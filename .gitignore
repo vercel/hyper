@@ -1,4 +1,4 @@
 node_modules
 .next
 npm-debug.log
-app/dist
+dist
