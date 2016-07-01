@@ -1,4 +1,4 @@
-# HyperTerm
+# hyperterm
 
 ## TODO
 
@@ -6,3 +6,4 @@
 - [ ] Add support for zsh and other popular shells
 - [ ] Figure out process title extraction on other platforms.
 - [ ] Define extensibility surface and APIs
+- [ ] Define approach to conf management (`~/.hyperterm.json` ?)
