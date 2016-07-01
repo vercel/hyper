@@ -3,12 +3,23 @@ const createRPC = require('./rpc');
 const Session = require('./session');
 const genUid = require('uid2');
 const { resolve } = require('path');
+const isDev = require('electron-is-dev');
 
-if ('development' === process.env.NODE_ENV) {
-  console.log('initializing in dev mode (NODE_ENV)');
+if (isDev) {
+  console.log('running in dev mode');
 } else {
-  console.log('initializing in prod mode (NODE_ENV)');
+  console.log('running in prod mode');
 }
+
+const url = 'file://' + resolve(
+  __dirname,
+  // in prod version, we copy over index.html and dist from 'app'
+  // into one dist folder to avoid unwanted files in package
+  isDev ? 'app' : '',
+  'index.html'
+);
+
+console.log('electron will open', url);
 
 app.on('window-all-closed', () => {
   // by subscribing to this event and nooping
@@ -28,10 +39,10 @@ app.on('ready', () => {
       transparent: true,
       // we only want to show when the prompt
       // is ready for user input
-      show: 'development' === process.env.NODE_ENV
+      show: isDev
     });
 
-    win.loadURL('file://' + resolve(__dirname, 'app', 'index.html'));
+    win.loadURL(url);
 
     const rpc = createRPC(win);
     const sessions = new Map();

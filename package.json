@@ -4,6 +4,8 @@
   "version": "0.0.1",
   "description": "",
   "dependencies": {
+    "child_pty": "3.0.1",
+    "electron-is-dev": "0.1.1",
     "electron-prebuilt": "1.2.5",
     "uid2": "0.0.3",
     "child_pty": "3.0.1"
