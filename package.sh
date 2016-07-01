@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-VERSION=`cat package.json | jq '.version' -r`
+VERSION=`node -e 'process.stdout.write(require("./package").version)'`
 rm -rf node_modules
 rm -rf ./app/node_modules
 rm -rf dist
