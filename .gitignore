@@ -2,3 +2,4 @@ node_modules
 .next
 npm-debug.log
 dist
+build
