@@ -29,7 +29,6 @@
     }
   },
   "scripts": {
-    "dev": "next -p 3006 app",
     "launch": "electron index",
     "lint": "eslint *.js"
   }
