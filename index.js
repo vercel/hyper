@@ -39,7 +39,7 @@ app.on('ready', () => {
       transparent: true,
       // we only want to show when the prompt
       // is ready for user input
-      show: isDev
+      show: process.env.HYPERTERM_DEBUG || isDev
     });
 
     win.loadURL(url);
