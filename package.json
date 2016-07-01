@@ -5,10 +5,6 @@
   "description": "",
   "dependencies": {
     "electron-prebuilt": "1.2.5",
-    "electron-rpc": "^2.0.1",
-    "ptyw.js": "0.4.0",
-    "terminal.js": "1.0.7",
-    "uid-promise": "0.1.0",
     "uid2": "0.0.3",
     "child_pty": "3.0.1"
   },
