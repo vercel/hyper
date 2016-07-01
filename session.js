@@ -1,6 +1,7 @@
 const { EventEmitter } = require('events');
 const { spawn } = require('child_pty');
 const { exec } = require('child_process');
+const defaultShell = require('default-shell');
 
 const TITLE_POLL_INTERVAL = 1000;
 
@@ -8,7 +9,7 @@ module.exports = class Session extends EventEmitter {
 
   constructor ({ rows, cols }) {
     super();
-    this.pty = spawn('bash', [], {
+    this.pty = spawn(defaultShell, ['--login'], {
       cols,
       rows,
       cwd: process.env.HOME,
