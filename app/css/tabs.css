@@ -1,0 +1,73 @@
+nav {
+  font-size: 12px;
+  font-family: -apple-system, BlinkMacSystemFont,
+  "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans",
+  "Droid Sans", "Helvetica Neue", sans-serif;
+  height: 28px;
+  line-height: 28px;
+  vertical-align: middle;
+  color: #9B9B9B;
+  cursor: default;
+  user-select: none;
+}
+
+.single {
+  text-align: center;
+  color: #fff;
+}
+
+.tabs {
+  border-bottom: 1px solid #333;
+  max-height: 28px;
+  display: flex;
+  flex-flow: row;
+}
+
+.tabs li:first-child {
+  margin-left: 70px;
+}
+
+.tabs li {
+  list-style-type: none;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.tabs li.is_active {
+  color: #fff;
+  position: relative;
+}
+
+.tabs li span {
+  display: block;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+}
+
+.tabs li.is_active span {
+  border-left-color: #333;
+  border-right-color: #333;
+}
+
+.tabs li.is_active:last-child span {
+  border-right-color: transparent;
+}
+
+.tabs li.is_active::before {
+  position: absolute;
+  content: ' ';
+  border-bottom: 1px solid #000;
+  display: block;
+  left: 1px;
+  right: 1px;
+  bottom: -1px;
+}
+
+.tabs li:not(.is_active):hover {
+  color: #ccc;
+}
+
+.tabs li.has_activity, .tabs li.has_activity:hover {
+  color: #50E3C2;
+}

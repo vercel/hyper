@@ -1,0 +1,65 @@
+.main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #333;
+}
+
+.mac.main {
+  border-radius: 5px;
+}
+
+header {
+  position: fixed;
+  top: 1px;
+  left: 1px;
+  right: 1px;
+  background: #000;
+  z-index: 100;
+}
+
+.mac header {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.terms {
+  position: absolute;
+  margin-top: 28px;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  color: #fff;
+}
+
+.terms div {
+  font-family: Menlo;
+  font-size: 11px;
+}
+
+.term {
+  display: none;
+}
+
+.term.active {
+  display: block;
+}
+
+.resize-indicator {
+  background: rgba(255, 255, 255, .2);
+  padding: 6px 14px;
+  color: #fff;
+  font: 11px Menlo;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  opacity: 0;
+  transition: opacity 150ms ease-in;
+}
+
+.resize-indicator.showing {
+  opacity: 1;
+}

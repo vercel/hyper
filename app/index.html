@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <title>HyperTerm</title>
+    <meta name="viewport" content="initial-scale=1.0" />
+    <style>
+      body {
+        background: #000;
+        color: #fff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        text-rendering: geometricPrecision;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="mount"></div>
+    <script>start = performance.now();</script>
+    <script src="dist/bundle.js"></script>
+    <script>console.log(performance.now() - start);</script>
+  </body>
+</html>
