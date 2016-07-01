@@ -15,7 +15,7 @@ const url = 'file://' + resolve(
   isDev ? __dirname : app.getAppPath(),
   // in prod version, we copy over index.html and dist from 'app'
   // into one dist folder to avoid unwanted files in package
-  isDev ? 'app' : 'dist',
+  isDev ? 'app' : 'build',
   'index.html'
 );
 
