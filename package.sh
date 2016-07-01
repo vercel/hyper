@@ -10,5 +10,5 @@ npm install
 npm run build
 cd -
 cp app/index.html dist/
-cp app/dist/* dist/
+cp -r app/dist dist/
 electron-packager ./ --platform=darwin --out=dist --arch=x64 --app-bundle-id="co.zeit.hyperterm" --app-version="0.1.0" --osx-sign --icon=icon.icns --ignore=app

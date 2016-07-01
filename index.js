@@ -15,7 +15,7 @@ const url = 'file://' + resolve(
   __dirname,
   // in prod version, we copy over index.html and dist from 'app'
   // into one dist folder to avoid unwanted files in package
-  isDev ? 'app' : '',
+  isDev ? 'app' : 'dist',
   'index.html'
 );
 
