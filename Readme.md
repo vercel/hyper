@@ -1,4 +1,6 @@
-# TODO
+# HyperTerm
+
+## TODO
 
 - [ ] Listen on `resize` event *coming* from the pty.
 - [ ] Add support for zsh.
