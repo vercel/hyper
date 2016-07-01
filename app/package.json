@@ -7,7 +7,9 @@
     "mousetrap": "1.6.0",
     "classnames": "2.2.5",
     "react": "15.1.0",
-    "react-dom": "15.1.0"
+    "react-dom": "15.1.0",
+    "semver-compare": "^1.0.0",
+    "json-loader": "^0.5.4"
   },
   "devDependencies": {
     "eslint": "2.13.1",
@@ -30,10 +32,19 @@
     ],
     "rules": {
       "yoda": 0,
-      "semi": [2, "always"],
+      "semi": [
+        2,
+        "always"
+      ],
       "no-unused-vars": 2,
       "no-extra-semi": 2,
-      "semi-spacing": [2, { "before": false, "after": true }],
+      "semi-spacing": [
+        2,
+        {
+          "before": false,
+          "after": true
+        }
+      ],
       "react/jsx-uses-react": 1,
       "react/jsx-uses-vars": 1
     },

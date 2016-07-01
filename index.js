@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, shell, Menu } = require('electron');
 const createRPC = require('./rpc');
 const Session = require('./session');
 const genUid = require('uid2');
@@ -79,6 +79,10 @@ app.on('ready', () => {
 
     rpc.on('data', ({ uid, data }) => {
       sessions.get(uid).write(data);
+    });
+
+    rpc.on('open external', ({ url }) => {
+      shell.openExternal(url);
     });
 
     const deleteSessions = () => {

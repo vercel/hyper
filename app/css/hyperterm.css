@@ -63,3 +63,23 @@ header {
 .resize-indicator.showing {
   opacity: 1;
 }
+
+.update-indicator {
+  background: rgba(255, 51, 76, .8);
+  padding: 6px 14px;
+  color: #fff;
+  font: 11px Menlo;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  opacity: 0;
+  transition: opacity 150ms ease-in;
+}
+
+.update-indicator a {
+  color: #fff;
+}
+
+.update-indicator.showing {
+  opacity: 1;
+}

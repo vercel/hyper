@@ -6,6 +6,7 @@ import classes from 'classnames';
 import getTextMetrics from './text-metrics';
 import shallowCompare from 'react-addons-shallow-compare';
 import React, { Component } from 'react';
+import UpdateChecker from './update-checker';
 
 export default class HyperTerm extends Component {
   constructor () {
@@ -19,7 +20,8 @@ export default class HyperTerm extends Component {
       active: null,
       activeMarkers: [],
       mac: /Mac/.test(navigator.userAgent),
-      resizeIndicatorShowing: false
+      resizeIndicatorShowing: false,
+      updateVersion: null
     };
 
     // we set this to true when the first tab
@@ -34,6 +36,7 @@ export default class HyperTerm extends Component {
 
     this.onResize = this.onResize.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.openExternal = this.openExternal.bind(this);
     this.focusActive = this.focusActive.bind(this);
     this.onHeaderMouseDown = this.onHeaderMouseDown.bind(this);
 
@@ -80,7 +83,17 @@ export default class HyperTerm extends Component {
       <div className={classes('resize-indicator', { showing: this.state.resizeIndicatorShowing })}>
         { this.state.cols }x{ this.state.rows }
       </div>
+      <div className={classes('update-indicator', { showing: null !== this.state.updateVersion })}>
+        Update available (<b>{ this.state.updateVersion }</b>).
+        {' '}
+        <a href='https://hyperterm.now.sh' onClick={this.openExternal} target='_blank'>Download</a>
+      </div>
     </div>;
+  }
+
+  openExternal (ev) {
+    ev.preventDefault();
+    this.rpc.emit('open external', { url: ev.target.href });
   }
 
   requestTab () {
@@ -156,6 +169,7 @@ export default class HyperTerm extends Component {
 
   componentDidMount () {
     this.rpc = new RPC();
+    this.updateChecker = new UpdateChecker(this.onUpdateAvailable.bind(this));
     this.setState(this.getDimensions());
 
     // open a new tab upon mounting
@@ -216,6 +230,10 @@ export default class HyperTerm extends Component {
 
     Mousetrap.bind('command+alt+left', this.moveLeft);
     Mousetrap.bind('command+alt+right', this.moveRight);
+  }
+
+  onUpdateAvailable (updateVersion) {
+    this.setState({ updateVersion });
   }
 
   moveTo (n) {
@@ -359,5 +377,6 @@ export default class HyperTerm extends Component {
     this.rpc.destroy();
     clearTimeout(this.resizeIndicatorTimeout);
     Mousetrap.reset();
+    this.updateChecker.destroy();
   }
 }
