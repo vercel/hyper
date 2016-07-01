@@ -6,6 +6,7 @@ rm -rf ./dist/HyperTerm-darwin-x64
 rm -rf ./dist/
 rm -rf ./build/
 mkdir dist
+mkdir build
 ./install.sh
 npm run lint
 cd app
