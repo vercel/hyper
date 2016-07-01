@@ -8,7 +8,7 @@
 - [ ] Define extensibility surface and APIs
 - [ ] Define approach to conf management (`~/.hyperterm.json` ?)
 - [ ] Admit Ctrl+C as a way of closing webview
-- [ ] When webview is shown, replace title of tab with <title>
+- [ ] When webview is shown, replace title of tab with webview's title
 - [ ] Linkify urls in stdout. If clicked, inline webview. If cmd+clicked, default browser.
 - [ ] Show icon that triggers contextmenu in tab, when hovered.
   - [ ] "Open in default browser" option in webview mode
