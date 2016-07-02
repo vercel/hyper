@@ -42,6 +42,7 @@ export default class HyperTerm extends Component {
 
     this.moveLeft = this.moveLeft.bind(this);
     this.moveRight = this.moveRight.bind(this);
+    this.fullscreen = this.fullscreen.bind(this);
   }
 
   render () {
@@ -214,6 +215,7 @@ export default class HyperTerm extends Component {
 
     this.rpc.on('move left', this.moveLeft);
     this.rpc.on('move right', this.moveRight);
+    this.rpc.on('fullscreen', this.fullscreen);
 
     Mousetrap.bind('command+1', this.moveTo.bind(this, 0));
     Mousetrap.bind('command+2', this.moveTo.bind(this, 1));
@@ -235,6 +237,12 @@ export default class HyperTerm extends Component {
 
     Mousetrap.bind('command+alt+left', this.moveLeft);
     Mousetrap.bind('command+alt+right', this.moveRight);
+
+    Mousetrap.bind('command+ctrl+f', this.fullscreen);
+  }
+
+  fullscreen() {
+    this.rpc.emit('fullscreen');
   }
 
   onUpdateAvailable (updateVersion) {
