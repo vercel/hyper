@@ -28,6 +28,8 @@ app.on('window-all-closed', () => {
   // terminal is closed
 });
 
+let winCount = 0;
+
 app.on('ready', () => {
   function createWindow (fn) {
     let win = new BrowserWindow({
@@ -41,7 +43,7 @@ app.on('ready', () => {
       // is ready for user input
       show: process.env.HYPERTERM_DEBUG || isDev
     });
-
+    winCount++;
     win.loadURL(url);
 
     const rpc = createRPC(win);
@@ -117,6 +119,7 @@ app.on('ready', () => {
     win.on('close', () => {
       rpc.destroy();
       deleteSessions();
+      winCount--;
     });
 
     win.rpc = rpc;
@@ -124,6 +127,15 @@ app.on('ready', () => {
 
   // when opening create a new window
   createWindow();
+
+  // mac only. when the dock icon is clicked
+  // and we don't have any active windows open,
+  // we open one
+  app.on('activate', () => {
+    if (!winCount) {
+      createWindow();
+    }
+  });
 
   // set menu
   Menu.setApplicationMenu(Menu.buildFromTemplate([
