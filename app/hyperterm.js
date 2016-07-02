@@ -103,16 +103,16 @@ export default class HyperTerm extends Component {
   closeTab () {
     if (this.state.sessions.length) {
       const uid = this.state.sessions[this.state.active];
+      this.rpc.emit('exit', { uid });
+    }
+  }
 
-      if (this.state.urls[uid]) {
-        // if we have a url loaded, closing a tab
-        // instead closes the url
-        const urls = Object.assign({}, this.state.urls);
-        delete urls[uid];
-        this.setState({ urls });
-      } else {
-        this.rpc.emit('exit', { uid });
-      }
+  closeBrowser () {
+    const uid = this.state.sessions[this.state.active];
+    if (this.state.urls[uid]) {
+      const urls = Object.assign({}, this.state.urls);
+      delete urls[uid];
+      this.setState({ urls });
     }
   }
 
@@ -224,6 +224,8 @@ export default class HyperTerm extends Component {
     Mousetrap.bind('command+7', this.moveTo.bind(this, 6));
     Mousetrap.bind('command+8', this.moveTo.bind(this, 7));
     Mousetrap.bind('command+9', this.moveTo.bind(this, 8));
+
+    Mousetrap.bind('ctrl+c', this.closeBrowser.bind(this));
 
     Mousetrap.bind('command+shift+left', this.moveLeft);
     Mousetrap.bind('command+shift+right', this.moveRight);
