@@ -251,6 +251,9 @@ export default class HyperTerm extends Component {
     const next = this.state.active - 1;
     if (this.state.sessions[next]) {
       this.setActive(next);
+    } else if (this.state.sessions.length > 1) {
+      // go to the end
+      this.setActive(this.state.sessions.length - 1);
     }
   }
 
@@ -258,6 +261,9 @@ export default class HyperTerm extends Component {
     const next = this.state.active + 1;
     if (this.state.sessions[next]) {
       this.setActive(next);
+    } else if (this.state.sessions.length > 1) {
+      // go to the beginning
+      this.setActive(0);
     }
   }
 
