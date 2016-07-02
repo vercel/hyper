@@ -205,6 +205,9 @@ app.on('ready', () => {
               focusedWindow.webContents.toggleDevTools();
             }
           }
+        },
+        {
+          role: 'togglefullscreen'
         }
       ]
     },
