@@ -98,6 +98,10 @@ app.on('ready', () => {
       shell.openExternal(url);
     });
 
+    rpc.on('fullscreen', () => {
+      win.setFullScreen(!win.isFullScreen());
+    });
+
     const deleteSessions = () => {
       sessions.forEach((session, key) => {
         session.removeAllListeners();
@@ -229,6 +233,15 @@ app.on('ready', () => {
           click (item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('move right');
+            }
+          }
+        },
+        {
+          label: 'Fullscreen',
+          accelerator: 'Ctrl+Cmd+F',
+          click (item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.rpc.emit('fullscreen');
             }
           }
         }
