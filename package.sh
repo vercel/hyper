@@ -18,3 +18,5 @@ cp app/index.html build/
 cp -r app/dist build/
 electron-packager ./ --platform=darwin --out=dist --arch=x64 --app-bundle-id="co.zeit.hyperterm" --app-version="$VERSION" --osx-sign --icon=icon.icns --prune --ignore=app
 rm -rf ./build/
+npm install bestzip@1.1.2
+bestzip dist/hyperterm-macos-x64-$VERSION.zip dist/HyperTerm-darwin-x64
