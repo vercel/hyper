@@ -2,7 +2,7 @@
   "name": "hyperterm",
   "productName": "HyperTerm",
   "version": "0.1.0",
-  "description": "",
+  "description": "HTML/JS/CSS Terminal",
   "dependencies": {
     "child_pty": "3.0.1",
     "default-shell": "1.0.1",
