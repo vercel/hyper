@@ -1,6 +1,6 @@
 # hyperterm
 
-## Developing
+## Contribute
 
 To install `package.json` dependencies in a way where the native
 modules are built with `electron`, run:
@@ -22,10 +22,10 @@ $ webpack --watch
 Then you can run:
 
 ```bash
-$ electron index
+$ npm start
 ```
 
-to launch the app!
+...to launch the app!
 
 ## TODO
 
