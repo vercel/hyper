@@ -37,7 +37,7 @@
     }
   },
   "scripts": {
-    "launch": "electron index",
+    "start": "electron index",
     "lint": "eslint *.js"
   }
 }
