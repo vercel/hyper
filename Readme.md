@@ -3,6 +3,8 @@
 ## TODO
 
 - [ ] Warn upon quit
+- [ ] Implement memory for tab navigation like in Chrome
+- [ ] Clone `pwd` when opening a new tab (as the first plugin?)
 - [ ] Implement cmd+K to clear
 - [ ] Listen on `resize` event *coming* from the pty.
 - [ ] Make sure all popular shells work well, and that we detect
