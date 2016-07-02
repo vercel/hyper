@@ -2,6 +2,8 @@
 
 ## TODO
 
+- [ ] Warn upon quit
+- [ ] Implement cmd+K to clear
 - [ ] Listen on `resize` event *coming* from the pty.
 - [ ] Make sure all popular shells work well, and that we detect
       "url commands" appropriately for them.
