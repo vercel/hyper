@@ -74,6 +74,7 @@ header {
   right: 20px;
   opacity: 0;
   transition: opacity 150ms ease-in;
+  pointer-events: none;
 }
 
 .update-indicator a {
@@ -82,4 +83,5 @@ header {
 
 .update-indicator.showing {
   opacity: 1;
+  pointer-events: inherit;
 }
