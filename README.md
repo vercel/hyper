@@ -19,7 +19,7 @@ $ npm install
 $ webpack --watch
 ```
 
-Then you can run:
+Then you can run in the main directory:
 
 ```bash
 $ npm start
