@@ -230,6 +230,9 @@ export default class HyperTerm extends Component {
     Mousetrap.bind('command+shift+left', this.moveLeft);
     Mousetrap.bind('command+shift+right', this.moveRight);
 
+    Mousetrap.bind('command+shift+[', this.moveLeft);
+    Mousetrap.bind('command+shift+]', this.moveRight);
+
     Mousetrap.bind('command+alt+left', this.moveLeft);
     Mousetrap.bind('command+alt+right', this.moveRight);
   }
