@@ -1,5 +1,12 @@
-node_modules
-.next
-npm-debug.log
+# build output
 dist
 build
+
+# dependencies
+node_modules
+
+# logs
+npm-debug.log
+
+# other
+.next
