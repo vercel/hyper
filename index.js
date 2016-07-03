@@ -68,6 +68,7 @@ app.on('ready', () => {
 
         session.on('exit', () => {
           rpc.emit('exit', { uid });
+          sessions.delete(uid);
         });
       });
     });
