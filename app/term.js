@@ -17,6 +17,16 @@ hterm.Terminal.prototype.onMouse_ = function (e) {
 // there's no option to turn off the size overlay
 hterm.Terminal.prototype.overlaySize = function () {};
 
+// fixing a bug in hterm where a double click triggers
+// a non-collapsed selection whose text is '', and results
+// in an infinite copy loop
+hterm.Terminal.prototype.copySelectionToClipboard = function () {
+  var text = this.getSelectionText();
+  if (text != null && text !== '') {
+    this.copyStringToClipboard(text);
+  }
+};
+
 // passthrough all the commands that are meant to control
 // hyperterm and not the terminal itself
 const oldKeyDown = hterm.Keyboard.prototype.onKeyDown_;
