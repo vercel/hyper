@@ -41,6 +41,13 @@ export default class Term extends Component {
 
   componentDidMount () {
     this.term = new hterm.Terminal();
+
+    // the first term that's created has unknown size
+    // subsequent new tabs have size
+    if (this.props.cols) {
+      this.term.realizeSize_(this.props.cols, this.props.rows);
+    }
+
     this.term.prefs_.set('font-family', 'Menlo');
     this.term.prefs_.set('font-size', 11);
     this.term.prefs_.set('cursor-color', '#F81CE5');

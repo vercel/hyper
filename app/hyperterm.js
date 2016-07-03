@@ -70,6 +70,8 @@ export default class HyperTerm extends Component {
                 <Term
                   key={uid}
                   ref={`term-${uid}`}
+                  cols={this.state.cols}
+                  rows={this.state.rows}
                   url={this.state.urls[uid]}
                   onResize={this.onResize}
                   onTitle={this.setTitle.bind(this, uid)}
