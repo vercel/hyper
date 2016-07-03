@@ -3,7 +3,6 @@ import Term from './term';
 import RPC from './rpc';
 import Mousetrap from 'mousetrap';
 import classes from 'classnames';
-import getTextMetrics from './text-metrics';
 import shallowCompare from 'react-addons-shallow-compare';
 import React, { Component } from 'react';
 import UpdateChecker from './update-checker';
@@ -12,6 +11,8 @@ export default class HyperTerm extends Component {
   constructor () {
     super();
     this.state = {
+      cols: null,
+      rows: null,
       hpadding: 10,
       vpadding: 5,
       sessions: [],
@@ -65,13 +66,12 @@ export default class HyperTerm extends Component {
           ref='termWrapper'>{
             this.state.sessions.map((uid, i) => {
               const active = i === this.state.active;
-              return <div key={`d${uid}`} className={classes('term', { active })} ref='term'>
+              return <div key={`d${uid}`} className={classes('term', { active })} style={{ width: '100%', height: '100%' }} ref='term'>
                 <Term
                   key={uid}
                   ref={`term-${uid}`}
                   url={this.state.urls[uid]}
-                  cols={this.state.cols}
-                  rows={this.state.rows}
+                  onResize={this.onResize}
                   onTitle={this.setTitle.bind(this, uid)}
                   onData={this.write.bind(this, uid)}
                   onURL={this.onURL.bind(this, uid)}
@@ -97,7 +97,8 @@ export default class HyperTerm extends Component {
   }
 
   requestTab () {
-    this.rpc.emit('new', this.getDimensions());
+    // we send the hterm default size
+    this.rpc.emit('new', { cols: this.state.cols, rows: this.state.rows });
   }
 
   closeTab () {
@@ -170,7 +171,6 @@ export default class HyperTerm extends Component {
   componentDidMount () {
     this.rpc = new RPC();
     this.updateChecker = new UpdateChecker(this.onUpdateAvailable.bind(this));
-    this.setState(this.getDimensions());
 
     // open a new tab upon mounting
     this.rpc.once('ready', () => this.requestTab());
@@ -329,13 +329,15 @@ export default class HyperTerm extends Component {
     }
   }
 
-  onResize () {
-    const dim = this.getDimensions();
+  onResize (dim) {
     if (dim.rows !== this.state.rows || dim.cols !== this.state.cols) {
       this.ignoreActivity = Date.now();
-
       this.rpc.emit('resize', dim);
-      const state = Object.assign({}, dim, { resizeIndicatorShowing: true });
+      const state = Object.assign({}, dim,
+        // if it's the first time we hear about the resize we
+        // don't show the indicator
+        null === this.state.rows ? {} : { resizeIndicatorShowing: true }
+      );
       this.setState(state);
       clearTimeout(this.resizeIndicatorTimeout);
       this.resizeIndicatorTimeout = setTimeout(() => {
