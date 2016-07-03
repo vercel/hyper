@@ -68,6 +68,7 @@ app.on('ready', () => {
 
         session.on('exit', () => {
           rpc.emit('exit', { uid });
+          sessions.delete(uid);
         });
       });
     });
@@ -184,7 +185,17 @@ app.on('ready', () => {
       submenu: [
         { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
         { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
-        { label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' }
+        { label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' },
+        { type: 'separator' },
+        {
+          label: 'Clear',
+          accelerator: 'CmdOrCtrl+K',
+          click (item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.rpc.emit('clear');
+            }
+          }
+        }
       ]
     },
     {
@@ -205,6 +216,9 @@ app.on('ready', () => {
               focusedWindow.webContents.toggleDevTools();
             }
           }
+        },
+        {
+          type: 'separator'
         },
         {
           role: 'togglefullscreen'
