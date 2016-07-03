@@ -127,6 +127,51 @@ export default class Term extends Component {
     this.term.focus();
   }
 
+  clear () {
+    const { term } = this;
+
+    // we re-implement `wipeContents` to preserve the line
+    // and cursor position that the client is in.
+    // otherwise the user ends up with a completely clear
+    // screen which is really strange
+    term.scrollbackRows_.length = 0;
+    term.scrollPort_.resetCache();
+
+    [term.primaryScreen_, term.alternateScreen_].forEach(function (screen) {
+      const bottom = screen.getHeight();
+      if (bottom > 0) {
+        term.renumberRows_(0, bottom);
+
+        const x = screen.cursorPosition.column;
+        const y = screen.cursorPosition.row;
+
+        if (y === 0) {
+          // Empty screen, nothing to do.
+          return;
+        }
+
+        for (let i = 0; i < y; i++) {
+          screen.setCursorPosition(i, 0);
+          screen.clearCursorRow();
+        }
+
+        // here we move the row that the user was focused on
+        // to the top of the screen
+        term.moveRows_(y, 1, 0);
+
+        // we restore the cursor position
+        screen.setCursorPosition(0, x);
+      }
+    });
+
+    term.syncCursorPosition_();
+    term.scrollPort_.invalidate();
+
+    // this will avoid a bug where the `wipeContents`
+    // hterm API doens't send the scroll to the top
+    this.term.scrollPort_.redraw_();
+  }
+
   componentWillUnmount () {
     // there's no need to manually destroy
     // as all the events are attached to the iframe

@@ -198,6 +198,7 @@ export default class HyperTerm extends Component {
       });
     });
 
+    this.rpc.on('clear', this.clearCurrentTerm.bind(this));
     this.rpc.on('exit', this.onSessionExit.bind(this));
 
     this.rpc.on('data', ({ uid, data }) => {
@@ -222,6 +223,12 @@ export default class HyperTerm extends Component {
 
     this.rpc.on('move left', this.moveLeft);
     this.rpc.on('move right', this.moveRight);
+  }
+
+  clearCurrentTerm () {
+    const uid = this.state.sessions[this.state.active];
+    const term = this.refs[`term-${uid}`];
+    term.clear();
   }
 
   onUpdateAvailable (updateVersion) {
