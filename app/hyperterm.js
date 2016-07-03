@@ -39,6 +39,7 @@ export default class HyperTerm extends Component {
     this.onChange = this.onChange.bind(this);
     this.openExternal = this.openExternal.bind(this);
     this.focusActive = this.focusActive.bind(this);
+    this.closeBrowser = this.closeBrowser.bind(this);
     this.onHeaderMouseDown = this.onHeaderMouseDown.bind(this);
 
     this.moveLeft = this.moveLeft.bind(this);
@@ -77,6 +78,7 @@ export default class HyperTerm extends Component {
                   onTitle={this.setTitle.bind(this, uid)}
                   onData={this.write.bind(this, uid)}
                   onURL={this.onURL.bind(this, uid)}
+                  onURLAbort={this.closeBrowser}
                   />
               </div>;
             })
@@ -324,7 +326,6 @@ export default class HyperTerm extends Component {
       keys.bind('command+7', this.moveTo.bind(this, 6));
       keys.bind('command+8', this.moveTo.bind(this, 7));
       keys.bind('command+9', this.moveTo.bind(this, 8));
-      keys.bind('ctrl+c', this.closeBrowser.bind(this));
       keys.bind('command+shift+left', this.moveLeft);
       keys.bind('command+shift+right', this.moveRight);
       keys.bind('command+shift+[', this.moveLeft);
@@ -393,7 +394,9 @@ export default class HyperTerm extends Component {
   componentWillUnmount () {
     this.rpc.destroy();
     clearTimeout(this.resizeIndicatorTimeout);
-    this.keys.reset();
+    if (this.keys) {
+      this.keys.reset();
+    }
     this.updateChecker.destroy();
   }
 }

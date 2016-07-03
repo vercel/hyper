@@ -83,7 +83,12 @@ export default class Term extends Component {
       // key input so that it doesn't conflict
       // with the <webview>
       if (nextProps.url) {
-        this.term.io.push();
+        const io = this.term.io.push();
+        io.onVTKeystroke = io.sendString = (str) => {
+          if (1 === str.length && 3 === str.charCodeAt(0) /* Ctrl + C */) {
+            this.props.onURLAbort();
+          }
+        };
       } else {
         this.term.io.pop();
       }
@@ -108,7 +113,7 @@ export default class Term extends Component {
   }
 
   focus () {
-    this.term.scrollPort_.focus();
+    this.term.focus();
   }
 
   componentWillUnmount () {
