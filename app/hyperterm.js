@@ -166,6 +166,9 @@ export default class HyperTerm extends Component {
       }
       const nextUid = nextState.sessions[nextState.active];
       this.rpc.emit('focus', { uid: nextUid });
+      this.shouldInitKeys = true;
+    } else {
+      this.shouldInitKeys = false;
     }
 
     return shallowCompare(this, nextProps, nextState);
@@ -213,31 +216,8 @@ export default class HyperTerm extends Component {
     this.rpc.on('close tab', this.closeTab.bind(this));
     this.rpc.on('title', this.onRemoteTitle.bind(this));
 
-    window.addEventListener('resize', this.onResize);
-
     this.rpc.on('move left', this.moveLeft);
     this.rpc.on('move right', this.moveRight);
-
-    Mousetrap.bind('command+1', this.moveTo.bind(this, 0));
-    Mousetrap.bind('command+2', this.moveTo.bind(this, 1));
-    Mousetrap.bind('command+3', this.moveTo.bind(this, 2));
-    Mousetrap.bind('command+4', this.moveTo.bind(this, 3));
-    Mousetrap.bind('command+5', this.moveTo.bind(this, 4));
-    Mousetrap.bind('command+6', this.moveTo.bind(this, 5));
-    Mousetrap.bind('command+7', this.moveTo.bind(this, 6));
-    Mousetrap.bind('command+8', this.moveTo.bind(this, 7));
-    Mousetrap.bind('command+9', this.moveTo.bind(this, 8));
-
-    Mousetrap.bind('ctrl+c', this.closeBrowser.bind(this));
-
-    Mousetrap.bind('command+shift+left', this.moveLeft);
-    Mousetrap.bind('command+shift+right', this.moveRight);
-
-    Mousetrap.bind('command+shift+[', this.moveLeft);
-    Mousetrap.bind('command+shift+]', this.moveRight);
-
-    Mousetrap.bind('command+alt+left', this.moveLeft);
-    Mousetrap.bind('command+alt+right', this.moveRight);
   }
 
   onUpdateAvailable (updateVersion) {
@@ -325,6 +305,34 @@ export default class HyperTerm extends Component {
   }
 
   componentDidUpdate () {
+    if (this.shouldInitKeys) {
+      if (this.keys) {
+        this.keys.reset();
+      }
+
+      const uid = this.state.sessions[this.state.active];
+      const term = this.refs[`term-${uid}`];
+      const keys = new Mousetrap(term.getTermDocument());
+      keys.bind('command+1', this.moveTo.bind(this, 0));
+      keys.bind('command+2', this.moveTo.bind(this, 1));
+      keys.bind('command+3', this.moveTo.bind(this, 2));
+      keys.bind('command+4', this.moveTo.bind(this, 3));
+      keys.bind('command+5', this.moveTo.bind(this, 4));
+      keys.bind('command+6', this.moveTo.bind(this, 5));
+      keys.bind('command+7', this.moveTo.bind(this, 6));
+      keys.bind('command+8', this.moveTo.bind(this, 7));
+      keys.bind('command+9', this.moveTo.bind(this, 8));
+      keys.bind('ctrl+c', this.closeBrowser.bind(this));
+      keys.bind('command+shift+left', this.moveLeft);
+      keys.bind('command+shift+right', this.moveRight);
+      keys.bind('command+shift+[', this.moveLeft);
+      keys.bind('command+shift+]', this.moveRight);
+      keys.bind('command+alt+left', this.moveLeft);
+      keys.bind('command+alt+right', this.moveRight);
+
+      this.keys = keys;
+    }
+
     this.focusActive();
   }
 
@@ -380,24 +388,10 @@ export default class HyperTerm extends Component {
     this.headerMouseDownWindowY = window.screenY;
   }
 
-  getDimensions () {
-    const tm = getTextMetrics('Menlo', '11px', '15px');
-    const hp = this.state.hpadding;
-    const vp = this.state.vpadding;
-    const el = this.refs.termWrapper;
-    const { width, height } = el.getBoundingClientRect();
-    const dim = {
-      cols: Math.floor((width - hp * 2) / tm.width),
-      rows: Math.floor((height - vp * 2) / tm.height)
-    };
-    return dim;
-  }
-
   componentWillUnmount () {
-    window.removeEventListener('resize', this.onResize);
     this.rpc.destroy();
     clearTimeout(this.resizeIndicatorTimeout);
-    Mousetrap.reset();
+    this.keys.reset();
     this.updateChecker.destroy();
   }
 }
