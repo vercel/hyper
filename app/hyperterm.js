@@ -105,6 +105,7 @@ export default class HyperTerm extends Component {
     if (this.state.sessions.length) {
       const uid = this.state.sessions[this.state.active];
       this.rpc.emit('exit', { uid });
+      this.onSessionExit(uid);
     }
   }
 
@@ -158,7 +159,9 @@ export default class HyperTerm extends Component {
   shouldComponentUpdate (nextProps, nextState) {
     if (this.state.active !== nextState.active) {
       const curUid = this.state.sessions[this.state.active];
-      if (curUid) {
+      // make sure that the blurred uid has not been
+      // optimistically removed
+      if (curUid && ~nextState.sessions.indexOf(curUid)) {
         this.rpc.emit('blur', { uid: curUid });
       }
       const nextUid = nextState.sessions[nextState.active];
@@ -268,6 +271,11 @@ export default class HyperTerm extends Component {
   }
 
   onSessionExit ({ uid }) {
+    if (!~this.state.sessions.indexOf(uid)) {
+      console.log('ignore exit of', uid);
+      return;
+    }
+
     const {
       sessions: _sessions,
       titles: _titles,
