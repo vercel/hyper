@@ -22,7 +22,8 @@ export default class HyperTerm extends Component {
       activeMarkers: [],
       mac: /Mac/.test(navigator.userAgent),
       resizeIndicatorShowing: false,
-      updateVersion: null
+      updateVersion: null,
+      updateNote: null
     };
 
     // we set this to true when the first tab
@@ -89,7 +90,7 @@ export default class HyperTerm extends Component {
       </div>
       <div className={classes('update-indicator', { showing: null !== this.state.updateVersion })}>
         Update available (<b>{ this.state.updateVersion }</b>).
-        {' '}
+        {this.state.updateNote ? ` ${this.state.updateNote}. ` : ' '}
         <a href='https://hyperterm.now.sh' onClick={this.openExternal} target='_blank'>Download</a>
       </div>
     </div>;
@@ -231,8 +232,9 @@ export default class HyperTerm extends Component {
     term.clear();
   }
 
-  onUpdateAvailable (updateVersion) {
-    this.setState({ updateVersion });
+  onUpdateAvailable (updateVersion, updateNote = '') {
+    updateNote = updateNote.replace(/\.$/, '');
+    this.setState({ updateVersion, updateNote });
   }
 
   moveTo (n) {

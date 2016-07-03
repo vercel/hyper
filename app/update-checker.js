@@ -19,7 +19,7 @@ export default class UpdateChecker {
     };
 
     console.log('checking for update');
-    fetch('https://hyperterm.now.sh/data.json')
+    fetch('https://hyperterm.now.sh/updates.json')
     .then((res) => {
       if (200 !== res.status) {
         console.error('Update check error. Status (%d)', res.status);
@@ -27,13 +27,13 @@ export default class UpdateChecker {
       }
 
       res.json()
-      .then(({ version }) => {
+      .then(({ version, note }) => {
         if (this.lastKnown !== version) {
           this.lastKnown = version;
 
           if (1 === compare(version, currentVersion)) {
             console.log('update found');
-            this.callback(version);
+            this.callback(version, note);
           } else {
             console.log('no update. latest:', version);
           }
