@@ -4,8 +4,8 @@ nav {
   "Segoe UI", "Roboto", "Oxygen",
   "Ubuntu", "Cantarell", "Fira Sans",
   "Droid Sans", "Helvetica Neue", sans-serif;
-  height: 28px;
-  line-height: 28px;
+  height: 37px;
+  line-height: 37px;
   vertical-align: middle;
   color: #9B9B9B;
   cursor: default;
@@ -19,7 +19,7 @@ nav {
 
 .tabs {
   border-bottom: 1px solid #333;
-  max-height: 28px;
+  max-height: 37px;
   display: flex;
   flex-flow: row;
 }
