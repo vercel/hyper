@@ -49,7 +49,7 @@
     */
     color: #fff;
 
-    font-family: Menlo;
+    font-family: Menlo, 'DejaVu Sans Mono', 'Lucida Console', monospace;
     font-feature-settings: "liga" 0;
     position: relative;
 }
