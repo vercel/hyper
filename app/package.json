@@ -3,13 +3,14 @@
   "version": "0.0.1",
   "description": "",
   "dependencies": {
-    "react-addons-shallow-compare": "15.1.0",
-    "mousetrap": "1.6.0",
     "classnames": "2.2.5",
+    "hterm-umd": "1.0.1",
+    "json-loader": "0.5.4",
+    "mousetrap": "1.6.0",
     "react": "15.1.0",
+    "react-addons-shallow-compare": "15.1.0",
     "react-dom": "15.1.0",
-    "semver-compare": "^1.0.0",
-    "json-loader": "^0.5.4"
+    "semver-compare": "1.0.0"
   },
   "devDependencies": {
     "eslint": "2.13.1",
