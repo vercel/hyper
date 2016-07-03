@@ -145,19 +145,19 @@ export default class Term extends Component {
         const x = screen.cursorPosition.column;
         const y = screen.cursorPosition.row;
 
-        if (y === 0) {
+        if (x === 0) {
           // Empty screen, nothing to do.
           return;
-        }
-
-        for (let i = 0; i < y; i++) {
-          screen.setCursorPosition(i, 0);
-          screen.clearCursorRow();
         }
 
         // here we move the row that the user was focused on
         // to the top of the screen
         term.moveRows_(y, 1, 0);
+
+        for (let i = 1; i < bottom; i++) {
+          screen.setCursorPosition(i, 0);
+          screen.clearCursorRow();
+        }
 
         // we restore the cursor position
         screen.setCursorPosition(0, x);
