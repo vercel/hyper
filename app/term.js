@@ -55,7 +55,6 @@ export default class Term extends Component {
     this.term.onTerminalReady = () => {
       const io = this.term.io.push();
       io.onVTKeystroke = io.sendString = (str) => {
-        console.log('handle', str);
         this.props.onData(str);
       };
       io.onTerminalResize = (cols, rows) => {
@@ -63,6 +62,7 @@ export default class Term extends Component {
       };
     };
     this.term.decorate(this.refs.term);
+    this.term.installKeyboard();
   }
 
   getTermDocument () {
