@@ -3,7 +3,6 @@ import Term from './term';
 import RPC from './rpc';
 import Mousetrap from 'mousetrap';
 import classes from 'classnames';
-import getTextMetrics from './text-metrics';
 import shallowCompare from 'react-addons-shallow-compare';
 import React, { Component } from 'react';
 import UpdateChecker from './update-checker';
@@ -12,8 +11,10 @@ export default class HyperTerm extends Component {
   constructor () {
     super();
     this.state = {
-      hpadding: 10,
-      vpadding: 5,
+      cols: null,
+      rows: null,
+      hpadding: 12,
+      vpadding: 19,
       sessions: [],
       titles: {},
       urls: {},
@@ -21,7 +22,8 @@ export default class HyperTerm extends Component {
       activeMarkers: [],
       mac: /Mac/.test(navigator.userAgent),
       resizeIndicatorShowing: false,
-      updateVersion: null
+      updateVersion: null,
+      updateNote: null
     };
 
     // we set this to true when the first tab
@@ -38,6 +40,7 @@ export default class HyperTerm extends Component {
     this.onChange = this.onChange.bind(this);
     this.openExternal = this.openExternal.bind(this);
     this.focusActive = this.focusActive.bind(this);
+    this.closeBrowser = this.closeBrowser.bind(this);
     this.onHeaderMouseDown = this.onHeaderMouseDown.bind(this);
 
     this.moveLeft = this.moveLeft.bind(this);
@@ -65,16 +68,18 @@ export default class HyperTerm extends Component {
           ref='termWrapper'>{
             this.state.sessions.map((uid, i) => {
               const active = i === this.state.active;
-              return <div key={`d${uid}`} className={classes('term', { active })} ref='term'>
+              return <div key={`d${uid}`} className={classes('term', { active })} style={{ width: '100%', height: '100%' }} ref='term'>
                 <Term
                   key={uid}
                   ref={`term-${uid}`}
-                  url={this.state.urls[uid]}
                   cols={this.state.cols}
                   rows={this.state.rows}
+                  url={this.state.urls[uid]}
+                  onResize={this.onResize}
                   onTitle={this.setTitle.bind(this, uid)}
                   onData={this.write.bind(this, uid)}
                   onURL={this.onURL.bind(this, uid)}
+                  onURLAbort={this.closeBrowser}
                   />
               </div>;
             })
@@ -85,7 +90,7 @@ export default class HyperTerm extends Component {
       </div>
       <div className={classes('update-indicator', { showing: null !== this.state.updateVersion })}>
         Update available (<b>{ this.state.updateVersion }</b>).
-        {' '}
+        {this.state.updateNote ? ` ${this.state.updateNote}. ` : ' '}
         <a href='https://hyperterm.now.sh' onClick={this.openExternal} target='_blank'>Download</a>
       </div>
     </div>;
@@ -97,13 +102,15 @@ export default class HyperTerm extends Component {
   }
 
   requestTab () {
-    this.rpc.emit('new', this.getDimensions());
+    // we send the hterm default size
+    this.rpc.emit('new', { cols: this.state.cols, rows: this.state.rows });
   }
 
   closeTab () {
     if (this.state.sessions.length) {
       const uid = this.state.sessions[this.state.active];
       this.rpc.emit('exit', { uid });
+      this.onSessionExit(uid);
     }
   }
 
@@ -157,11 +164,16 @@ export default class HyperTerm extends Component {
   shouldComponentUpdate (nextProps, nextState) {
     if (this.state.active !== nextState.active) {
       const curUid = this.state.sessions[this.state.active];
-      if (curUid) {
+      // make sure that the blurred uid has not been
+      // optimistically removed
+      if (curUid && ~nextState.sessions.indexOf(curUid)) {
         this.rpc.emit('blur', { uid: curUid });
       }
       const nextUid = nextState.sessions[nextState.active];
       this.rpc.emit('focus', { uid: nextUid });
+      this.shouldInitKeys = true;
+    } else {
+      this.shouldInitKeys = false;
     }
 
     return shallowCompare(this, nextProps, nextState);
@@ -170,7 +182,6 @@ export default class HyperTerm extends Component {
   componentDidMount () {
     this.rpc = new RPC();
     this.updateChecker = new UpdateChecker(this.onUpdateAvailable.bind(this));
-    this.setState(this.getDimensions());
 
     // open a new tab upon mounting
     this.rpc.once('ready', () => this.requestTab());
@@ -188,6 +199,7 @@ export default class HyperTerm extends Component {
       });
     });
 
+    this.rpc.on('clear', this.clearCurrentTerm.bind(this));
     this.rpc.on('exit', this.onSessionExit.bind(this));
 
     this.rpc.on('data', ({ uid, data }) => {
@@ -210,35 +222,19 @@ export default class HyperTerm extends Component {
     this.rpc.on('close tab', this.closeTab.bind(this));
     this.rpc.on('title', this.onRemoteTitle.bind(this));
 
-    window.addEventListener('resize', this.onResize);
-
     this.rpc.on('move left', this.moveLeft);
     this.rpc.on('move right', this.moveRight);
-
-    Mousetrap.bind('command+1', this.moveTo.bind(this, 0));
-    Mousetrap.bind('command+2', this.moveTo.bind(this, 1));
-    Mousetrap.bind('command+3', this.moveTo.bind(this, 2));
-    Mousetrap.bind('command+4', this.moveTo.bind(this, 3));
-    Mousetrap.bind('command+5', this.moveTo.bind(this, 4));
-    Mousetrap.bind('command+6', this.moveTo.bind(this, 5));
-    Mousetrap.bind('command+7', this.moveTo.bind(this, 6));
-    Mousetrap.bind('command+8', this.moveTo.bind(this, 7));
-    Mousetrap.bind('command+9', this.moveTo.bind(this, 8));
-
-    Mousetrap.bind('ctrl+c', this.closeBrowser.bind(this));
-
-    Mousetrap.bind('command+shift+left', this.moveLeft);
-    Mousetrap.bind('command+shift+right', this.moveRight);
-
-    Mousetrap.bind('command+shift+[', this.moveLeft);
-    Mousetrap.bind('command+shift+]', this.moveRight);
-
-    Mousetrap.bind('command+alt+left', this.moveLeft);
-    Mousetrap.bind('command+alt+right', this.moveRight);
   }
 
-  onUpdateAvailable (updateVersion) {
-    this.setState({ updateVersion });
+  clearCurrentTerm () {
+    const uid = this.state.sessions[this.state.active];
+    const term = this.refs[`term-${uid}`];
+    term.clear();
+  }
+
+  onUpdateAvailable (updateVersion, updateNote = '') {
+    updateNote = updateNote.replace(/\.$/, '');
+    this.setState({ updateVersion, updateNote });
   }
 
   moveTo (n) {
@@ -268,6 +264,11 @@ export default class HyperTerm extends Component {
   }
 
   onSessionExit ({ uid }) {
+    if (!~this.state.sessions.indexOf(uid)) {
+      console.log('ignore exit of', uid);
+      return;
+    }
+
     const {
       sessions: _sessions,
       titles: _titles,
@@ -317,6 +318,33 @@ export default class HyperTerm extends Component {
   }
 
   componentDidUpdate () {
+    if (this.shouldInitKeys) {
+      if (this.keys) {
+        this.keys.reset();
+      }
+
+      const uid = this.state.sessions[this.state.active];
+      const term = this.refs[`term-${uid}`];
+      const keys = new Mousetrap(term.getTermDocument());
+      keys.bind('command+1', this.moveTo.bind(this, 0));
+      keys.bind('command+2', this.moveTo.bind(this, 1));
+      keys.bind('command+3', this.moveTo.bind(this, 2));
+      keys.bind('command+4', this.moveTo.bind(this, 3));
+      keys.bind('command+5', this.moveTo.bind(this, 4));
+      keys.bind('command+6', this.moveTo.bind(this, 5));
+      keys.bind('command+7', this.moveTo.bind(this, 6));
+      keys.bind('command+8', this.moveTo.bind(this, 7));
+      keys.bind('command+9', this.moveTo.bind(this, 8));
+      keys.bind('command+shift+left', this.moveLeft);
+      keys.bind('command+shift+right', this.moveRight);
+      keys.bind('command+shift+[', this.moveLeft);
+      keys.bind('command+shift+]', this.moveRight);
+      keys.bind('command+alt+left', this.moveLeft);
+      keys.bind('command+alt+right', this.moveRight);
+
+      this.keys = keys;
+    }
+
     this.focusActive();
   }
 
@@ -329,13 +357,15 @@ export default class HyperTerm extends Component {
     }
   }
 
-  onResize () {
-    const dim = this.getDimensions();
+  onResize (dim) {
     if (dim.rows !== this.state.rows || dim.cols !== this.state.cols) {
       this.ignoreActivity = Date.now();
-
       this.rpc.emit('resize', dim);
-      const state = Object.assign({}, dim, { resizeIndicatorShowing: true });
+      const state = Object.assign({}, dim,
+        // if it's the first time we hear about the resize we
+        // don't show the indicator
+        null === this.state.rows ? {} : { resizeIndicatorShowing: true }
+      );
       this.setState(state);
       clearTimeout(this.resizeIndicatorTimeout);
       this.resizeIndicatorTimeout = setTimeout(() => {
@@ -370,24 +400,12 @@ export default class HyperTerm extends Component {
     this.headerMouseDownWindowY = window.screenY;
   }
 
-  getDimensions () {
-    const tm = getTextMetrics('Menlo', '11px', '15px');
-    const hp = this.state.hpadding;
-    const vp = this.state.vpadding;
-    const el = this.refs.termWrapper;
-    const { width, height } = el.getBoundingClientRect();
-    const dim = {
-      cols: Math.floor((width - hp * 2) / tm.width),
-      rows: Math.floor((height - vp * 2) / tm.height)
-    };
-    return dim;
-  }
-
   componentWillUnmount () {
-    window.removeEventListener('resize', this.onResize);
     this.rpc.destroy();
     clearTimeout(this.resizeIndicatorTimeout);
-    Mousetrap.reset();
+    if (this.keys) {
+      this.keys.reset();
+    }
     this.updateChecker.destroy();
   }
 }

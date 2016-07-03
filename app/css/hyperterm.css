@@ -35,17 +35,18 @@ header {
   color: #fff;
 }
 
-.terms div {
-  font-family: Menlo;
-  font-size: 11px;
-}
-
 .term {
   display: none;
 }
 
 .term.active {
   display: block;
+}
+
+.resize-indicator,
+.update-indicator {
+  cursor: default;
+  -webkit-user-select: none;
 }
 
 .resize-indicator {
