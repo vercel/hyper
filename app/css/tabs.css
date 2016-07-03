@@ -9,7 +9,7 @@ nav {
   vertical-align: middle;
   color: #9B9B9B;
   cursor: default;
-  user-select: none;
+  -webkit-user-select: none;
 }
 
 .single {
