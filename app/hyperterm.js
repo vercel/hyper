@@ -12,8 +12,8 @@ export default class HyperTerm extends Component {
   constructor () {
     super();
     this.state = {
-      hpadding: 10,
-      vpadding: 5,
+      hpadding: 12,
+      vpadding: 19,
       sessions: [],
       titles: {},
       urls: {},
