@@ -43,6 +43,12 @@ header {
   display: block;
 }
 
+.resize-indicator,
+.update-indicator {
+  cursor: default;
+  -webkit-user-select: none;
+}
+
 .resize-indicator {
   background: rgba(255, 255, 255, .2);
   padding: 6px 14px;
