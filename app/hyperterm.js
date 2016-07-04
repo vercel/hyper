@@ -410,7 +410,9 @@ export default class HyperTerm extends Component {
         this.clicks = 0;
         this.maximized = !this.maximized;
     } else {
-        this.clickTimer = setTimeout(() => this.clicks = 0, 400);
+        // http://www.quirksmode.org/dom/events/click.html
+        // https://en.wikipedia.org/wiki/Double-click
+        this.clickTimer = setTimeout(() => this.clicks = 0, 500);
     }
   }
 
@@ -420,6 +422,7 @@ export default class HyperTerm extends Component {
     if (this.keys) {
       this.keys.reset();
     }
+    delete this.clicks;
     this.updateChecker.destroy();
   }
 }
