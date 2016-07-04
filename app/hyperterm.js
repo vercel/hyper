@@ -398,6 +398,20 @@ export default class HyperTerm extends Component {
   onHeaderMouseDown () {
     this.headerMouseDownWindowX = window.screenX;
     this.headerMouseDownWindowY = window.screenY;
+
+    this.clicks = this.clicks || 1;
+
+    if (this.clicks++ >= 2) {
+        if (this.maximized) {
+            this.rpc.emit('unmaximize');
+        } else {
+            this.rpc.emit('maximize');
+        }
+        this.clicks = 0;
+        this.maximized = !this.maximized;
+    } else {
+        this.clickTimer = setTimeout(() => this.clicks = 0, 400);
+    }
   }
 
   componentWillUnmount () {

@@ -85,6 +85,14 @@ app.on('ready', () => {
       sessions.get(uid).exit();
     });
 
+    rpc.on('unmaximize', () => {
+        win.unmaximize();
+    });
+
+    rpc.on('maximize', () => {
+        win.maximize();
+    });
+
     rpc.on('resize', ({ cols, rows }) => {
       sessions.forEach((session) => {
         session.resize({ cols, rows });
