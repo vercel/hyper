@@ -45,6 +45,8 @@ export default class HyperTerm extends Component {
 
     this.moveLeft = this.moveLeft.bind(this);
     this.moveRight = this.moveRight.bind(this);
+    this.increaseFontSize = this.increaseFontSize.bind(this);
+    this.decreaseFontSize = this.decreaseFontSize.bind(this);
   }
 
   render () {
@@ -263,6 +265,32 @@ export default class HyperTerm extends Component {
     }
   }
 
+  increaseFontSize () {
+    const uid = this.state.sessions[this.state.active];
+    const term = this.refs[`term-${uid}`];
+    if (term) {
+      try {
+        const size = term.term.prefs_.get('font-size');
+        term.term.prefs_.set('font-size', size + 1);
+      } catch (e) {
+        alert(e);
+      }
+    }
+  }
+
+  decreaseFontSize () {
+    const uid = this.state.sessions[this.state.active];
+    const term = this.refs[`term-${uid}`];
+    if (term) {
+      try {
+        const size = term.term.prefs_.get('font-size');
+        term.term.prefs_.set('font-size', size - 1);
+      } catch (e) {
+        alert(e);
+      }
+    }
+  }
+
   onSessionExit ({ uid }) {
     if (!~this.state.sessions.indexOf(uid)) {
       console.log('ignore exit of', uid);
@@ -341,6 +369,8 @@ export default class HyperTerm extends Component {
       keys.bind('command+shift+]', this.moveRight);
       keys.bind('command+alt+left', this.moveLeft);
       keys.bind('command+alt+right', this.moveRight);
+      keys.bind('command+=', this.increaseFontSize);
+      keys.bind('command+-', this.decreaseFontSize);
 
       this.keys = keys;
     }
