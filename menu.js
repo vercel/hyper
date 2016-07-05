@@ -115,12 +115,6 @@ module.exports = function createMenu ({ createWindow }) {
           type: 'separator'
         },
         {
-          role: 'togglefullscreen'
-        },
-        {
-          type: 'separator'
-        },
-        {
           label: 'Actual Size',
           accelerator: 'CmdOrCtrl+0',
           click (item, focusedWindow) {
@@ -153,7 +147,16 @@ module.exports = function createMenu ({ createWindow }) {
       label: 'Window',
       submenu: [
         {
-          label: 'Select Previous Tab',
+          role: 'minimize'
+        },
+        {
+          role: 'close'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Show Previous Tab',
           accelerator: 'CmdOrCtrl+Left',
           click (item, focusedWindow) {
             if (focusedWindow) {
@@ -162,14 +165,23 @@ module.exports = function createMenu ({ createWindow }) {
           }
         },
         {
-          label: 'Select Next Tab',
+          label: 'Show Next Tab',
           accelerator: 'CmdOrCtrl+Right',
           click (item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('move right');
             }
           }
-        }
+        },
+        {
+          type: 'separator'
+        },
+        {
+          role: 'front'
+        },
+        {
+          role: 'togglefullscreen'
+        },
       ]
     },
     {
