@@ -273,9 +273,9 @@ export default class HyperTerm extends Component {
     }
   }
 
-  changeFontSize (value, increment = false) {
+  changeFontSize (value, { relative = false } = {}) {
     this.setState({
-      fontSize: increment ? this.state.fontSize + value : value,
+      fontSize: relative ? this.state.fontSize + value : value,
       fontSizeIndicatorShowing: true
     });
 
@@ -290,11 +290,11 @@ export default class HyperTerm extends Component {
   }
 
   increaseFontSize () {
-    this.changeFontSize(1, true);
+    this.changeFontSize(1, { relative: true });
   }
 
   decreaseFontSize () {
-    this.changeFontSize(-1, true);
+    this.changeFontSize(-1, { relative: true });
   }
 
   onSessionExit ({ uid }) {
@@ -455,6 +455,7 @@ export default class HyperTerm extends Component {
   componentWillUnmount () {
     this.rpc.destroy();
     clearTimeout(this.resizeIndicatorTimeout);
+    clearTimeout(this.fontSizeIndicatorTimeout);
     if (this.keys) this.keys.reset();
     delete this.clicks;
     clearTimeout(this.clickTimer);
