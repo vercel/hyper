@@ -402,27 +402,26 @@ export default class HyperTerm extends Component {
     this.clicks = this.clicks || 1;
 
     if (this.clicks++ >= 2) {
-        if (this.maximized) {
-            this.rpc.emit('unmaximize');
-        } else {
-            this.rpc.emit('maximize');
-        }
-        this.clicks = 0;
-        this.maximized = !this.maximized;
+      if (this.maximized) {
+        this.rpc.emit('unmaximize');
+      } else {
+        this.rpc.emit('maximize');
+      }
+      this.clicks = 0;
+      this.maximized = !this.maximized;
     } else {
-        // http://www.quirksmode.org/dom/events/click.html
-        // https://en.wikipedia.org/wiki/Double-click
-        this.clickTimer = setTimeout(() => this.clicks = 0, 500);
+      // http://www.quirksmode.org/dom/events/click.html
+      // https://en.wikipedia.org/wiki/Double-click
+      this.clickTimer = setTimeout(() => this.clicks = 0, 500);
     }
   }
 
   componentWillUnmount () {
     this.rpc.destroy();
     clearTimeout(this.resizeIndicatorTimeout);
-    if (this.keys) {
-      this.keys.reset();
-    }
+    if (this.keys) this.keys.reset();
     delete this.clicks;
+    clearTimeout(this.clickTimer);
     this.updateChecker.destroy();
   }
 }
