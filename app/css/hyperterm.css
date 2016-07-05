@@ -80,3 +80,8 @@ header {
   opacity: 1;
   pointer-events: inherit;
 }
+
+.icon {
+  vertical-align: middle;
+  fill: currentColor;
+}

@@ -42,6 +42,7 @@ export default class HyperTerm extends Component {
     this.focusActive = this.focusActive.bind(this);
     this.closeBrowser = this.closeBrowser.bind(this);
     this.onHeaderMouseDown = this.onHeaderMouseDown.bind(this);
+    this.closeTab = this.closeTab.bind(this);
 
     this.moveLeft = this.moveLeft.bind(this);
     this.moveRight = this.moveRight.bind(this);
@@ -62,6 +63,7 @@ export default class HyperTerm extends Component {
               return null != title ? title : 'Shell';
             })}
             onChange={this.onChange}
+            onClose={this.closeTab}
           />
         </header>
 
@@ -109,11 +111,15 @@ export default class HyperTerm extends Component {
     this.rpc.emit('new', { cols: this.state.cols, rows: this.state.rows });
   }
 
-  closeTab () {
+  closeActiveTab () {
+    this.closeTab(this.state.active);
+  }
+
+  closeTab (id) {
     if (this.state.sessions.length) {
-      const uid = this.state.sessions[this.state.active];
+      const uid = this.state.sessions[id];
       this.rpc.emit('exit', { uid });
-      this.onSessionExit(uid);
+      this.onSessionExit({ uid });
     }
   }
 
@@ -222,7 +228,7 @@ export default class HyperTerm extends Component {
     });
 
     this.rpc.on('new tab', this.requestTab.bind(this));
-    this.rpc.on('close tab', this.closeTab.bind(this));
+    this.rpc.on('close tab', this.closeActiveTab.bind(this));
     this.rpc.on('title', this.onRemoteTitle.bind(this));
 
     this.rpc.on('move left', this.moveLeft);

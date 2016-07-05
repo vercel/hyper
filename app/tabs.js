@@ -1,7 +1,8 @@
 import React from 'react';
 import classes from 'classnames';
+import Icon from './icon';
 
-export default function ({ data = [], active, activeMarkers = {}, onChange }) {
+export default function ({ data = [], active, activeMarkers = [], onChange, onClose }) {
   return <nav style={{ WebkitAppRegion: 'drag' }}>{
     data.length
       ? 1 === data.length
@@ -13,9 +14,11 @@ export default function ({ data = [], active, activeMarkers = {}, onChange }) {
                 const hasActivity = ~activeMarkers.indexOf(i);
                 return <li
                   key={`tab-${i}`}
-                  className={classes({ is_active: isActive, has_activity: hasActivity })}
-                  onClick={ onChange ? onClick.bind(null, i, onChange, active) : null }>
-                    <span>{ tab }</span>
+                  className={classes({ is_active: isActive, has_activity: hasActivity })}>
+                    <span onClick={ onChange ? onClick.bind(null, i, onChange, active) : null }>{ tab }</span>
+                    <i onClick={ onClose ? onClose.bind(null, i) : null }>
+                      <Icon name='cross' size='6px' />
+                    </i>
                 </li>;
               })
             }
