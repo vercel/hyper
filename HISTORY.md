@@ -1,4 +1,9 @@
 
+0.3.1 / 2016-07-04
+==================
+
+  * implement most recent hterm with lots of bugfixes [@dbkaplun, @rauchg]
+
 0.3.0 / 2016-07-04
 ==================
 
