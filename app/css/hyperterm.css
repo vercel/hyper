@@ -47,7 +47,7 @@ header {
   background: rgba(255, 255, 255, .2);
   padding: 6px 14px;
   color: #fff;
-  font: 11px Menlo;
+  font: 11px Menlo, 'DejaVu Sans Mono', 'Lucida Console', monospace;
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -63,7 +63,7 @@ header {
   background: rgba(255, 51, 76, .8);
   padding: 6px 14px;
   color: #fff;
-  font: 11px Menlo;
+  font: 11px Menlo, 'DejaVu Sans Mono', 'Lucida Console', monospace;
   position: fixed;
   bottom: 20px;
   right: 20px;
