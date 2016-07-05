@@ -218,7 +218,7 @@ module.exports = function createMenu ({ createWindow }) {
                   dialog.showMessageBox({
                     title: `About ${appName}`,
                     message: `${appName} ${app.getVersion()}`,
-                    detail: 'Created by Sindre Sorhus',
+                    detail: 'Created by Guillermo Rauch',
                     icon: path.join(__dirname, 'static/Icon.png'),
                     buttons: []
                   });
