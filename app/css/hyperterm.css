@@ -44,8 +44,6 @@ header {
 }
 
 .resize-indicator {
-  background: rgba(255, 255, 255, .2);
-  padding: 6px 14px;
   color: #fff;
   font: 11px Menlo;
   position: fixed;
@@ -53,6 +51,13 @@ header {
   right: 20px;
   opacity: 0;
   transition: opacity 150ms ease-in;
+  display: flex;
+}
+
+.resize-indicator > div {
+  background: rgba(255, 255, 255, .2);
+  padding: 6px 14px;
+  margin-left: 10px;
 }
 
 .resize-indicator.showing {

@@ -23,7 +23,8 @@ export default class HyperTerm extends Component {
       mac: /Mac/.test(navigator.userAgent),
       resizeIndicatorShowing: false,
       updateVersion: null,
-      updateNote: null
+      updateNote: null,
+      fontSize: 12
     };
 
     // we set this to true when the first tab
@@ -77,6 +78,7 @@ export default class HyperTerm extends Component {
                   ref={`term-${uid}`}
                   cols={this.state.cols}
                   rows={this.state.rows}
+                  fontSize={this.state.fontSize}
                   url={this.state.urls[uid]}
                   onResize={this.onResize}
                   onTitle={this.setTitle.bind(this, uid)}
@@ -89,7 +91,8 @@ export default class HyperTerm extends Component {
         }</div>
       </div>
       <div className={classes('resize-indicator', { showing: this.state.resizeIndicatorShowing })}>
-        { this.state.cols }x{ this.state.rows }
+        <div>{ this.state.fontSize }px</div>
+        <div>{ this.state.cols }x{ this.state.rows }</div>
       </div>
       <div className={classes('update-indicator', { showing: null !== this.state.updateVersion })}>
         Update available (<b>{ this.state.updateVersion }</b>).
@@ -270,21 +273,12 @@ export default class HyperTerm extends Component {
   }
 
   changeFontSize (value) {
-    const uid = this.state.sessions[this.state.active];
-    const term = this.refs[`term-${uid}`];
-    if (term) {
-      const size = term.term.prefs_.get('font-size');
-      term.term.prefs_.set('font-size', size + value);
-    }
+    this.setState({fontSize: this.state.fontSize + value});
   }
 
   resetFontSize () {
-    const uid = this.state.sessions[this.state.active];
-    const term = this.refs[`term-${uid}`];
-    if (term) {
-      // TODO: once we have preferences, we need to read from it
-      term.term.prefs_.set('font-size', 12);
-    }
+    // TODO: once we have preferences, we need to read from it
+    this.setState({fontSize: 12});
   }
 
   increaseFontSize () {
@@ -373,8 +367,8 @@ export default class HyperTerm extends Component {
       keys.bind('command+shift+]', this.moveRight);
       keys.bind('command+alt+left', this.moveLeft);
       keys.bind('command+alt+right', this.moveRight);
-      keys.bind('command+=', this.increaseFontSize);
-      keys.bind('command+-', this.decreaseFontSize);
+      keys.bind('command+plus', this.increaseFontSize);
+      keys.bind('command+minus', this.decreaseFontSize);
       keys.bind('command+0', this.resetFontSize);
 
       this.keys = keys;
