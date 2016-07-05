@@ -270,33 +270,29 @@ export default class HyperTerm extends Component {
   }
 
   changeFontSize (value) {
-     const uid = this.state.sessions[this.state.active];
-     const term = this.refs[`term-${uid}`];
-     if (term) {
-       try {
-         const size = term.term.prefs_.get('font-size');
-         term.term.prefs_.set('font-size', size + value);
-       } catch (e) {
-         alert(e);
-       }
-     }
+    const uid = this.state.sessions[this.state.active];
+    const term = this.refs[`term-${uid}`];
+    if (term) {
+      const size = term.term.prefs_.get('font-size');
+      term.term.prefs_.set('font-size', size + value);
+    }
   }
 
   resetFontSize () {
-     const uid = this.state.sessions[this.state.active];
-     const term = this.refs[`term-${uid}`];
-     if (term) {
-        //TODO: once we have preferences, we need to read from it
-        term.term.prefs_.set('font-size', 12);
-     }
+    const uid = this.state.sessions[this.state.active];
+    const term = this.refs[`term-${uid}`];
+    if (term) {
+      // TODO: once we have preferences, we need to read from it
+      term.term.prefs_.set('font-size', 12);
+    }
   }
 
   increaseFontSize () {
-     this.changeFontSize(1);
+    this.changeFontSize(1);
   }
 
   decreaseFontSize () {
-     this.changeFontSize(-1);
+    this.changeFontSize(-1);
   }
 
   onSessionExit ({ uid }) {
@@ -451,7 +447,9 @@ export default class HyperTerm extends Component {
     } else {
       // http://www.quirksmode.org/dom/events/click.html
       // https://en.wikipedia.org/wiki/Double-click
-      this.clickTimer = setTimeout(() => this.clicks = 0, 500);
+      this.clickTimer = setTimeout(() => {
+        this.clicks = 0;
+      }, 500);
     }
   }
 
