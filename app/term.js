@@ -46,7 +46,7 @@ hterm.Keyboard.prototype.onKeyPress_ = function (e) {
 };
 
 const domainRegex = /\b((?=[a-z0-9-]{1,63}\.)(xn--)?[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,63}\b/;
-const bashRegex = /bash: ((https?:\/\/)|(\/\/))?(.*): ((command not found)|(No such file or directory))/;
+const bashRegex = /(ba)?sh: ((https?:\/\/)|(\/\/))?(.*): ((command not found)|(No such file or directory))/;
 const zshRegex = /zsh: ((command not found)|(no such file or directory)): ((https?:\/\/)|(\/\/))?([^\n]+)/;
 
 export default class Term extends Component {
@@ -116,7 +116,7 @@ export default class Term extends Component {
     let url;
 
     if (match) {
-      url = match[4];
+      url = match[5];
     } else {
       match = data.match(zshRegex);
       if (match) {
