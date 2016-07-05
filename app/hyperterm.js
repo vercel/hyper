@@ -45,6 +45,9 @@ export default class HyperTerm extends Component {
 
     this.moveLeft = this.moveLeft.bind(this);
     this.moveRight = this.moveRight.bind(this);
+    this.resetFontSize = this.resetFontSize.bind(this);
+    this.increaseFontSize = this.increaseFontSize.bind(this);
+    this.decreaseFontSize = this.decreaseFontSize.bind(this);
   }
 
   render () {
@@ -224,6 +227,9 @@ export default class HyperTerm extends Component {
 
     this.rpc.on('move left', this.moveLeft);
     this.rpc.on('move right', this.moveRight);
+    this.rpc.on('increase font size', this.increaseFontSize);
+    this.rpc.on('decrease font size', this.decreaseFontSize);
+    this.rpc.on('reset font size', this.resetFontSize);
   }
 
   clearCurrentTerm () {
@@ -261,6 +267,36 @@ export default class HyperTerm extends Component {
       // go to the beginning
       this.setActive(0);
     }
+  }
+
+  changeFontSize (value) {
+     const uid = this.state.sessions[this.state.active];
+     const term = this.refs[`term-${uid}`];
+     if (term) {
+       try {
+         const size = term.term.prefs_.get('font-size');
+         term.term.prefs_.set('font-size', size + value);
+       } catch (e) {
+         alert(e);
+       }
+     }
+  }
+
+  resetFontSize () {
+     const uid = this.state.sessions[this.state.active];
+     const term = this.refs[`term-${uid}`];
+     if (term) {
+        //TODO: once we have preferences, we need to read from it
+        term.term.prefs_.set('font-size', 12);
+     }
+  }
+
+  increaseFontSize () {
+     this.changeFontSize(1);
+  }
+
+  decreaseFontSize () {
+     this.changeFontSize(-1);
   }
 
   onSessionExit ({ uid }) {
@@ -341,6 +377,9 @@ export default class HyperTerm extends Component {
       keys.bind('command+shift+]', this.moveRight);
       keys.bind('command+alt+left', this.moveLeft);
       keys.bind('command+alt+right', this.moveRight);
+      keys.bind('command+=', this.increaseFontSize);
+      keys.bind('command+-', this.decreaseFontSize);
+      keys.bind('command+0', this.resetFontSize);
 
       this.keys = keys;
     }

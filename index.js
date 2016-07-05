@@ -230,6 +230,33 @@ app.on('ready', () => {
         },
         {
           role: 'togglefullscreen'
+        },
+        {
+           label: 'Actual Size',
+           accelerator: 'CmdOrCtrl+0',
+           click (item, focusedWindow) {
+              if (focusedWindow) {
+                 focusedWindow.rpc.emit('reset font size');
+              }
+           }
+        },
+        {
+           label: 'Zoom In',
+           accelerator: 'CmdOrCtrl+plus',
+           click (item, focusedWindow) {
+              if (focusedWindow) {
+                 focusedWindow.rpc.emit('increase font size');
+              }
+           }
+        },
+        {
+           label: 'Zoom Out',
+           accelerator: 'CmdOrCtrl+-',
+           click (item, focusedWindow) {
+              if (focusedWindow) {
+                 focusedWindow.rpc.emit('decrease font size');
+              }
+           }
         }
       ]
     },
