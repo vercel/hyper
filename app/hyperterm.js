@@ -398,6 +398,22 @@ export default class HyperTerm extends Component {
   onHeaderMouseDown () {
     this.headerMouseDownWindowX = window.screenX;
     this.headerMouseDownWindowY = window.screenY;
+
+    this.clicks = this.clicks || 1;
+
+    if (this.clicks++ >= 2) {
+        if (this.maximized) {
+            this.rpc.emit('unmaximize');
+        } else {
+            this.rpc.emit('maximize');
+        }
+        this.clicks = 0;
+        this.maximized = !this.maximized;
+    } else {
+        // http://www.quirksmode.org/dom/events/click.html
+        // https://en.wikipedia.org/wiki/Double-click
+        this.clickTimer = setTimeout(() => this.clicks = 0, 500);
+    }
   }
 
   componentWillUnmount () {
@@ -406,6 +422,7 @@ export default class HyperTerm extends Component {
     if (this.keys) {
       this.keys.reset();
     }
+    delete this.clicks;
     this.updateChecker.destroy();
   }
 }
