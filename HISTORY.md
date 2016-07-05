@@ -1,4 +1,16 @@
 
+0.3.0 / 2016-07-04
+==================
+
+  * revamp the menu to be a lot more standard (#38) [@rauchg]
+  * move menu into its own file and refactor [@rauchg]
+  * add static icon, move icons to static folder [@rauchg]
+  * add cross-platform font family settings (#26) [@OlliV, @rauchg]
+  * remove `xterm.css` (no longer used, smaller build!) [@rauchg]
+  * change font size with command shortcuts (#34) [@jhaynie]
+  * implement a more reasonable update interval check frequency (#33) [@rauchg]
+  * add standard behavior when you double click window (#32) [@jhaynie]
+
 0.2.1 / 2016-07-03
 ==================
 
