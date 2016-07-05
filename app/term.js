@@ -48,6 +48,7 @@ hterm.Keyboard.prototype.onKeyPress_ = function (e) {
 const domainRegex = /\b((?=[a-z0-9-]{1,63}\.)(xn--)?[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,63}\b/;
 const bashRegex = /(ba)?sh: ((https?:\/\/)|(\/\/))?(.*): ((command not found)|(No such file or directory))/;
 const zshRegex = /zsh: ((command not found)|(no such file or directory)): ((https?:\/\/)|(\/\/))?([^\n]+)/;
+const fishRegex = /fish: Unknown command '((https?:\/\/)|(\/\/))?([^']+)'/;
 
 export default class Term extends Component {
 
@@ -121,6 +122,11 @@ export default class Term extends Component {
       match = data.match(zshRegex);
       if (match) {
         url = match[7];
+      } else {
+        match = data.match(fishRegex);
+        if (match){
+          url = match[4];
+        }
       }
     }
 
