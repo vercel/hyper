@@ -181,7 +181,7 @@ module.exports = function createMenu ({ createWindow }) {
         },
         {
           role: 'togglefullscreen'
-        },
+        }
       ]
     },
     {
@@ -230,4 +230,4 @@ module.exports = function createMenu ({ createWindow }) {
       ]
     }
   ];
-}
+};
