@@ -58,7 +58,7 @@ export default class Term extends Component {
       this.term.realizeSize_(this.props.cols, this.props.rows);
     }
 
-    this.term.prefs_.set('font-family', 'Menlo');
+    this.term.prefs_.set('font-family', "Menlo, 'DejaVu Sans Mono', 'Lucida Console', monospace");
     this.term.prefs_.set('font-size', 11);
     this.term.prefs_.set('cursor-color', '#F81CE5');
     this.term.prefs_.set('enable-clipboard-notice', false);
