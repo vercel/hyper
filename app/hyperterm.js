@@ -367,9 +367,6 @@ export default class HyperTerm extends Component {
       keys.bind('command+shift+]', this.moveRight);
       keys.bind('command+alt+left', this.moveLeft);
       keys.bind('command+alt+right', this.moveRight);
-      keys.bind('command+plus', this.increaseFontSize);
-      keys.bind('command+minus', this.decreaseFontSize);
-      keys.bind('command+0', this.resetFontSize);
 
       this.keys = keys;
     }
