@@ -22,6 +22,7 @@ export default class HyperTerm extends Component {
       activeMarkers: [],
       mac: /Mac/.test(navigator.userAgent),
       resizeIndicatorShowing: false,
+      fontSizeIndicatorShowing: false,
       updateVersion: null,
       updateNote: null,
       fontSize: 12
@@ -91,7 +92,7 @@ export default class HyperTerm extends Component {
         }</div>
       </div>
       <div className={classes('resize-indicator', { showing: this.state.resizeIndicatorShowing })}>
-        <div>{ this.state.fontSize }px</div>
+        {this.state.fontSizeIndicatorShowing && <div>{ this.state.fontSize }px</div>}
         <div>{ this.state.cols }x{ this.state.rows }</div>
       </div>
       <div className={classes('update-indicator', { showing: null !== this.state.updateVersion })}>
@@ -272,21 +273,28 @@ export default class HyperTerm extends Component {
     }
   }
 
-  changeFontSize (value) {
-    this.setState({ fontSize: this.state.fontSize + value });
+  changeFontSize (value, increment = false) {
+    this.setState({
+      fontSize: increment ? this.state.fontSize + value : value,
+      fontSizeIndicatorShowing: true
+    });
+
+    clearTimeout(this.fontSizeIndicatorTimeout);
+    this.fontSizeIndicatorTimeout = setTimeout(() => {
+      this.setState({ fontSizeIndicatorShowing: false });
+    }, 1500);
   }
 
   resetFontSize () {
-    // TODO: once we have preferences, we need to read from it
-    this.setState({ fontSize: 12 });
+    this.changeFontSize(12);
   }
 
   increaseFontSize () {
-    this.changeFontSize(1);
+    this.changeFontSize(1, true);
   }
 
   decreaseFontSize () {
-    this.changeFontSize(-1);
+    this.changeFontSize(-1, true);
   }
 
   onSessionExit ({ uid }) {
