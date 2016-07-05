@@ -86,11 +86,11 @@ app.on('ready', () => {
     });
 
     rpc.on('unmaximize', () => {
-        win.unmaximize();
+      win.unmaximize();
     });
 
     rpc.on('maximize', () => {
-        win.maximize();
+      win.maximize();
     });
 
     rpc.on('resize', ({ cols, rows }) => {
@@ -232,31 +232,34 @@ app.on('ready', () => {
           role: 'togglefullscreen'
         },
         {
-           label: 'Actual Size',
-           accelerator: 'CmdOrCtrl+0',
-           click (item, focusedWindow) {
-              if (focusedWindow) {
-                 focusedWindow.rpc.emit('reset font size');
-              }
-           }
+          type: 'separator'
         },
         {
-           label: 'Zoom In',
-           accelerator: 'CmdOrCtrl+plus',
-           click (item, focusedWindow) {
-              if (focusedWindow) {
-                 focusedWindow.rpc.emit('increase font size');
-              }
-           }
+          label: 'Actual Size',
+          accelerator: 'CmdOrCtrl+0',
+          click (item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.rpc.emit('reset font size');
+            }
+          }
         },
         {
-           label: 'Zoom Out',
-           accelerator: 'CmdOrCtrl+-',
-           click (item, focusedWindow) {
-              if (focusedWindow) {
-                 focusedWindow.rpc.emit('decrease font size');
-              }
-           }
+          label: 'Zoom In',
+          accelerator: 'CmdOrCtrl+plus',
+          click (item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.rpc.emit('increase font size');
+            }
+          }
+        },
+        {
+          label: 'Zoom Out',
+          accelerator: 'CmdOrCtrl+-',
+          click (item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.rpc.emit('decrease font size');
+            }
+          }
         }
       ]
     },
