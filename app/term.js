@@ -46,6 +46,8 @@ hterm.Keyboard.prototype.onKeyPress_ = function (e) {
 };
 
 const domainRegex = /\b((?=[a-z0-9-]{1,63}\.)(xn--)?[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,63}\b/;
+const bashRegex = /bash: ((https?:\/\/)|(\/\/))?(.*): ((command not found)|(No such file or directory))/;
+const zshRegex = /zsh: ((command not found)|(no such file or directory)): ((https?:\/\/)|(\/\/))?([^\n]+)/;
 
 export default class Term extends Component {
 
@@ -110,9 +112,19 @@ export default class Term extends Component {
   }
 
   write (data) {
-    const match = data.match(/bash: ((https?:\/\/)|(\/\/))?(.*): ((command not found)|(No such file or directory))/);
+    let match = data.match(bashRegex);
+    let url;
+
     if (match) {
-      const url = match[4];
+      url = match[4];
+    } else {
+      match = data.match(zshRegex);
+      if (match) {
+        url = match[7];
+      }
+    }
+
+    if (url) {
       // extract the domain portion from the url
       const domain = url.split('/')[0];
       if (domainRegex.test(domain)) {
@@ -120,6 +132,7 @@ export default class Term extends Component {
         return;
       }
     }
+
     this.term.io.print(data);
   }
 
