@@ -273,12 +273,12 @@ export default class HyperTerm extends Component {
   }
 
   changeFontSize (value) {
-    this.setState({fontSize: this.state.fontSize + value});
+    this.setState({ fontSize: this.state.fontSize + value });
   }
 
   resetFontSize () {
     // TODO: once we have preferences, we need to read from it
-    this.setState({fontSize: 12});
+    this.setState({ fontSize: 12 });
   }
 
   increaseFontSize () {
