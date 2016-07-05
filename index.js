@@ -1,5 +1,6 @@
 const { app, BrowserWindow, shell, Menu } = require('electron');
 const createRPC = require('./rpc');
+const createMenu = require('./menu');
 const Session = require('./session');
 const genUid = require('uid2');
 const { resolve } = require('path');
@@ -147,146 +148,8 @@ app.on('ready', () => {
   });
 
   // set menu
-  Menu.setApplicationMenu(Menu.buildFromTemplate([
-    {
-      label: 'Application',
-      submenu: [
-        {
-          role: 'quit'
-        }
-      ]
-    },
-    {
-      label: 'Shell',
-      submenu: [
-        {
-          label: 'New Window',
-          accelerator: 'CmdOrCtrl+N',
-          click (item, focusedWindow) {
-            createWindow();
-          }
-        },
-        {
-          label: 'New Tab',
-          accelerator: 'CmdOrCtrl+T',
-          click (item, focusedWindow) {
-            if (focusedWindow) {
-              focusedWindow.rpc.emit('new tab');
-            } else {
-              createWindow();
-            }
-          }
-        },
-        {
-          label: 'Close',
-          accelerator: 'CmdOrCtrl+W',
-          click (item, focusedWindow) {
-            if (focusedWindow) {
-              focusedWindow.rpc.emit('close tab');
-            }
-          }
-        }
-      ]
-    },
-    {
-      label: 'Edit',
-      submenu: [
-        { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
-        { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
-        { label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' },
-        { type: 'separator' },
-        {
-          label: 'Clear',
-          accelerator: 'CmdOrCtrl+K',
-          click (item, focusedWindow) {
-            if (focusedWindow) {
-              focusedWindow.rpc.emit('clear');
-            }
-          }
-        }
-      ]
-    },
-    {
-      label: 'View',
-      submenu: [
-        {
-          label: 'Reload',
-          accelerator: 'CmdOrCtrl+R',
-          click (item, focusedWindow) {
-            if (focusedWindow) focusedWindow.reload();
-          }
-        },
-        {
-          label: 'Toggle Developer Tools',
-          accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
-          click (item, focusedWindow) {
-            if (focusedWindow) {
-              focusedWindow.webContents.toggleDevTools();
-            }
-          }
-        },
-        {
-          type: 'separator'
-        },
-        {
-          role: 'togglefullscreen'
-        },
-        {
-          type: 'separator'
-        },
-        {
-          label: 'Actual Size',
-          accelerator: 'CmdOrCtrl+0',
-          click (item, focusedWindow) {
-            if (focusedWindow) {
-              focusedWindow.rpc.emit('reset font size');
-            }
-          }
-        },
-        {
-          label: 'Zoom In',
-          accelerator: 'CmdOrCtrl+plus',
-          click (item, focusedWindow) {
-            if (focusedWindow) {
-              focusedWindow.rpc.emit('increase font size');
-            }
-          }
-        },
-        {
-          label: 'Zoom Out',
-          accelerator: 'CmdOrCtrl+-',
-          click (item, focusedWindow) {
-            if (focusedWindow) {
-              focusedWindow.rpc.emit('decrease font size');
-            }
-          }
-        }
-      ]
-    },
-    {
-      label: 'Window',
-      submenu: [
-        {
-          label: 'Select Previous Tab',
-          accelerator: 'CmdOrCtrl+Left',
-          click (item, focusedWindow) {
-            if (focusedWindow) {
-              focusedWindow.rpc.emit('move left');
-            }
-          }
-        },
-        {
-          label: 'Select Next Tab',
-          accelerator: 'CmdOrCtrl+Right',
-          click (item, focusedWindow) {
-            if (focusedWindow) {
-              focusedWindow.rpc.emit('move right');
-            }
-          }
-        }
-      ]
-    }
-  ]));
+  const tpl = createMenu({ createWindow });
+  Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
 });
 
 function initSession (opts, fn) {
