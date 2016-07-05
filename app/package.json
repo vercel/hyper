@@ -4,7 +4,7 @@
   "description": "",
   "dependencies": {
     "classnames": "2.2.5",
-    "hterm-umd": "1.0.1",
+    "hterm-umdjs": "1.1.2",
     "json-loader": "0.5.4",
     "mousetrap": "1.6.0",
     "ms": "0.7.1",

@@ -1,6 +1,6 @@
 /*global URL:false,Blob:false*/
 import React, { Component } from 'react';
-import { hterm, lib as htermLib } from 'hterm-umd';
+import { hterm, lib as htermLib } from 'hterm-umdjs';
 
 hterm.defaultStorage = new htermLib.Storage.Memory();
 
