@@ -1,10 +1,13 @@
 /*global fetch:false*/
 import { version as currentVersion } from '../package';
 import compare from 'semver-compare';
+import ms from 'ms';
+
+const DEFAULT_INTERVAL = ms('5m');
 
 export default class UpdateChecker {
 
-  constructor (fn, { interval = 5000 } = {}) {
+  constructor (fn, { interval = DEFAULT_INTERVAL } = {}) {
     this.callback = fn;
     this.interval = interval;
     this.check();
