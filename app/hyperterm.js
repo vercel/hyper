@@ -41,6 +41,7 @@ export default class HyperTerm extends Component {
     this.onResize = this.onResize.bind(this);
     this.onChange = this.onChange.bind(this);
     this.openExternal = this.openExternal.bind(this);
+    this.quitAndInstall = this.quitAndInstall.bind(this);
     this.focusActive = this.focusActive.bind(this);
     this.closeBrowser = this.closeBrowser.bind(this);
     this.onHeaderMouseDown = this.onHeaderMouseDown.bind(this);
@@ -98,11 +99,21 @@ export default class HyperTerm extends Component {
         <div>{ this.state.cols }x{ this.state.rows }</div>
       </div>
       <div className={classes('update-indicator', { showing: null !== this.state.updateVersion })}>
-        Update available (<b>{ this.state.updateVersion }</b>).
+        Version <b>{ this.state.updateVersion }</b> ready.
         {this.state.updateNote ? ` ${this.state.updateNote}. ` : ' '}
-        <a href='https://hyperterm.now.sh' onClick={this.openExternal} target='_blank'>Download</a>
+        <a href='' onClick={this.quitAndInstall}>Restart</a>
+        to apply <span className='close' onClick={this.quitAndInstall}>[x]</span>
       </div>
     </div>;
+  }
+
+  quitAndInstall (ev) {
+    ev.preventDefault();
+    this.rpc.emit('quit-and-install');
+  }
+
+  closeUpdateIndicator () {
+    // @TODO
   }
 
   openExternal (ev) {
@@ -240,6 +251,13 @@ export default class HyperTerm extends Component {
     this.rpc.on('increase font size', this.increaseFontSize);
     this.rpc.on('decrease font size', this.decreaseFontSize);
     this.rpc.on('reset font size', this.resetFontSize);
+
+    this.rpc.once('update-available', (data) => {
+      // hardcoded data for now
+      const updateVersion = '3.0.1';
+      const updateNote = '';
+      this.setState({ updateVersion, updateNote });
+    });
   }
 
   clearCurrentTerm () {
@@ -249,8 +267,8 @@ export default class HyperTerm extends Component {
   }
 
   onUpdateAvailable (updateVersion, updateNote = '') {
-    updateNote = updateNote.replace(/\.$/, '');
-    this.setState({ updateVersion, updateNote });
+    // updateNote = updateNote.replace(/\.$/, '');
+    // this.setState({ updateVersion, updateNote });
   }
 
   moveTo (n) {

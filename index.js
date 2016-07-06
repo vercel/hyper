@@ -5,6 +5,7 @@ const Session = require('./session');
 const genUid = require('uid2');
 const { resolve } = require('path');
 const isDev = require('electron-is-dev');
+const AutoUpdater = require('./auto-updater');
 
 if (isDev) {
   console.log('running in dev mode');
@@ -58,6 +59,8 @@ app.on('ready', () => {
       initSession({ rows, cols }, (uid, session) => {
         sessions.set(uid, session);
         rpc.emit('new session', { uid });
+
+        AutoUpdater(rpc);
 
         session.on('data', (data) => {
           rpc.emit('data', { uid, data });
