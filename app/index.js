@@ -1,14 +1,14 @@
 import { render } from 'react-dom';
 import HyperTerm from './hyperterm';
 import React from 'react';
-import JsonConfig from './json-config';
+import Store from './store';
 
 require('./css/hyperterm.css');
 require('./css/tabs.css');
 
 render(
-  <JsonConfig path='~/.hyperterm.json' defaults={{ fontSize: 12 }}>
+  <Store path='~/.hyperterm.json'>
     <HyperTerm />
-  </JsonConfig>,
+  </Store>,
   document.getElementById('mount')
 );

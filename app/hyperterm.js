@@ -78,7 +78,7 @@ export default class HyperTerm extends Component {
                   ref={`term-${uid}`}
                   cols={this.state.cols}
                   rows={this.state.rows}
-                  fontSize={this.props.config.fontSize}
+                  fontSize={this.props.store.config.fontSize}
                   url={this.state.urls[uid]}
                   onResize={this.onResize}
                   onTitle={this.setTitle.bind(this, uid)}
@@ -91,7 +91,7 @@ export default class HyperTerm extends Component {
         }</div>
       </div>
       <div className={classes('resize-indicator', { showing: this.state.resizeIndicatorShowing })}>
-        {this.state.fontSizeIndicatorShowing && <div>{ this.props.config.fontSize }px</div>}
+        {this.state.fontSizeIndicatorShowing && <div>{ this.props.store.config.fontSize }px</div>}
         <div>{ this.state.cols }x{ this.state.rows }</div>
       </div>
       <div className={classes('update-indicator', { showing: null !== this.state.updateVersion })}>
@@ -273,8 +273,10 @@ export default class HyperTerm extends Component {
   }
 
   changeFontSize (value, { relative = false } = {}) {
-    const fontSize = relative ? this.props.config.fontSize + value : value;
-    this.props.setConfig({ fontSize });
+    const store = this.props.store;
+    const fontSize = relative ? store.config.fontSize + value : value;
+
+    this.props.saveToStore('config.fontSize', fontSize);
     this.setState({ fontSizeIndicatorShowing: true });
 
     clearTimeout(this.fontSizeIndicatorTimeout);
@@ -284,7 +286,7 @@ export default class HyperTerm extends Component {
   }
 
   resetFontSize () {
-    this.changeFontSize(12);
+    this.changeFontSize(undefined);
   }
 
   increaseFontSize () {
