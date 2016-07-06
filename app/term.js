@@ -1,7 +1,7 @@
 /*global URL:false,Blob:false*/
 import React, { Component } from 'react';
 import { hterm, lib as htermLib } from 'hterm-umdjs';
-import colors from './colors'
+import colors from './colors';
 
 hterm.defaultStorage = new htermLib.Storage.Memory();
 
@@ -66,7 +66,7 @@ export default class Term extends Component {
     this.term.prefs_.set('cursor-color', '#F81CE5');
     this.term.prefs_.set('enable-clipboard-notice', false);
     this.term.prefs_.set('background-color', '#000');
-    this.term.prefs_.set('color-palette-overrides', colors)
+    this.term.prefs_.set('color-palette-overrides', colors);
     this.term.prefs_.set('user-css', URL.createObjectURL(new Blob([`
       .cursor-node[focus="false"] {
         border-width: 1px !important;
@@ -130,7 +130,7 @@ export default class Term extends Component {
         url = match[7];
       } else {
         match = data.match(fishRegex);
-        if (match){
+        if (match) {
           url = match[4];
         }
       }

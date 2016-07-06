@@ -7,4 +7,4 @@ export default [
   '#a468f7', // magenta
   '#f19c37', // cyan
   null
-]
+];
