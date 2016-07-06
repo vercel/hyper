@@ -66,6 +66,24 @@ export default class Term extends Component {
     this.term.prefs_.set('cursor-color', '#F81CE5');
     this.term.prefs_.set('enable-clipboard-notice', false);
     this.term.prefs_.set('background-color', '#000');
+    this.term.prefs_.set('color-palette-overrides', {
+      '0': '#000000',
+      '1': '#ff0000',
+      '2': '#33ff00',
+      '3': '#ffff00',
+      '4': '#0066ff',
+      '5': '#cc00ff',
+      '6': '#00ffff',
+      '7': '#d0d0d0',
+      '8': '#808080',
+      '9': '#ff0000',
+      '10': '#33ff00',
+      '11': '#ffff00',
+      '12': '#0066ff',
+      '13': '#cc00ff',
+      '14': '#00ffff',
+      '15': '#ffffff'
+    });
 
     this.term.prefs_.set('user-css', URL.createObjectURL(new Blob([`
       .cursor-node[focus="false"] {
