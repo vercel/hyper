@@ -24,8 +24,7 @@ export default class HyperTerm extends Component {
       resizeIndicatorShowing: false,
       fontSizeIndicatorShowing: false,
       updateVersion: null,
-      updateNote: null,
-      fontSize: 12
+      updateNote: null
     };
 
     // we set this to true when the first tab
@@ -79,7 +78,7 @@ export default class HyperTerm extends Component {
                   ref={`term-${uid}`}
                   cols={this.state.cols}
                   rows={this.state.rows}
-                  fontSize={this.state.fontSize}
+                  fontSize={this.props.config.fontSize}
                   url={this.state.urls[uid]}
                   onResize={this.onResize}
                   onTitle={this.setTitle.bind(this, uid)}
@@ -92,7 +91,7 @@ export default class HyperTerm extends Component {
         }</div>
       </div>
       <div className={classes('resize-indicator', { showing: this.state.resizeIndicatorShowing })}>
-        {this.state.fontSizeIndicatorShowing && <div>{ this.state.fontSize }px</div>}
+        {this.state.fontSizeIndicatorShowing && <div>{ this.props.config.fontSize }px</div>}
         <div>{ this.state.cols }x{ this.state.rows }</div>
       </div>
       <div className={classes('update-indicator', { showing: null !== this.state.updateVersion })}>
@@ -274,10 +273,10 @@ export default class HyperTerm extends Component {
   }
 
   changeFontSize (value, { relative = false } = {}) {
-    this.setState({
-      fontSize: relative ? this.state.fontSize + value : value,
-      fontSizeIndicatorShowing: true
+    this.props.setConfig({
+      fontSize: relative ? this.props.config.fontSize + value : value
     });
+    this.setState({ fontSizeIndicatorShowing: true });
 
     clearTimeout(this.fontSizeIndicatorTimeout);
     this.fontSizeIndicatorTimeout = setTimeout(() => {
