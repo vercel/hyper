@@ -65,7 +65,7 @@ header {
 }
 
 .update-indicator {
-  background: rgba(255, 51, 76, .8);
+  background: #7ED321;
   padding: 6px 14px;
   color: #fff;
   font: 11px Menlo;
@@ -79,6 +79,11 @@ header {
 
 .update-indicator a {
   color: #fff;
+}
+
+.update-indicator .close {
+  color: #528D11;
+  cursor: pointer;
 }
 
 .update-indicator.showing {
