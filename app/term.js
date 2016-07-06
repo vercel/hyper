@@ -62,7 +62,7 @@ export default class Term extends Component {
     }
 
     this.term.prefs_.set('font-family', "Menlo, 'DejaVu Sans Mono', 'Lucida Console', monospace");
-    this.term.prefs_.set('font-size', 11);
+    this.term.prefs_.set('font-size', this.props.fontSize);
     this.term.prefs_.set('cursor-color', '#F81CE5');
     this.term.prefs_.set('enable-clipboard-notice', false);
     this.term.prefs_.set('background-color', '#000');
@@ -88,6 +88,12 @@ export default class Term extends Component {
 
   getTermDocument () {
     return this.term.document_;
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.props.fontSize !== nextProps.fontSize) {
+      this.term.prefs_.set('font-size', nextProps.fontSize);
+    }
   }
 
   shouldComponentUpdate (nextProps) {
