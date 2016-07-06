@@ -84,4 +84,6 @@ header {
 .icon {
   vertical-align: middle;
   fill: currentColor;
+  width: 1em;
+  height: 1em;
 }

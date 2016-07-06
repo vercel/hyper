@@ -79,7 +79,7 @@ nav {
   transition: opacity .2s ease,
               color .2s ease,
               transform .25s ease,
-              background-color .15s ease;
+              background-color .1s ease;
   pointer-events: none;
   position: absolute;
   right: 7px;
@@ -113,4 +113,6 @@ nav {
   position: absolute;
   left: 4px;
   top: 4px;
+  width: 6px;
+  height: 6px;
 }

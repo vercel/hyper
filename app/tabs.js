@@ -1,6 +1,5 @@
 import React from 'react';
 import classes from 'classnames';
-import Icon from './icon';
 
 export default function ({ data = [], active, activeMarkers = [], onChange, onClose }) {
   return <nav style={{ WebkitAppRegion: 'drag' }}>{
@@ -17,7 +16,9 @@ export default function ({ data = [], active, activeMarkers = [], onChange, onCl
                   className={classes({ is_active: isActive, has_activity: hasActivity })}>
                     <span onClick={ onChange ? onClick.bind(null, i, onChange, active) : null }>{ tab }</span>
                     <i onClick={ onClose ? onClose.bind(null, i) : null }>
-                      <Icon name='cross' size='6px' />
+                      <svg className='icon'>
+                        <use xlinkHref='assets/icons.svg#close'></use>
+                      </svg>
                     </i>
                 </li>;
               })
