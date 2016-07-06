@@ -273,7 +273,8 @@ export default class HyperTerm extends Component {
   }
 
   changeFontSize (value, { relative = false } = {}) {
-    this.props.setConfig({ fontSize: relative ? this.props.config.fontSize + value : value });
+    const fontSize = relative ? this.props.config.fontSize + value : value;
+    this.props.setConfig({ fontSize });
     this.setState({ fontSizeIndicatorShowing: true });
 
     clearTimeout(this.fontSizeIndicatorTimeout);
