@@ -29,8 +29,8 @@ export default class JsonConfig extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.props.path !== nextProps.path) {
-      this.read(nextProps.path);
+    if (this.props.path !== nextProps.path || this.props.defaults !== nextProps.defaults) {
+      this.read(nextProps.path, nextProps.defaults);
     }
   }
 
@@ -42,10 +42,10 @@ export default class JsonConfig extends React.Component {
     });
   }
 
-  read (path = this.props.path) {
+  read (path = this.props.path, defaults = this.props.defaults) {
     const absolutePath = expandPath(path);
     const config = JSON.parse(fs.readFileSync(absolutePath));
-    const configWithDefaults = Object.assign({}, this.props.defaults, config);
+    const configWithDefaults = Object.assign({}, defaults, config);
     this.setState({ config: configWithDefaults });
   }
 
