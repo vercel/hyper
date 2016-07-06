@@ -22,8 +22,10 @@ export default class HyperTerm extends Component {
       activeMarkers: [],
       mac: /Mac/.test(navigator.userAgent),
       resizeIndicatorShowing: false,
+      fontSizeIndicatorShowing: false,
       updateVersion: null,
-      updateNote: null
+      updateNote: null,
+      fontSize: 12
     };
 
     // we set this to true when the first tab
@@ -77,6 +79,7 @@ export default class HyperTerm extends Component {
                   ref={`term-${uid}`}
                   cols={this.state.cols}
                   rows={this.state.rows}
+                  fontSize={this.state.fontSize}
                   url={this.state.urls[uid]}
                   onResize={this.onResize}
                   onTitle={this.setTitle.bind(this, uid)}
@@ -89,7 +92,8 @@ export default class HyperTerm extends Component {
         }</div>
       </div>
       <div className={classes('resize-indicator', { showing: this.state.resizeIndicatorShowing })}>
-        { this.state.cols }x{ this.state.rows }
+        {this.state.fontSizeIndicatorShowing && <div>{ this.state.fontSize }px</div>}
+        <div>{ this.state.cols }x{ this.state.rows }</div>
       </div>
       <div className={classes('update-indicator', { showing: null !== this.state.updateVersion })}>
         Update available (<b>{ this.state.updateVersion }</b>).
@@ -269,30 +273,28 @@ export default class HyperTerm extends Component {
     }
   }
 
-  changeFontSize (value) {
-    const uid = this.state.sessions[this.state.active];
-    const term = this.refs[`term-${uid}`];
-    if (term) {
-      const size = term.term.prefs_.get('font-size');
-      term.term.prefs_.set('font-size', size + value);
-    }
+  changeFontSize (value, { relative = false } = {}) {
+    this.setState({
+      fontSize: relative ? this.state.fontSize + value : value,
+      fontSizeIndicatorShowing: true
+    });
+
+    clearTimeout(this.fontSizeIndicatorTimeout);
+    this.fontSizeIndicatorTimeout = setTimeout(() => {
+      this.setState({ fontSizeIndicatorShowing: false });
+    }, 1500);
   }
 
   resetFontSize () {
-    const uid = this.state.sessions[this.state.active];
-    const term = this.refs[`term-${uid}`];
-    if (term) {
-      // TODO: once we have preferences, we need to read from it
-      term.term.prefs_.set('font-size', 12);
-    }
+    this.changeFontSize(12);
   }
 
   increaseFontSize () {
-    this.changeFontSize(1);
+    this.changeFontSize(1, { relative: true });
   }
 
   decreaseFontSize () {
-    this.changeFontSize(-1);
+    this.changeFontSize(-1, { relative: true });
   }
 
   onSessionExit ({ uid }) {
@@ -373,9 +375,6 @@ export default class HyperTerm extends Component {
       keys.bind('command+shift+]', this.moveRight);
       keys.bind('command+alt+left', this.moveLeft);
       keys.bind('command+alt+right', this.moveRight);
-      keys.bind('command+=', this.increaseFontSize);
-      keys.bind('command+-', this.decreaseFontSize);
-      keys.bind('command+0', this.resetFontSize);
 
       this.keys = keys;
     }
@@ -456,6 +455,7 @@ export default class HyperTerm extends Component {
   componentWillUnmount () {
     this.rpc.destroy();
     clearTimeout(this.resizeIndicatorTimeout);
+    clearTimeout(this.fontSizeIndicatorTimeout);
     if (this.keys) this.keys.reset();
     delete this.clicks;
     clearTimeout(this.clickTimer);
