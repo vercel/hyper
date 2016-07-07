@@ -1,8 +1,7 @@
 const { autoUpdater, dialog } = require('electron');
-// const { version } = require('./package');
-const version = '0.3.0'; // to force update available
+const { version } = require('./package');
 
-const FEED_URL = 'https://nuts-serve-nxchetcjig.now.sh/update/osx';
+const FEED_URL = 'https://hyperterm-updates.now.sh/update/osx';
 
 module.exports = function AutoUpdater (rpc) {
   autoUpdater.on('error', (err, msg) => {
