@@ -7,11 +7,12 @@
     "child_pty": "3.0.1",
     "default-shell": "1.0.1",
     "electron-is-dev": "0.1.1",
-    "electron-packager": "7.1.0",
-    "electron-prebuilt": "1.2.5",
+    "gaze": "1.1.0",
     "uid2": "0.0.3"
   },
   "devDependencies": {
+    "electron-packager": "7.1.0",
+    "electron-prebuilt": "1.2.5",
     "eslint": "2.13.1",
     "eslint-config-standard": "5.3.1",
     "eslint-plugin-promise": "1.3.2",
