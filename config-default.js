@@ -1,7 +1,7 @@
 module.exports = {
   config: {
     // default font size for all tabs
-    fontSize: '12px',
+    fontSize: 12,
 
     // font family with optional fallbacks
     fontFamily: 'Menlo, "DejaVu Sans Mono", "Lucida Console", monospace',
@@ -34,5 +34,16 @@ module.exports = {
     ]
   },
 
-  plugins: []
+  // a list of plugins to fetch and install from npm
+  // format: [@org/]project[#version]
+  // examples:
+  //   `hypersolar`
+  //   `@company/project`
+  //   `project#1.0.1`
+  plugins: [],
+
+  // in development, you can create a directory under
+  // `~/.hyperterm_modules` and include it as a local
+  // plugin to load it and avoid npm installation
+  localPlugins: []
 };
