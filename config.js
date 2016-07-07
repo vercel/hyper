@@ -19,6 +19,11 @@ function exec (str) {
   const script = new vm.Script(str);
   const mod = {};
   script.runInNewContext(mod);
+  const cfg = mod.exports.config;
+  if (!cfg) {
+    throw new Error('Error reading configuration: `config` key is missing');
+  }
+  return cfg;
 }
 
 exports.init = function () {
