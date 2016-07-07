@@ -6,6 +6,7 @@ const genUid = require('uid2');
 const { resolve } = require('path');
 const isDev = require('electron-is-dev');
 const AutoUpdater = require('./auto-updater');
+const config = require('./config');
 
 if (isDev) {
   console.log('running in dev mode');
@@ -24,7 +25,7 @@ const url = 'file://' + resolve(
 console.log('electron will open', url);
 
 // initializate configuration
-require('./config').init();
+config.init();
 
 app.on('window-all-closed', () => {
   // by subscribing to this event and nooping
@@ -53,6 +54,10 @@ app.on('ready', () => {
 
     const rpc = createRPC(win);
     const sessions = new Map();
+
+    const cfgUnsubscribe = config.subscribe(() => {
+      win.webContents.send('config change');
+    });
 
     rpc.on('init', () => {
       win.show();
@@ -140,6 +145,7 @@ app.on('ready', () => {
       rpc.destroy();
       deleteSessions();
       winCount--;
+      cfgUnsubscribe();
     });
 
     win.rpc = rpc;
