@@ -1,15 +1,13 @@
-const { homedir } = require('os');
 const { resolve } = require('path');
 const { statSync, readFileSync, writeFileSync } = require('fs');
+const file = require('./config-path');
 
 module.exports = function initConfig () {
-  const file = resolve(homedir(), '.hyperterm.js');
-
   try {
     statSync(file);
   } catch (err) {
     console.log('stat error', file, err.message);
-    const defaultConfig = readFileSync(resolve(__dirname, 'default-config.js'));
+    const defaultConfig = readFileSync(resolve(__dirname, 'config-default.js'));
     try {
       console.log('attempting to write default config to', file);
       writeFileSync(file, defaultConfig);
