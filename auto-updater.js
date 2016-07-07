@@ -1,9 +1,11 @@
 const { autoUpdater, dialog } = require('electron');
 const { version } = require('./package');
+const ms = require('ms');
 
 const FEED_URL = 'https://hyperterm-updates.now.sh/update/osx';
+let isInit = false;
 
-module.exports = function AutoUpdater (rpc) {
+function init () {
   autoUpdater.on('error', (err, msg) => {
     dialog.showMessageBox({
       title: 'title',
@@ -14,13 +16,33 @@ module.exports = function AutoUpdater (rpc) {
 
   autoUpdater.setFeedURL(`${FEED_URL}/${version}`);
 
-  autoUpdater.once('update-downloaded', (ev, releaseNotes, releaseName) => {
-    rpc.emit('update available', { releaseNotes, releaseName });
-  });
+  setTimeout(() => {
+    autoUpdater.checkForUpdates();
+  }, ms('10s'));
 
-  rpc.once('quit-and-install', () => {
+  setInterval(() => {
+    autoUpdater.checkForUpdates();
+  }, ms('5m'));
+
+  isInit = true;
+}
+
+module.exports = function (win) {
+  if (!isInit) init();
+
+  const { rpc } = win;
+
+  const onupdate = (ev, releaseNotes, releaseName) => {
+    rpc.emit('update available', { releaseNotes, releaseName });
+  };
+
+  autoUpdater.on('update-downloaded', onupdate);
+
+  rpc.once('quit and install', () => {
     autoUpdater.quitAndInstall();
   });
 
-  autoUpdater.checkForUpdates();
+  win.on('close', () => {
+    autoUpdater.removeListener('update-downloaded', onupdate);
+  });
 };
