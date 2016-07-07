@@ -6,7 +6,11 @@ const genUid = require('uid2');
 const { resolve } = require('path');
 const isDev = require('electron-is-dev');
 const AutoUpdater = require('./auto-updater');
+
+// set up config
 const config = require('./config');
+config.init();
+const plugins = require('./plugins');
 
 if (isDev) {
   console.log('running in dev mode');
@@ -23,9 +27,6 @@ const url = 'file://' + resolve(
 );
 
 console.log('electron will open', url);
-
-// initializate configuration
-config.init();
 
 app.on('window-all-closed', () => {
   // by subscribing to this event and nooping
@@ -54,7 +55,6 @@ app.on('ready', () => {
 
     const rpc = createRPC(win);
     const sessions = new Map();
-
     const cfgUnsubscribe = config.subscribe(() => {
       win.webContents.send('config change');
     });
