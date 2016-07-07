@@ -53,7 +53,7 @@ export default class HyperTerm extends Component {
     this.decreaseFontSize = this.decreaseFontSize.bind(this);
 
     this.dismissUpdate = this.dismissUpdate.bind(this);
-    this.onUpdateAvailable = this.onUpdateAvailable.bind(this)
+    this.onUpdateAvailable = this.onUpdateAvailable.bind(this);
   }
 
   render () {
