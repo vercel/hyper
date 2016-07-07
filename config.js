@@ -17,9 +17,12 @@ function watch () {
 
 function exec (str) {
   const script = new vm.Script(str);
-  const mod = {};
-  script.runInNewContext(mod);
-  const cfg = mod.exports.config;
+  const module = {};
+  script.runInNewContext({ module });
+  const cfg = module.exports.config;
+  if (!module.exports) {
+    throw new Error('Error reading configuration: `module.exports` not set');
+  }
   if (!cfg) {
     throw new Error('Error reading configuration: `config` key is missing');
   }
