@@ -26,3 +26,15 @@ $ npm start
 ```
 
 ...to launch the app!
+
+## Common Errors
+
+### `Error: Module version mismatch. Expected 48, got 47`
+
+If you get this error after `npm start`, simply remove the `node_modules` folder and try to install again using following command:
+
+```
+sudo ./install.sh
+```
+
+More details: https://github.com/zeit/hyperterm/issues/72
