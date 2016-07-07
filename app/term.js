@@ -1,6 +1,7 @@
 /*global URL:false,Blob:false*/
 import React, { Component } from 'react';
 import { hterm, lib as htermLib } from 'hterm-umdjs';
+import colors from './colors';
 
 hterm.defaultStorage = new htermLib.Storage.Memory();
 
@@ -60,30 +61,12 @@ export default class Term extends Component {
     if (this.props.cols) {
       this.term.realizeSize_(this.props.cols, this.props.rows);
     }
-
-    this.term.prefs_.set('font-family', "Menlo, 'DejaVu Sans Mono', 'Lucida Console', monospace");
+    this.term.prefs_.set('font-family', "Menlo for Powerline, 'DejaVu Sans Mono', 'Lucida Console', monospace");
     this.term.prefs_.set('font-size', this.props.fontSize);
     this.term.prefs_.set('cursor-color', '#F81CE5');
     this.term.prefs_.set('enable-clipboard-notice', false);
     this.term.prefs_.set('background-color', '#000');
-    this.term.prefs_.set('color-palette-overrides', {
-      '0': '#000000',
-      '1': '#ff0000',
-      '2': '#33ff00',
-      '3': '#ffff00',
-      '4': '#0066ff',
-      '5': '#cc00ff',
-      '6': '#00ffff',
-      '7': '#d0d0d0',
-      '8': '#808080',
-      '9': '#ff0000',
-      '10': '#33ff00',
-      '11': '#ffff00',
-      '12': '#0066ff',
-      '13': '#cc00ff',
-      '14': '#00ffff',
-      '15': '#ffffff'
-    });
+    this.term.prefs_.set('color-palette-overrides', colors);
 
     this.term.prefs_.set('user-css', URL.createObjectURL(new Blob([`
       .cursor-node[focus="false"] {
@@ -148,7 +131,7 @@ export default class Term extends Component {
         url = match[7];
       } else {
         match = data.match(fishRegex);
-        if (match){
+        if (match) {
           url = match[4];
         }
       }
