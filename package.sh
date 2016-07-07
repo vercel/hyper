@@ -16,12 +16,7 @@ npm run build
 cd -
 cp app/index.html build/
 cp -r app/dist build/
-
-# electron-packager ./ --platform=darwin --out=dist --arch=x64 --app-bundle-id="co.zeit.hyperterm" --app-version="$VERSION" --osx-sign --icon=static/icon.icns --prune --ignore=app
-# without --osx-sign:
-electron-packager ./ --platform=darwin --out=dist --arch=x64 --app-bundle-id="co.zeit.hyperterm" --app-version="$VERSION" --icon=static/icon.icns --prune --ignore=app
-electron-osx-sign dist/HyperTerm-darwin-x64/HyperTerm.app --identity=88R8DU787Z
-
+electron-packager ./ --platform=darwin --out=dist --arch=x64 --app-bundle-id="co.zeit.hyperterm" --app-version="$VERSION" --osx-sign --icon=static/icon.icns --prune --ignore=app
 rm -rf ./build/
 npm install bestzip@1.1.2
 cd dist/HyperTerm-darwin-x64/
