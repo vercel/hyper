@@ -60,7 +60,11 @@ app.on('ready', () => {
         sessions.set(uid, session);
         rpc.emit('new session', { uid });
 
-        AutoUpdater(rpc);
+        if (!isDev) {
+          AutoUpdater(rpc);
+        } else {
+          console.log('ignoring auto updates during dev');
+        }
 
         session.on('data', (data) => {
           rpc.emit('data', { uid, data });
