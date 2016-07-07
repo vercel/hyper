@@ -53,37 +53,21 @@ const fishRegex = /fish: Unknown command '((https?:\/\/)|(\/\/))?([^']+)'/;
 export default class Term extends Component {
 
   componentDidMount () {
+    const { props } = this;
     this.term = new hterm.Terminal();
 
     // the first term that's created has unknown size
     // subsequent new tabs have size
-    if (this.props.cols) {
-      this.term.realizeSize_(this.props.cols, this.props.rows);
+    if (props.cols) {
+      this.term.realizeSize_(props.cols, props.rows);
     }
 
-    this.term.prefs_.set('font-family', "Menlo, 'DejaVu Sans Mono', 'Lucida Console', monospace");
-    this.term.prefs_.set('font-size', this.props.fontSize);
-    this.term.prefs_.set('cursor-color', '#F81CE5');
+    this.term.prefs_.set('font-family', props.fontFamily);
+    this.term.prefs_.set('font-size', props.fontSize);
+    this.term.prefs_.set('cursor-color', props.cursorColor);
     this.term.prefs_.set('enable-clipboard-notice', false);
-    this.term.prefs_.set('background-color', '#000');
-    this.term.prefs_.set('color-palette-overrides', {
-      '0': '#000000',
-      '1': '#ff0000',
-      '2': '#33ff00',
-      '3': '#ffff00',
-      '4': '#0066ff',
-      '5': '#cc00ff',
-      '6': '#00ffff',
-      '7': '#d0d0d0',
-      '8': '#808080',
-      '9': '#ff0000',
-      '10': '#33ff00',
-      '11': '#ffff00',
-      '12': '#0066ff',
-      '13': '#cc00ff',
-      '14': '#00ffff',
-      '15': '#ffffff'
-    });
+    this.term.prefs_.set('background-color', props.backgroundColor);
+    this.term.prefs_.set('color-palette-overrides', props.colors);
 
     this.term.prefs_.set('user-css', URL.createObjectURL(new Blob([`
       .cursor-node[focus="false"] {
@@ -94,10 +78,10 @@ export default class Term extends Component {
     this.term.onTerminalReady = () => {
       const io = this.term.io.push();
       io.onVTKeystroke = io.sendString = (str) => {
-        this.props.onData(str);
+        props.onData(str);
       };
       io.onTerminalResize = (cols, rows) => {
-        this.props.onResize({ cols, rows });
+        props.onResize({ cols, rows });
       };
     };
     this.term.decorate(this.refs.term);
@@ -111,6 +95,22 @@ export default class Term extends Component {
   componentWillReceiveProps (nextProps) {
     if (this.props.fontSize !== nextProps.fontSize) {
       this.term.prefs_.set('font-size', nextProps.fontSize);
+    }
+
+    if (this.props.backgroundColor !== nextProps.backgroundColor) {
+      this.term.prefs_.set('background-color', nextProps.backgroundColor);
+    }
+
+    if (this.props.fontFamily !== nextProps.fontFamily) {
+      this.term.prefs_.set('font-family', nextProps.fontFamily);
+    }
+
+    if (this.props.cursorColor !== nextProps.cursorColor) {
+      this.term.prefs_.set('cursor-color', nextProps.cursorColor);
+    }
+
+    if (this.props.colors.toString() !== nextProps.colors.toString()) {
+      this.term.prefs_.set('color-palette-overrides', nextProps.colors);
     }
   }
 

@@ -84,6 +84,7 @@ export default class HyperTerm extends Component {
           ref='termWrapper'>{
             this.state.sessions.map((uid, i) => {
               const active = i === this.state.active;
+              const { config } = this.props;
               return <div key={`d${uid}`} className={classes('term', { active })} style={{ width: '100%', height: '100%' }} ref='term'>
                 <Term
                   key={uid}
@@ -91,6 +92,10 @@ export default class HyperTerm extends Component {
                   cols={this.state.cols}
                   rows={this.state.rows}
                   fontSize={this.state.fontSize}
+                  cursorColor={config.cursorColor}
+                  fontFamily={config.fontFamily}
+                  backgroundColor={config.backgroundColor}
+                  colors={config.colors}
                   url={this.state.urls[uid]}
                   onResize={this.onResize}
                   onTitle={this.setTitle.bind(this, uid)}
