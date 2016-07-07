@@ -126,7 +126,7 @@ export default class HyperTerm extends Component {
 
   quitAndInstall (ev) {
     ev.preventDefault();
-    this.rpc.emit('quit-and-install');
+    this.rpc.emit('quit and install');
   }
 
   closeUpdateIndicator () {
