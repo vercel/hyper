@@ -1,4 +1,4 @@
-// const { ipcMain } = require('electron');
+const { dialog } = require('electron');
 const { homedir } = require('os');
 const { resolve } = require('path');
 const { readFileSync, writeFileSync } = require('fs');
@@ -6,28 +6,52 @@ const gaze = require('gaze');
 const vm = require('vm');
 
 const path = resolve(homedir(), '.hyperterm.js');
+const watchers = [];
 
 let cfg = {};
 
 function watch () {
-  gaze(path, () => {
-    console.log('a change happened');
+  gaze(path, function (err) {
+    if (err) throw err;
+    this.on('changed', () => {
+      try {
+        if (exec(readFileSync(path, 'utf8'))) {
+          watchers.forEach((fn) => fn());
+        }
+      } catch (err) {
+        dialog.showMessageBox({
+          message: `An error occurred loading your configuration (${path}): ${err.message}`,
+          buttons: ['Ok']
+        });
+      }
+    });
   });
 }
 
+let _str; // last script
 function exec (str) {
+  if (str === _str) return false;
+  _str = str;
   const script = new vm.Script(str);
   const module = {};
   script.runInNewContext({ module });
-  const cfg = module.exports.config;
   if (!module.exports) {
     throw new Error('Error reading configuration: `module.exports` not set');
   }
-  if (!cfg) {
+  const _cfg = module.exports.config;
+  if (!_cfg) {
     throw new Error('Error reading configuration: `config` key is missing');
   }
-  return cfg;
+  cfg = _cfg;
+  return true;
 }
+
+exports.subscribe = function (fn) {
+  watchers.push(fn);
+  return () => {
+    watchers.splice(watchers.indexOf(fn), 1);
+  };
+};
 
 exports.init = function () {
   try {
@@ -37,7 +61,7 @@ exports.init = function () {
     const defaultConfig = readFileSync(resolve(__dirname, 'config-default.js'));
     try {
       console.log('attempting to write default config to', path);
-      cfg = exec(defaultConfig);
+      exec(defaultConfig);
       writeFileSync(path, defaultConfig);
     } catch (err) {
       throw new Error(`Failed to write config to ${path}`);
