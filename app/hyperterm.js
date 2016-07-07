@@ -258,6 +258,7 @@ export default class HyperTerm extends Component {
     this.rpc.on('reset font size', this.resetFontSize);
 
     this.rpc.on('update available', this.onUpdateAvailable);
+    this.rpc.on('preferences', this.editPreferences.bind(this));
   }
 
   clearCurrentTerm () {
@@ -271,6 +272,21 @@ export default class HyperTerm extends Component {
       updateVersion: releaseName,
       updateNote: releaseNotes.split(/\n/)[0].trim()
     });
+  }
+
+  editPreferences () {
+    this.requestTab();
+    const onsession = ({ uid: _uid }) => {
+      const ondata = ({ uid }) => {
+        if (uid !== _uid) return;
+        this.rpc.removeListener('data', ondata);
+        this.rpc.emit('data', { uid, data: '# Attempting to open ~/.hyperterm.js with your $EDITOR\n' +
+          '# If this doesn\'t work, open it manually with your favorite editor!\n' +
+          '$EDITOR ~/.hyperterm.js\n' });
+      };
+      this.rpc.on('data', ondata);
+    };
+    this.rpc.once('new session', onsession);
   }
 
   moveTo (n) {

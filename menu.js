@@ -16,6 +16,15 @@ module.exports = function createMenu ({ createWindow }) {
           role: 'about'
         },
         {
+          label: 'Preferences...',
+          accelerator: 'Cmd+,',
+          click (item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.rpc.emit('preferences');
+            }
+          }
+        },
+        {
           type: 'separator'
         },
         {
