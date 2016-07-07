@@ -55,24 +55,27 @@ app.on('ready', () => {
 
     const rpc = createRPC(win);
     const sessions = new Map();
+
+    // config changes
     const cfgUnsubscribe = config.subscribe(() => {
       win.webContents.send('config change');
     });
 
     rpc.on('init', () => {
       win.show();
+
+      // auto updates
+      if (!isDev) {
+        AutoUpdater(rpc);
+      } else {
+        console.log('ignoring auto updates during dev');
+      }
     });
 
     rpc.on('new', ({ rows = 40, cols = 100 }) => {
       initSession({ rows, cols }, (uid, session) => {
         sessions.set(uid, session);
         rpc.emit('new session', { uid });
-
-        if (!isDev) {
-          AutoUpdater(rpc);
-        } else {
-          console.log('ignoring auto updates during dev');
-        }
 
         session.on('data', (data) => {
           rpc.emit('data', { uid, data });
