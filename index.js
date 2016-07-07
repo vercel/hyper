@@ -6,7 +6,6 @@ const genUid = require('uid2');
 const { resolve } = require('path');
 const isDev = require('electron-is-dev');
 const AutoUpdater = require('./auto-updater');
-const initConfig = require('./init-config');
 
 if (isDev) {
   console.log('running in dev mode');
@@ -24,14 +23,15 @@ const url = 'file://' + resolve(
 
 console.log('electron will open', url);
 
+// initializate configuration
+require('./config-init')();
+
 app.on('window-all-closed', () => {
   // by subscribing to this event and nooping
   // we prevent electron's default behavior
   // of quitting the app when the last
   // terminal is closed
 });
-
-const configFile = initConfig();
 
 let winCount = 0;
 
