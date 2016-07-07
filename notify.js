@@ -9,6 +9,8 @@ let win;
 // so we launch a window on which we can use the
 // HTML5 `Notification` API :'(
 
+let buffer = [];
+
 app.on('ready', () => {
   const win_ = new BrowserWindow({
     show: false
@@ -18,12 +20,22 @@ app.on('ready', () => {
     'notify.html'
   );
   win_.loadURL(url);
-  win = win_;
+  win_.webContents.on('dom-ready', () => {
+    console.log('ready');
+    win = win_;
+    buffer.forEach(([title, body]) => {
+      notify(title, body);
+    });
+    buffer = null;
+  });
 });
 
-module.exports = function notify (title, body) {
+function notify (title, body) {
   if (win) {
     win.webContents.send('notification', { title, body });
+  } else {
+    buffer.push([title, body]);
   }
-  // TODO: buffer ?
-};
+}
+
+module.exports = notify;
