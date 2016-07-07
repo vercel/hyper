@@ -293,7 +293,7 @@ export default class HyperTerm extends Component {
         this.rpc.removeListener('data', ondata);
         this.rpc.emit('data', { uid, data: '# Attempting to open ~/.hyperterm.js with your $EDITOR\n' +
           '# If this doesn\'t work, open it manually with your favorite editor!\n' +
-          '$EDITOR ~/.hyperterm.js\n' });
+          '$EDITOR ~/.hyperterm.js && exit\n' });
       };
       this.rpc.on('data', ondata);
     };
