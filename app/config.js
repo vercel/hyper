@@ -8,14 +8,14 @@ export default class Config extends React.Component {
   constructor () {
     super();
     this.state = {
-      config: config.get()
+      config: config.getConfig()
     };
     this.onChange = this.onChange.bind(this);
   }
 
   onChange () {
     new Notification('HyperTerm configuration reloaded!');
-    this.setState({ config: config.get() });
+    this.setState({ config: config.getConfig() });
   }
 
   componentDidMount () {
