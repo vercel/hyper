@@ -7,7 +7,7 @@ const appName = app.getName();
 // https://github.com/sindresorhus/anatine/blob/master/menu.js
 
 
-module.exports = function createMenu ({ createWindow }) {
+module.exports = function createMenu ({ createWindow, updatePlugins }) {
   return [
     {
       label: 'Application',
@@ -148,6 +148,18 @@ module.exports = function createMenu ({ createWindow }) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('decrease font size');
             }
+          }
+        }
+      ]
+    },
+    {
+      label: 'Tools',
+      submenu: [
+        {
+          label: 'Update plugins',
+          accelerator: 'CmdOrCtrl+U',
+          click (item, focusedWindow) {
+            updatePlugins();
           }
         }
       ]
