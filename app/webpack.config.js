@@ -28,9 +28,10 @@ module.exports = {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
       }
-    ],
-    plugins: [
-      new webpack.optimize.OccurrenceOrderPlugin()
     ]
-  }
+  },
+  plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.ExternalsPlugin('commonjs', ['electron'])
+  ]
 };
