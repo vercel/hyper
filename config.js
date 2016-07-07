@@ -38,10 +38,12 @@ function exec (str) {
   if (!module.exports) {
     throw new Error('Error reading configuration: `module.exports` not set');
   }
-  const _cfg = module.exports.config;
-  if (!_cfg) {
+  const _cfg = module.exports;
+  if (!_cfg.config) {
     throw new Error('Error reading configuration: `config` key is missing');
   }
+  _cfg.plugins = _cfg.plugins || [];
+  _cfg.localPlugins = _cfg.localPlugins || [];
   cfg = _cfg;
   return true;
 }
@@ -70,6 +72,13 @@ exports.init = function () {
   watch();
 };
 
-exports.get = function () {
-  return cfg;
+exports.getConfig = function () {
+  return cfg.config;
+};
+
+exports.getPlugins = function () {
+  return {
+    plugins: cfg.plugins,
+    localPlugins: cfg.localPlugins
+  };
 };
