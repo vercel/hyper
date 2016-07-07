@@ -14,8 +14,8 @@ module.exports = function AutoUpdater (rpc) {
 
   autoUpdater.setFeedURL(`${FEED_URL}/${version}`);
 
-  autoUpdater.once('update-downloaded', () => {
-    rpc.emit('update-available');
+  autoUpdater.once('update-downloaded', (ev, releaseNotes, releaseName) => {
+    rpc.emit('update available', { releaseNotes, releaseName });
   });
 
   rpc.once('quit-and-install', () => {
