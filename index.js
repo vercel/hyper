@@ -136,6 +136,7 @@ app.on('ready', () => {
     });
 
     win.rpc = rpc;
+    win.sessions = sessions;
   }
 
   // when opening create a new window
