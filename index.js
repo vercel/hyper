@@ -24,7 +24,7 @@ const url = 'file://' + resolve(
 console.log('electron will open', url);
 
 // initializate configuration
-require('./config-init')();
+require('./config').init();
 
 app.on('window-all-closed', () => {
   // by subscribing to this event and nooping
