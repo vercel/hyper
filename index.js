@@ -6,6 +6,7 @@ const genUid = require('uid2');
 const { resolve } = require('path');
 const isDev = require('electron-is-dev');
 const AutoUpdater = require('./auto-updater');
+const initConfig = require('./init-config');
 
 if (isDev) {
   console.log('running in dev mode');
@@ -29,6 +30,8 @@ app.on('window-all-closed', () => {
   // of quitting the app when the last
   // terminal is closed
 });
+
+const configFile = initConfig();
 
 let winCount = 0;
 
