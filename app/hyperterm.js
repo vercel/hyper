@@ -51,7 +51,9 @@ export default class HyperTerm extends Component {
     this.resetFontSize = this.resetFontSize.bind(this);
     this.increaseFontSize = this.increaseFontSize.bind(this);
     this.decreaseFontSize = this.decreaseFontSize.bind(this);
+
     this.dismissUpdate = this.dismissUpdate.bind(this);
+    this.onUpdateAvailable = this.onUpdateAvailable.bind(this)
   }
 
   render () {
@@ -209,7 +211,6 @@ export default class HyperTerm extends Component {
 
   componentDidMount () {
     this.rpc = new RPC();
-    this.updateChecker = new UpdateChecker(this.onUpdateAvailable.bind(this));
 
     // open a new tab upon mounting
     this.rpc.once('ready', () => this.requestTab());
@@ -256,12 +257,7 @@ export default class HyperTerm extends Component {
     this.rpc.on('decrease font size', this.decreaseFontSize);
     this.rpc.on('reset font size', this.resetFontSize);
 
-    this.rpc.once('update-available', (data) => {
-      // hardcoded data for now
-      const updateVersion = '3.0.1';
-      const updateNote = '';
-      this.setState({ updateVersion, updateNote });
-    });
+    this.rpc.on('update available', this.onUpdateAvailable);
   }
 
   clearCurrentTerm () {
@@ -270,9 +266,11 @@ export default class HyperTerm extends Component {
     term.clear();
   }
 
-  onUpdateAvailable (updateVersion, updateNote = '') {
-    // updateNote = updateNote.replace(/\.$/, '');
-    // this.setState({ updateVersion, updateNote });
+  onUpdateAvailable ({ releaseName, releaseNotes = '' }) {
+    this.setState({
+      updateVersion: releaseName,
+      updateNote: releaseNotes.split(/\n/)[0].trim()
+    });
   }
 
   moveTo (n) {
