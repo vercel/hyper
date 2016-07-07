@@ -5,7 +5,6 @@ import Mousetrap from 'mousetrap';
 import classes from 'classnames';
 import shallowCompare from 'react-addons-shallow-compare';
 import React, { Component } from 'react';
-import UpdateChecker from './update-checker';
 
 export default class HyperTerm extends Component {
   constructor () {
@@ -23,8 +22,8 @@ export default class HyperTerm extends Component {
       mac: /Mac/.test(navigator.userAgent),
       resizeIndicatorShowing: false,
       fontSizeIndicatorShowing: false,
+      dismissedUpdate: false,
       updateVersion: null,
-      updateNote: null,
       fontSize: 12
     };
 
@@ -52,6 +51,7 @@ export default class HyperTerm extends Component {
     this.resetFontSize = this.resetFontSize.bind(this);
     this.increaseFontSize = this.increaseFontSize.bind(this);
     this.decreaseFontSize = this.decreaseFontSize.bind(this);
+    this.dismissUpdate = this.dismissUpdate.bind(this);
   }
 
   render () {
@@ -98,13 +98,17 @@ export default class HyperTerm extends Component {
         {this.state.fontSizeIndicatorShowing && <div>{ this.state.fontSize }px</div>}
         <div>{ this.state.cols }x{ this.state.rows }</div>
       </div>
-      <div className={classes('update-indicator', { showing: null !== this.state.updateVersion })}>
+      <div className={classes('update-indicator', { showing: null !== this.state.updateVersion && !this.state.dismissedUpdate })}>
         Version <b>{ this.state.updateVersion }</b> ready.
         {this.state.updateNote ? ` ${this.state.updateNote}. ` : ' '}
         <a href='' onClick={this.quitAndInstall}>Restart</a>
-        to apply <span className='close' onClick={this.quitAndInstall}>[x]</span>
+        to apply <span className='close' onClick={this.dismissUpdate}>[x]</span>
       </div>
     </div>;
+  }
+
+  dismissUpdate () {
+    this.setState({ dismissedUpdate: true });
   }
 
   quitAndInstall (ev) {
