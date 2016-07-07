@@ -7,7 +7,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 import React, { Component } from 'react';
 
 export default class HyperTerm extends Component {
-  constructor () {
+  constructor (props) {
     super();
     this.state = {
       cols: null,
@@ -24,7 +24,7 @@ export default class HyperTerm extends Component {
       fontSizeIndicatorShowing: false,
       dismissedUpdate: false,
       updateVersion: null,
-      fontSize: 12
+      fontSize: props.config.fontSize
     };
 
     // we set this to true when the first tab
@@ -54,6 +54,12 @@ export default class HyperTerm extends Component {
 
     this.dismissUpdate = this.dismissUpdate.bind(this);
     this.onUpdateAvailable = this.onUpdateAvailable.bind(this);
+  }
+
+  componentWillReceiveProps (props) {
+    if (props.config.fontSize !== this.props.config.fontSize) {
+      this.changeFontSize(props.config.fontSize);
+    }
   }
 
   render () {
@@ -328,7 +334,7 @@ export default class HyperTerm extends Component {
   }
 
   resetFontSize () {
-    this.changeFontSize(12);
+    this.changeFontSize(this.props.config.fontSize);
   }
 
   increaseFontSize () {
