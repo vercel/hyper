@@ -1,5 +1,6 @@
-const { autoUpdater, dialog } = require('electron');
+const { autoUpdater } = require('electron');
 const { version } = require('./package');
+const notify = require('./notify');
 const ms = require('ms');
 
 const FEED_URL = 'https://hyperterm-updates.now.sh/update/osx';
@@ -7,11 +8,7 @@ let isInit = false;
 
 function init () {
   autoUpdater.on('error', (err, msg) => {
-    dialog.showMessageBox({
-      title: 'title',
-      message: 'Auto updater error: ' + msg + ' (' + err.stack + ')',
-      buttons: ['Ok']
-    });
+    notify('Error fetching updates', msg + ' (' + err.stack + ')');
   });
 
   autoUpdater.setFeedURL(`${FEED_URL}/${version}`);
