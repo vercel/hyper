@@ -166,22 +166,24 @@ function toDependencies (plugins) {
 }
 
 function install (fn) {
-  exec('npm prune && npm install --production', {
-    cwd: path
-  }, (err, stdout, stderr) => {
+  which('npm', (err, bin) => {
     if (err) {
-      if (/(command not found|not recognized as an)/.test(err.stack)) {
-        if (plugins.plugins.length) {
-          alert('We found `plugins` in `.hyperterm.js`, but `npm` is ' +
-            'not installed or not in $PATH!\nPlease head to ' +
-            'https://nodejs.org and install the Node.js runtime.');
-        } else {
-          console.log('npm not found, but no plugins defined');
-        }
+      if (plugins.plugins.length) {
+        alert('We found `plugins` in `.hyperterm.js`, but `npm` is ' +
+          'not installed or not in $PATH!\nPlease head to ' +
+          'https://nodejs.org and install the Node.js runtime.');
+      } else {
+        console.log('npm not found, but no plugins defined');
       }
       return fn(err);
     }
-    fn(null);
+
+    exec(`${bin} prune && ${bin} install --production`, {
+      cwd: path
+    }, (err, stdout, stderr) => {
+      if (err) return fn(err);
+      fn(null);
+    });
   });
 }
 
