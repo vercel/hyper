@@ -33,6 +33,11 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.ExternalsPlugin('commonjs', ['electron']),
-    new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
+    new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      }
+    })
   ]
 };
