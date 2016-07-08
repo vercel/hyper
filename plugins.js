@@ -204,7 +204,13 @@ function getPaths () {
   };
 }
 
+// expose to renderer
 exports.getPaths = getPaths;
+
+// get paths from renderer
+exports.getBasePaths = function () {
+  return { path, localPath };
+};
 
 function requirePlugins () {
   const { plugins, localPlugins } = paths;
