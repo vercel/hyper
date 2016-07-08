@@ -3,7 +3,7 @@ const { spawn } = require('child_pty');
 const { exec } = require('child_process');
 const defaultShell = require('default-shell');
 
-const TITLE_POLL_INTERVAL = 1000;
+const TITLE_POLL_INTERVAL = 500;
 
 module.exports = class Session extends EventEmitter {
 
@@ -52,7 +52,7 @@ module.exports = class Session extends EventEmitter {
 
     // TODO: limit the concurrency of how many processes we run?
     // TODO: only tested on mac
-    exec(`ps ac | grep ${tty} | tail -n 1`, (err, out) => {
+    exec(`ps uxac | grep ${tty} | head -n 1`, (err, out) => {
       if (this.ended) return;
       if (err) return;
       let title = out.split(' ').pop();
