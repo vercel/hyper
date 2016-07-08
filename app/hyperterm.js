@@ -61,6 +61,7 @@ export default class HyperTerm extends Component {
     this.onUpdateAvailable = this.onUpdateAvailable.bind(this);
 
     document.body.style.backgroundColor = props.config.backgroundColor;
+    this.rpc = new RPC();
   }
 
   componentWillReceiveProps (props) {
@@ -236,8 +237,6 @@ export default class HyperTerm extends Component {
   }
 
   componentDidMount () {
-    this.rpc = new RPC();
-
     // open a new tab upon mounting
     this.rpc.once('ready', () => this.requestTab());
 
