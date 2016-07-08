@@ -66,7 +66,7 @@ app.on('ready', () => {
 
       // auto updates
       if (!isDev) {
-        AutoUpdater(rpc);
+        AutoUpdater(win);
       } else {
         console.log('ignoring auto updates during dev');
       }
