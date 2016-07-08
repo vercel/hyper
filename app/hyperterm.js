@@ -407,8 +407,9 @@ export default class HyperTerm extends Component {
       active = _active - 1;
     }
 
-    if (~activeMarkers.indexOf(active)) {
-      activeMarkers.splice(active, 1);
+    const ai2 = activeMarkers.indexOf(active);
+    if (~ai2) {
+      activeMarkers.splice(ai2, 1);
     }
 
     this.setState({
