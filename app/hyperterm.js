@@ -69,13 +69,14 @@ export default class HyperTerm extends Component {
   }
 
   render () {
-    const { backgroundColor } = this.props.config;
+    const { backgroundColor, borderColor } = this.props.config;
     return <div onClick={ this.focusActive }>
-      <div className={ classes('main', { mac: this.state.mac }) }>
+      <div style={{ borderColor }} className={ classes('main', { mac: this.state.mac }) }>
         <header style={{ backgroundColor }} onMouseDown={this.onHeaderMouseDown}>
           <Tabs
             active={this.state.active}
             activeMarkers={this.state.activeMarkers}
+            borderColor={borderColor}
             data={this.state.sessions.map((uid) => {
               const title = this.state.titles[uid];
               return null != title ? title : 'Shell';

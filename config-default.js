@@ -10,7 +10,10 @@ module.exports = {
     cursorColor: '#F81CE5',
 
     // terminal background color (hex)
-    backgroundColor: '#000',
+    backgroundColor: '#000000',
+
+    // border color (winodw, tabs)
+    borderColor: '#333',
 
     // some color overrides. see http://bit.ly/29k1iU2 for
     // the full list
