@@ -16,7 +16,6 @@ export default class Config extends React.Component {
   }
 
   onChange () {
-    new Notification('HyperTerm configuration reloaded!');
     this.setState({ config: config.getConfig() });
   }
 

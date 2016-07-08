@@ -4,6 +4,7 @@ const { resolve } = require('path');
 const { readFileSync, writeFileSync } = require('fs');
 const gaze = require('gaze');
 const vm = require('vm');
+const notify = require('./notify');
 
 const path = resolve(homedir(), '.hyperterm.js');
 const watchers = [];
@@ -16,6 +17,7 @@ function watch () {
     this.on('changed', () => {
       try {
         if (exec(readFileSync(path, 'utf8'))) {
+          notify('HyperTerm configuration reloaded!');
           watchers.forEach((fn) => fn());
         }
       } catch (err) {
