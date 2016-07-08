@@ -7,6 +7,7 @@ const { sync: mkdirpSync } = require('mkdirp');
 const { exec } = require('child_process');
 const Config = require('electron-config');
 const ms = require('ms');
+const which = require('which');
 const notify = require('./notify');
 
 // local storage
@@ -48,7 +49,7 @@ config.subscribe(() => {
 
 let updating = false;
 
-function updatePlugins () {
+function updatePlugins ({ force = false } = {}) {
   if (updating) return notify('Plugin update in progress');
   updating = true;
   syncPackageJSON();
@@ -78,11 +79,28 @@ function updatePlugins () {
       // notify watchers
       watchers.forEach((fn) => fn(err));
 
-      // we consider it a success if we loaded *all* modules
-      if ((paths.plugins.length + paths.localPlugins.length) === modules.length) {
+      const loaded = modules.length;
+      const total = paths.plugins.length + paths.localPlugins.length;
+      const pluginVersions = JSON.stringify(getPluginVersions());
+      if (force || (cache.get('plugin-versions') !== pluginVersions && loaded === total)) {
         notify('HyperTerm plugins updated!');
       }
+      cache.set('plugin-versions', pluginVersions);
     }
+  });
+}
+
+function getPluginVersions () {
+  const paths_ = paths.plugins.concat(paths.localPlugins);
+  return paths_.map((path) => {
+    let version = null;
+    try {
+      version = require(resolve(path, 'package.json')).version;
+    } catch (err) { }
+    return [
+      basename(path),
+      version
+    ];
   });
 }
 
@@ -99,7 +117,7 @@ exports.updatePlugins = updatePlugins;
 // we schedule the initial plugins update
 // a bit after the user launches the terminal
 // to prevent slowness
-if (cache.get('plugins') !== id) {
+if (cache.get('plugins') !== id || process.env.HYPERTERM_FORCE_UPDATE) {
   // install immediately if the user changed plugins
   console.log('plugins have changed / not init, scheduling plugins installation');
   setTimeout(() => {
@@ -114,8 +132,11 @@ function syncPackageJSON () {
   const dependencies = toDependencies(plugins);
   const pkg = {
     name: 'hyperterm-plugins',
+    description: 'Auto-generated from `~/.hyperterm.js`!',
     private: true,
     version: '0.0.1',
+    repository: 'zeit/hyperterm',
+    license: 'MIT',
     homepage: 'https://hyperterm.org',
     dependencies
   };

@@ -184,7 +184,9 @@ app.on('ready', () => {
   const setupMenu = () => {
     const tpl = plugins.decorateMenu(createMenu({
       createWindow,
-      updatePlugins: plugins.updatePlugins
+      updatePlugins: () => {
+        plugins.updatePlugins({ force: true });
+      }
     }));
     Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
   };
