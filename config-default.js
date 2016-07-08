@@ -6,10 +6,10 @@ module.exports = {
     // font family with optional fallbacks
     fontFamily: 'Menlo, "DejaVu Sans Mono", "Lucida Console", monospace',
 
-    // terminal cursor background color
+    // terminal cursor background color (hex)
     cursorColor: '#F81CE5',
 
-    // terminal background color
+    // terminal background color (hex)
     backgroundColor: '#000',
 
     // some color overrides. see http://bit.ly/29k1iU2 for

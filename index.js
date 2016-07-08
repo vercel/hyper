@@ -44,7 +44,7 @@ app.on('ready', () => {
       height: 380,
       titleBarStyle: 'hidden',
       title: 'HyperTerm',
-      backgroundColor: '#000',
+      backgroundColor: config.getConfig().backgroundColor || '#000',
       transparent: true,
       // we only want to show when the prompt
       // is ready for user input
