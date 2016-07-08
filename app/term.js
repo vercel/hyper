@@ -1,54 +1,7 @@
 /*global URL:false,Blob:false*/
 import React, { Component } from 'react';
-import { hterm, lib as htermLib } from 'hterm-umdjs';
-
-hterm.defaultStorage = new htermLib.Storage.Memory();
-
-// override double click behavior to copy
-const oldMouse = hterm.Terminal.prototype.onMouse_;
-hterm.Terminal.prototype.onMouse_ = function (e) {
-  if ('dblclick' === e.type) {
-    console.log('[hyperterm+hterm] ignore double click');
-    return;
-  }
-  return oldMouse.call(this, e);
-};
-
-// there's no option to turn off the size overlay
-hterm.Terminal.prototype.overlaySize = function () {};
-
-// fixing a bug in hterm where a double click triggers
-// a non-collapsed selection whose text is '', and results
-// in an infinite copy loop
-hterm.Terminal.prototype.copySelectionToClipboard = function () {
-  var text = this.getSelectionText();
-  if (text != null && text !== '') {
-    this.copyStringToClipboard(text);
-  }
-};
-
-// passthrough all the commands that are meant to control
-// hyperterm and not the terminal itself
-const oldKeyDown = hterm.Keyboard.prototype.onKeyDown_;
-hterm.Keyboard.prototype.onKeyDown_ = function (e) {
-  if (e.metaKey) {
-    return;
-  }
-  return oldKeyDown.call(this, e);
-};
-
-const oldKeyPress = hterm.Keyboard.prototype.onKeyPress_;
-hterm.Keyboard.prototype.onKeyPress_ = function (e) {
-  if (e.metaKey) {
-    return;
-  }
-  return oldKeyPress.call(this, e);
-};
-
-const domainRegex = /\b((?=[a-z0-9-]{1,63}\.)(xn--)?[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,63}\b/;
-const bashRegex = /(ba)?sh: ((https?:\/\/)|(\/\/))?(.*): ((command not found)|(No such file or directory))/;
-const zshRegex = /zsh: ((command not found)|(no such file or directory)): ((https?:\/\/)|(\/\/))?([^\n]+)/;
-const fishRegex = /fish: Unknown command '((https?:\/\/)|(\/\/))?([^']+)'/;
+import { hterm, lib as htermLib } from './hterm';
+import * as regex from './regex';
 
 export default class Term extends Component {
 
@@ -73,6 +26,7 @@ export default class Term extends Component {
       .cursor-node[focus="false"] {
         border-width: 1px !important;
       }
+      ${Array.from(props.customCSS || '').join('\n')}
     `]), { type: 'text/css' }));
 
     this.term.onTerminalReady = () => {
@@ -137,17 +91,17 @@ export default class Term extends Component {
   }
 
   write (data) {
-    let match = data.match(bashRegex);
+    let match = data.match(regex.bash);
     let url;
 
     if (match) {
       url = match[5];
     } else {
-      match = data.match(zshRegex);
+      match = data.match(regex.zsh);
       if (match) {
         url = match[7];
       } else {
-        match = data.match(fishRegex);
+        match = data.match(regex.fish);
         if (match) {
           url = match[4];
         }
@@ -157,7 +111,7 @@ export default class Term extends Component {
     if (url) {
       // extract the domain portion from the url
       const domain = url.split('/')[0];
-      if (domainRegex.test(domain)) {
+      if (regex.domain.test(domain)) {
         this.props.onURL(toURL(url));
         return;
       }
