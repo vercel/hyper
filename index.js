@@ -42,7 +42,7 @@ app.on('ready', () => {
     let win = new BrowserWindow({
       width: 540,
       height: 380,
-      titleBarStyle: 'hidden',
+      titleBarStyle: 'hidden-inset',
       title: 'HyperTerm',
       backgroundColor: config.getConfig().backgroundColor || '#000',
       transparent: true,

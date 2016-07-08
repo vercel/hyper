@@ -43,6 +43,12 @@ header {
   display: block;
 }
 
+.resize-indicator,
+.update-indicator {
+  cursor: default;
+  -webkit-user-select: none;
+}
+
 .resize-indicator {
   color: #fff;
   font: 11px Menlo;
