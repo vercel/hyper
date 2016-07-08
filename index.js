@@ -143,16 +143,30 @@ app.on('ready', () => {
       }
     });
 
-    // the window can be closed by the browser process itself
-    win.on('close', () => {
-      rpc.destroy();
-      deleteSessions();
-      winCount--;
-      cfgUnsubscribe();
-    });
-
+    // expose internals to extension authors
     win.rpc = rpc;
     win.sessions = sessions;
+
+    const load = () => {
+      plugins.onWindow(win);
+    };
+
+    // load plugins
+    load();
+
+    const pluginsUnsubscribe = plugins.subscribe(() => {
+      load();
+      win.webContents.send('plugins change');
+    });
+
+    // the window can be closed by the browser process itself
+    win.on('close', () => {
+      winCount--;
+      rpc.destroy();
+      deleteSessions();
+      cfgUnsubscribe();
+      pluginsUnsubscribe();
+    });
   }
 
   // when opening create a new window
@@ -167,9 +181,21 @@ app.on('ready', () => {
     }
   });
 
-  // set menu
-  const tpl = createMenu({ createWindow });
-  Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
+  const setupMenu = () => {
+    const tpl = plugins.decorateMenu(createMenu({
+      createWindow,
+      updatePlugins: plugins.updatePlugins
+    }));
+    Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
+  };
+
+  const load = () => {
+    plugins.onApp(app);
+    setupMenu();
+  };
+
+  load();
+  plugins.subscribe(load);
 });
 
 function initSession (opts, fn) {
