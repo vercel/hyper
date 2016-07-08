@@ -54,18 +54,25 @@ export default class HyperTerm extends Component {
 
     this.dismissUpdate = this.dismissUpdate.bind(this);
     this.onUpdateAvailable = this.onUpdateAvailable.bind(this);
+
+    document.body.style.backgroundColor = props.config.backgroundColor;
   }
 
   componentWillReceiveProps (props) {
     if (props.config.fontSize !== this.props.config.fontSize) {
       this.changeFontSize(props.config.fontSize);
     }
+
+    if (props.config.backgroundColor !== this.props.config.backgroundColor) {
+      document.body.style.backgroundColor = props.config.backgroundColor;
+    }
   }
 
   render () {
+    const { backgroundColor } = this.props.config;
     return <div onClick={ this.focusActive }>
       <div className={ classes('main', { mac: this.state.mac }) }>
-        <header onMouseDown={this.onHeaderMouseDown}>
+        <header style={{ backgroundColor }} onMouseDown={this.onHeaderMouseDown}>
           <Tabs
             active={this.state.active}
             activeMarkers={this.state.activeMarkers}
