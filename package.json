@@ -2,6 +2,8 @@
   "name": "hyperterm",
   "productName": "HyperTerm",
   "version": "0.3.1",
+  "license": "MIT",
+  "repository": "zeit/hyperterm",
   "description": "HTML/JS/CSS Terminal",
   "dependencies": {
     "child_pty": "3.0.1",
