@@ -74,7 +74,7 @@ export default class HyperTerm extends Component {
   }
 
   render () {
-    const { backgroundColor, borderColor } = this.props.config;
+    const { backgroundColor, borderColor, css } = this.props.config;
     return <div onClick={ this.focusActive }>
       <div style={{ borderColor }} className={ classes('main', { mac: this.state.mac }) }>
         <header style={{ backgroundColor }} onMouseDown={this.onHeaderMouseDown}>
@@ -98,12 +98,13 @@ export default class HyperTerm extends Component {
             this.state.sessions.map((uid, i) => {
               const active = i === this.state.active;
               const { config } = this.props;
-              return <div key={`d${uid}`} className={classes('term', { active })} style={{ width: '100%', height: '100%' }} ref='term'>
+              return <div key={`d${uid}`} className={classes('term', { active })} style={{ width: '100%', height: '100%' }}>
                 <Term
                   key={uid}
                   ref={`term-${uid}`}
                   cols={this.state.cols}
                   rows={this.state.rows}
+                  customCSS={config.termCSS}
                   fontSize={this.state.fontSize}
                   cursorColor={config.cursorColor}
                   fontFamily={config.fontFamily}
@@ -130,6 +131,7 @@ export default class HyperTerm extends Component {
         <a href='' onClick={this.quitAndInstall}>Restart</a>
         to apply <span className='close' onClick={this.dismissUpdate}>[x]</span>
       </div>
+      <style dangerouslySetInnerHTML={{ __html: Array.from(css || '').join('\n') }} />
     </div>;
   }
 

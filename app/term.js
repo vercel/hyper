@@ -22,12 +22,7 @@ export default class Term extends Component {
     this.term.prefs_.set('background-color', props.backgroundColor);
     this.term.prefs_.set('color-palette-overrides', props.colors);
 
-    this.term.prefs_.set('user-css', URL.createObjectURL(new Blob([`
-      .cursor-node[focus="false"] {
-        border-width: 1px !important;
-      }
-      ${Array.from(props.customCSS || '').join('\n')}
-    `]), { type: 'text/css' }));
+    this.term.prefs_.set('user-css', this.getStylesheet(props.customCSS));
 
     this.term.onTerminalReady = () => {
       const io = this.term.io.push();
@@ -44,6 +39,16 @@ export default class Term extends Component {
 
   getTermDocument () {
     return this.term.document_;
+  }
+
+  getStylesheet (css) {
+    const blob = new Blob([`
+      .cursor-node[focus="false"] {
+        border-width: 1px !important;
+      }
+      ${Array.from(css || '').join('\n')}
+    `]);
+    return URL.createObjectURL(blob, { type: 'text/css' });
   }
 
   componentWillReceiveProps (nextProps) {
@@ -65,6 +70,10 @@ export default class Term extends Component {
 
     if (this.props.colors.toString() !== nextProps.colors.toString()) {
       this.term.prefs_.set('color-palette-overrides', nextProps.colors);
+    }
+
+    if (this.props.customCSS.toString() !== nextProps.customCSS.toString()) {
+      this.term.prefs_.set('user-css', this.getStylesheet(nextProps.customCSS));
     }
   }
 
