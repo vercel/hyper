@@ -32,6 +32,7 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.ExternalsPlugin('commonjs', ['electron'])
+    new webpack.ExternalsPlugin('commonjs', ['electron']),
+    new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
   ]
 };
