@@ -15,6 +15,12 @@ module.exports = {
     // border color (winodw, tabs)
     borderColor: '#333',
 
+    // custom css to embed in the main window
+    css: [''],
+
+    // custom css to embed inside each terminal
+    termCSS: [''],
+
     // some color overrides. see http://bit.ly/29k1iU2 for
     // the full list
     colors: [
