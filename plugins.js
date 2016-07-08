@@ -15,7 +15,7 @@ const cache = new Config();
 
 // modules path
 const path = resolve(homedir(), '.hyperterm_modules');
-const localPath = resolve(homedir(), '.hyperterm_local_modules');
+const localPath = resolve(homedir(), '.hyperterm_modules', 'local');
 
 // init plugin directories if not present
 mkdirpSync(path);
