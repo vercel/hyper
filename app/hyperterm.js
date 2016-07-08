@@ -13,7 +13,7 @@ export default class HyperTerm extends Component {
       cols: null,
       rows: null,
       hpadding: 12,
-      vpadding: 19,
+      vpadding: 12,
       sessions: [],
       titles: {},
       urls: {},
