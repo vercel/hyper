@@ -1,4 +1,5 @@
-/* eslint no-new:false */
+/* global Notification */
+/* eslint no-new:0 */
 import React from 'react';
 import { ipcRenderer, remote } from 'electron';
 
