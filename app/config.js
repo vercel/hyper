@@ -1,3 +1,4 @@
+/* eslint no-new:false */
 import React from 'react';
 import { ipcRenderer, remote } from 'electron';
 

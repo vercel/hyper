@@ -148,7 +148,7 @@ export default class Term extends Component {
         url = match[7];
       } else {
         match = data.match(fishRegex);
-        if (match){
+        if (match) {
           url = match[4];
         }
       }
