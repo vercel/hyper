@@ -1,10 +1,15 @@
-import Tabs from './tabs';
-import Term from './term';
+import Tabs_ from './tabs';
+import Term_ from './term';
 import RPC from './rpc';
 import Mousetrap from 'mousetrap';
 import classes from 'classnames';
 import shallowCompare from 'react-addons-shallow-compare';
 import React, { Component } from 'react';
+import decorate from './plugins';
+
+// make subcomponents reload siwth plugin changes
+const Tabs = decorate(Tabs_);
+const Term = decorate(Term_);
 
 export default class HyperTerm extends Component {
   constructor (props) {
