@@ -70,8 +70,7 @@ function updatePlugins ({ force = false } = {}) {
       paths = getPaths(plugins);
 
       // clear require cache
-      paths.plugins.forEach(clearCache);
-      paths.localPlugins.forEach(clearCache);
+      clearCache();
 
       // cache modules
       modules = requirePlugins();
@@ -106,7 +105,7 @@ function getPluginVersions () {
 
 function clearCache (mod) {
   for (const entry in require.cache) {
-    if (0 === entry.indexOf(mod + '/')) {
+    if (entry.indexOf(path) === 0 || entry.indexOf(localPath) === 0) {
       delete require.cache[entry];
     }
   }
