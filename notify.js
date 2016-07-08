@@ -21,7 +21,6 @@ app.on('ready', () => {
   );
   win_.loadURL(url);
   win_.webContents.on('dom-ready', () => {
-    console.log('ready');
     win = win_;
     buffer.forEach(([title, body]) => {
       notify(title, body);
