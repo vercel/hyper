@@ -255,20 +255,19 @@ exports.onWindow = function (win, app) {
   });
 };
 
-exports.decorateTerm = function (Term) {
-  return Term;
-};
-
-exports.decorateTabs = function (Tabs) {
-  return Tabs;
-};
-
-exports.decorateHyperTerm = function (HyperTerm) {
-  return HyperTerm;
-};
-
 exports.decorateMenu = function (tpl) {
-  return tpl;
+  let decorated = tpl;
+  modules.forEach((plugin) => {
+    if (plugin.decorateMenu) {
+      const res = plugin.decorateMenu(decorated);
+      if (res) {
+        decorated = res;
+      } else {
+        console.error('incompatible response type for `decorateMenu`');
+      }
+    }
+  });
+  return decorated;
 };
 
 exports.decorateConfig = function (config) {
