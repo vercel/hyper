@@ -52,7 +52,7 @@ module.exports = {
   plugins: [],
 
   // in development, you can create a directory under
-  // `~/.hyperterm_modules` and include it as a local
-  // plugin to load it and avoid npm installation
+  // `~/.hyperterm_modules/local/` and include it here
+  // to load it and avoid it being `npm install`ed
   localPlugins: []
 };
