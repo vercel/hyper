@@ -149,7 +149,7 @@ function install (fn) {
     cwd: path
   }, (err, stdout, stderr) => {
     if (err) {
-      if (/(command not found|not recognized as an)/.test(err.message)) {
+      if (/(command not found|not recognized as an)/.test(err.stack)) {
         if (plugins.plugins.length) {
           alert('We found `plugins` in `.hyperterm.js`, but `npm` is ' +
             'not installed or not in $PATH!\nPlease head to ' +
