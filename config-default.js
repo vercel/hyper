@@ -12,7 +12,7 @@ module.exports = {
     // terminal background color (hex)
     backgroundColor: '#000000',
 
-    // border color (winodw, tabs)
+    // border color (window, tabs)
     borderColor: '#333',
 
     // custom css to embed in the main window
