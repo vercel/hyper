@@ -35,7 +35,7 @@ module.exports = {
     new webpack.ExternalsPlugin('commonjs', ['electron']),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+        'NODE_ENV': JSON.stringify(nodeEnv)
       }
     })
   ]

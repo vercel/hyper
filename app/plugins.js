@@ -46,8 +46,7 @@ const updateProxy = (name) => {
   modules.forEach((mod) => {
     const decorator = mod[`decorate${name}`];
     if (decorator) {
-      console.log('decorating', name);
-      decorated = decorator(Component, __webpack_require__);
+      decorated = decorator(Component);
     }
   });
   if (decorated !== Component) {
@@ -74,6 +73,7 @@ ipcRenderer.on('plugins change', () => {
   updateProxies();
 });
 
+// for each component, we return the `react-proxy`d component
 export default function decorate (Component, props = null) {
   const name = Component.name;
 
