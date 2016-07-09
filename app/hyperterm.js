@@ -61,7 +61,6 @@ export default class HyperTerm extends Component {
     this.onUpdateAvailable = this.onUpdateAvailable.bind(this);
 
     document.body.style.backgroundColor = props.config.backgroundColor;
-    this.rpc = new RPC();
   }
 
   componentWillReceiveProps (props) {
@@ -145,10 +144,6 @@ export default class HyperTerm extends Component {
     this.rpc.emit('quit and install');
   }
 
-  closeUpdateIndicator () {
-    // @TODO
-  }
-
   openExternal (ev) {
     ev.preventDefault();
     this.rpc.emit('open external', { url: ev.target.href });
@@ -156,7 +151,10 @@ export default class HyperTerm extends Component {
 
   requestTab () {
     // we send the hterm default size
-    this.rpc.emit('new', { cols: this.state.cols, rows: this.state.rows });
+    this.rpc.emit('new', {
+      cols: this.state.cols,
+      rows: this.state.rows
+    });
   }
 
   closeActiveTab () {
@@ -237,6 +235,8 @@ export default class HyperTerm extends Component {
   }
 
   componentDidMount () {
+    this.rpc = new RPC();
+
     // open a new tab upon mounting
     this.rpc.once('ready', () => this.requestTab());
 
