@@ -74,7 +74,8 @@ export default class HyperTerm extends Component {
   }
 
   render () {
-    const { backgroundColor, borderColor, css } = this.props.config;
+    const { backgroundColor, borderColor, css, resizeIndicator } = this.props.config;
+
     return <div onClick={ this.focusActive }>
       <div style={{ borderColor }} className={ classes('main', { mac: this.state.mac }) }>
         <header style={{ backgroundColor }} onMouseDown={this.onHeaderMouseDown}>
@@ -122,8 +123,10 @@ export default class HyperTerm extends Component {
         }</div>
       </div>
       <div className={classes('resize-indicator', { showing: this.state.resizeIndicatorShowing })}>
-        {this.state.fontSizeIndicatorShowing && <div>{ this.state.fontSize }px</div>}
-        <div>{ this.state.cols }x{ this.state.rows }</div>
+        <div className={classes({ dn: !this.state.fontSizeIndicatorShowing })} style={resizeIndicator}>
+          { this.state.fontSize }px
+        </div>
+        <div style={resizeIndicator}>{ this.state.cols }x{ this.state.rows }</div>
       </div>
       <div className={classes('update-indicator', { showing: null !== this.state.updateVersion && !this.state.dismissedUpdate })}>
         Version <b>{ this.state.updateVersion }</b> ready.
