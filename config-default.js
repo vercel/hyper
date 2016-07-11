@@ -15,6 +15,9 @@ module.exports = {
     // border color (window, tabs)
     borderColor: '#333',
 
+    // style resize-indicators
+    resizeIndicator: {},
+
     // custom css to embed in the main window
     css: [''],
 

@@ -103,3 +103,5 @@ header {
   width: 1em;
   height: 1em;
 }
+
+.dn { display: none; }
