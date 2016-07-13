@@ -16,14 +16,10 @@ import { createStore, applyMiddleware } from 'redux';
 import HyperTermContainer from './containers/hyperterm';
 import { loadConfig, reloadConfig } from './actions/config';
 
-import createLogger from 'redux-logger';
-const logger = createLogger({ collapsed: true });
-
 const store = createStore(
   rootReducer,
   applyMiddleware(
     thunk,
-    logger,
     plugins.middleware,
     thunk,
     effects
