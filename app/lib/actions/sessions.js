@@ -20,9 +20,18 @@ import {
 } from '../constants/sessions';
 
 export function addSession (uid) {
-  return {
-    type: SESSION_ADD,
-    uid
+  return (dispatch, getState) => {
+    const { sessions } = getState();
+    const initial = null == sessions.activeUid;
+    return dispatch({
+      type: SESSION_ADD,
+      uid,
+      effect () {
+        if (initial) {
+          rpc.emit('init');
+        }
+      }
+    });
   };
 }
 
