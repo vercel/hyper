@@ -75,16 +75,16 @@ function updatePlugins ({ force = false } = {}) {
       // cache modules
       modules = requirePlugins();
 
-      // notify watchers
-      watchers.forEach((fn) => fn(err));
-
       const loaded = modules.length;
       const total = paths.plugins.length + paths.localPlugins.length;
       const pluginVersions = JSON.stringify(getPluginVersions());
-      if (force || (cache.get('plugin-versions') !== pluginVersions && loaded === total)) {
-        notify('HyperTerm plugins updated!');
-      }
+      const changed = cache.get('plugin-versions') !== pluginVersions && loaded === total;
       cache.set('plugin-versions', pluginVersions);
+
+      // notify watchers
+      if (force || changed) {
+        watchers.forEach((fn) => fn(err, { force }));
+      }
     }
   });
 }
@@ -221,9 +221,12 @@ function requirePlugins () {
       mod = require(path);
 
       if (!mod || (!mod.onApp && !mod.onWindow && !mod.onUnload &&
+        !mod.middleware &&
         !mod.decorateConfig && !mod.decorateMenu &&
         !mod.decorateTerm && !mod.decorateHyperTerm &&
-        !mod.decorateTabs && !mod.decorateConfig)) {
+        !mod.decorateTab && !mod.decorateNotification &&
+        !mod.decorateNotifications && !mod.decorateTabs &&
+        !mod.decorateConfig)) {
         notify('Plugin error!', `Plugin "${basename(path)}" does not expose any ` +
           'HyperTerm extension API methods');
         return;

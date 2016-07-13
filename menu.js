@@ -66,7 +66,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           accelerator: 'CmdOrCtrl+T',
           click (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.rpc.emit('new tab');
+              focusedWindow.rpc.emit('session add req');
             } else {
               createWindow();
             }
@@ -77,7 +77,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           accelerator: 'CmdOrCtrl+W',
           click (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.rpc.emit('close tab');
+              focusedWindow.rpc.emit('session close req');
             }
           }
         }
@@ -95,7 +95,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           accelerator: 'CmdOrCtrl+K',
           click (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.rpc.emit('clear');
+              focusedWindow.rpc.emit('session clear req');
             }
           }
         }
@@ -108,7 +108,18 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           label: 'Reload',
           accelerator: 'CmdOrCtrl+R',
           click (item, focusedWindow) {
-            if (focusedWindow) focusedWindow.reload();
+            if (focusedWindow) {
+              focusedWindow.rpc.emit('reload');
+            }
+          }
+        },
+        {
+          label: 'Full Reload',
+          accelerator: 'CmdOrCtrl+Shift+R',
+          click (item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.reload();
+            }
           }
         },
         {
@@ -128,7 +139,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           accelerator: 'CmdOrCtrl+0',
           click (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.rpc.emit('reset font size');
+              focusedWindow.rpc.emit('reset fontSize req');
             }
           }
         },
@@ -137,7 +148,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           accelerator: 'CmdOrCtrl+plus',
           click (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.rpc.emit('increase font size');
+              focusedWindow.rpc.emit('increase fontSize req');
             }
           }
         },
@@ -146,20 +157,8 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           accelerator: 'CmdOrCtrl+-',
           click (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.rpc.emit('decrease font size');
+              focusedWindow.rpc.emit('decrease fontSize req');
             }
-          }
-        }
-      ]
-    },
-    {
-      label: 'Tools',
-      submenu: [
-        {
-          label: 'Update plugins',
-          accelerator: 'CmdOrCtrl+U',
-          click (item, focusedWindow) {
-            updatePlugins();
           }
         }
       ]
@@ -181,7 +180,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           accelerator: 'CmdOrCtrl+Left',
           click (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.rpc.emit('move left');
+              focusedWindow.rpc.emit('move left req');
             }
           }
         },
@@ -190,7 +189,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           accelerator: 'CmdOrCtrl+Right',
           click (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.rpc.emit('move right');
+              focusedWindow.rpc.emit('move right req');
             }
           }
         },

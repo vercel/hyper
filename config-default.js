@@ -1,6 +1,6 @@
 module.exports = {
   config: {
-    // default font size for all tabs
+    // default font size in pixels for all tabs
     fontSize: 12,
 
     // font family with optional fallbacks
@@ -9,17 +9,23 @@ module.exports = {
     // terminal cursor background color (hex)
     cursorColor: '#F81CE5',
 
-    // terminal background color (hex)
-    backgroundColor: '#000000',
+    // color of the text
+    foregroundColor: '#fff',
+
+    // terminal background color
+    backgroundColor: '#000',
 
     // border color (window, tabs)
     borderColor: '#333',
 
     // custom css to embed in the main window
-    css: [''],
+    css: '',
 
-    // custom css to embed inside each terminal
-    termCSS: [''],
+    // custom padding (css format, i.e.: `top right bottom left`)
+    termCSS: '',
+
+    // custom padding
+    padding: '12px 14px',
 
     // some color overrides. see http://bit.ly/29k1iU2 for
     // the full list

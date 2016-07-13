@@ -30,6 +30,7 @@ app.on('ready', () => {
 });
 
 function notify (title, body) {
+  console.log(`[Notification] ${title}: ${body}`);
   if (win) {
     win.webContents.send('notification', { title, body });
   } else {

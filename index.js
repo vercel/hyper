@@ -6,6 +6,7 @@ const genUid = require('uid2');
 const { resolve } = require('path');
 const isDev = require('electron-is-dev');
 const AutoUpdater = require('./auto-updater');
+const toHex = require('convert-css-color-name-to-hex');
 
 // set up config
 const config = require('./config');
@@ -44,7 +45,7 @@ app.on('ready', () => {
       height: 380,
       titleBarStyle: 'hidden-inset',
       title: 'HyperTerm',
-      backgroundColor: config.getConfig().backgroundColor || '#000',
+      backgroundColor: toHex(config.getConfig().backgroundColor || '#000'),
       transparent: true,
       // we only want to show when the prompt
       // is ready for user input
@@ -75,29 +76,42 @@ app.on('ready', () => {
     rpc.on('new', ({ rows = 40, cols = 100 }) => {
       initSession({ rows, cols }, (uid, session) => {
         sessions.set(uid, session);
-        rpc.emit('new session', { uid });
+        rpc.emit('session add', { uid });
 
         session.on('data', (data) => {
-          rpc.emit('data', { uid, data });
+          rpc.emit('session data', { uid, data });
         });
 
         session.on('title', (title) => {
-          rpc.emit('title', { uid, title });
+          rpc.emit('session title', { uid, title });
         });
 
         session.on('exit', () => {
-          rpc.emit('exit', { uid });
+          rpc.emit('session exit', { uid });
           sessions.delete(uid);
         });
       });
     });
 
+    // TODO: this goes away when we are able to poll
+    // for the title ourseleves, instead of relying
+    // on Session and focus/blur to subscribe
     rpc.on('focus', ({ uid }) => {
-      sessions.get(uid).focus();
+      const session = sessions.get(uid);
+      if (session) {
+        session.focus();
+      } else {
+        console.log('session not found by', uid);
+      }
     });
 
     rpc.on('blur', ({ uid }) => {
-      sessions.get(uid).blur();
+      const session = sessions.get(uid);
+      if (session) {
+        session.blur();
+      } else {
+        console.log('session not found by', uid);
+      }
     });
 
     rpc.on('exit', ({ uid }) => {
@@ -154,9 +168,15 @@ app.on('ready', () => {
     // load plugins
     load();
 
-    const pluginsUnsubscribe = plugins.subscribe(() => {
-      load();
-      win.webContents.send('plugins change');
+    const pluginsUnsubscribe = plugins.subscribe((err, { force }) => {
+      if (!err) {
+        load();
+        if (force) {
+          win.webContents.send('plugins reload');
+        } else {
+          win.webContents.send('plugins change');
+        }
+      }
     });
 
     // the window can be closed by the browser process itself
