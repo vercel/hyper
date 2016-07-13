@@ -1,7 +1,18 @@
 const { EventEmitter } = require('events');
-const { spawn } = require('child_pty');
 const { exec } = require('child_process');
 const defaultShell = require('default-shell');
+
+let spawn;
+try {
+  spawn = require('child_pty').spawn;
+} catch (err) {
+  console.error(
+    'A native module failed to load. Typically this means ' +
+    'you installed the modules incorrectly.\n Use `scripts/install.sh` ' +
+    'to trigger the installation.\n ' +
+    'More information: https://github.com/zeit/hyperterm/issues/72'
+  );
+}
 
 const TITLE_POLL_INTERVAL = 500;
 
