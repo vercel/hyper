@@ -1,7 +1,6 @@
 import React from 'react';
 import Term_ from './term';
 import Component from '../component';
-import { shouldComponentUpdate } from 'react-addons-pure-render-mixin';
 import { last } from '../utils/array';
 import { decorate, getTermProps } from '../utils/plugins';
 
@@ -59,13 +58,20 @@ export default class Terms extends Component {
     }
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    let nextProps_ = nextProps;
-    if (this.props.write || nextProps.write) {
-      // ignore `write` when performing the comparison
-      nextProps_ = Object.assign({}, nextProps, { write: null });
+  shouldComponentUpdate (nextProps) {
+    for (const i in nextProps) {
+      if ('write' === i) continue;
+      if (this.props[i] !== nextProps[i]) {
+        return true;
+      }
     }
-    return shouldComponentUpdate.call(this, nextProps_);
+    for (const i in this.props) {
+      if ('write' === i) continue;
+      if (this.props[i] !== nextProps[i]) {
+        return true;
+      }
+    }
+    return false;
   }
 
   onRef (uid, term) {
