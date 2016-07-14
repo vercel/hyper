@@ -1,4 +1,4 @@
-const { dialog } = require('electron');
+const { app, dialog } = require('electron');
 const { homedir } = require('os');
 const { resolve, basename } = require('path');
 const { writeFileSync } = require('fs');
@@ -117,7 +117,7 @@ function getPluginVersions () {
 function clearCache (mod) {
   // trigger unload hooks
   modules.forEach((mod) => {
-    if (mod.onUnload) mod.onUnload();
+    if (mod.onUnload) mod.onUnload(app);
   });
 
   // clear require cache
