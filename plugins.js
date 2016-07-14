@@ -13,8 +13,8 @@ const notify = require('./notify');
 const cache = new Config();
 
 // modules path
-const path = resolve(homedir(), '.hyperterm_modules');
-const localPath = resolve(homedir(), '.hyperterm_modules', 'local');
+const path = resolve(homedir(), '.hyperterm_plugins');
+const localPath = resolve(homedir(), '.hyperterm_plugins', 'local');
 
 // init plugin directories if not present
 mkdirpSync(path);
@@ -60,7 +60,7 @@ function updatePlugins ({ force = false } = {}) {
       console.error(err.stack);
       notify(
         'Error updating plugins.',
-        'Check `~/.hyperterm_modules/npm-debug.log` for more information.'
+        'Check `~/.hyperterm_plugins/npm-debug.log` for more information.'
       );
     } else {
       // flag successful plugin update
