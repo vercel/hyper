@@ -168,7 +168,7 @@ app.on('ready', () => {
     // load plugins
     load();
 
-    const pluginsUnsubscribe = plugins.subscribe((err, { force }) => {
+    const pluginsUnsubscribe = plugins.subscribe((err) => {
       if (!err) {
         load();
       }
