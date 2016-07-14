@@ -1,4 +1,12 @@
 
+0.4.5 / 2016-07-14
+==================
+
+  * performance improvements for url matching [@rauchg]
+  * improve repaint performance for writes to the term [@rauchg]
+  * fix issue with perf degradation related to title polling [@rauchg]
+  * fix resizing when only one axis changed [@rauchg]
+
 0.4.4 / 2016-07-14
 ==================
 
