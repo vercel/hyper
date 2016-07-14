@@ -1,4 +1,4 @@
-import { ipcRenderer, remote } from 'electron';
+import { remote } from 'electron';
 import { connect as reduxConnect } from 'react-redux';
 
 // we expose these two deps to component decorators
