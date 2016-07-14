@@ -40,19 +40,24 @@ module.exports = class Session extends EventEmitter {
       }
     });
 
+    this.shell = defaultShell;
     this.getTitle();
   }
 
   focus () {
-    this.getTitle(true);
+    this.subscribed = true;
+    this.getTitle();
   }
 
   blur () {
+    this.subscribed = false;
     clearTimeout(this.titlePoll);
   }
 
-  getTitle (subscribe = false) {
+  getTitle () {
     if ('win32' === process.platform) return;
+    if (this.fetching) return;
+    this.fetching = true;
 
     let tty = this.pty.stdout.ttyname;
     tty = tty.replace(/^\/dev\/tty/, '');
@@ -64,6 +69,7 @@ module.exports = class Session extends EventEmitter {
     // TODO: limit the concurrency of how many processes we run?
     // TODO: only tested on mac
     exec(`ps uxac | grep ${tty} | head -n 1`, (err, out) => {
+      this.fetching = false;
       if (this.ended) return;
       if (err) return;
       let title = out.split(' ').pop();
@@ -76,8 +82,8 @@ module.exports = class Session extends EventEmitter {
         }
       }
 
-      if (subscribe) {
-        this.titlePoll = setTimeout(() => this.getTitle(true), TITLE_POLL_INTERVAL);
+      if (this.subscribed) {
+        this.titlePoll = setTimeout(() => this.getTitle(), TITLE_POLL_INTERVAL);
       }
     });
   }
@@ -106,7 +112,7 @@ module.exports = class Session extends EventEmitter {
     }
     this.emit('exit');
     this.ended = true;
-    clearTimeout(this.titlePoll);
+    this.blur();
   }
 
 };
