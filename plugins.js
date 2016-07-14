@@ -115,6 +115,12 @@ function getPluginVersions () {
 }
 
 function clearCache (mod) {
+  // trigger unload hooks
+  modules.forEach((mod) => {
+    if (mod.onUnload) mod.onUnload();
+  });
+
+  // clear require cache
   for (const entry in require.cache) {
     if (entry.indexOf(path) === 0 || entry.indexOf(localPath) === 0) {
       delete require.cache[entry];

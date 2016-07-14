@@ -28,6 +28,11 @@ let termPropsDecorators;
 const { path, localPath } = plugins.getBasePaths();
 
 const clearModulesCache = () => {
+  // trigger unload hooks
+  modules.forEach((mod) => {
+    if (mod.onRendererUnload) mod.onRendererUnload(window);
+  });
+
   // clear require cache
   for (const entry in window.require.cache) {
     if (entry.indexOf(path) === 0 || entry.indexOf(localPath) === 0) {
@@ -130,6 +135,10 @@ const loadModules = () => {
 
     if (mod.getTabsProps) {
       tabsPropsDecorators.push(mod.getTabsProps);
+    }
+
+    if (mod.onRendererWindow) {
+      mod.onRendererWindow(window);
     }
 
     return mod;
@@ -360,7 +369,9 @@ function getDecorated (parent, name) {
   return decorated[name];
 }
 
-// for each component, we return the `react-proxy`d component
+// for each component, we return a higher-order component
+// that wraps with the higher-order components
+// exposed by plugins
 export function decorate (Component, name) {
   return class extends React.Component {
     render () {
