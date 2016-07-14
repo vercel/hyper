@@ -43,6 +43,8 @@ app.on('ready', () => {
     let win = new BrowserWindow({
       width: 540,
       height: 380,
+      minHeight: 190,
+      minWidth: 370,
       titleBarStyle: 'hidden-inset',
       title: 'HyperTerm',
       backgroundColor: toHex(config.getConfig().backgroundColor || '#000'),
