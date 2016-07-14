@@ -1,4 +1,9 @@
 
+0.4.2 / 2016-07-13
+==================
+
+  * fix close icon by copying static assets to build [@rauchg]
+
 0.4.1 / 2016-07-13
 ==================
 
