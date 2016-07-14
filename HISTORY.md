@@ -1,4 +1,10 @@
 
+0.4.3 / 2016-07-14
+==================
+
+  * terms: improve write performance
+  * remove unused import
+
 0.4.2 / 2016-07-13
 ==================
 
