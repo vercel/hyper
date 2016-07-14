@@ -19,6 +19,7 @@ npm install
 npm run lint
 npm run build
 cd -
+cp -r app/assets build/
 cp app/index.html build/
 cp -r app/dist build/
 mkdir dist
