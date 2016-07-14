@@ -7,7 +7,6 @@ const { sync: mkdirpSync } = require('mkdirp');
 const { exec } = require('child_process');
 const Config = require('electron-config');
 const ms = require('ms');
-const which = require('which');
 const notify = require('./notify');
 
 // local storage
@@ -58,6 +57,7 @@ function updatePlugins ({ force = false } = {}) {
     updating = false;
 
     if (err) {
+      console.error(err.stack);
       notify(
         'Error updating plugins.',
         'Check `~/.hyperterm_modules/npm-debug.log` for more information.'
@@ -83,6 +83,17 @@ function updatePlugins ({ force = false } = {}) {
 
       // notify watchers
       if (force || changed) {
+        if (changed) {
+          notify(
+            'Plugins Updated',
+            'Restart the app or hot-reload with "Plugins" > "Reload Now" to enjoy the updates!'
+          );
+        } else {
+          notify(
+            'Plugins Updated',
+            'No changes!'
+          );
+        }
         watchers.forEach((fn) => fn(err, { force }));
       }
     }
@@ -165,24 +176,13 @@ function toDependencies (plugins) {
 }
 
 function install (fn) {
-  which('npm', (err, bin) => {
-    if (err) {
-      if (plugins.plugins.length) {
-        alert('We found `plugins` in `.hyperterm.js`, but `npm` is ' +
-          'not installed or not in $PATH!\nPlease head to ' +
-          'https://nodejs.org and install the Node.js runtime.');
-      } else {
-        console.log('npm not found, but no plugins defined');
-      }
-      return fn(err);
-    }
-
-    exec(`${bin} prune && ${bin} install --production`, {
-      cwd: path
-    }, (err, stdout, stderr) => {
-      if (err) return fn(err);
-      fn(null);
-    });
+  const prefix = 'darwin' === process.platform ? 'eval `/usr/libexec/path_helper -s` && ' : '';
+  exec(prefix + 'npm prune && npm install --production', {
+    cwd: path
+  }, (err, stdout, stderr) => {
+    if (err) alert(err.stack);
+    if (err) return fn(err);
+    fn(null);
   });
 }
 
@@ -196,7 +196,7 @@ exports.subscribe = function (fn) {
 function getPaths () {
   return {
     plugins: plugins.plugins.map((name) => {
-      return resolve(path, 'node_modules', name);
+      return resolve(path, 'node_modules', name.split('#')[0]);
     }),
     localPlugins: plugins.localPlugins.map((name) => {
       return resolve(localPath, name);
