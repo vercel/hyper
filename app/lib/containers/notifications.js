@@ -10,7 +10,7 @@ const NotificationsContainer = connect(
     const state_ = {};
 
     if (notifications.font) {
-      const fontSize = ui.fontSize;
+      const fontSize = ui.fontSizeOverride || ui.fontSize;
 
       Object.assign(state_, {
         fontShowing: true,

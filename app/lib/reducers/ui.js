@@ -183,7 +183,7 @@ const reducer = (state = initial, action) => {
       break;
 
     case UI_FONT_SIZE_SET:
-      state_ = state.set('fontSizeOverride', state.value);
+      state_ = state.set('fontSizeOverride', action.value);
       break;
 
     case UI_FONT_SIZE_RESET:

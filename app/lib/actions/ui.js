@@ -24,10 +24,10 @@ export function increaseFontSize () {
       effect () {
         const state = getState();
         const old = state.ui.fontSizeOverride || state.ui.fontSize;
-        const size = old + 1;
+        const value = old + 1;
         dispatch({
           type: UI_FONT_SIZE_SET,
-          size
+          value
         });
       }
     });
@@ -41,10 +41,10 @@ export function decreaseFontSize () {
       effect () {
         const state = getState();
         const old = state.ui.fontSizeOverride || state.ui.fontSize;
-        const size = old + 1;
+        const value = old - 1;
         dispatch({
           type: UI_FONT_SIZE_SET,
-          size
+          value
         });
       }
     });

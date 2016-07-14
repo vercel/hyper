@@ -78,7 +78,7 @@ rpc.on('increase fontSize req', () => {
 });
 
 rpc.on('decrease fontSize req', () => {
-  store_.dispatch(uiActions.resetFontSize());
+  store_.dispatch(uiActions.decreaseFontSize());
 });
 
 rpc.on('move left req', () => {
