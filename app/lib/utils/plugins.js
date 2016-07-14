@@ -148,17 +148,6 @@ export function reload () {
   decorated = {};
 }
 
-// we want to refresh our modules cache every time
-// plugins reload.
-// the re-painting happens by the top-level `Config` component
-// that reacts to configuration changes and plugin changes
-ipcRenderer.on('plugins change', function (ev) {
-  notify(
-    'Plugins Updated',
-    'Restart or choose "Plugins" > "Reload Now"'
-  );
-});
-
 export function getTermProps (uid, parentProps, props) {
   let props_;
 
