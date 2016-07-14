@@ -6,7 +6,6 @@ const appName = app.getName();
 // based on and inspired by
 // https://github.com/sindresorhus/anatine/blob/master/menu.js
 
-
 module.exports = function createMenu ({ createWindow, updatePlugins }) {
   return [
     {
@@ -159,6 +158,18 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('decrease fontSize req');
             }
+          }
+        }
+      ]
+    },
+    {
+      label: 'Plugins',
+      submenu: [
+        {
+          label: 'Update All Now',
+          accelerator: 'CmdOrCtrl+Shift+U',
+          click () {
+            updatePlugins();
           }
         }
       ]
