@@ -58,10 +58,17 @@ function updatePlugins ({ force = false } = {}) {
 
     if (err) {
       console.error(err.stack);
-      notify(
-        'Error updating plugins.',
-        'Check `~/.hyperterm_plugins/npm-debug.log` for more information.'
-      );
+      if (/not a recognized/.test(err.message) || /command not found/.test(err.message)) {
+        notify(
+          'Error updating plugins.',
+          'We could not find the `npm` command. Make sure it\'s in $PATH'
+        );
+      } else {
+        notify(
+          'Error updating plugins.',
+          'Check `~/.hyperterm_plugins/npm-debug.log` for more information.'
+        );
+      }
     } else {
       // flag successful plugin update
       cache.set('plugins', id_);
@@ -186,7 +193,6 @@ function install (fn) {
   exec(prefix + 'npm prune && npm install --production', {
     cwd: path
   }, (err, stdout, stderr) => {
-    if (err) alert(err.stack);
     if (err) return fn(err);
     fn(null);
   });
