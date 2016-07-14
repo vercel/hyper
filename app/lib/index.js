@@ -16,7 +16,7 @@ import { createStore, applyMiddleware } from 'redux';
 import HyperTermContainer from './containers/hyperterm';
 import { loadConfig, reloadConfig } from './actions/config';
 
-const store = createStore(
+const store_ = createStore(
   rootReducer,
   applyMiddleware(
     thunk,
@@ -26,78 +26,79 @@ const store = createStore(
   )
 );
 
-window.__defineGetter__('state', () => store.getState());
+window.__defineGetter__('store', () => store_);
+window.__defineGetter__('rpc', () => rpc);
 
 // initialize config
-store.dispatch(loadConfig(config.getConfig()));
+store_.dispatch(loadConfig(config.getConfig()));
 config.subscribe(() => {
-  store.dispatch(reloadConfig(config.getConfig()));
+  store_.dispatch(reloadConfig(config.getConfig()));
 });
 
 // initialize communication with main electron process
 // and subscribe to all user intents for example from menues
 rpc.on('ready', () => {
-  store.dispatch(init());
+  store_.dispatch(init());
 });
 
 rpc.on('session add', ({ uid }) => {
-  store.dispatch(sessionActions.addSession(uid));
+  store_.dispatch(sessionActions.addSession(uid));
 });
 
 rpc.on('session data', ({ uid, data }) => {
-  store.dispatch(sessionActions.addSessionData(uid, data));
+  store_.dispatch(sessionActions.addSessionData(uid, data));
 });
 
 rpc.on('session title', ({ uid, title }) => {
-  store.dispatch(sessionActions.setSessionProcessTitle(uid, title));
+  store_.dispatch(sessionActions.setSessionProcessTitle(uid, title));
 });
 
 rpc.on('session exit', ({ uid }) => {
-  store.dispatch(sessionActions.sessionExit(uid));
+  store_.dispatch(sessionActions.sessionExit(uid));
 });
 
 rpc.on('session add req', () => {
-  store.dispatch(sessionActions.requestSession());
+  store_.dispatch(sessionActions.requestSession());
 });
 
 rpc.on('session close req', () => {
-  store.dispatch(sessionActions.userExitActiveSession());
+  store_.dispatch(sessionActions.userExitActiveSession());
 });
 
 rpc.on('session clear req', () => {
-  store.dispatch(sessionActions.clearActiveSession());
+  store_.dispatch(sessionActions.clearActiveSession());
 });
 
 rpc.on('reset fontSize req', () => {
-  store.dispatch(uiActions.resetFontSize());
+  store_.dispatch(uiActions.resetFontSize());
 });
 
 rpc.on('increase fontSize req', () => {
-  store.dispatch(uiActions.increaseFontSize());
+  store_.dispatch(uiActions.increaseFontSize());
 });
 
 rpc.on('decrease fontSize req', () => {
-  store.dispatch(uiActions.resetFontSize());
+  store_.dispatch(uiActions.resetFontSize());
 });
 
 rpc.on('move left req', () => {
-  store.dispatch(uiActions.moveLeft());
+  store_.dispatch(uiActions.moveLeft());
 });
 
 rpc.on('move right req', () => {
-  store.dispatch(uiActions.moveRight());
+  store_.dispatch(uiActions.moveRight());
 });
 
 rpc.on('preferences', () => {
-  store.dispatch(uiActions.showPreferences());
+  store_.dispatch(uiActions.showPreferences());
 });
 
 rpc.on('update available', ({ releaseName, releaseNotes }) => {
-  store.dispatch(updaterActions.updateAvailable(releaseName, releaseNotes));
+  store_.dispatch(updaterActions.updateAvailable(releaseName, releaseNotes));
 });
 
 const app = render(
-  <Provider store={ store }>
+  <Provider store={ store_ }>
     <HyperTermContainer />
   </Provider>,
   document.getElementById('mount')
