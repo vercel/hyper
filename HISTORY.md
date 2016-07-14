@@ -1,4 +1,19 @@
 
+0.4.0 / 2016-07-13
+==================
+
+  * implement extensible redux actions system [@rauchg]
+  * add support for config (~/.hyperterm.js) [@rauchg, @nfcampos]
+  * add support for plugins (~/.hyperterm_modules) [@rauchg]
+  * improve menubar look [@leo, @rauchg]
+  * beautiful default colors [@hharnisc, @dzannotti]
+  * add close icon for tabs [@johanbrook]
+  * add support for font size shortcuts [@jhaynie, @nfcampos]
+  * add support for maximizing upon double click [@jhaynie]
+  * add fallback fonts for linux and windows [@olliv]
+  * improve menu items [@rauchg, @sindresorhus]
+  * add proper auto updates system [@matiastucci, @rauchg]
+
 0.3.1 / 2016-07-04
 ==================
 
