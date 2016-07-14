@@ -38,7 +38,7 @@ export default class Term extends Component {
       const io = this.term.io.push();
       io.onVTKeystroke = io.sendString = props.onData;
       io.onTerminalResize = (cols, rows) => {
-        if (cols !== this.props.cols && rows !== this.props.rows) {
+        if (cols !== this.props.cols || rows !== this.props.rows) {
           props.onResize(cols, rows);
         }
       };
