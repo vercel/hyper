@@ -14,8 +14,7 @@
     "gaze": "1.1.0",
     "mkdirp": "0.5.1",
     "ms": "0.7.1",
-    "uid2": "0.0.3",
-    "which": "1.2.10"
+    "uid2": "0.0.3"
   },
   "devDependencies": {
     "electron-packager": "7.1.0",
