@@ -22,15 +22,16 @@ import {
 export function addSession (uid) {
   return (dispatch, getState) => {
     const { sessions } = getState();
+
+    // normally this would be encoded as an effect
+    // but the `SESSION_ADD` action is pretty expensive
+    // and we want to get this out as soon as possible
     const initial = null == sessions.activeUid;
-    return dispatch({
+    if (initial) rpc.emit('init');
+
+    dispatch({
       type: SESSION_ADD,
-      uid,
-      effect () {
-        if (initial) {
-          rpc.emit('init');
-        }
-      }
+      uid
     });
   };
 }
