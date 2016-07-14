@@ -78,7 +78,10 @@ app.on('ready', () => {
     rpc.on('new', ({ rows = 40, cols = 100 }) => {
       initSession({ rows, cols }, (uid, session) => {
         sessions.set(uid, session);
-        rpc.emit('session add', { uid });
+        rpc.emit('session add', {
+          uid,
+          shell: session.shell
+        });
 
         session.on('data', (data) => {
           rpc.emit('session data', { uid, data });

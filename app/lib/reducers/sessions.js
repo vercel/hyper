@@ -25,7 +25,8 @@ function Session (obj) {
     title: '',
     write: null,
     url: null,
-    cleared: false
+    cleared: false,
+    shell: ''
   }).merge(obj);
 }
 
@@ -37,14 +38,12 @@ function Write (obj) {
 }
 
 const reducer = (state = initialState, action) => {
-  // prune the last write to the terminal
-  if (state.write) {
-    state = state.set('write', null);
-  }
-
   switch (action.type) {
     case SESSION_ADD:
-      return state.setIn(['sessions', action.uid], Session({ uid: action.uid }));
+      return state.setIn(['sessions', action.uid], Session({
+        uid: action.uid,
+        shell: action.shell.split('/').pop()
+      }));
 
     case SESSION_URL_SET:
       return state.setIn(['sessions', action.uid, 'url'], action.url);
@@ -65,8 +64,9 @@ const reducer = (state = initialState, action) => {
       }, { deep: true });
 
     case SESSION_PTY_DATA:
-      return state.merge({
-        write: Write(action),
+      return state
+      .set('write', Write(action))
+      .merge({
         sessions: {
           [action.uid]: {
             cleared: false

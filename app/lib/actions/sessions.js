@@ -19,7 +19,7 @@ import {
   SESSION_SET_PROCESS_TITLE
 } from '../constants/sessions';
 
-export function addSession (uid) {
+export function addSession (uid, shell) {
   return (dispatch, getState) => {
     const { sessions } = getState();
 
@@ -31,7 +31,8 @@ export function addSession (uid) {
 
     dispatch({
       type: SESSION_ADD,
-      uid
+      uid,
+      shell
     });
   };
 }
@@ -51,13 +52,14 @@ export function requestSession (uid) {
 }
 
 export function addSessionData (uid, data) {
-  return (dispatch, getState) => {
+  return function (dispatch, getState) {
     dispatch({
       type: SESSION_ADD_DATA,
       data,
       effect () {
-        const url = getURL(data);
-        if (null != url) {
+        const { shell } = getState().sessions.sessions[uid];
+        const url = getURL(shell, data);
+        if (null !== url) {
           dispatch({
             type: SESSION_URL_SET,
             uid,
@@ -101,10 +103,13 @@ export function userExitSession (uid) {
       type: SESSION_USER_EXIT,
       uid,
       effect () {
-        rpc.emit('exit', { uid });
-        const sessions = keys(getState().sessions.sessions);
-        if (!sessions.length) {
-          window.close();
+        const { sessions } = getState().sessions;
+        if (sessions[uid]) {
+          rpc.emit('exit', { uid });
+          const sessions = keys(getState().sessions.sessions);
+          if (!sessions.length) {
+            window.close();
+          }
         }
       }
     });

@@ -41,8 +41,8 @@ rpc.on('ready', () => {
   store_.dispatch(init());
 });
 
-rpc.on('session add', ({ uid }) => {
-  store_.dispatch(sessionActions.addSession(uid));
+rpc.on('session add', ({ uid, shell }) => {
+  store_.dispatch(sessionActions.addSession(uid, shell));
 });
 
 rpc.on('session data', ({ uid, data }) => {

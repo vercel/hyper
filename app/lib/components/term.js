@@ -1,4 +1,4 @@
-/* global Blob,URL */
+/* global Blob,URL,requestAnimationFrame */
 import React from 'react';
 import hterm from '../hterm';
 import Component from '../component';
@@ -73,7 +73,9 @@ export default class Term extends Component {
   }
 
   write (data) {
-    this.term.io.print(data);
+    requestAnimationFrame(() => {
+      this.term.io.print(data);
+    });
   }
 
   focus () {
