@@ -20,7 +20,7 @@ to the app are detected.
 ```bash
 $ cd app/
 $ npm install
-$ webpack --watch
+$ npm run dev
 ```
 
 Then you can run in the main directory:
