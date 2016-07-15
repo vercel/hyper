@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Electron's version.
 export npm_config_target=1.2.3
 # The architecture of Electron, can be ia32 or x64.
