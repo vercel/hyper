@@ -4,6 +4,12 @@
 
 For downloads, documentation and the developer API head to: https://hyperterm.org
 
+### Repositories
+
+- Art: https://github.com/zeit/hyperterm-art
+- Website: https://github.com/zeit/hyperterm-website
+- Example extension: https://github.com/zeit/hyperpower
+
 ## Contribute
 
 To install `package.json` dependencies in a way where the native
