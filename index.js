@@ -37,10 +37,11 @@ app.on('window-all-closed', () => {
 });
 
 let winCount = 0;
+let win;
 
 app.on('ready', () => {
   function createWindow (fn) {
-    let win = new BrowserWindow({
+    win = new BrowserWindow({
       width: 540,
       height: 380,
       minHeight: 190,
@@ -53,6 +54,7 @@ app.on('ready', () => {
       // is ready for user input
       show: process.env.HYPERTERM_DEBUG || isDev
     });
+
     winCount++;
     win.loadURL(url);
 
@@ -78,6 +80,7 @@ app.on('ready', () => {
     rpc.on('new', ({ rows = 40, cols = 100 }) => {
       initSession({ rows, cols }, (uid, session) => {
         sessions.set(uid, session);
+
         rpc.emit('session add', {
           uid,
           shell: session.shell
@@ -103,6 +106,7 @@ app.on('ready', () => {
     // on Session and focus/blur to subscribe
     rpc.on('focus', ({ uid }) => {
       const session = sessions.get(uid);
+
       if (session) {
         session.focus();
       } else {
@@ -112,6 +116,7 @@ app.on('ready', () => {
 
     rpc.on('blur', ({ uid }) => {
       const session = sessions.get(uid);
+
       if (session) {
         session.blur();
       } else {
@@ -156,6 +161,7 @@ app.on('ready', () => {
     // we reset the rpc channel only upon
     // subsequent refreshes (ie: F5)
     let i = 0;
+
     win.webContents.on('did-navigate', () => {
       if (i++) {
         deleteSessions();
@@ -206,8 +212,10 @@ app.on('ready', () => {
       createWindow,
       updatePlugins: () => {
         plugins.updatePlugins({ force: true });
-      }
+      },
+      mainWindow: win
     }));
+
     Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
   };
 
