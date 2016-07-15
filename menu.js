@@ -6,7 +6,7 @@ const appName = app.getName();
 // based on and inspired by
 // https://github.com/sindresorhus/anatine/blob/master/menu.js
 
-module.exports = function createMenu ({ createWindow, updatePlugins }) {
+module.exports = function createMenu ({ createWindow, updatePlugins, mainWindow }) {
   return [
     {
       label: 'Application',
@@ -20,6 +20,10 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           click (item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('preferences');
+              return;
+            } else if (!mainWindow.isFocused()) {
+              mainWindow.on('focus', () => mainWindow.rpc.emit('preferences'));
+              mainWindow.show();
             }
           }
         },
