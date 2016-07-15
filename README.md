@@ -1,5 +1,9 @@
 # hyperterm
 
+![](https://cldup.com/tD67NzPryA.gif)
+
+For downloads, documentation and the developer API head to: https://hyperterm.org
+
 ## Contribute
 
 To install `package.json` dependencies in a way where the native
