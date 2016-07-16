@@ -40,12 +40,11 @@ export function addSession (uid, shell) {
 export function requestSession (uid) {
   return (dispatch, getState) => {
     const { ui } = getState();
-    const cols = ui.cols;
-    const rows = ui.rows;
+    const { cols, rows, cwd } = ui;
     dispatch({
       type: SESSION_REQUEST,
       effect: () => {
-        rpc.emit('new', { cols, rows });
+        rpc.emit('new', { cols, rows, cwd });
       }
     });
   };

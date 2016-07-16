@@ -80,8 +80,8 @@ app.on('ready', () => {
       }
     });
 
-    rpc.on('new', ({ rows = 40, cols = 100 }) => {
-      initSession({ rows, cols }, (uid, session) => {
+    rpc.on('new', ({ rows = 40, cols = 100, cwd = process.env.HOME }) => {
+      initSession({ rows, cols, cwd }, (uid, session) => {
         sessions.set(uid, session);
         rpc.emit('session add', {
           uid,
