@@ -7,6 +7,7 @@ export function getConfig () {
 
 export function subscribe (fn) {
   ipcRenderer.on('config change', fn);
+  ipcRenderer.on('plugins change', fn);
   return () => {
     ipcRenderer.removeListener('config change', fn);
   };
