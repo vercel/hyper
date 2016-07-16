@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": "zeit/hyperterm",
   "dependencies": {
-    "aphrodite": "0.4.1",
+    "aphrodite-simple": "0.4.1",
     "hterm-umdjs": "1.1.2",
     "json-loader": "0.5.4",
     "mousetrap": "1.6.0",

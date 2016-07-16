@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, css } from 'aphrodite';
+import { StyleSheet, css } from 'aphrodite-simple';
 import { shouldComponentUpdate } from 'react-addons-pure-render-mixin';
 
 export default class Component extends React.Component {
