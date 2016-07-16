@@ -85,7 +85,8 @@ app.on('ready', () => {
         sessions.set(uid, session);
         rpc.emit('session add', {
           uid,
-          shell: session.shell
+          shell: session.shell,
+          pid: session.pty.pid
         });
 
         session.on('data', (data) => {

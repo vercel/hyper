@@ -26,7 +26,8 @@ function Session (obj) {
     write: null,
     url: null,
     cleared: false,
-    shell: ''
+    shell: '',
+    pid: null
   }).merge(obj);
 }
 
@@ -42,7 +43,8 @@ const reducer = (state = initialState, action) => {
     case SESSION_ADD:
       return state.setIn(['sessions', action.uid], Session({
         uid: action.uid,
-        shell: action.shell.split('/').pop()
+        shell: action.shell.split('/').pop(),
+        pid: action.pid
       }));
 
     case SESSION_URL_SET:

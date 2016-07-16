@@ -19,7 +19,7 @@ import {
   SESSION_SET_PROCESS_TITLE
 } from '../constants/sessions';
 
-export function addSession (uid, shell) {
+export function addSession (uid, shell, pid) {
   return (dispatch, getState) => {
     const { sessions } = getState();
 
@@ -32,7 +32,8 @@ export function addSession (uid, shell) {
     dispatch({
       type: SESSION_ADD,
       uid,
-      shell
+      shell,
+      pid
     });
   };
 }
