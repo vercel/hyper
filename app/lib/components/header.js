@@ -1,6 +1,5 @@
 import React from 'react';
 import Tabs_ from './tabs';
-import overrideStyles from '../utils/override-style';
 import Component from '../component';
 import { decorate, getTabsProps } from '../utils/plugins';
 
@@ -62,7 +61,7 @@ export default class Header extends Component {
       onChange: this.onChangeIntent
     });
     return <header
-      ref={ overrideStyles({ backgroundColor }) }
+      style={{ backgroundColor }}
       className={ css('header', isMac && 'headerRounded') }
       onMouseDown={ this.onHeaderMouseDown }>
         { this.props.customChildrenBefore }

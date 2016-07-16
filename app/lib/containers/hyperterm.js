@@ -4,7 +4,6 @@ import TermsContainer from './terms';
 import NotificationsContainer from './notifications';
 import Component from '../component';
 import Mousetrap from 'mousetrap';
-import overrideStyles from '../utils/override-style';
 import { moveTo, moveLeft, moveRight } from '../actions/ui';
 import { connect } from '../utils/plugins';
 
@@ -74,7 +73,7 @@ class HyperTerm extends Component {
     const { isMac, customCSS, borderColor } = this.props;
     return <div onClick={ this.focusActive }>
       <div
-        ref={ overrideStyles({ borderColor }) }
+        style={{ borderColor }}
         className={ css('main', isMac && 'mainRounded') }>
         <HeaderContainer />
         <TermsContainer ref_={this.onTermsRef} />
