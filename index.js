@@ -13,6 +13,10 @@ const config = require('./config');
 config.init();
 const plugins = require('./plugins');
 
+// expose to plugins
+app.config = config;
+app.plugins = plugins;
+
 if (isDev) {
   console.log('running in dev mode');
 } else {
@@ -41,6 +45,8 @@ let win;
 
 app.on('ready', () => {
   function createWindow (fn) {
+    const cfg = plugins.getDecoratedConfig();
+
     win = new BrowserWindow({
       width: 540,
       height: 380,
@@ -48,7 +54,7 @@ app.on('ready', () => {
       minWidth: 370,
       titleBarStyle: 'hidden-inset',
       title: 'HyperTerm',
-      backgroundColor: toHex(config.getConfig().backgroundColor || '#000'),
+      backgroundColor: toHex(cfg.backgroundColor || '#000'),
       transparent: true,
       // we only want to show when the prompt
       // is ready for user input
@@ -182,6 +188,7 @@ app.on('ready', () => {
     const pluginsUnsubscribe = plugins.subscribe((err) => {
       if (!err) {
         load();
+        win.webContents.send('plugins change');
       }
     });
 
