@@ -266,10 +266,10 @@ exports.onApp = function (app) {
   });
 };
 
-exports.onWindow = function (win, app) {
+exports.onWindow = function (win) {
   modules.forEach((plugin) => {
     if (plugin.onWindow) {
-      plugin.onWindow(app);
+      plugin.onWindow(win);
     }
   });
 };
