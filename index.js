@@ -13,6 +13,10 @@ const config = require('./config');
 config.init();
 const plugins = require('./plugins');
 
+// expose to plugins
+app.config = config;
+app.plugins = plugins;
+
 if (isDev) {
   console.log('running in dev mode');
 } else {
