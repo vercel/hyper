@@ -1,6 +1,7 @@
 /* global Blob,URL,requestAnimationFrame */
 import React from 'react';
 import hterm from '../hterm';
+import rpc from '../rpc';
 import Component from '../component';
 
 export default class Term extends Component {
@@ -12,6 +13,10 @@ export default class Term extends Component {
     this.onScrollEnter = this.onScrollEnter.bind(this);
     this.onScrollLeave = this.onScrollLeave.bind(this);
     props.ref_(this);
+    // catches dropped files from the Main thread in order to print path
+    rpc.on('dropped-file', (url) => {
+      this.write(url);
+    });
   }
 
   componentDidMount () {
