@@ -28,6 +28,8 @@ const store_ = createStore(
 
 window.__defineGetter__('store', () => store_);
 window.__defineGetter__('rpc', () => rpc);
+window.__defineGetter__('config', () => config);
+window.__defineGetter__('plugins', () => plugins);
 
 // initialize config
 store_.dispatch(loadConfig(config.getConfig()));
