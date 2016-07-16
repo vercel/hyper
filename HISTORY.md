@@ -70,7 +70,7 @@
 
   * Implement hterm (#28) [@rauchg]
   * Fix "Download" link being clickable when hidden (#7) [@rauchg]
-  * Jump to begining of end at edges of tabs when moving sideways (#22) [@rauchg]
+  * Jump to beginning of end at edges of tabs when moving sideways (#22) [@rauchg]
   * Make clear where to run `npm start` (#19) [@montogeek]
   * Add fullscreen menu item (#1) [@rauchg, @montogeek]
   * Improve README and scripts (#15) [@leo]
