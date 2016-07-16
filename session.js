@@ -18,12 +18,12 @@ const TITLE_POLL_INTERVAL = 500;
 
 module.exports = class Session extends EventEmitter {
 
-  constructor ({ rows, cols: columns }) {
+  constructor ({ rows, cols: columns, cwd }) {
     super();
     this.pty = spawn(defaultShell, ['--login'], {
       columns,
       rows,
-      cwd: process.env.HOME,
+      cwd,
       env: Object.assign({}, process.env, {
         TERM: 'xterm-256color'
       })
