@@ -93,7 +93,7 @@ function updatePlugins ({ force = false } = {}) {
         if (changed) {
           notify(
             'Plugins Updated',
-            'Restart the app or hot-reload with "Plugins" > "Reload Now" to enjoy the updates!'
+            'Restart the app or hot-reload with "Plugins" > "Update All Now" to enjoy the updates!'
           );
         } else {
           notify(
