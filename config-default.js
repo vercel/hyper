@@ -52,7 +52,7 @@ module.exports = {
   // a list of plugins to fetch and install from npm
   // format: [@org/]project[#version]
   // examples:
-  //   `hypersolar`
+  //   `hyperpower`
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [],
