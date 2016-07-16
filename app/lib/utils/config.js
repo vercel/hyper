@@ -1,8 +1,8 @@
 import { ipcRenderer, remote } from 'electron';
-const config = remote.require('./config');
+const plugins = remote.require('./plugins');
 
 export function getConfig () {
-  return config.getConfig();
+  return plugins.getDecoratedConfig();
 }
 
 export function subscribe (fn) {
