@@ -15,6 +15,9 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           role: 'about'
         },
         {
+          type: 'separator'
+        },
+        {
           label: 'Preferences...',
           accelerator: 'Cmd+,',
           click (item, focusedWindow) {
@@ -72,6 +75,9 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           }
         },
         {
+          type: 'separator'
+        },
+        {
           label: 'Close',
           accelerator: 'CmdOrCtrl+W',
           click (item, focusedWindow) {
@@ -85,10 +91,30 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
     {
       label: 'Edit',
       submenu: [
-        { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
-        { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
-        { label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' },
-        { type: 'separator' },
+        {
+          role: 'undo'
+        },
+        {
+          role: 'redo'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          role: 'cut'
+        },
+        {
+          role: 'copy'
+        },
+        {
+          role: 'paste'
+        },
+        {
+          role: 'selectall'
+        },
+        {
+          type: 'separator'
+        },
         {
           label: 'Clear',
           accelerator: 'CmdOrCtrl+K',
@@ -228,13 +254,13 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           label: 'Report an Issue...',
           click () {
             const body = `
-        <!-- Please succinctly describe your issue and steps to reproduce it. -->
+<!-- Please succinctly describe your issue and steps to reproduce it. -->
 
-        -
+-
 
-        ${app.getName()} ${app.getVersion()}
-        Electron ${process.versions.electron}
-        ${process.platform} ${process.arch} ${os.release()}`;
+${app.getName()} ${app.getVersion()}
+Electron ${process.versions.electron}
+${process.platform} ${process.arch} ${os.release()}`;
 
             shell.openExternal(`https://github.com/zeit/hyperterm/issues/new?body=${encodeURIComponent(body)}`);
           }
