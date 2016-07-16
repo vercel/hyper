@@ -1,4 +1,16 @@
 
+0.5.0 / 2016-07-16
+==================
+
+  * plugins: improve error handling and introduce `getDecoratedConfig` [@rauchg]
+  * index: notify renderer of plugins changes to reload config [@rauchg]
+  * index: allow plugin authors to change electron window settings [@rauchg]
+  * index: expose `config` and `plugins` to plugin authors in electron process [@rauchg]
+  * app: preserve class names with uglification [@rauchg]
+  * config: reload config upon `plugins change` due to decorati [@rauchg]
+  * app: expose `plugins` and `config` to window [@rauchg]
+  * allow plugin authors to override styles by ditching !important [@rauchg]
+
 0.4.5 / 2016-07-14
 ==================
 
