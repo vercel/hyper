@@ -181,6 +181,7 @@ app.on('ready', () => {
     const pluginsUnsubscribe = plugins.subscribe((err) => {
       if (!err) {
         load();
+        win.webContents.send('plugins change');
       }
     });
 
