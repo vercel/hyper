@@ -44,14 +44,15 @@ let winCount = 0;
 
 app.on('ready', () => {
   function createWindow (fn) {
-    let win = new BrowserWindow({
+    const cfg = plugins.getDecoratedConfig();
+    const win = new BrowserWindow({
       width: 540,
       height: 380,
       minHeight: 190,
       minWidth: 370,
       titleBarStyle: 'hidden-inset',
       title: 'HyperTerm',
-      backgroundColor: toHex(config.getConfig().backgroundColor || '#000'),
+      backgroundColor: toHex(cfg.backgroundColor || '#000'),
       transparent: true,
       // we only want to show when the prompt
       // is ready for user input
