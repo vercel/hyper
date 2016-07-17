@@ -54,6 +54,7 @@ app.on('ready', () => {
       title: 'HyperTerm',
       backgroundColor: toHex(cfg.backgroundColor || '#000'),
       transparent: true,
+      icon: resolve(__dirname, 'static/icon.png'),
       // we only want to show when the prompt
       // is ready for user input
       show: process.env.HYPERTERM_DEBUG || isDev
