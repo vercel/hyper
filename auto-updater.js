@@ -3,7 +3,7 @@ const { version } = require('./package');
 const notify = require('./notify');
 const ms = require('ms');
 
-const FEED_URL = 'https://hyperterm-updates.now.sh/update/osx';
+const FEED_URL = process.platform === 'darwin' ? 'https://hyperterm-updates.now.sh/update/osx' : '';
 let isInit = false;
 
 function init () {
