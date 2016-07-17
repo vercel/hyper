@@ -1,23 +1,23 @@
 const { app } = require('electron');
+const { join } = require('path');
 const { homedir } = require('os');
-const { resolve } = require('path');
 const { existsSync } = require('fs');
 
 const home = homedir();
-const root = resolve(app.getPath('appData'), 'HyperTerm');
-const legacyConfig = resolve(home, './.hyperterm.js');
+const root = app.getPath('userData');
+const legacyConfig = join(home, '.hyperterm.js');
 const legacy = existsSync(legacyConfig);
 
 module.exports = legacy? {
   root: home,
   config: legacyConfig,
-  plugins: resolve(home, './.hyperterm_plugins'),
-  localPlugins: resolve(home, './.hyperterm_plugins', './local'),
-  resolveConfigPath: (...paths) => resolve(home, ...paths)
+  plugins: join(home, '.hyperterm_plugins'),
+  localPlugins: join(home, '.hyperterm_plugins', 'local'),
+  joinConfigPath: (...paths) => join(home, ...paths)
 }:{
-  root: root,
-  config: resolve(root, './init.js'),
-  plugins: resolve(root, './plugins'),
-  localPlugins: resolve(root, './plugins', './local'),
-  resolveConfigPath: (...paths) => resolve(root, ...paths)
+  root,
+  config: join(root, 'init.js'),
+  plugins: join(root, 'plugins'),
+  localPlugins: join(root, 'plugins', 'local'),
+  joinConfigPath: (...paths) => join(root, ...paths)
 };
