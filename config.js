@@ -1,12 +1,15 @@
 const { dialog } = require('electron');
-const { homedir } = require('os');
-const { resolve } = require('path');
+const { dirname, resolve } = require('path');
 const { readFileSync, writeFileSync } = require('fs');
+const { sync: mkdirpSync } = require('mkdirp');
+const { config: path } = require('./config-paths');
 const gaze = require('gaze');
 const vm = require('vm');
 const notify = require('./notify');
 
-const path = resolve(homedir(), '.hyperterm.js');
+// make sure our config directory is available
+mkdirpSync(dirname(path));
+
 const watchers = [];
 
 let cfg = {};
