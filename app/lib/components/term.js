@@ -96,6 +96,34 @@ export default class Term extends Component {
     }
   }
 
+  moveWordLeft () {
+    this.term.onVTKeystroke('\x1bb');
+  }
+
+  moveWordRight () {
+    this.term.onVTKeystroke('\x1bf');
+  }
+
+  deleteWordLeft () {
+    this.term.onVTKeystroke('\x1b\x7f');
+  }
+
+  deleteWordRight () {
+    this.term.onVTKeystroke('\x1bd');
+  }
+
+  deleteLine () {
+    this.term.onVTKeystroke('\x1bw');
+  }
+
+  moveToStart () {
+    this.term.onVTKeystroke('\x01');
+  }
+
+  moveToEnd () {
+    this.term.onVTKeystroke('\x05');
+  }
+
   getTermDocument () {
     return this.term.document_;
   }
