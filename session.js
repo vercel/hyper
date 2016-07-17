@@ -18,9 +18,9 @@ const TITLE_POLL_INTERVAL = 500;
 
 module.exports = class Session extends EventEmitter {
 
-  constructor ({ rows, cols: columns, cwd }) {
+  constructor ({ rows, cols: columns, cwd, shell }) {
     super();
-    this.pty = spawn(defaultShell, ['--login'], {
+    this.pty = spawn(shell || defaultShell, ['--login'], {
       columns,
       rows,
       cwd,
