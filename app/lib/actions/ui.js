@@ -11,6 +11,7 @@ import {
   UI_FONT_SIZE_INCR,
   UI_FONT_SIZE_DECR,
   UI_FONT_SIZE_RESET,
+  UI_FONT_SMOOTHING_SET,
   UI_MOVE_LEFT,
   UI_MOVE_RIGHT,
   UI_MOVE_TO,
@@ -54,6 +55,18 @@ export function decreaseFontSize () {
 export function resetFontSize () {
   return {
     type: UI_FONT_SIZE_RESET
+  };
+}
+
+export function setFontSmoothing () {
+  const devicePixelRatio = window.devicePixelRatio;
+  const fontSmoothing = devicePixelRatio < 2
+    ? 'subpixel-antialiased'
+    : 'antialiased';
+
+  return {
+    type: UI_FONT_SMOOTHING_SET,
+    fontSmoothing
   };
 }
 

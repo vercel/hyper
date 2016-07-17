@@ -26,7 +26,7 @@ export default class Term extends Component {
 
     this.term.prefs_.set('font-family', props.fontFamily);
     this.term.prefs_.set('font-size', props.fontSize);
-    this.term.prefs_.set('font-smoothing', this.getFontSmoothing());
+    this.term.prefs_.set('font-smoothing', props.fontSmoothing);
     this.term.prefs_.set('cursor-color', props.cursorColor);
     this.term.prefs_.set('enable-clipboard-notice', false);
     this.term.prefs_.set('foreground-color', props.foregroundColor);
@@ -104,16 +104,6 @@ export default class Term extends Component {
     return URL.createObjectURL(blob, { type: 'text/css' });
   }
 
-  getFontSmoothing () {
-    this.devicePixelRatio = window.devicePixelRatio;
-
-    if (this.devicePixelRatio < 2) {
-      return 'subpixel-antialiased';
-    }
-
-    return 'antialiased';
-  }
-
   componentWillReceiveProps (nextProps) {
     if (this.props.url !== nextProps.url) {
       // when the url prop changes, we make sure
@@ -152,6 +142,10 @@ export default class Term extends Component {
       this.term.prefs_.set('font-family', nextProps.fontFamily);
     }
 
+    if (this.props.fontSmoothing !== nextProps.fontSmoothing) {
+      this.term.prefs_.set('font-smoothing', props.fontSmoothing);
+    }
+
     if (this.props.cursorColor !== nextProps.cursorColor) {
       this.term.prefs_.set('cursor-color', nextProps.cursorColor);
     }
@@ -162,10 +156,6 @@ export default class Term extends Component {
 
     if (this.props.customCSS !== nextProps.customCSS) {
       this.term.prefs_.set('user-css', this.getStylesheet(nextProps.customCSS));
-    }
-
-    if (this.devicePixelRatio !== window.devicePixelRatio) {
-      this.term.prefs_.set('font-smoothing', this.getFontSmoothing());
     }
   }
 

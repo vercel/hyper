@@ -2,6 +2,7 @@ export const UI_FONT_SIZE_SET = 'UI_FONT_SIZE_SET';
 export const UI_FONT_SIZE_INCR = 'UI_FONT_SIZE_INCR';
 export const UI_FONT_SIZE_DECR = 'UI_FONT_SIZE_DECR';
 export const UI_FONT_SIZE_RESET = 'UI_FONT_SIZE_RESET';
+export const UI_FONT_SMOOTHING_SET = 'UI_FONT_SMOOTHING_SET';
 export const UI_MOVE_LEFT = 'UI_MOVE_LEFT';
 export const UI_MOVE_RIGHT = 'UI_MOVE_RIGHT';
 export const UI_MOVE_TO = 'UI_MOVE_TO';
