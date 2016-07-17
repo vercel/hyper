@@ -177,12 +177,11 @@ export default class Term extends Component {
               width: '100%',
               height: '100%'
             }}></webview>
-        : null
+        : <div
+            className={ css('scrollbarShim') }
+            onMouseEnter={ this.onScrollEnter }
+            onMouseLeave={ this.onScrollLeave } />
       }
-      <div
-        className={ css('scrollbarShim') }
-        onMouseEnter={ this.onScrollEnter }
-        onMouseLeave={ this.onScrollLeave } />
       { this.props.customChildren }
     </div>;
   }
