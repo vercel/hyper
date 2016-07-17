@@ -37,11 +37,16 @@ export default class Notifications extends Component {
           <Notification
             key='update'
             backgroundColor='#7ED321'
-            text={`Version ${this.props.updateVersion} available`}
+            text={`Version ${this.props.updateVersion} ready`}
             onDismiss={ this.props.onDismissUpdate }
             userDismissable={ true }>
-            Version <b>{ this.props.updateVersion}</b> available.
-            { this.props.updateNote && ` ${this.props.updateNote.trim().replace(/\.$/, '')}.` }
+            Version <b>{ this.props.updateVersion}</b> ready.
+            { this.props.updateNote && ` ${this.props.updateNote.trim().replace(/\.$/, '')}` }
+            { ' ' }
+            (<a
+              style={{ color: '#fff' }}
+              target="_blank"
+              href={`https://github.com/zeit/hyperterm/releases/tag/${this.props.updateVersion}`}>notes</a>).
             { ' ' }
             <a style={{
               cursor: 'pointer',
@@ -49,7 +54,7 @@ export default class Notifications extends Component {
               fontWeight: 'bold' }}
               onClick={ this.props.onUpdateInstall }>
                 Restart
-              </a>
+            </a>.
             { ' ' }
           </Notification>
       }

@@ -54,6 +54,7 @@ app.on('ready', () => {
       title: 'HyperTerm',
       backgroundColor: toHex(cfg.backgroundColor || '#000'),
       transparent: true,
+      icon: resolve(__dirname, 'static/icon.png'),
       // we only want to show when the prompt
       // is ready for user input
       show: process.env.HYPERTERM_DEBUG || isDev
@@ -80,12 +81,15 @@ app.on('ready', () => {
       }
     });
 
-    rpc.on('new', ({ rows = 40, cols = 100 }) => {
-      initSession({ rows, cols }, (uid, session) => {
+    rpc.on('new', ({ rows = 40, cols = 100, cwd = process.env.HOME }) => {
+      const shell = cfg.shell;
+
+      initSession({ rows, cols, cwd, shell }, (uid, session) => {
         sessions.set(uid, session);
         rpc.emit('session add', {
           uid,
-          shell: session.shell
+          shell: session.shell,
+          pid: session.pty.pid
         });
 
         session.on('data', (data) => {

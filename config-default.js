@@ -46,13 +46,17 @@ module.exports = {
       '#cc00ff',
       '#00ffff',
       '#ffffff'
-    ]
+    ],
+
+    // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
+    // if left empty, your system's login shell will be used by default
+    shell: ''
   },
 
   // a list of plugins to fetch and install from npm
   // format: [@org/]project[#version]
   // examples:
-  //   `hypersolar`
+  //   `hyperpower`
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [],
