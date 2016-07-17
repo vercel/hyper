@@ -15,7 +15,7 @@ let modules;
 // cache of decorated components
 let decorated = {};
 
-// varios caches extracted of the plugin methods
+// various caches extracted of the plugin methods
 let connectors;
 let middlewares;
 let uiReducers;
@@ -67,7 +67,7 @@ const loadModules = () => {
     let mod;
     const pluginName = getPluginName(path);
 
-    // window.require allows us to ensure this doens't get
+    // window.require allows us to ensure this doesn't get
     // in the way of our build
     try {
       mod = window.require(path);
@@ -240,7 +240,7 @@ export function getTabProps (tab, parentProps, props) {
 
 // connects + decorates a class
 // plugins can override mapToState, dispatchToProps
-// and the class gets deorated (proxied)
+// and the class gets decorated (proxied)
 export function connect (stateFn, dispatchFn, c, d = {}) {
   return function (Class, name) {
     return reduxConnect(
