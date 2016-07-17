@@ -1,4 +1,23 @@
 
+0.6.0 / 2016-07-17
+==================
+
+  * notification style improvements and link to release notes upon updates [@rauchg]
+  * make `npm install` work more reliably (#172) [@marcbachmann]
+  * fixing problems with alt key and special characters like å, ö and ä. (#201) [@teemuteemu]
+  * change the version of eslint-config-standard from 5.3.1 to 5.3.5 (#166) [@6thmonth]
+  * fixed an issue where the app icon was not showing up in Linux (#126) [@code-haven]
+  * fixed typo (#152) [@radarhere]
+  * icon typo fixed in about dialog (#146) [@akashnimare]
+  * add a copy of the MIT license (#160) [@calinou]
+  * fix notification message (#111) [@montogeek]
+  * improved installation method (#104) [@amilajack]
+  * initial travis ci support (#107) [@amilajack]
+  * menu improvements (#185) [@sindresorhus]
+  * provide hooks to open a new tab to the same directory (#174) [@hharnisc]
+  * fix hypersolar plugin example, it does not exist (#179) [@montogeek]
+  * fix onWindow hook (#180) [@dfrankland]
+
 0.5.0 / 2016-07-16
 ==================
 
