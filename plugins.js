@@ -8,6 +8,7 @@ const { exec } = require('child_process');
 const Config = require('electron-config');
 const ms = require('ms');
 const notify = require('./notify');
+const shellEnv = require('shell-env');
 
 // local storage
 const cache = new Config();
@@ -189,13 +190,15 @@ function toDependencies (plugins) {
 }
 
 function install (fn) {
-  const prefix = 'darwin' === process.platform ? 'eval `/usr/libexec/path_helper -s` && ' : '';
-  exec(prefix + 'npm prune && npm install --production', {
-    cwd: path
-  }, (err, stdout, stderr) => {
-    if (err) return fn(err);
-    fn(null);
-  });
+  shellEnv().then((env) => {
+    exec('npm prune && npm install --production', {
+      cwd: path,
+      env: env
+    }, (err, stdout, stderr) => {
+      if (err) return fn(err);
+      fn(null);
+    });
+  }).catch(fn);
 }
 
 exports.subscribe = function (fn) {
