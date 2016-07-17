@@ -82,7 +82,7 @@ hterm.Terminal.prototype.clearPreserveCursorRow = function () {
   this.scrollPort_.invalidate();
 
   // this will avoid a bug where the `wipeContents`
-  // hterm API doens't send the scroll to the top
+  // hterm API doesn't send the scroll to the top
   this.scrollPort_.redraw_();
 };
 

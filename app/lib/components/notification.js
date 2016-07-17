@@ -20,7 +20,7 @@ export default class Notification extends Component {
 
   componentWillReceiveProps (next) {
     // if we have a timer going and the notification text
-    // changed we rest the timer
+    // changed we reset the timer
     if (next.text !== this.props.text) {
       if (this.props.dismissAfter) {
         this.resetDismissTimer();
@@ -42,7 +42,7 @@ export default class Notification extends Component {
           this.props.onDismiss();
         }
       });
-      // aprhodie !important override :(
+      // aprhodite !important override :(
       const { backgroundColor } = this.props;
       if (backgroundColor) {
         el.style.setProperty(

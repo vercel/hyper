@@ -38,7 +38,7 @@ config.subscribe(() => {
 });
 
 // initialize communication with main electron process
-// and subscribe to all user intents for example from menues
+// and subscribe to all user intents for example from menus
 rpc.on('ready', () => {
   store_.dispatch(init());
 });
