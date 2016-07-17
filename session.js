@@ -1,3 +1,4 @@
+const { homedir } = require('os');
 const { EventEmitter } = require('events');
 const { exec } = require('child_process');
 const defaultShell = require('default-shell');
@@ -14,6 +15,7 @@ try {
   );
 }
 
+const { getConfig } = require('./config');
 const TITLE_POLL_INTERVAL = 500;
 
 module.exports = class Session extends EventEmitter {
@@ -54,6 +56,51 @@ module.exports = class Session extends EventEmitter {
     clearTimeout(this.titlePoll);
   }
 
+  getCurrentWorkingDirectory (pid) {
+    return new Promise((resolve, reject) => {
+      // TODO: only tested on mac
+      exec(`lsof -p ${pid} | grep cwd`, (err, out) => {
+        if (this.ended || err) {
+          reject();
+          return;
+        }
+
+        // TODO: can homedir() be ran just once?
+        const homeDirectory = homedir();
+        let cwd = out.split(' ').pop();
+
+        if (cwd.substr(0, homeDirectory.length) === homeDirectory) {
+          cwd = cwd.replace(homeDirectory, '~');
+        }
+
+        resolve(cwd);
+      });
+    });
+  }
+
+  getCurrentProcess (tty) {
+    return new Promise((resolve, reject) => {
+      // TODO: limit the concurrency of how many processes we run?
+      // TODO: only tested on mac
+      exec(`ps uxac | grep ${tty} | head -n 1`, (err, out) => {
+        if (this.ended || err) {
+          reject();
+          return;
+        }
+
+        const [user, pid, ...fragments] = out.split(' ');
+        let title = fragments.pop();
+
+        if (title) {
+          title = title.replace(/^\(/, '');
+          title = title.replace(/\)?\n$/, '');
+        }
+
+        resolve({user, pid, title});
+      });
+    });
+  }
+
   getTitle () {
     if ('win32' === process.platform) return;
     if (this.fetching) return;
@@ -66,20 +113,20 @@ module.exports = class Session extends EventEmitter {
     // by grepping for `[s]001` instead of `s001`
     tty = `[${tty[0]}]${tty.substr(1)}`;
 
-    // TODO: limit the concurrency of how many processes we run?
-    // TODO: only tested on mac
-    exec(`ps uxac | grep ${tty} | head -n 1`, (err, out) => {
+    this.getCurrentProcess(tty).then(({ user, pid, title }) => {
+      if (pid && getConfig().displayTitleCwd) {
+        return this.getCurrentWorkingDirectory(pid).then((cwd) => {
+          return `${cwd} – ${title}`;
+        });
+      }
+
+      return title;
+    }).then((title) => {
       this.fetching = false;
-      if (this.ended) return;
-      if (err) return;
-      let title = out.split(' ').pop();
-      if (title) {
-        title = title.replace(/^\(/, '');
-        title = title.replace(/\)?\n$/, '');
-        if (title !== this.lastTitle) {
-          this.emit('title', title);
-          this.lastTitle = title;
-        }
+
+      if (title !== this.lastTitle) {
+        this.emit('title', title);
+        this.lastTitle = title;
       }
 
       if (this.subscribed) {
