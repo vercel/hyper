@@ -49,8 +49,8 @@ module.exports = {
     ],
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
-    // if empty, your login shell will be used by default
-    shell: '/bin/bash'
+    // if left empty, your system's login shell will be used by default
+    shell: ''
   },
 
   // a list of plugins to fetch and install from npm
