@@ -49,5 +49,10 @@ module.exports = {
         'NODE_ENV': JSON.stringify(nodeEnv)
       }
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      'react-native': 'react-native-web'
+    }
+  }
 };

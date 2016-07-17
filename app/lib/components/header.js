@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import Tabs_ from './tabs';
-import Component from '../component';
 import { decorate, getTabsProps } from '../utils/plugins';
+import { StyleSheet, View } from 'react-native';
+import { shouldComponentUpdate } from 'react-addons-pure-render-mixin';
 
 const Tabs = decorate(Tabs_, 'Tabs');
 
 export default class Header extends Component {
-
   constructor () {
     super();
     this.onChangeIntent = this.onChangeIntent.bind(this);
     this.onHeaderMouseDown = this.onHeaderMouseDown.bind(this);
+  }
+
+  shouldComponentUpdate (...args) {
+    return shouldComponentUpdate.apply(this, [args])
   }
 
   onChangeIntent (active) {
@@ -32,9 +36,9 @@ export default class Header extends Component {
 
     if (this.clicks++ >= 2) {
       if (this.maximized) {
-        this.rpc.emit('unmaximize');
+        window.rpc.emit('unmaximize');
       } else {
-        this.rpc.emit('maximize');
+        window.rpc.emit('maximize');
       }
       this.clicks = 0;
       this.maximized = !this.maximized;
@@ -52,40 +56,62 @@ export default class Header extends Component {
     clearTimeout(this.clickTimer);
   }
 
-  template (css) {
-    const { isMac, backgroundColor } = this.props;
-    const props = getTabsProps(this.props, {
-      tabs: this.props.tabs,
-      borderColor: this.props.borderColor,
-      onClose: this.props.onCloseTab,
-      onChange: this.onChangeIntent
+  render () {
+    const {
+      backgroundColor,
+      borderColor,
+      customChildren,
+      customChildrenBefore,
+      isMac,
+      onCloseTab,
+      tabs
+    } = this.props;
+
+    const tabProps = getTabsProps(this.props, {
+      borderColor,
+      onChange: this.onChangeIntent,
+      onClose: onCloseTab,
+      tabs
     });
-    return <header
-      style={{ backgroundColor }}
-      className={ css('header', isMac && 'headerRounded') }
-      onMouseDown={ this.onHeaderMouseDown }>
-        { this.props.customChildrenBefore }
-        <Tabs {...props} />
-        { this.props.customChildren }
-    </header>;
+
+    return (
+      <View
+        accessibilityRole='header'
+        onMouseDown={ this.onHeaderMouseDown }
+        style={[
+          { backgroundColor },
+          styles.header,
+          isMac && styles.headerRounded
+        ]}>
+          { customChildrenBefore }
+          <Tabs {...tabProps} />
+          { customChildren }
+      </View>
+    );
   }
-
-  styles () {
-    return {
-      header: {
-        position: 'fixed',
-        top: '1px',
-        left: '1px',
-        right: '1px',
-        background: '#000',
-        zIndex: '100'
-      },
-
-      headerRounded: {
-        borderTopLeftRadius: '6px',
-        borderTopRightRadius: '6px'
-      }
-    };
-  }
-
 }
+
+Header.propTypes = {
+  borderColor: PropTypes.string,
+  customChildrenBefore: PropTypes.any,
+  customChildren: PropTypes.any,
+  isMac: PropTypes.bool,
+  onChangeTab: PropTypes.func,
+  onCloseTab: PropTypes.func,
+  tabs: PropTypes.array
+};
+
+const styles = StyleSheet.create({
+  header: {
+    position: 'fixed',
+    top: '1px',
+    left: '1px',
+    right: '1px',
+    backgroundColor: '#000',
+    zIndex: 100
+  },
+  headerRounded: {
+    borderTopLeftRadius: '6px',
+    borderTopRightRadius: '6px'
+  }
+});
