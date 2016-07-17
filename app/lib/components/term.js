@@ -33,6 +33,9 @@ export default class Term extends Component {
     this.term.prefs_.set('color-palette-overrides', props.colors);
     this.term.prefs_.set('user-css', this.getStylesheet(props.customCSS));
     this.term.prefs_.set('scrollbar-visible', false);
+    this.term.prefs_.set('receive-encoding', 'raw');
+    this.term.prefs_.set('send-encoding', 'raw');
+    this.term.prefs_.set('alt-sends-what', 'browser-key');
 
     this.term.onTerminalReady = () => {
       const io = this.term.io.push();
@@ -74,7 +77,7 @@ export default class Term extends Component {
 
   write (data) {
     requestAnimationFrame(() => {
-      this.term.io.print(data);
+      this.term.io.writeUTF8(data);
     });
   }
 
