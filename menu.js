@@ -276,7 +276,7 @@ ${process.platform} ${process.arch} ${os.release()}`;
                     title: `About ${appName}`,
                     message: `${appName} ${app.getVersion()}`,
                     detail: 'Created by Guillermo Rauch',
-                    icon: path.join(__dirname, 'static/Icon.png'),
+                    icon: path.join(__dirname, 'static/icon.png'),
                     buttons: []
                   });
                 }
