@@ -101,7 +101,7 @@ rpc.on('update available', ({ releaseName, releaseNotes }) => {
 });
 
 rpc.on('move', () => {
-  store_.dispatch(uiActions.setFontSmoothing());
+  store_.dispatch(uiActions.windowMove());
 });
 
 const app = render(

@@ -15,7 +15,8 @@ import {
   UI_MOVE_LEFT,
   UI_MOVE_RIGHT,
   UI_MOVE_TO,
-  UI_SHOW_PREFERENCES
+  UI_SHOW_PREFERENCES,
+  UI_WINDOW_MOVE
 } from '../constants/ui';
 
 export function increaseFontSize () {
@@ -150,6 +151,17 @@ export function showPreferences () {
             ));
           });
         });
+      }
+    });
+  };
+}
+
+export function windowMove () {
+  return (dispatch) => {
+    dispatch({
+      type: UI_WINDOW_MOVE,
+      effect () {
+        dispatch(setFontSmoothing());
       }
     });
   };
