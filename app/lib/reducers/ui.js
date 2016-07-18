@@ -53,6 +53,7 @@ const initial = Immutable({
   },
   foregroundColor: '#fff',
   backgroundColor: '#000',
+  displayTitleCwd: true,
   updateVersion: null,
   updateNotes: null
 });
@@ -113,6 +114,12 @@ const reducer = (state = initial, action) => {
         if (null != config.colors) {
           if (state.colors.toString() !== config.colors.toString()) {
             ret.colors = config.colors;
+          }
+        }
+
+        if (null != config.displayTitleCwd) {
+          if (state.displayTitleCwd.toString() !== config.displayTitleCwd.toString()) {
+            ret.displayTitleCwd = config.displayTitleCwd;
           }
         }
 
