@@ -162,8 +162,6 @@ export default class Term extends Component {
   }
 
   componentWillUnmount () {
-    const iframeWindow = this.getTermDocument().defaultView;
-    iframeWindow.addEventListener('wheel', this.onWheel);
     clearTimeout(this.scrollbarsHideTimer);
     this.props.ref_(null);
   }
