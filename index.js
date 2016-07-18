@@ -13,9 +13,12 @@ const config = require('./config');
 config.init();
 const plugins = require('./plugins');
 
+const windowSet = new Set([]);
+
 // expose to plugins
 app.config = config;
 app.plugins = plugins;
+app.getWindows = () => new Set([...windowSet]); // return a clone
 
 if (isDev) {
   console.log('running in dev mode');
@@ -40,7 +43,6 @@ app.on('window-all-closed', () => {
   // terminal is closed
 });
 
-let winCount = 0;
 app.on('ready', () => {
   function createWindow (fn) {
     const cfg = plugins.getDecoratedConfig();
@@ -60,7 +62,7 @@ app.on('ready', () => {
       show: process.env.HYPERTERM_DEBUG || isDev
     });
 
-    winCount++;
+    windowSet.add(win);
     win.loadURL(url);
 
     const rpc = createRPC(win);
@@ -195,7 +197,7 @@ app.on('ready', () => {
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
-      winCount--;
+      windowSet.delete(win);
       rpc.destroy();
       deleteSessions();
       cfgUnsubscribe();
@@ -206,11 +208,14 @@ app.on('ready', () => {
   // when opening create a new window
   createWindow();
 
+  // expose to plugins
+  app.createWindow = createWindow;
+
   // mac only. when the dock icon is clicked
   // and we don't have any active windows open,
   // we open one
   app.on('activate', () => {
-    if (!winCount) {
+    if (!windowSet.size) {
       createWindow();
     }
   });
