@@ -25,5 +25,5 @@ cp -r app/dist build/
 mkdir dist
 electron-packager ./ --platform=darwin --out=dist --arch=x64 --app-bundle-id="co.zeit.hyperterm" --app-version="$VERSION" --osx-sign.identity="$HYPERTERM_OSX_SIGNING_IDENTITY" --icon=static/icon.icns --prune --ignore=app/
 cd dist/HyperTerm-darwin-x64/
-zip -r -y ../hyperterm-macos-x64-$VERSION.zip .
+zip -r -q -y ../hyperterm-macos-x64-$VERSION.zip .
 cd -
