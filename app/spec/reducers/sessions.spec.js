@@ -30,14 +30,14 @@ describe('Sessions reducer', () => {
 
   describe('on SESSION_ADD', it => {
     const state = initialState;
-    const action = { type: SESSION_ADD, uid: 'mysession', shell: '/my/shell' };
+    const action = { type: SESSION_ADD, uid: 'mysession', pid: 1, shell: '/my/shell' };
 
     it('should add a session to the state based on its uid', t => {
       const result = reducer(state, action);
 
       t.deepEqual(result.sessions, {
         mysession: {
-          uid: 'mysession', title: '', write: null, url: null, cleared: false, shell: 'shell' 
+          uid: 'mysession', title: '', write: null, url: null, cleared: false, shell: 'shell', pid: 1 
         }
       });
     });
