@@ -22,7 +22,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins, mainWindow 
               focusedWindow.rpc.emit('preferences');
               return;
             } else if (!mainWindow.isFocused()) {
-              mainWindow.on('focus', () => mainWindow.rpc.emit('preferences'));
+              mainWindow.once('focus', () => mainWindow.rpc.emit('preferences'));
               mainWindow.show();
             }
           }
