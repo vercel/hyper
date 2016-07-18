@@ -126,7 +126,7 @@ module.exports = class Session extends EventEmitter {
         this.emit('title', title);
         this.lastTitle = title;
       }
-    }).catch((error) => {
+    }).catch(() => {
       // do nothing
     })
 
