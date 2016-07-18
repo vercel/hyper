@@ -51,7 +51,7 @@ const initial = Immutable({
     resize: false,
     updates: false
   },
-  foregroundColor: '#fff',
+  foregroundColor: '#ffffff',
   backgroundColor: '#000',
   updateVersion: null,
   updateNotes: null
