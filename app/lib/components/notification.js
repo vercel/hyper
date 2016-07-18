@@ -42,7 +42,6 @@ export default class Notification extends Component {
           this.props.onDismiss();
         }
       });
-      // aprhodite !important override :(
       const { backgroundColor } = this.props;
       if (backgroundColor) {
         el.style.setProperty(
