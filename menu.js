@@ -23,6 +23,8 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           click (item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('preferences');
+            } else {
+              createWindow(win => win.rpc.emit('preferences'));
             }
           }
         },

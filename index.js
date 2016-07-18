@@ -41,10 +41,10 @@ app.on('window-all-closed', () => {
 });
 
 let winCount = 0;
-
 app.on('ready', () => {
   function createWindow (fn) {
     const cfg = plugins.getDecoratedConfig();
+
     const win = new BrowserWindow({
       width: 540,
       height: 380,
@@ -59,6 +59,7 @@ app.on('ready', () => {
       // is ready for user input
       show: process.env.HYPERTERM_DEBUG || isDev
     });
+
     winCount++;
     win.loadURL(url);
 
@@ -72,6 +73,7 @@ app.on('ready', () => {
 
     rpc.on('init', () => {
       win.show();
+      if (fn) fn(win);
 
       // auto updates
       if (!isDev) {
@@ -112,6 +114,7 @@ app.on('ready', () => {
     // on Session and focus/blur to subscribe
     rpc.on('focus', ({ uid }) => {
       const session = sessions.get(uid);
+
       if (session) {
         session.focus();
       } else {
@@ -121,6 +124,7 @@ app.on('ready', () => {
 
     rpc.on('blur', ({ uid }) => {
       const session = sessions.get(uid);
+
       if (session) {
         session.blur();
       } else {
@@ -218,6 +222,7 @@ app.on('ready', () => {
         plugins.updatePlugins({ force: true });
       }
     }));
+
     Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
   };
 
