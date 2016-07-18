@@ -96,9 +96,13 @@ app.on('ready', () => {
           rpc.emit('session data', { uid, data });
         });
 
-        session.on('title', (title) => {
-          rpc.emit('session title', { uid, title });
-        });
+        // No need to extract the title if hyperterm is
+        // being used in fullscreen/tiling wm mode
+        if(!cfg.fullScreenMode) {
+          session.on('title', (title) => {
+            rpc.emit('session title', { uid, title });
+          });
+        }
 
         session.on('exit', () => {
           rpc.emit('session exit', { uid });

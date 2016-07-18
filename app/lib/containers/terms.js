@@ -28,7 +28,8 @@ const TermsContainer = connect(
       borderColor: state.ui.borderColor,
       colors: state.ui.colors,
       foregroundColor: state.ui.foregroundColor,
-      backgroundColor: state.ui.backgroundColor
+      backgroundColor: state.ui.backgroundColor,
+      isFullScreen: state.ui.fullScreenMode
     };
   },
   (dispatch) => {
