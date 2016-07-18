@@ -7,7 +7,6 @@ export default class Term extends Component {
 
   constructor (props) {
     super(props);
-    this.state = { scrollable: false };
     this.onWheel = this.onWheel.bind(this);
     this.onScrollEnter = this.onScrollEnter.bind(this);
     this.onScrollLeave = this.onScrollLeave.bind(this);
