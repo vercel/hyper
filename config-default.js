@@ -50,7 +50,11 @@ module.exports = {
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
     // if left empty, your system's login shell will be used by default
-    shell: ''
+    shell: '',
+
+    // the working directory to start in when spawning a new session (i.e. ~/projects)
+    // if left empty, your process.env.HOME directory will be used by default
+    workingDirectory: ''
   },
 
   // a list of plugins to fetch and install from npm
