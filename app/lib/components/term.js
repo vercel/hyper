@@ -1,5 +1,6 @@
 /* global Blob,URL,requestAnimationFrame */
 import React from 'react';
+import Color from 'color';
 import hterm from '../hterm';
 import Component from '../component';
 
@@ -26,7 +27,7 @@ export default class Term extends Component {
     this.term.prefs_.set('font-family', props.fontFamily);
     this.term.prefs_.set('font-size', props.fontSize);
     this.term.prefs_.set('font-smoothing', props.fontSmoothing);
-    this.term.prefs_.set('cursor-color', props.cursorColor);
+    this.term.prefs_.set('cursor-color', Color(props.cursorColor).rgbString());
     this.term.prefs_.set('enable-clipboard-notice', false);
     this.term.prefs_.set('foreground-color', props.foregroundColor);
     this.term.prefs_.set('background-color', props.backgroundColor);
@@ -181,7 +182,7 @@ export default class Term extends Component {
     }
 
     if (this.props.cursorColor !== nextProps.cursorColor) {
-      this.term.prefs_.set('cursor-color', nextProps.cursorColor);
+      this.term.prefs_.set('cursor-color', Color(nextProps.cursorColor).rgbString());
     }
 
     if (this.props.colors !== nextProps.colors) {
