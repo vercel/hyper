@@ -1,7 +1,11 @@
 const { app, dialog } = require('electron');
-const { homedir } = require('os');
-const { resolve, basename } = require('path');
+const { basename, resolve } = require('path');
 const { writeFileSync } = require('fs');
+const {
+  config: configFilePath,
+  plugins: path,
+  localPlugins: localPath
+} = require('./config-paths');
 const config = require('./config');
 const { sync: mkdirpSync } = require('mkdirp');
 const { exec } = require('child_process');
@@ -13,12 +17,7 @@ const shellEnv = require('shell-env');
 // local storage
 const cache = new Config();
 
-// modules path
-const path = resolve(homedir(), '.hyperterm_plugins');
-const localPath = resolve(homedir(), '.hyperterm_plugins', 'local');
-
-// init plugin directories if not present
-mkdirpSync(path);
+// make sure our plugins directory is available
 mkdirpSync(localPath);
 
 // caches
@@ -156,7 +155,7 @@ function syncPackageJSON () {
   const dependencies = toDependencies(plugins);
   const pkg = {
     name: 'hyperterm-plugins',
-    description: 'Auto-generated from `~/.hyperterm.js`!',
+    description: `Auto-generated from ${configFilePath}!`,
     private: true,
     version: '0.0.1',
     repository: 'zeit/hyperterm',

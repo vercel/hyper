@@ -17,6 +17,9 @@ import {
   UI_SHOW_PREFERENCES
 } from '../constants/ui';
 
+import { remote } from 'electron';
+const { config: configFile } = remote.require('./config-paths');
+
 export function increaseFontSize () {
   return (dispatch, getState) => {
     dispatch({
@@ -129,9 +132,9 @@ export function showPreferences () {
           rpc.once('session data', () => {
             dispatch(sendSessionData(
               uid,
-              ['# Attempting to open ~/.hyperterm.js with your $EDITOR',
+              [`# Attempting to open ${configFile} with your $EDITOR`,
                '# If this doesn\'t work, open it manually with your favorite editor!',
-               '$EDITOR ~/.hyperterm.js && exit',
+               `$EDITOR ${configFile} && exit`,
                ''
               ].join('\n')
             ));
