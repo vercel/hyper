@@ -36,4 +36,5 @@ before_script:
   - sleep 3
 
 script:
+  - npm test
   - npm run lint
