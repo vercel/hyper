@@ -103,13 +103,10 @@ export function userExitSession (uid) {
       type: SESSION_USER_EXIT,
       uid,
       effect () {
-        const { sessions } = getState().sessions;
-        if (sessions[uid]) {
-          rpc.emit('exit', { uid });
-          const sessions = keys(getState().sessions.sessions);
-          if (!sessions.length) {
-            window.close();
-          }
+        rpc.emit('exit', { uid });
+        const sessions = keys(getState().sessions.sessions);
+        if (!sessions.length) {
+          window.close();
         }
       }
     });
