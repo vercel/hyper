@@ -82,13 +82,18 @@ module.exports = class Session extends EventEmitter {
     return new Promise((resolve, reject) => {
       // TODO: limit the concurrency of how many processes we run?
       // TODO: only tested on mac
-      exec(`ps uxac | grep ${tty} | head -n 1`, (err, out) => {
+
+      // try to exclude grep from the results
+      // by grepping for `[s]001` instead of `s001`
+      const grep = `[${tty[0]}]${tty.substr(1)}`;
+
+      exec(`ps uxac | grep ${grep} | head -n 1`, (err, out) => {
         if (this.ended || err) {
           reject();
           return;
         }
 
-        const [user, pid, ...fragments] = out.split(' ');
+        const [user, pid, ...fragments] = out.trim().split(/\s+/);
         let title = fragments.pop();
 
         if (title) {
@@ -104,14 +109,9 @@ module.exports = class Session extends EventEmitter {
   getTitle () {
     if ('win32' === process.platform) return;
     if (this.fetching) return;
+
+    let tty = this.pty.stdout.ttyname.replace(/^\/dev\/tty/, '');
     this.fetching = true;
-
-    let tty = this.pty.stdout.ttyname;
-    tty = tty.replace(/^\/dev\/tty/, '');
-
-    // try to exclude grep from the results
-    // by grepping for `[s]001` instead of `s001`
-    tty = `[${tty[0]}]${tty.substr(1)}`;
 
     this.getCurrentProcess(tty).then(({ user, pid, title }) => {
       if (pid && getConfig().displayTitleCwd) {
@@ -122,12 +122,17 @@ module.exports = class Session extends EventEmitter {
 
       return title;
     }).then((title) => {
-      this.fetching = false;
-
       if (title !== this.lastTitle) {
         this.emit('title', title);
         this.lastTitle = title;
       }
+    }).catch((error) => {
+      // do nothing
+    })
+
+    // always restart the loop, even on error, to avoid stalls
+    .then(() => {
+      this.fetching = false;
 
       if (this.subscribed) {
         this.titlePoll = setTimeout(() => this.getTitle(), TITLE_POLL_INTERVAL);
