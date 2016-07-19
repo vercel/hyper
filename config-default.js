@@ -10,7 +10,7 @@ module.exports = {
     cursorColor: '#F81CE5',
 
     // color of the text
-    foregroundColor: '#fff',
+    foregroundColor: '#ffffff',
 
     // terminal background color
     backgroundColor: '#000',
