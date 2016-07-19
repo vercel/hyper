@@ -52,6 +52,7 @@ app.on('ready', () => {
       minWidth: 370,
       titleBarStyle: 'hidden-inset',
       title: 'HyperTerm',
+      backgroundColor: toHex(cfg.backgroundColor || '#000'),
       transparent: true,
       icon: resolve(__dirname, 'static/icon.png'),
       // we only want to show when the prompt
@@ -67,6 +68,8 @@ app.on('ready', () => {
     // config changes
     const cfgUnsubscribe = config.subscribe(() => {
       win.webContents.send('config change');
+      const newCfg = plugins.getDecoratedConfig();
+      win.setBackgroundColor(toHex(newCfg.backgroundColor || '#000'));
     });
 
     rpc.on('init', () => {
