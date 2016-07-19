@@ -129,8 +129,8 @@ export function showPreferences () {
           rpc.once('session data', () => {
             dispatch(sendSessionData(
               uid,
-              ['# Attempting to open ~/.hyperterm.js with your $EDITOR',
-               '# If this doesn\'t work, open it manually with your favorite editor!',
+              ['echo Attempting to open ~/.hyperterm.js with your \$EDITOR',
+               'echo If it fails, open it manually with your favorite editor!',
                'exec env $EDITOR ~/.hyperterm.js',
                ''
               ].join('\n')
