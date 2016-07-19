@@ -216,7 +216,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         },
         {
           label: 'Show Previous Tab',
-          accelerator: 'CmdOrCtrl+Left',
+          accelerator: 'CmdOrCtrl+Option+Left',
           click (item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('move left req');
@@ -225,7 +225,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         },
         {
           label: 'Show Next Tab',
-          accelerator: 'CmdOrCtrl+Right',
+          accelerator: 'CmdOrCtrl+Option+Right',
           click (item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('move right req');

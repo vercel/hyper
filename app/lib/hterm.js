@@ -29,7 +29,7 @@ hterm.Terminal.prototype.copySelectionToClipboard = function () {
 // hyperterm and not the terminal itself
 const oldKeyDown = hterm.Keyboard.prototype.onKeyDown_;
 hterm.Keyboard.prototype.onKeyDown_ = function (e) {
-  if (e.metaKey) {
+  if (e.metaKey || e.altKey) {
     return;
   }
   return oldKeyDown.call(this, e);
