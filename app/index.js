@@ -17,6 +17,7 @@ const plugins = require('./plugins');
 const Session = require('./session');
 
 const windowSet = new Set([]);
+var lastWindow;
 
 // expose to plugins
 app.config = config;
@@ -61,6 +62,8 @@ app.on('ready', () => {
     const win = new BrowserWindow(browserOptions);
 
     windowSet.add(win);
+    lastWindow = win;
+
     win.loadURL(url);
 
     const rpc = createRPC(win);
@@ -214,8 +217,14 @@ app.on('ready', () => {
       }
     });
 
+    win.on('focus', () => {
+      lastWindow = win;
+    })
+
     // the window can be closed by the browser process itself
     win.on('close', () => {
+      // TODO: lastWindow should be set to another window, if one exists.
+      lastWindow = undefined;
       windowSet.delete(win);
       rpc.destroy();
       deleteSessions();
