@@ -8,7 +8,8 @@ import {
   SESSION_RESIZE,
   SESSION_PTY_DATA,
   SESSION_PTY_EXIT,
-  SESSION_SET_ACTIVE
+  SESSION_SET_ACTIVE,
+  SESSION_SET_CWD
 } from '../constants/sessions';
 import { UPDATE_AVAILABLE } from '../constants/updater';
 
@@ -180,6 +181,10 @@ const reducer = (state = initial, action) => {
           }
         }, { deep: true });
       }
+      break;
+
+    case SESSION_SET_CWD:
+      state_ = state.set('cwd', action.cwd);
       break;
 
     case UI_FONT_SIZE_SET:
