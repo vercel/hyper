@@ -6,6 +6,7 @@ export default class Tab extends Component {
     super();
     this.hover = this.hover.bind(this);
     this.blur = this.blur.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.state = {
       hovered: false
     };
@@ -17,6 +18,17 @@ export default class Tab extends Component {
 
   blur () {
     this.setState({ hovered: false });
+  }
+
+  handleClick (event) {
+    const isLeftClick = event.nativeEvent.which === 1;
+    const isMiddleClick = event.nativeEvent.which === 2;
+
+    if (isLeftClick) {
+      this.props.isActive ? null : this.props.onSelect();
+    } else if (isMiddleClick) {
+      this.props.onClose();
+    }
   }
 
   template (css) {
@@ -41,7 +53,7 @@ export default class Tab extends Component {
             isLast && 'textLast',
             isActive && 'textActive'
           ) }
-          onClick={ this.props.isActive ? null : this.props.onSelect }>
+          onClick={ this.handleClick }>
           <span className={ css('textInner') }>
             { this.props.text }
           </span>
