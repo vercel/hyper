@@ -95,6 +95,10 @@ rpc.on('preferences', () => {
   store_.dispatch(uiActions.showPreferences());
 });
 
+rpc.on('open file', ({ path }) => {
+  store_.dispatch(uiActions.openFile(path));
+});
+
 rpc.on('update available', ({ releaseName, releaseNotes }) => {
   store_.dispatch(updaterActions.updateAvailable(releaseName, releaseNotes));
 });

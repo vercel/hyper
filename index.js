@@ -255,3 +255,14 @@ function initSession (opts, fn) {
     fn(uid, new Session(opts));
   });
 }
+
+app.on('open-file', (event, path) => {
+  const callback = win => win.rpc.emit('open file', { path });
+  if (lastWindow) {
+    callback(lastWindow);
+  } else {
+    // TODO: This causes two tabs to be created; the default tab upon creating a
+    // new window, and the tab used to open the URL.
+    app.createWindow(callback);
+  }
+});

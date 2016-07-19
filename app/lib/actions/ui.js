@@ -1,6 +1,7 @@
 import { setActiveSession } from './sessions';
 import { keys } from '../utils/object';
 import { last } from '../utils/array';
+import { escapeShellArgument } from '../utils/string';
 import rpc from '../rpc';
 import {
   requestSession,
@@ -14,8 +15,11 @@ import {
   UI_MOVE_LEFT,
   UI_MOVE_RIGHT,
   UI_MOVE_TO,
-  UI_SHOW_PREFERENCES
+  UI_SHOW_PREFERENCES,
+  UI_OPEN_FILE
 } from '../constants/ui';
+
+const { lstat } = window.require("fs");
 
 export function increaseFontSize () {
   return (dispatch, getState) => {
@@ -139,5 +143,27 @@ export function showPreferences () {
         });
       }
     });
+  };
+}
+
+export function openFile (path) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: UI_OPEN_FILE,
+      effect () {
+        lstat(path, (err, stats) => {
+          var command = escapeShellArgument(path) + "\n";
+          if (stats.isDirectory()) {
+            command = "cd " + command;
+          }
+          dispatch(requestSession());
+          rpc.once('session add', ({ uid }) => {
+            rpc.once('session data', () => {
+              dispatch(sendSessionData(uid, command));
+            });
+          });
+        });
+      }
+    })
   };
 }
