@@ -160,6 +160,10 @@ app.on('ready', () => {
       shell.openExternal(url);
     });
 
+    rpc.win.on('move', () => {
+      rpc.emit('move');
+    });
+
     const deleteSessions = () => {
       sessions.forEach((session, key) => {
         session.removeAllListeners();

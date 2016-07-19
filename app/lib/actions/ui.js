@@ -11,10 +11,12 @@ import {
   UI_FONT_SIZE_INCR,
   UI_FONT_SIZE_DECR,
   UI_FONT_SIZE_RESET,
+  UI_FONT_SMOOTHING_SET,
   UI_MOVE_LEFT,
   UI_MOVE_RIGHT,
   UI_MOVE_TO,
-  UI_SHOW_PREFERENCES
+  UI_SHOW_PREFERENCES,
+  UI_WINDOW_MOVE
 } from '../constants/ui';
 
 export function increaseFontSize () {
@@ -54,6 +56,18 @@ export function decreaseFontSize () {
 export function resetFontSize () {
   return {
     type: UI_FONT_SIZE_RESET
+  };
+}
+
+export function setFontSmoothing () {
+  const devicePixelRatio = window.devicePixelRatio;
+  const fontSmoothing = devicePixelRatio < 2
+    ? 'subpixel-antialiased'
+    : 'antialiased';
+
+  return {
+    type: UI_FONT_SMOOTHING_SET,
+    fontSmoothing
   };
 }
 
@@ -137,6 +151,17 @@ export function showPreferences () {
             ));
           });
         });
+      }
+    });
+  };
+}
+
+export function windowMove () {
+  return (dispatch) => {
+    dispatch({
+      type: UI_WINDOW_MOVE,
+      effect () {
+        dispatch(setFontSmoothing());
       }
     });
   };
