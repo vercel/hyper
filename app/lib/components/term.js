@@ -7,7 +7,6 @@ export default class Term extends Component {
 
   constructor (props) {
     super(props);
-    this.state = { scrollable: false };
     this.onWheel = this.onWheel.bind(this);
     this.onScrollEnter = this.onScrollEnter.bind(this);
     this.onScrollLeave = this.onScrollLeave.bind(this);
@@ -87,6 +86,13 @@ export default class Term extends Component {
 
   clear () {
     this.term.clearPreserveCursorRow();
+
+    // If cursor is still not at the top, a command is probably
+    // running and we'd like to delete the whole screen.
+    // Move cursor to top
+    if (this.term.getCursorRow() !== 0) {
+      this.term.io.writeUTF8('\x1B[0;0H\x1B[2J');
+    }
   }
 
   getTermDocument () {
@@ -155,8 +161,6 @@ export default class Term extends Component {
   }
 
   componentWillUnmount () {
-    const iframeWindow = this.getTermDocument().defaultView;
-    iframeWindow.addEventListener('wheel', this.onWheel);
     clearTimeout(this.scrollbarsHideTimer);
     this.props.ref_(null);
   }

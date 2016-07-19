@@ -55,6 +55,8 @@ module.exports = {
     // the working directory to start in when spawning a new session (e.g. `~/projects`)
     // if left empty, your `process.env.HOME` directory will be used by default
     workingDirectory: ''
+
+    // for advanced config flags please refer to https://hyperterm.org/#cfg
   },
 
   // a list of plugins to fetch and install from npm
