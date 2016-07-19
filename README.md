@@ -4,6 +4,12 @@
 
 For downloads, documentation and the developer API head to: https://hyperterm.org
 
+(NOTE: only on macOS) With [Homebrew](http://brew.sh/) and [Homebrew Cask](https://caskroom.github.io/) installed, you can run this command:
+
+```bash
+$ brew cask install hyperterm
+```
+
 ### Repositories
 
 - Art: https://github.com/zeit/hyperterm-art
