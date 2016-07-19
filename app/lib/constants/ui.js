@@ -6,3 +6,4 @@ export const UI_MOVE_LEFT = 'UI_MOVE_LEFT';
 export const UI_MOVE_RIGHT = 'UI_MOVE_RIGHT';
 export const UI_MOVE_TO = 'UI_MOVE_TO';
 export const UI_SHOW_PREFERENCES = 'UI_SHOW_PREFERENCES';
+export const UI_OPEN_FILE = 'UI_OPEN_FILE';

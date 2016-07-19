@@ -14,6 +14,7 @@ config.init();
 const plugins = require('./plugins');
 
 const windowSet = new Set([]);
+var lastWindow;
 
 // expose to plugins
 app.config = config;
@@ -63,6 +64,8 @@ app.on('ready', () => {
     });
 
     windowSet.add(win);
+    lastWindow = win;
+
     win.loadURL(url);
 
     const rpc = createRPC(win);
@@ -195,8 +198,14 @@ app.on('ready', () => {
       }
     });
 
+    win.on('focus', () => {
+      lastWindow = win;
+    })
+
     // the window can be closed by the browser process itself
     win.on('close', () => {
+      // TODO: lastWindow should be set to another window, if one exists.
+      lastWindow = undefined;
       windowSet.delete(win);
       rpc.destroy();
       deleteSessions();
@@ -246,3 +255,14 @@ function initSession (opts, fn) {
     fn(uid, new Session(opts));
   });
 }
+
+app.on('open-file', (event, path) => {
+  const callback = win => win.rpc.emit('open file', { path });
+  if (lastWindow) {
+    callback(lastWindow);
+  } else {
+    // TODO: This causes two tabs to be created; the default tab upon creating a
+    // new window, and the tab used to open the URL.
+    app.createWindow(callback);
+  }
+});
