@@ -191,6 +191,8 @@ function toDependencies (plugins) {
 
 function install (fn) {
   shellEnv().then((env) => {
+    let registry = exports.getDecoratedConfig().npmRegistry;
+    if (registry) env.NPM_CONFIG_REGISTRY = registry;
     exec('npm prune && npm install --production', {
       cwd: path,
       env: env
