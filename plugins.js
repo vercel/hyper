@@ -8,6 +8,7 @@ const { exec } = require('child_process');
 const Config = require('electron-config');
 const ms = require('ms');
 const notify = require('./notify');
+const shellEnv = require('shell-env');
 
 // local storage
 const cache = new Config();
@@ -93,7 +94,7 @@ function updatePlugins ({ force = false } = {}) {
         if (changed) {
           notify(
             'Plugins Updated',
-            'Restart the app or hot-reload with "Plugins" > "Reload Now" to enjoy the updates!'
+            'Restart the app or hot-reload with "View" > "Reload" to enjoy the updates!'
           );
         } else {
           notify(
@@ -189,13 +190,17 @@ function toDependencies (plugins) {
 }
 
 function install (fn) {
-  const prefix = 'darwin' === process.platform ? 'eval `/usr/libexec/path_helper -s` && ' : '';
-  exec(prefix + 'npm prune && npm install --production', {
-    cwd: path
-  }, (err, stdout, stderr) => {
-    if (err) return fn(err);
-    fn(null);
-  });
+  shellEnv().then((env) => {
+    let registry = exports.getDecoratedConfig().npmRegistry;
+    if (registry) env.NPM_CONFIG_REGISTRY = registry;
+    exec('npm prune && npm install --production', {
+      cwd: path,
+      env: env
+    }, (err, stdout, stderr) => {
+      if (err) return fn(err);
+      fn(null);
+    });
+  }).catch(fn);
 }
 
 exports.subscribe = function (fn) {
@@ -233,7 +238,7 @@ function requirePlugins () {
       mod = require(path);
 
       if (!mod || (!mod.onApp && !mod.onWindow && !mod.onUnload &&
-        !mod.middleware &&
+        !mod.middleware && !mod.reduceUI && !mod.reduceSessions &&
         !mod.decorateConfig && !mod.decorateMenu &&
         !mod.decorateTerm && !mod.decorateHyperTerm &&
         !mod.decorateTab && !mod.decorateNotification &&
@@ -243,6 +248,10 @@ function requirePlugins () {
           'HyperTerm extension API methods');
         return;
       }
+
+      // populate the name for internal errors here
+      mod._name = basename(path);
+
       return mod;
     } catch (err) {
       notify('Plugin error!', `Plugin "${basename(path)}" failed to load (${err.message})`);
@@ -262,10 +271,10 @@ exports.onApp = function (app) {
   });
 };
 
-exports.onWindow = function (win, app) {
+exports.onWindow = function (win) {
   modules.forEach((plugin) => {
     if (plugin.onWindow) {
-      plugin.onWindow(app);
+      plugin.onWindow(win);
     }
   });
 };
@@ -285,15 +294,15 @@ exports.decorateMenu = function (tpl) {
   return decorated;
 };
 
-exports.decorateConfig = function (config) {
-  let decorated = config;
+exports.getDecoratedConfig = function () {
+  let decorated = config.getConfig();
   modules.forEach((plugin) => {
     if (plugin.decorateConfig) {
       const res = plugin.decorateConfig(decorated);
-      if (res) {
+      if (res && 'object' === typeof res) {
         decorated = res;
       } else {
-        console.error('incompatible response type for `decorateConfig`');
+        notify('Plugin error!', `"${plugin._name}": invalid return type for \`decorateConfig\``);
       }
     }
   });

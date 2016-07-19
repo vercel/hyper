@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, css } from 'aphrodite';
+import { StyleSheet, css } from 'aphrodite-simple';
 import { shouldComponentUpdate } from 'react-addons-pure-render-mixin';
 
 export default class Component extends React.Component {
@@ -31,9 +31,9 @@ export default class Component extends React.Component {
   // - we can give the element an unaltered global classname
   //   that can be used to introduce global css side effects
   //   for example, through the configuration, web inspector
-  //   or user agente extensions
+  //   or user agent extensions
   // - the user doesn't need to keep track of both `css`
-  //    and `style`, and we make that whole ordear easier
+  //    and `style`, and we make that whole ordeal easier
   cssHelper (...args) {
     const classes = args
       .map((c) => {

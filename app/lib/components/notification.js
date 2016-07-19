@@ -20,7 +20,7 @@ export default class Notification extends Component {
 
   componentWillReceiveProps (next) {
     // if we have a timer going and the notification text
-    // changed we rest the timer
+    // changed we reset the timer
     if (next.text !== this.props.text) {
       if (this.props.dismissAfter) {
         this.resetDismissTimer();
@@ -42,7 +42,6 @@ export default class Notification extends Component {
           this.props.onDismiss();
         }
       });
-      // aprhodie !important override :(
       const { backgroundColor } = this.props;
       if (backgroundColor) {
         el.style.setProperty(
@@ -96,14 +95,20 @@ export default class Notification extends Component {
         cursor: 'default',
         WebkitUserSelect: 'none',
         background: 'rgba(255, 255, 255, .2)',
-        padding: '6px 14px',
+        padding: '8px 14px 9px',
         marginLeft: '10px',
         transition: '150ms opacity ease',
         color: '#fff',
-        font: '11px Menlo'
+        fontSize: '11px',
+        fontFamily: `-apple-system, BlinkMacSystemFont,
+        "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans",
+        "Droid Sans", "Helvetica Neue", sans-serif`
       },
 
       dismissLink: {
+        position: 'relative',
+        left: '4px',
         cursor: 'pointer',
         color: '#528D11',
         ':hover': {

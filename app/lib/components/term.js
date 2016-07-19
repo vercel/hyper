@@ -7,7 +7,6 @@ export default class Term extends Component {
 
   constructor (props) {
     super(props);
-    this.state = { scrollable: false };
     this.onWheel = this.onWheel.bind(this);
     this.onScrollEnter = this.onScrollEnter.bind(this);
     this.onScrollLeave = this.onScrollLeave.bind(this);
@@ -33,6 +32,9 @@ export default class Term extends Component {
     this.term.prefs_.set('color-palette-overrides', props.colors);
     this.term.prefs_.set('user-css', this.getStylesheet(props.customCSS));
     this.term.prefs_.set('scrollbar-visible', false);
+    this.term.prefs_.set('receive-encoding', 'raw');
+    this.term.prefs_.set('send-encoding', 'raw');
+    this.term.prefs_.set('alt-sends-what', 'browser-key');
 
     this.term.onTerminalReady = () => {
       const io = this.term.io.push();
@@ -74,7 +76,7 @@ export default class Term extends Component {
 
   write (data) {
     requestAnimationFrame(() => {
-      this.term.io.print(data);
+      this.term.io.writeUTF8(data);
     });
   }
 
@@ -84,6 +86,13 @@ export default class Term extends Component {
 
   clear () {
     this.term.clearPreserveCursorRow();
+
+    // If cursor is still not at the top, a command is probably
+    // running and we'd like to delete the whole screen.
+    // Move cursor to top
+    if (this.term.getCursorRow() !== 0) {
+      this.term.io.writeUTF8('\x1B[0;0H\x1B[2J');
+    }
   }
 
   getTermDocument () {
@@ -152,8 +161,6 @@ export default class Term extends Component {
   }
 
   componentWillUnmount () {
-    const iframeWindow = this.getTermDocument().defaultView;
-    iframeWindow.addEventListener('wheel', this.onWheel);
     clearTimeout(this.scrollbarsHideTimer);
     this.props.ref_(null);
   }
@@ -174,12 +181,11 @@ export default class Term extends Component {
               width: '100%',
               height: '100%'
             }}></webview>
-        : null
+        : <div
+            className={ css('scrollbarShim') }
+            onMouseEnter={ this.onScrollEnter }
+            onMouseLeave={ this.onScrollLeave } />
       }
-      <div
-        className={ css('scrollbarShim') }
-        onMouseEnter={ this.onScrollEnter }
-        onMouseLeave={ this.onScrollLeave } />
       { this.props.customChildren }
     </div>;
   }

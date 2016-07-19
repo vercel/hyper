@@ -13,6 +13,13 @@ const config = require('./config');
 config.init();
 const plugins = require('./plugins');
 
+const windowSet = new Set([]);
+
+// expose to plugins
+app.config = config;
+app.plugins = plugins;
+app.getWindows = () => new Set([...windowSet]); // return a clone
+
 if (isDev) {
   console.log('running in dev mode');
 } else {
@@ -36,24 +43,26 @@ app.on('window-all-closed', () => {
   // terminal is closed
 });
 
-let winCount = 0;
-
 app.on('ready', () => {
   function createWindow (fn) {
-    let win = new BrowserWindow({
+    const cfg = plugins.getDecoratedConfig();
+
+    const win = new BrowserWindow({
       width: 540,
       height: 380,
       minHeight: 190,
       minWidth: 370,
       titleBarStyle: 'hidden-inset',
       title: 'HyperTerm',
-      backgroundColor: toHex(config.getConfig().backgroundColor || '#000'),
+      backgroundColor: toHex(cfg.backgroundColor || '#000'),
       transparent: true,
+      icon: resolve(__dirname, 'static/icon.png'),
       // we only want to show when the prompt
       // is ready for user input
       show: process.env.HYPERTERM_DEBUG || isDev
     });
-    winCount++;
+
+    windowSet.add(win);
     win.loadURL(url);
 
     const rpc = createRPC(win);
@@ -66,6 +75,7 @@ app.on('ready', () => {
 
     rpc.on('init', () => {
       win.show();
+      if (fn) fn(win);
 
       // auto updates
       if (!isDev) {
@@ -75,12 +85,15 @@ app.on('ready', () => {
       }
     });
 
-    rpc.on('new', ({ rows = 40, cols = 100 }) => {
-      initSession({ rows, cols }, (uid, session) => {
+    rpc.on('new', ({ rows = 40, cols = 100, cwd = process.env.HOME }) => {
+      const shell = cfg.shell;
+
+      initSession({ rows, cols, cwd, shell }, (uid, session) => {
         sessions.set(uid, session);
         rpc.emit('session add', {
           uid,
-          shell: session.shell
+          shell: session.shell,
+          pid: session.pty.pid
         });
 
         session.on('data', (data) => {
@@ -103,6 +116,7 @@ app.on('ready', () => {
     // on Session and focus/blur to subscribe
     rpc.on('focus', ({ uid }) => {
       const session = sessions.get(uid);
+
       if (session) {
         session.focus();
       } else {
@@ -112,6 +126,7 @@ app.on('ready', () => {
 
     rpc.on('blur', ({ uid }) => {
       const session = sessions.get(uid);
+
       if (session) {
         session.blur();
       } else {
@@ -176,12 +191,13 @@ app.on('ready', () => {
     const pluginsUnsubscribe = plugins.subscribe((err) => {
       if (!err) {
         load();
+        win.webContents.send('plugins change');
       }
     });
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
-      winCount--;
+      windowSet.delete(win);
       rpc.destroy();
       deleteSessions();
       cfgUnsubscribe();
@@ -192,11 +208,14 @@ app.on('ready', () => {
   // when opening create a new window
   createWindow();
 
+  // expose to plugins
+  app.createWindow = createWindow;
+
   // mac only. when the dock icon is clicked
   // and we don't have any active windows open,
   // we open one
   app.on('activate', () => {
-    if (!winCount) {
+    if (!windowSet.size) {
       createWindow();
     }
   });
@@ -208,6 +227,7 @@ app.on('ready', () => {
         plugins.updatePlugins({ force: true });
       }
     }));
+
     Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
   };
 

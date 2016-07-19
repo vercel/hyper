@@ -28,6 +28,8 @@ const store_ = createStore(
 
 window.__defineGetter__('store', () => store_);
 window.__defineGetter__('rpc', () => rpc);
+window.__defineGetter__('config', () => config);
+window.__defineGetter__('plugins', () => plugins);
 
 // initialize config
 store_.dispatch(loadConfig(config.getConfig()));
@@ -36,13 +38,13 @@ config.subscribe(() => {
 });
 
 // initialize communication with main electron process
-// and subscribe to all user intents for example from menues
+// and subscribe to all user intents for example from menus
 rpc.on('ready', () => {
   store_.dispatch(init());
 });
 
-rpc.on('session add', ({ uid, shell }) => {
-  store_.dispatch(sessionActions.addSession(uid, shell));
+rpc.on('session add', ({ uid, shell, pid }) => {
+  store_.dispatch(sessionActions.addSession(uid, shell, pid));
 });
 
 rpc.on('session data', ({ uid, data }) => {

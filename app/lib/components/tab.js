@@ -1,6 +1,5 @@
 import React from 'react';
 import Component from '../component';
-import overrideStyle from '../utils/override-style';
 
 export default class Tab extends Component {
   constructor () {
@@ -28,7 +27,7 @@ export default class Tab extends Component {
       onMouseEnter={ this.hover }
       onMouseLeave={ this.blur }
       onClick={ this.props.onClick }
-      ref={ overrideStyle({ borderColor }) }
+      style={{ borderColor }}
       className={ css(
         'tab',
         isFirst && 'first',

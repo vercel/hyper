@@ -1,7 +1,6 @@
 import Tab_ from './tab';
 import React from 'react';
 import Component from '../component';
-import overrideStyle from '../utils/override-style';
 import { decorate, getTabProps } from '../utils/plugins';
 
 const Tab = decorate(Tab_, 'Tab');
@@ -22,7 +21,7 @@ export default class Tabs extends Component {
           ? 1 === tabs.length
             ? <div className={ css('title') }>{ tabs[0].title }</div>
             : <ul
-                ref={overrideStyle({ borderColor })}
+                style={{ borderColor }}
                 className={ css('list') }>
                 {
                   tabs.map((tab, i) => {

@@ -29,6 +29,9 @@ module.exports = {
   plugins: [
     new webpack.ExternalsPlugin('commonjs', ['electron']),
     new webpack.optimize.UglifyJsPlugin({
+      mangle: {
+        keep_fnames: true
+      },
       compress: {
         warnings: false
       },
