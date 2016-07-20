@@ -46,6 +46,6 @@
   },
   "scripts": {
     "start": "electron index",
-    "lint": "eslint *.js"
+    "lint": "eslint ."
   }
 }

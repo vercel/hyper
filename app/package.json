@@ -72,7 +72,7 @@
   },
   "scripts": {
     "dev": "webpack --watch",
-    "lint": "eslint *.js",
+    "lint": "eslint .",
     "build": "NODE_ENV=production webpack"
   }
 }
