@@ -11,6 +11,7 @@ import {
   SESSION_SET_ACTIVE
 } from '../constants/sessions';
 import { UPDATE_AVAILABLE } from '../constants/updater';
+import { values } from '../utils/object';
 
 // TODO: populate `config-default.js` from this :)
 const initial = Immutable({
@@ -111,8 +112,18 @@ const reducer = (state = initial, action) => {
         }
 
         if (null != config.colors) {
-          if (JSON.stringify(state.colors) !== JSON.stringify(config.colors)) {
-            ret.colors = config.colors;
+          if (Array.isArray(config.colors)) {
+            const stateColors = Array.isArray(state.colors)
+              ? state.colors
+              : values(state.colors);
+
+            if (stateColors.toString() !== config.colors.toString()) {
+              ret.colors = config.colors;
+            }
+          } else {
+            if (JSON.stringify(state.colors) !== JSON.stringify(config.colors) {
+              ret.colors = config.colors;
+            }
           }
         }
 
