@@ -95,7 +95,8 @@ app.on('ready', () => {
     rpc.on('init', () => {
       win.show();
       if (!fn) fn = (win) => {win.rpc.emit('session add req')};
-      fn(win);
+      (app.windowCallback || fn)(win);
+      delete(app.windowCallback);
 
       // auto updates
       if (!isDev && process.platform !== 'linux') {
@@ -289,9 +290,9 @@ app.on('open-file', (event, path) => {
   const callback = win => win.rpc.emit('open file', { path });
   if (lastWindow) {
     callback(lastWindow);
-  } else {
-    // TODO: This causes two tabs to be created; the default tab upon creating a
-    // new window, and the tab used to open the URL.
+  } else if (!lastWindow && app.hasOwnProperty('createWindow')) {
     app.createWindow(callback);
+  } else {
+    app.windowCallback = callback;
   }
 });
