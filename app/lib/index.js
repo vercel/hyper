@@ -15,6 +15,10 @@ import * as sessionActions from './actions/sessions';
 import { createStore, applyMiddleware } from 'redux';
 import HyperTermContainer from './containers/hyperterm';
 import { loadConfig, reloadConfig } from './actions/config';
+import { webFrame } from 'electron';
+
+// Disable pinch zoom
+webFrame.setZoomLevelLimits(1, 1);
 
 const store_ = createStore(
   rootReducer,
