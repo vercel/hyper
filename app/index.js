@@ -17,12 +17,20 @@ const plugins = require('./plugins');
 const Session = require('./session');
 
 const windowSet = new Set([]);
-var lastWindow;
 
 // expose to plugins
 app.config = config;
 app.plugins = plugins;
 app.getWindows = () => new Set([...windowSet]); // return a clone
+app.getLastFocusedWindow = () => {
+  let lastWindow = null;
+  let lastFocusTime = 0;
+  windowSet.forEach((win) => {
+    lastWindow = win.focusTime > lastFocusTime ? win : lastWindow;
+    lastFocusTime = win.focusTime;
+  });
+  return lastWindow;
+};
 
 if (isDev) {
   console.log('running in dev mode');
@@ -62,7 +70,6 @@ app.on('ready', () => {
     const win = new BrowserWindow(browserOptions);
 
     windowSet.add(win);
-    lastWindow = win;
 
     win.loadURL(url);
 
@@ -218,13 +225,11 @@ app.on('ready', () => {
     });
 
     win.on('focus', () => {
-      lastWindow = win;
-    })
+      win.focusTime = process.uptime();
+    });
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
-      // TODO: lastWindow should be set to another window, if one exists.
-      lastWindow = undefined;
       windowSet.delete(win);
       rpc.destroy();
       deleteSessions();
@@ -279,6 +284,7 @@ function initSession (opts, fn) {
 }
 
 app.on('open-file', (event, path) => {
+  let lastWindow = app.getLastFocusedWindow();
   const callback = win => win.rpc.emit('open file', { path });
   if (lastWindow) {
     callback(lastWindow);
