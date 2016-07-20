@@ -143,7 +143,7 @@ export function showPreferences () {
           rpc.once('session data', () => {
             dispatch(sendSessionData(
               uid,
-              ['echo Attempting to open ~/.hyperterm.js with your \$EDITOR',
+              ['echo Attempting to open ~/.hyperterm.js with your \$EDITOR', // eslint-disable-line no-useless-escape
                'echo If it fails, open it manually with your favorite editor!',
                'exec env $EDITOR ~/.hyperterm.js',
                ''

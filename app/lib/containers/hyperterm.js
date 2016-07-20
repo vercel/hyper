@@ -50,7 +50,7 @@ class HyperTerm extends Component {
     keys.bind('command+alt+left', moveLeft);
     keys.bind('command+alt+right', moveRight);
 
-    const bound = method => { return term[method].bind(term) }
+    const bound = method => { return term[method].bind(term); };
     keys.bind('alt+left', bound('moveWordLeft'));
     keys.bind('alt+right', bound('moveWordRight'));
     keys.bind('alt+backspace', bound('deleteWordLeft'));
