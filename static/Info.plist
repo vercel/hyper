@@ -1,0 +1,17 @@
+<plist version="1.0">
+	<dict>
+		<key>CFBundleDocumentTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeName</key>
+				<string>Folders</string>
+				<key>CFBundleTypeOSTypes</key>
+				<array>
+					<string>fold</string>
+				</array>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+			</dict>
+		</array>
+	</dict>
+</plist>
