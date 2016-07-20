@@ -145,7 +145,7 @@ export function showPreferences () {
               uid,
               ['echo Attempting to open ~/.hyperterm.js with your \$EDITOR',
                'echo If it fails, open it manually with your favorite editor!',
-               'exec env $EDITOR ~/.hyperterm.js',
+               'bash -c "exec env $EDITOR ~/.hyperterm.js"',
                ''
               ].join('\n')
             ));
