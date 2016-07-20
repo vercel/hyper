@@ -177,7 +177,7 @@ export default class Term extends Component {
     }
 
     if (this.props.fontSmoothing !== nextProps.fontSmoothing) {
-      this.term.prefs_.set('font-smoothing', props.fontSmoothing);
+      this.term.prefs_.set('font-smoothing', nextProps.fontSmoothing);
     }
 
     if (this.props.cursorColor !== nextProps.cursorColor) {
