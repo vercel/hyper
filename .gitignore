@@ -5,6 +5,10 @@ build
 # dependencies
 node_modules
 
+# coverage
+coverage
+.nyc_output
+
 # logs
 npm-debug.log
 

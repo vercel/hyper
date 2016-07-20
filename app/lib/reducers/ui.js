@@ -18,7 +18,7 @@ import {
 import { UPDATE_AVAILABLE } from '../constants/updater';
 
 // TODO: populate `config-default.js` from this :)
-const initial = Immutable({
+export const initialState = Immutable({
   cols: null,
   rows: null,
   activeUid: null,
@@ -63,7 +63,7 @@ const initial = Immutable({
   updateNotes: null
 });
 
-const reducer = (state = initial, action) => {
+export const reducer = (state = initialState, action) => {
   let state_ = state;
 
   switch (action.type) {

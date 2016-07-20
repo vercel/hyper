@@ -13,13 +13,13 @@ import {
   SESSION_SET_PROCESS_TITLE
 } from '../constants/sessions';
 
-const initialState = Immutable({
+export const initialState = Immutable({
   sessions: {},
   write: null,
   activeUid: null
 });
 
-function Session (obj) {
+export function Session (obj) {
   return Immutable({
     uid: '',
     title: '',
@@ -31,14 +31,14 @@ function Session (obj) {
   }).merge(obj);
 }
 
-function Write (obj) {
+export function Write (obj) {
   return Immutable({
     uid: '',
     data: ''
   }).merge(obj);
 }
 
-const reducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case SESSION_ADD:
       return state.setIn(['sessions', action.uid], Session({
