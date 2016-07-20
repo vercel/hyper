@@ -94,9 +94,9 @@ app.on('ready', () => {
 
     rpc.on('init', () => {
       win.show();
-      if (!fn) fn = (win) => {win.rpc.emit('session add req')};
+      if (!fn) fn = (win) => win.rpc.emit('session add req');
       (app.windowCallback || fn)(win);
-      delete(app.windowCallback);
+      delete (app.windowCallback);
 
       // auto updates
       if (!isDev && process.platform !== 'linux') {
