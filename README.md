@@ -25,9 +25,7 @@ modules are built with `electron`, run:
 $ ./scripts/install.sh
 ```
 
-Then, you want to make sure `app/dist` is populated. I recommend
-running `webpack` with `--watch` so that any changes you make
-to the app are detected.
+Then, you want to make sure `app/dist` is populated.
 
 ```bash
 $ cd app/

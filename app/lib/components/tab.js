@@ -1,14 +1,19 @@
-import React from 'react';
-import Component from '../component';
+import React, { Component, PropTypes } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import { shouldComponentUpdate } from 'react-addons-pure-render-mixin';
 
 export default class Tab extends Component {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.hover = this.hover.bind(this);
     this.blur = this.blur.bind(this);
     this.state = {
       hovered: false
     };
+  }
+
+  shouldComponentUpdate (...args) {
+    return shouldComponentUpdate.apply(this, [args])
   }
 
   hover () {
@@ -19,156 +24,127 @@ export default class Tab extends Component {
     this.setState({ hovered: false });
   }
 
-  template (css) {
+  render () {
     const { isActive, isFirst, isLast, borderColor, hasActivity } = this.props;
     const { hovered } = this.state;
 
-    return <li
+    return <View
+      accessibilityRole='button'
       onMouseEnter={ this.hover }
       onMouseLeave={ this.blur }
       onClick={ this.props.onClick }
-      style={{ borderColor }}
-      className={ css(
-        'tab',
-        isFirst && 'first',
-        isActive && 'active',
-        hasActivity && 'hasActivity'
-      ) }>
+      style={[
+        { borderColor },
+        styles.tab,
+        isFirst && styles.first,
+        hasActivity && styles.hasActivity
+      ]}>
+        {isActive ? <View style={styles.tabBorder} /> : null}
         { this.props.customChildrenBefore }
-        <span
-          className={ css(
-            'text',
-            isLast && 'textLast',
-            isActive && 'textActive'
-          ) }
-          onClick={ this.props.isActive ? null : this.props.onSelect }>
-          <span className={ css('textInner') }>
+        <View
+          style={[
+            styles.textBox,
+            isLast && styles.textBoxLast,
+            (isActive || hovered) && styles.textBoxActive
+          ]}
+          onClick={ isActive ? null : this.props.onSelect }>
+          <Text style={[
+            styles.text,
+            isActive && styles.textActive,
+          ]}>
             { this.props.text }
-          </span>
-        </span>
-        <i
-          className={ css(
-            'icon',
-            hovered && 'iconHovered'
-          ) }
+          </Text>
+        </View>
+        <View
+          pointerEvents={ hovered ? 'auto' : 'none' }
+          style={[
+            styles.icon,
+            hovered && styles.iconHovered
+          ]}
           onClick={ this.props.onClose }>
-          <svg className={ css('shape') }>
+          <svg style={svgStyles}>
             <use xlinkHref='assets/icons.svg#close'></use>
           </svg>
-        </i>
+        </View>
         { this.props.customChildren }
-    </li>;
+    </View>;
   }
-
-  styles () {
-    return {
-      tab: {
-        color: '#ccc',
-        listStyleType: 'none',
-        flexGrow: 1,
-        position: 'relative',
-        ':hover': {
-          color: '#ccc'
-        }
-      },
-
-      first: {
-        marginLeft: '76px'
-      },
-
-      active: {
-        color: '#fff',
-        ':before': {
-          position: 'absolute',
-          content: '" "',
-          borderBottom: '1px solid #000',
-          display: 'block',
-          left: '0px',
-          right: '0px',
-          bottom: '-1px'
-        },
-        ':hover': {
-          color: '#fff'
-        }
-      },
-
-      hasActivity: {
-        color: '#50E3C2',
-        ':hover': {
-          color: '#50E3C2'
-        }
-      },
-
-      text: {
-        transition: 'color .2s ease',
-        height: '34px',
-        display: 'block',
-        width: '100%',
-        position: 'relative',
-        borderLeft: '1px solid transparent',
-        borderRight: '1px solid transparent',
-        overflow: 'hidden'
-      },
-
-      textInner: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        textAlign: 'center'
-      },
-
-      textLast: {
-        borderRightWidth: 0
-      },
-
-      textActive: {
-        borderColor: 'inherit'
-      },
-
-      icon: {
-        transition: `opacity .2s ease, color .2s ease,
-          transform .25s ease, background-color .1s ease`,
-        pointerEvents: 'none',
-        position: 'absolute',
-        right: '7px',
-        top: '10px',
-        display: 'inline-block',
-        width: '14px',
-        height: '14px',
-        borderRadius: '100%',
-        color: '#e9e9e9',
-        opacity: 0,
-        transform: 'scale(.95)',
-
-        ':hover': {
-          backgroundColor: 'rgba(255,255,255, .13)',
-          color: '#fff'
-        },
-
-        ':active': {
-          backgroundColor: 'rgba(255,255,255, .1)',
-          color: '#909090'
-        }
-      },
-
-      iconHovered: {
-        opacity: 1,
-        transform: 'none',
-        pointerEvents: 'all'
-      },
-
-      shape: {
-        position: 'absolute',
-        left: '4px',
-        top: '4px',
-        width: '6px',
-        height: '6px',
-        verticalAlign: 'middle',
-        fill: 'currentColor'
-      }
-    };
-  }
-
 }
+
+const svgStyles = {
+  position: 'absolute',
+  left: '4px',
+  top: '4px',
+  width: '6px',
+  height: '6px',
+  textAlignVertical: 'center',
+  fill: 'currentColor'
+}
+
+const styles = StyleSheet.create({
+  tab: {
+    flex: 1,
+    outline: 'none'
+  },
+  first: {
+    marginLeft: '76px'
+  },
+  tabBorder: {
+    position: 'absolute',
+    height: 1,
+    backgroundColor: '#000',
+    left: '0px',
+    right: '0px',
+    bottom: '-1px'
+  },
+  hasActivity: {
+    color: '#50E3C2',
+  },
+  textBox: {
+    transition: 'color .2s ease',
+    height: '34px',
+    width: '100%',
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'transparent',
+    overflow: 'hidden',
+    justifyContent: 'center',
+  },
+  textBoxLast: {
+    borderRightWidth: 0
+  },
+  textBoxActive: {
+    borderColor: 'inherit'
+  },
+  text: {
+    fontSize: '12px',
+    fontFamily: `-apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif`,
+    color: '#ccc',
+    textAlign: 'center'
+  },
+  textActive: {
+    color: '#fff'
+  },
+  icon: {
+    transition: `opacity .2s ease, color .2s ease,
+      transform .25s ease, background-color .1s ease`,
+    position: 'absolute',
+    right: '7px',
+    top: '10px',
+    display: 'inline-block',
+    width: '14px',
+    height: '14px',
+    borderRadius: '100%',
+    color: '#e9e9e9',
+    opacity: 0,
+    transform: [ { scale: 0.95 } ],
+  },
+  iconHovered: {
+    opacity: 1,
+    transform: []
+  }
+})
