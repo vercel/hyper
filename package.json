@@ -24,7 +24,8 @@
     "eslint-config-standard": "5.3.5",
     "eslint-plugin-promise": "2.0.0",
     "eslint-plugin-react": "5.2.2",
-    "eslint-plugin-standard": "2.0.0"
+    "eslint-plugin-standard": "2.0.0",
+    "husky": "0.11.4"
   },
   "eslintConfig": {
     "extends": "standard",
@@ -47,6 +48,9 @@
   },
   "scripts": {
     "start": "electron index",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepublish": "npm test",
+    "prepush": "npm test",
+    "test": "npm run lint"
   }
 }
