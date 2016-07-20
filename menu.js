@@ -87,6 +87,11 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
               focusedWindow.rpc.emit('session close req');
             }
           }
+        },
+        {
+          label: 'Close Terminal Window',
+          role: 'close',
+          accelerator: 'CmdOrCtrl+Shift+W',
         }
       ]
     },
@@ -207,9 +212,6 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
       submenu: [
         {
           role: 'minimize'
-        },
-        {
-          role: 'close'
         },
         {
           type: 'separator'
