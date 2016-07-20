@@ -214,6 +214,9 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           role: 'minimize'
         },
         {
+          role: 'zoom'
+        },
+        {
           type: 'separator'
         },
         {
