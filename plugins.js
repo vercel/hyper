@@ -312,8 +312,8 @@ exports.getDecoratedConfig = function () {
   return decorated;
 };
 
-exports.getDecoratedBrowserOptions = function () {
-  let decorated = {};
+exports.getDecoratedBrowserOptions = function (defaults) {
+  let decorated = defaults;
   modules.forEach((plugin) => {
     if (plugin.decorateBrowserOptions) {
       const res = plugin.decorateBrowserOptions(decorated);
