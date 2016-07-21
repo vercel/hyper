@@ -91,7 +91,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         {
           label: 'Close Terminal Window',
           role: 'close',
-          accelerator: 'CmdOrCtrl+Shift+W',
+          accelerator: 'CmdOrCtrl+Shift+W'
         }
       ]
     },
