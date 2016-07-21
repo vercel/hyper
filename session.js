@@ -2,7 +2,7 @@ const { app } = require('electron');
 const { EventEmitter } = require('events');
 const { exec } = require('child_process');
 const defaultShell = require('default-shell');
-const { productName, version } = require('../package');
+const { productName, version } = require('./package');
 
 let spawn;
 try {
