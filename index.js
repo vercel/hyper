@@ -78,7 +78,7 @@ app.on('ready', () => {
       if (fn) fn(win);
 
       // auto updates
-      if (!isDev) {
+      if (!isDev && process.platform !== 'linux') {
         AutoUpdater(win);
       } else {
         console.log('ignoring auto updates during dev');
