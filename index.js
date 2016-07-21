@@ -37,10 +37,8 @@ const url = 'file://' + resolve(
 console.log('electron will open', url);
 
 app.on('window-all-closed', () => {
-  // by subscribing to this event and nooping
-  // we prevent electron's default behavior
-  // of quitting the app when the last
-  // terminal is closed
+  if (process.platform != 'darwin')
+    app.quit();
 });
 
 app.on('ready', () => {
