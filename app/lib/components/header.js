@@ -82,8 +82,8 @@ export default class Header extends Component {
       },
 
       headerRounded: {
-        borderTopLeftRadius: '6px',
-        borderTopRightRadius: '6px'
+        borderTopLeftRadius: '4px',
+        borderTopRightRadius: '4px'
       }
     };
   }
