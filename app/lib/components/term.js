@@ -3,6 +3,7 @@ import React from 'react';
 import Color from 'color';
 import hterm from '../hterm';
 import Component from '../component';
+import { getColorList } from '../utils/colors'
 
 export default class Term extends Component {
 
@@ -31,7 +32,7 @@ export default class Term extends Component {
     this.term.prefs_.set('enable-clipboard-notice', false);
     this.term.prefs_.set('foreground-color', props.foregroundColor);
     this.term.prefs_.set('background-color', props.backgroundColor);
-    this.term.prefs_.set('color-palette-overrides', props.colors);
+    this.term.prefs_.set('color-palette-overrides', getColorList(props.colors));
     this.term.prefs_.set('user-css', this.getStylesheet(props.customCSS));
     this.term.prefs_.set('scrollbar-visible', false);
     this.term.prefs_.set('receive-encoding', 'raw');
@@ -186,7 +187,7 @@ export default class Term extends Component {
     }
 
     if (this.props.colors !== nextProps.colors) {
-      this.term.prefs_.set('color-palette-overrides', nextProps.colors);
+      this.term.prefs_.set('color-palette-overrides', getColorList(nextProps.colors));
     }
 
     if (this.props.customCSS !== nextProps.customCSS) {

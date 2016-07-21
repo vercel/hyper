@@ -16,6 +16,7 @@ import {
   SESSION_SET_CWD
 } from '../constants/sessions';
 import { UPDATE_AVAILABLE } from '../constants/updater';
+import { values } from '../utils/object';
 
 // TODO: populate `config-default.js` from this :)
 const initial = Immutable({
@@ -33,24 +34,24 @@ const initial = Immutable({
   termCSS: '',
   openAt: {},
   resizeAt: 0,
-  colors: [
-    '#000000',
-    '#ff0000',
-    '#33ff00',
-    '#ffff00',
-    '#0066ff',
-    '#cc00ff',
-    '#00ffff',
-    '#d0d0d0',
-    '#808080',
-    '#ff0000',
-    '#33ff00',
-    '#ffff00',
-    '#0066ff',
-    '#cc00ff',
-    '#00ffff',
-    '#ffffff'
-  ],
+  colors: {
+    black: '#000000',
+    red: '#ff0000',
+    green: '#33ff00',
+    yellow: '#ffff00',
+    blue: '#0066ff',
+    magenta: '#cc00ff',
+    cyan: '#00ffff',
+    white: '#d0d0d0',
+    lightBlack: '#808080',
+    lightRed: '#ff0000',
+    lightGreen: '#33ff00',
+    lightYellow: '#ffff00',
+    lightBlue: '#0066ff',
+    lightMagenta: '#cc00ff',
+    lightCyan: '#00ffff',
+    lightWhite: '#ffffff'
+  },
   activityMarkers: {},
   notifications: {
     font: false,
@@ -117,8 +118,18 @@ const reducer = (state = initial, action) => {
         }
 
         if (null != config.colors) {
-          if (state.colors.toString() !== config.colors.toString()) {
-            ret.colors = config.colors;
+          if (Array.isArray(config.colors)) {
+            const stateColors = Array.isArray(state.colors)
+              ? state.colors
+              : values(state.colors);
+
+            if (stateColors.toString() !== config.colors.toString()) {
+              ret.colors = config.colors;
+            }
+          } else {
+            if (JSON.stringify(state.colors) !== JSON.stringify(config.colors) {
+              ret.colors = config.colors;
+            }
           }
         }
 
