@@ -193,6 +193,9 @@ function install (fn) {
   shellEnv().then((env) => {
     let registry = exports.getDecoratedConfig().npmRegistry;
     if (registry) env.NPM_CONFIG_REGISTRY = registry;
+    env.npm_config_runtime = 'electron';
+    env.npm_config_target = require('./package.json').devDependencies['electron-prebuilt'];
+    env.npm_config_disturl = 'https://atom.io/download/atom-shell';
     exec('npm prune && npm install --production', {
       cwd: path,
       env: env

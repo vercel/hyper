@@ -1,14 +1,19 @@
 import Immutable from 'seamless-immutable';
 import { decorateUIReducer } from '../utils/plugins';
 import { CONFIG_LOAD, CONFIG_RELOAD } from '../constants/config';
-import { UI_FONT_SIZE_SET, UI_FONT_SIZE_RESET } from '../constants/ui';
+import {
+  UI_FONT_SIZE_SET,
+  UI_FONT_SIZE_RESET,
+  UI_FONT_SMOOTHING_SET
+} from '../constants/ui';
 import { NOTIFICATION_DISMISS } from '../constants/notifications';
 import {
   SESSION_ADD,
   SESSION_RESIZE,
   SESSION_PTY_DATA,
   SESSION_PTY_EXIT,
-  SESSION_SET_ACTIVE
+  SESSION_SET_ACTIVE,
+  SESSION_SET_CWD
 } from '../constants/sessions';
 import { UPDATE_AVAILABLE } from '../constants/updater';
 
@@ -23,6 +28,7 @@ const initial = Immutable({
   padding: '12px 14px',
   fontFamily: 'Menlo, "DejaVu Sans Mono", "Lucida Console", monospace',
   fontSizeOverride: null,
+  fontSmoothingOverride: 'antialiased',
   css: '',
   termCSS: '',
   openAt: {},
@@ -182,12 +188,20 @@ const reducer = (state = initial, action) => {
       }
       break;
 
+    case SESSION_SET_CWD:
+      state_ = state.set('cwd', action.cwd);
+      break;
+
     case UI_FONT_SIZE_SET:
       state_ = state.set('fontSizeOverride', action.value);
       break;
 
     case UI_FONT_SIZE_RESET:
       state_ = state.set('fontSizeOverride', null);
+      break;
+
+    case UI_FONT_SMOOTHING_SET:
+      state_ = state.set('fontSmoothingOverride', action.fontSmoothing);
       break;
 
     case NOTIFICATION_DISMISS:

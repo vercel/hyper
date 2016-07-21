@@ -15,6 +15,10 @@ import * as sessionActions from './actions/sessions';
 import { createStore, applyMiddleware } from 'redux';
 import HyperTermContainer from './containers/hyperterm';
 import { loadConfig, reloadConfig } from './actions/config';
+import { webFrame } from 'electron';
+
+// Disable pinch zoom
+webFrame.setZoomLevelLimits(1, 1);
 
 const store_ = createStore(
   rootReducer,
@@ -41,6 +45,7 @@ config.subscribe(() => {
 // and subscribe to all user intents for example from menus
 rpc.on('ready', () => {
   store_.dispatch(init());
+  store_.dispatch(uiActions.setFontSmoothing());
 });
 
 rpc.on('session add', ({ uid, shell, pid }) => {
@@ -97,6 +102,10 @@ rpc.on('preferences', () => {
 
 rpc.on('update available', ({ releaseName, releaseNotes }) => {
   store_.dispatch(updaterActions.updateAvailable(releaseName, releaseNotes));
+});
+
+rpc.on('move', () => {
+  store_.dispatch(uiActions.windowMove());
 });
 
 const app = render(

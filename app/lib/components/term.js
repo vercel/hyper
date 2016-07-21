@@ -25,6 +25,7 @@ export default class Term extends Component {
 
     this.term.prefs_.set('font-family', props.fontFamily);
     this.term.prefs_.set('font-size', props.fontSize);
+    this.term.prefs_.set('font-smoothing', props.fontSmoothing);
     this.term.prefs_.set('cursor-color', props.cursorColor);
     this.term.prefs_.set('enable-clipboard-notice', false);
     this.term.prefs_.set('foreground-color', props.foregroundColor);
@@ -95,6 +96,34 @@ export default class Term extends Component {
     }
   }
 
+  moveWordLeft () {
+    this.term.onVTKeystroke('\x1bb');
+  }
+
+  moveWordRight () {
+    this.term.onVTKeystroke('\x1bf');
+  }
+
+  deleteWordLeft () {
+    this.term.onVTKeystroke('\x1b\x7f');
+  }
+
+  deleteWordRight () {
+    this.term.onVTKeystroke('\x1bd');
+  }
+
+  deleteLine () {
+    this.term.onVTKeystroke('\x1bw');
+  }
+
+  moveToStart () {
+    this.term.onVTKeystroke('\x01');
+  }
+
+  moveToEnd () {
+    this.term.onVTKeystroke('\x05');
+  }
+
   getTermDocument () {
     return this.term.document_;
   }
@@ -145,6 +174,10 @@ export default class Term extends Component {
 
     if (this.props.fontFamily !== nextProps.fontFamily) {
       this.term.prefs_.set('font-family', nextProps.fontFamily);
+    }
+
+    if (this.props.fontSmoothing !== nextProps.fontSmoothing) {
+      this.term.prefs_.set('font-smoothing', nextProps.fontSmoothing);
     }
 
     if (this.props.cursorColor !== nextProps.cursorColor) {
