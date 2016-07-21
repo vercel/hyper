@@ -8,7 +8,7 @@ let isInit = false;
 
 function init () {
   autoUpdater.on('error', (err, msg) => {
-    notify('Error fetching updates', msg + ' (' + err.stack + ')');
+    console.error('Error fetching updates', msg + ' (' + err.stack + ')');
   });
 
   autoUpdater.setFeedURL(`${FEED_URL}/${version}`);
