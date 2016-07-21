@@ -128,6 +128,7 @@ export default class Terms extends Component {
             customCSS: this.props.customCSS,
             fontSize: this.props.fontSize,
             cursorColor: this.props.cursorColor,
+            cursorShape: this.props.cursorShape,
             fontFamily: this.props.fontFamily,
             fontSmoothing: this.props.fontSmoothing,
             foregroundColor: this.props.foregroundColor,

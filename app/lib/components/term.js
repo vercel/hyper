@@ -47,6 +47,9 @@ export default class Term extends Component {
           props.onResize(cols, rows);
         }
       };
+
+      // this.term.CursorNode_ is available at this point.
+      this.term.setCursorShape(props.cursorShape);
     };
     this.term.decorate(this.refs.term);
     this.term.installKeyboard();
@@ -184,6 +187,10 @@ export default class Term extends Component {
 
     if (this.props.cursorColor !== nextProps.cursorColor) {
       this.term.prefs_.set('cursor-color', Color(nextProps.cursorColor).rgbString());
+    }
+
+    if (this.props.cursorShape !== nextProps.cursorShape) {
+      this.term.setCursorShape(nextProps.cursorShape);
     }
 
     if (this.props.colors !== nextProps.colors) {
