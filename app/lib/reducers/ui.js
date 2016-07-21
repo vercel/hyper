@@ -18,12 +18,15 @@ import {
 import { UPDATE_AVAILABLE } from '../constants/updater';
 import { values } from '../utils/object';
 
+const allowedCursorShapes = ['BEAM', 'BLOCK', 'UNDERLINE'];
+
 // TODO: populate `config-default.js` from this :)
 const initial = Immutable({
   cols: null,
   rows: null,
   activeUid: null,
   cursorColor: '#F81CE5',
+  cursorShape: 'BLOCK',
   borderColor: '#333',
   fontSize: 12,
   padding: '12px 14px',
@@ -91,6 +94,10 @@ const reducer = (state = initial, action) => {
 
         if (null != config.cursorColor) {
           ret.cursorColor = config.cursorColor;
+        }
+
+        if (allowedCursorShapes.includes(config.cursorShape)) {
+          ret.cursorShape = config.cursorShape;
         }
 
         if (null != config.borderColor) {
