@@ -1,3 +1,4 @@
+const { app } = require('electron');
 const { EventEmitter } = require('events');
 const { exec } = require('child_process');
 const defaultShell = require('default-shell');
@@ -25,6 +26,7 @@ module.exports = class Session extends EventEmitter {
       rows,
       cwd,
       env: Object.assign({}, process.env, {
+        LANG: app.getLocale(),
         TERM: 'xterm-256color'
       })
     });
