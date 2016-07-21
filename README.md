@@ -1,5 +1,7 @@
 # hyperterm
 
+![](https://zeit-slackin.now.sh/badge.svg)
+
 ![](https://cldup.com/tD67NzPryA.gif)
 
 For downloads, documentation and the developer API head to: https://hyperterm.org
