@@ -1,6 +1,5 @@
 const { autoUpdater } = require('electron');
 const { version } = require('./package');
-const notify = require('./notify');
 const ms = require('ms');
 
 const FEED_URL = 'https://hyperterm-updates.now.sh/update/osx';

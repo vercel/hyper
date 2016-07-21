@@ -127,7 +127,7 @@ const reducer = (state = initial, action) => {
               ret.colors = config.colors;
             }
           } else {
-            if (JSON.stringify(state.colors) !== JSON.stringify(config.colors) {
+            if (JSON.stringify(state.colors) !== JSON.stringify(config.colors)) {
               ret.colors = config.colors;
             }
           }

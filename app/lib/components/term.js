@@ -3,7 +3,7 @@ import React from 'react';
 import Color from 'color';
 import hterm from '../hterm';
 import Component from '../component';
-import { getColorList } from '../utils/colors'
+import { getColorList } from '../utils/colors';
 
 export default class Term extends Component {
 

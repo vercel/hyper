@@ -17,7 +17,7 @@ const colorList = [
   'lightWhite',
   'colorCubes',
   'grayscale'
-]
+];
 
 export function getColorList (colors) {
   // For backwards compatibility, return early if it's already an array
@@ -26,6 +26,6 @@ export function getColorList (colors) {
   }
 
   return colorList.map((colorName) => {
-    return colors[colorName]
-  })
+    return colors[colorName];
+  });
 }
