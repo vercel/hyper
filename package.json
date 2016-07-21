@@ -18,6 +18,7 @@
     "uid2": "0.0.3"
   },
   "devDependencies": {
+    "electron-installer-debian": "^0.3.0",
     "electron-packager": "7.3.0",
     "electron-prebuilt": "1.2.7",
     "eslint": "3.1.1",

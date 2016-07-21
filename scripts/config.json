@@ -1,0 +1,31 @@
+{
+  "name": "Hyperterm",
+  "description":"HTML/JS/CSS Terminal",
+  "dest": "./dist",
+  "icon": "./static/icon.png",
+  "version":"0.6.0",
+  "maintainer":"Guillermo Rauch",
+  "categories": [
+    "Utility"
+  ],
+  "depends": [
+    "git",
+    "gconf2",
+    "gconf-service",
+    "gvfs-bin",
+    "libc6",
+    "libcap2",
+    "libgtk2.0-0",
+    "libudev0 | libudev1",
+    "libgcrypt11 | libgcrypt20",
+    "libappindicator1",
+    "libnotify4",
+    "libnss3",
+    "libxtst6",
+    "python",
+    "xdg-utils"
+  ],
+  "lintianOverrides": [
+    "changelog-file-missing-in-native-package"
+  ]
+}
