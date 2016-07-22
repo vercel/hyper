@@ -40,8 +40,9 @@ const url = 'file://' + resolve(
 console.log('electron will open', url);
 
 app.on('window-all-closed', () => {
-  if (process.platform != 'darwin')
+  if (process.platform !== 'darwin') {
     app.quit();
+  }
 });
 
 app.on('ready', () => {

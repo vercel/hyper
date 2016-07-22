@@ -1,6 +1,6 @@
 const { autoUpdater } = require('electron');
 const { version } = require('./package');
-const notify = require('./notify');
+const notify = require('./notify'); // eslint-disable-line no-unused-vars
 const ms = require('ms');
 
 const FEED_URL = 'https://hyperterm-updates.now.sh/update/osx';
