@@ -32,6 +32,7 @@ class HyperTerm extends Component {
     const { moveTo, moveLeft, moveRight } = this.props;
     const term = this.terms.getActiveTerm();
     if (!term) return;
+    const lastIndex = this.terms.getLastTermIndex();
     const document = term.getTermDocument();
     const keys = new Mousetrap(document);
     keys.bind('command+1', moveTo.bind(this, 0));
@@ -42,7 +43,8 @@ class HyperTerm extends Component {
     keys.bind('command+6', moveTo.bind(this, 5));
     keys.bind('command+7', moveTo.bind(this, 6));
     keys.bind('command+8', moveTo.bind(this, 7));
-    keys.bind('command+9', moveTo.bind(this, 8));
+    keys.bind('command+9', moveTo.bind(this, lastIndex));
+
     keys.bind('command+shift+left', moveLeft);
     keys.bind('command+shift+right', moveRight);
     keys.bind('command+shift+[', moveLeft);

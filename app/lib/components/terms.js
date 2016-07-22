@@ -90,6 +90,10 @@ export default class Terms extends Component {
     return this.getTermByUid(this.props.activeSession);
   }
 
+  getLastTermIndex () {
+    return this.props.sessions.length - 1;
+  }
+
   bind (fn, thisObj, uid) {
     if (!this.bound.has(fn)) {
       this.bound.set(fn, {});
