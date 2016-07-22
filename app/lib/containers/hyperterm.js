@@ -49,6 +49,8 @@ class HyperTerm extends Component {
     keys.bind('command+shift+]', moveRight);
     keys.bind('command+alt+left', moveLeft);
     keys.bind('command+alt+right', moveRight);
+    keys.bind('ctrl+shift+tab', moveLeft);
+    keys.bind('ctrl+tab', moveRight);
 
     const bound = method => { return term[method].bind(term); };
     keys.bind('alt+left', bound('moveWordLeft'));
