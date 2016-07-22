@@ -311,3 +311,19 @@ exports.getDecoratedConfig = function () {
   });
   return decorated;
 };
+
+exports.getDecoratedBrowserOptions = function (defaults) {
+  let decorated = defaults;
+  modules.forEach((plugin) => {
+    if (plugin.decorateBrowserOptions) {
+      const res = plugin.decorateBrowserOptions(decorated);
+      if (res && 'object' === typeof res) {
+        decorated = res;
+      } else {
+        notify('Plugin error!', `"${plugin._name}": invalid return type for \`decorateBrowserOptions\``);
+      }
+    }
+  });
+  return decorated;
+};
+

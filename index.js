@@ -48,7 +48,7 @@ app.on('ready', () => {
   function createWindow (fn) {
     const cfg = plugins.getDecoratedConfig();
 
-    const win = new BrowserWindow({
+    const browserDefaults = {
       width: 540,
       height: 380,
       minHeight: 190,
@@ -61,7 +61,10 @@ app.on('ready', () => {
       // we only want to show when the prompt
       // is ready for user input
       show: process.env.HYPERTERM_DEBUG || isDev
-    });
+    };
+    const browserOptions = plugins.getDecoratedBrowserOptions(browserDefaults);
+
+    const win = new BrowserWindow(browserOptions);
 
     windowSet.add(win);
     win.loadURL(url);
