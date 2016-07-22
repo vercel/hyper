@@ -9,8 +9,8 @@ For downloads, documentation and the developer API head to: https://hyperterm.or
 (NOTE: only on macOS) With [Homebrew](http://brew.sh/) and [Homebrew Cask](https://caskroom.github.io/) installed, you can run this command:
 
 ```bash
-$ brew cask update
-$ brew cask install hyperterm
+brew cask update
+brew cask install hyperterm
 ```
 
 ### Repositories
