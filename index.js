@@ -4,6 +4,7 @@ const createMenu = require('./menu');
 const Session = require('./session');
 const genUid = require('uid2');
 const { resolve } = require('path');
+const untildify = require('untildify');
 const isDev = require('electron-is-dev');
 const AutoUpdater = require('./auto-updater');
 const toHex = require('convert-css-color-name-to-hex');
@@ -90,7 +91,12 @@ app.on('ready', () => {
       }
     });
 
-    rpc.on('new', ({ rows = 40, cols = 100, cwd = process.env.HOME }) => {
+    rpc.on('new', ({ rows = 40, cols = 100, cwd: newCwd }) => {
+      let cwd = newCwd;
+      if (!cwd) {
+        cwd = cfg.workingDirectory ? untildify(cfg.workingDirectory) : process.env.HOME;
+      }
+
       const shell = cfg.shell;
 
       initSession({ rows, cols, cwd, shell }, (uid, session) => {
