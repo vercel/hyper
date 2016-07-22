@@ -138,6 +138,9 @@ export default class Term extends Component {
       .cursor-node[focus="false"] {
         border-width: 1px !important;
       }
+      .cursor-node[focus="true"] {
+        opacity: 0.5 !important;
+      }
       ${css}
     `]);
     return URL.createObjectURL(blob, { type: 'text/css' });
