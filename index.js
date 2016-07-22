@@ -48,10 +48,11 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
   function createWindow (fn) {
     const cfg = plugins.getDecoratedConfig();
+    const [width, height] = cfg.windowSize || [540, 380];
 
     const browserDefaults = {
-      width: 540,
-      height: 380,
+      width,
+      height,
       minHeight: 190,
       minWidth: 370,
       titleBarStyle: 'hidden-inset',
