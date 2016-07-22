@@ -2,6 +2,7 @@ const { app } = require('electron');
 const { EventEmitter } = require('events');
 const { exec } = require('child_process');
 const defaultShell = require('default-shell');
+const { productName, version } = require('./package');
 
 let spawn;
 try {
@@ -27,7 +28,9 @@ module.exports = class Session extends EventEmitter {
       cwd,
       env: Object.assign({}, process.env, {
         LANG: app.getLocale(),
-        TERM: 'xterm-256color'
+        TERM: 'xterm-256color',
+        TERM_PROGRAM: productName,
+        TERM_PROGRAM_VERSION: version
       })
     });
 
