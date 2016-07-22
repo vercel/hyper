@@ -1,6 +1,6 @@
 # hyperterm
 
-[![Slack Channel](https://zeit-slackin.now.sh/badge.svg)](zeit-slackin.now.sh)
+[![Slack Channel](https://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
 
 ![](https://cldup.com/tD67NzPryA.gif)
 
