@@ -1,7 +1,7 @@
 {
   "name": "hyperterm",
   "productName": "HyperTerm",
-  "version": "0.6.0",
+  "version": "0.7.0-beta",
   "license": "MIT",
   "repository": "zeit/hyperterm",
   "description": "HTML/JS/CSS Terminal",
