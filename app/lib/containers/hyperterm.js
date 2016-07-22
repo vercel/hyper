@@ -81,12 +81,12 @@ class HyperTerm extends Component {
   }
 
   template (css) {
-    const { isMac, customCSS, borderColor } = this.props;
+    const { isMac, customCSS, borderColor, isFullScreen } = this.props;
     return <div onClick={ this.focusActive }>
       <div
         style={{ borderColor }}
         className={ css('main', isMac && 'mainRounded') }>
-        <HeaderContainer />
+        {isFullScreen ? null : <HeaderContainer />}
         <TermsContainer ref_={this.onTermsRef} />
       </div>
 
@@ -122,7 +122,8 @@ const HyperTermContainer = connect(
       customCSS: state.ui.css,
       borderColor: state.ui.borderColor,
       activeSession: state.sessions.activeUid,
-      backgroundColor: state.ui.backgroundColor
+      backgroundColor: state.ui.backgroundColor,
+      isFullScreen: state.ui.fullScreenMode
     };
   },
   (dispatch) => {

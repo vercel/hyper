@@ -140,6 +140,10 @@ const reducer = (state = initial, action) => {
           }
         }
 
+        if (null != config.fullScreenMode) {
+          ret.fullScreenMode = config.fullScreenMode;
+        }
+
         return ret;
       })());
       break;

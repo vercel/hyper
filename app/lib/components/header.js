@@ -60,6 +60,7 @@ export default class Header extends Component {
       onClose: this.props.onCloseTab,
       onChange: this.onChangeIntent
     });
+
     return <header
       style={{ backgroundColor }}
       className={ css('header', isMac && 'headerRounded') }
