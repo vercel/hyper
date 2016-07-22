@@ -248,7 +248,8 @@ export default class Term extends Component {
         right: 0,
         width: '50px',
         top: 0,
-        bottom: 0
+        bottom: 0,
+        pointerEvents: 'none'
       }
     };
   }
