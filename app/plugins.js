@@ -246,7 +246,7 @@ function requirePlugins () {
         !mod.decorateTerm && !mod.decorateHyperTerm &&
         !mod.decorateTab && !mod.decorateNotification &&
         !mod.decorateNotifications && !mod.decorateTabs &&
-        !mod.decorateConfig)) {
+        !mod.decorateConfig && !mod.decorateEnv)) {
         notify('Plugin error!', `Plugin "${basename(path)}" does not expose any ` +
           'HyperTerm extension API methods');
         return;
@@ -282,48 +282,37 @@ exports.onWindow = function (win) {
   });
 };
 
-exports.decorateMenu = function (tpl) {
-  let decorated = tpl;
+// decorates the base object by calling plugin[key]
+// for all the available plugins
+function decorateObject (base, key) {
+  let decorated = base;
   modules.forEach((plugin) => {
-    if (plugin.decorateMenu) {
-      const res = plugin.decorateMenu(decorated);
-      if (res) {
+    if (plugin[key]) {
+      const res = plugin[key](decorated);
+      if (res && 'object' === typeof res) {
         decorated = res;
       } else {
-        console.error('incompatible response type for `decorateMenu`');
+        notify('Plugin error!', `"${plugin._name}": invalid return type for \`${key}\``);
       }
     }
   });
+
   return decorated;
+}
+
+exports.decorateMenu = function (tpl) {
+  return decorateObject(tpl, 'decorateMenu');
+};
+
+exports.getDecoratedEnv = function (baseEnv) {
+  return decorateObject(baseEnv, 'decorateEnv');
 };
 
 exports.getDecoratedConfig = function () {
-  let decorated = config.getConfig();
-  modules.forEach((plugin) => {
-    if (plugin.decorateConfig) {
-      const res = plugin.decorateConfig(decorated);
-      if (res && 'object' === typeof res) {
-        decorated = res;
-      } else {
-        notify('Plugin error!', `"${plugin._name}": invalid return type for \`decorateConfig\``);
-      }
-    }
-  });
-  return decorated;
+  const baseConfig = config.getConfig();
+  return decorateObject(baseConfig, 'decorateConfig');
 };
 
 exports.getDecoratedBrowserOptions = function (defaults) {
-  let decorated = defaults;
-  modules.forEach((plugin) => {
-    if (plugin.decorateBrowserOptions) {
-      const res = plugin.decorateBrowserOptions(decorated);
-      if (res && 'object' === typeof res) {
-        decorated = res;
-      } else {
-        notify('Plugin error!', `"${plugin._name}": invalid return type for \`decorateBrowserOptions\``);
-      }
-    }
-  });
-  return decorated;
+  return decorateObject(defaults, 'decorateBrowserOptions');
 };
-
