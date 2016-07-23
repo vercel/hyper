@@ -196,7 +196,7 @@ function install (fn) {
     env.npm_config_runtime = 'electron';
     env.npm_config_target = require('./package.json').devDependencies['electron-prebuilt'];
     env.npm_config_disturl = 'https://atom.io/download/atom-shell';
-    exec('npm prune && npm install --production', {
+    exec('npm prune && npm install --ignore-scripts --production', {
       cwd: path,
       env: env
     }, (err, stdout, stderr) => {
