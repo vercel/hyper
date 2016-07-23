@@ -16,6 +16,13 @@ const cache = new Config();
 // modules path
 const path = resolve(homedir(), '.hyperterm_plugins');
 const localPath = resolve(homedir(), '.hyperterm_plugins', 'local');
+const availableExtensions = new Set([
+  'onApp', 'onWindow', 'onUnload', 'middleware',
+  'reduceUI', 'reduceSessions', 'decorateMenu',
+  'decorateTerm', 'decorateHyperTerm', 'decorateTab',
+  'decorateNotification', 'decorateNotifications',
+  'decorateTabs', 'decorateConfig', 'decorateEnv'
+]);
 
 // init plugin directories if not present
 mkdirpSync(path);
@@ -239,14 +246,8 @@ function requirePlugins () {
     let mod;
     try {
       mod = require(path);
-
-      if (!mod || (!mod.onApp && !mod.onWindow && !mod.onUnload &&
-        !mod.middleware && !mod.reduceUI && !mod.reduceSessions &&
-        !mod.decorateConfig && !mod.decorateMenu &&
-        !mod.decorateTerm && !mod.decorateHyperTerm &&
-        !mod.decorateTab && !mod.decorateNotification &&
-        !mod.decorateNotifications && !mod.decorateTabs &&
-        !mod.decorateConfig && !mod.decorateEnv)) {
+      const exposed = mod && Object.keys(mod).some(key => availableExtensions.has(key));
+      if (!exposed) {
         notify('Plugin error!', `Plugin "${basename(path)}" does not expose any ` +
           'HyperTerm extension API methods');
         return;
