@@ -8,9 +8,6 @@ const isDev = require('electron-is-dev');
 const AutoUpdater = require('./auto-updater');
 const toHex = require('convert-css-color-name-to-hex');
 
-// --harmony enables a few remaining es2015 features not defaulted in node 6
-app.commandLine.appendSwitch('js-flags', '--harmony');
-
 // set up config
 const config = require('./config');
 config.init();
