@@ -4,7 +4,7 @@ import TermsContainer from './terms';
 import NotificationsContainer from './notifications';
 import Component from '../component';
 import Mousetrap from 'mousetrap';
-import { moveTo, moveLeft, moveRight } from '../actions/ui';
+import * as uiActions from '../actions/ui';
 import { connect } from '../utils/plugins';
 
 const isMac = /Mac/.test(navigator.userAgent);
@@ -132,15 +132,15 @@ const HyperTermContainer = connect(
   (dispatch) => {
     return {
       moveTo: (i) => {
-        dispatch(moveTo(i));
+        dispatch(uiActions.moveTo(i));
       },
 
       moveLeft: () => {
-        dispatch(moveLeft());
+        dispatch(uiActions.moveLeft());
       },
 
       moveRight: () => {
-        dispatch(moveRight());
+        dispatch(uiActions.moveRight());
       }
     };
   },
