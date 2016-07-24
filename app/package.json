@@ -17,17 +17,6 @@
     "shell-env": "0.1.2",
     "uid2": "0.0.3"
   },
-  "devDependencies": {
-    "electron-installer-debian": "0.3.0",
-    "electron-packager": "7.3.0",
-    "electron-prebuilt": "1.2.8",
-    "eslint": "3.1.1",
-    "eslint-config-standard": "5.3.5",
-    "eslint-plugin-promise": "2.0.0",
-    "eslint-plugin-react": "5.2.2",
-    "eslint-plugin-standard": "2.0.0",
-    "husky": "0.11.4"
-  },
   "eslintConfig": {
     "extends": "standard",
     "rules": {
