@@ -71,6 +71,10 @@
       "react"
     ]
   },
+  "build": {
+    "appId": "hyperterm",
+    "app-category-type": "public.app-category.developer-tools"
+  },
   "scripts": {
     "dev": "webpack --watch",
     "lint": "eslint .",
