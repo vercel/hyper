@@ -79,7 +79,7 @@
   },
   "scripts": {
     "dev": "webpack --watch",
-    "lint": "eslint lib/",
+    "lint": "eslint lib/ && eslint app/*.js",
     "build": "NODE_ENV=production webpack",
     "test": "npm run lint",
     "start": "electron app",
