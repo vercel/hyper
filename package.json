@@ -75,7 +75,8 @@
   },
   "build": {
     "appId": "hyperterm",
-    "app-category-type": "public.app-category.developer-tools"
+    "app-category-type": "public.app-category.developer-tools",
+    "asar": false
   },
   "scripts": {
     "dev": "webpack --watch",
