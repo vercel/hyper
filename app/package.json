@@ -1,46 +1,35 @@
 {
-  "name": "hyperterm-web",
-  "version": "0.0.1",
-  "description": "Web app that runs in the renderer process",
+  "name": "hyperterm",
+  "productName": "HyperTerm",
+  "version": "0.7.0-beta",
   "license": "MIT",
   "repository": "zeit/hyperterm",
+  "description": "HTML/JS/CSS Terminal",
   "dependencies": {
-    "aphrodite-simple": "0.4.1",
-    "color": "^0.11.3",
-    "hterm-umdjs": "1.1.3",
-    "json-loader": "0.5.4",
-    "mousetrap": "1.6.0",
+    "child_pty": "3.0.1",
+    "convert-css-color-name-to-hex": "0.1.1",
+    "default-shell": "1.0.1",
+    "electron-config": "0.2.1",
+    "electron-is-dev": "0.1.1",
+    "gaze": "1.1.0",
+    "mkdirp": "0.5.1",
     "ms": "0.7.1",
-    "object-values": "1.0.0",
-    "react": "15.2.1",
-    "react-addons-pure-render-mixin": "15.2.1",
-    "react-deep-force-update": "2.0.1",
-    "react-dom": "15.2.1",
-    "react-redux": "4.4.5",
-    "redux": "3.5.2",
-    "redux-thunk": "2.1.0",
-    "reselect": "2.5.3",
-    "seamless-immutable": "6.1.1"
+    "shell-env": "0.1.2",
+    "uid2": "0.0.3"
   },
   "devDependencies": {
-    "babel-cli": "6.10.1",
-    "babel-core": "6.10.4",
-    "babel-eslint": "6.1.2",
-    "babel-loader": "6.2.4",
-    "babel-preset-es2015-native-modules": "6.9.0",
-    "babel-preset-react": "6.11.1",
+    "electron-installer-debian": "0.3.0",
+    "electron-packager": "7.3.0",
+    "electron-prebuilt": "1.2.8",
     "eslint": "3.1.1",
     "eslint-config-standard": "5.3.5",
     "eslint-plugin-promise": "2.0.0",
     "eslint-plugin-react": "5.2.2",
     "eslint-plugin-standard": "2.0.0",
-    "webpack": "2.1.0-beta.15"
+    "husky": "0.11.4"
   },
   "eslintConfig": {
     "extends": "standard",
-    "plugins": [
-      "react"
-    ],
     "rules": {
       "yoda": 0,
       "semi": [
@@ -55,26 +44,14 @@
           "before": false,
           "after": true
         }
-      ],
-      "react/jsx-uses-react": 1,
-      "react/jsx-uses-vars": 1
-    },
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      }
+      ]
     }
   },
-  "babel": {
-    "presets": [
-      "es2015-native-modules",
-      "react"
-    ]
-  },
   "scripts": {
-    "dev": "webpack --watch",
+    "start": "electron index",
     "lint": "eslint .",
-    "build": "NODE_ENV=production webpack",
+    "prepublish": "npm test",
+    "prepush": "npm test",
     "test": "npm run lint"
   }
 }
