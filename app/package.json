@@ -3,6 +3,7 @@
   "productName": "HyperTerm",
   "version": "0.7.0-beta",
   "license": "MIT",
+  "author": "rauchg",
   "repository": "zeit/hyperterm",
   "description": "HTML/JS/CSS Terminal",
   "dependencies": {
@@ -35,12 +36,5 @@
         }
       ]
     }
-  },
-  "scripts": {
-    "start": "electron index",
-    "lint": "eslint .",
-    "prepublish": "npm test",
-    "prepush": "npm test",
-    "test": "npm run lint"
   }
 }

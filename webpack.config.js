@@ -8,7 +8,7 @@ module.exports = {
   devtool: isProd ? 'hidden-source-map' : 'cheap-eval-source-map',
   entry: './lib/index.js',
   output: {
-    path: path.join(__dirname, './dist'),
+    path: path.join(__dirname, 'app', 'dist'),
     filename: 'bundle.js'
   },
   module: {

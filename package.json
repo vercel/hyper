@@ -2,7 +2,6 @@
   "name": "hyperterm-web",
   "version": "0.0.1",
   "description": "Web app that runs in the renderer process",
-  "license": "MIT",
   "repository": "zeit/hyperterm",
   "dependencies": {
     "aphrodite-simple": "0.4.1",
@@ -37,11 +36,6 @@
     "eslint-plugin-react": "5.2.2",
     "eslint-plugin-standard": "2.0.0",
     "husky": "0.11.4",
-    "eslint": "3.1.1",
-    "eslint-config-standard": "5.3.5",
-    "eslint-plugin-promise": "2.0.0",
-    "eslint-plugin-react": "5.2.2",
-    "eslint-plugin-standard": "2.0.0",
     "webpack": "2.1.0-beta.15"
   },
   "eslintConfig": {
@@ -85,8 +79,14 @@
   },
   "scripts": {
     "dev": "webpack --watch",
-    "lint": "eslint .",
+    "lint": "eslint lib/",
     "build": "NODE_ENV=production webpack",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "start": "electron app",
+    "prepublish": "npm test",
+    "prepush": "npm test",
+    "postinstall": "install-app-deps",
+    "pack": "npm run build && build --dir",
+    "dist": "npm run build && build"
   }
 }
