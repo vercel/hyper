@@ -1,0 +1,58 @@
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+# version format
+version: 0.0.{build}-{branch}
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+# Build worker image (VM template)
+image: Visual Studio 2015
+
+# scripts that are called at very beginning, before repo cloning
+init:
+  # configure node-gyp environment https://github.com/nodejs/node-gyp#installation
+  - npm config set msvs_version 2015
+  - 'echo System architecture: %PLATFORM%'
+
+# environment variables
+environment:
+  nodejs_version: "6.2.2"
+
+# this is how to allow failing jobs in the matrix
+matrix:
+  fast_finish: true                     # set this flag to immediately finish build once one of the jobs fails.
+
+# build cache to preserve files/folders between builds
+cache:
+  - node_modules                        # local npm modules
+
+# scripts that run after cloning repository
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - npm -g install npm@next             # install latest npm for node-gyp build issue https://github.com/nodejs/node-gyp/issues/972
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+platform:
+  - x64
+
+# scripts to run before build
+before_build:
+  - sh scripts/install.sh
+  - npm run lint
+
+# scripts to run *after* solution is built and *before* automatic packaging occurs (web apps, NuGet packages, Azure Cloud Services)
+before_package:
+
+# scripts to run after build
+after_build:
+
+# to run your custom scripts instead of automatic MSBuild
+build_script:
+  - echo build native module completed   # avoid to trigger msbuild

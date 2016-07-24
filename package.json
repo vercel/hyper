@@ -6,7 +6,6 @@
   "repository": "zeit/hyperterm",
   "description": "HTML/JS/CSS Terminal",
   "dependencies": {
-    "child_pty": "3.0.1",
     "convert-css-color-name-to-hex": "0.1.1",
     "default-shell": "1.0.1",
     "electron-config": "0.2.1",
@@ -15,6 +14,7 @@
     "mkdirp": "0.5.1",
     "ms": "0.7.1",
     "shell-env": "0.1.2",
+    "ptyw.js": "^0.4.0",
     "uid2": "0.0.3"
   },
   "devDependencies": {
