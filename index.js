@@ -138,7 +138,8 @@ app.on('ready', () => {
     });
 
     rpc.on('exit', ({ uid }) => {
-      sessions.get(uid).exit();
+      const session = sessions.get(uid);
+      session && session.exit();
     });
 
     rpc.on('unmaximize', () => {
