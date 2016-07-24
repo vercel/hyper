@@ -1,13 +1,14 @@
-const {exec} = require('child_process');
+const {app, dialog} = require('electron');
 const {homedir} = require('os');
 const {resolve, basename} = require('path');
-const {writeFileSync} = require('fs');
-
-const {app, dialog} = require('electron');
+const {writeFileSync, readFileSync} = require('fs');
+const cp = require('child_process');
 const {sync: mkdirpSync} = require('mkdirp');
 const Config = require('electron-config');
 const ms = require('ms');
-const shellEnv = require('shell-env');
+const queue = require('queue');
+
+const spawnQueue = queue({concurrency: 1});
 
 const config = require('./config');
 const notify = require('./notify');
@@ -17,6 +18,7 @@ const cache = new Config();
 
 // modules path
 const path = resolve(homedir(), '.hyper_plugins');
+const cachePath = resolve(homedir(), '.hyper_plugins', 'cache');
 const localPath = resolve(homedir(), '.hyper_plugins', 'local');
 const availableExtensions = new Set([
   'onApp', 'onWindow', 'onRendererWindow', 'onUnload', 'middleware',
@@ -78,17 +80,10 @@ function updatePlugins({force = false} = {}) {
 
     if (err) {
       console.error(err.stack);
-      if (/not a recognized/.test(err.message) || /command not found/.test(err.message)) {
-        notify(
-          'Error updating plugins.',
-          'We could not find the `npm` command. Make sure it\'s in $PATH'
-        );
-      } else {
-        notify(
-          'Error updating plugins.',
-          'Check `~/.hyper_plugins/npm-debug.log` for more information.'
-        );
-      }
+      notify(
+        'Error updating plugins.',
+        'Check `~/.hyperterm_plugins/npm-debug.log` for more information.'
+      );
     } else {
       // flag successful plugin update
       cache.set('hyper.plugins', id_);
@@ -223,30 +218,51 @@ function toDependencies(plugins) {
 }
 
 function install(fn) {
-  const {shell: cfgShell, npmRegistry} = exports.getDecoratedConfig();
+  const env = {
+    NODE_ENV: 'production',
+    ELECTRON_RUN_AS_NODE: 'true'
+  };
 
-  const shell = cfgShell && cfgShell !== '' ? cfgShell : undefined;
+  const electronPath = resolve(
+    __dirname, '..', 'node_modules', 'electron',
+    readFileSync(resolve(__dirname, '..', 'node_modules', 'electron', 'path.txt')).toString().trim()
+  );
 
-  shellEnv(shell).then(env => {
-    if (npmRegistry) {
-      env.NPM_CONFIG_REGISTRY = npmRegistry;
-    }
-    /* eslint-disable camelcase  */
-    env.npm_config_runtime = 'electron';
-    env.npm_config_target = process.versions.electron;
-    env.npm_config_disturl = 'https://atom.io/download/atom-shell';
-    /* eslint-enable camelcase  */
-    exec('npm prune && npm install --production', {
-      cwd: path,
-      env,
-      shell
-    }, err => {
-      if (err) {
-        return fn(err);
-      }
-      fn(null);
+  const yarnPath = resolve(__dirname, '..', 'node_modules', '.bin', 'yarn');
+
+  function yarn(args, cb) {
+    spawnQueue.push(end => {
+      const fullcmd = [electronPath, yarnPath].concat(args).join(' ');
+
+      cp.exec(fullcmd, {
+        cwd: path,
+        env,
+        shell: true,
+        timeout: 1000 * 60 * 5,
+        stdio: ['ignore', 'ignore', 'inherit']
+      }, err => {
+        console.log('Done!');
+
+        if (err) {
+          cb(err);
+        } else {
+          cb(null);
+        }
+
+        end();
+        spawnQueue.start();
+      });
     });
-  }).catch(fn);
+
+    spawnQueue.start();
+  }
+
+  yarn(['install', '--no-emoji', '--no-lockfile', '--cache-folder', cachePath], err => {
+    if (err) {
+      return fn(err);
+    }
+    fn(null);
+  });
 }
 
 exports.subscribe = function (fn) {
