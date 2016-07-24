@@ -1,0 +1,16 @@
+{
+  "name": "@hyperterm/hotkey",
+  "version": "1.0.0",
+  "description": "Open HyperTerm terminal with a global hotkey.",
+  "repository": "",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^0.4.1",
+    "lodash.remove": "^4.5.0"
+  },
+  "keywords": [
+    "hyperterm",
+    "hyperterm-plugin"
+  ]
+}

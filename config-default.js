@@ -54,7 +54,11 @@ module.exports = {
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
     // if left empty, your system's login shell will be used by default
-    shell: ''
+    shell: '',
+
+    // global hotkey to toggle window visibility. for list of available hotkeys, see:
+    // https://github.com/electron/electron/blob/master/docs/api/accelerator.md
+    hotkey: 'F12'
 
     // for advanced config flags please refer to https://hyperterm.org/#cfg
   },

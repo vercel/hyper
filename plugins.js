@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { app, dialog } = require('electron');
 const { homedir } = require('os');
 const { resolve, basename } = require('path');
@@ -215,6 +216,9 @@ exports.subscribe = function (fn) {
 
 function getPaths () {
   return {
+    defaultPlugins: fs.readdirSync(resolve(__dirname, '@hyperterm')).map((name) => {
+      return resolve(__dirname, '@hyperterm', name);
+    }),
     plugins: plugins.plugins.map((name) => {
       return resolve(path, 'node_modules', name.split('#')[0]);
     }),
@@ -233,7 +237,7 @@ exports.getBasePaths = function () {
 };
 
 function requirePlugins () {
-  const { plugins, localPlugins } = paths;
+  const { defaultPlugins, plugins, localPlugins } = paths;
 
   const load = (path) => {
     let mod;
@@ -261,8 +265,8 @@ function requirePlugins () {
     }
   };
 
-  return plugins.map(load)
-    .concat(localPlugins.map(load))
+  return defaultPlugins.concat(plugins).concat(localPlugins)
+    .map(load)
     .filter(v => !!v);
 }
 
