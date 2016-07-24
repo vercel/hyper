@@ -67,6 +67,15 @@ app.on('ready', () => {
 
     windowSet.add(win);
     win.loadURL(url);
+    // prevent file drops to navigate the window. Instead handle explicitly
+    // file drops as string to location of file.
+    win.webContents.on('will-navigate', (event, url) => {
+      event.preventDefault();
+      const path = url.split('file://'); // if has file:// prefix...
+      // ...send chopped url. The fallback is meant as contigency, for
+      // edge cases the author couldn't anticipate. Remove if needed.
+      rpc.emit('dropped-file', path.length > 1 ? path[1] : path[0]);
+    });
 
     const rpc = createRPC(win);
     const sessions = new Map();

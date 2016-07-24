@@ -2,6 +2,7 @@
 import React from 'react';
 import Color from 'color';
 import hterm from '../hterm';
+import rpc from '../rpc';
 import Component from '../component';
 import { getColorList } from '../utils/colors';
 
@@ -13,6 +14,10 @@ export default class Term extends Component {
     this.onScrollEnter = this.onScrollEnter.bind(this);
     this.onScrollLeave = this.onScrollLeave.bind(this);
     props.ref_(this);
+    // catches dropped files from the Main thread in order to print path
+    rpc.on('dropped-file', (url) => {
+      this.write(url);
+    });
   }
 
   componentDidMount () {
