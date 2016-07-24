@@ -1,7 +1,6 @@
 const { app, BrowserWindow, shell, Menu } = require('electron');
 const createRPC = require('./rpc');
 const createMenu = require('./menu');
-const Session = require('./session');
 const genUid = require('uid2');
 const { resolve } = require('path');
 const isDev = require('electron-is-dev');
@@ -12,6 +11,7 @@ const toHex = require('convert-css-color-name-to-hex');
 const config = require('./config');
 config.init();
 const plugins = require('./plugins');
+const Session = require('./session');
 
 const windowSet = new Set([]);
 

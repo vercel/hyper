@@ -2,6 +2,7 @@ const { app } = require('electron');
 const { EventEmitter } = require('events');
 const { exec } = require('child_process');
 const defaultShell = require('default-shell');
+const { getDecoratedEnv } = require('./plugins');
 const { productName, version } = require('./package');
 
 let spawn;
@@ -22,16 +23,18 @@ module.exports = class Session extends EventEmitter {
 
   constructor ({ rows, cols: columns, cwd, shell }) {
     super();
+    const baseEnv = Object.assign({}, process.env, {
+      LANG: app.getLocale().replace('-', '_'),
+      TERM: 'xterm-256color',
+      TERM_PROGRAM: productName,
+      TERM_PROGRAM_VERSION: version
+    });
+
     this.pty = spawn(shell || defaultShell, ['--login'], {
       columns,
       rows,
       cwd,
-      env: Object.assign({}, process.env, {
-        LANG: app.getLocale(),
-        TERM: 'xterm-256color',
-        TERM_PROGRAM: productName,
-        TERM_PROGRAM_VERSION: version
-      })
+      env: getDecoratedEnv(baseEnv)
     });
 
     this.pty.stdout.on('data', (data) => {
