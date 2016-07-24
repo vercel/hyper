@@ -45,7 +45,7 @@ module.exports = class Session extends EventEmitter {
       }
     });
 
-    this.shell = defaultShell;
+    this.shell = shell || defaultShell;
     this.getTitle();
   }
 
