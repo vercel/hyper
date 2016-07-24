@@ -135,7 +135,13 @@ app.on('ready', () => {
     });
 
     rpc.on('exit', ({ uid }) => {
-      sessions.get(uid).exit();
+      const session = sessions.get(uid);
+
+      if (session) {
+        session.exit();
+      } else {
+        console.log('session not found by', uid);
+      }
     });
 
     rpc.on('unmaximize', () => {
