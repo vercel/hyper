@@ -1,1 +1,4 @@
+app/dist
+app/node_modules
+build
 dist

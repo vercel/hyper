@@ -21,27 +21,24 @@ brew cask install hyperterm
 
 ## Contribute
 
-To install `package.json` dependencies in a way where the native
-modules are built with `electron`, run:
+To test a certain git tree, clone and then run:
 
 ```bash
-./scripts/install.sh
+npm install
+npm run pack
 ```
 
-Then, you want to make sure `app/dist` is populated. I recommend
-running `webpack` with `--watch` so that any changes you make
-to the app are detected.
+then open the `./dist` folder to find the built binaries!
 
-```bash
-cd app/
-npm install
+If you want to develop, run the above, and then you want to
+run webpack in `watch` mode:
+
+```
 npm run dev
 ```
 
-Then you can run in the main directory:
+and to load the application simply run:
 
-```bash
-npm start
 ```
-
-...to launch the app!
+electron app/index.js
+```
