@@ -48,6 +48,7 @@
     }
   },
   "scripts": {
+    "postinstall": "npm install -g hpm",
     "start": "electron index",
     "lint": "eslint .",
     "prepublish": "npm test",
