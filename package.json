@@ -26,7 +26,6 @@
     "babel-core": "6.10.4",
     "babel-eslint": "6.1.2",
     "babel-loader": "6.2.4",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.11.5",
     "babel-preset-es2015-native-modules": "6.9.0",
     "babel-preset-react": "6.11.1",
     "electron-builder": "5.14.2",
