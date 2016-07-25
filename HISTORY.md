@@ -2,6 +2,8 @@
 0.7.0 / 2016-07-25
 ==================
 
+  * use `uuid` instead of `uid2` for session ids [@albinekb]
+  * fix support for `mapTermsDispatch` [@albinekb]
   * implement `extend-info` for the custom `plist` [@lordgiotto]
   * index: prevent double sesson exit (#380) [@timneutkens]
   * add decorateEnv to the extensions API (#370) [@ekmartin]
