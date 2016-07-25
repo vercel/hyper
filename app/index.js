@@ -1,7 +1,7 @@
 const { app, BrowserWindow, shell, Menu } = require('electron');
 const createRPC = require('./rpc');
 const createMenu = require('./menu');
-const genUid = require('uid2');
+const uuid = require('uuid');
 const { resolve } = require('path');
 const isDev = require('electron-is-dev');
 const AutoUpdater = require('./auto-updater');
@@ -251,8 +251,5 @@ app.on('ready', () => {
 });
 
 function initSession (opts, fn) {
-  genUid(20, (err, uid) => {
-    if (err) throw err;
-    fn(uid, new Session(opts));
-  });
+  fn(uuid.v4(), new Session(opts));
 }
