@@ -1,4 +1,4 @@
-const { app, BrowserWindow, shell, Menu } = require('electron');
+const { app, BrowserWindow, shell, Menu, dialog } = require('electron');
 const createRPC = require('./rpc');
 const createMenu = require('./menu');
 const uuid = require('uuid');
@@ -36,6 +36,29 @@ console.log('electron will open', url);
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
+  }
+});
+
+let quitIsConfirmed = false;
+
+app.on('before-quit', (event) => {
+  const windows = BrowserWindow.getAllWindows().filter(win => win.sessions);
+
+  if (!quitIsConfirmed && Boolean(windows.length)) {
+    event.preventDefault();
+
+    dialog.showMessageBox({
+      type: 'question',
+      buttons: ['OK', 'Cancel'],
+      defaultId: 0,
+      title: 'Quit HyperTerm?',
+      message: 'All sessions will be closed.'
+    }, (index) => {
+      if (index === 0) {
+        quitIsConfirmed = true;
+        app.quit();
+      }
+    });
   }
 });
 
