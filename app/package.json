@@ -3,7 +3,11 @@
   "productName": "HyperTerm",
   "version": "0.7.0",
   "license": "MIT",
-  "author": "rauchg",
+  "author": {
+    "name": "Guillermo Rauch",
+    "email": "rauchg@users.noreply.github.com",
+    "url": "https://github.com/rauchg"
+  },
   "repository": "zeit/hyperterm",
   "description": "HTML/JS/CSS Terminal",
   "dependencies": {
