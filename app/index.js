@@ -159,7 +159,13 @@ app.on('ready', () => {
     });
 
     rpc.on('data', ({ uid, data }) => {
-      sessions.get(uid).write(data);
+      const session = sessions.get(uid);
+
+      if (session) {
+        session.write(data);
+      } else {
+        console.log('session not found by', uid);
+      }
     });
 
     rpc.on('open external', ({ url }) => {
