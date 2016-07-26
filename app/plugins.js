@@ -190,8 +190,15 @@ function alert (message) {
 function toDependencies (plugins) {
   const obj = {};
   plugins.plugins.forEach((plugin) => {
-    const pieces = plugin.split('#');
-    obj[pieces[0]] = null == pieces[1] ? 'latest' : pieces[1];
+    let pieces = plugin.split('#');
+    let tmp = {};
+    tmp[pieces[0]] = null == pieces[1] ? 'latest' : pieces[1];
+    pieces = plugin.split('@');
+    if (pieces[0] && pieces[1]) {
+      tmp = {};
+      tmp[pieces[0]] = pieces[1];
+    }
+    Object.assign(obj, tmp);
   });
   return obj;
 }
