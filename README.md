@@ -40,5 +40,5 @@ npm run dev
 and to load the application simply run:
 
 ```
-electron app/index.js
+npm start
 ```
