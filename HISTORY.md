@@ -1,4 +1,13 @@
 
+0.7.1 / 2016-07-26
+==================
+
+  * notifications: fix `(notes)` link [@rauchg]
+  * session: suffix `UTF-8` to locale [@rauchg]
+  * revert `--ignore-scripts` [@rauchg]
+  * rpc server now extends `EventEmitter` (#406) [@jaywunder]
+  * add a slight timeout to update the fontSmoothing pref (#407) [@mike-engel]
+
 0.7.0 / 2016-07-25
 ==================
 
