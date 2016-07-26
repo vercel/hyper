@@ -194,9 +194,14 @@ function toDependencies (plugins) {
     let tmp = {};
     tmp[pieces[0]] = null == pieces[1] ? 'latest' : pieces[1];
     pieces = plugin.split('@');
-    if (pieces[0] && pieces[1]) {
+    if (pieces.length === 2) { // @org/project || project@tag
+      if (!plugin.startsWith('@')) {
+        tmp = {};
+        tmp[pieces[0]] = pieces[1];
+      }
+    } else if (pieces.length === 3) { // @org/project@tag
       tmp = {};
-      tmp[pieces[0]] = pieces[1];
+      tmp[`${pieces[1]}`] = pieces[2];
     }
     Object.assign(obj, tmp);
   });
