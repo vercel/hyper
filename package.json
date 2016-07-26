@@ -48,22 +48,22 @@
       "react"
     ],
     "rules": {
-      "yoda": 0,
+      "yoda": "off",
       "semi": [
-        2,
+        "error",
         "always"
       ],
-      "no-unused-vars": 2,
-      "no-extra-semi": 2,
+      "no-unused-vars": "error",
+      "no-extra-semi": "error",
       "semi-spacing": [
-        2,
+        "error",
         {
           "before": false,
           "after": true
         }
       ],
-      "react/jsx-uses-react": 1,
-      "react/jsx-uses-vars": 1
+      "react/jsx-uses-react": "warn",
+      "react/jsx-uses-vars": "warn"
     },
     "parserOptions": {
       "ecmaFeatures": {
@@ -88,7 +88,7 @@
   },
   "scripts": {
     "dev": "webpack --watch",
-    "lint": "eslint lib/ && eslint app/*.js",
+    "lint": "eslint .",
     "build": "NODE_ENV=production webpack",
     "test": "npm run lint",
     "start": "electron app",

@@ -1,1 +1,6 @@
+app/dist
+app/node_modules
+app/static
+assets
+build
 dist
