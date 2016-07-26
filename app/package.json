@@ -1,7 +1,7 @@
 {
   "name": "hyperterm",
   "productName": "HyperTerm",
-  "version": "0.7.0-beta",
+  "version": "0.7.0",
   "license": "MIT",
   "author": "rauchg",
   "repository": "zeit/hyperterm",
@@ -16,7 +16,7 @@
     "mkdirp": "0.5.1",
     "ms": "0.7.1",
     "shell-env": "0.1.2",
-    "uid2": "0.0.3"
+    "uuid": "^2.0.2"
   },
   "eslintConfig": {
     "extends": "standard",
