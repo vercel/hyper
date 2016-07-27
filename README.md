@@ -1,9 +1,4 @@
-<p align="center">
-	<br>
-	<img width="300" src="https://github.com/zeit/hyperterm-art/blob/master/branding/Hyperterm-Mark-Large.png" alt="XO">
-	<br>
-	<br>
-</p>
+<img width="100" src="https://cdn.rawgit.com/zeit/hyperterm-art/master/branding/Hyperterm-Mark.svg" alt="HyperTerm">
 
 # HyperTerm
 
