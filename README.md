@@ -5,9 +5,9 @@
 [![Slack Channel](https://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
 [![Build Status](https://travis-ci.org/zeit/hyperterm.svg?branch=master)](https://travis-ci.org/zeit/hyperterm)
 
-![](https://cldup.com/tD67NzPryA.gif)
+**FOR MORE DETAILS, HEAD TO:** https://hyperterm.org
 
-For downloads, documentation and the developer API head to: https://hyperterm.org
+## Usage
 
 (NOTE: only on macOS) With [Homebrew](http://brew.sh/) and [Homebrew Cask](https://caskroom.github.io/) installed, you can run this command:
 
@@ -16,11 +16,6 @@ brew cask update
 brew cask install hyperterm
 ```
 
-### Repositories
-
-- Art: https://github.com/zeit/hyperterm-art
-- Website: https://github.com/zeit/hyperterm-website
-- Example extension: https://github.com/zeit/hyperpower
 
 ## Contribute
 
@@ -45,3 +40,9 @@ and to load the application simply run:
 ```
 npm start
 ```
+
+## Repositories
+
+- Art: https://github.com/zeit/hyperterm-art
+- Website: https://github.com/zeit/hyperterm-website
+- Example extension: https://github.com/zeit/hyperpower
