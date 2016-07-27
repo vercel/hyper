@@ -1,4 +1,4 @@
-<img width="100" src="https://cdn.rawgit.com/zeit/hyperterm-art/master/branding/Hyperterm-Mark.svg" alt="HyperTerm">
+![](https://github.com/zeit/hyperterm-art/blob/master/branding/HyperTerm-banner.png)
 
 # HyperTerm
 
