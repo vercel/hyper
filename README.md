@@ -29,9 +29,9 @@ npm run pack
 
 After that, you'll see the binaries in the `./dist` folder!
 
-## Repositories
+## Related Repositories
 
-- Art: https://github.com/zeit/hyperterm-art
-- Website: https://github.com/zeit/hyperterm-website
-- Sample extension: https://github.com/zeit/hyperpower
-- Sample theme: https://github.com/zeit/hyperyellow
+- [Art](https://github.com/zeit/hyperterm-art)
+- [Website](https://github.com/zeit/hyperterm-website)
+- [Sample Extension](https://github.com/zeit/hyperpower)
+- [Sample Theme]( https://github.com/zeit/hyperyellow)
