@@ -3,7 +3,7 @@
 [![Slack Channel](https://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
 [![Build Status](https://travis-ci.org/zeit/hyperterm.svg?branch=master)](https://travis-ci.org/zeit/hyperterm)
 
-**FOR MORE DETAILS, HEAD TO:** https://hyperterm.org
+For more details, head to: https://hyperterm.org
 
 ## Usage
 
