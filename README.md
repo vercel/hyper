@@ -1,13 +1,13 @@
 ![](https://github.com/zeit/hyperterm-art/blob/master/branding/HyperTerm-banner.png)
 
-[![Slack Channel](https://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
 [![Build Status](https://travis-ci.org/zeit/hyperterm.svg?branch=master)](https://travis-ci.org/zeit/hyperterm)
+[![Slack Channel](https://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
 
 For more details, head to: https://hyperterm.org
 
 ## Usage
 
-If you're on macOS and have [Homebrew](http://brew.sh/) + [Homebrew Cask](https://caskroom.github.io/) installed, you can download the app by running the following commands:
+If you're on macOS, you can use [Homebrew Cask](https://caskroom.github.io/) to download the app by running the following commands:
 
 ```bash
 brew cask update
