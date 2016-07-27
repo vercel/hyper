@@ -9,37 +9,27 @@
 
 ## Usage
 
-(NOTE: only on macOS) With [Homebrew](http://brew.sh/) and [Homebrew Cask](https://caskroom.github.io/) installed, you can run this command:
+If you're on macOS and have [Homebrew](http://brew.sh/) + [Homebrew Cask](https://caskroom.github.io/) installed, you can download the app by running the following commands:
 
 ```bash
 brew cask update
 brew cask install hyperterm
 ```
 
-
 ## Contribute
 
-To test a certain git tree, clone and then run:
+1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
+2. Install the dependencies: `npm install`
+3. Build the code and watch for changes: `npm run dev`
+4. In a new tab, start the application: `npm start`
+
+If you want to build the binaries for all specified platforms, run the command:
 
 ```bash
-npm install
 npm run pack
 ```
 
-then open the `./dist` folder to find the built binaries!
-
-If you want to develop, run the above, and then you want to
-run webpack in `watch` mode:
-
-```
-npm run dev
-```
-
-and to load the application simply run:
-
-```
-npm start
-```
+After that, you'll see the binaries in the `./dist` folder!
 
 ## Repositories
 
