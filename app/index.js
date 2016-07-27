@@ -208,11 +208,13 @@ app.on('ready', () => {
     // the window can be closed by the browser process itself
     win.on('close', () => {
       windowSet.delete(win);
-      win.close();
       rpc.destroy();
       deleteSessions();
       cfgUnsubscribe();
       pluginsUnsubscribe();
+      if(windowSet.size === 0) {
+        win.close();
+      }
     });
   }
 
