@@ -16,9 +16,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loaders: [
-          'babel-loader'
-        ]
+        loader: 'babel'
       },
       {
         test: /\.json/,
@@ -27,27 +25,11 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.ExternalsPlugin('commonjs', ['electron']),
-    new webpack.optimize.UglifyJsPlugin({
-      mangle: {
-        keep_fnames: true
-      },
-      compress: {
-        warnings: false
-      },
-      output: {
-        comments: false
-      },
-      sourceMap: false
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false
-    }),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(nodeEnv)
       }
     })
-  ]
+  ],
+  target: 'electron'
 };
