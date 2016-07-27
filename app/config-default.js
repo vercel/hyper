@@ -59,6 +59,13 @@ module.exports = {
     // for environment variables
     env: {}
 
+    // set to false for no bell
+    bell: 'SOUND'
+
+    // URL to custom bell
+    // bellSoundURL: 'http://example.com/bell.mp3',
+
+
     // for advanced config flags please refer to https://hyperterm.org/#cfg
   },
 
