@@ -1,7 +1,5 @@
 ![](https://github.com/zeit/hyperterm-art/blob/master/branding/HyperTerm-banner.png)
 
-# HyperTerm
-
 [![Slack Channel](https://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
 [![Build Status](https://travis-ci.org/zeit/hyperterm.svg?branch=master)](https://travis-ci.org/zeit/hyperterm)
 
