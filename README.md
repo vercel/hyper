@@ -33,4 +33,5 @@ After that, you'll see the binaries in the `./dist` folder!
 
 - Art: https://github.com/zeit/hyperterm-art
 - Website: https://github.com/zeit/hyperterm-website
-- Example extension: https://github.com/zeit/hyperpower
+- Sample extension: https://github.com/zeit/hyperpower
+- Sample theme: https://github.com/zeit/hyperyellow
