@@ -1,4 +1,6 @@
-# hyperterm
+<img src="https://github.com/zeit/hyperterm-art/blob/master/branding/Hyperterm-Mark-Large.png" width="80">
+
+# HyperTerm
 
 [![Slack Channel](https://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
 [![Build Status](https://travis-ci.org/zeit/hyperterm.svg?branch=master)](https://travis-ci.org/zeit/hyperterm)
