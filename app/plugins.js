@@ -197,15 +197,19 @@ function toDependencies (plugins) {
 }
 
 function install (fn) {
-  shellEnv().then((env) => {
-    let registry = exports.getDecoratedConfig().npmRegistry;
-    if (registry) env.NPM_CONFIG_REGISTRY = registry;
+  const { shell: cfgShell, npmRegistry } = exports.getDecoratedConfig();
+
+  const shell = cfgShell && cfgShell !== '' ? cfgShell : undefined;
+
+  shellEnv(shell).then((env) => {
+    if (npmRegistry) env.NPM_CONFIG_REGISTRY = npmRegistry;
     env.npm_config_runtime = 'electron';
     env.npm_config_target = '1.3.0';
     env.npm_config_disturl = 'https://atom.io/download/atom-shell';
     exec('npm prune && npm install --production', {
       cwd: path,
-      env: env
+      env,
+      shell
     }, (err, stdout, stderr) => {
       if (err) return fn(err);
       fn(null);
