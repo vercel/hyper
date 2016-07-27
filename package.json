@@ -7,6 +7,9 @@
     "name": "Guillermo Rauch",
     "email": "rauchg@zeit.co"
   },
+  "greenkeeper": {
+    "emails": false
+  },
   "dependencies": {
     "aphrodite-simple": "0.4.1",
     "color": "0.11.3",
