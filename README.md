@@ -7,7 +7,9 @@ For more details, head to: https://hyperterm.org
 
 ## Usage
 
-If you're on macOS, you can use [Homebrew Cask](https://caskroom.github.io/) to download the app by running the following commands:
+You can manually download the latest release [here](https://hyperterm.org/#installation).
+
+If you're on macOS, you can also use [Homebrew Cask](https://caskroom.github.io/) to download the app by running these commands:
 
 ```bash
 brew cask update
