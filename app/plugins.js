@@ -206,7 +206,7 @@ function install (fn) {
     env.npm_config_runtime = 'electron';
     env.npm_config_target = '1.3.0';
     env.npm_config_disturl = 'https://atom.io/download/atom-shell';
-    exec('npm prune && npm install --production', {
+    exec('npm prune; npm install --production', {
       cwd: path,
       env,
       shell
