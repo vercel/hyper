@@ -227,9 +227,6 @@ app.on('ready', () => {
       deleteSessions();
       cfgUnsubscribe();
       pluginsUnsubscribe();
-      if (windowSet.size === 0) {
-        win.close();
-      }
     });
   }
 
