@@ -3,7 +3,12 @@ const { version } = require('./package');
 const notify = require('./notify'); // eslint-disable-line no-unused-vars
 const ms = require('ms');
 
-const FEED_URL = 'https://hyperterm-updates.now.sh/update/osx';
+// accepted values: `osx`, `win32`
+// https://nuts.gitbook.com/update-windows.html
+const platform = 'darwin' === process.platform
+  ? 'osx'
+  : process.platform;
+const FEED_URL = `https://hyperterm-updates.now.sh/update/${platform}`;
 let isInit = false;
 
 function init () {
