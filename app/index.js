@@ -36,12 +36,6 @@ const url = 'file://' + resolve(
 
 console.log('electron will open', url);
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
 app.on('ready', () => {
   function createWindow (fn) {
     let cfg = plugins.getDecoratedConfig();
@@ -227,8 +221,11 @@ app.on('ready', () => {
       deleteSessions();
       cfgUnsubscribe();
       pluginsUnsubscribe();
-      if (windowSet.size === 0) {
-        win.close();
+    });
+
+    win.on('closed', () => {
+      if (process.platform !== 'darwin') {
+        app.quit();
       }
     });
   }
