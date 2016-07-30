@@ -41,6 +41,7 @@ app.on('ready', () => {
     let cfg = plugins.getDecoratedConfig();
 
     const [width, height] = cfg.windowSize || [540, 380];
+    const { screen } = require('electron')
 
     let startX = 50;
     let startY = 50;
@@ -51,8 +52,21 @@ app.on('ready', () => {
     if (BrowserWindow.getFocusedWindow() !== null) {
       const currentWindow = BrowserWindow.getFocusedWindow();
       const points = currentWindow.getPosition();
-      startX = points[0] + 34;
-      startY = points[1] + 34;
+      const currentScreen = screen.getDisplayNearestPoint({ x: points[0], y: points[1] });
+
+      const biggestX = ((points[0] + 100 + width) - currentScreen.bounds.x);
+      const biggestY = ((points[1] + 100 + height) - currentScreen.bounds.y);
+
+      if (biggestX > currentScreen.size.width) {
+        startX = 50;
+      } else {
+        startX = points[0] + 34;
+      }
+      if (biggestY > currentScreen.size.height) {
+        startY = 50;
+      } else {
+        startY = points[1] + 34;
+      }
     }
 
     const browserDefaults = {
