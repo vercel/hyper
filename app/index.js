@@ -5,6 +5,7 @@ const uuid = require('uuid');
 const { resolve } = require('path');
 const isDev = require('electron-is-dev');
 const AutoUpdater = require('./auto-updater');
+const toElectronBackgroundColor = require('./utils/to-electron-background-color');
 const notify = require('./notify');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
@@ -48,6 +49,7 @@ app.on('ready', () => {
       minWidth: 370,
       titleBarStyle: 'hidden-inset',
       title: 'HyperTerm',
+      backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
       transparent: true,
       icon: resolve(__dirname, 'static/icon.png'),
       // we only want to show when the prompt
@@ -78,6 +80,9 @@ app.on('ready', () => {
           'Open a new tab or window to start using the new shell'
         );
       }
+
+      // update background color if necessary
+      win.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
 
       cfg = cfg_;
     });
