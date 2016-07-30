@@ -42,6 +42,19 @@ app.on('ready', () => {
 
     const [width, height] = cfg.windowSize || [540, 380];
 
+    let startX = 50;
+    let startY = 50;
+    
+    // Open the new window roughly the height of the header away from the
+    // previous window. This also ensures in multi monitor setups that the
+    // new terminal is on the correct screen.
+    if (BrowserWindow.getFocusedWindow() !== null) {
+      const currentWindow = BrowserWindow.getFocusedWindow();
+      const points = currentWindow.getPosition();
+      startX = points[0] + 34;
+      startY = points[1] + 34;
+    }
+
     const browserDefaults = {
       width,
       height,
@@ -54,7 +67,9 @@ app.on('ready', () => {
       icon: resolve(__dirname, 'static/icon.png'),
       // we only want to show when the prompt
       // is ready for user input
-      show: process.env.HYPERTERM_DEBUG || isDev
+      show: process.env.HYPERTERM_DEBUG || isDev,
+      x: startX,
+      y: startY
     };
     const browserOptions = plugins.getDecoratedBrowserOptions(browserDefaults);
 
