@@ -41,7 +41,7 @@ app.on('ready', () => {
     let cfg = plugins.getDecoratedConfig();
 
     const [width, height] = cfg.windowSize || [540, 380];
-    const { screen } = require('electron')
+    const { screen } = require('electron');
 
     let startX = 50;
     let startY = 50;
