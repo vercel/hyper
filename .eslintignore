@@ -4,3 +4,4 @@ app/static
 assets
 build
 dist
+node_modules
