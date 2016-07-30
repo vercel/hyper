@@ -8,8 +8,6 @@ const AutoUpdater = require('./auto-updater');
 const toHex = require('convert-css-color-name-to-hex');
 const notify = require('./notify');
 
-app.commandLine.appendSwitch('js-flags', '--harmony');
-
 // set up config
 const config = require('./config');
 config.init();
