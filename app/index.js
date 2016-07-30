@@ -26,13 +26,10 @@ app.getWindows = () => new Set([...windowSet]); // return a clone
 // function to retrive the last focused window in windowSet;
 // added to app object in order to expose it to plugins.
 app.getLastFocusedWindow = () => {
-  let lastWindow = null;
-  let lastFocusTime = 0;
-  windowSet.forEach((win) => {
-    lastWindow = win.focusTime > lastFocusTime ? win : lastWindow;
-    lastFocusTime = win.focusTime;
+  if (!windowSet.size) return null;
+  return Array.from(windowSet).reduce((lastWindow, win) => {
+    return win.focusTime > lastWindow.focusTime ? win : lastWindow;
   });
-  return lastWindow;
 };
 
 if (isDev) {
