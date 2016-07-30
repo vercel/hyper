@@ -33,6 +33,7 @@
     "babel-core": "^6.11.4",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.4",
+    "babel-preset-es2015-native-modules": "^6.9.2",
     "babel-preset-react": "^6.11.1",
     "copy-webpack-plugin": "^3.0.1",
     "electron-builder": "^5.19.1",
@@ -76,6 +77,7 @@
   },
   "babel": {
     "presets": [
+      "es2015-native-modules",
       "react"
     ]
   },
@@ -100,7 +102,7 @@
     "prepublish": "npm test",
     "prepush": "npm test",
     "postinstall": "install-app-deps",
-    "pack": "npm run build && build --dir && babel --no-comments --compact --minified --out-file app/dist/bundle.js app/dist/bundle.js",
+    "pack": "npm run build && build --dir",
     "dist": "npm run build && build",
     "release": "npm run build && build --publish=onTagOrDraft"
   }
