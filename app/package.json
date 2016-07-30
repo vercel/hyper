@@ -18,7 +18,7 @@
     "gaze": "1.1.0",
     "mkdirp": "0.5.1",
     "ms": "0.7.1",
-    "shell-env": "git@github.com:albinekb/shell-env.git#custom-shell",
+    "shell-env": "0.2.0",
     "uuid": "2.0.2"
   },
   "eslintConfig": {
