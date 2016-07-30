@@ -23,7 +23,7 @@ app.config = config;
 app.plugins = plugins;
 app.getWindows = () => new Set([...windowSet]); // return a clone
 
-// function to retrive the last focused winow in windowSet;
+// function to retrive the last focused window in windowSet;
 // added to app object in order to expose it to plugins.
 app.getLastFocusedWindow = () => {
   let lastWindow = null;
