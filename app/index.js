@@ -44,7 +44,7 @@ app.on('ready', () => {
 
     let startX = 50;
     let startY = 50;
-    
+
     // Open the new window roughly the height of the header away from the
     // previous window. This also ensures in multi monitor setups that the
     // new terminal is on the correct screen.
