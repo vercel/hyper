@@ -6,7 +6,8 @@ const Color = require('color');
 module.exports = function toElectronBackgroundColor (bgColor) {
   const color = Color(bgColor);
   if (1 !== color.alpha()) {
-    return color.hexString() + Math.floor(color.alpha() * 100);
+    // (╯°□°）╯︵ ┻━┻
+    return '#' + Math.floor(color.alpha() * 100) + color.hexString().substr(1);
   } else {
     return color.hexString();
   }
