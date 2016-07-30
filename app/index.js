@@ -7,6 +7,7 @@ const isDev = require('electron-is-dev');
 const AutoUpdater = require('./auto-updater');
 const toHex = require('convert-css-color-name-to-hex');
 const notify = require('./notify');
+const windowStateKeeper = require('electron-window-state');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
 
@@ -42,9 +43,15 @@ app.on('ready', () => {
 
     const [width, height] = cfg.windowSize || [540, 380];
 
+    const windowState = windowStateKeeper({
+      file: 'window-state-' + (windowSet.size + 1) + '.json'
+    });
+
     const browserDefaults = {
       width,
       height,
+      x: windowState.x,
+      y: windowState.y,
       minHeight: 190,
       minWidth: 370,
       titleBarStyle: 'hidden-inset',
@@ -61,6 +68,7 @@ app.on('ready', () => {
     const win = new BrowserWindow(browserOptions);
 
     windowSet.add(win);
+    windowState.manage(win);
     win.loadURL(url);
 
     const rpc = createRPC(win);

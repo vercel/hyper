@@ -16,6 +16,7 @@
     "hterm-umdjs": "1.1.3",
     "json-loader": "0.5.4",
     "mousetrap": "1.6.0",
+    "electron-window-state": "3.0.3",
     "ms": "0.7.1",
     "object-values": "1.0.0",
     "react": "15.3.0",
