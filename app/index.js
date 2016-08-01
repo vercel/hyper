@@ -23,6 +23,15 @@ app.config = config;
 app.plugins = plugins;
 app.getWindows = () => new Set([...windowSet]); // return a clone
 
+// function to retrive the last focused window in windowSet;
+// added to app object in order to expose it to plugins.
+app.getLastFocusedWindow = () => {
+  if (!windowSet.size) return null;
+  return Array.from(windowSet).reduce((lastWindow, win) => {
+    return win.focusTime > lastWindow.focusTime ? win : lastWindow;
+  });
+};
+
 if (isDev) {
   console.log('running in dev mode');
 } else {
@@ -90,6 +99,7 @@ app.on('ready', () => {
     const win = new BrowserWindow(browserOptions);
 
     windowSet.add(win);
+
     win.loadURL(url);
 
     const rpc = createRPC(win);
@@ -113,7 +123,17 @@ app.on('ready', () => {
 
     rpc.on('init', () => {
       win.show();
-      if (fn) fn(win);
+
+      // If no callback is passed to createWindow,
+      // a new session will be created by default.
+      if (!fn) fn = (win) => win.rpc.emit('session add req');
+
+      // app.windowCallback is the createWindow callback
+      // that can be setted before the 'ready' app event
+      // and createWindow deifinition. It's exeuted in place of
+      // the callback passed as parameter, and deleted right after.
+      (app.windowCallback || fn)(win);
+      delete (app.windowCallback);
 
       // auto updates
       if (!isDev && process.platform !== 'linux') {
@@ -243,6 +263,13 @@ app.on('ready', () => {
       }
     });
 
+    // Keep track of focus time of every window, to figure out
+    // which one of the existing window is the last focused.
+    // Works nicely even if a window is closed and removed.
+    win.on('focus', () => {
+      win.focusTime = process.uptime();
+    });
+
     // the window can be closed by the browser process itself
     win.on('close', () => {
       windowSet.delete(win);
@@ -297,3 +324,17 @@ app.on('ready', () => {
 function initSession (opts, fn) {
   fn(uuid.v4(), new Session(opts));
 }
+
+app.on('open-file', (event, path) => {
+  const lastWindow = app.getLastFocusedWindow();
+  const callback = win => win.rpc.emit('open file', { path });
+  if (lastWindow) {
+    callback(lastWindow);
+  } else if (!lastWindow && app.hasOwnProperty('createWindow')) {
+    app.createWindow(callback);
+  } else {
+    // if createWindow not exists yet ('ready' event was not fired),
+    // sets his callback to an app.windowCallback property.
+    app.windowCallback = callback;
+  }
+});
