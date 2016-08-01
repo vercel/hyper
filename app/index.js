@@ -153,12 +153,12 @@ app.on('ready', () => {
       }
     });
 
-    rpc.on('maximize', () => {
-      win.maximize();
-    });
-
     rpc.on('unmaximize', () => {
       win.unmaximize();
+    });
+
+    rpc.on('maximize', () => {
+      win.maximize();
     });
 
     rpc.on('resize', ({ cols, rows }) => {
