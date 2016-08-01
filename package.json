@@ -27,7 +27,7 @@
     "redux-thunk": "2.1.0",
     "reselect": "2.5.3",
     "seamless-immutable": "6.1.1",
-    "unicode-string-utils": "^0.1.0"
+    "unicode-string-utils": "0.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
