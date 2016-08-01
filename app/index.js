@@ -153,8 +153,12 @@ app.on('ready', () => {
       }
     });
 
-    rpc.on('toggle-maximize', () => {
-      win.isMaximized() ? win.unmaximize() : win.maximize();
+    rpc.on('maximize', () => {
+      win.maximize();
+    });
+
+    rpc.on('unmaximize', () => {
+      win.unmaximize();
     });
 
     rpc.on('resize', ({ cols, rows }) => {
