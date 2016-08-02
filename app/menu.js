@@ -7,6 +7,14 @@ const appName = app.getName();
 // https://github.com/sindresorhus/anatine/blob/master/menu.js
 
 module.exports = function createMenu ({ createWindow, updatePlugins }) {
+
+  const {app, Menu} = require('electron');
+
+  const dockMenu = Menu.buildFromTemplate([
+    {label: 'New Window', click () { createWindow(); }}
+  ]);
+  app.dock.setMenu(dockMenu);
+
   return [
     {
       label: 'Application',
@@ -209,6 +217,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
     },
     {
       label: 'Window',
+      role: 'window',
       submenu: [
         {
           role: 'minimize'
