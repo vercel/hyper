@@ -7,7 +7,6 @@ const appName = app.getName();
 // https://github.com/sindresorhus/anatine/blob/master/menu.js
 
 module.exports = function createMenu ({ createWindow, updatePlugins }) {
-
   const {app, Menu} = require('electron');
 
   const dockMenu = Menu.buildFromTemplate([
