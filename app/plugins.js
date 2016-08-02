@@ -332,3 +332,5 @@ exports.getDecoratedConfig = function () {
 exports.getDecoratedBrowserOptions = function (defaults) {
   return decorateObject(defaults, 'decorateBrowserOptions');
 };
+
+exports._toDependencies = toDependencies;
