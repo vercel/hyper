@@ -18,6 +18,7 @@
     "mousetrap": "1.6.0",
     "ms": "0.7.1",
     "object-values": "1.0.0",
+    "php-escape-shell": "1.0.0",
     "react": "15.3.0",
     "react-addons-pure-render-mixin": "15.3.0",
     "react-deep-force-update": "2.0.1",
@@ -40,7 +41,7 @@
     "eslint": "^3.2.0",
     "eslint-config-standard": "^5.3.5",
     "eslint-plugin-promise": "^2.0.0",
-    "eslint-plugin-react": "^5.2.2",
+    "eslint-plugin-react": "^6.0.0",
     "eslint-plugin-standard": "^2.0.0",
     "husky": "^0.11.6",
     "webpack": "^2.1.0-beta.15"
