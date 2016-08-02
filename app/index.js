@@ -310,6 +310,16 @@ app.on('ready', () => {
       }
     }));
 
+    // If we're on Mac make a Dock Menu
+    if (process.platform === 'darwin') {
+      const {app, Menu} = require('electron');
+
+      const dockMenu = Menu.buildFromTemplate([
+        {label: 'New Window', click () { createWindow(); }}
+      ]);
+      app.dock.setMenu(dockMenu);
+    }
+
     Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
   };
 
