@@ -38,6 +38,7 @@
     "babel-core": "^6.11.4",
     "babel-loader": "^6.2.4",
     "babel-preset-react": "^6.11.1",
+    "concurrently": "^2.2.0",
     "copy-webpack-plugin": "^3.0.1",
     "electron-builder": "^7.0.1",
     "electron": "1.4.0",
@@ -102,6 +103,8 @@
   },
   "scripts": {
     "dev": "webpack --watch",
+    "dev": "concurrently --kill-others \"npm run dev-build\" \"npm run start\"",
+    "dev-build": "webpack --watch",
     "lint": "xo",
     "build": "NODE_ENV=production webpack",
     "test": "npm run lint && electron-mocha test/*",
