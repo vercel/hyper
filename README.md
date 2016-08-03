@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/zeit/hyperterm.svg?branch=master)](https://travis-ci.org/zeit/hyperterm)
 [![Slack Channel](https://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
+[![Changelog #213](https://img.shields.io/badge/changelog-%23213-lightgrey.svg)](https://changelog.com/213)
 
 For more details, head to: https://hyperterm.org
 
