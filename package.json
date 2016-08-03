@@ -46,7 +46,8 @@
     "eslint-plugin-react": "^6.2.2",
     "husky": "^0.11.6",
     "webpack": "^2.1.0-beta.15",
-    "xo": "^0.16.0"
+    "xo": "^0.16.0",
+    "electron-devtools-installer": "^2.0.0"
   },
   "xo": {
     "extends": "xo-react",
