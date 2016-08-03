@@ -27,9 +27,7 @@
     "redux": "3.5.2",
     "redux-thunk": "2.1.0",
     "reselect": "2.5.3",
-    "seamless-immutable": "6.1.1"
-  },
-  "devDependencies": {
+    "seamless-immutable": "6.1.1",
     "babel-cli": "^6.11.4",
     "babel-core": "^6.11.4",
     "babel-eslint": "^6.1.2",
