@@ -164,7 +164,6 @@ app.on('ready', () => {
 
         session.on('exit', () => {
           rpc.emit('session exit', { uid });
-          session.removeAllListeners();
           sessions.delete(uid);
         });
       });
