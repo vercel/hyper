@@ -164,6 +164,8 @@ app.on('ready', () => {
 
         session.on('exit', () => {
           rpc.emit('session exit', { uid });
+          session.removeAllListeners();
+          session.destroy();
           sessions.delete(uid);
         });
       });
@@ -196,7 +198,9 @@ app.on('ready', () => {
       const session = sessions.get(uid);
 
       if (session) {
-        session.exit();
+        session.removeAllListeners();
+        session.destroy();
+        sessions.delete(uid);
       } else {
         console.log('session not found by', uid);
       }
