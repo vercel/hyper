@@ -3,6 +3,8 @@ const createRPC = require('./rpc');
 const createMenu = require('./menu');
 const uuid = require('uuid');
 const { resolve } = require('path');
+const { parse: parseUrl } = require('url');
+const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 const AutoUpdater = require('./auto-updater');
 const toHex = require('convert-css-color-name-to-hex');
@@ -243,6 +245,17 @@ app.on('ready', () => {
     win.webContents.on('did-navigate', () => {
       if (i++) {
         deleteSessions();
+      }
+    });
+
+    // If file is dropped onto the terminal window, navigate event is prevented
+    // and his path is added to active session.
+    win.webContents.on('will-navigate', (event, url) => {
+      var protocol = typeof url === 'string' && parseUrl(url).protocol;
+      if (protocol === 'file:') {
+        event.preventDefault();
+        let path = fileUriToPath(url).replace(/ /g, '\\ ');
+        rpc.emit('session data send', { data: path });
       }
     });
 
