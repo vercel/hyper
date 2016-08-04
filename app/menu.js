@@ -208,7 +208,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
       ]
     },
     {
-      label: 'Window',
+      role: 'window',
       submenu: [
         {
           role: 'minimize'
