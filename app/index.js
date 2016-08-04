@@ -3,6 +3,8 @@ const createRPC = require('./rpc');
 const createMenu = require('./menu');
 const uuid = require('uuid');
 const { resolve } = require('path');
+const { parse: parseUrl } = require('url');
+const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 const AutoUpdater = require('./auto-updater');
 const toHex = require('convert-css-color-name-to-hex');
@@ -97,7 +99,6 @@ app.on('ready', () => {
     const browserOptions = plugins.getDecoratedBrowserOptions(browserDefaults);
 
     const win = new BrowserWindow(browserOptions);
-
     windowSet.add(win);
 
     win.loadURL(url);
@@ -159,6 +160,7 @@ app.on('ready', () => {
         });
 
         session.on('title', (title) => {
+          win.setTitle(title);
           rpc.emit('session title', { uid, title });
         });
 
@@ -174,14 +176,15 @@ app.on('ready', () => {
     // on Session and focus/blur to subscribe
     rpc.on('focus', ({ uid }) => {
       const session = sessions.get(uid);
-
+      if (typeof session !== 'undefined' && typeof session.lastTitle !== 'undefined') {
+        win.setTitle(session.lastTitle);
+      }
       if (session) {
         session.focus();
       } else {
         console.log('session not found by', uid);
       }
     });
-
     rpc.on('blur', ({ uid }) => {
       const session = sessions.get(uid);
 
@@ -242,6 +245,17 @@ app.on('ready', () => {
     win.webContents.on('did-navigate', () => {
       if (i++) {
         deleteSessions();
+      }
+    });
+
+    // If file is dropped onto the terminal window, navigate event is prevented
+    // and his path is added to active session.
+    win.webContents.on('will-navigate', (event, url) => {
+      var protocol = typeof url === 'string' && parseUrl(url).protocol;
+      if (protocol === 'file:') {
+        event.preventDefault();
+        let path = fileUriToPath(url).replace(/ /g, '\\ ');
+        rpc.emit('session data send', { data: path });
       }
     });
 
@@ -308,6 +322,15 @@ app.on('ready', () => {
         plugins.updatePlugins({ force: true });
       }
     }));
+
+    // If we're on Mac make a Dock Menu
+    if (process.platform === 'darwin') {
+      const { app, Menu } = require('electron');
+      const dockMenu = Menu.buildFromTemplate([
+        {label: 'New Window', click () { createWindow(); }}
+      ]);
+      app.dock.setMenu(dockMenu);
+    }
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
   };
