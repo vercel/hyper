@@ -13,8 +13,10 @@
   "dependencies": {
     "aphrodite-simple": "0.4.1",
     "color": "0.11.3",
+    "electron-mocha": "^3.0.0",
     "hterm-umdjs": "1.1.3",
     "json-loader": "0.5.4",
+    "mocha": "^3.0.0",
     "mousetrap": "1.6.0",
     "ms": "0.7.1",
     "object-values": "1.0.0",
@@ -27,7 +29,8 @@
     "redux": "3.5.2",
     "redux-thunk": "2.1.0",
     "reselect": "2.5.3",
-    "seamless-immutable": "6.1.1"
+    "seamless-immutable": "6.1.1",
+    "should": "^10.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
@@ -73,6 +76,9 @@
       "ecmaFeatures": {
         "jsx": true
       }
+    },
+    "env": {
+      "mocha": true
     }
   },
   "babel": {
@@ -96,7 +102,7 @@
     "dev": "webpack --watch",
     "lint": "eslint .",
     "build": "NODE_ENV=production webpack",
-    "test": "npm run lint",
+    "test": "npm run lint && electron-mocha test/*",
     "start": "electron app",
     "prepublish": "npm test",
     "prepush": "npm test",
