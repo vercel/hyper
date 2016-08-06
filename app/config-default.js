@@ -54,7 +54,16 @@ module.exports = {
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
     // if left empty, your system's login shell will be used by default
-    shell: ''
+    shell: '',
+
+    // for environment variables
+    env: {},
+
+    // set to false for no bell
+    bell: 'SOUND'
+
+    // URL to custom bell
+    // bellSoundURL: 'http://example.com/bell.mp3',
 
     // for advanced config flags please refer to https://hyperterm.org/#cfg
   },

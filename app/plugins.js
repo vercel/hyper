@@ -190,8 +190,19 @@ function alert (message) {
 function toDependencies (plugins) {
   const obj = {};
   plugins.plugins.forEach((plugin) => {
-    const pieces = plugin.split('#');
-    obj[pieces[0]] = null == pieces[1] ? 'latest' : pieces[1];
+    const regex = /.(@|#)/;
+    const match = regex.exec(plugin);
+
+    if (match) {
+      const index = match.index + 1;
+      const pieces = [];
+
+      pieces[0] = plugin.substring(0, index);
+      pieces[1] = plugin.substring(index + 1, plugin.length);
+      obj[pieces[0]] = pieces[1];
+    } else {
+      obj[plugin] = 'latest';
+    }
   });
   return obj;
 }
@@ -321,3 +332,5 @@ exports.getDecoratedConfig = function () {
 exports.getDecoratedBrowserOptions = function (defaults) {
   return decorateObject(defaults, 'decorateBrowserOptions');
 };
+
+exports._toDependencies = toDependencies;
