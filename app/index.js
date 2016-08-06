@@ -103,9 +103,6 @@ app.on('ready', () => {
 
     win.loadURL(url);
 
-    // Make sure this newly opened window is seen to now have focus
-    win.focusTime = process.uptime();
-
     const rpc = createRPC(win);
     const sessions = new Map();
 
@@ -286,6 +283,7 @@ app.on('ready', () => {
     win.on('focus', () => {
       win.focusTime = process.uptime();
     });
+    win.emit('focus');
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
