@@ -283,6 +283,8 @@ app.on('ready', () => {
     win.on('focus', () => {
       win.focusTime = process.uptime();
     });
+    // The focus event doesn't fire on win.show, but we need
+    // this to track the most recent window in focusedWindow
     win.emit('focus');
 
     // the window can be closed by the browser process itself
