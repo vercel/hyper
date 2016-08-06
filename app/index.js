@@ -60,9 +60,9 @@ app.on('ready', () => {
     // Open the new window roughly the height of the header away from the
     // previous window. This also ensures in multi monitor setups that the
     // new terminal is on the correct screen.
-    if (BrowserWindow.getFocusedWindow() !== null) {
-      const currentWindow = BrowserWindow.getFocusedWindow();
-      const points = currentWindow.getPosition();
+    const focusedWindow = BrowserWindow.getFocusedWindow() || app.getLastFocusedWindow();
+    if (focusedWindow) {
+      const points = focusedWindow.getPosition();
       const currentScreen = screen.getDisplayNearestPoint({ x: points[0], y: points[1] });
 
       const biggestX = ((points[0] + 100 + width) - currentScreen.bounds.x);
@@ -280,9 +280,15 @@ app.on('ready', () => {
     // Keep track of focus time of every window, to figure out
     // which one of the existing window is the last focused.
     // Works nicely even if a window is closed and removed.
-    win.on('focus', () => {
+    const updateFocusTime = () => {
       win.focusTime = process.uptime();
+    };
+    win.on('focus', () => {
+      updateFocusTime();
     });
+    // Ensure focusTime is set on window open. The focus event doesn't
+    // fire from the dock (see bug #583)
+    updateFocusTime();
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
