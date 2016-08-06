@@ -280,12 +280,15 @@ app.on('ready', () => {
     // Keep track of focus time of every window, to figure out
     // which one of the existing window is the last focused.
     // Works nicely even if a window is closed and removed.
-    win.on('focus', () => {
+    const updateFocusTime = () => {
       win.focusTime = process.uptime();
+    };
+    win.on('focus', () => {
+      updateFocusTime();
     });
-    // The focus event doesn't fire on win.show, but we need
-    // this to track the most recent window in focusedWindow
-    win.emit('focus');
+    // Ensure focusTime is set on window open. The focus event doesn't
+    // fire from the dock (see bug #583)
+    updateFocusTime();
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
