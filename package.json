@@ -27,6 +27,7 @@
     "react-dom": "15.3.1",
     "react-redux": "4.4.5",
     "redux": "3.6.0",
+    "react-split-pane": "0.1.44",
     "redux-thunk": "2.1.0",
     "reselect": "2.5.3",
     "seamless-immutable": "6.1.1",

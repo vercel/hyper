@@ -127,7 +127,7 @@ app.on('ready', () => {
 
       // If no callback is passed to createWindow,
       // a new session will be created by default.
-      if (!fn) fn = (win) => win.rpc.emit('session add req');
+      if (!fn) fn = (win) => win.rpc.emit('termgroup add req');
 
       // app.windowCallback is the createWindow callback
       // that can be setted before the 'ready' app event
@@ -144,14 +144,17 @@ app.on('ready', () => {
       }
     });
 
-    rpc.on('new', ({ rows = 40, cols = 100, cwd = process.env.HOME }) => {
+    rpc.on('new', ({ rows = 40, cols = 100, cwd = process.env.HOME, splitDirection }) => {
       const shell = cfg.shell;
       const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
 
       initSession({ rows, cols, cwd, shell, shellArgs }, (uid, session) => {
         sessions.set(uid, session);
         rpc.emit('session add', {
+          rows,
+          cols,
           uid,
+          splitDirection,
           shell: session.shell,
           pid: session.pty.pid
         });
@@ -214,10 +217,9 @@ app.on('ready', () => {
       win.maximize();
     });
 
-    rpc.on('resize', ({ cols, rows }) => {
-      sessions.forEach((session) => {
-        session.resize({ cols, rows });
-      });
+    rpc.on('resize', ({ uid, cols, rows }) => {
+      const session = sessions.get(uid);
+      session.resize({ cols, rows });
     });
 
     rpc.on('data', ({ uid, data }) => {

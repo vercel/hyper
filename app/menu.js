@@ -70,9 +70,30 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           accelerator: 'CmdOrCtrl+T',
           click (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.rpc.emit('session add req');
+              focusedWindow.rpc.emit('termgroup add req');
             } else {
               createWindow();
+            }
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Split Vertically',
+          accelerator: 'CmdOrCtrl+D',
+          click (item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.rpc.emit('split request vertical');
+            }
+          }
+        },
+        {
+          label: 'Split Horizontally',
+          accelerator: 'CmdOrCtrl+Shift+D',
+          click (item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.rpc.emit('split request horizontal');
             }
           }
         },
