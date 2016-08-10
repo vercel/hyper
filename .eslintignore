@@ -1,7 +1,12 @@
+# build output
+dist
+build
 app/dist
+
+# dependencies
+node_modules
 app/node_modules
+
+# other
 app/static
 assets
-build
-dist
-node_modules
