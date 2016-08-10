@@ -30,7 +30,7 @@
     "redux-thunk": "2.1.0",
     "reselect": "2.5.3",
     "seamless-immutable": "6.1.1",
-    "should": "^10.0.0"
+    "should": "^11.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
