@@ -8,7 +8,7 @@ For more details, head to: https://hyperterm.org
 
 ## Usage
 
-You can manually download the latest release [here](https://hyperterm.org/#installation).
+You can download the latest release [here](https://hyperterm.org/#installation).
 
 If you're on macOS, you can also use [Homebrew Cask](https://caskroom.github.io/) to download the app by running these commands:
 
@@ -37,4 +37,4 @@ After that, you'll see the binaries in the `./dist` folder!
 - [Art](https://github.com/zeit/hyperterm-art)
 - [Website](https://github.com/zeit/hyperterm-website)
 - [Sample Extension](https://github.com/zeit/hyperpower)
-- [Sample Theme]( https://github.com/zeit/hyperyellow)
+- [Sample Theme](https://github.com/zeit/hyperyellow)
