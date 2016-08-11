@@ -64,7 +64,10 @@ module.exports = {
     env: {},
 
     // set to false for no bell
-    bell: 'SOUND'
+    bell: 'SOUND',
+
+    // set to false for no copy-on-select
+    copyOnSelect: false
 
     // URL to custom bell
     // bellSoundURL: 'http://example.com/bell.mp3',
