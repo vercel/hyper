@@ -66,7 +66,7 @@ module.exports = {
     // set to false for no bell
     bell: 'SOUND',
 
-    // set to false for no copy-on-select
+    // if true, selected text will automatically be copied to the clipboard
     copyOnSelect: false
 
     // URL to custom bell
