@@ -71,8 +71,10 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     const [width, height] = cfg.windowSize || [540, 380];
     const {screen} = require('electron');
 
-    let startX = 50;
-    let startY = 50;
+    const start = app.config.getScreenState();
+
+    let startX = (start !== undefined) ? start[0] : 50;
+    let startY = (start !== undefined) ? start[1] : 50;
 
     // Open the new window roughly the height of the header away from the
     // previous window. This also ensures in multi monitor setups that the
@@ -222,7 +224,6 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     rpc.on('exit', ({uid}) => {
       const session = sessions.get(uid);
-
       if (session) {
         session.exit();
       } else {
@@ -317,6 +318,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
+      app.config.recordScreenState(win.getPosition());
       windowSet.delete(win);
       rpc.destroy();
       deleteSessions();

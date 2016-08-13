@@ -6,6 +6,10 @@ const vm = require('vm');
 const {dialog} = require('electron');
 const gaze = require('gaze');
 const notify = require('./notify');
+const Config = require('electron-config');
+
+// local storage
+const cache = new Config();
 
 const path = resolve(homedir(), '.hyperterm.js');
 const watchers = [];
@@ -88,4 +92,12 @@ exports.getPlugins = function () {
     plugins: cfg.plugins,
     localPlugins: cfg.localPlugins
   };
+};
+
+exports.recordScreenState = function (screenPosition) {
+  cache.set('screenPosition', screenPosition);
+};
+
+exports.getScreenState = function () {
+  return cache.get('screenPosition');
 };
