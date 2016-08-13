@@ -112,7 +112,7 @@ app.on('ready', () => {
 
       win.webContents.send('config change');
 
-      if (cfg_.shell !== cfg.shell) {
+      if (cfg_.shell !== cfg.shell || cfg_.shellArgs !== cfg.shellArgs) {
         notify(
           'Shell configuration changed!',
           'Open a new tab or window to start using the new shell'
@@ -146,8 +146,9 @@ app.on('ready', () => {
 
     rpc.on('new', ({ rows = 40, cols = 100, cwd = process.env.HOME }) => {
       const shell = cfg.shell;
+      const shellArgs = cfg.shellArgs;
 
-      initSession({ rows, cols, cwd, shell }, (uid, session) => {
+      initSession({ rows, cols, cwd, shell, shellArgs }, (uid, session) => {
         sessions.set(uid, session);
         rpc.emit('session add', {
           uid,

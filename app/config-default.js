@@ -56,6 +56,10 @@ module.exports = {
     // if left empty, your system's login shell will be used by default
     shell: '',
 
+    // for setting shell arguments (i.e. for using interactive shellArgs: ['-i'])
+    // by default ['--login'] will be used
+    shellArgs: ['--login'],
+
     // for environment variables
     env: {},
 
