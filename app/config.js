@@ -94,10 +94,11 @@ exports.getPlugins = function () {
   };
 };
 
-exports.recordScreenState = function (screenPosition) {
-  cache.set('screenPosition', screenPosition);
+exports.recordWindowState = function (position, size) {
+  cache.set('windowPosition', position);
+  cache.set('windowSize', size);
 };
 
-exports.getScreenState = function () {
-  return cache.get('screenPosition');
+exports.getWindowState = function () {
+  return {'position': cache.get('windowPosition'), 'size': cache.get('windowSize')};
 };
