@@ -9,7 +9,7 @@ const notify = require('./notify');
 const Config = require('electron-config');
 
 // local storage
-const cache = new Config();
+const winCfg = new Config();
 
 const path = resolve(homedir(), '.hyperterm.js');
 const watchers = [];
@@ -97,24 +97,24 @@ exports.getPlugins = function () {
 exports.window = {
   position: undefined,
   size: undefined,
-  get: function () {
-    let position = cache.get('windowPosition');
-    let size = cache.get('windowSize');
+  get () {
+    let position = winCfg.get('windowPosition');
+    let size = winCfg.get('windowSize');
     return {
-      'position': (position !== undefined) ? position : [50, 50],
-      'size': (size !== undefined) ? size : [540, 380]
+      position: (position !== undefined) ? position : [50, 50],
+      size: (size !== undefined) ? size : [540, 340]
     };
   },
-  set: function (position, size) {
+  set (position, size) {
     this.position = position;
     this.size = size;
   },
-  revoke: function () {
+  revoke () {
     this.position = undefined;
     this.size = undefined;
   },
-  recordState: function (win) {
-    cache.set('windowPosition', win.getPosition());
-    cache.set('windowSize', win.getSize());
+  recordState (win) {
+    winCfg.set('windowPosition', win.getPosition());
+    winCfg.set('windowSize', win.getSize());
   }
 };

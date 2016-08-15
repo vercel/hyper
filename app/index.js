@@ -70,8 +70,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     const winSet = app.config.window.get();
 
-    let startX = winSet.position[0];
-    let startY = winSet.position[1];
+    let [startX, startY] = winSet.position;
 
     const [width, height] = app.config.window.size !== undefined ? app.config.window.size : (cfg.windowSize || winSet.size);
     const { screen } = require('electron');
@@ -80,12 +79,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     // previous window. This also ensures in multi monitor setups that the
     // new terminal is on the correct screen.
     const focusedWindow = BrowserWindow.getFocusedWindow() || app.getLastFocusedWindow();
-    // Ignore focusedWindow if createWindow started from ascript or a plugins
-    // setting the position and the size.
-    // Only walid when size and position are strictly set.
+    // In case of strictly set position and size, we should ignore the focusedWindow.
     if (app.config.window.position !== undefined) {
-      startX = app.config.window.position[0];
-      startY = app.config.window.position[1];
+      [startX, startY] = app.config.window.position;
       // Revoke config to prevent undesired behavior
       app.config.window.revoke();
     } else if (focusedWindow) {
