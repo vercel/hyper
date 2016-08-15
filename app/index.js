@@ -68,24 +68,27 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
   function createWindow(fn) {
     let cfg = plugins.getDecoratedConfig();
 
-    const [width, height] = cfg.windowSize || [540, 380];
-    const {screen} = require('electron');
+    const winSet = app.config.window.get();
 
-    const recordedWindow = app.config.getWindowState();
+    let startX = winSet.position[0];
+    let startY = winSet.position[1];
 
-    if (recordedWindow !== undefined) {
-      startX = recordedWindow.position[0];
-      startY = recordedWindow.position[1];
-    }
-
-    const [width, height] = cfg.windowSize || ((recordedWindow !== undefined) ? recordedWindow.size : [540, 380]);
+    const [width, height] = app.config.window.size !== undefined ? app.config.window.size : (cfg.windowSize || winSet.size);
     const { screen } = require('electron');
 
     // Open the new window roughly the height of the header away from the
     // previous window. This also ensures in multi monitor setups that the
     // new terminal is on the correct screen.
     const focusedWindow = BrowserWindow.getFocusedWindow() || app.getLastFocusedWindow();
-    if (focusedWindow) {
+    // Ignore focusedWindow if createWindow started from ascript or a plugins
+    // setting the position and the size.
+    // Only walid when size and position are strictly set.
+    if (app.config.window.position !== undefined) {
+      startX = app.config.window.position[0];
+      startY = app.config.window.position[1];
+      // Revoke config to prevent undesired behavior
+      app.config.window.revoke();
+    } else if (focusedWindow) {
       const points = focusedWindow.getPosition();
       const currentScreen = screen.getDisplayNearestPoint({x: points[0], y: points[1]});
 
@@ -323,7 +326,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
-      app.config.recordWindowState(win.getPosition(), win.getSize());
+      app.config.window.recordState(win);
       windowSet.delete(win);
       rpc.destroy();
       deleteSessions();

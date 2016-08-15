@@ -94,11 +94,27 @@ exports.getPlugins = function () {
   };
 };
 
-exports.recordWindowState = function (position, size) {
-  cache.set('windowPosition', position);
-  cache.set('windowSize', size);
-};
-
-exports.getWindowState = function () {
-  return {'position': cache.get('windowPosition'), 'size': cache.get('windowSize')};
+exports.window = {
+  position: undefined,
+  size: undefined,
+  get: function () {
+    let position = cache.get('windowPosition');
+    let size = cache.get('windowSize');
+    return {
+      'position': (position !== undefined) ? position : [50, 50],
+      'size': (size !== undefined) ? size : [540, 380]
+    };
+  },
+  set: function (position, size) {
+    this.position = position;
+    this.size = size;
+  },
+  revoke: function () {
+    this.position = undefined;
+    this.size = undefined;
+  },
+  recordState: function (win) {
+    cache.set('windowPosition', win.getPosition());
+    cache.set('windowSize', win.getSize());
+  }
 };
