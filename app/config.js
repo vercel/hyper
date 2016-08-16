@@ -9,7 +9,12 @@ const notify = require('./notify');
 const Config = require('electron-config');
 
 // local storage
-const winCfg = new Config();
+const winCfg = new Config({
+  defaults: {
+    position: [50, 50],
+    size: [540, 380]
+  }
+});
 
 const path = resolve(homedir(), '.hyperterm.js');
 const watchers = [];
@@ -101,11 +106,11 @@ exports.window = {
     let position = winCfg.get('windowPosition');
     let size = winCfg.get('windowSize');
     return {
-      position: (position !== undefined) ? position : [50, 50],
-      size: (size !== undefined) ? size : [540, 340]
+      position: (position !== undefined) ? position : winCfg.store.position,
+      size: (size !== undefined) ? size : winCfg.store.size
     };
   },
-  set (position, size) {
+  set (position, size, cwd) {
     this.position = position;
     this.size = size;
   },

@@ -69,19 +69,20 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     let cfg = plugins.getDecoratedConfig();
 
     const winSet = app.config.window.get();
-
     let [startX, startY] = winSet.position;
 
     const [width, height] = app.config.window.size !== undefined ? app.config.window.size : (cfg.windowSize || winSet.size);
     const { screen } = require('electron');
+
+    const winPos = app.config.window.position;
 
     // Open the new window roughly the height of the header away from the
     // previous window. This also ensures in multi monitor setups that the
     // new terminal is on the correct screen.
     const focusedWindow = BrowserWindow.getFocusedWindow() || app.getLastFocusedWindow();
     // In case of strictly set position and size, we should ignore the focusedWindow.
-    if (app.config.window.position !== undefined) {
-      [startX, startY] = app.config.window.position;
+    if (winPos !== undefined) {
+      [startX, startY] = winPos;
       // Revoke config to prevent undesired behavior
       app.config.window.revoke();
     } else if (focusedWindow) {
