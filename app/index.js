@@ -65,26 +65,24 @@ const url = 'file://' + resolve(
 console.log('electron will open', url);
 
 app.on('ready', () => installDevExtensions(isDev).then(() => {
-  function createWindow(fn) {
+  function createWindow (fn, options = {defaults: {position: undefined, size: undefined}}) {
     let cfg = plugins.getDecoratedConfig();
 
     const winSet = app.config.window.get();
     let [startX, startY] = winSet.position;
 
-    const [width, height] = app.config.window.size !== undefined ? app.config.window.size : (cfg.windowSize || winSet.size);
+    const [width, height] = options.defaults.size !== undefined ? options.defaults.size : (cfg.windowSize || winSet.size);
     const { screen } = require('electron');
 
-    const winPos = app.config.window.position;
+    const winPos = options.defaults.position;
 
     // Open the new window roughly the height of the header away from the
     // previous window. This also ensures in multi monitor setups that the
     // new terminal is on the correct screen.
     const focusedWindow = BrowserWindow.getFocusedWindow() || app.getLastFocusedWindow();
-    // In case of strictly set position and size, we should ignore the focusedWindow.
+    // In case of options defaults position and size, we should ignore the focusedWindow.
     if (winPos !== undefined) {
       [startX, startY] = winPos;
-      // Revoke config to prevent undesired behavior
-      app.config.window.revoke();
     } else if (focusedWindow) {
       const points = focusedWindow.getPosition();
       const currentScreen = screen.getDisplayNearestPoint({x: points[0], y: points[1]});

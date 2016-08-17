@@ -100,8 +100,6 @@ exports.getPlugins = function () {
 };
 
 exports.window = {
-  position: undefined,
-  size: undefined,
   get () {
     let position = winCfg.get('windowPosition');
     let size = winCfg.get('windowSize');
@@ -109,14 +107,6 @@ exports.window = {
       position: (position !== undefined) ? position : winCfg.store.position,
       size: (size !== undefined) ? size : winCfg.store.size
     };
-  },
-  set (position, size, cwd) {
-    this.position = position;
-    this.size = size;
-  },
-  revoke () {
-    this.position = undefined;
-    this.size = undefined;
   },
   recordState (win) {
     winCfg.set('windowPosition', win.getPosition());
