@@ -65,16 +65,16 @@ const url = 'file://' + resolve(
 console.log('electron will open', url);
 
 app.on('ready', () => installDevExtensions(isDev).then(() => {
-  function createWindow (fn, options = {defaults: {position: undefined, size: undefined}}) {
+  function createWindow (fn, options = {}) {
     let cfg = plugins.getDecoratedConfig();
 
     const winSet = app.config.window.get();
     let [startX, startY] = winSet.position;
 
-    const [width, height] = options.defaults.size !== undefined ? options.defaults.size : (cfg.windowSize || winSet.size);
+    const [width, height] = options.size !== undefined ? options.size : (cfg.windowSize || winSet.size);
     const { screen } = require('electron');
 
-    const winPos = options.defaults.position;
+    const winPos = options.position;
 
     // Open the new window roughly the height of the header away from the
     // previous window. This also ensures in multi monitor setups that the
