@@ -11,8 +11,8 @@ const Config = require('electron-config');
 // local storage
 const winCfg = new Config({
   defaults: {
-    position: [50, 50],
-    size: [540, 380]
+    windowPosition: [50, 50],
+    windowSize: [540, 380]
   }
 });
 
@@ -103,10 +103,7 @@ exports.window = {
   get () {
     let position = winCfg.get('windowPosition');
     let size = winCfg.get('windowSize');
-    return {
-      position: (position !== undefined) ? position : winCfg.store.position,
-      size: (size !== undefined) ? size : winCfg.store.size
-    };
+    return {position, size};
   },
   recordState (win) {
     winCfg.set('windowPosition', win.getPosition());
