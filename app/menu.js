@@ -105,7 +105,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           accelerator: 'CmdOrCtrl+W',
           click (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.rpc.emit('session close req');
+              focusedWindow.rpc.emit('termgroup close req');
             }
           }
         },
