@@ -43,6 +43,9 @@ module.exports = class Session extends EventEmitter {
     });
 
     this.pty.stdout.on('data', (data) => {
+      if (this.ended) {
+        return;
+      }
       this.emit('data', data.toString('utf8'));
     });
 
