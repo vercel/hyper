@@ -14,7 +14,6 @@
     "aphrodite-simple": "0.4.1",
     "color": "0.11.3",
     "electron-mocha": "^3.0.0",
-    "file-uri-to-path": "0.0.2",
     "hterm-umdjs": "1.1.3",
     "json-loader": "0.5.4",
     "mocha": "^3.0.0",
@@ -22,7 +21,7 @@
     "ms": "0.7.1",
     "object-values": "1.0.0",
     "php-escape-shell": "1.0.0",
-    "react": "15.3.0",
+    "react": "15.3.1",
     "react-addons-pure-render-mixin": "15.3.0",
     "react-deep-force-update": "2.0.1",
     "react-dom": "15.3.0",
@@ -31,7 +30,7 @@
     "redux-thunk": "2.1.0",
     "reselect": "2.5.3",
     "seamless-immutable": "6.1.1",
-    "should": "^10.0.0"
+    "should": "^11.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
@@ -41,7 +40,7 @@
     "babel-preset-react": "^6.11.1",
     "copy-webpack-plugin": "^3.0.1",
     "electron-builder": "^5.19.1",
-    "electron-prebuilt": "1.3.1",
+    "electron-prebuilt": "1.3.3",
     "eslint": "^3.2.0",
     "eslint-config-standard": "^5.3.5",
     "eslint-plugin-promise": "^2.0.0",
