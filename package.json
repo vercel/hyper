@@ -4,8 +4,8 @@
   "description": "Web app that runs in the renderer process",
   "repository": "zeit/hyperterm",
   "author": {
-    "name": "Guillermo Rauch",
-    "email": "rauchg@zeit.co"
+    "name": "Zeit, Inc.",
+    "email": "team@zeit.co"
   },
   "greenkeeper": {
     "emails": false
