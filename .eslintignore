@@ -1,12 +1,12 @@
 # build output
 dist
+build
+app/dist
 
 # dependencies
 node_modules
-
-# logs
-npm-debug.log
+app/node_modules
 
 # other
-.next
-.DS_Store
+app/static
+assets

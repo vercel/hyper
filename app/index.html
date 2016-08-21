@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>HyperTerm</title>
+    <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1.0" />
     <style>
       body {
@@ -11,8 +12,14 @@
       * {
         margin: 0;
         padding: 0;
-        text-rendering: geometricPrecision;
+        text-rendering: optimizeLegibility;
         box-sizing: border-box;
+      }
+
+      @media (min-resolution: 2dppx) {
+        * {
+          text-rendering: geometricPrecision;
+        }
       }
     </style>
   </head>

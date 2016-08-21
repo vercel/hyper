@@ -1,50 +1,114 @@
 {
   "name": "hyperterm",
-  "productName": "HyperTerm",
-  "version": "0.5.0",
-  "license": "MIT",
+  "version": "0.7.1",
+  "description": "Web app that runs in the renderer process",
   "repository": "zeit/hyperterm",
-  "description": "HTML/JS/CSS Terminal",
+  "author": {
+    "name": "Zeit, Inc.",
+    "email": "team@zeit.co"
+  },
+  "greenkeeper": {
+    "emails": false
+  },
   "dependencies": {
-    "child_pty": "3.0.1",
-    "convert-css-color-name-to-hex": "0.1.1",
-    "default-shell": "1.0.1",
-    "electron-config": "0.2.0",
-    "electron-is-dev": "0.1.1",
-    "gaze": "1.1.0",
-    "mkdirp": "0.5.1",
+    "aphrodite-simple": "0.4.1",
+    "color": "0.11.3",
+    "electron-mocha": "^3.0.0",
+    "hterm-umdjs": "1.1.3",
+    "json-loader": "0.5.4",
+    "mocha": "^3.0.0",
+    "mousetrap": "1.6.0",
     "ms": "0.7.1",
-    "uid2": "0.0.3"
+    "object-values": "1.0.0",
+    "php-escape-shell": "1.0.0",
+    "react": "15.3.1",
+    "react-addons-pure-render-mixin": "15.3.1",
+    "react-deep-force-update": "2.0.1",
+    "react-dom": "15.3.1",
+    "react-redux": "4.4.5",
+    "redux": "3.5.2",
+    "redux-thunk": "2.1.0",
+    "reselect": "2.5.3",
+    "seamless-immutable": "6.1.1",
+    "should": "^11.0.0"
   },
   "devDependencies": {
-    "electron-packager": "7.1.0",
-    "electron-prebuilt": "1.2.5",
-    "eslint": "2.13.1",
-    "eslint-config-standard": "5.3.1",
-    "eslint-plugin-promise": "1.3.2",
-    "eslint-plugin-standard": "1.3.2"
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.11.4",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.4",
+    "babel-preset-react": "^6.11.1",
+    "copy-webpack-plugin": "^3.0.1",
+    "electron-builder": "^5.19.1",
+    "electron-prebuilt": "1.3.3",
+    "eslint": "^3.2.0",
+    "eslint-config-standard": "^5.3.5",
+    "eslint-plugin-promise": "^2.0.0",
+    "eslint-plugin-react": "^6.0.0",
+    "eslint-plugin-standard": "^2.0.0",
+    "husky": "^0.11.6",
+    "webpack": "^2.1.0-beta.15"
   },
   "eslintConfig": {
     "extends": "standard",
+    "plugins": [
+      "react"
+    ],
     "rules": {
-      "yoda": 0,
+      "yoda": "off",
       "semi": [
-        2,
+        "error",
         "always"
       ],
-      "no-unused-vars": 2,
-      "no-extra-semi": 2,
+      "no-unused-vars": "error",
+      "no-extra-semi": "error",
       "semi-spacing": [
-        2,
+        "error",
         {
           "before": false,
           "after": true
         }
+      ],
+      "react/jsx-uses-react": "warn",
+      "react/jsx-uses-vars": "warn"
+    },
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "env": {
+      "mocha": true
+    }
+  },
+  "babel": {
+    "presets": [
+      "react"
+    ]
+  },
+  "build": {
+    "appId": "co.zeit.hyperterm",
+    "app-category-type": "public.app-category.developer-tools",
+    "asar": false,
+    "extend-info": "build/Info.plist",
+    "linux": {
+      "target": [
+        "deb",
+        "AppImage"
       ]
     }
   },
   "scripts": {
-    "start": "electron index",
-    "lint": "eslint *.js"
+    "dev": "webpack --watch",
+    "lint": "eslint .",
+    "build": "NODE_ENV=production webpack",
+    "test": "npm run lint && electron-mocha test/*",
+    "start": "electron app",
+    "prepublish": "npm test",
+    "prepush": "npm test",
+    "postinstall": "install-app-deps",
+    "pack": "npm run build && build --dir && babel --no-comments --compact --minified --out-file app/dist/bundle.js app/dist/bundle.js",
+    "dist": "npm run build && build",
+    "release": "npm run build && build --publish=onTagOrDraft"
   }
 }
