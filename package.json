@@ -4,8 +4,8 @@
   "description": "Web app that runs in the renderer process",
   "repository": "zeit/hyperterm",
   "author": {
-    "name": "Guillermo Rauch",
-    "email": "rauchg@zeit.co"
+    "name": "Zeit, Inc.",
+    "email": "team@zeit.co"
   },
   "greenkeeper": {
     "emails": false
@@ -22,9 +22,9 @@
     "object-values": "1.0.0",
     "php-escape-shell": "1.0.0",
     "react": "15.3.1",
-    "react-addons-pure-render-mixin": "15.3.0",
+    "react-addons-pure-render-mixin": "15.3.1",
     "react-deep-force-update": "2.0.1",
-    "react-dom": "15.3.0",
+    "react-dom": "15.3.1",
     "react-redux": "4.4.5",
     "redux": "3.5.2",
     "redux-thunk": "2.1.0",

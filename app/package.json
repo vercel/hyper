@@ -4,8 +4,8 @@
   "version": "0.7.1",
   "license": "MIT",
   "author": {
-    "name": "Guillermo Rauch",
-    "email": "rauchg@zeit.co"
+    "name": "Zeit, Inc.",
+    "email": "team@zeit.co"
   },
   "repository": "zeit/hyperterm",
   "description": "HTML/JS/CSS Terminal",
