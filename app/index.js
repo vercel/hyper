@@ -146,7 +146,7 @@ app.on('ready', () => {
 
     rpc.on('new', ({ rows = 40, cols = 100, cwd = process.env.HOME }) => {
       const shell = cfg.shell;
-      const shellArgs = cfg.shellArgs;
+      const shellArgs = Array.from(cfg.shellArgs);
 
       initSession({ rows, cols, cwd, shell, shellArgs }, (uid, session) => {
         sessions.set(uid, session);
