@@ -79,7 +79,7 @@ function updatePlugins ({ force = false } = {}) {
       }
     } else {
       // flag successful plugin update
-      cache.set('plugins', id_);
+      cache.set('hyperterm.plugins', id_);
 
       // cache paths
       paths = getPaths(plugins);
@@ -148,7 +148,7 @@ exports.updatePlugins = updatePlugins;
 // we schedule the initial plugins update
 // a bit after the user launches the terminal
 // to prevent slowness
-if (cache.get('plugins') !== id || process.env.HYPERTERM_FORCE_UPDATE) {
+if (cache.get('hyperterm.plugins') !== id || process.env.HYPERTERM_FORCE_UPDATE) {
   // install immediately if the user changed plugins
   console.log('plugins have changed / not init, scheduling plugins installation');
   setTimeout(() => {
