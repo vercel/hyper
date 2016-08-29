@@ -93,8 +93,8 @@ function updatePlugins ({ force = false } = {}) {
       const loaded = modules.length;
       const total = paths.plugins.length + paths.localPlugins.length;
       const pluginVersions = JSON.stringify(getPluginVersions());
-      const changed = cache.get('plugin-versions') !== pluginVersions && loaded === total;
-      cache.set('plugin-versions', pluginVersions);
+      const changed = cache.get('hyperterm.plugin-versions') !== pluginVersions && loaded === total;
+      cache.set('hyperterm.plugin-versions', pluginVersions);
 
       // notify watchers
       if (force || changed) {
