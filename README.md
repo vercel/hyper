@@ -31,6 +31,14 @@ If you want to build the binaries for all specified platforms, run the command:
 $ npm run pack
 ```
 
+Or use Docker if your system doesn't meet a dependency.
+```bash
+$ git clone https://github.com/zeit/hyperterm.git
+$ cd hyperterm
+$ docker build -t hyperterm .
+$ docker run -v $(pwd)/dist:/hyperterm/dist hyperterm
+```
+
 After that, you'll see the binaries in the `./dist` folder!
 
 ### Required Build Dependencies
