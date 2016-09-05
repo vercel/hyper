@@ -3,12 +3,12 @@
 ==================
 
 ### Added
-  * add a slight timeout to update the fontSmoothing pref (#407) [@mike-engel]
+  * add a slight timeout to update the `fontSmoothing` pref (#407) [@mike-engel]
 
 ### Changed
   * session: suffix `UTF-8` to locale [@rauchg]
   * revert `--ignore-scripts` [@rauchg]
-  * rpc server now extends `EventEmitter` (#406) [@jaywunder]
+  * RPC server now extends `EventEmitter` (#406) [@jaywunder]
 
 ### Fixed
   * notifications: fix `(notes)` link [@rauchg]
@@ -19,27 +19,27 @@
 
 ### Added
   * implement `extend-info` for the custom `plist` [@lordgiotto]
-  * add decorateEnv to the extensions API (#370) [@ekmartin]
-  * add ctrl+tab/ctrl+shift+tab for tab switching (#367) [@NickChristensen]
+  * add `decorateEnv` to the extensions API (#370) [@ekmartin]
+  * add <kbd>ctrl</kbd>+<kbd>tab</kbd>/<kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>tab</kbd> for tab switching (#367) [@NickChristensen]
   * add `TERM_PROGRAM` and `TERM_PROGRAM_VERSION` env vars (#350) [@tootallnate]
   * add middle click to close tab functionality (#286) [@itswil]
   * adds plugin hook for decorating the electron browser options (#310) [@danprince]
   * add support for multiple cursor shapes (#352) [@rpunkfu]
-  * add LANG env variable (#354) [@TooTallNate]
+  * add `LANG` env variable (#354) [@TooTallNate]
   * implement post push and post install hooks (#328) [@freebroccolo]
-  * add .editorconfig file (#320) [@freebroccolo]
+  * add `.editorconfig` file (#320) [@freebroccolo]
   * add window zoom menu item (#325) [@marcbachmann]
   * add cursor actions (#217) [@marcbachmann]
   * add reducer to set cwd (#271) [@hharnisc]
-  * add homebrew cask install method (#273, #356) [@ZakariaRidouh, @arnif]
+  * add `homebrew cask` install method (#273, #356) [@ZakariaRidouh, @arnif]
   * add support for a `registry` configuration field (#211) [@developit]
   * add an option for a non-login shell to be run (#192) [@mike-engel, @cuth]
-  * expose 'getWindows' and 'createWindow' to plugins (#248) [@CWSpear]
+  * expose `getWindows` and `createWindow` to plugins (#248) [@CWSpear]
 
 ### Changed
   * use `uuid` instead of `uid2` for session ids [@albinekb]
   * reorganize dir structure and implement `electron-builder` [@rauchg]
-  * move to the last term with cmd+9 (#261) [@ekmartin]
+  * move to the last term with <kbd>cmd</kbd>+<kbd>9</kbd> (#261) [@ekmartin]
   * support default width/height of browser window (#257) [@tamagokun]
   * bump `electron-prebuilt` (#359) [@freebroccolo]
   * improved linux support (#341) [@c0b41]
@@ -51,32 +51,32 @@
   * update dependencies (#319) [@freeboccolo]
   * disable pinch zoom functionality (#326) [@marcbachmann]
   * allow opening of files in webview (#305) [@cuth]
-  * modified Info.plist generation to enable folder drop onto dock icon (#307) [@lordgiotto]
+  * modified `Info.plist` generation to enable folder drop onto dock icon (#307) [@lordgiotto]
   * dynamically change the `font-smoothing` pref (#205) [@mike-engel]
-  * override the buggy hexToRGB implementation in hterm. (#272) [@mauro-oto]
+  * override the buggy `hexToRGB` implementation in `hterm` (#272) [@mauro-oto]
   * do not rely on bash-style comments for pref opening (#279) [@mfpierre]
   * close window when last tab is exited (#263) [@ekmartin]
   * bring focus to main window when clicking preferences (#235) [@leo]
   * hide scrollbar when webview is active (#209) [@marcbachmann]
 
 ### Removed
-  * remove $ from terminal commands in README (#130) [@Tyriar]
+  * remove `$` from terminal commands in `README.md` (#130) [@Tyriar]
   * disable linux autoupdate (#338) [@c0b41]
   * remove unused state variable (#268) [@marcbachmann]
-  * remove unnecessary comment referencing use of !important due to aphrodite" (#223) [@conorhastings]
-  * remove unnecessary event listener teardown on Term unmount (#242) [@developit]
+  * remove unnecessary comment referencing use of `!important` due to aphrodite (#223) [@conorhastings]
+  * remove unnecessary event listener `teardown` on Term unmount (#242) [@developit]
 
 ### Fixed
   * fix support for `mapTermsDispatch` [@albinekb]
   * fix quit problem (#343) [@c0b41, @timneutkens]
   * fix linter issues (#321) [@freebroccolo]
-  * fix prop update logic for fontSmoothing (#302) [@mike-engel]
+  * fix prop update logic for `fontSmoothing` (#302) [@mike-engel]
   * fix installing plugins that use `node-gyp` (#291) [@dfrankland]
-  * fix some documentation typos. (#212) [@mauro-oto]
+  * fix some documentation typos (#212) [@mauro-oto]
   * index: prevent double sesson exit (#380) [@timneutkens]
   * make sure scrollbar shim doesn't capture clicks [@rauchg]
   * make preference-opening work on all shells (#267) [@szhu]
-  * make CMD + K work for all commands, even tail (#215) [@marcbachmann]
+  * make <kbd>CMD</kbd>+<kbd>K</kbd> work for all commands, even `tail` (#215) [@marcbachmann]
 
 
 0.6.0 / 2016-07-17
@@ -84,24 +84,24 @@
 
 ### Added
   * add a copy of the MIT license (#160) [@calinou]
-  * initial travis ci support (#107) [@amilajack]
+  * initial Travis CI support (#107) [@amilajack]
   * provide hooks to open a new tab to the same directory (#174) [@hharnisc]
 
 ### Changed
   * notification style improvements and link to release notes upon updates [@rauchg]
-  * change the version of eslint-config-standard from 5.3.1 to 5.3.5 (#166) [@6thmonth]
+  * change the version of `eslint-config-standard` from `5.3.1` to `5.3.5` (#166) [@6thmonth]
   * improved installation method (#104) [@amilajack]
   * menu improvements (#185) [@sindresorhus]
 
 ### Fixed
-  * fixing problems with alt key and special characters like å, ö and ä. (#201) [@teemuteemu]
-  * fixed an issue where the app icon was not showing up in Linux (#126) [@code-haven]
+  * fix problems with <kbd>alt</kbd> key and special characters (e.g., å, ö, and ä) (#201) [@teemuteemu]
+  * fix issue where the app icon was not showing up in Linux (#126) [@code-haven]
   * fixed typo (#152) [@radarhere]
   * fix notification message (#111) [@montogeek]
-  * fix hypersolar plugin example, it does not exist (#179) [@montogeek]
-  * fix onWindow hook (#180) [@dfrankland]
+  * fix hypersolar plugin example (it does not exist) (#179) [@montogeek]
+  * fix `onWindow` hook (#180) [@dfrankland]
   * make `npm install` work more reliably (#172) [@marcbachmann]
-  * icon typo fixed in about dialog (#146) [@akashnimare]
+  * fix icon typo in “About” dialog (#146) [@akashnimare]
 
 
 0.5.0 / 2016-07-16
@@ -117,14 +117,14 @@
   * index: allow plugin authors to change electron window settings [@rauchg]
   * app: preserve class names with uglification [@rauchg]  
   * config: reload config upon `plugins change` due to decorati [@rauchg]
-  * allow plugin authors to override styles by ditching !important [@rauchg]
+  * allow plugin authors to override styles by ditching `!important` [@rauchg]
 
 
 0.4.5 / 2016-07-14
 ==================
 
 ### Changed
-  * performance improvements for url matching [@rauchg]
+  * performance improvements for URL matching [@rauchg]
   * improve repaint performance for writes to the term [@rauchg]
 
 ### Fixed
@@ -168,8 +168,8 @@
 
 ### Added
   * implement extensible redux actions system [@rauchg]
-  * add support for config (~/.hyperterm.js) [@rauchg, @nfcampos]
-  * add support for plugins (~/.hyperterm_modules) [@rauchg]
+  * add support for config (`~/.hyperterm.js`) [@rauchg, @nfcampos]
+  * add support for plugins (`~/.hyperterm_modules`) [@rauchg]
   * add close icon for tabs [@johanbrook]
   * add support for font size shortcuts [@jhaynie, @nfcampos]
   * add support for maximizing upon double click [@jhaynie]
@@ -186,7 +186,7 @@
 ==================
 
 ### Added
-  * implement most recent hterm with lots of bugfixes [@dbkaplun, @rauchg]
+  * implement most recent `hterm` with lots of bugfixes [@dbkaplun, @rauchg]
 
 
 0.3.0 / 2016-07-04
@@ -194,7 +194,7 @@
 
 ### Added
   * add static icon, move icons to static folder [@rauchg]
-  * add cross-platform font family settings (#26) [@OlliV, @rauchg]
+  * add cross-platform `font-family` settings (#26) [@OlliV, @rauchg]
   * add standard behavior when you double click window (#32) [@jhaynie]
 
 ### Changed
@@ -218,16 +218,16 @@
 ==================
 
 ### Added
-  * Implement hterm (#28) [@rauchg]
+  * Implement `hterm` (#28) [@rauchg]
   * Add fullscreen menu item (#1) [@rauchg, @montogeek]
-  * Add support for cmd+shift+[|] [@rauchg]
-  * Add dev build instructions to README (#3) [@rauchg]
+  * Add support for <kbd>cmd</kbd>+<kbd>shift</kbd>+<kbd>|</kbd> [@rauchg]
+  * Add dev build instructions to `README.md` (#3) [@rauchg]
 
 ### Changed
   * Jump to beginning of end at edges of tabs when moving sideways (#22) [@rauchg]
   * Make clear where to run `npm start` (#19) [@montogeek]
-  * Improve README and scripts (#15) [@leo]
-  * Make `ctrl+c` close <webview> instead of `cmd+w` (#2) [@rauchg]
+  * Improve `README.md` and scripts (#15) [@leo]
+  * Make <kbd>ctrl</kbd>+<kbd>c</kbd> close `&lt;webview&gt;` instead of <kbd>cmd</kbd>+<kbd>w</kbd> (#2) [@rauchg]
   * Improve `zip` builds to not include nested directory [@rauchg]
 
 ### Fixed
@@ -238,4 +238,4 @@
 ==================
 
 ### Added
-  * initial release
+  * Initial release
