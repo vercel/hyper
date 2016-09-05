@@ -19,18 +19,19 @@ $ brew cask install hyperterm
 
 ## Contribute
 
-1. Fork this repository and clone it
-3. `npm install`
-4. Start webpack in watch mode: `npm run dev`
-5. Start the app in another tab: `npm start`
+1. If you are running Linux, install the required dependencies: `sudo apt-get install -y icnsutils graphicsmagick xz-utils`
+2. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
+3. Install the dependencies: `npm install`
+4. Build the code and watch for changes: `npm run dev`
+5. In a new tab, start the application: `npm start`
 
-If you want to build the binary for your platform, run the command:
+To make sure that your code works in a **production** environment, build the binary for your platform by running the following:
 
 ```bash
 $ npm run pack
 ```
 
-To more detailed info, refer to [CONTRIBUTING.md](CONTRIBUTING.md).
+After that, you'll see the binary in the `./dist` folder!
 
 ## Related Repositories
 
