@@ -262,6 +262,25 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           type: 'separator'
         },
         {
+          label: 'Select Next Pane',
+          click (item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.rpc.emit('next pane req');
+            }
+          }
+        },
+        {
+          label: 'Select Previous Pane',
+          click (item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.rpc.emit('prev pane req');
+            }
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
           role: 'front'
         },
         {
