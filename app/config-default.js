@@ -86,5 +86,13 @@ module.exports = {
   // in development, you can create a directory under
   // `~/.hyperterm_plugins/local/` and include it here
   // to load it and avoid it being `npm install`ed
-  localPlugins: []
+  localPlugins: [],
+
+  // a list of Chrome DevTools extensions to fetch and install from the Chrome Store.
+  // can be either be an extension ID or a predefined constant: https://github.com/GPMDP/electron-devtools-installer#what-extensions-can-i-use
+  // examples:
+  //   `REACT_DEVELOPER_TOOLS`
+  //   `REDUX_DEVTOOLS`
+  //   `hacmcodfllhbnekmghgdlplbdnahmhmm`
+  devtoolsPlugins: []
 };
