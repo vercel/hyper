@@ -19,13 +19,13 @@ $ brew cask install hyperterm
 
 ## Contribute
 
-1. If you are running Linux, install the required dependencies: `sudo apt-get install -y icnsutils graphicsmagick xz-utils`
+1. If you are running Linux, install "icnsutils", "graphicsmagick" and "xz-utils"
 2. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
 3. Install the dependencies: `npm install`
 4. Build the code and watch for changes: `npm run dev`
 5. In a new tab, start the application: `npm start`
 
-To make sure that your code works in a **production** environment, build the binary for your platform by running the following:
+To make sure that your code works in the finished application, you can generated the binaries like that:
 
 ```bash
 $ npm run pack
