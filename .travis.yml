@@ -39,9 +39,6 @@ install:
 - npm install
 - npm prune
 
-script:
-- npm run release
-
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
