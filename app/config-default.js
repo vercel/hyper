@@ -67,10 +67,13 @@ module.exports = {
     bell: 'SOUND',
 
     // if true, selected text will automatically be copied to the clipboard
-    copyOnSelect: false
+    copyOnSelect: false,
 
     // URL to custom bell
     // bellSoundURL: 'http://example.com/bell.mp3',
+
+    // send Alt-x keys to the underlying terminal escaped
+    pass_meta_keys: false
 
     // for advanced config flags please refer to https://hyperterm.org/#cfg
   },
