@@ -1,4 +1,4 @@
-![](https://github.com/zeit/hyperterm-art/blob/master/branding/HyperTerm-banner.png)
+![](https://github.com/zeit/art/blob/master/branding/HyperTerm-banner.png)
 
 [![Build Status](https://travis-ci.org/zeit/hyperterm.svg?branch=master)](https://travis-ci.org/zeit/hyperterm)
 [![Slack Channel](https://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
