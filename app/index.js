@@ -81,6 +81,7 @@ app.on('ready', () => {
     }
 
     const browserDefaults = {
+      autoHideMenuBar: true,
       width,
       height,
       minHeight: 190,
