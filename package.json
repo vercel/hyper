@@ -1,6 +1,6 @@
 {
   "name": "hyperterm",
-  "version": "0.7.1",
+  "version": "1.0.0",
   "description": "Web app that runs in the renderer process",
   "repository": "zeit/hyperterm",
   "author": {
@@ -88,7 +88,6 @@
   },
   "build": {
     "appId": "co.zeit.hyperterm",
-    "app-category-type": "public.app-category.developer-tools",
     "asar": false,
     "extend-info": "build/Info.plist",
     "linux": {
@@ -96,6 +95,9 @@
         "deb",
         "AppImage"
       ]
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools"
     }
   },
   "scripts": {
