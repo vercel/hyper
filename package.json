@@ -1,6 +1,6 @@
 {
   "name": "hyperterm",
-  "version": "0.7.1",
+  "version": "1.0.0",
   "description": "Web app that runs in the renderer process",
   "repository": "zeit/hyperterm",
   "author": {
