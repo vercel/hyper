@@ -25,7 +25,7 @@ $ brew cask install hyperterm
 4. Build the code and watch for changes: `npm run dev`
 5. In a new tab, start the application: `npm start`
 
-To make sure that your code works in the finished application, you can generated the binaries like that:
+To make sure that your code works in the finished application, you can generate the binaries like that:
 
 ```bash
 $ npm run pack
