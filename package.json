@@ -49,7 +49,8 @@
     "eslint-plugin-react": "^6.2.2",
     "eslint-plugin-standard": "^2.0.0",
     "husky": "^0.11.6",
-    "webpack": "^2.1.0-beta.15"
+    "webpack": "^2.1.0-beta.15",
+    "xo": "^0.16.0"
   },
   "eslintConfig": {
     "extends": "standard",
