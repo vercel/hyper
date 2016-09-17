@@ -28,7 +28,7 @@
     "react-redux": "4.4.5",
     "redux": "3.6.0",
     "redux-thunk": "2.1.0",
-    "reselect": "2.5.3",
+    "reselect": "2.5.4",
     "seamless-immutable": "6.1.1",
     "should": "^11.0.0"
   },
