@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Web app that runs in the renderer process",
   "repository": "zeit/hyperterm",
+  "license": "MIT",
   "author": {
     "name": "Zeit, Inc.",
     "email": "team@zeit.co"
