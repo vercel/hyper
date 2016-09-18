@@ -40,7 +40,7 @@ install:
 - npm prune
 
 script:
-- npm run test
+- npm run release
 
 branches:
   except:
