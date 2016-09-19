@@ -2,8 +2,10 @@
 <html>
   <head>
     <title>HyperTerm</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1.0" />
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0">
+
     <style>
       body {
         color: #fff;
@@ -12,14 +14,21 @@
       * {
         margin: 0;
         padding: 0;
-        text-rendering: geometricPrecision;
+        text-rendering: optimizeLegibility;
         box-sizing: border-box;
+      }
+
+      @media (min-resolution: 2dppx) {
+        * {
+          text-rendering: geometricPrecision;
+        }
       }
     </style>
   </head>
 
   <body>
     <div id="mount"></div>
+
     <script>start = performance.now();</script>
     <script src="dist/bundle.js"></script>
     <script>console.log('total init time', performance.now() - start);</script>

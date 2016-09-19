@@ -79,7 +79,7 @@ function updatePlugins ({ force = false } = {}) {
       }
     } else {
       // flag successful plugin update
-      cache.set('plugins', id_);
+      cache.set('hyperterm.plugins', id_);
 
       // cache paths
       paths = getPaths(plugins);
@@ -93,8 +93,8 @@ function updatePlugins ({ force = false } = {}) {
       const loaded = modules.length;
       const total = paths.plugins.length + paths.localPlugins.length;
       const pluginVersions = JSON.stringify(getPluginVersions());
-      const changed = cache.get('plugin-versions') !== pluginVersions && loaded === total;
-      cache.set('plugin-versions', pluginVersions);
+      const changed = cache.get('hyperterm.plugin-versions') !== pluginVersions && loaded === total;
+      cache.set('hyperterm.plugin-versions', pluginVersions);
 
       // notify watchers
       if (force || changed) {
@@ -148,7 +148,7 @@ exports.updatePlugins = updatePlugins;
 // we schedule the initial plugins update
 // a bit after the user launches the terminal
 // to prevent slowness
-if (cache.get('plugins') !== id || process.env.HYPERTERM_FORCE_UPDATE) {
+if (cache.get('hyperterm.plugins') !== id || process.env.HYPERTERM_FORCE_UPDATE) {
   // install immediately if the user changed plugins
   console.log('plugins have changed / not init, scheduling plugins installation');
   setTimeout(() => {
@@ -190,22 +190,37 @@ function alert (message) {
 function toDependencies (plugins) {
   const obj = {};
   plugins.plugins.forEach((plugin) => {
-    const pieces = plugin.split('#');
-    obj[pieces[0]] = null == pieces[1] ? 'latest' : pieces[1];
+    const regex = /.(@|#)/;
+    const match = regex.exec(plugin);
+
+    if (match) {
+      const index = match.index + 1;
+      const pieces = [];
+
+      pieces[0] = plugin.substring(0, index);
+      pieces[1] = plugin.substring(index + 1, plugin.length);
+      obj[pieces[0]] = pieces[1];
+    } else {
+      obj[plugin] = 'latest';
+    }
   });
   return obj;
 }
 
 function install (fn) {
-  shellEnv().then((env) => {
-    let registry = exports.getDecoratedConfig().npmRegistry;
-    if (registry) env.NPM_CONFIG_REGISTRY = registry;
+  const { shell: cfgShell, npmRegistry } = exports.getDecoratedConfig();
+
+  const shell = cfgShell && cfgShell !== '' ? cfgShell : undefined;
+
+  shellEnv(shell).then((env) => {
+    if (npmRegistry) env.NPM_CONFIG_REGISTRY = npmRegistry;
     env.npm_config_runtime = 'electron';
     env.npm_config_target = '1.3.0';
     env.npm_config_disturl = 'https://atom.io/download/atom-shell';
-    exec('npm prune && npm install --production', {
+    exec('npm prune; npm install --production', {
       cwd: path,
-      env: env
+      env,
+      shell
     }, (err, stdout, stderr) => {
       if (err) return fn(err);
       fn(null);
@@ -317,3 +332,5 @@ exports.getDecoratedConfig = function () {
 exports.getDecoratedBrowserOptions = function (defaults) {
   return decorateObject(defaults, 'decorateBrowserOptions');
 };
+
+exports._toDependencies = toDependencies;

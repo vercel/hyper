@@ -4,6 +4,7 @@ const { exec } = require('child_process');
 const defaultShell = require('default-shell');
 const { getDecoratedEnv } = require('./plugins');
 const { productName, version } = require('./package');
+const config = require('./config');
 
 let spawn;
 try {
@@ -19,18 +20,22 @@ try {
 
 const TITLE_POLL_INTERVAL = 500;
 
+const envFromConfig = config.getConfig().env || {};
+
 module.exports = class Session extends EventEmitter {
 
-  constructor ({ rows, cols: columns, cwd, shell }) {
+  constructor ({ rows, cols: columns, cwd, shell, shellArgs }) {
     super();
     const baseEnv = Object.assign({}, process.env, {
       LANG: app.getLocale().replace('-', '_') + '.UTF-8',
       TERM: 'xterm-256color',
       TERM_PROGRAM: productName,
       TERM_PROGRAM_VERSION: version
-    });
+    }, envFromConfig);
 
-    this.pty = spawn(shell || defaultShell, ['--login'], {
+    const defaultShellArgs = ['--login'];
+
+    this.pty = spawn(shell || defaultShell, shellArgs || defaultShellArgs, {
       columns,
       rows,
       cwd,
@@ -38,6 +43,9 @@ module.exports = class Session extends EventEmitter {
     });
 
     this.pty.stdout.on('data', (data) => {
+      if (this.ended) {
+        return;
+      }
       this.emit('data', data.toString('utf8'));
     });
 

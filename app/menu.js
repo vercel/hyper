@@ -167,7 +167,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
           type: 'separator'
         },
         {
-          label: 'Actual Size',
+          label: 'Reset Zoom Level',
           accelerator: 'CmdOrCtrl+0',
           click (item, focusedWindow) {
             if (focusedWindow) {
@@ -208,7 +208,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
       ]
     },
     {
-      label: 'Window',
+      role: 'window',
       submenu: [
         {
           role: 'minimize'

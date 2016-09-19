@@ -3,6 +3,8 @@ const createRPC = require('./rpc');
 const createMenu = require('./menu');
 const uuid = require('uuid');
 const { resolve } = require('path');
+const { parse: parseUrl } = require('url');
+const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
@@ -23,6 +25,15 @@ app.config = config;
 app.plugins = plugins;
 app.getWindows = () => new Set([...windowSet]); // return a clone
 
+// function to retrive the last focused window in windowSet;
+// added to app object in order to expose it to plugins.
+app.getLastFocusedWindow = () => {
+  if (!windowSet.size) return null;
+  return Array.from(windowSet).reduce((lastWindow, win) => {
+    return win.focusTime > lastWindow.focusTime ? win : lastWindow;
+  });
+};
+
 if (isDev) {
   console.log('running in dev mode');
 } else {
@@ -41,6 +52,33 @@ app.on('ready', () => {
     let cfg = plugins.getDecoratedConfig();
 
     const [width, height] = cfg.windowSize || [540, 380];
+    const { screen } = require('electron');
+
+    let startX = 50;
+    let startY = 50;
+
+    // Open the new window roughly the height of the header away from the
+    // previous window. This also ensures in multi monitor setups that the
+    // new terminal is on the correct screen.
+    const focusedWindow = BrowserWindow.getFocusedWindow() || app.getLastFocusedWindow();
+    if (focusedWindow) {
+      const points = focusedWindow.getPosition();
+      const currentScreen = screen.getDisplayNearestPoint({ x: points[0], y: points[1] });
+
+      const biggestX = ((points[0] + 100 + width) - currentScreen.bounds.x);
+      const biggestY = ((points[1] + 100 + height) - currentScreen.bounds.y);
+
+      if (biggestX > currentScreen.size.width) {
+        startX = 50;
+      } else {
+        startX = points[0] + 34;
+      }
+      if (biggestY > currentScreen.size.height) {
+        startY = 50;
+      } else {
+        startY = points[1] + 34;
+      }
+    }
 
     const browserDefaults = {
       width,
@@ -54,13 +92,15 @@ app.on('ready', () => {
       icon: resolve(__dirname, 'static/icon.png'),
       // we only want to show when the prompt
       // is ready for user input
-      show: process.env.HYPERTERM_DEBUG || isDev
+      show: process.env.HYPERTERM_DEBUG || isDev,
+      x: startX,
+      y: startY
     };
     const browserOptions = plugins.getDecoratedBrowserOptions(browserDefaults);
 
     const win = new BrowserWindow(browserOptions);
-
     windowSet.add(win);
+
     win.loadURL(url);
 
     const rpc = createRPC(win);
@@ -74,7 +114,7 @@ app.on('ready', () => {
       win.webContents.send('config change');
 
       // notify user that shell changes require new sessions
-      if (cfg_.shell !== cfg.shell) {
+      if (cfg_.shell !== cfg.shell || cfg_.shellArgs !== cfg.shellArgs) {
         notify(
           'Shell configuration changed!',
           'Open a new tab or window to start using the new shell'
@@ -89,7 +129,17 @@ app.on('ready', () => {
 
     rpc.on('init', () => {
       win.show();
-      if (fn) fn(win);
+
+      // If no callback is passed to createWindow,
+      // a new session will be created by default.
+      if (!fn) fn = (win) => win.rpc.emit('session add req');
+
+      // app.windowCallback is the createWindow callback
+      // that can be setted before the 'ready' app event
+      // and createWindow deifinition. It's exeuted in place of
+      // the callback passed as parameter, and deleted right after.
+      (app.windowCallback || fn)(win);
+      delete (app.windowCallback);
 
       // auto updates
       if (!isDev && process.platform !== 'linux') {
@@ -101,8 +151,9 @@ app.on('ready', () => {
 
     rpc.on('new', ({ rows = 40, cols = 100, cwd = process.env.HOME }) => {
       const shell = cfg.shell;
+      const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
 
-      initSession({ rows, cols, cwd, shell }, (uid, session) => {
+      initSession({ rows, cols, cwd, shell, shellArgs }, (uid, session) => {
         sessions.set(uid, session);
         rpc.emit('session add', {
           uid,
@@ -115,6 +166,7 @@ app.on('ready', () => {
         });
 
         session.on('title', (title) => {
+          win.setTitle(title);
           rpc.emit('session title', { uid, title });
         });
 
@@ -130,14 +182,15 @@ app.on('ready', () => {
     // on Session and focus/blur to subscribe
     rpc.on('focus', ({ uid }) => {
       const session = sessions.get(uid);
-
+      if (typeof session !== 'undefined' && typeof session.lastTitle !== 'undefined') {
+        win.setTitle(session.lastTitle);
+      }
       if (session) {
         session.focus();
       } else {
         console.log('session not found by', uid);
       }
     });
-
     rpc.on('blur', ({ uid }) => {
       const session = sessions.get(uid);
 
@@ -201,6 +254,17 @@ app.on('ready', () => {
       }
     });
 
+    // If file is dropped onto the terminal window, navigate event is prevented
+    // and his path is added to active session.
+    win.webContents.on('will-navigate', (event, url) => {
+      var protocol = typeof url === 'string' && parseUrl(url).protocol;
+      if (protocol === 'file:') {
+        event.preventDefault();
+        let path = fileUriToPath(url).replace(/ /g, '\\ ');
+        rpc.emit('session data send', { data: path });
+      }
+    });
+
     // expose internals to extension authors
     win.rpc = rpc;
     win.sessions = sessions;
@@ -218,6 +282,19 @@ app.on('ready', () => {
         win.webContents.send('plugins change');
       }
     });
+
+    // Keep track of focus time of every window, to figure out
+    // which one of the existing window is the last focused.
+    // Works nicely even if a window is closed and removed.
+    const updateFocusTime = () => {
+      win.focusTime = process.uptime();
+    };
+    win.on('focus', () => {
+      updateFocusTime();
+    });
+    // Ensure focusTime is set on window open. The focus event doesn't
+    // fire from the dock (see bug #583)
+    updateFocusTime();
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
@@ -258,6 +335,15 @@ app.on('ready', () => {
       }
     }));
 
+    // If we're on Mac make a Dock Menu
+    if (process.platform === 'darwin') {
+      const { app, Menu } = require('electron');
+      const dockMenu = Menu.buildFromTemplate([
+        {label: 'New Window', click () { createWindow(); }}
+      ]);
+      app.dock.setMenu(dockMenu);
+    }
+
     Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
   };
 
@@ -273,3 +359,17 @@ app.on('ready', () => {
 function initSession (opts, fn) {
   fn(uuid.v4(), new Session(opts));
 }
+
+app.on('open-file', (event, path) => {
+  const lastWindow = app.getLastFocusedWindow();
+  const callback = win => win.rpc.emit('open file', { path });
+  if (lastWindow) {
+    callback(lastWindow);
+  } else if (!lastWindow && app.hasOwnProperty('createWindow')) {
+    app.createWindow(callback);
+  } else {
+    // if createWindow not exists yet ('ready' event was not fired),
+    // sets his callback to an app.windowCallback property.
+    app.windowCallback = callback;
+  }
+});

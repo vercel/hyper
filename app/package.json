@@ -1,11 +1,11 @@
 {
   "name": "hyperterm",
   "productName": "HyperTerm",
-  "version": "0.7.1",
+  "version": "1.0.0",
   "license": "MIT",
   "author": {
-    "name": "Guillermo Rauch",
-    "email": "rauchg@zeit.co"
+    "name": "Zeit, Inc.",
+    "email": "team@zeit.co"
   },
   "repository": "zeit/hyperterm",
   "description": "HTML/JS/CSS Terminal",
@@ -15,10 +15,11 @@
     "default-shell": "1.0.1",
     "electron-config": "0.2.1",
     "electron-is-dev": "0.1.1",
+    "file-uri-to-path": "0.0.2",
     "gaze": "1.1.0",
     "mkdirp": "0.5.1",
     "ms": "0.7.1",
-    "shell-env": "0.1.2",
+    "shell-env": "0.2.0",
     "uuid": "2.0.2"
   },
   "eslintConfig": {
