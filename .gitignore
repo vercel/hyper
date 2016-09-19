@@ -6,7 +6,3 @@ node_modules
 
 # logs
 npm-debug.log
-
-# other
-.next
-.DS_Store

@@ -7,7 +7,7 @@ const { parse: parseUrl } = require('url');
 const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 const AutoUpdater = require('./auto-updater');
-const toHex = require('convert-css-color-name-to-hex');
+const toElectronBackgroundColor = require('./utils/to-electron-background-color');
 const notify = require('./notify');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
@@ -87,7 +87,7 @@ app.on('ready', () => {
       minWidth: 370,
       titleBarStyle: 'hidden-inset',
       title: 'HyperTerm',
-      backgroundColor: toHex(cfg.backgroundColor || '#000'),
+      backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
       transparent: true,
       icon: resolve(__dirname, 'static/icon.png'),
       // we only want to show when the prompt
@@ -110,14 +110,19 @@ app.on('ready', () => {
     const cfgUnsubscribe = config.subscribe(() => {
       const cfg_ = plugins.getDecoratedConfig();
 
+      // notify renderer
       win.webContents.send('config change');
 
+      // notify user that shell changes require new sessions
       if (cfg_.shell !== cfg.shell || cfg_.shellArgs !== cfg.shellArgs) {
         notify(
           'Shell configuration changed!',
           'Open a new tab or window to start using the new shell'
         );
       }
+
+      // update background color if necessary
+      win.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
 
       cfg = cfg_;
     });

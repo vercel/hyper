@@ -1,8 +1,9 @@
 {
   "name": "hyperterm",
-  "version": "0.7.1",
+  "version": "1.0.0",
   "description": "Web app that runs in the renderer process",
   "repository": "zeit/hyperterm",
+  "license": "MIT",
   "author": {
     "name": "Zeit, Inc.",
     "email": "team@zeit.co"
@@ -28,7 +29,7 @@
     "react-redux": "4.4.5",
     "redux": "3.6.0",
     "redux-thunk": "2.1.0",
-    "reselect": "2.5.3",
+    "reselect": "2.5.4",
     "seamless-immutable": "6.1.1",
     "should": "^11.0.0"
   },
@@ -39,8 +40,8 @@
     "babel-loader": "^6.2.4",
     "babel-preset-react": "^6.11.1",
     "copy-webpack-plugin": "^3.0.1",
-    "electron-builder": "^6.0.2",
-    "electron-prebuilt": "1.3.5",
+    "electron-builder": "^7.0.1",
+    "electron": "1.4.0",
     "eslint": "^3.2.0",
     "eslint-config-standard": "^5.3.5",
     "eslint-plugin-promise": "^2.0.0",
@@ -88,7 +89,6 @@
   },
   "build": {
     "appId": "co.zeit.hyperterm",
-    "app-category-type": "public.app-category.developer-tools",
     "asar": false,
     "extend-info": "build/Info.plist",
     "linux": {
@@ -96,6 +96,12 @@
         "deb",
         "AppImage"
       ]
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "publish": {
+      "vPrefixedTagName": false
     }
   },
   "scripts": {
