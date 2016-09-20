@@ -18,6 +18,7 @@
     "electron-is-dev": "0.1.1",
     "file-uri-to-path": "0.0.2",
     "gaze": "1.1.0",
+    "git-describe": "3.0.2",
     "mkdirp": "0.5.1",
     "ms": "0.7.1",
     "shell-env": "0.2.0",
