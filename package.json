@@ -36,52 +36,31 @@
   "devDependencies": {
     "babel-cli": "^6.11.4",
     "babel-core": "^6.11.4",
-    "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.4",
     "babel-preset-react": "^6.11.1",
     "copy-webpack-plugin": "^3.0.1",
     "electron-builder": "^7.0.1",
     "electron": "1.4.0",
-    "eslint": "^3.2.0",
-    "eslint-config-standard": "^5.3.5",
     "eslint-config-xo-react": "^0.9.0",
-    "eslint-plugin-promise": "^2.0.0",
     "eslint-plugin-react": "^6.2.2",
-    "eslint-plugin-standard": "^2.0.0",
     "husky": "^0.11.6",
     "webpack": "^2.1.0-beta.15",
     "xo": "^0.16.0"
   },
-  "eslintConfig": {
-    "extends": "standard",
-    "plugins": [
-      "react"
+  "xo": {
+    "extends": "xo-react",
+    "esnext": true,
+    "space": true,
+    "env": [
+      "browser",
+      "node",
+      "mocha"
     ],
     "rules": {
-      "yoda": "off",
-      "semi": [
-        "error",
-        "always"
-      ],
-      "no-unused-vars": "error",
-      "no-extra-semi": "error",
-      "semi-spacing": [
-        "error",
-        {
-          "before": false,
-          "after": true
-        }
-      ],
-      "react/jsx-uses-react": "warn",
-      "react/jsx-uses-vars": "warn"
-    },
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      }
-    },
-    "env": {
-      "mocha": true
+      "react/jsx-filename-extension": "off",
+      "babel/new-cap": "off",
+      "quote-props": "off",
+      "import/no-extraneous-dependencies": "off"
     }
   },
   "babel": {
@@ -108,7 +87,7 @@
   },
   "scripts": {
     "dev": "webpack --watch",
-    "lint": "eslint .",
+    "lint": "xo",
     "build": "NODE_ENV=production webpack",
     "test": "npm run lint && electron-mocha test/*",
     "start": "electron app",
