@@ -1,9 +1,11 @@
-const { app } = require('electron');
-const { EventEmitter } = require('events');
-const { exec } = require('child_process');
+const {exec} = require('child_process');
+const {EventEmitter} = require('events');
+
+const {app} = require('electron');
 const defaultShell = require('default-shell');
-const { getDecoratedEnv } = require('./plugins');
-const { productName, version } = require('./package');
+
+const {getDecoratedEnv} = require('./plugins');
+const {productName, version} = require('./package');
 const config = require('./config');
 
 let spawn;
@@ -24,7 +26,7 @@ const envFromConfig = config.getConfig().env || {};
 
 module.exports = class Session extends EventEmitter {
 
-  constructor ({ rows, cols: columns, cwd, shell, shellArgs }) {
+  constructor({rows, cols: columns, cwd, shell, shellArgs}) {
     super();
     const baseEnv = Object.assign({}, process.env, {
       LANG: app.getLocale().replace('-', '_') + '.UTF-8',
@@ -42,7 +44,7 @@ module.exports = class Session extends EventEmitter {
       env: getDecoratedEnv(baseEnv)
     });
 
-    this.pty.stdout.on('data', (data) => {
+    this.pty.stdout.on('data', data => {
       if (this.ended) {
         return;
       }
@@ -60,19 +62,24 @@ module.exports = class Session extends EventEmitter {
     this.getTitle();
   }
 
-  focus () {
+  focus() {
     this.subscribed = true;
     this.getTitle();
   }
 
-  blur () {
+  blur() {
     this.subscribed = false;
     clearTimeout(this.titlePoll);
   }
 
-  getTitle () {
-    if ('win32' === process.platform) return;
-    if (this.fetching) return;
+  getTitle() {
+    if (process.platform === 'win32') {
+      return;
+    }
+
+    if (this.fetching) {
+      return;
+    }
     this.fetching = true;
 
     let tty = this.pty.stdout.ttyname;
@@ -86,8 +93,12 @@ module.exports = class Session extends EventEmitter {
     // TODO: only tested on mac
     exec(`ps uxac | grep ${tty} | head -n 1`, (err, out) => {
       this.fetching = false;
-      if (this.ended) return;
-      if (err) return;
+      if (this.ended) {
+        return;
+      }
+      if (err) {
+        return;
+      }
       let title = out.split(' ').pop();
       if (title) {
         title = title.replace(/^\(/, '');
@@ -104,23 +115,23 @@ module.exports = class Session extends EventEmitter {
     });
   }
 
-  exit () {
+  exit() {
     this.destroy();
   }
 
-  write (data) {
+  write(data) {
     this.pty.stdin.write(data);
   }
 
-  resize ({ cols: columns, rows }) {
+  resize({cols: columns, rows}) {
     try {
-      this.pty.stdout.resize({ columns, rows });
+      this.pty.stdout.resize({columns, rows});
     } catch (err) {
       console.error(err.stack);
     }
   }
 
-  destroy () {
+  destroy() {
     try {
       this.pty.kill('SIGHUP');
     } catch (err) {

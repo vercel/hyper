@@ -1,9 +1,10 @@
-const { dialog } = require('electron');
-const { homedir } = require('os');
-const { resolve } = require('path');
-const { readFileSync, writeFileSync } = require('fs');
-const gaze = require('gaze');
+const {homedir} = require('os');
+const {readFileSync, writeFileSync} = require('fs');
+const {resolve} = require('path');
 const vm = require('vm');
+
+const {dialog} = require('electron');
+const gaze = require('gaze');
 const notify = require('./notify');
 
 const path = resolve(homedir(), '.hyperterm.js');
@@ -11,14 +12,16 @@ const watchers = [];
 
 let cfg = {};
 
-function watch () {
+function watch() {
   gaze(path, function (err) {
-    if (err) throw err;
+    if (err) {
+      throw err;
+    }
     this.on('changed', () => {
       try {
         if (exec(readFileSync(path, 'utf8'))) {
           notify('HyperTerm configuration reloaded!');
-          watchers.forEach((fn) => fn());
+          watchers.forEach(fn => fn());
         }
       } catch (err) {
         dialog.showMessageBox({
@@ -31,12 +34,14 @@ function watch () {
 }
 
 let _str; // last script
-function exec (str) {
-  if (str === _str) return false;
+function exec(str) {
+  if (str === _str) {
+    return false;
+  }
   _str = str;
   const script = new vm.Script(str);
   const module = {};
-  script.runInNewContext({ module });
+  script.runInNewContext({module});
   if (!module.exports) {
     throw new Error('Error reading configuration: `module.exports` not set');
   }
