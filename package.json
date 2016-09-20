@@ -43,7 +43,7 @@
     "electron-builder": "^7.0.1",
     "electron": "1.4.0",
     "eslint": "^3.2.0",
-    "eslint-config-standard": "^5.3.5",
+    "eslint-config-standard": "^6.0.0",
     "eslint-plugin-promise": "^2.0.0",
     "eslint-plugin-react": "^6.0.0",
     "eslint-plugin-standard": "^2.0.0",
