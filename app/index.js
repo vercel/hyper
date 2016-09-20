@@ -9,6 +9,7 @@ const isDev = require('electron-is-dev');
 const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
 const notify = require('./notify');
+const { gitDescribe } = require('git-describe');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
 
@@ -36,6 +37,11 @@ app.getLastFocusedWindow = () => {
 
 if (isDev) {
   console.log('running in dev mode');
+
+  // Overide default appVersion which is set from package.json
+  gitDescribe({customArguments: ['--tags']}, (error, gitInfo) => {
+    if (!error) app.setVersion(gitInfo.raw);
+  });
 } else {
   console.log('running in prod mode');
 }
