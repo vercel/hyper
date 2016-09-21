@@ -65,7 +65,7 @@ const url = 'file://' + resolve(
 console.log('electron will open', url);
 
 app.on('ready', () => installDevExtensions(isDev).then(() => {
-  function createWindow (fn) {
+  function createWindow(fn) {
     let cfg = plugins.getDecoratedConfig();
 
     const [width, height] = cfg.windowSize || [540, 380];
@@ -397,16 +397,17 @@ app.on('open-file', (event, path) => {
   }
 });
 
-function installDevExtensions (isDev) {
+function installDevExtensions(isDev) {
   if (!isDev) {
     return Promise.resolve();
   }
   const installer = require('electron-devtools-installer'); // eslint-disable-line global-require
+
   const extensions = [
     'REACT_DEVELOPER_TOOLS',
     'REDUX_DEVTOOLS'
   ];
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
+  const forceDownload = Boolean(process.env.UPGRADE_EXTENSIONS);
 
-  return Promise.all(extensions.map((name) => installer.default(installer[name], forceDownload)));
+  return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload)));
 }
