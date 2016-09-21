@@ -1,12 +1,13 @@
 const os = require('os');
 const path = require('path');
-const { app, shell, dialog } = require('electron');
+const {app, shell, dialog} = require('electron');
+
 const appName = app.getName();
 
 // based on and inspired by
 // https://github.com/sindresorhus/anatine/blob/master/menu.js
 
-module.exports = function createMenu ({ createWindow, updatePlugins }) {
+module.exports = function createMenu({createWindow, updatePlugins}) {
   return [
     {
       label: 'Application',
@@ -20,7 +21,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         {
           label: 'Preferences...',
           accelerator: 'Cmd+,',
-          click (item, focusedWindow) {
+          click(item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('preferences');
             } else {
@@ -61,14 +62,14 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         {
           label: 'New Window',
           accelerator: 'CmdOrCtrl+N',
-          click (item, focusedWindow) {
+          click() {
             createWindow();
           }
         },
         {
           label: 'New Tab',
           accelerator: 'CmdOrCtrl+T',
-          click (item, focusedWindow) {
+          click(item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('session add req');
             } else {
@@ -82,7 +83,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         {
           label: 'Close',
           accelerator: 'CmdOrCtrl+W',
-          click (item, focusedWindow) {
+          click(item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('session close req');
             }
@@ -125,7 +126,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         {
           label: 'Clear',
           accelerator: 'CmdOrCtrl+K',
-          click (item, focusedWindow) {
+          click(item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('session clear req');
             }
@@ -139,7 +140,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         {
           label: 'Reload',
           accelerator: 'CmdOrCtrl+R',
-          click (item, focusedWindow) {
+          click(item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('reload');
             }
@@ -148,7 +149,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         {
           label: 'Full Reload',
           accelerator: 'CmdOrCtrl+Shift+R',
-          click (item, focusedWindow) {
+          click(item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.reload();
             }
@@ -157,7 +158,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         {
           label: 'Toggle Developer Tools',
           accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
-          click (item, focusedWindow) {
+          click(item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.webContents.toggleDevTools();
             }
@@ -169,7 +170,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         {
           label: 'Reset Zoom Level',
           accelerator: 'CmdOrCtrl+0',
-          click (item, focusedWindow) {
+          click(item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('reset fontSize req');
             }
@@ -178,7 +179,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         {
           label: 'Zoom In',
           accelerator: 'CmdOrCtrl+plus',
-          click (item, focusedWindow) {
+          click(item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('increase fontSize req');
             }
@@ -187,7 +188,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         {
           label: 'Zoom Out',
           accelerator: 'CmdOrCtrl+-',
-          click (item, focusedWindow) {
+          click(item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('decrease fontSize req');
             }
@@ -201,7 +202,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         {
           label: 'Update All Now',
           accelerator: 'CmdOrCtrl+Shift+U',
-          click () {
+          click() {
             updatePlugins();
           }
         }
@@ -222,7 +223,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         {
           label: 'Show Previous Tab',
           accelerator: 'CmdOrCtrl+Option+Left',
-          click (item, focusedWindow) {
+          click(item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('move left req');
             }
@@ -231,7 +232,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         {
           label: 'Show Next Tab',
           accelerator: 'CmdOrCtrl+Option+Right',
-          click (item, focusedWindow) {
+          click(item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('move right req');
             }
@@ -253,13 +254,13 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
       submenu: [
         {
           label: `${appName} Website`,
-          click () {
+          click() {
             shell.openExternal('https://hyperterm.now.sh');
           }
         },
         {
           label: 'Report an Issue...',
-          click () {
+          click() {
             const body = `
 <!-- Please succinctly describe your issue and steps to reproduce it. -->
 
@@ -273,12 +274,13 @@ ${process.platform} ${process.arch} ${os.release()}`;
           }
         },
         ...(
-          'darwin' !== process.platform
-            ? [
-                { type: 'separator' },
+          process.platform === 'darwin' ?
+            [] :
+            [
+                {type: 'separator'},
               {
                 role: 'about',
-                click () {
+                click() {
                   dialog.showMessageBox({
                     title: `About ${appName}`,
                     message: `${appName} ${app.getVersion()}`,
@@ -289,7 +291,6 @@ ${process.platform} ${process.arch} ${os.release()}`;
                 }
               }
             ]
-            : []
         )
       ]
     }

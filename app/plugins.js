@@ -1,14 +1,16 @@
-const { app, dialog } = require('electron');
-const { homedir } = require('os');
-const { resolve, basename } = require('path');
-const { writeFileSync } = require('fs');
-const config = require('./config');
-const { sync: mkdirpSync } = require('mkdirp');
-const { exec } = require('child_process');
+const {exec} = require('child_process');
+const {homedir} = require('os');
+const {resolve, basename} = require('path');
+const {writeFileSync} = require('fs');
+
+const {app, dialog} = require('electron');
+const {sync: mkdirpSync} = require('mkdirp');
 const Config = require('electron-config');
 const ms = require('ms');
-const notify = require('./notify');
 const shellEnv = require('shell-env');
+
+const config = require('./config');
+const notify = require('./notify');
 
 // local storage
 const cache = new Config();
@@ -34,7 +36,7 @@ let paths = getPaths(plugins);
 let id = getId(plugins);
 let modules = requirePlugins();
 
-function getId (plugins_) {
+function getId(plugins_) {
   return JSON.stringify(plugins_);
 }
 
@@ -56,12 +58,14 @@ config.subscribe(() => {
 
 let updating = false;
 
-function updatePlugins ({ force = false } = {}) {
-  if (updating) return notify('Plugin update in progress');
+function updatePlugins({force = false} = {}) {
+  if (updating) {
+    return notify('Plugin update in progress');
+  }
   updating = true;
   syncPackageJSON();
   const id_ = id;
-  install((err) => {
+  install(err => {
     updating = false;
 
     if (err) {
@@ -109,15 +113,15 @@ function updatePlugins ({ force = false } = {}) {
             'No changes!'
           );
         }
-        watchers.forEach((fn) => fn(err, { force }));
+        watchers.forEach(fn => fn(err, {force}));
       }
     }
   });
 }
 
-function getPluginVersions () {
+function getPluginVersions() {
   const paths_ = paths.plugins.concat(paths.localPlugins);
-  return paths_.map((path) => {
+  return paths_.map(path => {
     let version = null;
     try {
       version = require(resolve(path, 'package.json')).version;
@@ -129,10 +133,12 @@ function getPluginVersions () {
   });
 }
 
-function clearCache (mod) {
+function clearCache() {
   // trigger unload hooks
-  modules.forEach((mod) => {
-    if (mod.onUnload) mod.onUnload(app);
+  modules.forEach(mod => {
+    if (mod.onUnload) {
+      mod.onUnload(app);
+    }
   });
 
   // clear require cache
@@ -159,7 +165,7 @@ if (cache.get('hyperterm.plugins') !== id || process.env.HYPERTERM_FORCE_UPDATE)
 // otherwise update plugins every 5 hours
 setInterval(updatePlugins, ms('5h'));
 
-function syncPackageJSON () {
+function syncPackageJSON() {
   const dependencies = toDependencies(plugins);
   const pkg = {
     name: 'hyperterm-plugins',
@@ -180,16 +186,16 @@ function syncPackageJSON () {
   }
 }
 
-function alert (message) {
+function alert(message) {
   dialog.showMessageBox({
     message,
     buttons: ['Ok']
   });
 }
 
-function toDependencies (plugins) {
+function toDependencies(plugins) {
   const obj = {};
-  plugins.plugins.forEach((plugin) => {
+  plugins.plugins.forEach(plugin => {
     const regex = /.(@|#)/;
     const match = regex.exec(plugin);
 
@@ -207,22 +213,28 @@ function toDependencies (plugins) {
   return obj;
 }
 
-function install (fn) {
-  const { shell: cfgShell, npmRegistry } = exports.getDecoratedConfig();
+function install(fn) {
+  const {shell: cfgShell, npmRegistry} = exports.getDecoratedConfig();
 
   const shell = cfgShell && cfgShell !== '' ? cfgShell : undefined;
 
-  shellEnv(shell).then((env) => {
-    if (npmRegistry) env.NPM_CONFIG_REGISTRY = npmRegistry;
+  shellEnv(shell).then(env => {
+    if (npmRegistry) {
+      env.NPM_CONFIG_REGISTRY = npmRegistry;
+    }
+    /* eslint-disable camelcase  */
     env.npm_config_runtime = 'electron';
     env.npm_config_target = '1.3.0';
     env.npm_config_disturl = 'https://atom.io/download/atom-shell';
+    /* eslint-enable camelcase  */
     exec('npm prune; npm install --production', {
       cwd: path,
       env,
       shell
-    }, (err, stdout, stderr) => {
-      if (err) return fn(err);
+    }, err => {
+      if (err) {
+        return fn(err);
+      }
       fn(null);
     });
   }).catch(fn);
@@ -235,12 +247,12 @@ exports.subscribe = function (fn) {
   };
 };
 
-function getPaths () {
+function getPaths() {
   return {
-    plugins: plugins.plugins.map((name) => {
+    plugins: plugins.plugins.map(name => {
       return resolve(path, 'node_modules', name.split('#')[0]);
     }),
-    localPlugins: plugins.localPlugins.map((name) => {
+    localPlugins: plugins.localPlugins.map(name => {
       return resolve(localPath, name);
     })
   };
@@ -251,13 +263,13 @@ exports.getPaths = getPaths;
 
 // get paths from renderer
 exports.getBasePaths = function () {
-  return { path, localPath };
+  return {path, localPath};
 };
 
-function requirePlugins () {
-  const { plugins, localPlugins } = paths;
+function requirePlugins() {
+  const {plugins, localPlugins} = paths;
 
-  const load = (path) => {
+  const load = path => {
     let mod;
     try {
       mod = require(path);
@@ -279,11 +291,11 @@ function requirePlugins () {
 
   return plugins.map(load)
     .concat(localPlugins.map(load))
-    .filter(v => !!v);
+    .filter(v => Boolean(v));
 }
 
 exports.onApp = function (app) {
-  modules.forEach((plugin) => {
+  modules.forEach(plugin => {
     if (plugin.onApp) {
       plugin.onApp(app);
     }
@@ -291,7 +303,7 @@ exports.onApp = function (app) {
 };
 
 exports.onWindow = function (win) {
-  modules.forEach((plugin) => {
+  modules.forEach(plugin => {
     if (plugin.onWindow) {
       plugin.onWindow(win);
     }
@@ -300,12 +312,12 @@ exports.onWindow = function (win) {
 
 // decorates the base object by calling plugin[key]
 // for all the available plugins
-function decorateObject (base, key) {
+function decorateObject(base, key) {
   let decorated = base;
-  modules.forEach((plugin) => {
+  modules.forEach(plugin => {
     if (plugin[key]) {
       const res = plugin[key](decorated);
-      if (res && 'object' === typeof res) {
+      if (res && typeof res === 'object') {
         decorated = res;
       } else {
         notify('Plugin error!', `"${plugin._name}": invalid return type for \`${key}\``);

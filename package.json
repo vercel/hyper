@@ -36,51 +36,47 @@
   "devDependencies": {
     "babel-cli": "^6.11.4",
     "babel-core": "^6.11.4",
-    "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.4",
     "babel-preset-react": "^6.11.1",
     "copy-webpack-plugin": "^3.0.1",
     "electron-builder": "^7.0.1",
     "electron": "1.4.0",
-    "eslint": "^3.2.0",
-    "eslint-config-standard": "^5.3.5",
-    "eslint-plugin-promise": "^2.0.0",
-    "eslint-plugin-react": "^6.0.0",
-    "eslint-plugin-standard": "^2.0.0",
+    "eslint-config-xo-react": "^0.9.0",
+    "eslint-plugin-react": "^6.2.2",
     "husky": "^0.11.6",
-    "webpack": "^2.1.0-beta.15"
+    "webpack": "^2.1.0-beta.15",
+    "xo": "^0.16.0"
   },
-  "eslintConfig": {
-    "extends": "standard",
-    "plugins": [
-      "react"
+  "xo": {
+    "extends": "xo-react",
+    "esnext": true,
+    "space": true,
+    "env": [
+      "browser",
+      "node",
+      "mocha"
     ],
     "rules": {
-      "yoda": "off",
-      "semi": [
-        "error",
-        "always"
-      ],
-      "no-unused-vars": "error",
-      "no-extra-semi": "error",
-      "semi-spacing": [
-        "error",
-        {
-          "before": false,
-          "after": true
-        }
-      ],
-      "react/jsx-uses-react": "warn",
-      "react/jsx-uses-vars": "warn"
+      "react/jsx-filename-extension": 0,
+      "react/prop-types": 0,
+      "babel/new-cap": 0,
+      "quote-props": 0,
+      "import/no-extraneous-dependencies": 0,
+      "no-warning-comments": 0,
+      "complexity": 0,
+      "react/no-danger": 0,
+      "react/no-string-refs": 0,
+      "react/jsx-key": 0,
+      "no-nested-ternary": 0,
+      "react/jsx-no-bind": 0
     },
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      }
-    },
-    "env": {
-      "mocha": true
-    }
+    "ignore": [
+      "dist",
+      "build",
+      "app/dist",
+      "app/static",
+      "assets"
+    ]
   },
   "babel": {
     "presets": [
@@ -106,7 +102,7 @@
   },
   "scripts": {
     "dev": "webpack --watch",
-    "lint": "eslint .",
+    "lint": "xo",
     "build": "NODE_ENV=production webpack",
     "test": "npm run lint && electron-mocha test/*",
     "start": "electron app",

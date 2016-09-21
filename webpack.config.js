@@ -1,6 +1,7 @@
+const path = require('path');
+
 const webpack = require('webpack');
 const Copy = require('copy-webpack-plugin');
-const path = require('path');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
@@ -27,7 +28,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
+      'process.env': { // eslint-disable-line quote-props
         'NODE_ENV': JSON.stringify(nodeEnv)
       }
     }),
