@@ -9,6 +9,7 @@ const Config = require('electron-config');
 const ms = require('ms');
 const notify = require('./notify');
 const shellEnv = require('shell-env');
+const devtoolsInstaller = require('electron-devtools-installer');
 
 // local storage
 const cache = new Config();
@@ -61,7 +62,8 @@ function updatePlugins ({ force = false } = {}) {
   updating = true;
   syncPackageJSON();
   const id_ = id;
-  install((err) => {
+
+  install(force, (err) => {
     updating = false;
 
     if (err) {
@@ -207,10 +209,25 @@ function toDependencies (plugins) {
   return obj;
 }
 
-function install (fn) {
+function install (force, fn) {
   const { shell: cfgShell, npmRegistry } = exports.getDecoratedConfig();
 
   const shell = cfgShell && cfgShell !== '' ? cfgShell : undefined;
+
+  if (Array.isArray(plugins.devtoolsPlugins)) {
+    plugins.devtoolsPlugins.forEach((id) => {
+      let extensionId = id;
+
+      // Check if ID is a constant
+      if (devtoolsInstaller[id]) {
+        extensionId = devtoolsInstaller[id];
+      }
+
+      devtoolsInstaller.default(extensionId, force)
+        .then((name) => console.log('Installed Chrome DevTools extension:', name))
+        .catch((err) => console.error('Failed to install Chrome DevTools extension:', err.message));
+    });
+  }
 
   shellEnv(shell).then((env) => {
     if (npmRegistry) env.NPM_CONFIG_REGISTRY = npmRegistry;

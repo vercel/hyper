@@ -15,6 +15,7 @@
     "convert-css-color-name-to-hex": "0.1.1",
     "default-shell": "1.0.1",
     "electron-config": "0.2.1",
+    "electron-devtools-installer": "2.0.1",
     "electron-is-dev": "0.1.1",
     "file-uri-to-path": "0.0.2",
     "gaze": "1.1.0",

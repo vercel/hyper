@@ -81,6 +81,7 @@ exports.getConfig = function () {
 exports.getPlugins = function () {
   return {
     plugins: cfg.plugins,
-    localPlugins: cfg.localPlugins
+    localPlugins: cfg.localPlugins,
+    devtoolsPlugins: cfg.devtoolsPlugins
   };
 };
