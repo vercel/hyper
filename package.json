@@ -57,10 +57,18 @@
       "mocha"
     ],
     "rules": {
-      "react/jsx-filename-extension": "off",
-      "babel/new-cap": "off",
-      "quote-props": "off",
-      "import/no-extraneous-dependencies": "off"
+      "react/jsx-filename-extension": 0,
+      "react/prop-types": 0,
+      "babel/new-cap": 0,
+      "quote-props": 0,
+      "import/no-extraneous-dependencies": 0,
+      "no-warning-comments": 0,
+      "complexity": 0,
+      "react/no-danger": 0,
+      "react/no-string-refs": 0,
+      "react/jsx-key": 0,
+      "no-nested-ternary": 0,
+      "react/jsx-no-bind": 0
     },
     "ignore": [
       "dist",

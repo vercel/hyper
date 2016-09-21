@@ -1,17 +1,20 @@
-const {parse: parseUrl} = require('url');
+// Native
 const {resolve} = require('path');
 
+// Packages
+const {parse: parseUrl} = require('url');
+const {gitDescribe} = require('git-describe');
 const {app, BrowserWindow, shell, Menu} = require('electron');
 const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
+
+// Ours
 const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
-
 const createMenu = require('./menu');
 const createRPC = require('./rpc');
 const notify = require('./notify');
-const { gitDescribe } = require('git-describe');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
 
@@ -46,7 +49,9 @@ if (isDev) {
 
   // Overide default appVersion which is set from package.json
   gitDescribe({customArguments: ['--tags']}, (error, gitInfo) => {
-    if (!error) app.setVersion(gitInfo.raw);
+    if (!error) {
+      app.setVersion(gitInfo.raw);
+    }
   });
 } else {
   console.log('running in prod mode');
