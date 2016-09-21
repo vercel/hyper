@@ -61,7 +61,14 @@
       "babel/new-cap": "off",
       "quote-props": "off",
       "import/no-extraneous-dependencies": "off"
-    }
+    },
+    "ignore": [
+      "dist",
+      "build",
+      "app/dist",
+      "app/static",
+      "assets"
+    ]
   },
   "babel": {
     "presets": [
