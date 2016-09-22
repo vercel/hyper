@@ -40,14 +40,15 @@
     "babel-preset-react": "^6.11.1",
     "concurrently": "^2.2.0",
     "copy-webpack-plugin": "^3.0.1",
-    "electron-builder": "^7.0.1",
     "electron": "1.4.0",
+    "electron-builder": "^7.0.1",
+    "electron-devtools-installer": "^2.0.0",
     "eslint-config-xo-react": "^0.9.0",
     "eslint-plugin-react": "^6.2.2",
     "husky": "^0.11.6",
+    "redux-logger": "^2.6.1",
     "webpack": "^2.1.0-beta.15",
-    "xo": "^0.16.0",
-    "electron-devtools-installer": "^2.0.0"
+    "xo": "^0.16.0"
   },
   "xo": {
     "extends": "xo-react",
@@ -103,7 +104,6 @@
     }
   },
   "scripts": {
-    "dev": "webpack --watch",
     "dev": "concurrently --kill-others \"npm run dev-build\" \"npm run start\"",
     "dev-build": "webpack --watch",
     "lint": "xo",
