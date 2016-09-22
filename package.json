@@ -106,7 +106,7 @@
     "start": "concurrently --kill-others --raw \"npm run dev\" \"electron app\"",
     "dev": "webpack -w",
     "build": "NODE_ENV=production webpack",
-    "test": "npm run pack && xo && ava",
+    "test": "npm run dist && xo && ava",
     "prepublish": "npm test",
     "prepush": "npm test",
     "postinstall": "install-app-deps",
