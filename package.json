@@ -104,11 +104,10 @@
     }
   },
   "scripts": {
-    "dev": "concurrently --kill-others \"npm run dev-build\" \"npm run start\"",
-    "dev-build": "webpack --watch",
-    "lint": "xo",
+    "dev": "concurrently --kill-others \"npm run dev-build\" \"npm start\"",
+    "dev-build": "webpack -w",
     "build": "NODE_ENV=production webpack",
-    "test": "npm run lint && electron-mocha test/*",
+    "test": "xo && electron-mocha test/*",
     "start": "electron app",
     "prepublish": "npm test",
     "prepush": "npm test",
