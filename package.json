@@ -104,7 +104,7 @@
     }
   },
   "scripts": {
-    "dev": "concurrently --kill-others \"npm run dev-build\" \"npm start\"",
+    "dev": "concurrently --kill-others --raw \"npm run dev-build\" \"npm start\"",
     "dev-build": "webpack -w",
     "build": "NODE_ENV=production webpack",
     "test": "xo && electron-mocha test/*",
