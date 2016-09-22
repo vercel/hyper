@@ -19,11 +19,6 @@ test.after(async () => {
   await app.stop();
 });
 
-test('check window count', async t => {
-  await app.client.waitUntilWindowLoaded();
-  t.is(await app.client.getWindowCount(), 4);
-});
-
 test('see if dev tools are open', async t => {
   await app.client.waitUntilWindowLoaded();
   t.false(await app.browserWindow.isDevToolsOpened());
