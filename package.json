@@ -41,8 +41,8 @@
     "electron": "1.4.1",
     "electron-builder": "^7.0.1",
     "electron-devtools-installer": "^2.0.0",
-    "eslint-config-xo-react": "^0.9.0",
-    "eslint-plugin-react": "^6.2.2",
+    "eslint-config-xo-react": "^0.10.0",
+    "eslint-plugin-react": "^6.3.0",
     "husky": "^0.11.6",
     "redux-logger": "^2.6.1",
     "spectron": "^3.4.0",
@@ -59,7 +59,6 @@
       "mocha"
     ],
     "rules": {
-      "react/jsx-filename-extension": 0,
       "react/prop-types": 0,
       "babel/new-cap": 0,
       "quote-props": 0,
