@@ -8,7 +8,7 @@ const isProd = nodeEnv === 'production';
 
 module.exports = {
   devtool: isProd ? 'hidden-source-map' : 'cheap-eval-source-map',
-  entry: './lib/index.js',
+  entry: './lib/index.jsx',
   output: {
     path: path.join(__dirname, 'app', 'dist'),
     filename: 'bundle.js'
@@ -16,7 +16,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel'
       },
@@ -25,6 +25,9 @@ module.exports = {
         loader: 'json-loader'
       }
     ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
   },
   plugins: [
     new webpack.DefinePlugin({
