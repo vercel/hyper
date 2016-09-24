@@ -5,8 +5,8 @@ const vm = require('vm');
 
 const {dialog} = require('electron');
 const gaze = require('gaze');
-const notify = require('./notify');
 const Config = require('electron-config');
+const notify = require('./notify');
 
 // local storage
 const winCfg = new Config({
@@ -100,12 +100,12 @@ exports.getPlugins = function () {
 };
 
 exports.window = {
-  get () {
-    let position = winCfg.get('windowPosition');
-    let size = winCfg.get('windowSize');
+  get() {
+    const position = winCfg.get('windowPosition');
+    const size = winCfg.get('windowSize');
     return {position, size};
   },
-  recordState (win) {
+  recordState(win) {
     winCfg.set('windowPosition', win.getPosition());
     winCfg.set('windowSize', win.getSize());
   }

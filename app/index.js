@@ -65,14 +65,14 @@ const url = 'file://' + resolve(
 console.log('electron will open', url);
 
 app.on('ready', () => installDevExtensions(isDev).then(() => {
-  function createWindow (fn, options = {}) {
+  function createWindow(fn, options = {}) {
     let cfg = plugins.getDecoratedConfig();
 
     const winSet = app.config.window.get();
     let [startX, startY] = winSet.position;
 
-    const [width, height] = options.size !== undefined ? options.size : (cfg.windowSize || winSet.size);
-    const { screen } = require('electron');
+    const [width, height] = options.size ? options.size : (cfg.windowSize || winSet.size);
+    const {screen} = require('electron');
 
     const winPos = options.position;
 
