@@ -67,7 +67,10 @@ module.exports = {
     bell: 'SOUND',
 
     // if true, selected text will automatically be copied to the clipboard
-    copyOnSelect: false
+    copyOnSelect: false,
+
+    // shows tab close buttons if true, hides if false
+    showCloseTabBtn: true
 
     // URL to custom bell
     // bellSoundURL: 'http://example.com/bell.mp3',
