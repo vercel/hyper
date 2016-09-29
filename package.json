@@ -69,7 +69,6 @@
       "import/no-extraneous-dependencies": 0,
       "no-warning-comments": 0,
       "complexity": 0,
-      "react/no-danger": 0,
       "react/no-string-refs": 0,
       "react/jsx-key": 0,
       "no-nested-ternary": 0,
