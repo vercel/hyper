@@ -28,7 +28,7 @@
     "redux": "3.6.0",
     "redux-thunk": "2.1.0",
     "reselect": "2.5.4",
-    "seamless-immutable": "6.1.1"
+    "seamless-immutable": "6.1.2"
   },
   "devDependencies": {
     "ava": "^0.16.0",
