@@ -263,6 +263,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         },
         {
           label: 'Select Next Pane',
+          accelerator: 'Ctrl+Alt+Tab',
           click (item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('next pane req');
@@ -271,6 +272,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         },
         {
           label: 'Select Previous Pane',
+          accelerator: 'Ctrl+Shift+Alt+Tab',
           click (item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('prev pane req');
