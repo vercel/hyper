@@ -60,6 +60,8 @@
       "mocha"
     ],
     "rules": {
+      "eqeqeq": ["error", "allow-null"],
+      "no-eq-null": 0,
       "react/prop-types": 0,
       "babel/new-cap": 0,
       "quote-props": 0,
