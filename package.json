@@ -38,7 +38,7 @@
     "babel-preset-react": "^6.11.1",
     "concurrently": "^3.0.0",
     "copy-webpack-plugin": "^3.0.1",
-    "electron": "1.4.1",
+    "electron": "1.4.2",
     "electron-builder": "^7.0.1",
     "electron-devtools-installer": "^2.0.0",
     "eslint-config-xo-react": "^0.10.0",
