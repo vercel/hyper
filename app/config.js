@@ -5,7 +5,16 @@ const vm = require('vm');
 
 const {dialog} = require('electron');
 const gaze = require('gaze');
+const Config = require('electron-config');
 const notify = require('./notify');
+
+// local storage
+const winCfg = new Config({
+  defaults: {
+    windowPosition: [50, 50],
+    windowSize: [540, 380]
+  }
+});
 
 const path = resolve(homedir(), '.hyperterm.js');
 const watchers = [];
@@ -88,4 +97,16 @@ exports.getPlugins = function () {
     plugins: cfg.plugins,
     localPlugins: cfg.localPlugins
   };
+};
+
+exports.window = {
+  get() {
+    const position = winCfg.get('windowPosition');
+    const size = winCfg.get('windowSize');
+    return {position, size};
+  },
+  recordState(win) {
+    winCfg.set('windowPosition', win.getPosition());
+    winCfg.set('windowSize', win.getSize());
+  }
 };

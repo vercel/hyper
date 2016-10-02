@@ -65,20 +65,25 @@ const url = 'file://' + resolve(
 console.log('electron will open', url);
 
 app.on('ready', () => installDevExtensions(isDev).then(() => {
-  function createWindow(fn) {
+  function createWindow(fn, options = {}) {
     let cfg = plugins.getDecoratedConfig();
 
-    const [width, height] = cfg.windowSize || [540, 380];
+    const winSet = app.config.window.get();
+    let [startX, startY] = winSet.position;
+
+    const [width, height] = options.size ? options.size : (cfg.windowSize || winSet.size);
     const {screen} = require('electron');
 
-    let startX = 50;
-    let startY = 50;
+    const winPos = options.position;
 
     // Open the new window roughly the height of the header away from the
     // previous window. This also ensures in multi monitor setups that the
     // new terminal is on the correct screen.
     const focusedWindow = BrowserWindow.getFocusedWindow() || app.getLastFocusedWindow();
-    if (focusedWindow) {
+    // In case of options defaults position and size, we should ignore the focusedWindow.
+    if (winPos !== undefined) {
+      [startX, startY] = winPos;
+    } else if (focusedWindow) {
       const points = focusedWindow.getPosition();
       const currentScreen = screen.getDisplayNearestPoint({x: points[0], y: points[1]});
 
@@ -222,7 +227,6 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     rpc.on('exit', ({uid}) => {
       const session = sessions.get(uid);
-
       if (session) {
         session.exit();
       } else {
@@ -317,6 +321,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
+      app.config.window.recordState(win);
       windowSet.delete(win);
       rpc.destroy();
       deleteSessions();
