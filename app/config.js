@@ -1,24 +1,36 @@
-const { dialog } = require('electron');
-const { homedir } = require('os');
-const { resolve } = require('path');
-const { readFileSync, writeFileSync } = require('fs');
-const gaze = require('gaze');
+const {homedir} = require('os');
+const {readFileSync, writeFileSync} = require('fs');
+const {resolve} = require('path');
 const vm = require('vm');
+
+const {dialog} = require('electron');
+const gaze = require('gaze');
+const Config = require('electron-config');
 const notify = require('./notify');
+
+// local storage
+const winCfg = new Config({
+  defaults: {
+    windowPosition: [50, 50],
+    windowSize: [540, 380]
+  }
+});
 
 const path = resolve(homedir(), '.hyperterm.js');
 const watchers = [];
 
 let cfg = {};
 
-function watch () {
+function watch() {
   gaze(path, function (err) {
-    if (err) throw err;
+    if (err) {
+      throw err;
+    }
     this.on('changed', () => {
       try {
         if (exec(readFileSync(path, 'utf8'))) {
           notify('HyperTerm configuration reloaded!');
-          watchers.forEach((fn) => fn());
+          watchers.forEach(fn => fn());
         }
       } catch (err) {
         dialog.showMessageBox({
@@ -31,12 +43,14 @@ function watch () {
 }
 
 let _str; // last script
-function exec (str) {
-  if (str === _str) return false;
+function exec(str) {
+  if (str === _str) {
+    return false;
+  }
   _str = str;
   const script = new vm.Script(str);
   const module = {};
-  script.runInNewContext({ module });
+  script.runInNewContext({module});
   if (!module.exports) {
     throw new Error('Error reading configuration: `module.exports` not set');
   }
@@ -83,4 +97,16 @@ exports.getPlugins = function () {
     plugins: cfg.plugins,
     localPlugins: cfg.localPlugins
   };
+};
+
+exports.window = {
+  get() {
+    const position = winCfg.get('windowPosition');
+    const size = winCfg.get('windowSize');
+    return {position, size};
+  },
+  recordState(win) {
+    winCfg.set('windowPosition', win.getPosition());
+    winCfg.set('windowSize', win.getSize());
+  }
 };

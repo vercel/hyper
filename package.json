@@ -14,74 +14,71 @@
   "dependencies": {
     "aphrodite-simple": "0.4.1",
     "color": "0.11.3",
-    "electron-mocha": "^3.0.0",
     "hterm-umdjs": "1.1.3",
     "json-loader": "0.5.4",
-    "mocha": "^3.0.0",
     "mousetrap": "1.6.0",
     "ms": "0.7.1",
     "object-values": "1.0.0",
     "php-escape-shell": "1.0.0",
-    "react": "15.3.1",
-    "react-addons-pure-render-mixin": "15.3.1",
+    "react": "15.3.2",
+    "react-addons-pure-render-mixin": "15.3.2",
     "react-deep-force-update": "2.0.1",
-    "react-dom": "15.3.1",
+    "react-dom": "15.3.2",
     "react-redux": "4.4.5",
     "redux": "3.6.0",
     "redux-thunk": "2.1.0",
     "reselect": "2.5.4",
-    "seamless-immutable": "6.1.1",
-    "should": "^11.0.0",
-    "uuid": "2.0.2"
+    "uuid": "2.0.2",
+    "seamless-immutable": "6.1.3"
   },
   "devDependencies": {
+    "ava": "^0.16.0",
     "babel-cli": "^6.11.4",
     "babel-core": "^6.11.4",
-    "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.4",
     "babel-preset-react": "^6.11.1",
+    "concurrently": "^3.0.0",
     "copy-webpack-plugin": "^3.0.1",
     "electron": "1.4.0",
     "electron-builder": "^7.0.1",
-    "eslint": "^3.2.0",
-    "eslint-config-standard": "^5.3.5",
-    "eslint-plugin-promise": "^2.0.0",
-    "eslint-plugin-react": "^6.0.0",
-    "eslint-plugin-standard": "^2.0.0",
+    "electron-devtools-installer": "^2.0.0",
+    "eslint-config-xo-react": "^0.10.0",
+    "eslint-plugin-react": "^6.3.0",
     "husky": "^0.11.6",
-    "webpack": "^2.1.0-beta.15"
+    "redux-logger": "^2.6.1",
+    "spectron": "^3.4.0",
+    "webpack": "^2.1.0-beta.15",
+    "xo": "^0.16.0"
   },
-  "eslintConfig": {
-    "extends": "standard",
-    "plugins": [
-      "react"
+  "xo": {
+    "extends": "xo-react",
+    "esnext": true,
+    "space": true,
+    "env": [
+      "browser",
+      "node",
+      "mocha"
     ],
     "rules": {
-      "yoda": "off",
-      "semi": [
-        "error",
-        "always"
-      ],
-      "no-unused-vars": "error",
-      "no-extra-semi": "error",
-      "semi-spacing": [
-        "error",
-        {
-          "before": false,
-          "after": true
-        }
-      ],
-      "react/jsx-uses-react": "warn",
-      "react/jsx-uses-vars": "warn"
+      "react/prop-types": 0,
+      "babel/new-cap": 0,
+      "quote-props": 0,
+      "import/no-extraneous-dependencies": 0,
+      "no-warning-comments": 0,
+      "complexity": 0,
+      "react/no-danger": 0,
+      "react/no-string-refs": 0,
+      "react/jsx-key": 0,
+      "no-nested-ternary": 0,
+      "react/jsx-no-bind": 0
     },
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      }
-    },
-    "env": {
-      "mocha": true
-    }
+    "ignore": [
+      "dist",
+      "build",
+      "app/dist",
+      "app/static",
+      "assets"
+    ]
   },
   "babel": {
     "presets": [
@@ -106,11 +103,10 @@
     }
   },
   "scripts": {
-    "dev": "webpack --watch",
-    "lint": "eslint .",
+    "start": "concurrently --kill-others --raw \"npm run dev\" \"electron app\"",
+    "dev": "webpack -w",
     "build": "NODE_ENV=production webpack",
-    "test": "npm run lint && electron-mocha test/*",
-    "start": "electron app",
+    "test": "npm run pack && xo && ava",
     "prepublish": "npm test",
     "prepush": "npm test",
     "postinstall": "install-app-deps",

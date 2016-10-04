@@ -1,6 +1,7 @@
-const { app, BrowserWindow } = require('electron');
+const {resolve} = require('path');
+
+const {app, BrowserWindow} = require('electron');
 const isDev = require('electron-is-dev');
-const { resolve } = require('path');
 
 let win;
 
@@ -29,10 +30,10 @@ app.on('ready', () => {
   });
 });
 
-function notify (title, body) {
+function notify(title, body) {
   console.log(`[Notification] ${title}: ${body}`);
   if (win) {
-    win.webContents.send('notification', { title, body });
+    win.webContents.send('notification', {title, body});
   } else {
     buffer.push([title, body]);
   }

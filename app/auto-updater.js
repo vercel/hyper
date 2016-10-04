@@ -1,17 +1,18 @@
-const { autoUpdater } = require('electron');
-const { version } = require('./package');
-const notify = require('./notify'); // eslint-disable-line no-unused-vars
+const {autoUpdater} = require('electron');
 const ms = require('ms');
+
+const notify = require('./notify'); // eslint-disable-line no-unused-vars
+const {version} = require('./package');
 
 // accepted values: `osx`, `win32`
 // https://nuts.gitbook.com/update-windows.html
-const platform = 'darwin' === process.platform
-  ? 'osx'
-  : process.platform;
+const platform = process.platform === 'darwin' ?
+  'osx' :
+  process.platform;
 const FEED_URL = `https://hyperterm-updates.now.sh/update/${platform}`;
 let isInit = false;
 
-function init () {
+function init() {
   autoUpdater.on('error', (err, msg) => {
     console.error('Error fetching updates', msg + ' (' + err.stack + ')');
   });
@@ -30,12 +31,14 @@ function init () {
 }
 
 module.exports = function (win) {
-  if (!isInit) init();
+  if (!isInit) {
+    init();
+  }
 
-  const { rpc } = win;
+  const {rpc} = win;
 
   const onupdate = (ev, releaseNotes, releaseName) => {
-    rpc.emit('update available', { releaseNotes, releaseName });
+    rpc.emit('update available', {releaseNotes, releaseName});
   };
 
   autoUpdater.on('update-downloaded', onupdate);

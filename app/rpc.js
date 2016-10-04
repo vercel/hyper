@@ -1,15 +1,17 @@
-const { EventEmitter } = require('events');
-const { ipcMain } = require('electron');
+const {EventEmitter} = require('events');
+const {ipcMain} = require('electron');
 const uuid = require('uuid');
 
 class Server extends EventEmitter {
 
-  constructor (win) {
+  constructor(win) {
     super();
     this.win = win;
     this.ipcListener = this.ipcListener.bind(this);
 
-    if (this.destroyed) return;
+    if (this.destroyed) {
+      return;
+    }
 
     const uid = uuid.v4();
     this.id = uid;
@@ -24,19 +26,19 @@ class Server extends EventEmitter {
     });
   }
 
-  get wc () {
+  get wc() {
     return this.win.webContents;
   }
 
-  ipcListener (event, { ev, data }) {
+  ipcListener(event, {ev, data}) {
     super.emit(ev, data);
   }
 
-  emit (ch, data) {
-    this.wc.send(this.id, { ch, data });
+  emit(ch, data) {
+    this.wc.send(this.id, {ch, data});
   }
 
-  destroy () {
+  destroy() {
     this.removeAllListeners();
     this.wc.removeAllListeners();
     if (this.id) {
@@ -49,6 +51,6 @@ class Server extends EventEmitter {
 
 }
 
-module.exports = function createRPC (win) {
+module.exports = function createRPC(win) {
   return new Server(win);
 };
