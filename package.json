@@ -28,6 +28,7 @@
     "redux": "3.6.0",
     "redux-thunk": "2.1.0",
     "reselect": "2.5.4",
+    "uuid": "2.0.2",
     "seamless-immutable": "6.1.3"
   },
   "devDependencies": {
@@ -38,7 +39,7 @@
     "babel-preset-react": "^6.11.1",
     "concurrently": "^3.0.0",
     "copy-webpack-plugin": "^3.0.1",
-    "electron": "1.4.2",
+    "electron": "1.4.0",
     "electron-builder": "^7.0.1",
     "electron-devtools-installer": "^2.0.0",
     "eslint-config-xo-react": "^0.10.0",

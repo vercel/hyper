@@ -73,9 +73,30 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
         accelerator: 'CmdOrCtrl+T',
         click(item, focusedWindow) {
           if (focusedWindow) {
-            focusedWindow.rpc.emit('session add req');
+            focusedWindow.rpc.emit('termgroup add req');
           } else {
             createWindow();
+          }
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Split Vertically',
+        accelerator: 'Ctrl+Shift+E',
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('split request vertical');
+          }
+        }
+      },
+      {
+        label: 'Split Horizontally',
+        accelerator: 'Ctrl+Shift+O',
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('split request horizontal');
           }
         }
       },
@@ -87,7 +108,7 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
         accelerator: 'CmdOrCtrl+W',
         click(item, focusedWindow) {
           if (focusedWindow) {
-            focusedWindow.rpc.emit('session close req');
+            focusedWindow.rpc.emit('termgroup close req');
           }
         }
       },
@@ -258,6 +279,27 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('move right req');
+          }
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Select Next Pane',
+        accelerator: 'Ctrl+Alt+Tab',
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('next pane req');
+          }
+        }
+      },
+      {
+        label: 'Select Previous Pane',
+        accelerator: 'Ctrl+Shift+Alt+Tab',
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('prev pane req');
           }
         }
       },
