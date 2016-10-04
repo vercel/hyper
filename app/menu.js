@@ -81,7 +81,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         },
         {
           label: 'Split Vertically',
-          accelerator: 'CmdOrCtrl+D',
+          accelerator: 'Ctrl+Shift+E',
           click (item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('split request vertical');
@@ -90,7 +90,7 @@ module.exports = function createMenu ({ createWindow, updatePlugins }) {
         },
         {
           label: 'Split Horizontally',
-          accelerator: 'CmdOrCtrl+Shift+D',
+          accelerator: 'Ctrl+Shift+O',
           click (item, focusedWindow) {
             if (focusedWindow) {
               focusedWindow.rpc.emit('split request horizontal');
