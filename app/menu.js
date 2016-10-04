@@ -2,6 +2,7 @@ const os = require('os');
 const path = require('path');
 const {app, shell, dialog} = require('electron');
 
+const isMac = process.platform === 'darwin';
 const appName = app.getName();
 
 // based on and inspired by
@@ -59,7 +60,7 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
   };
 
   const shellOrFileMenu = {
-    label: process.platform === 'darwin' ? 'Shell' : 'File',
+    label: isMac ? 'Shell' : 'File',
     submenu: [
       {
         label: 'New Window',
@@ -84,7 +85,7 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
       },
       {
         label: 'Split Vertically',
-        accelerator: 'Ctrl+Shift+E',
+        accelerator: isMac ? 'Cmd+D' : 'Ctrl+Shift+E',
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('split request vertical');
@@ -93,7 +94,7 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
       },
       {
         label: 'Split Horizontally',
-        accelerator: 'Ctrl+Shift+O',
+        accelerator: isMac ? 'Cmd+Shift+D' : 'Ctrl+Shift+O',
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('split request horizontal');
@@ -113,7 +114,7 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
         }
       },
       {
-        label: process.platform === 'darwin' ? 'Close Terminal Window' : 'Quit',
+        label: isMac ? 'Close Terminal Window' : 'Quit',
         role: 'close',
         accelerator: 'CmdOrCtrl+Shift+W'
       }
@@ -159,7 +160,7 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
     ]
   };
 
-  if (process.platform !== 'darwin') {
+  if (!isMac) {
     editMenu.submenu.push(
       {type: 'separator'},
       {
@@ -199,7 +200,7 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
       },
       {
         label: 'Toggle Developer Tools',
-        accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
+        accelerator: isMac ? 'Alt+Command+I' : 'Ctrl+Shift+I',
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.webContents.toggleDevTools();
@@ -342,7 +343,7 @@ ${process.platform} ${process.arch} ${os.release()}`;
     ]
   };
 
-  if (process.platform !== 'darwin') {
+  if (!isMac) {
     helpMenu.submenu.push(
       {type: 'separator'},
       {
@@ -361,7 +362,7 @@ ${process.platform} ${process.arch} ${os.release()}`;
   }
 
   const menu = [].concat(
-    process.platform === 'darwin' ? osxApplicationMenu : [],
+    isMac ? osxApplicationMenu : [],
     shellOrFileMenu,
     editMenu,
     viewMenu,
