@@ -39,7 +39,7 @@ install:
 - npm install
 - npm prune
 
-script:
+after_success:
 - npm run release
 
 branches:
