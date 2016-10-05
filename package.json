@@ -100,9 +100,6 @@
     },
     "mac": {
       "category": "public.app-category.developer-tools"
-    },
-    "publish": {
-      "vPrefixedTagName": false
     }
   },
   "scripts": {
