@@ -72,7 +72,6 @@
       "react/no-danger": 0,
       "react/no-string-refs": 0,
       "react/jsx-key": 0,
-      "no-nested-ternary": 0,
       "react/jsx-no-bind": 0
     },
     "ignore": [
