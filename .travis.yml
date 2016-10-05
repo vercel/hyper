@@ -2,12 +2,13 @@ sudo: required
 dist: trusty
 
 language: node_js
-node_js: 6
 
 matrix:
   include:
     - os: osx
+      node_js: 6
     - os: linux
+      node_js: 6
       env: CC=clang CXX=clang++ npm_config_clang=1
       compiler: clang
 
