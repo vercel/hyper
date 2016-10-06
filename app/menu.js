@@ -322,7 +322,7 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
       {
         label: `${appName} Website`,
         click() {
-          shell.openExternal('https://hyperterm.now.sh');
+          shell.openExternal('https://hyper.is');
         }
       },
       {
@@ -337,7 +337,7 @@ ${app.getName()} ${app.getVersion()}
 Electron ${process.versions.electron}
 ${process.platform} ${process.arch} ${os.release()}`;
 
-          shell.openExternal(`https://github.com/zeit/hyperterm/issues/new?body=${encodeURIComponent(body)}`);
+          shell.openExternal(`https://github.com/zeit/hyper/issues/new?body=${encodeURIComponent(body)}`);
         }
       }
     ]
