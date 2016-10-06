@@ -9,7 +9,7 @@ const {version} = require('./package');
 const platform = process.platform === 'darwin' ?
   'osx' :
   process.platform;
-const FEED_URL = `https://hyperterm-updates.now.sh/update/${platform}`;
+const FEED_URL = `https://hyper-updates.now.sh/update/${platform}`;
 let isInit = false;
 
 function init() {

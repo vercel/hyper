@@ -1,8 +1,8 @@
 {
-  "name": "hyperterm",
+  "name": "hyper",
   "version": "0.8.0",
   "description": "Web app that runs in the renderer process",
-  "repository": "zeit/hyperterm",
+  "repository": "zeit/hyper",
   "license": "MIT",
   "author": {
     "name": "Zeit, Inc.",
@@ -89,7 +89,7 @@
     ]
   },
   "build": {
-    "appId": "co.zeit.hyperterm",
+    "appId": "co.zeit.hyper",
     "asar": false,
     "extend-info": "build/Info.plist",
     "linux": {

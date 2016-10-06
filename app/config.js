@@ -1,5 +1,5 @@
 const {homedir} = require('os');
-const {readFileSync, writeFileSync} = require('fs');
+const {statSync, renameSync, readFileSync, writeFileSync} = require('fs');
 const {resolve} = require('path');
 const vm = require('vm');
 
@@ -16,7 +16,8 @@ const winCfg = new Config({
   }
 });
 
-const path = resolve(homedir(), '.hyperterm.js');
+const path = resolve(homedir(), '.hyper.js');
+const pathLegacy = resolve(homedir(), '.hyperterm.js');
 const watchers = [];
 
 let cfg = {};
@@ -29,7 +30,7 @@ function watch() {
     this.on('changed', () => {
       try {
         if (exec(readFileSync(path, 'utf8'))) {
-          notify('HyperTerm configuration reloaded!');
+          notify('Hyper configuration reloaded!');
           watchers.forEach(fn => fn());
         }
       } catch (err) {
@@ -72,6 +73,16 @@ exports.subscribe = function (fn) {
 };
 
 exports.init = function () {
+  // for backwards compatibility with hyperterm
+  // (prior to the renme), we try to rename
+  // on behalf of the user
+  try {
+    const stat = statSync(pathLegacy);
+    renameSync(pathLegacy, path);
+  } catch (err) {
+    // ignore
+  }
+
   try {
     exec(readFileSync(path, 'utf8'));
   } catch (err) {
