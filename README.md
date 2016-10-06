@@ -1,15 +1,15 @@
 ![](https://github.com/zeit/art/blob/b30bbeda1506fb95b0b106a8a4f54c59c9dfe419/hyperterm/repo-banner.png)
 
-[![Build Status](https://travis-ci.org/zeit/hyperterm.svg?branch=master)](https://travis-ci.org/zeit/hyperterm)
+[![Build Status](https://travis-ci.org/zeit/hyper.svg?branch=master)](https://travis-ci.org/zeit/hyper)
 [![Slack Channel](https://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
 [![Changelog #213](https://img.shields.io/badge/changelog-%23213-lightgrey.svg)](https://changelog.com/213)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 
-For more details, head to: https://hyperterm.org
+For more details, head to: https://hyper.is
 
 ## Usage
 
-You can download the latest release [here](https://hyperterm.org/#installation).
+You can download the latest release [here](https://hyper.is/#installation).
 
 If you're on macOS, you can also use [Homebrew Cask](https://caskroom.github.io/) to download the app by running these commands:
 
@@ -35,7 +35,7 @@ After that, you'll see the binary in the `./dist` folder!
 
 ## Related Repositories
 
-- [Art](https://github.com/zeit/hyperterm-art)
-- [Website](https://github.com/zeit/hyperterm-website)
+- [Art](https://github.com/zeit/art)
+- [Website](https://github.com/zeit/hyper-website)
 - [Sample Extension](https://github.com/zeit/hyperpower)
 - [Sample Theme](https://github.com/zeit/hyperyellow)

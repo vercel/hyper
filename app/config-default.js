@@ -72,7 +72,7 @@ module.exports = {
     // URL to custom bell
     // bellSoundURL: 'http://example.com/bell.mp3',
 
-    // for advanced config flags please refer to https://hyperterm.org/#cfg
+    // for advanced config flags please refer to https://hyper.is/#cfg
   },
 
   // a list of plugins to fetch and install from npm
@@ -84,7 +84,7 @@ module.exports = {
   plugins: [],
 
   // in development, you can create a directory under
-  // `~/.hyperterm_plugins/local/` and include it here
+  // `~/.hyper_plugins/local/` and include it here
   // to load it and avoid it being `npm install`ed
   localPlugins: []
 };

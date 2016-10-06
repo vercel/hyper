@@ -108,7 +108,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       minHeight: 190,
       minWidth: 370,
       titleBarStyle: 'hidden-inset',
-      title: 'HyperTerm',
+      title: 'Hyper.app',
       backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
       transparent: true,
       icon: resolve(__dirname, 'static/icon.png'),

@@ -17,7 +17,7 @@ try {
     'A native module failed to load. Typically this means ' +
     'you installed the modules incorrectly.\n Use `scripts/install.sh` ' +
     'to trigger the installation.\n ' +
-    'More information: https://github.com/zeit/hyperterm/issues/72'
+    'More information: https://github.com/zeit/hyper/issues/72'
   );
 }
 
