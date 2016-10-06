@@ -77,7 +77,7 @@ exports.init = function () {
   // (prior to the renme), we try to rename
   // on behalf of the user
   try {
-    const stat = statSync(pathLegacy);
+    statSync(pathLegacy);
     renameSync(pathLegacy, path);
   } catch (err) {
     // ignore
