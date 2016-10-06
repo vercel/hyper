@@ -9,7 +9,7 @@ For more details, head to: https://hyper.is
 
 ## Usage
 
-You can download the latest release [here](https://hyperterm.org/#installation).
+You can download the latest release [here](https://hyper.is/#installation).
 
 If you're on macOS, you can also use [Homebrew Cask](https://caskroom.github.io/) to download the app by running these commands:
 
@@ -35,7 +35,7 @@ After that, you'll see the binary in the `./dist` folder!
 
 ## Related Repositories
 
-- [Art](https://github.com/zeit/hyperterm-art)
-- [Website](https://github.com/zeit/hyperterm-website)
+- [Art](https://github.com/zeit/art)
+- [Website](https://github.com/zeit/hyper-website)
 - [Sample Extension](https://github.com/zeit/hyperpower)
 - [Sample Theme](https://github.com/zeit/hyperyellow)
