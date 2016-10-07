@@ -4,6 +4,7 @@ const {resolve} = require('path');
 // Packages
 const {parse: parseUrl} = require('url');
 const {gitDescribe} = require('git-describe');
+const electron = require('electron');
 const {app, BrowserWindow, shell, Menu} = require('electron');
 const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
@@ -243,6 +244,16 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     rpc.on('maximize', () => {
       win.maximize();
+    });
+
+    rpc.on('enter quick full screen', () => {
+      const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
+      win.setSize(width, height);
+      win.center();
+    });
+
+    rpc.on('leave quick full screen', () => {
+
     });
 
     rpc.on('resize', ({uid, cols, rows}) => {

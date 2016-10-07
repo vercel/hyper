@@ -312,6 +312,15 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
       },
       {
         role: 'togglefullscreen'
+      },
+      {
+        label: 'Enter Quick Full Screen',
+        accelerator: 'Cmd+Enter',
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('enter quick full screen req');
+          }
+        }
       }
     ]
   };
