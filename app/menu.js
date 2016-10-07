@@ -254,6 +254,7 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
   };
 
   const windowMenu = {
+    id: 'WINDOW',
     role: 'window',
     submenu: [
       {
@@ -314,11 +315,24 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
         role: 'togglefullscreen'
       },
       {
+        id: 'ENTER_QUICK_FULL_SCREEN',
         label: 'Enter Quick Full Screen',
         accelerator: 'Cmd+Enter',
+        visible: true,
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('enter quick full screen req');
+          }
+        }
+      },
+      {
+        id: 'LEAVE_QUICK_FULL_SCREEN',
+        label: 'Leave Quick Full Screen',
+        accelerator: 'Cmd+Enter',
+        visible: false,
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('leave quick full screen req');
           }
         }
       }

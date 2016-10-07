@@ -246,7 +246,26 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       win.maximize();
     });
 
+    const getMenuItem = id => {
+      return Menu.getApplicationMenu().items
+        .filter(menuItem => menuItem.id === id)[0];
+    };
+
+    const getSubmenuItem = (menuItem, id) => {
+      return menuItem.submenu.items
+        .filter(submenuItem => submenuItem.id === id)[0];
+    };
+
+    const toggleQuickFullScreenMenuItems = isQuickFullScreenEnabled => {
+      const windowMenu = getMenuItem('WINDOW');
+      const enterQuickFullScreenMenu = getSubmenuItem(windowMenu, 'ENTER_QUICK_FULL_SCREEN');
+      const leaveQuickFullScreenMenu = getSubmenuItem(windowMenu, 'LEAVE_QUICK_FULL_SCREEN');
+      enterQuickFullScreenMenu.visible = !isQuickFullScreenEnabled;
+      leaveQuickFullScreenMenu.visible = isQuickFullScreenEnabled;
+    };
+
     rpc.on('enter quick full screen', () => {
+      toggleQuickFullScreenMenuItems(true);
       app.config.window.recordState(win);
       const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
       win.setSize(width, height);
@@ -254,6 +273,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('leave quick full screen', () => {
+      toggleQuickFullScreenMenuItems(false);
       const winSet = app.config.window.get();
       const [width, height] = winSet.size;
       win.setSize(width, height);
