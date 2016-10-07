@@ -254,7 +254,11 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('leave quick full screen', () => {
-
+      const winSet = app.config.window.get();
+      const [width, height] = winSet.size;
+      win.setSize(width, height);
+      const [x, y] = winSet.position;
+      win.setPosition(x, y);
     });
 
     rpc.on('resize', ({uid, cols, rows}) => {
