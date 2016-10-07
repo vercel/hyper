@@ -246,15 +246,11 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       win.maximize();
     });
 
-    const getMenuItem = id => {
-      return Menu.getApplicationMenu().items
-        .filter(menuItem => menuItem.id === id)[0];
-    };
+    const findMenuItem = (items, id) => items.filter(item => item.id === id)[0];
 
-    const getSubmenuItem = (menuItem, id) => {
-      return menuItem.submenu.items
-        .filter(submenuItem => submenuItem.id === id)[0];
-    };
+    const getMenuItem = id => findMenuItem(Menu.getApplicationMenu().items, id);
+
+    const getSubmenuItem = (menuItem, id) => findMenuItem(menuItem.submenu.items, id);
 
     const toggleQuickFullScreenMenuItems = isQuickFullScreenEnabled => {
       const windowMenu = getMenuItem('WINDOW');
