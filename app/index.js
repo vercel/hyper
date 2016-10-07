@@ -247,6 +247,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('enter quick full screen', () => {
+      app.config.window.recordState(win);
       const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
       win.setSize(width, height);
       win.center();
