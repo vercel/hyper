@@ -1,13 +1,13 @@
 {
-  "name": "hyperterm",
-  "productName": "HyperTerm",
-  "version": "1.0.0",
+  "name": "hyper",
+  "productName": "Hyper",
+  "version": "0.8.1",
   "license": "MIT",
   "author": {
     "name": "Zeit, Inc.",
     "email": "team@zeit.co"
   },
-  "repository": "zeit/hyperterm",
+  "repository": "zeit/hyper",
   "description": "HTML/JS/CSS Terminal",
   "dependencies": {
     "child_pty": "3.0.1",

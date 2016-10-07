@@ -12,11 +12,11 @@ test.before(async () => {
 
   switch (process.platform) {
     case 'linux':
-      pathToBinary = path.join(__dirname, '../dist/linux-unpacked/HyperTerm');
+      pathToBinary = path.join(__dirname, '../dist/linux-unpacked/Hyper');
       break;
 
     case 'darwin':
-      pathToBinary = path.join(__dirname, '../dist/mac/HyperTerm.app/Contents/MacOS/HyperTerm');
+      pathToBinary = path.join(__dirname, '../dist/mac/Hyper.app/Contents/MacOS/Hyper');
       break;
 
     default:
