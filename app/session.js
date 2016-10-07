@@ -1,5 +1,6 @@
 const {exec} = require('child_process');
 const {EventEmitter} = require('events');
+const {StringDecoder} = require('string_decoder');
 
 const {app} = require('electron');
 const defaultShell = require('default-shell');
@@ -16,7 +17,7 @@ try {
     'A native module failed to load. Typically this means ' +
     'you installed the modules incorrectly.\n Use `scripts/install.sh` ' +
     'to trigger the installation.\n ' +
-    'More information: https://github.com/zeit/hyperterm/issues/72'
+    'More information: https://github.com/zeit/hyper/issues/72'
   );
 }
 
@@ -35,6 +36,8 @@ module.exports = class Session extends EventEmitter {
       TERM_PROGRAM_VERSION: version
     }, envFromConfig);
 
+    const decoder = new StringDecoder('utf8');
+
     const defaultShellArgs = ['--login'];
 
     this.pty = spawn(shell || defaultShell, shellArgs || defaultShellArgs, {
@@ -48,7 +51,7 @@ module.exports = class Session extends EventEmitter {
       if (this.ended) {
         return;
       }
-      this.emit('data', data.toString('utf8'));
+      this.emit('data', decoder.write(data));
     });
 
     this.pty.on('exit', () => {

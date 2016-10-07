@@ -2,6 +2,7 @@ const os = require('os');
 const path = require('path');
 const {app, shell, dialog} = require('electron');
 
+const isMac = process.platform === 'darwin';
 const appName = app.getName();
 
 // based on and inspired by
@@ -59,7 +60,7 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
   };
 
   const shellOrFileMenu = {
-    label: process.platform === 'darwin' ? 'Shell' : 'File',
+    label: isMac ? 'Shell' : 'File',
     submenu: [
       {
         label: 'New Window',
@@ -73,9 +74,30 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
         accelerator: 'CmdOrCtrl+T',
         click(item, focusedWindow) {
           if (focusedWindow) {
-            focusedWindow.rpc.emit('session add req');
+            focusedWindow.rpc.emit('termgroup add req');
           } else {
             createWindow();
+          }
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Split Vertically',
+        accelerator: isMac ? 'Cmd+D' : 'Ctrl+Shift+E',
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('split request vertical');
+          }
+        }
+      },
+      {
+        label: 'Split Horizontally',
+        accelerator: isMac ? 'Cmd+Shift+D' : 'Ctrl+Shift+O',
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('split request horizontal');
           }
         }
       },
@@ -87,12 +109,12 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
         accelerator: 'CmdOrCtrl+W',
         click(item, focusedWindow) {
           if (focusedWindow) {
-            focusedWindow.rpc.emit('session close req');
+            focusedWindow.rpc.emit('termgroup close req');
           }
         }
       },
       {
-        label: process.platform === 'darwin' ? 'Close Terminal Window' : 'Quit',
+        label: isMac ? 'Close Terminal Window' : 'Quit',
         role: 'close',
         accelerator: 'CmdOrCtrl+Shift+W'
       }
@@ -138,7 +160,7 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
     ]
   };
 
-  if (process.platform !== 'darwin') {
+  if (!isMac) {
     editMenu.submenu.push(
       {type: 'separator'},
       {
@@ -178,7 +200,7 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
       },
       {
         label: 'Toggle Developer Tools',
-        accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
+        accelerator: isMac ? 'Alt+Command+I' : 'Ctrl+Shift+I',
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.webContents.toggleDevTools();
@@ -265,6 +287,27 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
         type: 'separator'
       },
       {
+        label: 'Select Next Pane',
+        accelerator: 'Ctrl+Alt+Tab',
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('next pane req');
+          }
+        }
+      },
+      {
+        label: 'Select Previous Pane',
+        accelerator: 'Ctrl+Shift+Alt+Tab',
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('prev pane req');
+          }
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
         role: 'front'
       },
       {
@@ -279,7 +322,7 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
       {
         label: `${appName} Website`,
         click() {
-          shell.openExternal('https://hyperterm.now.sh');
+          shell.openExternal('https://hyper.is');
         }
       },
       {
@@ -294,13 +337,13 @@ ${app.getName()} ${app.getVersion()}
 Electron ${process.versions.electron}
 ${process.platform} ${process.arch} ${os.release()}`;
 
-          shell.openExternal(`https://github.com/zeit/hyperterm/issues/new?body=${encodeURIComponent(body)}`);
+          shell.openExternal(`https://github.com/zeit/hyper/issues/new?body=${encodeURIComponent(body)}`);
         }
       }
     ]
   };
 
-  if (process.platform !== 'darwin') {
+  if (!isMac) {
     helpMenu.submenu.push(
       {type: 'separator'},
       {
@@ -319,7 +362,7 @@ ${process.platform} ${process.arch} ${os.release()}`;
   }
 
   const menu = [].concat(
-    process.platform === 'darwin' ? osxApplicationMenu : [],
+    isMac ? osxApplicationMenu : [],
     shellOrFileMenu,
     editMenu,
     viewMenu,
