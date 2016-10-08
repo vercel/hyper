@@ -74,7 +74,7 @@ module.exports = ({createWindow, updatePlugins}) => {
         accelerator: 'CmdOrCtrl+T',
         click(item, focusedWindow) {
           if (focusedWindow) {
-            focusedWindow.rpc.emit('termgroup add req');
+            focusedWindow.rpc.emit('window create tab');
           } else {
             createWindow();
           }

@@ -1,4 +1,4 @@
-// Native
+  // Native
 const {resolve} = require('path');
 
 // Packages
@@ -21,11 +21,15 @@ app.commandLine.appendSwitch('js-flags', '--harmony');
 
 // set up config
 const config = require('./config');
+// set up record
+const record = require('./record');
 
 config.init();
 
 const plugins = require('./plugins');
 const Session = require('./session');
+
+const Window = require('./window');
 
 const windowSet = new Set([]);
 
@@ -119,16 +123,19 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       x: startX,
       y: startY
     };
+
     const browserOptions = plugins.getDecoratedBrowserOptions(browserDefaults);
 
-    const win = new BrowserWindow(browserOptions);
+    const win = new Window(browserOptions);
     windowSet.add(win);
 
     win.loadURL(url);
 
     const rpc = createRPC(win);
     const sessions = new Map();
-
+    
+    win.setRpc(rpc);
+    
     // config changes
     const cfgUnsubscribe = config.subscribe(() => {
       const cfg_ = plugins.getDecoratedConfig();
@@ -151,12 +158,13 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('init', () => {
+      console.log('init');
       win.show();
 
       // If no callback is passed to createWindow,
       // a new session will be created by default.
       if (!fn) {
-        fn = win => win.rpc.emit('termgroup add req');
+        fn = win => win.rpc.emit('termgroup add req init');
       }
 
       // app.windowCallback is the createWindow callback
@@ -173,37 +181,28 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       } else {
         console.log('ignoring auto updates during dev');
       }
+
+      // record.pushWin(win);
     });
-
-    rpc.on('new', ({rows = 40, cols = 100, cwd = process.env.HOME, splitDirection}) => {
+    
+    rpc.on('createTab', ({rows = 40, cols = 100, cwd = process.env.HOME}) => {
       const shell = cfg.shell;
-      const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
-
-      initSession({rows, cols, cwd, shell, shellArgs}, (uid, session) => {
-        sessions.set(uid, session);
-        rpc.emit('session add', {
-          rows,
-          cols,
-          uid,
-          splitDirection,
-          shell: session.shell,
-          pid: session.pty.pid
-        });
-
-        session.on('data', data => {
-          rpc.emit('session data', {uid, data});
-        });
-
-        session.on('exit', () => {
-          rpc.emit('session exit', {uid});
-          sessions.delete(uid);
-        });
-      });
+      const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs); 
+      
+      win.createTab({rows, cols, cwd, shell, shellArgs}); 
+    });
+    
+    rpc.on('termSplit', ({rows = 40, cols = 100, cwd = process.env.HOME, splitDirection, activeUid}) => {
+      const shell = cfg.shell;
+      const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs); 
+      
+      const element = win.get(activeUid);
+      element.split({rows, cols, cwd, shell, shellArgs, splitDirection, activeUid}, win);
     });
 
     rpc.on('exit', ({uid}) => {
-      const session = sessions.get(uid);
-      if (session) {
+      const session = win.get(uid).session;
+      if(session) {
         session.exit();
       } else {
         console.log('session not found by', uid);
@@ -219,12 +218,13 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('resize', ({uid, cols, rows}) => {
-      const session = sessions.get(uid);
+      const session = win.get(uid).session;
       session.resize({cols, rows});
     });
 
     rpc.on('data', ({uid, data}) => {
-      sessions.get(uid).write(data);
+      const session = win.get(uid).session;
+      session.write(data);
     });
 
     rpc.on('open external', ({url}) => {
@@ -235,20 +235,12 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       rpc.emit('move');
     });
 
-    const deleteSessions = () => {
-      sessions.forEach((session, key) => {
-        session.removeAllListeners();
-        session.destroy();
-        sessions.delete(key);
-      });
-    };
-
     // we reset the rpc channel only upon
     // subsequent refreshes (ie: F5)
     let i = 0;
     win.webContents.on('did-navigate', () => {
       if (i++) {
-        deleteSessions();
+        win.removeElements();
       }
     });
 
@@ -299,7 +291,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       app.config.window.recordState(win);
       windowSet.delete(win);
       rpc.destroy();
-      deleteSessions();
+      win.removeElements();
       cfgUnsubscribe();
       pluginsUnsubscribe();
     });
@@ -311,8 +303,25 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
   }
 
-  // when opening create a new window
+  // restore previous saved state
+  // record.load(reccords => {
+  //   if (reccords.length > 0) {
+  //     reccords.forEach(reccord => {
+  //       createWindow(undefined, {
+  //         position: reccord.position,
+  //         size: reccord.size
+  //       });
+  //         // rpc.emit('termgroup add req');
+  //     });
+  //   } else {
+  //     // when no reccords
+  //     // when opening create a new window
   createWindow();
+  //   }
+  //
+  //   // start save scheduler
+    record.save(windowSet);
+  // });
 
   // expose to plugins
   app.createWindow = createWindow;
