@@ -113,9 +113,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
       transparent: true,
       icon: resolve(__dirname, 'static/icon.png'),
-      // we only want to show when the prompt
-      // is ready for user input
-      show: process.env.HYPERTERM_DEBUG || isDev,
+      // we only want to show when the prompt is ready for user input
+      // HYPERTERM_DEBUG for backwards compatibility with hyperterm
+      show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
       x: startX,
       y: startY
     };
