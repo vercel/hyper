@@ -22,6 +22,7 @@ const availableExtensions = new Set([
   'onApp', 'onWindow', 'onUnload', 'middleware',
   'reduceUI', 'reduceSessions', 'decorateMenu',
   'decorateTerm', 'decorateHyper', 'decorateTab',
+  'decorateHyperTerm', // for backwards compatibility with hyperterm
   'decorateNotification', 'decorateNotifications',
   'decorateTabs', 'decorateConfig', 'decorateEnv'
 ]);
