@@ -21,6 +21,7 @@
     "git-describe": "3.0.2",
     "mkdirp": "0.5.1",
     "ms": "0.7.1",
+    "node-fetch": "1.6.3",
     "shell-env": "0.2.0",
     "uuid": "2.0.2"
   }
