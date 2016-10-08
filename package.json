@@ -100,7 +100,8 @@
     }
   },
   "scripts": {
-    "start": "concurrently --kill-others --raw \"npm run dev\" \"electron app\"",
+    "start": "concurrently --kill-others --raw \"npm run dev\" \"npm run app\"",
+    "app": "electron app",
     "dev": "webpack -w",
     "build": "NODE_ENV=production webpack",
     "test": "npm run dist && xo && ava",
