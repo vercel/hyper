@@ -15,6 +15,7 @@ const toElectronBackgroundColor = require('./utils/to-electron-background-color'
 const createMenu = require('./menu');
 const createRPC = require('./rpc');
 const notify = require('./notify');
+const fetchNotifications = require('./notifications');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
 
@@ -165,6 +166,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       (app.windowCallback || fn)(win);
       delete (app.windowCallback);
 
+      fetchNotifications(win);
       // auto updates
       if (!isDev && process.platform !== 'linux') {
         AutoUpdater(win);
