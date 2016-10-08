@@ -35,24 +35,16 @@ if (process.platform === 'win32') {
 }
 
 // Native
-const {resolve, isAbsolute} = require('path');
-const {homedir} = require('os');
+const {resolve} = require('path');
 
 // Packages
-const {parse: parseUrl} = require('url');
-const {app, BrowserWindow, shell, Menu} = require('electron');
+const {app, BrowserWindow, Menu} = require('electron');
 const {gitDescribe} = require('git-describe');
-const uuid = require('uuid');
-const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 
 // Ours
-const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
 const createMenu = require('./menu');
-const createRPC = require('./rpc');
-const notify = require('./notify');
-const fetchNotifications = require('./notifications');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
 
@@ -62,25 +54,16 @@ const config = require('./config');
 config.init();
 
 const plugins = require('./plugins');
-const Session = require('./session');
 
-const windowSet = new Set([]);
+const Window = require('./win/window');
+const wins = require('./win/windows');
+
+app.getWindows = () => wins.gets();
+app.getLastFocusedWindow = () => wins.lastFocused();
 
 // expose to plugins
 app.config = config;
 app.plugins = plugins;
-app.getWindows = () => new Set([...windowSet]); // return a clone
-
-// function to retrieve the last focused window in windowSet;
-// added to app object in order to expose it to plugins.
-app.getLastFocusedWindow = () => {
-  if (!windowSet.size) {
-    return null;
-  }
-  return Array.from(windowSet).reduce((lastWindow, win) => {
-    return win.focusTime > lastWindow.focusTime ? win : lastWindow;
-  });
-};
 
 if (isDev) {
   console.log('running in dev mode');
@@ -104,7 +87,7 @@ console.log('electron will open', url);
 
 app.on('ready', () => installDevExtensions(isDev).then(() => {
   function createWindow(fn, options = {}) {
-    let cfg = plugins.getDecoratedConfig();
+    const cfg = plugins.getDecoratedConfig();
 
     const winSet = app.config.window.get();
     let [startX, startY] = winSet.position;
@@ -159,233 +142,39 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       y: startY,
       acceptFirstMouse: true
     };
+
     const browserOptions = plugins.getDecoratedBrowserOptions(browserDefaults);
 
-    const win = new BrowserWindow(browserOptions);
-    windowSet.add(win);
-
+    const win = new Window(browserOptions, cfg, fn);
+    wins.new(win);
     win.loadURL(url);
-
-    const rpc = createRPC(win);
-    const sessions = new Map();
-
-    // config changes
-    const cfgUnsubscribe = config.subscribe(() => {
-      const cfg_ = plugins.getDecoratedConfig();
-
-      // notify renderer
-      win.webContents.send('config change');
-
-      // notify user that shell changes require new sessions
-      if (cfg_.shell !== cfg.shell ||
-        JSON.stringify(cfg_.shellArgs) !== JSON.stringify(cfg.shellArgs)) {
-        notify(
-          'Shell configuration changed!',
-          'Open a new tab or window to start using the new shell'
-        );
-      }
-
-      // update background color if necessary
-      cfg = cfg_;
-    });
-
-    rpc.on('init', () => {
-      // we update the backgroundColor once the init is called.
-      // when we do a win.reload() we need need to reset the backgroundColor
-      win.setBackgroundColor(toElectronBackgroundColor(cfg.backgroundColor || '#000'));
-      win.show();
-
-      // If no callback is passed to createWindow,
-      // a new session will be created by default.
-      if (!fn) {
-        fn = win => win.rpc.emit('termgroup add req');
-      }
-
-      // app.windowCallback is the createWindow callback
-      // that can be set before the 'ready' app event
-      // and createWindow deifinition. It's executed in place of
-      // the callback passed as parameter, and deleted right after.
-      (app.windowCallback || fn)(win);
-      delete (app.windowCallback);
-
-      fetchNotifications(win);
-      // auto updates
-      if (!isDev && process.platform !== 'linux') {
-        AutoUpdater(win);
-      } else {
-        console.log('ignoring auto updates during dev');
-      }
-    });
-
-    rpc.on('new', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homedir(), splitDirection}) => {
-      const shell = cfg.shell;
-      const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
-
-      initSession({rows, cols, cwd, shell, shellArgs}, (uid, session) => {
-        sessions.set(uid, session);
-        rpc.emit('session add', {
-          rows,
-          cols,
-          uid,
-          splitDirection,
-          shell: session.shell,
-          pid: session.pty.pid
-        });
-
-        session.on('data', data => {
-          rpc.emit('session data', uid + data);
-        });
-
-        session.on('exit', () => {
-          rpc.emit('session exit', {uid});
-          sessions.delete(uid);
-        });
-      });
-    });
-
-    rpc.on('exit', ({uid}) => {
-      const session = sessions.get(uid);
-      if (session) {
-        session.exit();
-      } else {
-        console.log('session not found by', uid);
-      }
-    });
-
-    rpc.on('unmaximize', () => {
-      win.unmaximize();
-    });
-
-    rpc.on('maximize', () => {
-      win.maximize();
-    });
-
-    rpc.on('resize', ({uid, cols, rows}) => {
-      const session = sessions.get(uid);
-      session.resize({cols, rows});
-    });
-
-    rpc.on('data', ({uid, data}) => {
-      sessions.get(uid).write(data);
-    });
-
-    rpc.on('open external', ({url}) => {
-      shell.openExternal(url);
-    });
-
-    rpc.win.on('move', () => {
-      rpc.emit('move');
-    });
-
-    rpc.on('open hamburger menu', ({x, y}) => {
-      Menu.getApplicationMenu().popup(x, y);
-    });
-
-    rpc.on('minimize', () => {
-      win.minimize();
-    });
-
-    rpc.on('close', () => {
-      win.close();
-    });
-
-    const deleteSessions = () => {
-      sessions.forEach((session, key) => {
-        session.removeAllListeners();
-        session.destroy();
-        sessions.delete(key);
-      });
-    };
-
-    // we reset the rpc channel only upon
-    // subsequent refreshes (ie: F5)
-    let i = 0;
-    win.webContents.on('did-navigate', () => {
-      if (i++) {
-        deleteSessions();
-      }
-    });
-
-    // If file is dropped onto the terminal window, navigate event is prevented
-    // and his path is added to active session.
-    win.webContents.on('will-navigate', (event, url) => {
-      const protocol = typeof url === 'string' && parseUrl(url).protocol;
-      if (protocol === 'file:') {
-        event.preventDefault();
-        const path = fileUriToPath(url).replace(/ /g, '\\ ');
-        rpc.emit('session data send', {data: path});
-      } else if (protocol === 'http:' || protocol === 'https:') {
-        event.preventDefault();
-        rpc.emit('session data send', {data: url});
-      }
-    });
-
-    // expose internals to extension authors
-    win.rpc = rpc;
-    win.sessions = sessions;
-
-    const load = () => {
-      plugins.onWindow(win);
-    };
-
-    // load plugins
-    load();
-
-    const pluginsUnsubscribe = plugins.subscribe(err => {
-      if (!err) {
-        load();
-        win.webContents.send('plugins change');
-      }
-    });
-
-    // Keep track of focus time of every window, to figure out
-    // which one of the existing window is the last focused.
-    // Works nicely even if a window is closed and removed.
-    const updateFocusTime = () => {
-      win.focusTime = process.uptime();
-    };
-    win.on('focus', () => {
-      updateFocusTime();
-    });
-    // Ensure focusTime is set on window open. The focus event doesn't
-    // fire from the dock (see bug #583)
-    updateFocusTime();
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
-      app.config.window.recordState(win);
-      windowSet.delete(win);
-      rpc.destroy();
-      deleteSessions();
-      cfgUnsubscribe();
-      pluginsUnsubscribe();
+      wins.delete(win);
     });
 
-    // Same deal as above, grabbing the window titlebar when the window
-    // is maximized on Windows results in unmaximize, without hitting any
-    // app buttons
-    for (const ev of ['maximize', 'unmaximize', 'minimize', 'restore']) {
-      win.on(ev, () => rpc.emit('windowGeometry change'));
-    }
-
     win.on('closed', () => {
-      if (process.platform !== 'darwin' && windowSet.size === 0) {
+      if (process.platform !== 'darwin' && wins.size() === 0) {
         app.quit();
       }
     });
   }
 
-  // when opening create a new window
-  createWindow();
-
   // expose to plugins
   app.createWindow = createWindow;
+
+  // set up record
+  const record = require('./win/record');
+  // restore previous saved state
+  // record.load();
+  app.createWindow();
 
   // mac only. when the dock icon is clicked
   // and we don't have any active windows open,
   // we open one
   app.on('activate', () => {
-    if (!windowSet.size) {
+    if (!wins.size()) {
       createWindow();
     }
   });
@@ -422,10 +211,6 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 }).catch(err => {
   console.error('Error while loading devtools extensions', err);
 }));
-
-function initSession(opts, fn) {
-  fn(uuid.v4(), new Session(opts));
-}
 
 app.on('open-file', (event, path) => {
   const lastWindow = app.getLastFocusedWindow();
