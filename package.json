@@ -43,6 +43,7 @@
     "electron": "1.4.0",
     "electron-builder": "^7.10.2",
     "electron-devtools-installer": "^2.0.0",
+    "eslint": "3.7.1",
     "eslint-config-xo-react": "^0.10.0",
     "eslint-plugin-react": "^6.3.0",
     "husky": "^0.11.6",
@@ -61,7 +62,10 @@
       "mocha"
     ],
     "rules": {
-      "eqeqeq": ["error", "allow-null"],
+      "eqeqeq": [
+        "error",
+        "allow-null"
+      ],
       "no-eq-null": 0,
       "react/prop-types": 0,
       "babel/new-cap": 0,
