@@ -15,7 +15,7 @@ If you're on macOS, you can also use [Homebrew Cask](https://caskroom.github.io/
 
 ```bash
 $ brew cask update
-$ brew cask install hyperterm
+$ brew cask install hyper
 ```
 
 ## Contribute
