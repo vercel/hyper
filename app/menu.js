@@ -317,7 +317,7 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
       {
         id: 'ENTER_QUICK_FULL_SCREEN',
         label: 'Enter Quick Full Screen',
-        accelerator: 'Cmd+Enter',
+        accelerator: isMac ? 'Cmd+Enter' : 'Ctrl+Shift+Enter',
         visible: true,
         click(item, focusedWindow) {
           if (focusedWindow) {
@@ -328,7 +328,7 @@ module.exports = function createMenu({createWindow, updatePlugins}) {
       {
         id: 'LEAVE_QUICK_FULL_SCREEN',
         label: 'Leave Quick Full Screen',
-        accelerator: 'Cmd+Enter',
+        accelerator: isMac ? 'Cmd+Enter' : 'Ctrl+Shift+Enter',
         visible: false,
         click(item, focusedWindow) {
           if (focusedWindow) {
