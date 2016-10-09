@@ -25,7 +25,7 @@ $ brew cask install hyper
 3. Install the dependencies: `npm install`
 4. Build the code, watch for changes and run the app: `npm start`
 
-To make sure that your code works in the finished application, you can generate the binaries like that:
+To make sure that your code works in the finished application, you can generate the binaries like this:
 
 ```bash
 $ npm run pack
