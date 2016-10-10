@@ -74,7 +74,7 @@ exports.subscribe = function (fn) {
 
 exports.init = function () {
   // for backwards compatibility with hyperterm
-  // (prior to the renme), we try to rename
+  // (prior to the rename), we try to rename
   // on behalf of the user
   try {
     statSync(pathLegacy);
