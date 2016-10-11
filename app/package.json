@@ -9,6 +9,7 @@
   },
   "repository": "zeit/hyper",
   "description": "HTML/JS/CSS Terminal",
+  "xo": false,
   "dependencies": {
     "child_pty": "3.0.1",
     "color": "0.11.3",
