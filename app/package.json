@@ -9,7 +9,6 @@
   },
   "repository": "zeit/hyper",
   "description": "HTML/JS/CSS Terminal",
-  "xo": false,
   "dependencies": {
     "child_pty": "3.0.1",
     "color": "0.11.3",
@@ -23,7 +22,9 @@
     "mkdirp": "0.5.1",
     "ms": "0.7.1",
     "node-fetch": "1.6.3",
+    "semver": "5.3.0",
     "shell-env": "0.2.0",
     "uuid": "2.0.2"
-  }
+  },
+  "xo": false
 }
