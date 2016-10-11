@@ -132,6 +132,7 @@ function getPluginVersions() {
   return paths_.map(path => {
     let version = null;
     try {
+      // eslint-disable-next-line import/no-dynamic-require
       version = require(resolve(path, 'package.json')).version;
     } catch (err) { }
     return [
@@ -280,6 +281,7 @@ function requirePlugins() {
   const load = path => {
     let mod;
     try {
+      // eslint-disable-next-line import/no-dynamic-require
       mod = require(path);
       const exposed = mod && Object.keys(mod).some(key => availableExtensions.has(key));
       if (!exposed) {

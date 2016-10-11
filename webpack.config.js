@@ -29,7 +29,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': { // eslint-disable-line quote-props
-        'NODE_ENV': JSON.stringify(nodeEnv)
+        NODE_ENV: JSON.stringify(nodeEnv)
       }
     }),
     new Copy([

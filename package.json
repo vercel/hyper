@@ -63,13 +63,11 @@
     "rules": {
       "eqeqeq": ["error", "allow-null"],
       "no-eq-null": 0,
-      "react/prop-types": 0,
-      "babel/new-cap": 0,
-      "quote-props": 0,
-      "import/no-extraneous-dependencies": 0,
+      "new-cap": 0,
       "no-warning-comments": 0,
       "complexity": 0,
-      "no-nested-ternary": 0,
+      "import/prefer-default-export": 0,
+      "react/prop-types": 0,
       "react/jsx-no-bind": 0
     },
     "ignore": [
