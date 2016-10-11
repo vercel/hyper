@@ -41,7 +41,7 @@
     "concurrently": "^3.0.0",
     "copy-webpack-plugin": "^3.0.1",
     "electron": "1.4.0",
-    "electron-builder": "^7.10.2",
+    "electron-builder": "^7.11.4",
     "electron-devtools-installer": "^2.0.0",
     "eslint-config-xo-react": "^0.10.0",
     "eslint-plugin-react": "^6.3.0",
@@ -90,6 +90,7 @@
     "asar": false,
     "extend-info": "build/Info.plist",
     "linux": {
+      "arch": ["ia32", "x64"],
       "target": [
         "deb",
         "AppImage"
