@@ -20,10 +20,18 @@ const path = resolve(homedir(), '.hyper_plugins');
 const localPath = resolve(homedir(), '.hyper_plugins', 'local');
 const availableExtensions = new Set([
   'onApp', 'onWindow', 'onUnload', 'middleware',
-  'reduceUI', 'reduceSessions', 'decorateMenu',
-  'decorateTerm', 'decorateHyperTerm', 'decorateTab',
+  'reduceUI', 'reduceSessions', 'reduceTermGroups',
+  'decorateMenu', 'decorateTerm', 'decorateHyper',
+  'decorateHyperTerm', // for backwards compatibility with hyperterm
+  'decorateTab',
   'decorateNotification', 'decorateNotifications',
-  'decorateTabs', 'decorateConfig', 'decorateEnv'
+  'decorateTabs', 'decorateConfig', 'decorateEnv',
+  'decorateTermGroup', 'getTermProps',
+  'getTabProps', 'getTabsProps', 'getTermGroupProps',
+  'mapHyperTermState', 'mapTermsState',
+  'mapHeaderState', 'mapNotificationsState',
+  'mapHyperTermDispatch', 'mapTermsDispatch',
+  'mapHeaderDispatch', 'mapNotificationsDispatch'
 ]);
 
 // init plugin directories if not present

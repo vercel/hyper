@@ -35,7 +35,7 @@ app.config = config;
 app.plugins = plugins;
 app.getWindows = () => new Set([...windowSet]); // return a clone
 
-// function to retrive the last focused window in windowSet;
+// function to retrieve the last focused window in windowSet;
 // added to app object in order to expose it to plugins.
 app.getLastFocusedWindow = () => {
   if (!windowSet.size) {
@@ -114,9 +114,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
       transparent: true,
       icon: resolve(__dirname, 'static/icon.png'),
-      // we only want to show when the prompt
-      // is ready for user input
-      show: process.env.HYPERTERM_DEBUG || isDev,
+      // we only want to show when the prompt is ready for user input
+      // HYPERTERM_DEBUG for backwards compatibility with hyperterm
+      show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
       x: startX,
       y: startY
     };
@@ -161,8 +161,8 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       }
 
       // app.windowCallback is the createWindow callback
-      // that can be setted before the 'ready' app event
-      // and createWindow deifinition. It's exeuted in place of
+      // that can be set before the 'ready' app event
+      // and createWindow deifinition. It's executed in place of
       // the callback passed as parameter, and deleted right after.
       (app.windowCallback || fn)(win);
       delete (app.windowCallback);
@@ -208,7 +208,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     // TODO: this goes away when we are able to poll
-    // for the title ourseleves, instead of relying
+    // for the title ourselves, instead of relying
     // on Session and focus/blur to subscribe
     rpc.on('focus', ({uid}) => {
       const session = sessions.get(uid);
@@ -432,7 +432,7 @@ app.on('open-file', (event, path) => {
   } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
     app.createWindow(callback);
   } else {
-    // if createWindow not exists yet ('ready' event was not fired),
+    // If createWindow doesn't exist yet ('ready' event was not fired),
     // sets his callback to an app.windowCallback property.
     app.windowCallback = callback;
   }
