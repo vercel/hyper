@@ -18,6 +18,8 @@ cache:
   - app/node_modules
   - $HOME/.electron
   - $HOME/.cache
+  - ~/.yarn
+  - ~/.nvm
 
 addons:
   apt:
@@ -34,12 +36,13 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start; sleep 3; fi
 
 install:
-- nvm install 6
-- npm install
-- npm prune
+  - nvm install 6
+  - npm -g install yarn
+  - yarn
+  - npm prune
 
 script:
-- npm run dist
+  - npm run dist
 
 branches:
   except:
