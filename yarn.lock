@@ -4,7 +4,7 @@
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/7zip-bin-linux/-/7zip-bin-linux-1.0.2.tgz#719d56e67e92ef447364676bf6af2370e23dea7c"
 
-"7zip-bin-osx@^1.0.0":
+"7zip-bin-osx", "7zip-bin-osx@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/7zip-bin-osx/-/7zip-bin-osx-1.0.0.tgz#25fa84ebe9a30bb646a065d83e47e1e456ff79a9"
 
