@@ -4,13 +4,25 @@
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/7zip-bin-linux/-/7zip-bin-linux-1.0.2.tgz#719d56e67e92ef447364676bf6af2370e23dea7c"
 
-"7zip-bin-osx", "7zip-bin-osx@^1.0.0":
+"7zip-bin-osx@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/7zip-bin-osx/-/7zip-bin-osx-1.0.0.tgz#25fa84ebe9a30bb646a065d83e47e1e456ff79a9"
+
+"7zip-bin-win@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/7zip-bin-win/-/7zip-bin-win-1.0.0.tgz#a334be71371507b65dde6fda7be6917c3e5c91f6"
 
 "7zip-bin-win@^2.0.0":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/7zip-bin-win/-/7zip-bin-win-2.0.1.tgz#e9b26dba2b381b8e845e95765f697bd7b507a430"
+
+"7zip-bin@^1.0.0":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/7zip-bin/-/7zip-bin-1.0.6.tgz#77121d6888e59a9924d80a6033f2809146aaede5"
+  optionalDependencies:
+    "7zip-bin-linux" "^1.0.1"
+    "7zip-bin-osx" "^1.0.0"
+    "7zip-bin-win" "^1.0.0"
 
 "7zip-bin@^2.0.1":
   version "2.0.1"
