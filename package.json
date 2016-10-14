@@ -12,6 +12,7 @@
     "emails": false
   },
   "dependencies": {
+    "7zip-bin-osx": "1.0.0",
     "aphrodite-simple": "0.4.1",
     "color": "0.11.3",
     "hterm-umdjs": "1.1.3",
@@ -20,6 +21,7 @@
     "ms": "0.7.1",
     "object-values": "1.0.0",
     "php-escape-shell": "1.0.0",
+    "platform-dependent-modules": "^0.0.14",
     "react": "15.3.2",
     "react-addons-pure-render-mixin": "15.3.2",
     "react-deep-force-update": "2.0.1",
@@ -33,7 +35,6 @@
     "uuid": "2.0.2"
   },
   "devDependencies": {
-    "7zip-bin": "^1.0.0",
     "ava": "^0.16.0",
     "babel-cli": "^6.11.4",
     "babel-core": "^6.11.4",
@@ -108,7 +109,7 @@
     "build": "NODE_ENV=production webpack",
     "test": "npm run dist && xo && ava",
     "prepush": "npm test",
-    "postinstall": "install-app-deps",
+    "postinstall": "install-app-deps && if [[ `uname` == 'Linux' ]]; then npm install 7zip-bin-linux; elif [[ `uname` == 'Darwin' ]]; then npm install 7zip-bin-osx; fi",
     "pack": "npm run build && build --dir && babel --no-comments --compact --minified --out-file app/dist/bundle.js app/dist/bundle.js",
     "dist": "npm run build && build"
   }
