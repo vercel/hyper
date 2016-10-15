@@ -254,12 +254,15 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     const getSubmenuItem = (menuItem, id) => findMenuItem(menuItem.submenu.items, id);
 
-    const toggleQuickFullScreenMenuItems = isQuickFullScreenEnabled => {
+    let isQuickFullScreenEnabled = false;
+
+    const toggleQuickFullScreenMenuItems = isQuickFullScreen => {
       const windowMenu = getMenuItem('WINDOW');
       const enterQuickFullScreenMenu = getSubmenuItem(windowMenu, 'ENTER_QUICK_FULL_SCREEN');
       const leaveQuickFullScreenMenu = getSubmenuItem(windowMenu, 'LEAVE_QUICK_FULL_SCREEN');
-      enterQuickFullScreenMenu.visible = !isQuickFullScreenEnabled;
-      leaveQuickFullScreenMenu.visible = isQuickFullScreenEnabled;
+      enterQuickFullScreenMenu.visible = !isQuickFullScreen;
+      leaveQuickFullScreenMenu.visible = isQuickFullScreen;
+      isQuickFullScreenEnabled = isQuickFullScreen;
     };
 
     rpc.on('enter quick full screen', () => {
@@ -357,7 +360,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
-      app.config.window.recordState(win);
+      if (!isQuickFullScreenEnabled) {
+        app.config.window.recordState(win);
+      }
       windowSet.delete(win);
       rpc.destroy();
       deleteSessions();
