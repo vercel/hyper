@@ -8,7 +8,7 @@ const appName = app.getName();
 // based on and inspired by
 // https://github.com/sindresorhus/anatine/blob/master/menu.js
 
-module.exports = function createMenu({createWindow, updatePlugins}) {
+module.exports = ({createWindow, updatePlugins}) => {
   const osxApplicationMenu = {
     // This menu label is overrided by OSX to be the appName
     // The label is set to appName here so it matches actual behavior

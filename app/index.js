@@ -3,9 +3,9 @@ const {resolve} = require('path');
 
 // Packages
 const {parse: parseUrl} = require('url');
-const {gitDescribe} = require('git-describe');
 const electron = require('electron');
 const {app, BrowserWindow, shell, Menu} = require('electron');
+const {gitDescribe} = require('git-describe');
 const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
@@ -447,7 +447,8 @@ function installDevExtensions(isDev) {
   if (!isDev) {
     return Promise.resolve();
   }
-  const installer = require('electron-devtools-installer'); // eslint-disable-line global-require
+  // eslint-disable-next-line import/no-extraneous-dependencies
+  const installer = require('electron-devtools-installer');
 
   const extensions = [
     'REACT_DEVELOPER_TOOLS',

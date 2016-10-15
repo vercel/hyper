@@ -51,6 +51,6 @@ class Server extends EventEmitter {
 
 }
 
-module.exports = function createRPC(win) {
+module.exports = win => {
   return new Server(win);
 };
