@@ -37,6 +37,7 @@
     "babel-cli": "^6.11.4",
     "babel-core": "^6.11.4",
     "babel-loader": "^6.2.4",
+    "babel-plugin-transform-react-remove-prop-types": "0.2.10",
     "babel-preset-react": "^6.11.1",
     "concurrently": "^3.0.0",
     "copy-webpack-plugin": "^3.0.1",
@@ -61,13 +62,15 @@
       "mocha"
     ],
     "rules": {
-      "eqeqeq": ["error", "allow-null"],
+      "eqeqeq": [
+        "error",
+        "allow-null"
+      ],
       "no-eq-null": 0,
       "new-cap": 0,
       "no-warning-comments": 0,
       "complexity": 0,
       "import/prefer-default-export": 0,
-      "react/prop-types": 0,
       "react/jsx-no-bind": 0
     },
     "ignore": [
@@ -81,6 +84,9 @@
   "babel": {
     "presets": [
       "react"
+    ],
+    "plugins": [
+      "transform-react-remove-prop-types"
     ]
   },
   "build": {
