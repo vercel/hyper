@@ -1,4 +1,4 @@
-const {exec} = require('child_process');
+// const {exec} = require('child_process');
 const {EventEmitter} = require('events');
 const {StringDecoder} = require('string_decoder');
 
@@ -21,7 +21,7 @@ try {
   );
 }
 
-const TITLE_POLL_INTERVAL = 500;
+// const TITLE_POLL_INTERVAL = 500;
 
 const envFromConfig = config.getConfig().env || {};
 
