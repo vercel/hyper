@@ -62,7 +62,6 @@
     ],
     "rules": {
       "eqeqeq": ["error", "allow-null"],
-      "no-eq-null": 0,
       "new-cap": 0,
       "no-warning-comments": 0,
       "complexity": 0,
