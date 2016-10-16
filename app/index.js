@@ -17,7 +17,7 @@ const createRPC = require('./rpc');
 const notify = require('./notify');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
-if(process.platform === 'linux') {
+if (process.platform === 'linux') {
   app.commandLine.appendSwitch('--enable-transparent-visuals');
   app.commandLine.appendSwitch('--disable-gpu');
 }
