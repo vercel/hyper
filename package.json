@@ -61,7 +61,6 @@
       "mocha"
     ],
     "rules": {
-      "eqeqeq": ["error", "allow-null"],
       "new-cap": 0,
       "no-warning-comments": 0,
       "complexity": 0,
@@ -87,7 +86,10 @@
     "asar": false,
     "extend-info": "build/Info.plist",
     "linux": {
-      "arch": ["ia32", "x64"],
+      "arch": [
+        "ia32",
+        "x64"
+      ],
       "target": [
         "deb",
         "AppImage"
