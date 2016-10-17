@@ -57,8 +57,7 @@
     "space": true,
     "env": [
       "browser",
-      "node",
-      "mocha"
+      "node"
     ],
     "rules": {
       "new-cap": 0,
