@@ -67,12 +67,11 @@
       "react/prop-types": 0,
       "react/jsx-no-bind": 0
     },
-    "ignore": [
-      "dist",
-      "build",
-      "app/dist",
-      "app/static",
-      "assets"
+    "ignores": [
+      "build/**",
+      "app/dist/**",
+      "app/static/**",
+      "assets/**"
     ]
   },
   "babel": {
