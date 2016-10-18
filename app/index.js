@@ -195,11 +195,6 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
           rpc.emit('session data', {uid, data});
         });
 
-        session.on('title', title => {
-          win.setTitle(title);
-          rpc.emit('session title', {uid, title});
-        });
-
         session.on('exit', () => {
           rpc.emit('session exit', {uid});
           sessions.delete(uid);
