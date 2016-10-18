@@ -61,14 +61,6 @@ module.exports = class Session extends EventEmitter {
     this.shell = shell || defaultShell;
   }
 
-  focus() {
-    this.subscribed = true;
-  }
-
-  blur() {
-    this.subscribed = false;
-  }
-
   exit() {
     this.destroy();
   }
