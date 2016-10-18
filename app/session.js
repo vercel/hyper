@@ -85,7 +85,6 @@ module.exports = class Session extends EventEmitter {
     }
     this.emit('exit');
     this.ended = true;
-    this.blur();
   }
 
 };
