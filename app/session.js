@@ -1,4 +1,3 @@
-// const {exec} = require('child_process');
 const {EventEmitter} = require('events');
 const {StringDecoder} = require('string_decoder');
 
@@ -20,8 +19,6 @@ try {
     'More information: https://github.com/zeit/hyper/issues/72'
   );
 }
-
-// const TITLE_POLL_INTERVAL = 500;
 
 const envFromConfig = config.getConfig().env || {};
 
@@ -62,60 +59,15 @@ module.exports = class Session extends EventEmitter {
     });
 
     this.shell = shell || defaultShell;
-    this.getTitle();
   }
 
   focus() {
     this.subscribed = true;
-    this.getTitle();
   }
 
   blur() {
     this.subscribed = false;
     clearTimeout(this.titlePoll);
-  }
-
-  getTitle() {
-//    if (process.platform === 'win32') {
-//      return;
-//    }
-//
-//    if (this.fetching) {
-//      return;
-//    }
-//    this.fetching = true;
-//
-//    let tty = this.pty.stdout.ttyname;
-//    tty = tty.replace(/^\/dev\/tty/, '');
-//
-//    // try to exclude grep from the results
-//    // by grepping for `[s]001` instead of `s001`
-//    tty = `[${tty[0]}]${tty.substr(1)}`;
-//
-//    // TODO: limit the concurrency of how many processes we run?
-//    // TODO: only tested on mac
-//    exec(`ps uxac | grep ${tty} | head -n 1`, (err, out) => {
-//      this.fetching = false;
-//      if (this.ended) {
-//        return;
-//      }
-//      if (err) {
-//        return;
-//      }
-//      let title = out.split(' ').pop();
-//      if (title) {
-//        title = title.replace(/^\(/, '');
-//        title = title.replace(/\)?\n$/, '');
-//        if (title !== this.lastTitle) {
-//          this.emit('title', title);
-//          this.lastTitle = title;
-//        }
-//      }
-//
-//      if (this.subscribed) {
-//        this.titlePoll = setTimeout(() => this.getTitle(), TITLE_POLL_INTERVAL);
-//      }
-//    });
   }
 
   exit() {
