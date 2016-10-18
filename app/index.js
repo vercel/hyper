@@ -3,7 +3,6 @@ const {resolve} = require('path');
 
 // Packages
 const {parse: parseUrl} = require('url');
-const electron = require('electron');
 const {app, BrowserWindow, shell, Menu} = require('electron');
 const {gitDescribe} = require('git-describe');
 const uuid = require('uuid');
@@ -248,40 +247,6 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       win.maximize();
     });
 
-    const findMenuItem = (items, id) => items.filter(item => item.id === id)[0];
-
-    const getMenuItem = id => findMenuItem(Menu.getApplicationMenu().items, id);
-
-    const getSubmenuItem = (menuItem, id) => findMenuItem(menuItem.submenu.items, id);
-
-    let isQuickFullScreenEnabled = false;
-
-    const toggleQuickFullScreenMenuItems = isQuickFullScreen => {
-      const windowMenu = getMenuItem('WINDOW');
-      const enterQuickFullScreenMenu = getSubmenuItem(windowMenu, 'ENTER_QUICK_FULL_SCREEN');
-      const leaveQuickFullScreenMenu = getSubmenuItem(windowMenu, 'LEAVE_QUICK_FULL_SCREEN');
-      enterQuickFullScreenMenu.visible = !isQuickFullScreen;
-      leaveQuickFullScreenMenu.visible = isQuickFullScreen;
-      isQuickFullScreenEnabled = isQuickFullScreen;
-    };
-
-    rpc.on('enter quick full screen', () => {
-      toggleQuickFullScreenMenuItems(true);
-      app.config.window.recordState(win);
-      const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
-      win.setSize(width, height);
-      win.center();
-    });
-
-    rpc.on('leave quick full screen', () => {
-      toggleQuickFullScreenMenuItems(false);
-      const winSet = app.config.window.get();
-      const [width, height] = winSet.size;
-      win.setSize(width, height);
-      const [x, y] = winSet.position;
-      win.setPosition(x, y);
-    });
-
     rpc.on('resize', ({uid, cols, rows}) => {
       const session = sessions.get(uid);
       session.resize({cols, rows});
@@ -360,9 +325,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
-      if (!isQuickFullScreenEnabled) {
-        app.config.window.recordState(win);
-      }
+      app.config.window.recordState(win);
       windowSet.delete(win);
       rpc.destroy();
       deleteSessions();
