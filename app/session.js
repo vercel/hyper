@@ -67,7 +67,6 @@ module.exports = class Session extends EventEmitter {
 
   blur() {
     this.subscribed = false;
-    clearTimeout(this.titlePoll);
   }
 
   exit() {
