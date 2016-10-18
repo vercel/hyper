@@ -88,13 +88,9 @@ module.exports = class Session extends EventEmitter {
     let tty = this.pty.stdout.ttyname;
     tty = tty.replace(/^\/dev\/tty/, '');
 
-    // try to exclude grep from the results
-    // by grepping for `[s]001` instead of `s001`
-    tty = `[${tty[0]}]${tty.substr(1)}`;
-
     // TODO: limit the concurrency of how many processes we run?
     // TODO: only tested on mac
-    exec(`ps uxac | grep ${tty} | head -n 1`, (err, out) => {
+    exec(`ps uxac | grep ${tty} | grep -v 'grep\\|ps' | head -n 1`, (err, out) => {
       this.fetching = false;
       if (this.ended) {
         return;
