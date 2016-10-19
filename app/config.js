@@ -4,6 +4,7 @@ const {resolve} = require('path');
 const vm = require('vm');
 
 const {dialog} = require('electron');
+const isDev = require('electron-is-dev');
 const gaze = require('gaze');
 const Config = require('electron-config');
 const notify = require('./notify');
@@ -16,8 +17,24 @@ const winCfg = new Config({
   }
 });
 
-const path = resolve(homedir(), '.hyper.js');
-const pathLegacy = resolve(homedir(), '.hyperterm.js');
+
+let configDir = homedir();
+if (isDev) {
+  // if a local config file exists, use it
+  try {
+    const devDir = resolve(__dirname, '..');
+    const devConfig = resolve(devDir, '.hyper.js');
+    statSync(devConfig);
+    configDir = devDir;
+    console.log('using config file:', devConfig);
+  } catch(err) {
+    //ignore
+  }
+}
+
+const path = resolve(configDir, '.hyper.js');
+const pathLegacy = resolve(configDir, '.hyperterm.js');
+
 const watchers = [];
 
 let cfg = {};
@@ -101,6 +118,11 @@ exports.init = function () {
   }
   watch();
 };
+
+exports.getConfigDir = function() {
+  // expose config directory to load plugin from the right place
+  return configDir;
+}
 
 exports.getConfig = function () {
   return cfg.config;

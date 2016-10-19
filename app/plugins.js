@@ -16,8 +16,8 @@ const notify = require('./notify');
 const cache = new Config();
 
 // modules path
-const path = resolve(homedir(), '.hyper_plugins');
-const localPath = resolve(homedir(), '.hyper_plugins', 'local');
+const path = resolve(config.getConfigDir(), '.hyper_plugins');
+const localPath = resolve(config.getConfigDir(), '.hyper_plugins', 'local');
 const availableExtensions = new Set([
   'onApp', 'onWindow', 'onUnload', 'middleware',
   'reduceUI', 'reduceSessions', 'reduceTermGroups',
