@@ -17,7 +17,7 @@ const cache = new Config();
 
 // modules path
 const path = resolve(config.getConfigDir(), '.hyper_plugins');
-const localPath = resolve(config.getConfigDir(), '.hyper_plugins', 'local');
+const localPath = resolve(path, 'local');
 const availableExtensions = new Set([
   'onApp', 'onWindow', 'onUnload', 'middleware',
   'reduceUI', 'reduceSessions', 'reduceTermGroups',
