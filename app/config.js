@@ -17,7 +17,6 @@ const winCfg = new Config({
   }
 });
 
-
 let configDir = homedir();
 if (isDev) {
   // if a local config file exists, use it
@@ -27,8 +26,8 @@ if (isDev) {
     statSync(devConfig);
     configDir = devDir;
     console.log('using config file:', devConfig);
-  } catch(err) {
-    //ignore
+  } catch (err) {
+    // ignore
   }
 }
 
@@ -119,10 +118,10 @@ exports.init = function () {
   watch();
 };
 
-exports.getConfigDir = function() {
+exports.getConfigDir = function () {
   // expose config directory to load plugin from the right place
   return configDir;
-}
+};
 
 exports.getConfig = function () {
   return cfg.config;

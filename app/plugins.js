@@ -1,5 +1,4 @@
 const {exec} = require('child_process');
-const {homedir} = require('os');
 const {resolve, basename} = require('path');
 const {writeFileSync} = require('fs');
 
