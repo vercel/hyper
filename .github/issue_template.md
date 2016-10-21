@@ -6,7 +6,7 @@
   If not, please try and fulfil these first.
 -->
 
-- [ ] I am on the [latest](github.com/zeit/hyper/releases/latest) Hyper.app version
+- [ ] I am on the [latest](https://github.com/zeit/hyper/releases/latest) Hyper.app version
 - [ ] I have searched the [issues](https://github.com/zeit/hyper/issues) of this repo and believe that this is not a duplicate
 
 <!-- 
