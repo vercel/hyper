@@ -18,7 +18,7 @@
 - **Hyper.app version**: <!-- Replace with version -->
 - **Link of a [Gist](https://gist.github.com/) with the contents of your .hyper.js**: <!-- Gist Link Here -->
 - **Relevent information from devtools** _(CMD+SHIFT+I)_: <!-- Replace with info if applicable, or N/A -->
-- **The issue is reproducible in vanilla Hyper.app**: <!-- Replace with info if applicable, or `Is Vanilla` -->
+- **The issue is reproducible in vanilla Hyper.app**: <!-- Replace with info if applicable, or `Is Vanilla`. (Vanilla means Hyper.app without any add-ons or extras. Straight out of the box.) -->
 
 ## Issue
 <!-- Now feel free to write your issue! Thanks again 🙌 ❤️ -->
