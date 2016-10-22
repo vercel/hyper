@@ -12,7 +12,7 @@ const matchVersion = versions => (
 module.exports = function fetchNotifications(win) {
   const {rpc} = win;
   const retry = err => {
-    setTimeout(() => fetchNotifications(win), ms(err ? '10s' : '5m'));
+    setTimeout(() => fetchNotifications(win), ms('30m'));
     if (err) {
       console.error('Notification messages fetch error', err.stack);
     }
