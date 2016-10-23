@@ -134,6 +134,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     const rpc = createRPC(win);
     const sessions = new Map();
     
+    
     win.setRpc(rpc);
     
     // config changes
@@ -196,12 +197,15 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       const shell = cfg.shell;
       const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs); 
       
-      const element = win.get(activeUid);
+      const element = sessions.get(activeUid);
+      
+      // const element = win.get(activeUid);
       element.split({rows, cols, cwd, shell, shellArgs, splitDirection, activeUid}, win);
     });
 
     rpc.on('exit', ({uid}) => {
-      const session = win.get(uid).session;
+      // const session = win.get(uid).session;
+      const session = sessions.get(uid).session;
       if(session) {
         session.exit();
       } else {
@@ -218,12 +222,14 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('resize', ({uid, cols, rows}) => {
-      const session = win.get(uid).session;
+      // const session = win.get(uid).session;
+      const session = sessions.get(uid).session;
       session.resize({cols, rows});
     });
 
     rpc.on('data', ({uid, data}) => {
-      const session = win.get(uid).session;
+      // const session = win.get(uid).session;
+      const session = sessions.get(uid).session;
       session.write(data);
     });
 
@@ -240,7 +246,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     let i = 0;
     win.webContents.on('did-navigate', () => {
       if (i++) {
-        win.removeElements();
+        win.deleteSessions();
       }
     });
 
@@ -291,7 +297,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       app.config.window.recordState(win);
       windowSet.delete(win);
       rpc.destroy();
-      win.removeElements();
+      win.deleteSessions();
       cfgUnsubscribe();
       pluginsUnsubscribe();
     });
@@ -304,24 +310,25 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
   }
 
   // restore previous saved state
-  // record.load(reccords => {
-  //   if (reccords.length > 0) {
-  //     reccords.forEach(reccord => {
-  //       createWindow(undefined, {
-  //         position: reccord.position,
-  //         size: reccord.size
-  //       });
-  //         // rpc.emit('termgroup add req');
-  //     });
-  //   } else {
-  //     // when no reccords
-  //     // when opening create a new window
-  createWindow();
-  //   }
+  record.load(reccords => {
+    if (reccords.length > 0) {
+      reccords.forEach(reccord => {
+        console.log(reccord);
+        createWindow(undefined, {
+          position: reccord.position,
+          size: reccord.size
+        });
+          // rpc.emit('termgroup add req');
+      });
+    } else {
+      // when no reccords
+      // when opening create a new window
+      createWindow();
+    }
   //
-  //   // start save scheduler
+  // start save scheduler
     record.save(windowSet);
-  // });
+  });
 
   // expose to plugins
   app.createWindow = createWindow;
@@ -367,10 +374,6 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 }).catch(err => {
   console.error('Error while loading devtools extensions', err);
 }));
-
-function initSession(opts, fn) {
-  fn(uuid.v4(), new Session(opts));
-}
 
 app.on('open-file', (event, path) => {
   const lastWindow = app.getLastFocusedWindow();

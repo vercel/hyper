@@ -33,7 +33,7 @@ module.exports = class Tab {
     const size = this.splits.size;
     const id = size + 1;
     this.splits.add(new Split(size + 1, opts, this.rpc, (uid, split) => {
-      win.set(uid, split);
+      win.sessions.set(uid, split);
       split.session.on('data', data => {
         this.rpc.emit('session data', {uid, data});
       });
@@ -44,11 +44,21 @@ module.exports = class Tab {
       });
       
       split.session.on('exit', () => {
-        this.splits.delete(split.id);
-        win.remove(uid);
+        this.splits.delete(split);
+        win.sessions.delete(uid);
         this.rpc.emit('session exit', {uid});
       });
     }));
+  }
+  
+  record(fn) {
+   const tab = {ID: this.id, TYPE: 'TAB', splits:[]};
+    this.splits.forEach((split) => {
+      split.record(state => {
+        tab.splits.push(state);
+      });
+    });
+    fn(tab);
   }
 
 };

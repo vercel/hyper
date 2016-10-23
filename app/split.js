@@ -8,6 +8,7 @@ function initSession(opts, fn) {
 module.exports = class Split {
   constructor(id, {rows, cols, cwd, shell, shellArgs, splitDirection}, rpc, fn) {
     this.id = id;
+    this.direction = splitDirection;
     this.rpc = rpc;
     
     initSession({rows, cols, cwd, shell, shellArgs}, (uid, session) => {
@@ -33,7 +34,7 @@ module.exports = class Split {
     const size = this.splits.size;
     const id = size + 1;
     this.splits.add(new Split(size + 1, opts, this.rpc, (uid, split) => {
-      win.set(uid, split);
+      win.sessions.set(uid, split);
       split.session.on('data', data => {
         this.rpc.emit('session data', {uid, data});
       });
@@ -44,11 +45,21 @@ module.exports = class Split {
       });
       
       split.session.on('exit', () => {
-        this.splits.delete(split.id);
-        win.remove(uid);
+        this.splits.delete(split);
+        win.sessions.delete(uid);
         this.rpc.emit('session exit', {uid});
       });
     }));
+  }
+  
+  record(fn) {
+    const splitState = {ID: this.id, TYPE: 'SPLIT', DIRECTION: this.direction, splits: []};
+    this.splits.forEach((split) => {
+      split.record(state => {
+        splitState.splits.push(state);
+      });
+    });
+    fn(splitState);
   }
   
 };
