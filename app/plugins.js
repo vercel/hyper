@@ -295,6 +295,7 @@ function requirePlugins() {
 
       return mod;
     } catch (err) {
+      console.error(err);
       notify('Plugin error!', `Plugin "${basename(path)}" failed to load (${err.message})`);
     }
   };

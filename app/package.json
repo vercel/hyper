@@ -1,14 +1,15 @@
 {
   "name": "hyper",
   "productName": "Hyper",
-  "version": "0.8.1",
+  "description": "A terminal built on web technologies",
+  "version": "0.8.3",
   "license": "MIT",
   "author": {
     "name": "Zeit, Inc.",
     "email": "team@zeit.co"
   },
   "repository": "zeit/hyper",
-  "description": "HTML/JS/CSS Terminal",
+  "xo": false,
   "dependencies": {
     "child_pty": "3.0.1",
     "color": "0.11.3",
@@ -17,7 +18,7 @@
     "electron-config": "0.2.1",
     "electron-is-dev": "0.1.1",
     "file-uri-to-path": "0.0.2",
-    "gaze": "1.1.0",
+    "gaze": "1.1.2",
     "git-describe": "3.0.2",
     "mkdirp": "0.5.1",
     "ms": "0.7.1",
@@ -25,6 +26,5 @@
     "semver": "5.3.0",
     "shell-env": "0.2.0",
     "uuid": "2.0.2"
-  },
-  "xo": false
+  }
 }

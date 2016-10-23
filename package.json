@@ -1,8 +1,62 @@
 {
-  "name": "hyper",
-  "version": "0.8.1",
-  "description": "Web app that runs in the renderer process",
   "repository": "zeit/hyper",
+  "scripts": {
+    "start": "concurrently --kill-others --raw \"npm run dev\" \"npm run app\"",
+    "app": "electron app",
+    "dev": "webpack -w",
+    "build": "NODE_ENV=production webpack",
+    "test": "npm run dist && xo && ava",
+    "prepush": "npm test",
+    "postinstall": "install-app-deps",
+    "pack": "npm run build && build --dir && babel --no-comments --compact --minified --out-file app/dist/bundle.js app/dist/bundle.js",
+    "dist": "npm run build && build"
+  },
+  "xo": {
+    "extends": "xo-react",
+    "esnext": true,
+    "space": true,
+    "env": [
+      "browser",
+      "node"
+    ],
+    "rules": {
+      "new-cap": 0,
+      "no-warning-comments": 0,
+      "complexity": 0,
+      "import/prefer-default-export": 0,
+      "react/prop-types": 0,
+      "react/jsx-no-bind": 0
+    },
+    "ignores": [
+      "build/**",
+      "app/dist/**",
+      "app/static/**",
+      "assets/**"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "react"
+    ]
+  },
+  "build": {
+    "appId": "co.zeit.hyper",
+    "asar": false,
+    "extend-info": "build/Info.plist",
+    "linux": {
+      "arch": [
+        "ia32",
+        "x64"
+      ],
+      "target": [
+        "deb",
+        "AppImage"
+      ]
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    }
+  },
   "license": "MIT",
   "author": {
     "name": "Zeit, Inc.",
@@ -12,7 +66,6 @@
     "emails": false
   },
   "dependencies": {
-    "7zip-bin-osx": "1.0.0",
     "aphrodite-simple": "0.4.1",
     "color": "0.11.3",
     "hterm-umdjs": "1.1.3",
@@ -21,7 +74,6 @@
     "ms": "0.7.1",
     "object-values": "1.0.0",
     "php-escape-shell": "1.0.0",
-    "platform-dependent-modules": "^0.0.14",
     "react": "15.3.2",
     "react-addons-pure-render-mixin": "15.3.2",
     "react-deep-force-update": "2.0.1",
@@ -42,8 +94,8 @@
     "babel-preset-react": "^6.11.1",
     "concurrently": "^3.0.0",
     "copy-webpack-plugin": "^3.0.1",
-    "electron": "1.4.0",
-    "electron-builder": "^7.10.2",
+    "electron": "1.4.4",
+    "electron-builder": "^7.11.4",
     "electron-devtools-installer": "^2.0.0",
     "eslint-config-xo-react": "^0.10.0",
     "eslint-plugin-react": "^6.3.0",
@@ -52,65 +104,5 @@
     "spectron": "^3.4.0",
     "webpack": "^2.1.0-beta.15",
     "xo": "^0.17.0"
-  },
-  "xo": {
-    "extends": "xo-react",
-    "esnext": true,
-    "space": true,
-    "env": [
-      "browser",
-      "node",
-      "mocha"
-    ],
-    "rules": {
-      "eqeqeq": [
-        "error",
-        "allow-null"
-      ],
-      "no-eq-null": 0,
-      "new-cap": 0,
-      "no-warning-comments": 0,
-      "complexity": 0,
-      "import/prefer-default-export": 0,
-      "react/prop-types": 0,
-      "react/jsx-no-bind": 0
-    },
-    "ignore": [
-      "dist",
-      "build",
-      "app/dist",
-      "app/static",
-      "assets"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react"
-    ]
-  },
-  "build": {
-    "appId": "co.zeit.hyper",
-    "asar": false,
-    "extend-info": "build/Info.plist",
-    "linux": {
-      "target": [
-        "deb",
-        "AppImage"
-      ]
-    },
-    "mac": {
-      "category": "public.app-category.developer-tools"
-    }
-  },
-  "scripts": {
-    "start": "concurrently --kill-others --raw \"npm run dev\" \"npm run app\"",
-    "app": "electron app",
-    "dev": "webpack -w",
-    "build": "NODE_ENV=production webpack",
-    "test": "npm run dist && xo && ava",
-    "prepush": "npm test",
-    "postinstall": "install-app-deps && if [[ `uname` == 'Linux' ]]; then npm install 7zip-bin-linux; elif [[ `uname` == 'Darwin' ]]; then npm install 7zip-bin-osx; fi",
-    "pack": "npm run build && build --dir && babel --no-comments --compact --minified --out-file app/dist/bundle.js app/dist/bundle.js",
-    "dist": "npm run build && build"
   }
 }

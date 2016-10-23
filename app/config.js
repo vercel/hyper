@@ -40,6 +40,9 @@ function watch() {
         });
       }
     });
+    this.on('error', () => {
+      // Ignore file watching errors
+    });
   });
 }
 

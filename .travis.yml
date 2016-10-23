@@ -1,25 +1,25 @@
-osx_image: xcode7.3
-
 sudo: required
 dist: trusty
 
-language: c
+language: node_js
 
 matrix:
   include:
     - os: osx
+      node_js: 6
     - os: linux
+      node_js: 6
       env: CC=clang CXX=clang++ npm_config_clang=1
       compiler: clang
 
 cache:
   directories:
-  - node_modules
-  - app/node_modules
-  - $HOME/.electron
-  - $HOME/.cache
-  - ~/.yarn
-  - ~/.nvm
+    - node_modules
+    - app/node_modules
+    - $HOME/.electron
+    - $HOME/.cache
+    - ~/.yarn
+    - ~/.nvm
 
 addons:
   apt:
@@ -42,6 +42,11 @@ install:
   - npm prune
 
 script:
+
+before_script:
+  - npm prune
+
+after_success:
   - npm run dist
 
 branches:
