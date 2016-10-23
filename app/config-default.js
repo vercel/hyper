@@ -81,7 +81,12 @@ module.exports = {
   //   `hyperpower`
   //   `@company/project`
   //   `project#1.0.1`
-  plugins: [],
+  //
+  // Make sure, you dont remove 'hyper-keymap' plugin,
+  // unless you know what you are doing
+  plugins: [
+    'hyper-keymap'
+  ],
 
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
