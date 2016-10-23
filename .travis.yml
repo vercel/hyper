@@ -39,6 +39,9 @@ install:
   - nvm install 6
   - npm -g install yarn
   - yarn
+  - yarn add --optional 7zip-bin-mac || true
+  - yarn add --optional 7zip-bin-linux || true
+  - yarn add --optional 7zip-bin-win || true
   - npm prune
 
 script:
