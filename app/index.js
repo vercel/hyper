@@ -183,7 +183,6 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         console.log('ignoring auto updates during dev');
       }
 
-      // record.pushWin(win);
     });
     
     rpc.on('createTab', ({rows = 40, cols = 100, cwd = process.env.HOME}) => {
@@ -314,18 +313,21 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     if (reccords.length > 0) {
       reccords.forEach(reccord => {
         console.log(reccord);
-        createWindow(undefined, {
+        createWindow(win => {
+          reccord.tabs.forEach(tab => {
+            win.rpc.emit('window create tab');
+          });
+        }, {
           position: reccord.position,
           size: reccord.size
         });
-          // rpc.emit('termgroup add req');
       });
     } else {
       // when no reccords
       // when opening create a new window
       createWindow();
     }
-  //
+
   // start save scheduler
     record.save(windowSet);
   });
