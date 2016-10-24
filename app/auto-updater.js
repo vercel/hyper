@@ -19,6 +19,10 @@ function init() {
 
   autoUpdater.setFeedURL(`${FEED_URL}/${version}`);
 
+  setTimeout(() => {
+    autoUpdater.checkForUpdates();
+  }, ms('10s'));
+
   setInterval(() => {
     autoUpdater.checkForUpdates();
   }, ms('30m'));
