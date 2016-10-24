@@ -53,7 +53,7 @@ module.exports = class Split {
   }
   
   record(fn) {
-    const splitState = {ID: this.id, TYPE: 'SPLIT', DIRECTION: this.direction, splits: []};
+    const splitState = {id: this.id, uid: this.uid, type: 'SPLIT', direction: this.direction, splits: []};
     this.splits.forEach((split) => {
       split.record(state => {
         splitState.splits.push(state);

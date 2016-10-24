@@ -52,7 +52,7 @@ module.exports = class Tab {
   }
   
   record(fn) {
-   const tab = {ID: this.id, TYPE: 'TAB', splits:[]};
+   const tab = {id: this.id, uid: this.uid, type: 'TAB', splits:[]};
     this.splits.forEach((split) => {
       split.record(state => {
         tab.splits.push(state);

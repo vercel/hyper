@@ -165,7 +165,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       // If no callback is passed to createWindow,
       // a new session will be created by default.
       if (!fn) {
-        fn = win => win.rpc.emit('termgroup add req init');
+        fn = win => win.rpc.emit('window create tab');
       }
 
       // app.windowCallback is the createWindow callback
@@ -316,6 +316,17 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         createWindow(win => {
           reccord.tabs.forEach(tab => {
             win.rpc.emit('window create tab');
+            tab.splits.forEach(split => {
+              console.log(split);
+              // if(split) {
+              //   if (split.direction === 'VERTICAL') {
+              //     win.rpc.emit('split request vertical');
+              //   }
+              //   if (split.direction === 'HORIZONTAL') {
+              //     win.rpc.emit('split request horizontal');
+              //   }
+              // }
+            });
           });
         }, {
           position: reccord.position,

@@ -44,7 +44,7 @@ module.exports = class Window extends BrowserWindow {
   }
   
   record(fn) {
-    const win = { ID: this.id, size: this.getSize(), position: this.getPosition(), tabs:[]};
+    const win = { id: this.id, size: this.getSize(), position: this.getPosition(), tabs:[]};
     this.tabs.forEach((tab) => {
       tab.record(state => {
         win.tabs.push(state);
