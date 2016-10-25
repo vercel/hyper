@@ -105,7 +105,7 @@ module.exports = ({createWindow, updatePlugins}) => {
         type: 'separator'
       },
       {
-        label: 'Close',
+        label: 'Close Session',
         accelerator: 'CmdOrCtrl+W',
         click(item, focusedWindow) {
           if (focusedWindow) {
@@ -114,7 +114,7 @@ module.exports = ({createWindow, updatePlugins}) => {
         }
       },
       {
-        label: isMac ? 'Close Terminal Window' : 'Quit',
+        label: isMac ? 'Close Window' : 'Quit',
         role: 'close',
         accelerator: 'CmdOrCtrl+Shift+W'
       }
