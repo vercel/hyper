@@ -3,15 +3,19 @@ const Session = require('./session');
 const Split = require('./split');
 
 function initSession(opts, fn) {
-  fn(uuid.v4(), new Session(opts));
+  if (opts.uid) {
+    fn(opts.uid, new Session(opts));
+  } else {
+    fn(uuid.v4(), new Session(opts));
+  }
 }
 
 module.exports = class Tab {
-  constructor(id, {rows, cols, cwd, shell, shellArgs}, rpc, fn) {
+  constructor(id, {rows, cols, cwd, shell, shellArgs, uid}, rpc, fn) {
     this.id = id;
     this.rpc = rpc;
     
-    initSession({rows, cols, cwd, shell, shellArgs}, (uid, session) => {
+    initSession({rows, cols, cwd, shell, shellArgs, uid}, (uid, session) => {
       this.uid = uid;
       this.session =  session;
       

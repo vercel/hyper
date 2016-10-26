@@ -1,8 +1,6 @@
 const {BrowserWindow} = require('electron');
 const Tab = require('./tab');
 
-// const elements = new Map();
-
 module.exports = class Window extends BrowserWindow {
   constructor(ops) {
     super(ops);
@@ -14,8 +12,13 @@ module.exports = class Window extends BrowserWindow {
     this.rpc = rpc;
   }
   
+  loadTab(uid) {
+    
+  }
+  
   createTab(opts) {
     const size = this.tabs.size;
+    console.log(opts);
     this.tabs.add(new Tab(size + 1, opts, this.rpc, (uid, tab) => {
       this.sessions.set(uid, tab);
       tab.session.on('data', data => {

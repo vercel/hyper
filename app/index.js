@@ -185,11 +185,10 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     });
     
-    rpc.on('createTab', ({rows = 40, cols = 100, cwd = process.env.HOME}) => {
+    rpc.on('createTab', ({rows = 40, cols = 100, cwd = process.env.HOME, uid}) => {
       const shell = cfg.shell;
-      const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs); 
-      
-      win.createTab({rows, cols, cwd, shell, shellArgs}); 
+      const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
+      win.createTab({rows, cols, cwd, shell, shellArgs, uid}); 
     });
     
     rpc.on('termSplit', ({rows = 40, cols = 100, cwd = process.env.HOME, splitDirection, activeUid}) => {
@@ -308,6 +307,14 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
   }
 
+
+  // rpc.on('restoreTab', ({rows = 40, cols = 100, cwd = process.env.HOME}) => {
+  //   const shell = cfg.shell;
+  //   const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs); 
+  //   
+  //   win.createTab({rows, cols, cwd, shell, shellArgs}); 
+  // });
+  
   // restore previous saved state
   record.load(reccords => {
     if (reccords.length > 0) {
@@ -315,9 +322,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         console.log(reccord);
         createWindow(win => {
           reccord.tabs.forEach(tab => {
-            win.rpc.emit('window create tab');
-            tab.splits.forEach(split => {
-              console.log(split);
+            win.rpc.emit('window load tab', {uid:tab.uid});
+            // tab.splits.forEach(split => {
+              // console.log(split);
               // if(split) {
               //   if (split.direction === 'VERTICAL') {
               //     win.rpc.emit('split request vertical');
@@ -326,7 +333,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
               //     win.rpc.emit('split request horizontal');
               //   }
               // }
-            });
+            // });
           });
         }, {
           position: reccord.position,
@@ -338,7 +345,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       // when opening create a new window
       createWindow();
     }
-
+  
   // start save scheduler
     record.save(windowSet);
   });
