@@ -10,7 +10,7 @@ const config = require('./config');
 
 let spawn;
 try {
-  spawn = require('child_pty').spawn;
+  spawn = require('pty.js').spawn;
 } catch (err) {
   console.error(
     'A native module failed to load. Typically this means ' +
@@ -69,9 +69,9 @@ module.exports = class Session extends EventEmitter {
     this.pty.stdin.write(data);
   }
 
-  resize({cols: columns, rows}) {
+  resize({cols, rows}) {
     try {
-      this.pty.stdout.resize({columns, rows});
+      this.pty.stdout.resize(cols, rows);
     } catch (err) {
       console.error(err.stack);
     }
@@ -79,7 +79,7 @@ module.exports = class Session extends EventEmitter {
 
   destroy() {
     try {
-      this.pty.kill('SIGHUP');
+      this.pty.kill();
     } catch (err) {
       console.error('exit error', err.stack);
     }

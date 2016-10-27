@@ -11,7 +11,6 @@
   "repository": "zeit/hyper",
   "xo": false,
   "dependencies": {
-    "child_pty": "3.0.1",
     "color": "0.11.3",
     "convert-css-color-name-to-hex": "0.1.1",
     "default-shell": "1.0.1",
@@ -23,6 +22,7 @@
     "mkdirp": "0.5.1",
     "ms": "0.7.1",
     "node-fetch": "1.6.3",
+    "pty.js": "https://github.com/Tyriar/pty.js/tarball/c75c2dcb6dcad83b0cb3ef2ae42d0448fb912642",
     "semver": "5.3.0",
     "shell-env": "0.2.0",
     "uuid": "2.0.2"
