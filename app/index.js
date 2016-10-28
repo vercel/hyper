@@ -108,9 +108,11 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       height,
       minHeight: 190,
       minWidth: 370,
-      titleBarStyle: 'hidden-inset',
+      titleBarStyle: 'hidden-inset', // macOS only
       title: 'Hyper.app',
       backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
+      // we want to go frameless on windows and linux
+      frame: process.platform === 'darwin',
       transparent: true,
       icon: resolve(__dirname, 'static/icon.png'),
       // we only want to show when the prompt is ready for user input
