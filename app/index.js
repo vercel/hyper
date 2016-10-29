@@ -202,7 +202,6 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('exit', ({uid}) => {
-      // const session = win.get(uid).session;
       const session = sessions.get(uid).session;
       if(session) {
         session.exit();
@@ -220,13 +219,11 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('resize', ({uid, cols, rows}) => {
-      // const session = win.get(uid).session;
       const session = sessions.get(uid).session;
       session.resize({cols, rows});
     });
 
     rpc.on('data', ({uid, data}) => {
-      // const session = win.get(uid).session;
       const session = sessions.get(uid).session;
       session.write(data);
     });
@@ -323,7 +320,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         createWindow(win => {
           reccord.tabs.forEach(tab => {
             console.log(tab);
-            win.rpc.emit('window load tab', {uid:tab.uid});
+            win.rpc.emit('termgroup load req', {uid:tab.uid});
             // tab.splits.forEach(split => {
               // console.log(split);
               // if(split) {
