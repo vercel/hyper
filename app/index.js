@@ -2,25 +2,21 @@
 const {resolve} = require('path');
 
 // Packages
-const {parse: parseUrl} = require('url');
 const {app, BrowserWindow, shell, Menu} = require('electron');
 const {gitDescribe} = require('git-describe');
 const uuid = require('uuid');
-const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 
 // Ours
-const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
 const createMenu = require('./menu');
 const createRPC = require('./rpc');
-const notify = require('./notify');
-const fetchNotifications = require('./notifications');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
 
 // set up config
 const config = require('./config');
+
 // set up record
 const record = require('./record');
 
@@ -31,23 +27,9 @@ const Session = require('./session');
 
 const Window = require('./window');
 
-const windowSet = new Set([]);
-
 // expose to plugins
 app.config = config;
 app.plugins = plugins;
-app.getWindows = () => new Set([...windowSet]); // return a clone
-
-// function to retrieve the last focused window in windowSet;
-// added to app object in order to expose it to plugins.
-app.getLastFocusedWindow = () => {
-  if (!windowSet.size) {
-    return null;
-  }
-  return Array.from(windowSet).reduce((lastWindow, win) => {
-    return win.focusTime > lastWindow.focusTime ? win : lastWindow;
-  });
-};
 
 if (isDev) {
   console.log('running in dev mode');
@@ -126,226 +108,46 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     const browserOptions = plugins.getDecoratedBrowserOptions(browserDefaults);
 
-    const win = new Window(browserOptions);
-    windowSet.add(win);
+    const win = new Window(browserOptions, cfg, fn);
 
     win.loadURL(url);
-
-    const rpc = createRPC(win);
-    const sessions = new Map();
-    
-    
-    win.setRpc(rpc);
-    
-    // config changes
-    const cfgUnsubscribe = config.subscribe(() => {
-      const cfg_ = plugins.getDecoratedConfig();
-
-      // notify renderer
-      win.webContents.send('config change');
-
-      // notify user that shell changes require new sessions
-      if (cfg_.shell !== cfg.shell || cfg_.shellArgs !== cfg.shellArgs) {
-        notify(
-          'Shell configuration changed!',
-          'Open a new tab or window to start using the new shell'
-        );
-      }
-
-      // update background color if necessary
-      win.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
-
-      cfg = cfg_;
-    });
-
-    rpc.on('init', () => {
-      win.show();
-
-      // If no callback is passed to createWindow,
-      // a new session will be created by default.
-      if (!fn) {
-        fn = win => win.rpc.emit('termgroup add req');
-      }
-
-      // app.windowCallback is the createWindow callback
-      // that can be set before the 'ready' app event
-      // and createWindow deifinition. It's executed in place of
-      // the callback passed as parameter, and deleted right after.
-      (app.windowCallback || fn)(win);
-      delete (app.windowCallback);
-
-      fetchNotifications(win);
-      // auto updates
-      if (!isDev && process.platform !== 'linux') {
-        AutoUpdater(win);
-      } else {
-        console.log('ignoring auto updates during dev');
-      }
-
-    });
-    
-    rpc.on('new tab', ({rows = 40, cols = 100, cwd = process.env.HOME, uid}) => {
-      const shell = cfg.shell;
-      const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
-      win.createTab({rows, cols, cwd, shell, shellArgs, uid}); 
-    });
-    
-    rpc.on('new split', ({rows = 40, cols = 100, cwd = process.env.HOME, splitDirection, activeUid}) => {
-      const shell = cfg.shell;
-      const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs); 
-      
-      const element = sessions.get(activeUid);
-      
-      // const element = win.get(activeUid);
-      element.split({rows, cols, cwd, shell, shellArgs, splitDirection, activeUid}, win);
-    });
-
-    rpc.on('exit', ({uid}) => {
-      const session = sessions.get(uid).session;
-      if(session) {
-        session.exit();
-      } else {
-        console.log('session not found by', uid);
-      }
-    });
-
-    rpc.on('unmaximize', () => {
-      win.unmaximize();
-    });
-
-    rpc.on('maximize', () => {
-      win.maximize();
-    });
-
-    rpc.on('resize', ({uid, cols, rows}) => {
-      const session = sessions.get(uid).session;
-      session.resize({cols, rows});
-    });
-
-    rpc.on('data', ({uid, data}) => {
-      const session = sessions.get(uid).session;
-      session.write(data);
-    });
-
-    rpc.on('open external', ({url}) => {
-      shell.openExternal(url);
-    });
-
-    rpc.win.on('move', () => {
-      rpc.emit('move');
-    });
-
-    // we reset the rpc channel only upon
-    // subsequent refreshes (ie: F5)
-    let i = 0;
-    win.webContents.on('did-navigate', () => {
-      if (i++) {
-        win.deleteSessions();
-      }
-    });
-
-    // If file is dropped onto the terminal window, navigate event is prevented
-    // and his path is added to active session.
-    win.webContents.on('will-navigate', (event, url) => {
-      const protocol = typeof url === 'string' && parseUrl(url).protocol;
-      if (protocol === 'file:') {
-        event.preventDefault();
-        const path = fileUriToPath(url).replace(/ /g, '\\ ');
-        rpc.emit('session data send', {data: path});
-      }
-    });
-
-    // expose internals to extension authors
-    win.rpc = rpc;
-    win.sessions = sessions;
-
-    const load = () => {
-      plugins.onWindow(win);
-    };
-
-    // load plugins
-    load();
-
-    const pluginsUnsubscribe = plugins.subscribe(err => {
-      if (!err) {
-        load();
-        win.webContents.send('plugins change');
-      }
-    });
-
-    // Keep track of focus time of every window, to figure out
-    // which one of the existing window is the last focused.
-    // Works nicely even if a window is closed and removed.
-    const updateFocusTime = () => {
-      win.focusTime = process.uptime();
-    };
-    win.on('focus', () => {
-      updateFocusTime();
-    });
-    // Ensure focusTime is set on window open. The focus event doesn't
-    // fire from the dock (see bug #583)
-    updateFocusTime();
-
-    // the window can be closed by the browser process itself
-    win.on('close', () => {
-      app.config.window.recordState(win);
-      windowSet.delete(win);
-      rpc.destroy();
-      win.deleteSessions();
-      cfgUnsubscribe();
-      pluginsUnsubscribe();
-    });
-
-    win.on('closed', () => {
-      if (process.platform !== 'darwin') {
-        app.quit();
-      }
-    });
   }
-
-
-  // rpc.on('restoreTab', ({rows = 40, cols = 100, cwd = process.env.HOME}) => {
-  //   const shell = cfg.shell;
-  //   const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs); 
-  //   
-  //   win.createTab({rows, cols, cwd, shell, shellArgs}); 
-  // });
   
   // restore previous saved state
-  record.load(reccords => {
-    if (reccords.length > 0) {
-      reccords.forEach(reccord => {
-        console.log(reccord);
-        createWindow(win => {
-          reccord.tabs.forEach(tab => {
-            console.log(tab);
-            win.rpc.emit('termgroup load req', {uid:tab.uid});
-            // tab.splits.forEach(split => {
-              // console.log(split);
-              // if(split) {
-              //   if (split.direction === 'VERTICAL') {
-              //     win.rpc.emit('split request vertical');
-              //   }
-              //   if (split.direction === 'HORIZONTAL') {
-              //     win.rpc.emit('split request horizontal');
-              //   }
-              // }
-            // });
-          });
-        }, {
-          position: reccord.position,
-          size: reccord.size
-        });
-      });
-    } else {
-      // when no reccords
-      // when opening create a new window
+  // record.load(reccords => {
+  //   if (reccords.length > 0) {
+  //     reccords.forEach(reccord => {
+  //       console.log(reccord);
+  //       createWindow(win => {
+  //         reccord.tabs.forEach(tab => {
+  //           console.log(tab);
+  //           win.rpc.emit('termgroup load req', {uid:tab.uid});
+  //           // tab.splits.forEach(split => {
+  //             // console.log(split);
+  //             // if(split) {
+  //             //   if (split.direction === 'VERTICAL') {
+  //             //     win.rpc.emit('split request vertical');
+  //             //   }
+  //             //   if (split.direction === 'HORIZONTAL') {
+  //             //     win.rpc.emit('split request horizontal');
+  //             //   }
+  //             // }
+  //           // });
+  //         });
+  //       }, {
+  //         position: reccord.position,
+  //         size: reccord.size
+  //       });
+  //     });
+  //   } else {
+  //     // when no reccords
+  //     // when opening create a new window
       createWindow();
-    }
-  
-  // start save scheduler
-    record.save(windowSet);
-  });
+  //   }
+  // 
+  // // start save scheduler
+  //   record.save(windowSet);
+  // });
 
   // expose to plugins
   app.createWindow = createWindow;
