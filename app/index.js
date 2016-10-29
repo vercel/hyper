@@ -165,7 +165,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       // If no callback is passed to createWindow,
       // a new session will be created by default.
       if (!fn) {
-        fn = win => win.rpc.emit('window create tab');
+        fn = win => win.rpc.emit('termgroup add req');
       }
 
       // app.windowCallback is the createWindow callback
@@ -185,13 +185,13 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     });
     
-    rpc.on('createTab', ({rows = 40, cols = 100, cwd = process.env.HOME, uid}) => {
+    rpc.on('new tab', ({rows = 40, cols = 100, cwd = process.env.HOME, uid}) => {
       const shell = cfg.shell;
       const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
       win.createTab({rows, cols, cwd, shell, shellArgs, uid}); 
     });
     
-    rpc.on('termSplit', ({rows = 40, cols = 100, cwd = process.env.HOME, splitDirection, activeUid}) => {
+    rpc.on('new split', ({rows = 40, cols = 100, cwd = process.env.HOME, splitDirection, activeUid}) => {
       const shell = cfg.shell;
       const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs); 
       
@@ -322,6 +322,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         console.log(reccord);
         createWindow(win => {
           reccord.tabs.forEach(tab => {
+            console.log(tab);
             win.rpc.emit('window load tab', {uid:tab.uid});
             // tab.splits.forEach(split => {
               // console.log(split);
