@@ -159,7 +159,6 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('init', () => {
-      console.log('init');
       win.show();
 
       // If no callback is passed to createWindow,
