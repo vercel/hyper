@@ -1,3 +1,4 @@
+const { exec } = require('child_process');
 const uuid = require('uuid');
 const Session = require('./session');
 const Split = require('./split');
@@ -14,11 +15,11 @@ module.exports = class Tab {
   constructor(id, {rows, cols, cwd, shell, shellArgs, uid}, rpc, fn) {
     this.id = id;
     this.rpc = rpc;
-    
+
     initSession({rows, cols, cwd, shell, shellArgs, uid}, (uid, session) => {
       this.uid = uid;
       this.session =  session;
-      
+
       rpc.emit('session add', {
         rows,
         cols,
@@ -36,6 +37,7 @@ module.exports = class Tab {
   split(opts, win, recordedSplit) {
     if (recordedSplit) {
       opts.uid = recordedSplit.uid;
+      opts.cwd = recordedSplit.cwd;
     }
     const size = this.splits.size;
     this.splits.add(new Split(size + 1, opts, this.rpc, (uid, split) => {
@@ -62,9 +64,18 @@ module.exports = class Tab {
       }
     }));
   }
-  
+
   record(fn) {
-   const tab = {id: this.id, uid: this.uid, type: 'TAB', splits:[]};
+    const pid = this.session.pty.pid;
+    exec(`lsof -p ${pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`, (err, cwd) => {
+      if (err) {
+        console.error(err);
+      } else {
+        cwd = cwd.trim();
+        this.cwd = cwd;
+      }
+    });
+   const tab = {id: this.id, uid: this.uid, cwd: this.cwd, type: 'TAB', splits:[]};
     this.splits.forEach((split) => {
       split.record(state => {
         tab.splits.push(state);

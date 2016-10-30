@@ -3,7 +3,7 @@ const Config = require('electron-config');
 
 // local storage
 const rec = new Config();
-const recordInterval = 1000;
+const recordInterval = 2000;
 
 module.exports.save = function (windows) {
   setInterval(() => {

@@ -194,6 +194,7 @@ module.exports = class Window extends BrowserWindow {
   createTab(opts, recordedTab) {
     if (recordedTab) {
       opts.uid = recordedTab.uid;
+      opts.cwd = recordedTab.cwd;
     }
     const size = this.tabs.size;
     this.tabs.add(new Tab(size + 1, opts, this.rpc, (uid, tab) => {

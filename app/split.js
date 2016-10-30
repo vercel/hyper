@@ -1,3 +1,4 @@
+const { exec } = require('child_process');
 const uuid = require('uuid');
 const Session = require('./session');
 
@@ -37,6 +38,7 @@ module.exports = class Split {
   split(opts, win, recordedSplit) {
     if (recordedSplit) {
       opts.uid = recordedSplit.uid;
+      opts.cwd = recordedSplit.cwd;
     }
     const size = this.splits.size;
     this.splits.add(new Split(size + 1, opts, this.rpc, (uid, split) => {
@@ -65,7 +67,16 @@ module.exports = class Split {
   }
   
   record(fn) {
-    const splitState = {id: this.id, uid: this.uid, type: 'SPLIT', direction: this.direction, splits: []};
+    const pid = this.session.pty.pid;
+    exec(`lsof -p ${pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`, (err, cwd) => {
+      if (err) {
+        console.error(err);
+      } else {
+        cwd = cwd.trim();
+        this.cwd = cwd;
+      }
+    });
+    const splitState = {id: this.id, uid: this.uid, cwd: this.cwd, type: 'SPLIT', direction: this.direction, splits: []};
     this.splits.forEach((split) => {
       split.record(state => {
         splitState.splits.push(state);
