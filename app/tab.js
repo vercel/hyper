@@ -33,9 +33,11 @@ module.exports = class Tab {
     this.splits = new Set([]);
   }
 
-  split(opts, win) {
+  split(opts, win, recordedSplit) {
+    if (recordedSplit) {
+      opts.uid = recordedSplit.uid;
+    }
     const size = this.splits.size;
-    const id = size + 1;
     this.splits.add(new Split(size + 1, opts, this.rpc, (uid, split) => {
       win.sessions.set(uid, split);
       split.session.on('data', data => {
@@ -52,6 +54,12 @@ module.exports = class Tab {
         win.sessions.delete(uid);
         this.rpc.emit('session exit', {uid});
       });
+      
+      if (recordedSplit) {
+        recordedSplit.splits.forEach(split => {
+          this.rpc.emit('split load', {uid: recordedSplit.uid, split: split});
+        });
+      }
     }));
   }
   

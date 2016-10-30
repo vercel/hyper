@@ -12,26 +12,11 @@ const notify = require('./notify');
 const fetchNotifications = require('./notifications');
 const Tab = require('./tab');
 
-const windowSet = new Set([]);
-
-app.getWindows = () => new Set([...windowSet]); // return a clone
-
-// function to retrieve the last focused window in windowSet;
-// added to app object in order to expose it to plugins.
-app.getLastFocusedWindow = () => {
-  if (!windowSet.size) {
-    return null;
-  }
-  return Array.from(windowSet).reduce((lastWindow, win) => {
-    return win.focusTime > lastWindow.focusTime ? win : lastWindow;
-  });
-};
-
 module.exports = class Window extends BrowserWindow {
   constructor(opts, cfg, fn) {
     super(opts);
     this.tabs = new Set([]);
-
+    
     const rpc = createRPC(this);
     const sessions = new Map();
 
@@ -81,18 +66,18 @@ module.exports = class Window extends BrowserWindow {
       }
     });
 
-    rpc.on('new tab', ({rows = 40, cols = 100, cwd = process.env.HOME, uid}) => {
+    rpc.on('new tab', ({rows = 40, cols = 100, cwd = process.env.HOME, tab}) => {
       const shell = cfg.shell;
       const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
-      this.createTab({rows, cols, cwd, shell, shellArgs, uid}); 
+      this.createTab({rows, cols, cwd, shell, shellArgs}, tab);
     });
 
-    rpc.on('new split', ({rows = 40, cols = 100, cwd = process.env.HOME, splitDirection, activeUid}) => {
+    rpc.on('new split', ({rows = 40, cols = 100, cwd = process.env.HOME, splitDirection, activeUid, split}) => {
       const shell = cfg.shell;
       const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
       
       const element = sessions.get(activeUid);
-      element.split({rows, cols, cwd, shell, shellArgs, splitDirection, activeUid}, this);
+      element.split({rows, cols, cwd, shell, shellArgs, splitDirection, activeUid}, this, split);
     });
 
     rpc.on('exit', ({uid}) => {
@@ -193,7 +178,6 @@ module.exports = class Window extends BrowserWindow {
     // the window can be closed by the browser process itself
     this.on('close', () => {
       app.config.window.recordState(this);
-      windowSet.delete(win);
       rpc.destroy();
       deleteSessions();
       cfgUnsubscribe();
@@ -205,17 +189,13 @@ module.exports = class Window extends BrowserWindow {
         app.quit();
       }
     });
-
-    windowSet.add(this);
   }
   
-  loadTab(uid) {
-    
-  }
-  
-  createTab(opts) {
+  createTab(opts, recordedTab) {
+    if (recordedTab) {
+      opts.uid = recordedTab.uid;
+    }
     const size = this.tabs.size;
-    console.log(opts);
     this.tabs.add(new Tab(size + 1, opts, this.rpc, (uid, tab) => {
       this.sessions.set(uid, tab);
       tab.session.on('data', data => {
@@ -232,6 +212,12 @@ module.exports = class Window extends BrowserWindow {
         this.sessions.delete(uid);
         this.rpc.emit('session exit', {uid});
       });
+      
+      if (recordedTab) {
+        recordedTab.splits.forEach(split => {
+          this.rpc.emit('split load', {uid: recordedTab.uid, split: split});
+        });
+      }
     }));
   }
   

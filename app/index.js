@@ -27,9 +27,26 @@ const Session = require('./session');
 
 const Window = require('./window');
 
+
+const windowSet = new Set([]);
+
 // expose to plugins
 app.config = config;
 app.plugins = plugins;
+
+app.getWindows = () => new Set([...windowSet]); // return a clone
+
+// function to retrieve the last focused window in windowSet;
+// added to app object in order to expose it to plugins.
+app.getLastFocusedWindow = () => {
+  if (!windowSet.size) {
+    return null;
+  }
+  return Array.from(windowSet).reduce((lastWindow, win) => {
+    return win.focusTime > lastWindow.focusTime ? win : lastWindow;
+  });
+};
+
 
 if (isDev) {
   console.log('running in dev mode');
@@ -109,45 +126,38 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     const browserOptions = plugins.getDecoratedBrowserOptions(browserDefaults);
 
     const win = new Window(browserOptions, cfg, fn);
+    windowSet.add(win);
 
     win.loadURL(url);
+    
+    // the window can be closed by the browser process itself
+    win.on('close', () => {
+      windowSet.delete(win);
+    });
   }
   
   // restore previous saved state
-  // record.load(reccords => {
-  //   if (reccords.length > 0) {
-  //     reccords.forEach(reccord => {
-  //       console.log(reccord);
-  //       createWindow(win => {
-  //         reccord.tabs.forEach(tab => {
-  //           console.log(tab);
-  //           win.rpc.emit('termgroup load req', {uid:tab.uid});
-  //           // tab.splits.forEach(split => {
-  //             // console.log(split);
-  //             // if(split) {
-  //             //   if (split.direction === 'VERTICAL') {
-  //             //     win.rpc.emit('split request vertical');
-  //             //   }
-  //             //   if (split.direction === 'HORIZONTAL') {
-  //             //     win.rpc.emit('split request horizontal');
-  //             //   }
-  //             // }
-  //           // });
-  //         });
-  //       }, {
-  //         position: reccord.position,
-  //         size: reccord.size
-  //       });
-  //     });
-  //   } else {
-  //     // when no reccords
-  //     // when opening create a new window
+  record.load(reccords => {
+    if (reccords.length > 0) {
+      reccords.forEach(reccord => {
+        createWindow(win => {
+          reccord.tabs.forEach(tab => {
+            win.rpc.emit('termgroup load req', {tab:tab});
+          });
+        }, {
+          position: reccord.position,
+          size: reccord.size
+        });
+      });
+    } else {
+      // when no reccords
+      // when opening create a new window
       createWindow();
-  //   }
-  // 
-  // // start save scheduler
-  //   record.save(windowSet);
-  // });
+    }
+  
+  // start save scheduler
+    record.save(windowSet);
+  });
 
   // expose to plugins
   app.createWindow = createWindow;

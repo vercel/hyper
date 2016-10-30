@@ -2,16 +2,19 @@ const uuid = require('uuid');
 const Session = require('./session');
 
 function initSession(opts, fn) {
-  fn(uuid.v4(), new Session(opts));
+  if (opts.uid) {
+    fn(opts.uid, new Session(opts));
+  } else {
+    fn(uuid.v4(), new Session(opts));
+  }
 }
 
 module.exports = class Split {
-  constructor(id, {rows, cols, cwd, shell, shellArgs, splitDirection}, rpc, fn) {
+  constructor(id, {rows, cols, cwd, shell, shellArgs, splitDirection, activeUid, uid}, rpc, fn) {
     this.id = id;
     this.direction = splitDirection;
     this.rpc = rpc;
-    
-    initSession({rows, cols, cwd, shell, shellArgs}, (uid, session) => {
+    initSession({rows, cols, cwd, shell, shellArgs, uid}, (uid, session) => {
       this.uid = uid;
       this.session =  session;
       
@@ -21,7 +24,8 @@ module.exports = class Split {
         uid,
         splitDirection,
         shell: session.shell,
-        pid: session.pty.pid
+        pid: session.pty.pid,
+        activeUid: activeUid
       });
       
       fn(uid, this);
@@ -30,9 +34,11 @@ module.exports = class Split {
     this.splits = new Set([]);
   }
   
-  split(opts, win) {
+  split(opts, win, recordedSplit) {
+    if (recordedSplit) {
+      opts.uid = recordedSplit.uid;
+    }
     const size = this.splits.size;
-    const id = size + 1;
     this.splits.add(new Split(size + 1, opts, this.rpc, (uid, split) => {
       win.sessions.set(uid, split);
       split.session.on('data', data => {
@@ -49,6 +55,12 @@ module.exports = class Split {
         win.sessions.delete(uid);
         this.rpc.emit('session exit', {uid});
       });
+      
+      if (recordedSplit) {
+        recordedSplit.splits.forEach(split => {
+          this.rpc.emit('split load', {uid: recordedSplit.uid, split: split});
+        });
+      }
     }));
   }
   
