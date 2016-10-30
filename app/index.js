@@ -2,31 +2,24 @@
 const {resolve} = require('path');
 
 // Packages
-const {app, BrowserWindow, shell, Menu} = require('electron');
+const {app, BrowserWindow, Menu} = require('electron');
 const {gitDescribe} = require('git-describe');
-const uuid = require('uuid');
 const isDev = require('electron-is-dev');
 
 // Ours
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
 const createMenu = require('./menu');
-const createRPC = require('./rpc');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
 
 // set up config
 const config = require('./config');
 
-// set up record
-const record = require('./record');
-
 config.init();
 
 const plugins = require('./plugins');
-const Session = require('./session');
 
 const Window = require('./window');
-
 
 const windowSet = new Set([]);
 
@@ -46,7 +39,6 @@ app.getLastFocusedWindow = () => {
     return win.focusTime > lastWindow.focusTime ? win : lastWindow;
   });
 };
-
 
 if (isDev) {
   console.log('running in dev mode');
@@ -70,7 +62,7 @@ console.log('electron will open', url);
 
 app.on('ready', () => installDevExtensions(isDev).then(() => {
   function createWindow(fn, options = {}) {
-    let cfg = plugins.getDecoratedConfig();
+    const cfg = plugins.getDecoratedConfig();
 
     const winSet = app.config.window.get();
     let [startX, startY] = winSet.position;
@@ -129,38 +121,20 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     windowSet.add(win);
 
     win.loadURL(url);
-    
+
     // the window can be closed by the browser process itself
     win.on('close', () => {
       windowSet.delete(win);
     });
   }
-  
-  // restore previous saved state
-  record.load(reccords => {
-    if (reccords.length > 0) {
-      reccords.forEach(reccord => {
-        createWindow(win => {
-          reccord.tabs.forEach(tab => {
-            win.rpc.emit('termgroup load req', {tab:tab});
-          });
-        }, {
-          position: reccord.position,
-          size: reccord.size
-        });
-      });
-    } else {
-      // when no reccords
-      // when opening create a new window
-      createWindow();
-    }
-  
-  // start save scheduler
-    record.save(windowSet);
-  });
 
   // expose to plugins
   app.createWindow = createWindow;
+
+  // set up record
+  const record = require('./record');
+  // restore previous saved state
+  record.load(windowSet);
 
   // mac only. when the dock icon is clicked
   // and we don't have any active windows open,

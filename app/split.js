@@ -1,4 +1,4 @@
-const { exec } = require('child_process');
+const {exec} = require('child_process');
 const uuid = require('uuid');
 const Session = require('./session');
 
@@ -17,8 +17,8 @@ module.exports = class Split {
     this.rpc = rpc;
     initSession({rows, cols, cwd, shell, shellArgs, uid}, (uid, session) => {
       this.uid = uid;
-      this.session =  session;
-      
+      this.session = session;
+
       rpc.emit('session add', {
         rows,
         cols,
@@ -26,15 +26,15 @@ module.exports = class Split {
         splitDirection,
         shell: session.shell,
         pid: session.pty.pid,
-        activeUid: activeUid
+        activeUid
       });
-      
+
       fn(uid, this);
-    }); 
-    
+    });
+
     this.splits = new Set([]);
   }
-  
+
   split(opts, win, recordedSplit) {
     if (recordedSplit) {
       opts.uid = recordedSplit.uid;
@@ -46,26 +46,26 @@ module.exports = class Split {
       split.session.on('data', data => {
         this.rpc.emit('session data', {uid, data});
       });
-      
+
       split.session.on('title', title => {
         win.setTitle(title);
         this.rpc.emit('session title', {uid, title});
       });
-      
+
       split.session.on('exit', () => {
         this.splits.delete(split);
         win.sessions.delete(uid);
         this.rpc.emit('session exit', {uid});
       });
-      
+
       if (recordedSplit) {
         recordedSplit.splits.forEach(split => {
-          this.rpc.emit('split load', {uid: recordedSplit.uid, split: split});
+          this.rpc.emit('split load', {uid: recordedSplit.uid, split});
         });
       }
     }));
   }
-  
+
   record(fn) {
     const pid = this.session.pty.pid;
     exec(`lsof -p ${pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`, (err, cwd) => {
@@ -77,12 +77,12 @@ module.exports = class Split {
       }
     });
     const splitState = {id: this.id, uid: this.uid, cwd: this.cwd, type: 'SPLIT', direction: this.direction, splits: []};
-    this.splits.forEach((split) => {
+    this.splits.forEach(split => {
       split.record(state => {
         splitState.splits.push(state);
       });
     });
     fn(splitState);
   }
-  
+
 };

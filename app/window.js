@@ -16,7 +16,7 @@ module.exports = class Window extends BrowserWindow {
   constructor(opts, cfg, fn) {
     super(opts);
     this.tabs = new Set([]);
-    
+
     const rpc = createRPC(this);
     const sessions = new Map();
 
@@ -47,7 +47,7 @@ module.exports = class Window extends BrowserWindow {
       // If no callback is passed to createWindow,
       // a new session will be created by default.
       if (!fn) {
-        fn = win => rpc.emit('termgroup add req');
+        rpc.emit('termgroup add req');
       }
 
       // app.windowCallback is the createWindow callback
@@ -75,14 +75,14 @@ module.exports = class Window extends BrowserWindow {
     rpc.on('new split', ({rows = 40, cols = 100, cwd = process.env.HOME, splitDirection, activeUid, split}) => {
       const shell = cfg.shell;
       const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
-      
+
       const element = sessions.get(activeUid);
       element.split({rows, cols, cwd, shell, shellArgs, splitDirection, activeUid}, this, split);
     });
 
     rpc.on('exit', ({uid}) => {
       const session = sessions.get(uid).session;
-      if(session) {
+      if (session) {
         session.exit();
       } else {
         console.log('session not found by', uid);
@@ -117,11 +117,11 @@ module.exports = class Window extends BrowserWindow {
 
     const deleteSessions = () => {
       sessions.forEach((element, key) => {
-          element.session.removeAllListeners();
-          element.session.destroy();
-          sessions.delete(key);
+        element.session.removeAllListeners();
+        element.session.destroy();
+        sessions.delete(key);
       });
-    }
+    };
 
     // expose internals to extension authors
     this.rpc = rpc;
@@ -157,7 +157,7 @@ module.exports = class Window extends BrowserWindow {
     const pluginsUnsubscribe = app.plugins.subscribe(err => {
       if (!err) {
         load();
-        win.webContents.send('plugins change');
+        this.webContents.send('plugins change');
       }
     });
 
@@ -190,7 +190,7 @@ module.exports = class Window extends BrowserWindow {
       }
     });
   }
-  
+
   createTab(opts, recordedTab) {
     if (recordedTab) {
       opts.uid = recordedTab.uid;
@@ -202,29 +202,35 @@ module.exports = class Window extends BrowserWindow {
       tab.session.on('data', data => {
         this.rpc.emit('session data', {uid, data});
       });
-      
+
       tab.session.on('title', title => {
         this.setTitle(title);
         this.rpc.emit('session title', {uid, title});
       });
-      
+
       tab.session.on('exit', () => {
         this.tabs.delete(tab);
         this.sessions.delete(uid);
         this.rpc.emit('session exit', {uid});
       });
-      
+
       if (recordedTab) {
         recordedTab.splits.forEach(split => {
-          this.rpc.emit('split load', {uid: recordedTab.uid, split: split});
+          this.rpc.emit('split load', {uid: recordedTab.uid, split});
         });
       }
     }));
   }
-  
+
+  restore(tabs) {
+    tabs.forEach(tab => {
+      this.rpc.emit('termgroup load req', {tab});
+    });
+  }
+
   record(fn) {
-    const win = { id: this.id, size: this.getSize(), position: this.getPosition(), tabs:[]};
-    this.tabs.forEach((tab) => {
+    const win = {id: this.id, size: this.getSize(), position: this.getPosition(), tabs: []};
+    this.tabs.forEach(tab => {
       tab.record(state => {
         win.tabs.push(state);
       });

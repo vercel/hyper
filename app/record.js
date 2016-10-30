@@ -1,4 +1,5 @@
 // Application state fallback upon unexpected quit
+const {app} = require('electron');
 const Config = require('electron-config');
 
 // local storage
@@ -17,7 +18,20 @@ module.exports.save = function (windows) {
   }, recordInterval);
 };
 
-module.exports.load = function (callback) {
+module.exports.load = function (windowSet) {
   const reccords = rec.get('reccords');
-  callback(reccords);
+  if (reccords.length > 0) {
+    reccords.forEach(rec => {
+      app.createWindow(win => {
+        win.restore(rec.tabs);
+      }, {position: rec.position, size: rec.size, tabs: rec.tabs});
+    });
+  } else {
+    // when no reccords
+    // when opening create a new window
+    app.createWindow();
+  }
+
+  // start save scheduler
+  this.save(windowSet);
 };
