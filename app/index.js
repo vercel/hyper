@@ -1,21 +1,14 @@
-// Native
+  // Native
 const {resolve} = require('path');
 
 // Packages
-const {parse: parseUrl} = require('url');
-const {app, BrowserWindow, shell, Menu} = require('electron');
+const {app, BrowserWindow, Menu} = require('electron');
 const {gitDescribe} = require('git-describe');
-const uuid = require('uuid');
-const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 
 // Ours
-const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
 const createMenu = require('./menu');
-const createRPC = require('./rpc');
-const notify = require('./notify');
-const fetchNotifications = require('./notifications');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
 
@@ -25,13 +18,15 @@ const config = require('./config');
 config.init();
 
 const plugins = require('./plugins');
-const Session = require('./session');
+
+const Window = require('./window');
 
 const windowSet = new Set([]);
 
 // expose to plugins
 app.config = config;
 app.plugins = plugins;
+
 app.getWindows = () => new Set([...windowSet]); // return a clone
 
 // function to retrieve the last focused window in windowSet;
@@ -67,7 +62,7 @@ console.log('electron will open', url);
 
 app.on('ready', () => installDevExtensions(isDev).then(() => {
   function createWindow(fn, options = {}) {
-    let cfg = plugins.getDecoratedConfig();
+    const cfg = plugins.getDecoratedConfig();
 
     const winSet = app.config.window.get();
     let [startX, startY] = winSet.position;
@@ -119,203 +114,27 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       x: startX,
       y: startY
     };
+
     const browserOptions = plugins.getDecoratedBrowserOptions(browserDefaults);
 
-    const win = new BrowserWindow(browserOptions);
+    const win = new Window(browserOptions, cfg, fn);
     windowSet.add(win);
 
     win.loadURL(url);
 
-    const rpc = createRPC(win);
-    const sessions = new Map();
-
-    // config changes
-    const cfgUnsubscribe = config.subscribe(() => {
-      const cfg_ = plugins.getDecoratedConfig();
-
-      // notify renderer
-      win.webContents.send('config change');
-
-      // notify user that shell changes require new sessions
-      if (cfg_.shell !== cfg.shell || cfg_.shellArgs !== cfg.shellArgs) {
-        notify(
-          'Shell configuration changed!',
-          'Open a new tab or window to start using the new shell'
-        );
-      }
-
-      // update background color if necessary
-      win.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
-
-      cfg = cfg_;
-    });
-
-    rpc.on('init', () => {
-      win.show();
-
-      // If no callback is passed to createWindow,
-      // a new session will be created by default.
-      if (!fn) {
-        fn = win => win.rpc.emit('termgroup add req');
-      }
-
-      // app.windowCallback is the createWindow callback
-      // that can be set before the 'ready' app event
-      // and createWindow deifinition. It's executed in place of
-      // the callback passed as parameter, and deleted right after.
-      (app.windowCallback || fn)(win);
-      delete (app.windowCallback);
-
-      fetchNotifications(win);
-      // auto updates
-      if (!isDev && process.platform !== 'linux') {
-        AutoUpdater(win);
-      } else {
-        console.log('ignoring auto updates during dev');
-      }
-    });
-
-    rpc.on('new', ({rows = 40, cols = 100, cwd = process.env.HOME, splitDirection}) => {
-      const shell = cfg.shell;
-      const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
-
-      initSession({rows, cols, cwd, shell, shellArgs}, (uid, session) => {
-        sessions.set(uid, session);
-        rpc.emit('session add', {
-          rows,
-          cols,
-          uid,
-          splitDirection,
-          shell: session.shell,
-          pid: session.pty.pid
-        });
-
-        session.on('data', data => {
-          rpc.emit('session data', {uid, data});
-        });
-
-        session.on('exit', () => {
-          rpc.emit('session exit', {uid});
-          sessions.delete(uid);
-        });
-      });
-    });
-
-    rpc.on('exit', ({uid}) => {
-      const session = sessions.get(uid);
-      if (session) {
-        session.exit();
-      } else {
-        console.log('session not found by', uid);
-      }
-    });
-
-    rpc.on('unmaximize', () => {
-      win.unmaximize();
-    });
-
-    rpc.on('maximize', () => {
-      win.maximize();
-    });
-
-    rpc.on('resize', ({uid, cols, rows}) => {
-      const session = sessions.get(uid);
-      session.resize({cols, rows});
-    });
-
-    rpc.on('data', ({uid, data}) => {
-      sessions.get(uid).write(data);
-    });
-
-    rpc.on('open external', ({url}) => {
-      shell.openExternal(url);
-    });
-
-    rpc.win.on('move', () => {
-      rpc.emit('move');
-    });
-
-    const deleteSessions = () => {
-      sessions.forEach((session, key) => {
-        session.removeAllListeners();
-        session.destroy();
-        sessions.delete(key);
-      });
-    };
-
-    // we reset the rpc channel only upon
-    // subsequent refreshes (ie: F5)
-    let i = 0;
-    win.webContents.on('did-navigate', () => {
-      if (i++) {
-        deleteSessions();
-      }
-    });
-
-    // If file is dropped onto the terminal window, navigate event is prevented
-    // and his path is added to active session.
-    win.webContents.on('will-navigate', (event, url) => {
-      const protocol = typeof url === 'string' && parseUrl(url).protocol;
-      if (protocol === 'file:') {
-        event.preventDefault();
-        const path = fileUriToPath(url).replace(/ /g, '\\ ');
-        rpc.emit('session data send', {data: path});
-      }
-    });
-
-    // expose internals to extension authors
-    win.rpc = rpc;
-    win.sessions = sessions;
-
-    const load = () => {
-      plugins.onWindow(win);
-    };
-
-    // load plugins
-    load();
-
-    const pluginsUnsubscribe = plugins.subscribe(err => {
-      if (!err) {
-        load();
-        win.webContents.send('plugins change');
-      }
-    });
-
-    // Keep track of focus time of every window, to figure out
-    // which one of the existing window is the last focused.
-    // Works nicely even if a window is closed and removed.
-    const updateFocusTime = () => {
-      win.focusTime = process.uptime();
-    };
-    win.on('focus', () => {
-      updateFocusTime();
-    });
-    // Ensure focusTime is set on window open. The focus event doesn't
-    // fire from the dock (see bug #583)
-    updateFocusTime();
-
     // the window can be closed by the browser process itself
     win.on('close', () => {
-      app.config.window.recordState(win);
       windowSet.delete(win);
-      rpc.destroy();
-      deleteSessions();
-      cfgUnsubscribe();
-      pluginsUnsubscribe();
-    });
-
-    win.on('closed', () => {
-      if (process.platform !== 'darwin') {
-        app.quit();
-      }
     });
   }
 
-  // when opening create a new window
-  createWindow();
-
   // expose to plugins
   app.createWindow = createWindow;
+
+  // set up record
+  const record = require('./record');
+  // restore previous saved state
+  record.load(windowSet);
 
   // mac only. when the dock icon is clicked
   // and we don't have any active windows open,
@@ -358,10 +177,6 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 }).catch(err => {
   console.error('Error while loading devtools extensions', err);
 }));
-
-function initSession(opts, fn) {
-  fn(uuid.v4(), new Session(opts));
-}
 
 app.on('open-file', (event, path) => {
   const lastWindow = app.getLastFocusedWindow();
