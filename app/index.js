@@ -237,6 +237,18 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       rpc.emit('move');
     });
 
+    rpc.on('open hamburger menu', ({x, y}) => {
+      Menu.getApplicationMenu().popup(x, y);
+    });
+
+    rpc.on('minimize', () => {
+      win.minimize();
+    });
+
+    rpc.on('close', () => {
+      win.close();
+    });
+
     const deleteSessions = () => {
       sessions.forEach((session, key) => {
         session.removeAllListeners();
