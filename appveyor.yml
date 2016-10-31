@@ -13,7 +13,7 @@ cache:
   - node_modules
 
 install:
-  - Install-Product node 0 x64 # 0 === latest version
+  - ps: Install-Product node 0 x64 # 0 === latest version
   - npm install -g npm
   - npm install
 
