@@ -1,5 +1,4 @@
-# not sure how this works
-version: 1.0.{build}-{branch}
+# https://github.com/sindresorhus/appveyor-node/blob/master/appveyor.yml
 
 image: Visual Studio 2015
 
@@ -13,12 +12,18 @@ cache:
   - node_modules
 
 install:
-  - ps: Install-Product node 0 x64 # 0 === latest version
-  - npm install -g npm
+  - ps: Install-Product node 6
+  - set CI=true
+  - npm -g install npm@latest
   - npm install
 
+build: off
+
+shallow_clone: true
+
 test_script:
-  - node --version && npm --version
+  - node --version
+  - npm --version
   - npm run test
 
 on_success:
