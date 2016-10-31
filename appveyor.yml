@@ -1,9 +1,9 @@
 # https://github.com/sindresorhus/appveyor-node/blob/master/appveyor.yml
 
-image: Visual Studio 2015
+- matrix:
+  - platform: x64
 
-platform:
-  - x64
+image: Visual Studio 2015
 
 init:
   - npm config set msvs_version 2015 # we need this to build `pty.js`
