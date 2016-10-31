@@ -1,0 +1,25 @@
+# not sure how this works
+version: 1.0.{build}-{branch}
+
+image: Visual Studio 2015
+
+platform:
+  - x64
+
+init:
+  - npm config set msvs_version 2015 # we need this to build `pty.js`
+
+cache:
+  - node_modules
+
+install:
+  - Install-Product node 0 x64 # 0 === latest version
+  - npm install -g npm
+  - npm install
+
+test_script:
+  - node --version && npm --version
+  - npm run test
+
+on_success:
+  - npm run dist
