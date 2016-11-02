@@ -25,7 +25,7 @@ function init() {
 
   setInterval(() => {
     autoUpdater.checkForUpdates();
-  }, ms('5m'));
+  }, ms('30m'));
 
   isInit = true;
 }

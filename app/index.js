@@ -3,7 +3,6 @@ const {resolve} = require('path');
 
 // Packages
 const {parse: parseUrl} = require('url');
-const electron = require('electron');
 const {app, BrowserWindow, shell, Menu} = require('electron');
 const {gitDescribe} = require('git-describe');
 const uuid = require('uuid');
@@ -195,40 +194,11 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
           rpc.emit('session data', {uid, data});
         });
 
-        session.on('title', title => {
-          win.setTitle(title);
-          rpc.emit('session title', {uid, title});
-        });
-
         session.on('exit', () => {
           rpc.emit('session exit', {uid});
           sessions.delete(uid);
         });
       });
-    });
-
-    // TODO: this goes away when we are able to poll
-    // for the title ourselves, instead of relying
-    // on Session and focus/blur to subscribe
-    rpc.on('focus', ({uid}) => {
-      const session = sessions.get(uid);
-      if (typeof session !== 'undefined' && typeof session.lastTitle !== 'undefined') {
-        win.setTitle(session.lastTitle);
-      }
-      if (session) {
-        session.focus();
-      } else {
-        console.log('session not found by', uid);
-      }
-    });
-    rpc.on('blur', ({uid}) => {
-      const session = sessions.get(uid);
-
-      if (session) {
-        session.blur();
-      } else {
-        console.log('session not found by', uid);
-      }
     });
 
     rpc.on('exit', ({uid}) => {
@@ -246,40 +216,6 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     rpc.on('maximize', () => {
       win.maximize();
-    });
-
-    const findMenuItem = (items, id) => items.filter(item => item.id === id)[0];
-
-    const getMenuItem = id => findMenuItem(Menu.getApplicationMenu().items, id);
-
-    const getSubmenuItem = (menuItem, id) => findMenuItem(menuItem.submenu.items, id);
-
-    let isQuickFullScreenEnabled = false;
-
-    const toggleQuickFullScreenMenuItems = isQuickFullScreen => {
-      const windowMenu = getMenuItem('WINDOW');
-      const enterQuickFullScreenMenu = getSubmenuItem(windowMenu, 'ENTER_QUICK_FULL_SCREEN');
-      const leaveQuickFullScreenMenu = getSubmenuItem(windowMenu, 'LEAVE_QUICK_FULL_SCREEN');
-      enterQuickFullScreenMenu.visible = !isQuickFullScreen;
-      leaveQuickFullScreenMenu.visible = isQuickFullScreen;
-      isQuickFullScreenEnabled = isQuickFullScreen;
-    };
-
-    rpc.on('enter quick full screen', () => {
-      toggleQuickFullScreenMenuItems(true);
-      app.config.window.recordState(win);
-      const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
-      win.setSize(width, height);
-      win.center();
-    });
-
-    rpc.on('leave quick full screen', () => {
-      toggleQuickFullScreenMenuItems(false);
-      const winSet = app.config.window.get();
-      const [width, height] = winSet.size;
-      win.setSize(width, height);
-      const [x, y] = winSet.position;
-      win.setPosition(x, y);
     });
 
     rpc.on('resize', ({uid, cols, rows}) => {
@@ -360,9 +296,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
-      if (!isQuickFullScreenEnabled) {
-        app.config.window.recordState(win);
-      }
+      app.config.window.recordState(win);
       windowSet.delete(win);
       rpc.destroy();
       deleteSessions();

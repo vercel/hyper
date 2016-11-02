@@ -105,7 +105,7 @@ module.exports = ({createWindow, updatePlugins}) => {
         type: 'separator'
       },
       {
-        label: 'Close',
+        label: 'Close Session',
         accelerator: 'CmdOrCtrl+W',
         click(item, focusedWindow) {
           if (focusedWindow) {
@@ -114,7 +114,7 @@ module.exports = ({createWindow, updatePlugins}) => {
         }
       },
       {
-        label: isMac ? 'Close Terminal Window' : 'Quit',
+        label: isMac ? 'Close Window' : 'Quit',
         role: 'close',
         accelerator: 'CmdOrCtrl+Shift+W'
       }
@@ -254,7 +254,6 @@ module.exports = ({createWindow, updatePlugins}) => {
   };
 
   const windowMenu = {
-    id: 'WINDOW',
     role: 'window',
     submenu: [
       {
@@ -313,28 +312,6 @@ module.exports = ({createWindow, updatePlugins}) => {
       },
       {
         role: 'togglefullscreen'
-      },
-      {
-        id: 'ENTER_QUICK_FULL_SCREEN',
-        label: 'Enter Quick Full Screen',
-        accelerator: isMac ? 'Cmd+Enter' : 'Ctrl+Shift+Enter',
-        visible: true,
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('enter quick full screen req');
-          }
-        }
-      },
-      {
-        id: 'LEAVE_QUICK_FULL_SCREEN',
-        label: 'Leave Quick Full Screen',
-        accelerator: isMac ? 'Cmd+Enter' : 'Ctrl+Shift+Enter',
-        visible: false,
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('leave quick full screen req');
-          }
-        }
       }
     ]
   };
