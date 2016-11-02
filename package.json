@@ -93,7 +93,7 @@
     "concurrently": "^3.0.0",
     "copy-webpack-plugin": "^4.0.0",
     "electron": "1.4.5",
-    "electron-builder": "^7.11.4",
+    "electron-builder": "^7.17.1",
     "electron-devtools-installer": "^2.0.0",
     "eslint-config-xo-react": "^0.10.0",
     "eslint-plugin-react": "^6.3.0",
