@@ -87,7 +87,7 @@
   "devDependencies": {
     "ava": "^0.16.0",
     "babel-cli": "^6.11.4",
-    "babel-core": "^6.11.4",
+    "babel-core": "^6.18.2",
     "babel-loader": "^6.2.4",
     "babel-preset-react": "^6.11.1",
     "concurrently": "^3.0.0",
