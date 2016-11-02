@@ -96,7 +96,7 @@
     "electron-builder": "^7.11.4",
     "electron-devtools-installer": "^2.0.0",
     "eslint-config-xo-react": "^0.10.0",
-    "eslint-plugin-react": "^6.3.0",
+    "eslint-plugin-react": "^6.5.0",
     "husky": "^0.11.6",
     "redux-logger": "^2.6.1",
     "spectron": "^3.4.0",
