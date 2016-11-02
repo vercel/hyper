@@ -194,40 +194,11 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
           rpc.emit('session data', {uid, data});
         });
 
-        session.on('title', title => {
-          win.setTitle(title);
-          rpc.emit('session title', {uid, title});
-        });
-
         session.on('exit', () => {
           rpc.emit('session exit', {uid});
           sessions.delete(uid);
         });
       });
-    });
-
-    // TODO: this goes away when we are able to poll
-    // for the title ourselves, instead of relying
-    // on Session and focus/blur to subscribe
-    rpc.on('focus', ({uid}) => {
-      const session = sessions.get(uid);
-      if (typeof session !== 'undefined' && typeof session.lastTitle !== 'undefined') {
-        win.setTitle(session.lastTitle);
-      }
-      if (session) {
-        session.focus();
-      } else {
-        console.log('session not found by', uid);
-      }
-    });
-    rpc.on('blur', ({uid}) => {
-      const session = sessions.get(uid);
-
-      if (session) {
-        session.blur();
-      } else {
-        console.log('session not found by', uid);
-      }
     });
 
     rpc.on('exit', ({uid}) => {

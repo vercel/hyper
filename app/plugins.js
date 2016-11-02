@@ -18,7 +18,7 @@ const cache = new Config();
 const path = resolve(config.getConfigDir(), '.hyper_plugins');
 const localPath = resolve(path, 'local');
 const availableExtensions = new Set([
-  'onApp', 'onWindow', 'onUnload', 'middleware',
+  'onApp', 'onWindow', 'onRendererWindow', 'onUnload', 'middleware',
   'reduceUI', 'reduceSessions', 'reduceTermGroups',
   'decorateMenu', 'decorateTerm', 'decorateHyper',
   'decorateHyperTerm', // for backwards compatibility with hyperterm
@@ -294,6 +294,7 @@ function requirePlugins() {
 
       return mod;
     } catch (err) {
+      console.error(err);
       notify('Plugin error!', `Plugin "${basename(path)}" failed to load (${err.message})`);
     }
   };
