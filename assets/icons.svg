@@ -6,21 +6,43 @@
     </symbol>
     <symbol id="hamburger-menu" viewBox="0 0 10 9">
       <title>hamburger menu</title>
-      <rect width="10" height="1"/>
-      <rect y="4" width="10" height="1"/>
-      <rect y="8" width="10" height="1"/>
+      <rect width="10" height="1" fill="currentColor"/>
+      <rect y="4" width="10" height="1" fill="currentColor"/>
+      <rect y="8" width="10" height="1" fill="currentColor"/>
     </symbol>
     <symbol id="minimize-window" viewBox="0 0 10 10">
       <title>minimize window</title>
-      <rect y="9" width="10" height="1"/>
+      <g fill="none" fill-rule="evenodd">
+        <polygon points="0 0 10 0 10 10 0 10"/>
+        <path stroke="currentColor" d="M9.5,5 L0.5,5" stroke-linecap="square"/>
+      </g>
+      <g fill="none" fill-rule="evenodd">
+        <polygon points="0 0 10 0 10 10 0 10"/>
+        <rect width="10" height="1" y="4.5" fill="currentColor"/>
+      </g>
     </symbol>
     <symbol id="maximize-window" viewBox="0 0 10 10">
       <title>maximize window</title>
-      <rect width="10" height="10" fill="none" stroke-width="1"/>
+      <defs>
+        <polygon id="maximize-window-a" points="0 0 10 0 10 10 0 10"/>
+        <mask id="maximize-window-b" width="10" height="10" x="0" y="0">
+          <use xlink:href="#maximize-window-a"/>
+        </mask>
+      </defs>
+      <g fill="none" fill-rule="evenodd">
+        <polygon fill="none" points="0 0 10 0 10 10 0 10"/>
+        <use stroke="currentColor" stroke-width="2" mask="url(#maximize-window-b)" xlink:href="#maximize-window-a"/>
+      </g>
     </symbol>
     <symbol id="close-window" viewBox="0 0 10 10">
       <title>close window</title>
-      <path d="M0.5,0.5 L9.5,9.5 M0.5,9.5 L9.5,0.5"></path>
+      <g fill="none" fill-rule="evenodd">
+        <g stroke="currentColor" transform="translate(.25 .25)" stroke-linecap="square">
+          <path d="M0.5,0.5 L9,9"/>
+          <path d="M0.5,0.5 L9,9" transform="matrix(-1 0 0 1 9.5 0)"/>
+        </g>
+        <polygon points="0 0 10 0 10 10 0 10"/>
+      </g>
     </symbol>
   </defs>
 </svg>
