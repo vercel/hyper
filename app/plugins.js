@@ -233,7 +233,7 @@ function install(fn) {
     }
     /* eslint-disable camelcase  */
     env.npm_config_runtime = 'electron';
-    env.npm_config_target = '1.3.0';
+    env.npm_config_target = process.versions.electron;
     env.npm_config_disturl = 'https://atom.io/download/atom-shell';
     /* eslint-enable camelcase  */
     exec('npm prune; npm install --production', {
