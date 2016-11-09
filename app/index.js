@@ -153,17 +153,16 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     rpc.on('init', () => {
       win.show();
 
-      // If no callback is passed to createWindow,
-      // a new session will be created by default.
-      if (!fn) {
-        fn = win => win.rpc.emit('termgroup add req');
-      }
+      // create a new session
+      win.rpc.emit('termgroup add req');
 
       // app.windowCallback is the createWindow callback
       // that can be set before the 'ready' app event
       // and createWindow deifinition. It's executed in place of
       // the callback passed as parameter, and deleted right after.
-      (app.windowCallback || fn)(win);
+      if (app.windowCallback || fn) {
+        (app.windowCallback || fn)(win);
+      }
       delete (app.windowCallback);
 
       fetchNotifications(win);
@@ -309,6 +308,8 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         app.quit();
       }
     });
+
+    return win;
   }
 
   // when opening create a new window
