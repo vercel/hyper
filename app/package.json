@@ -16,6 +16,7 @@
     "default-shell": "1.0.1",
     "electron-config": "0.2.1",
     "electron-is-dev": "0.1.1",
+    "electron-squirrel-startup": "1.0.0",
     "file-uri-to-path": "0.0.2",
     "gaze": "1.1.2",
     "git-describe": "3.0.2",
