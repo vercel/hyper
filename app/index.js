@@ -321,7 +321,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     win.on('closed', () => {
-      if (process.platform !== 'darwin') {
+      if (process.platform !== 'darwin' && windowSet.size === 0) {
         app.quit();
       }
     });
