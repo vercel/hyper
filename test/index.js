@@ -19,6 +19,10 @@ test.before(async () => {
       pathToBinary = path.join(__dirname, '../dist/mac/Hyper.app/Contents/MacOS/Hyper');
       break;
 
+    case 'win32':
+      pathToBinary = path.join(__dirname, '../dist/win-unpacked/Hyper.exe');
+      break;
+
     default:
       throw new Error('Path to the built binary needs to be defined for this platform in test/index.js');
   }

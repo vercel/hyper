@@ -1,3 +1,5 @@
+// eslint-disable-next-line curly, unicorn/no-process-exit
+if (require('electron-squirrel-startup')) process.exit();
 // Native
 const {resolve} = require('path');
 
@@ -108,9 +110,11 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       height,
       minHeight: 190,
       minWidth: 370,
-      titleBarStyle: 'hidden-inset',
+      titleBarStyle: 'hidden-inset', // macOS only
       title: 'Hyper.app',
       backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
+      // we want to go frameless on windows and linux
+      frame: process.platform === 'darwin',
       transparent: true,
       icon: resolve(__dirname, 'static/icon.png'),
       // we only want to show when the prompt is ready for user input
@@ -235,6 +239,18 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       rpc.emit('move');
     });
 
+    rpc.on('open hamburger menu', ({x, y}) => {
+      Menu.getApplicationMenu().popup(x, y);
+    });
+
+    rpc.on('minimize', () => {
+      win.minimize();
+    });
+
+    rpc.on('close', () => {
+      win.close();
+    });
+
     const deleteSessions = () => {
       sessions.forEach((session, key) => {
         session.removeAllListeners();
@@ -305,7 +321,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     win.on('closed', () => {
-      if (process.platform !== 'darwin') {
+      if (process.platform !== 'darwin' && windowSet.size === 0) {
         app.quit();
       }
     });
