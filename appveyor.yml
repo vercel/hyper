@@ -29,3 +29,4 @@ test_script:
 
 on_success:
   - npm run dist
+  - ps: ls .\dist\win\*.exe | % { Push-AppveyorArtifact $_.FullName }
