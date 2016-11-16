@@ -8,6 +8,7 @@ image: Visual Studio 2015
 
 init:
   - npm config set msvs_version 2015 # we need this to build `pty.js`
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 cache:
   - node_modules
