@@ -121,7 +121,8 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       // HYPERTERM_DEBUG for backwards compatibility with hyperterm
       show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
       x: startX,
-      y: startY
+      y: startY,
+      acceptFirstMouse: true
     };
     const browserOptions = plugins.getDecoratedBrowserOptions(browserDefaults);
 
