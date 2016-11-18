@@ -180,7 +180,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       }
     });
 
-    rpc.on('new', ({rows = 40, cols = 100, cwd = process.platform === 'win32' ? process.env.HOMEPATH : process.env.HOME, splitDirection}) => {
+    rpc.on('new', ({rows = 40, cols = 100, cwd = process.env.HOME || process.env.HOMEPATH, splitDirection}) => {
       const shell = cfg.shell;
       const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
 
