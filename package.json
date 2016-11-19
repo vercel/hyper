@@ -109,5 +109,10 @@
     "spectron": "^3.4.0",
     "webpack": "^2.1.0-beta.15",
     "xo": "^0.17.0"
+  },
+  "optionalDependencies": {
+    "7zip-bin-linux": "1.0.3",
+    "7zip-bin-mac": "^1.0.1",
+    "7zip-bin-win": "2.0.2"
   }
 }
