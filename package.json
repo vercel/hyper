@@ -48,7 +48,8 @@
       ],
       "target": [
         "deb",
-        "AppImage"
+        "AppImage",
+        "rpm"
       ]
     },
     "win": {
