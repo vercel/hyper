@@ -78,7 +78,7 @@
     "object-values": "1.0.0",
     "php-escape-shell": "1.0.0",
     "react": "15.3.2",
-    "react-addons-pure-render-mixin": "15.3.2",
+    "react-addons-pure-render-mixin": "15.4.0",
     "react-deep-force-update": "2.0.1",
     "react-dom": "15.3.2",
     "react-redux": "4.4.5",
