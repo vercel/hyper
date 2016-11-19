@@ -1,7 +1,7 @@
 // eslint-disable-next-line curly, unicorn/no-process-exit
 if (require('electron-squirrel-startup')) process.exit();
 // Native
-const {resolve} = require('path');
+const {resolve, isAbsolute} = require('path');
 
 // Packages
 const {parse: parseUrl} = require('url');
@@ -18,6 +18,7 @@ const createMenu = require('./menu');
 const createRPC = require('./rpc');
 const notify = require('./notify');
 const fetchNotifications = require('./notifications');
+const shellMenu = require('./shell-menu');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
 
@@ -46,6 +47,14 @@ app.getLastFocusedWindow = () => {
     return win.focusTime > lastWindow.focusTime ? win : lastWindow;
   });
 };
+
+if (process.platform === 'win32' && !isDev) {
+  if (config.getConfig().shellMenu) {
+    shellMenu.add();
+  } else {
+    shellMenu.remove();
+  }
+}
 
 if (isDev) {
   console.log('running in dev mode');
@@ -180,7 +189,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       }
     });
 
-    rpc.on('new', ({rows = 40, cols = 100, cwd = process.env.HOME || process.env.HOMEPATH, splitDirection}) => {
+    rpc.on('new', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : process.env.HOMEPATH || process.env.HOME, splitDirection}) => {
       const shell = cfg.shell;
       const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
 
