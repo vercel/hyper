@@ -18,7 +18,7 @@ const createMenu = require('./menu');
 const createRPC = require('./rpc');
 const notify = require('./notify');
 const fetchNotifications = require('./notifications');
-const shellMenu = require('./shell-menu');
+const systemContextMenu = require('./system-context-menu');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
 
@@ -49,11 +49,7 @@ app.getLastFocusedWindow = () => {
 };
 
 if (process.platform === 'win32' && !isDev) {
-  if (config.getConfig().shellMenu) {
-    shellMenu.add();
-  } else {
-    shellMenu.remove();
-  }
+  systemContextMenu.add();
 }
 
 if (isDev) {

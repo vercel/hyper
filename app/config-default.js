@@ -37,10 +37,6 @@ module.exports = {
     // default: `true` on windows and Linux (ignored on macOS)
     showWindowControls: '',
 
-    // Windows only as of yet
-    // true enables 'Open Hyper here' in right click directory menu
-    shellMenu: true,
-
     // custom padding (css format, i.e.: `top right bottom left`)
     padding: '12px 14px',
 
