@@ -1,5 +1,28 @@
-// eslint-disable-next-line curly, unicorn/no-process-exit
-if (require('electron-squirrel-startup')) process.exit();
+// handle startup squirrel events
+if (process.platform === 'win32') {
+  // eslint-disable-next-line import/order
+  const systemContextMenu = require('./system-context-menu');
+
+  switch (process.argv[1]) {
+    case '--squirrel-install':
+    case '--squirrel-updated':
+      systemContextMenu.add(() => {
+        // eslint-disable-next-line curly, unicorn/no-process-exit
+        if (require('electron-squirrel-startup')) process.exit();
+      });
+      break;
+    case '--squirrel-uninstall':
+      systemContextMenu.remove(() => {
+        // eslint-disable-next-line curly, unicorn/no-process-exit
+        if (require('electron-squirrel-startup')) process.exit();
+      });
+      break;
+    default:
+      // eslint-disable-next-line curly, unicorn/no-process-exit
+      if (require('electron-squirrel-startup')) process.exit();
+  }
+}
+
 // Native
 const {resolve, isAbsolute} = require('path');
 
@@ -18,7 +41,6 @@ const createMenu = require('./menu');
 const createRPC = require('./rpc');
 const notify = require('./notify');
 const fetchNotifications = require('./notifications');
-const systemContextMenu = require('./system-context-menu');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
 
@@ -47,10 +69,6 @@ app.getLastFocusedWindow = () => {
     return win.focusTime > lastWindow.focusTime ? win : lastWindow;
   });
 };
-
-if (process.platform === 'win32' && !isDev) {
-  systemContextMenu.add();
-}
 
 if (isDev) {
   console.log('running in dev mode');

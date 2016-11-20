@@ -17,21 +17,33 @@ function isRegistered(callback) {
   });
 }
 
-exports.add = function () {
+exports.add = function (callback) {
   isRegistered(registered => {
     if (!registered) {
+      const regPromises = [];
       regParts.forEach(part => {
         const reg = new Registry({hive: 'HKCU', key: part.key ? `${regKey}\\${part.key}` : regKey});
-        reg.create(() => reg.set(part.name, Registry.REG_SZ, part.value, () => {}));
+        reg.create(() => {
+          regPromises.push(new Promise((resolve, reject) => {
+            reg.set(part.name, Registry.REG_SZ, part.value, err => {
+              if (err === null) {
+                resolve(true);
+              } else {
+                return reject(err);
+              }
+            });
+          }));
+        });
       });
+      Promise.all(regPromises).then(() => callback());
     }
   });
 };
 
-exports.remove = function () {
+exports.remove = function (callback) {
   isRegistered(registered => {
     if (registered) {
-      new Registry({hive: 'HKCU', key: regKey}).destroy(() => {});
+      new Registry({hive: 'HKCU', key: regKey}).destroy(() => callback());
     }
   });
 };
