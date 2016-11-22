@@ -25,7 +25,8 @@ $ brew cask install hyper
   * If you are running Windows, install [VC++ Build Tools Technical Preview](http://go.microsoft.com/fwlink/?LinkId=691126) using the **Default Install option**; Install Python 2.7 and add it to your `%PATH%`; Run `npm config set msvs_version 2015 --global`
 2. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
 3. Install the dependencies: `npm install`
-4. Build the code, watch for changes and run the app: `npm start`
+4. Build the code and watch for changes: `npm run dev`
+5. In another terminal tab/window/pane, run the app: `npm run app`
 
 To make sure that your code works in the finished application, you can generate the binaries like this:
 
