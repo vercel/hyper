@@ -5,7 +5,7 @@
     "app": "electron app",
     "dev": "webpack -w",
     "build": "cross-env NODE_ENV=production webpack",
-    "test": "npm run dist && xo && ava",
+    "test": "xo && npm run dist && ava",
     "prepush": "npm test",
     "postinstall": "install-app-deps",
     "pack": "npm run build && build --dir && babel --no-comments --compact --minified --out-file app/dist/bundle.js app/dist/bundle.js",
