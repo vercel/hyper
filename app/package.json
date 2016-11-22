@@ -2,7 +2,7 @@
   "name": "hyper",
   "productName": "Hyper",
   "description": "A terminal built on web technologies",
-  "version": "0.8.3",
+  "version": "1.0.0",
   "license": "MIT",
   "author": {
     "name": "Zeit, Inc.",
