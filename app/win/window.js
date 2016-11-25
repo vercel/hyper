@@ -79,8 +79,8 @@ module.exports = class Window extends BrowserWindow {
       const shell = cfg.shell;
       const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
 
-      const element = sessions.get(activeUid);
-      element.onSplit({rows, cols, cwd, shell, shellArgs, splitDirection, activeUid, parent:element}, this, split);
+      const pane = sessions.get(activeUid);
+      pane.onSplit({rows, cols, cwd, shell, shellArgs, splitDirection, activeUid, parent: pane}, this, split);
     });
 
     rpc.on('exit', ({uid}) => {

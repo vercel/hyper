@@ -167,8 +167,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
   // set up record
   const record = require('./win/record');
   // restore previous saved state
-  // record.load();
-  app.createWindow();
+  record.load();
 
   // mac only. when the dock icon is clicked
   // and we don't have any active windows open,

@@ -1,4 +1,3 @@
-const {exec} = require('child_process');
 const initSession = require('../utils/init-session');
 const Split = require('./split');
 const Pane = require('./pane');
@@ -90,21 +89,10 @@ module.exports = class Tab {
   // }
 
   record(fn) {
-    const pid = this.session.pty.pid;
-    exec(`lsof -p ${pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`, (err, cwd) => {
-      if (err) {
-        console.error(err);
-      } else {
-        cwd = cwd.trim();
-        this.cwd = cwd;
-      }
-    });
-    const tab = {id: this.id, uid: this.uid, cwd: this.cwd, type: 'TAB', splits: []};
-    this.splits.forEach(split => {
-      split.record(state => {
-        tab.splits.push(state);
-      });
-    });
+    const tab = {id: this.id, type: 'TAB', root: undefined};
+    this.root.record(state => {
+      tab.root = state;
+    }); 
     fn(tab);
   }
 

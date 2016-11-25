@@ -23,15 +23,17 @@ module.exports.load = function () {
   const reccords = rec.get('reccords');
   if (reccords.length > 0) {
     reccords.forEach(rec => {
-      app.createWindow(win => {
-        win.restore(rec.tabs);
-      }, {position: rec.position, size: rec.size, tabs: rec.tabs});
+      console.log(rec);
+  //     app.createWindow(win => {
+  //       win.restore(rec.tabs);
+  //     }, {position: rec.position, size: rec.size, tabs: rec.tabs});
     });
   } else {
-    // when no reccords
-    // when opening create a new window
-    app.createWindow();
+  //   // when no reccords
+  //   // when opening create a new window
+  //   // app.createWindow();
   }
+  app.createWindow();
 
   // start save scheduler
   this.save(wins.get());

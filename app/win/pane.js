@@ -1,5 +1,5 @@
 const initSession = require('../utils/init-session');
-const uuid = require('uuid');
+const {exec} = require('child_process');
 const Session = require('../session');
 
 
@@ -12,7 +12,6 @@ module.exports = class Pane {
     initSession({rows, cols, cwd, shell, shellArgs, uid}, (uid, session) => {
       this.uid = uid;
       this.session = session;
-      session.write('UID: ' + this.uid);
 
       if (splitDirection) {
         this.direction = splitDirection;
@@ -57,7 +56,7 @@ module.exports = class Pane {
         pane.session.on('data', data => {
           this.rpc.emit('session data', {uid: pane.uid, data});
         });
-        
+
         pane.session.on('exit', () => {
           if (!pane.root) {
             pane.parent.childs.delete(pane);
@@ -73,37 +72,11 @@ module.exports = class Pane {
           }
         });
     });
-
-    // this.childs.add(new Split(size + 1, opts, this.rpc, (uid, split) => {
-    //   // if(size === 1) {
-    //   //   this.firstSplit = uid;
-    //   // }
-    //   win.sessions.set(uid, split);
-    //   split.session.on('data', data => {
-    //     this.rpc.emit('session data', {uid, data});
+    // if (recordedSplit) {
+    //   recordedSplit.splits.forEach(split => {
+    //     this.rpc.emit('split load', {uid: recordedSplit.uid, split});
     //   });
-    // 
-    //   split.session.on('title', title => {
-    //     win.setTitle(title);
-    //     this.rpc.emit('session title', {uid, title});
-    //   });
-      // 
-      // split.session.on('exit', () => {
-      //   this.splits.delete(split);
-      //   win.sessions.delete(uid);
-      //   let id = 0;
-      //   this.splits.forEach(split => {
-      //     split.id = ++id;
-      //   });
-      //   this.rpc.emit('session exit', {uid});
-      // });
-      // 
-      // if (recordedSplit) {
-      //   recordedSplit.splits.forEach(split => {
-      //     this.rpc.emit('split load', {uid: recordedSplit.uid, split});
-      //   });
-      // }
-    // }));
+    // }
   }
 
   lastChild() {
@@ -117,6 +90,25 @@ module.exports = class Pane {
       }
     });
     return last;      
+  }
+  
+  record(fn) {
+    const pid = this.session.pty.pid;
+    exec(`lsof -p ${pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`, (err, cwd) => {
+      if (err) {
+        console.error(err);
+      } else {
+        cwd = cwd.trim();
+        this.cwd = cwd;
+      }
+    });
+    const pane = {uid: this.uid, cwd: this.cwd, type: 'PANE', root: this.root, direction: this.direction, childs: []};
+    this.childs.forEach(child => {
+      child.record(state => {
+        pane.childs.push(state);
+      });
+    });
+    fn(pane);
   }
 
 };
