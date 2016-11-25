@@ -12,6 +12,7 @@ module.exports = class Pane {
     initSession({rows, cols, cwd, shell, shellArgs, uid}, (uid, session) => {
       this.uid = uid;
       this.session = session;
+      session.write('UID: ' + this.uid);
 
       if (splitDirection) {
         this.direction = splitDirection;
@@ -56,10 +57,11 @@ module.exports = class Pane {
         pane.session.on('data', data => {
           this.rpc.emit('session data', {uid: pane.uid, data});
         });
+        
         pane.session.on('exit', () => {
-          if (pane.childs.size >= 1) {
-            if (!pane.root) {
-              pane.parent.childs.delete(pane);
+          if (!pane.root) {
+            pane.parent.childs.delete(pane);
+            if (pane.childs.size >= 1) {
               console.log('curentPaneUid: ', pane.uid);
               pane.childs.forEach(child => {
                 child.parent = pane.parent;
@@ -104,16 +106,17 @@ module.exports = class Pane {
     // }));
   }
 
-  firstChild() {
+  lastChild() {
     let cpt = 0;
-    let first = undefined;
+    let last = undefined;
     this.childs.forEach(child => {
       cpt++;
-      if (cpt === 1) {
-        first = child;
+      console.log('childUID: ',child.uid);
+      if (cpt === this.childs.size) {
+        last = child;
       }
     });
-    return first;      
+    return last;      
   }
 
 };

@@ -13,6 +13,7 @@ module.exports = class Tab {
   onRoot({rows, cols, cwd, shell, shellArgs, uid}) {
     this.root = new Pane({rows, cols, cwd, shell, shellArgs, uid}, this.window.rpc, pane => {
       pane.root = true;
+      console.log('rootUID:', pane.uid);
       this.window.sessions.set(pane.uid, pane);
       
       pane.session.on('data', data => {
@@ -21,7 +22,7 @@ module.exports = class Tab {
       
       pane.session.on('exit', () => {
         if (pane.root && pane.childs.size >= 1) {
-          this.onRootUpdate(pane.firstChild());
+          this.onRootUpdate(pane.lastChild());
         }
         this.window.sessions.delete(pane.uid);
         this.window.rpc.emit('session exit', {uid: pane.uid});
@@ -30,15 +31,24 @@ module.exports = class Tab {
   }
   
   onRootUpdate(pane) {
+    this.root.childs.delete(pane);
+    console.log('curentRootUid: ', this.root.uid);
     pane.toRoot();
+    this.root.childs.forEach(child => {
+      child.parent = pane;
+    });
+    this.root.childs.forEach(child => {
+      pane.childs.add(child);
+    });
+    this.root = pane;
+    console.log('rootUID:', this.root.uid, 'childs:', this.root.childs.size);
     pane.session.on('exit', () => {
       if (pane.root && pane.childs.size >= 1) {
-        this.onRootUpdate(pane.firstChild());
+        this.onRootUpdate(pane.lastChild());
       }
       this.window.sessions.delete(pane.uid);
       this.window.rpc.emit('session exit', {uid: pane.uid});
     });
-    this.root = pane;
   }
 
   // onSplit(opts, win, recordedSplit) {
