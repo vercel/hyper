@@ -1,6 +1,7 @@
 // Native
 const {isAbsolute} = require('path');
 const {homedir} = require('os');
+>>>>>>> Fix pane restoration => root childds
 
 // Packages
 const {parse: parseUrl} = require('url');
@@ -75,12 +76,12 @@ module.exports = class Window extends BrowserWindow {
       this.onTab({rows, cols, cwd, shell, shellArgs}, tab);
     });
 
-    rpc.on('new split', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homedir(), splitDirection, activeUid, split}) => {
+    rpc.on('new split', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homedir(), splitDirection, activeUid, pane}) => {
       const shell = cfg.shell;
       const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
 
-      const pane = sessions.get(activeUid);
-      pane.onSplit({rows, cols, cwd, shell, shellArgs, splitDirection, activeUid, parent: pane}, this, split);
+      const activePane = sessions.get(activeUid);
+      activePane.onSplit({rows, cols, cwd, shell, shellArgs, splitDirection, activeUid, parent: activePane}, this, pane);
     });
 
     rpc.on('exit', ({uid}) => {
@@ -207,20 +208,10 @@ module.exports = class Window extends BrowserWindow {
     });
   }
 
-  onTab(opts, recordedTab) {
-    // if (recordedTab) {
-    //   opts.uid = recordedTab.uid;
-    //   opts.cwd = recordedTab.cwd;
-    // }
+  onTab(opts, recorded) {
     const size = this.tabs.size;
     this.tabs.add(new Tab(size + 1, this, (tab) => {
-      tab.onRoot(opts);
-      
-      // if (recordedTab) {
-      //   recordedTab.splits.forEach(split => {
-      //     this.rpc.emit('split restore', {uid: recordedTab.uid, split});
-      //   });
-      // }
+      tab.onRoot(opts, recorded);
     }));
   }
 

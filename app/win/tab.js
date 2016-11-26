@@ -9,16 +9,19 @@ module.exports = class Tab {
     fn(this);
   }
   
-  onRoot({rows, cols, cwd, shell, shellArgs, uid}) {
+  onRoot({rows, cols, cwd, shell, shellArgs, uid}, recorded) {
+    if (recorded && recorded.root) {
+      uid = recorded.root.uid;
+      cwd = recorded.root.cwd;
+    }
+    
     this.root = new Pane({rows, cols, cwd, shell, shellArgs, uid}, this.window.rpc, pane => {
       pane.root = true;
-      console.log('rootUID:', pane.uid);
       this.window.sessions.set(pane.uid, pane);
-      
       pane.session.on('data', data => {
-        this.window.rpc.emit('session data', {uid:pane.uid, data});
+        this.window.rpc.emit('session data', {uid: pane.uid, data});
       });
-      
+
       pane.session.on('exit', () => {
         if (pane.root && pane.childs.size >= 1) {
           this.onRootUpdate(pane.lastChild());
@@ -26,21 +29,31 @@ module.exports = class Tab {
         this.window.sessions.delete(pane.uid);
         this.window.rpc.emit('session exit', {uid: pane.uid});
       });
+
+      if (recorded && recorded.root) {
+        recorded.root.childs.forEach(pane => {
+          this.window.rpc.emit('pane restore', {uid: recorded.root.uid, pane});
+        });
+      }
     });
   }
   
   onRootUpdate(pane) {
     this.root.childs.delete(pane);
-    console.log('curentRootUid: ', this.root.uid);
     pane.toRoot();
+    const rootChilds = new Set([]);
     this.root.childs.forEach(child => {
       child.parent = pane;
+      rootChilds.add(child);
     });
-    this.root.childs.forEach(child => {
-      pane.childs.add(child);
+
+    pane.childs.forEach(child => {
+      rootChilds.add(child);
     });
+
+    pane.childs = rootChilds;
     this.root = pane;
-    console.log('rootUID:', this.root.uid, 'childs:', this.root.childs.size);
+
     pane.session.on('exit', () => {
       if (pane.root && pane.childs.size >= 1) {
         this.onRootUpdate(pane.lastChild());
@@ -49,44 +62,6 @@ module.exports = class Tab {
       this.window.rpc.emit('session exit', {uid: pane.uid});
     });
   }
-
-  // onSplit(opts, win, recordedSplit) {
-  //   if (recordedSplit) {
-  //     opts.uid = recordedSplit.uid;
-  //     opts.cwd = recordedSplit.cwd;
-  //   }
-  //   const size = this.splits.size;
-  //   this.splits.add(new Split(size + 1, opts, this.rpc, (uid, split) => {
-  //     // if(size === 1) {
-  //     //   this.firstSplit = uid;
-  //     // }
-  //     win.sessions.set(uid, split);
-  //     split.session.on('data', data => {
-  //       this.rpc.emit('session data', {uid, data});
-  //     });
-  // 
-  //     split.session.on('title', title => {
-  //       win.setTitle(title);
-  //       this.rpc.emit('session title', {uid, title});
-  //     });
-  // 
-  //     split.session.on('exit', () => {
-  //       this.splits.delete(split);
-  //       win.sessions.delete(uid);
-  //       let id = 0;
-  //       this.splits.forEach(split => {
-  //         split.id = ++id;
-  //       });
-  //       this.rpc.emit('session exit', {uid});
-  //     });
-  // 
-  //     if (recordedSplit) {
-  //       recordedSplit.splits.forEach(split => {
-  //         this.rpc.emit('split load', {uid: recordedSplit.uid, split});
-  //       });
-  //     }
-  //   }));
-  // }
 
   record(fn) {
     const tab = {id: this.id, type: 'TAB', root: undefined};

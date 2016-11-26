@@ -44,12 +44,11 @@ module.exports = class Pane {
     this.root = true;
   }
 
-  onSplit(opts, win, recordedSplit) {
-    // if (recordedSplit) {
-    //   opts.uid = recordedSplit.uid;
-    //   opts.cwd = recordedSplit.cwd;
-    // }
-    // const size = this.childs.size;
+  onSplit(opts, win, recorded) {
+    if (recorded) {
+      opts.uid = recorded.uid;
+      opts.cwd = recorded.cwd;
+    }
     new Pane(opts, this.rpc, pane => {
       this.childs.add(pane);
         win.sessions.set(pane.uid, pane);
@@ -71,12 +70,12 @@ module.exports = class Pane {
             }
           }
         });
+        if (recorded) {
+          recorded.childs.forEach(pane => {
+            this.rpc.emit('pane restore', {uid: recorded.uid, pane});
+          });
+        }
     });
-    // if (recordedSplit) {
-    //   recordedSplit.splits.forEach(split => {
-    //     this.rpc.emit('split load', {uid: recordedSplit.uid, split});
-    //   });
-    // }
   }
 
   lastChild() {
@@ -102,7 +101,17 @@ module.exports = class Pane {
         this.cwd = cwd;
       }
     });
-    const pane = {uid: this.uid, cwd: this.cwd, type: 'PANE', root: this.root, direction: this.direction, childs: []};
+    
+    let pane = {};
+    if(this.root === true) {
+      pane = {uid: this.uid, cwd: this.cwd, type: 'PANE', root: this.root, childs: []};
+    } else {
+      pane = {uid: this.uid, cwd: this.cwd, type: 'PANE', root: this.root, direction: this.direction, childs: []};
+    }
+    // if(!this.root) {
+    // pane = {uid: this.uid, cwd: this.cwd, type: 'PANE', root: this.root, direction: this.direction, childs: []};
+    // }
+    // const pane = {uid: this.uid, cwd: this.cwd, type: 'PANE', root: this.root, direction: this.direction, childs: []};
     this.childs.forEach(child => {
       child.record(state => {
         pane.childs.push(state);
