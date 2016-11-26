@@ -32,8 +32,6 @@ module.exports.load = function () {
     // when opening create a new window
     app.createWindow();
   }
-  // app.createWindow();
-
   // start save scheduler
   this.save(wins.get());
 };

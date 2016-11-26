@@ -1,5 +1,3 @@
-const initSession = require('../utils/init-session');
-const Split = require('./split');
 const Pane = require('./pane');
 
 module.exports = class Tab {
@@ -8,13 +6,13 @@ module.exports = class Tab {
     this.window = window;
     fn(this);
   }
-  
+
   onRoot({rows, cols, cwd, shell, shellArgs, uid}, recorded) {
     if (recorded && recorded.root) {
       uid = recorded.root.uid;
       cwd = recorded.root.cwd;
     }
-    
+
     this.root = new Pane({rows, cols, cwd, shell, shellArgs, uid}, this.window.rpc, pane => {
       pane.root = true;
       this.window.sessions.set(pane.uid, pane);
@@ -37,7 +35,7 @@ module.exports = class Tab {
       }
     });
   }
-  
+
   onRootUpdate(pane) {
     this.root.childs.delete(pane);
     pane.toRoot();
@@ -67,7 +65,7 @@ module.exports = class Tab {
     const tab = {id: this.id, type: 'TAB', root: undefined};
     this.root.record(state => {
       tab.root = state;
-    }); 
+    });
     fn(tab);
   }
 
