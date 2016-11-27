@@ -1,8 +1,12 @@
+const uuid = require('uuid');
 const Pane = require('./pane');
 
 module.exports = class Tab {
   constructor(id, window, fn) {
     this.id = id;
+    if (!id) {
+      this.id = uuid.v4();
+    }
     this.window = window;
     fn(this);
   }
@@ -15,6 +19,7 @@ module.exports = class Tab {
 
     this.root = new Pane({rows, cols, cwd, shell, shellArgs, uid}, this.window.rpc, pane => {
       pane.root = true;
+      console.log('tabID: ',this.id ,' root UID: ', pane.uid);
       this.window.sessions.set(pane.uid, pane);
       pane.session.on('data', data => {
         this.window.rpc.emit('session data', {uid: pane.uid, data});

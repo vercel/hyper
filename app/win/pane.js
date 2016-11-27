@@ -9,6 +9,7 @@ module.exports = class Pane {
 
     initSession({rows, cols, cwd, shell, shellArgs, uid}, (uid, session) => {
       this.uid = uid;
+      console.log('paneUID: ', uid);
       this.session = session;
 
       if (splitDirection) {
