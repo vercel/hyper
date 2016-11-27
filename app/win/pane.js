@@ -53,6 +53,7 @@ module.exports = class Pane {
       });
 
       pane.session.on('exit', () => {
+        console.log('PANE EXIT called');
         if (!pane.root) {
           pane.parent.childs.delete(pane);
           if (pane.childs.size >= 1) {

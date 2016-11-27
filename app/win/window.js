@@ -214,6 +214,11 @@ module.exports = class Window extends BrowserWindow {
       tab.onRoot(opts, recorded);
     }));
   }
+  
+  onDeleteTab(tab) {
+    console.log('onDeleteTab called');
+    this.tabs.delete(tab);
+  }
 
   restore(tabs) {
     tabs.forEach(tab => {

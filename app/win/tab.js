@@ -21,8 +21,11 @@ module.exports = class Tab {
       });
 
       pane.session.on('exit', () => {
+        console.log('onRoot EXIT called');
         if (pane.root && pane.childs.size >= 1) {
           this.onRootUpdate(pane.lastChild());
+        } else {
+          this.window.onDeleteTab(this);
         }
         this.window.sessions.delete(pane.uid);
         this.window.rpc.emit('session exit', {uid: pane.uid});
@@ -53,8 +56,11 @@ module.exports = class Tab {
     this.root = pane;
 
     pane.session.on('exit', () => {
+      console.log('onRootUpdate EXIT called');
       if (pane.root && pane.childs.size >= 1) {
         this.onRootUpdate(pane.lastChild());
+      } else {
+        this.window.onDeleteTab(this);
       }
       this.window.sessions.delete(pane.uid);
       this.window.rpc.emit('session exit', {uid: pane.uid});
