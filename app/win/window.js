@@ -210,16 +210,15 @@ module.exports = class Window extends BrowserWindow {
 
   onTab(opts, recorded) {
     let id;
-    if(recorded) {
+    if (recorded) {
       id = recorded.id;
     }
     this.tabs.add(new Tab(id, this, tab => {
       tab.onRoot(opts, recorded);
     }));
   }
-  
+
   onDeleteTab(tab) {
-    console.log('onDeleteTab called');
     this.tabs.delete(tab);
   }
 

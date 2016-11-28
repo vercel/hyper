@@ -19,14 +19,12 @@ module.exports = class Tab {
 
     this.root = new Pane({rows, cols, cwd, shell, shellArgs, uid}, this.window.rpc, pane => {
       pane.root = true;
-      console.log('tabID: ',this.id ,' root UID: ', pane.uid);
       this.window.sessions.set(pane.uid, pane);
       pane.session.on('data', data => {
         this.window.rpc.emit('session data', {uid: pane.uid, data});
       });
 
       pane.session.on('exit', () => {
-        console.log('onRoot EXIT called');
         if (pane.root && pane.childs.size >= 1) {
           this.onRootUpdate(pane.lastChild());
         } else {
@@ -61,7 +59,6 @@ module.exports = class Tab {
     this.root = pane;
 
     pane.session.on('exit', () => {
-      console.log('onRootUpdate EXIT called');
       if (pane.root && pane.childs.size >= 1) {
         this.onRootUpdate(pane.lastChild());
       } else {

@@ -9,7 +9,6 @@ module.exports = class Pane {
 
     initSession({rows, cols, cwd, shell, shellArgs, uid}, (uid, session) => {
       this.uid = uid;
-      console.log('paneUID: ', uid);
       this.session = session;
 
       if (splitDirection) {
@@ -54,7 +53,6 @@ module.exports = class Pane {
       });
 
       pane.session.on('exit', () => {
-        console.log('PANE EXIT called');
         if (!pane.root) {
           pane.parent.childs.delete(pane);
           if (pane.childs.size >= 1) {
@@ -63,6 +61,8 @@ module.exports = class Pane {
               pane.parent.childs.add(child);
             });
           }
+          win.sessions.delete(pane.uid);
+          win.rpc.emit('session exit', {uid: pane.uid});
         }
       });
       if (recorded) {
