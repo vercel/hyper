@@ -267,7 +267,7 @@ module.exports = ({createWindow, updatePlugins}) => {
       },
       {
         label: 'Show Previous Tab',
-        accelerator: 'CmdOrCtrl+Option+Left',
+        accelerator: 'CmdOrCtrl+Alt+Left',
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('move left req');
@@ -276,7 +276,7 @@ module.exports = ({createWindow, updatePlugins}) => {
       },
       {
         label: 'Show Next Tab',
-        accelerator: 'CmdOrCtrl+Option+Right',
+        accelerator: 'CmdOrCtrl+Alt+Right',
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('move right req');
