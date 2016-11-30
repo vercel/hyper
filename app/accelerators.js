@@ -43,7 +43,7 @@ const applicationMenu = { // app/menu.js
   showNextTab: 'Alt+Right',
   selectNextPane: 'Ctrl+Alt+Tab',
   selectPreviousPane: 'Ctrl+Shift+Alt+Tab',
-  enterFullScreen: isMac ? 'Ctrl+Cmd+F' : ''
+  enterFullScreen: isMac ? 'Ctrl+Cmd+F' : 'F11'
 };
 
 const mousetrap = { // lib/containers/hyper.js
