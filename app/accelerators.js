@@ -78,18 +78,23 @@ const mousetrap = { // lib/containers/hyper.js
   selectAll: 'A'
 };
 
-const allAccelerators = [];
+const allAccelerators = Object.assign({}, applicationMenu, mousetrap);
+const cache = [];
 
-for (const key in Object.assign({}, applicationMenu, mousetrap)) { // eslint-disable-line guard-for-in
-  let value = applicationMenu[key] || mousetrap[key];
-  if (value !== '' && !value.startsWith('Ctrl') && !value.startsWith('+')) { // we don't want to process those
-    value = `${prefix}+${value}`;
-    applicationMenu[key] = value;
+for (const key in allAccelerators) {
+  if ({}.hasOwnProperty.call(allAccelerators, key)) {
+    let value = allAccelerators[key];
+    if (value) {
+      if (value.startsWith('+')) {
+        // we don't need to add the prefix to accelerators starting with `+`
+        value = value.slice(1);
+      } else if (!value.startsWith('Ctrl')) { // nor to the ones starting with `Ctrl`
+        value = `${prefix}+${value}`;
+      }
+      cache.push(value.toLowerCase());
+      allAccelerators[key] = value;
+    }
   }
-  if (value.startsWith('+')) {
-    value = value.slice(1);
-  }
-  allAccelerators.push(value.toLowerCase());
 }
 
 // decides if a keybard event is a Hyper Accelerator
@@ -122,7 +127,7 @@ function isAccelerator(e) {
 
   keys = keys.join('+');
 
-  return allAccelerators.includes(keys);
+  return cache.includes(keys);
 }
 
 module.exports.isAccelerator = isAccelerator;
