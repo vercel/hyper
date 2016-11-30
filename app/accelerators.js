@@ -41,9 +41,9 @@ const applicationMenu = { // app/menu.js
   minimize: 'M',
   showPreviousTab: 'Alt+Left',
   showNextTab: 'Alt+Right',
-  selectNextPane: 'Ctrl+Alt+Tab', // exception
-  selectPreviousPane: 'Ctrl+Shift+Alt+Tab', // ditto
-  enterFullScreen: isMac ? 'Ctrl+Cmd+F' : '' // ditto
+  selectNextPane: 'Ctrl+Alt+Tab',
+  selectPreviousPane: 'Ctrl+Shift+Alt+Tab',
+  enterFullScreen: isMac ? 'Ctrl+Cmd+F' : ''
 };
 
 const mousetrap = { // lib/containers/hyper.js
