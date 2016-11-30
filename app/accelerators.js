@@ -135,3 +135,4 @@ function isAccelerator(e) {
 }
 
 module.exports.isAccelerator = isAccelerator;
+module.exports.accelerators = allAccelerators;
