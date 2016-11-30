@@ -80,6 +80,8 @@ const mousetrap = { // lib/containers/hyper.js
 
 const allAccelerators = Object.assign({}, applicationMenu, mousetrap);
 const cache = [];
+// ^ here we store the shortcuts so we don't need to
+// look into the `allAccelerators` everytime
 
 for (const key in allAccelerators) {
   if ({}.hasOwnProperty.call(allAccelerators, key)) {
@@ -122,6 +124,8 @@ function isAccelerator(e) {
   if (e.key === ' ') {
     keys.push('space');
   } else {
+    // we need `toLowerCase` for when the shortcut has `shift`
+    // we need to replace `arrow` when the shortcut uses the arrow keys
     keys.push(e.key.toLowerCase().replace('arrow', ''));
   }
 
