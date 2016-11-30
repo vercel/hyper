@@ -122,8 +122,6 @@ function isAccelerator(e) {
 
   keys = keys.join('+');
 
-  console.log(keys);
-  console.log(allAccelerators.includes(keys));
   return allAccelerators.includes(keys);
 }
 
