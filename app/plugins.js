@@ -236,7 +236,7 @@ function install(fn) {
     env.npm_config_target = process.versions.electron;
     env.npm_config_disturl = 'https://atom.io/download/atom-shell';
     /* eslint-enable camelcase  */
-    exec('npm prune && npm install --production', {
+    exec('bash -c \'npm prune && npm install --production\'', {
       cwd: path,
       env,
       shell
