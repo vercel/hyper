@@ -1,5 +1,30 @@
+// handle startup squirrel events
+if (process.platform === 'win32') {
+  // eslint-disable-next-line import/order
+  const systemContextMenu = require('./system-context-menu');
+
+  switch (process.argv[1]) {
+    case '--squirrel-install':
+    case '--squirrel-updated':
+      systemContextMenu.add(() => {
+        // eslint-disable-next-line curly, unicorn/no-process-exit
+        if (require('electron-squirrel-startup')) process.exit();
+      });
+      break;
+    case '--squirrel-uninstall':
+      systemContextMenu.remove(() => {
+        // eslint-disable-next-line curly, unicorn/no-process-exit
+        if (require('electron-squirrel-startup')) process.exit();
+      });
+      break;
+    default:
+      // eslint-disable-next-line curly, unicorn/no-process-exit
+      if (require('electron-squirrel-startup')) process.exit();
+  }
+}
+
 // Native
-const {resolve} = require('path');
+const {resolve, isAbsolute} = require('path');
 
 // Packages
 const {parse: parseUrl} = require('url');
@@ -108,16 +133,19 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       height,
       minHeight: 190,
       minWidth: 370,
-      titleBarStyle: 'hidden-inset',
+      titleBarStyle: 'hidden-inset', // macOS only
       title: 'Hyper.app',
       backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
+      // we want to go frameless on windows and linux
+      frame: process.platform === 'darwin',
       transparent: true,
       icon: resolve(__dirname, 'static/icon.png'),
       // we only want to show when the prompt is ready for user input
       // HYPERTERM_DEBUG for backwards compatibility with hyperterm
       show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
       x: startX,
-      y: startY
+      y: startY,
+      acceptFirstMouse: true
     };
     const browserOptions = plugins.getDecoratedBrowserOptions(browserDefaults);
 
@@ -175,7 +203,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       }
     });
 
-    rpc.on('new', ({rows = 40, cols = 100, cwd = process.env.HOME, splitDirection}) => {
+    rpc.on('new', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : process.env.HOMEPATH || process.env.HOME, splitDirection}) => {
       const shell = cfg.shell;
       const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
 
@@ -233,6 +261,18 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     rpc.win.on('move', () => {
       rpc.emit('move');
+    });
+
+    rpc.on('open hamburger menu', ({x, y}) => {
+      Menu.getApplicationMenu().popup(x, y);
+    });
+
+    rpc.on('minimize', () => {
+      win.minimize();
+    });
+
+    rpc.on('close', () => {
+      win.close();
     });
 
     const deleteSessions = () => {
@@ -305,7 +345,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     win.on('closed', () => {
-      if (process.platform !== 'darwin') {
+      if (process.platform !== 'darwin' && windowSet.size === 0) {
         app.quit();
       }
     });
