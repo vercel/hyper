@@ -237,7 +237,10 @@ function install(fn) {
     env.npm_config_disturl = 'https://atom.io/download/atom-shell';
     /* eslint-enable camelcase  */
     let command = 'npm prune && npm install --production';
-    if (process.platform !== 'win32') command = `bash -c '${command}'`;
+    if (process.platform !== 'win32') {
+      command = `bash -c '${command}'`;
+    }
+
     exec(command, {
       cwd: path,
       env,
