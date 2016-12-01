@@ -10,7 +10,7 @@
     "prepush": "npm test",
     "postinstall": "install-app-deps",
     "pack": "npm run build && build --dir && babel --no-comments --compact --minified --out-file app/dist/bundle.js app/dist/bundle.js",
-    "dist": "npm run build && build --ia32 --x64"
+    "dist": "npm run build && build"
   },
   "xo": {
     "extends": "xo-react",
