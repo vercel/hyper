@@ -1,7 +1,6 @@
 // Native
 const {isAbsolute} = require('path');
 const {homedir} = require('os');
->>>>>>> Fix pane restoration => root childds
 
 // Packages
 const {parse: parseUrl} = require('url');
