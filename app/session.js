@@ -36,7 +36,7 @@ module.exports = class Session extends EventEmitter {
 
     try {
       this.pty = spawn(shell || defaultShell, shellArgs || defaultShellArgs, {
-        columns,
+        cols: columns,
         rows,
         cwd,
         env: getDecoratedEnv(baseEnv)
