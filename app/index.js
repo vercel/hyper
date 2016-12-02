@@ -25,6 +25,7 @@ if (process.platform === 'win32') {
 
 // Native
 const {resolve, isAbsolute} = require('path');
+const {homedir} = require('os');
 
 // Packages
 const {parse: parseUrl} = require('url');
@@ -203,7 +204,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       }
     });
 
-    rpc.on('new', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : process.env.HOMEPATH || process.env.HOME, splitDirection}) => {
+    rpc.on('new', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homedir(), splitDirection}) => {
       const shell = cfg.shell;
       const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
 
