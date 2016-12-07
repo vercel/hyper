@@ -6,7 +6,7 @@
     "dev": "webpack -w",
     "build": "cross-env NODE_ENV=production webpack",
     "lint": "xo",
-    "test": "npm run lint && npm run dist && ava",
+    "test": "npm run lint",
     "prepush": "npm test",
     "postinstall": "install-app-deps",
     "pack": "npm run build && build --dir && babel --no-comments --compact --minified --out-file app/dist/bundle.js app/dist/bundle.js",
