@@ -41,8 +41,8 @@ const applicationMenu = { // app/menu.js
   minimize: 'M',
   showPreviousTab: 'Alt+Left',
   showNextTab: 'Alt+Right',
-  selectNextPane: 'Ctrl+Alt+Tab',
-  selectPreviousPane: 'Ctrl+Shift+Alt+Tab',
+  selectNextPane: isMac ? ']' : 'Ctrl+Alt+]',
+  selectPreviousPane: isMac ? '[' : 'Ctrl+Alt+[',
   enterFullScreen: isMac ? 'Ctrl+Cmd+F' : 'F11'
 };
 
