@@ -21,6 +21,10 @@ module.exports = {
     // border color (window, tabs)
     borderColor: '#333',
 
+    // macOS vibrancy type. Requires a transparent `backgroundColor`. See:
+    // https://github.com/electron/electron/blob/master/docs/api/browser-window.md#winsetvibrancytype-macos
+    vibrancyType: 'none',
+
     // custom css to embed in the main window
     css: '',
 

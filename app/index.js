@@ -38,6 +38,7 @@ const isDev = require('electron-is-dev');
 // Ours
 const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
+const toElectronVibrancy = require('./utils/to-electron-vibrancy');
 const createMenu = require('./menu');
 const createRPC = require('./rpc');
 const notify = require('./notify');
@@ -137,6 +138,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       titleBarStyle: 'hidden-inset', // macOS only
       title: 'Hyper.app',
       backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
+      vibrancy: toElectronVibrancy(cfg.vibrancyType),
       // we want to go frameless on windows and linux
       frame: process.platform === 'darwin',
       transparent: true,
@@ -175,6 +177,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
       // update background color if necessary
       win.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
+
+      // update vibrancy if necessary
+      win.setVibrancy(toElectronVibrancy(cfg_.vibrancyType));
 
       cfg = cfg_;
     });
