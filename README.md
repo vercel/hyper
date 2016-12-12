@@ -10,7 +10,7 @@ For more details, head to: https://hyper.is
 
 ## Usage
 
-**You can download the latest release [here](https://github.com/zeit/hyper/releases/latest)**.
+**You can download the latest release [here](https://hyper.is/#installation)**.
 
 If you're on macOS, you can also use [Homebrew Cask](https://caskroom.github.io/) to download the app by running these commands:
 
