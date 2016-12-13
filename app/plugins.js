@@ -236,7 +236,15 @@ function install(fn) {
     env.npm_config_target = process.versions.electron;
     env.npm_config_disturl = 'https://atom.io/download/atom-shell';
     /* eslint-enable camelcase  */
-    exec('npm prune && npm install --production', {
+    // Shell-specific installation commands
+    const installCommands = {
+      fish: 'npm prune; and npm install --production',
+      default: 'npm prune && npm install --production'
+    };
+    // determine the shell we're running in
+    const whichShell = shell.match(/fish/) ? 'fish' : 'default';
+    // Use the install command that is appropriate for our shell
+    exec(installCommands[whichShell], {
       cwd: path,
       env,
       shell
