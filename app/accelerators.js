@@ -2,7 +2,7 @@ const platform = process.platform;
 
 const isMac = platform === 'darwin';
 
-const prefix = isMac ? 'Cmd' : 'Ctrl';
+const prefix = isMac ? 'Cmd' : 'Ctrl+Shift';
 
 const applicationMenu = { // app/menu.js
   preferences: ',',
@@ -11,16 +11,16 @@ const applicationMenu = { // app/menu.js
   // Shell/File menu
   newWindow: 'N',
   newTab: 'T',
-  splitVertically: isMac ? 'D' : 'Shift+E',
-  splitHorizontally: isMac ? 'Shift+D' : 'Shift+O',
+  splitVertically: 'D',
+  splitHorizontally: isMac ? 'Shift+D' : 'E',
   closeSession: 'W',
-  closeWindow: 'Shift+W',
+  closeWindow: isMac ? 'Shift+W' : 'Q',
 
   // Edit menu
   undo: 'Z',
-  redo: 'Shift+Z',
+  redo: isMac ? 'Shift+Z' : 'Y',
   cut: 'X',
-  copy: isMac ? 'C' : 'Shift+C',
+  copy: 'C',
   paste: 'V',
   selectAll: 'A',
   clear: 'K',
@@ -28,21 +28,21 @@ const applicationMenu = { // app/menu.js
 
   // View menu
   reload: 'R',
-  fullReload: 'Shift+R',
-  toggleDevTools: isMac ? 'Alt+I' : 'Shift+I',
+  fullReload: isMac ? 'Shift+R' : 'F5',
+  toggleDevTools: isMac ? 'Alt+I' : 'I',
   resetZoom: '0',
   zoomIn: 'plus',
   zoomOut: '-',
 
   // Plugins menu
-  updatePlugins: 'Shift+U',
+  updatePlugins: isMac ? 'Shift+U' : 'U',
 
   // Window menu
   minimize: 'M',
   showPreviousTab: 'Alt+Left',
   showNextTab: 'Alt+Right',
   selectNextPane: 'Ctrl+Alt+Tab',
-  selectPreviousPane: 'Ctrl+Shift+Alt+Tab',
+  selectPreviousPane: isMac ? 'Ctrl+Shift+Alt+Tab' : 'Ctrl+Z+Alt+Tab',
   enterFullScreen: isMac ? 'Ctrl+Cmd+F' : 'F11'
 };
 
@@ -58,13 +58,13 @@ const mousetrap = { // lib/containers/hyper.js
   moveToLast: '9',
 
   // here `1`, `2` etc are used to "emulate" something like `moveLeft: ['...', '...', etc]`
-  moveLeft1: 'Shift+Left',
-  moveRight1: 'Shift+Right',
-  moveLeft2: 'Shift+{',
-  moveRight2: 'Shift+}',
+  moveLeft1: isMac ? 'Shift+Left' : 'Z+Left',
+  moveRight1: isMac ? 'Shift+Right' : 'Z+Right',
+  moveLeft2: isMac ? 'Shift+{' : '{',
+  moveRight2: isMac ? 'Shift+}' : '}',
   moveLeft3: 'Alt+Left',
   moveRight3: 'Alt+Right',
-  moveLeft4: 'Ctrl+Shift+Tab',
+  moveLeft4: isMac ? 'Ctrl+Shift+Tab' : 'Z+Tab',
   moveRight4: 'Ctrl+Tab',
 
   // here we add `+` at the beginning to prevent the prefix from being added
