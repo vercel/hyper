@@ -239,10 +239,10 @@ function install(fn) {
     // Shell-specific installation commands
     const installCommands = {
       fish: 'npm prune; and npm install --production',
-      default: 'npm prune && npm install --production'
+      posix: 'npm prune && npm install --production'
     };
     // determine the shell we're running in
-    const whichShell = shell.match(/fish/) ? 'fish' : 'default';
+    const whichShell = shell.match(/fish/) ? 'fish' : 'posix';
     // Use the install command that is appropriate for our shell
     exec(installCommands[whichShell], {
       cwd: path,
