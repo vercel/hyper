@@ -178,6 +178,8 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('init', () => {
+      // we update the backgroundColor once the init is called.
+      // when we do a win.reload() we need need to reset the backgroundColor
       win.setBackgroundColor(toElectronBackgroundColor(cfg.backgroundColor || '#000'));
 
       // If no callback is passed to createWindow,
