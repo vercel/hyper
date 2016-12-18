@@ -174,14 +174,11 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       }
 
       // update background color if necessary
-      win.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
-
       cfg = cfg_;
     });
 
     rpc.on('init', () => {
       win.setBackgroundColor(toElectronBackgroundColor(cfg.backgroundColor || '#000'));
-      win.show();
 
       // If no callback is passed to createWindow,
       // a new session will be created by default.
