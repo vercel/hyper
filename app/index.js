@@ -180,6 +180,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('init', () => {
+      win.setBackgroundColor(toElectronBackgroundColor(cfg.backgroundColor || '#000'));
       win.show();
 
       // If no callback is passed to createWindow,
