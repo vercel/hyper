@@ -77,7 +77,11 @@ module.exports = {
     bell: 'SOUND',
 
     // if true, selected text will automatically be copied to the clipboard
-    copyOnSelect: false
+    copyOnSelect: false,
+
+    // if true, on right click selected text will be copied or pasted if no
+    // selection is present
+    quickEdit: false
 
     // URL to custom bell
     // bellSoundURL: 'http://example.com/bell.mp3',
