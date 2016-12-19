@@ -1,12 +1,13 @@
 // Remove the full path to electron and the name of this file from the arguments list.
-const args = process.argv.slice(2);
+const firstArg = process.argv[1];
 // Print diagnostic information for a few arguments instead of running Hyper.
-if (args[0] === '--help' || args[0] === '-v' || args[0] === '--version') {
+if (firstArg === '--help' || firstArg === '-v' || firstArg === '--version') {
   const {version} = require('./package');
-  const configLocation = process.platform === 'win32' ? process.env.userprofile + '\\.hyper.js' : '~/.hyper.js'
+  const configLocation = process.platform === 'win32' ? process.env.userprofile + '\\.hyper.js' : '~/.hyper.js';
   console.log('Hyper version ' + version);
   console.log('Hyper does not accept any command line arguments. Please modify the config file instead.');
   console.log('Hyper configuration file located at: ' + configLocation);
+  // eslint-disable-next-line unicorn/no-process-exit
   process.exit();
 }
 
