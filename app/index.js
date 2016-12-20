@@ -1,4 +1,3 @@
-// Remove the full path to electron and the name of this file from the arguments list.
 const firstArg = process.argv[1];
 // Print diagnostic information for a few arguments instead of running Hyper.
 if (firstArg === '--help' || firstArg === '-v' || firstArg === '--version') {
