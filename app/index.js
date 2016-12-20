@@ -229,15 +229,6 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         });
       });
     });
-    
-    rpc.on('webv', ({url}) => {
-      console.log(url);
-          if(url) {
-            const webv = new BrowserWindow({width: 1024, height: 768 });
-            webv.loadURL('file://' + __dirname + '/webv.html');
-          }
-      
-    });
 
     rpc.on('exit', ({uid}) => {
       const session = sessions.get(uid);
