@@ -139,7 +139,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
       // we want to go frameless on windows and linux
       frame: process.platform === 'darwin',
-      //transparent: true,
+      transparent: process.platform === 'darwin',
       icon: resolve(__dirname, 'static/icon.png'),
       // we only want to show when the prompt is ready for user input
       // HYPERTERM_DEBUG for backwards compatibility with hyperterm
@@ -245,7 +245,6 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('maximize', () => {
-      console.log("MAXIMIZE");
       win.maximize();
     });
 
@@ -350,7 +349,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     // Same deal as above, grabbing the window titlebar when the window
     // is maximized on Windows results in unmaximize, without hitting any
     // app buttons
-    for(let ev of ['maximize', 'unmaximize', 'minimize', 'restore']) {
+    for (const ev of ['maximize', 'unmaximize', 'minimize', 'restore']) {
       win.on(ev, () => rpc.emit('windowGeometry change'));
     }
 
