@@ -347,6 +347,13 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       pluginsUnsubscribe();
     });
 
+    // Same deal as above, grabbing the window titlebar when the window
+    // is maximized on Windows results in unmaximize, without hitting any
+    // app buttons
+    for(let ev of ['maximize', 'unmaximize', 'minimize', 'restore']) {
+      win.on(ev, () => rpc.emit('windowGeometry change'));
+    }
+
     win.on('closed', () => {
       if (process.platform !== 'darwin' && windowSet.size === 0) {
         app.quit();
