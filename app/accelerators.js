@@ -39,8 +39,8 @@ const applicationMenu = { // app/menu.js
 
   // Window menu
   minimize: 'M',
-  showPreviousTab: 'Alt+Left',
-  showNextTab: 'Alt+Right',
+  showPreviousTab: isMac ? 'Alt+Left' : '+Ctrl+PageDown',
+  showNextTab: isMac ? 'Alt+Right' : '+Ctrl+PageUp',
   selectNextPane: 'Ctrl+Alt+Tab',
   selectPreviousPane: isMac ? 'Ctrl+Shift+Alt+Tab' : 'Ctrl+Z+Alt+Tab',
   enterFullScreen: isMac ? 'Ctrl+Cmd+F' : 'F11'
@@ -68,8 +68,8 @@ const mousetrap = { // lib/containers/hyper.js
   moveRight4: 'Ctrl+Tab',
 
   // here we add `+` at the beginning to prevent the prefix from being added
-  moveWordLeft: '+Alt+Left',
-  moveWordRight: '+Alt+Right',
+  moveWordLeft: isMac ? '+Alt+Left' : '+Ctrl+Left',
+  moveWordRight: isMac ? '+Alt+Right' : '+Ctrl+Right',
   deleteWordLeft: '+Alt+Backspace',
   deleteWordRight: '+Alt+Delete',
   deleteLine: 'Backspace',
