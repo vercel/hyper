@@ -1,6 +1,5 @@
-const firstArg = process.argv[1];
 // Print diagnostic information for a few arguments instead of running Hyper.
-if (firstArg === '--help' || firstArg === '-v' || firstArg === '--version') {
+if (['--help', '-v', '--version'].indexOf(process.argv[1]) !== -1) {
   const {version} = require('./package');
   const configLocation = process.platform === 'win32' ? process.env.userprofile + '\\.hyper.js' : '~/.hyper.js';
   console.log('Hyper version ' + version);
