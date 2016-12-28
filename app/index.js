@@ -181,6 +181,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       // we update the backgroundColor once the init is called.
       // when we do a win.reload() we need need to reset the backgroundColor
       win.setBackgroundColor(toElectronBackgroundColor(cfg.backgroundColor || '#000'));
+      win.show();
 
       // If no callback is passed to createWindow,
       // a new session will be created by default.
