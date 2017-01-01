@@ -33,6 +33,7 @@ const applicationMenu = { // app/menu.js
   resetZoom: '0',
   zoomIn: 'plus',
   zoomOut: '-',
+  maximizePane: 'Shift+Enter',
 
   // Plugins menu
   updatePlugins: 'Shift+U',
