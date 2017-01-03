@@ -15,8 +15,8 @@ For more details, head to: https://hyper.is
 If you're on macOS, you can also use [Homebrew Cask](https://caskroom.github.io/) to download the app by running these commands:
 
 ```bash
-$ brew update
-$ brew cask install hyper
+brew update
+brew cask install hyper
 ```
 
 ## Contribute
