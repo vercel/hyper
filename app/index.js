@@ -146,7 +146,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     const browserOptions = plugins.getDecoratedBrowserOptions(browserDefaults);
 
     const win = new Window(browserOptions, cfg, fn);
-    wins.new(win);
+    wins.add(win);
     win.loadURL(url);
 
     // the window can be closed by the browser process itself

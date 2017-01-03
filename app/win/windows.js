@@ -13,7 +13,7 @@ module.exports.lastFocused = () => {
   });
 };
 
-module.exports.new = win => {
+module.exports.add = win => {
   windowSet.add(win);
 };
 

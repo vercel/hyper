@@ -6,6 +6,7 @@ const wins = require('./windows');
 // local storage
 const rec = new Config();
 const recordInterval = 2000;
+let lastSession;
 
 module.exports.save = function (windows) {
   setInterval(() => {
@@ -15,14 +16,33 @@ module.exports.save = function (windows) {
         states.push(state);
       });
     });
-    rec.set('reccords', states);
+    rec.set('records', states);
   }, recordInterval);
 };
 
+module.exports.store = function (payload) {
+  clearTimeout(lastSession);
+  rec.set('lastSession', payload);
+  console.log(rec.get('lastSession'));
+  lastSession = setTimeout(() => {
+    console.log('delete session completly');
+    rec.delete('lastSession');
+  }, 10000);
+};
+
+module.exports.restore = function () {
+  clearTimeout(lastSession);
+  const relst = rec.get('lastSession');
+  if (relst) {
+    rec.delete('lastSession');
+  }
+  return relst;
+};
+
 module.exports.load = function () {
-  const reccords = rec.get('reccords');
-  if (reccords.length > 0) {
-    reccords.forEach(rec => {
+  const records = rec.get('records');
+  if (records && records.length > 0) {
+    records.forEach(rec => {
       app.createWindow(win => {
         win.restore(rec.tabs);
       }, {position: rec.position, size: rec.size, tabs: rec.tabs});

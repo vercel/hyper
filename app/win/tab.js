@@ -1,5 +1,6 @@
 const uuid = require('uuid');
 const Pane = require('./pane');
+const record = require('./record');
 
 module.exports = class Tab {
   constructor(id, window, fn) {
@@ -27,7 +28,9 @@ module.exports = class Tab {
       pane.session.on('exit', () => {
         if (pane.root && pane.childs.size >= 1) {
           this.onRootUpdate(pane.lastChild());
+          this.store(pane);
         } else {
+          this.store();
           this.window.onDeleteTab(this);
         }
         this.window.sessions.delete(pane.uid);
@@ -61,7 +64,9 @@ module.exports = class Tab {
     pane.session.on('exit', () => {
       if (pane.root && pane.childs.size >= 1) {
         this.onRootUpdate(pane.lastChild());
+        this.store(pane);
       } else {
+        this.store();
         this.window.onDeleteTab(this);
       }
       this.window.sessions.delete(pane.uid);
@@ -69,8 +74,28 @@ module.exports = class Tab {
     });
   }
 
+  to() {
+    return {id: this.id, type: 'TAB', root: undefined};
+  }
+
+  store(pane) {
+    if (pane) {
+      const rec = pane.to();
+      rec.root = false;
+      rec.direction = 'VERTICAL';
+      rec.parent = {uid: this.root.uid};
+      record.store(rec);
+    } else {
+      const tab = this.to();
+      this.root.store(state => {
+        tab.root = state;
+      });
+      record.store(tab);
+    }
+  }
+
   record(fn) {
-    const tab = {id: this.id, type: 'TAB', root: undefined};
+    const tab = this.to();
     this.root.record(state => {
       tab.root = state;
     });

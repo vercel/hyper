@@ -1,5 +1,6 @@
 const {exec} = require('child_process');
 const initSession = require('../utils/init-session');
+const record = require('./record');
 
 module.exports = class Pane {
   constructor({rows, cols, cwd, shell, shellArgs, splitDirection, activeUid, uid, parent}, rpc, fn) {
@@ -54,6 +55,7 @@ module.exports = class Pane {
 
       pane.session.on('exit', () => {
         if (!pane.root) {
+          pane.store();
           pane.parent.childs.delete(pane);
           if (pane.childs.size >= 1) {
             pane.childs.forEach(child => {
@@ -85,7 +87,7 @@ module.exports = class Pane {
     return last;
   }
 
-  record(fn) {
+  to() {
     const pid = this.session.pty.pid;
     exec(`lsof -p ${pid} | grep cwd | tr -s ' ' | cut -d ' ' -f9-`, (err, cwd) => {
       if (err) {
@@ -96,7 +98,23 @@ module.exports = class Pane {
       }
     });
 
-    const pane = {uid: this.uid, cwd: this.cwd, type: 'PANE', root: this.root, direction: this.direction, childs: []};
+    return {uid: this.uid, cwd: this.cwd, type: 'PANE', root: this.root, direction: this.direction, childs: []};
+  }
+
+  store(fn) {
+    const pane = this.to();
+    if (!pane.root) {
+      pane.parent = {uid: this.parent.uid};
+    }
+    if (fn) {
+      fn(pane);
+    } else {
+      record.store(pane);
+    }
+  }
+
+  record(fn) {
+    const pane = this.to();
     this.childs.forEach(child => {
       child.record(state => {
         pane.childs.push(state);

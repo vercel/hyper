@@ -15,6 +15,7 @@ const applicationMenu = { // app/menu.js
   splitHorizontally: isMac ? 'Shift+D' : 'Shift+O',
   closeSession: 'W',
   closeWindow: 'Shift+W',
+  reopenLastSession: 'Shift+T', // open the last closed session
 
   // Edit menu
   undo: 'Z',

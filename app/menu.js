@@ -119,6 +119,15 @@ module.exports = ({createWindow, updatePlugins}) => {
         label: isMac ? 'Close Window' : 'Quit',
         role: 'close',
         accelerator: accelerators.closeWindow
+      },
+      {
+        label: 'Repoen last closed session',
+        accelerator: accelerators.reopenLastSession,
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.reopenLastSession();
+          }
+        }
       }
     ]
   };
