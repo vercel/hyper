@@ -253,7 +253,7 @@ module.exports = ({createWindow, updatePlugins}) => {
         accelerator: accelerators.maximizePane,
         click(item, focusedWindow) {
           if (focusedWindow) {
-            focusedWindow.rpc.emit('toggle pane maximized state req');
+            focusedWindow.rpc.emit('toggle pane state');
           }
         }
       }
