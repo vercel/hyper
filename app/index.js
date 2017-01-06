@@ -49,7 +49,6 @@ const isDev = require('electron-is-dev');
 // Ours
 const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
-const createMenu = require('./menu');
 const createRPC = require('./rpc');
 const notify = require('./notify');
 const fetchNotifications = require('./notifications');
@@ -61,6 +60,7 @@ const config = require('./config');
 
 config.init();
 
+const createMenu = require('./menu');
 const plugins = require('./plugins');
 const Session = require('./session');
 
@@ -198,7 +198,8 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       // If no callback is passed to createWindow,
       // a new session will be created by default.
       if (!fn) {
-        fn = win => win.rpc.emit('termgroup add req');
+        const shellOpts = options.shellOpts || {};
+        fn = win => win.rpc.emit('termgroup add req', {shellOpts});
       }
 
       // app.windowCallback is the createWindow callback
@@ -217,9 +218,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       }
     });
 
-    rpc.on('new', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homedir(), splitDirection}) => {
-      const shell = cfg.shell;
-      const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
+    rpc.on('new', ({rows = 40, cols = 100, shellOpts = {}, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homedir(), splitDirection}) => {
+      const shell = shellOpts.path || cfg.shell;
+      const shellArgs = shellOpts.args || (cfg.shellArgs && Array.from(cfg.shellArgs));
 
       initSession({rows, cols, cwd, shell, shellArgs}, (uid, session) => {
         sessions.set(uid, session);

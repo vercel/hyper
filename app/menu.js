@@ -1,12 +1,16 @@
+'use strict';
+
 const os = require('os');
 const path = require('path');
 const {app, shell, dialog} = require('electron');
 
 const {accelerators} = require('./accelerators');
-const {getConfigDir} = require('./config');
+const {getConfig,getConfigDir} = require('./config');
 
 const isMac = process.platform === 'darwin';
 const appName = app.getName();
+const shells = getConfig().shells || {};
+const shellKeys = Object.keys(shells);
 
 // based on and inspired by
 // https://github.com/sindresorhus/anatine/blob/master/menu.js
@@ -59,6 +63,56 @@ module.exports = ({createWindow, updatePlugins}) => {
     ]
   };
 
+  const otherShellsMenu = {
+    label: 'Other Shells',
+    submenu: []
+  };
+
+  for (const shellName of shellKeys) {
+    const shellOpts = shells[shellName];
+
+    otherShellsMenu.submenu.push({
+      label: shellName,
+      submenu: [
+        {
+          label: 'New Window',
+          click() {
+            createWindow(null, {shellOpts});
+          }
+        },
+        {
+          label: 'New Tab',
+          click(item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.rpc.emit('termgroup add req', {shellOpts});
+            } else {
+              createWindow(null, {shellOpts});
+            }
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Split Vertically',
+          click(item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.rpc.emit('split request vertical', {shellOpts});
+            }
+          }
+        },
+        {
+          label: 'Split Horizontally',
+          click(item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.rpc.emit('split request horizontal', {shellOpts});
+            }
+          }
+        }
+      ]
+    });
+  }
+
   const shellOrFileMenu = {
     label: isMac ? 'Shell' : 'File',
     submenu: [
@@ -101,6 +155,11 @@ module.exports = ({createWindow, updatePlugins}) => {
           }
         }
       },
+      ...(
+        shellKeys.length > 0 ?
+          [{type: 'separator'}, otherShellsMenu] :
+          []
+      ),
       {
         type: 'separator'
       },
