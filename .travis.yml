@@ -37,6 +37,9 @@ before_script:
 after_success:
   - npm run dist
 
+notifications:
+  email: false
+
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
