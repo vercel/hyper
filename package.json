@@ -1,11 +1,12 @@
 {
   "repository": "zeit/hyper",
   "scripts": {
-    "start": "concurrently --kill-others --raw \"npm run dev\" \"npm run app\"",
+    "start": "echo 'please run `npm run dev` in one tab and then `npm run app` in another one'",
     "app": "electron app",
     "dev": "webpack -w",
     "build": "cross-env NODE_ENV=production webpack",
-    "test": "npm run dist && xo && ava",
+    "lint": "xo",
+    "test": "npm run lint",
     "prepush": "npm test",
     "postinstall": "install-app-deps",
     "pack": "npm run build && build --dir && babel --no-comments --compact --minified --out-file app/dist/bundle.js app/dist/bundle.js",
@@ -97,7 +98,6 @@
     "babel-core": "^6.11.4",
     "babel-loader": "^6.2.4",
     "babel-preset-react": "^6.11.1",
-    "concurrently": "^3.0.0",
     "copy-webpack-plugin": "^4.0.0",
     "cross-env": "3.1.3",
     "electron": "1.4.7",

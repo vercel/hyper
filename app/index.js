@@ -1,7 +1,31 @@
-// eslint-disable-next-line curly, unicorn/no-process-exit
-if (require('electron-squirrel-startup')) process.exit();
+// handle startup squirrel events
+if (process.platform === 'win32') {
+  // eslint-disable-next-line import/order
+  const systemContextMenu = require('./system-context-menu');
+
+  switch (process.argv[1]) {
+    case '--squirrel-install':
+    case '--squirrel-updated':
+      systemContextMenu.add(() => {
+        // eslint-disable-next-line curly, unicorn/no-process-exit
+        if (require('electron-squirrel-startup')) process.exit();
+      });
+      break;
+    case '--squirrel-uninstall':
+      systemContextMenu.remove(() => {
+        // eslint-disable-next-line curly, unicorn/no-process-exit
+        if (require('electron-squirrel-startup')) process.exit();
+      });
+      break;
+    default:
+      // eslint-disable-next-line curly, unicorn/no-process-exit
+      if (require('electron-squirrel-startup')) process.exit();
+  }
+}
+
 // Native
-const {resolve} = require('path');
+const {resolve, isAbsolute} = require('path');
+const {homedir} = require('os');
 
 // Packages
 const {parse: parseUrl} = require('url');
@@ -150,12 +174,13 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       }
 
       // update background color if necessary
-      win.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
-
       cfg = cfg_;
     });
 
     rpc.on('init', () => {
+      // we update the backgroundColor once the init is called.
+      // when we do a win.reload() we need need to reset the backgroundColor
+      win.setBackgroundColor(toElectronBackgroundColor(cfg.backgroundColor || '#000'));
       win.show();
 
       // If no callback is passed to createWindow,
@@ -180,7 +205,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       }
     });
 
-    rpc.on('new', ({rows = 40, cols = 100, cwd = process.env.HOME || process.env.HOMEPATH, splitDirection}) => {
+    rpc.on('new', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homedir(), splitDirection}) => {
       const shell = cfg.shell;
       const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
 

@@ -2,7 +2,7 @@
   "name": "hyper",
   "productName": "Hyper",
   "description": "A terminal built on web technologies",
-  "version": "0.8.3",
+  "version": "1.0.1",
   "license": "MIT",
   "author": {
     "name": "Zeit, Inc.",
@@ -27,6 +27,8 @@
     "queue": "4.0.0",
     "semver": "5.3.0",
     "uuid": "3.0.0",
-    "yarn": "0.17.6"
+    "yarn": "0.17.6",
+    "shell-env": "0.2.0",
+    "winreg": "1.2.2"
   }
 }

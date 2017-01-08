@@ -1,5 +1,6 @@
 const {app, dialog} = require('electron');
 const {homedir} = require('os');
+const {exec} = require('child_process');
 const {resolve, basename} = require('path');
 const {writeFileSync, readFileSync} = require('fs');
 const cp = require('child_process');
@@ -17,9 +18,9 @@ const notify = require('./notify');
 const cache = new Config();
 
 // modules path
-const path = resolve(homedir(), '.hyper_plugins');
-const cachePath = resolve(homedir(), '.hyper_plugins', 'cache');
-const localPath = resolve(homedir(), '.hyper_plugins', 'local');
+const path = resolve(config.getConfigDir(), '.hyper_plugins');
+const localPath = resolve(path, 'local');
+const cachePath = resolve(path, 'cache');
 const availableExtensions = new Set([
   'onApp', 'onWindow', 'onRendererWindow', 'onUnload', 'middleware',
   'reduceUI', 'reduceSessions', 'reduceTermGroups',
