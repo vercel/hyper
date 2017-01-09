@@ -9,7 +9,7 @@
     "test": "npm run lint",
     "prepush": "npm test",
     "postinstall": "install-app-deps",
-    "pack": "npm run build && build --dir && BABEL_ENV=production babel --out-file app/dist/bundle.js --no-comments --minified app/dist/bundle.js",
+    "pack": "npm run build && build --dir && cross-env BABEL_ENV=production babel --out-file app/dist/bundle.js --no-comments --minified app/dist/bundle.js",
     "dist": "npm run build && build"
   },
   "xo": {
