@@ -12,13 +12,6 @@ matrix:
       env: CC=clang CXX=clang++ npm_config_clang=1
       compiler: clang
 
-cache:
-  directories:
-    - node_modules
-    - app/node_modules
-    - $HOME/.electron
-    - $HOME/.cache
-
 addons:
   apt:
     packages:
