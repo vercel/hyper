@@ -8,11 +8,11 @@ const {getDecoratedEnv} = require('./plugins');
 const {productName, version} = require('./package');
 const config = require('./config');
 
-const createPtyJsError = () => new Error('`pty.js` failed to load. Typically this means that it was built incorrectly. Please check the `README.me` to more info.');
+const createPtyJsError = () => new Error('`node-pty` failed to load. Typically this means that it was built incorrectly. Please check the `README.me` to more info.');
 
 let spawn;
 try {
-  spawn = require('pty.js').spawn;
+  spawn = require('node-pty').spawn;
 } catch (err) {
   throw createPtyJsError();
 }
