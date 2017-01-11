@@ -10,13 +10,13 @@ For more details, head to: https://hyper.is
 
 ## Usage
 
-**You can download the latest release [here](https://github.com/zeit/hyper/releases/latest)**.
+[Download the latest release!](https://hyper.is/#installation)
 
 If you're on macOS, you can also use [Homebrew Cask](https://caskroom.github.io/) to download the app by running these commands:
 
 ```bash
-$ brew update
-$ brew cask install hyper
+brew update
+brew cask install hyper
 ```
 
 ## Contribute
@@ -36,6 +36,15 @@ $ npm run pack
 ```
 
 After that, you'll see the binary in the `./dist` folder!
+
+### pty.js issues
+
+If after building during development you get an alert dialog related to `pty.js` issues,
+make sure its build process is working correctly by running `npm rebuild` manually inside 
+the `app` directory.
+
+If you're on macOS, this typically is related to Xcode issues (like not having agreed
+to the Terms of Service by running `sudo xcodebuild` after a fresh Xcode installation).
 
 ## Related Repositories
 

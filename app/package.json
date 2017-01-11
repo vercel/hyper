@@ -2,7 +2,7 @@
   "name": "hyper",
   "productName": "Hyper",
   "description": "A terminal built on web technologies",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "author": {
     "name": "Zeit, Inc.",
@@ -23,7 +23,7 @@
     "mkdirp": "0.5.1",
     "ms": "0.7.1",
     "node-fetch": "1.6.3",
-    "pty.js": "https://github.com/Tyriar/pty.js/tarball/c75c2dcb6dcad83b0cb3ef2ae42d0448fb912642",
+    "node-pty": "0.4.1",
     "semver": "5.3.0",
     "shell-env": "0.2.0",
     "uuid": "3.0.0",

@@ -11,9 +11,6 @@ image: Visual Studio 2015
 init:
   - npm config set msvs_version 2015 # we need this to build `pty.js`
 
-cache:
-  - node_modules
-
 install:
   - ps: Install-Product node 6 x64
   - set CI=true

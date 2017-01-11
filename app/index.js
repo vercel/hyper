@@ -141,7 +141,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       vibrancy: toElectronVibrancy(cfg.vibrancyType),
       // we want to go frameless on windows and linux
       frame: process.platform === 'darwin',
-      transparent: true,
+      transparent: process.platform === 'darwin',
       icon: resolve(__dirname, 'static/icon.png'),
       // we only want to show when the prompt is ready for user input
       // HYPERTERM_DEBUG for backwards compatibility with hyperterm
@@ -167,6 +167,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       // notify renderer
       win.webContents.send('config change');
 
+      // Update Vibrancy
+      win.setVibrancy(toElectronVibrancy(cfg_.vibrancyType))
+
       // notify user that shell changes require new sessions
       if (cfg_.shell !== cfg.shell || cfg_.shellArgs !== cfg.shellArgs) {
         notify(
@@ -175,16 +178,14 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         );
       }
 
-      // update background color if necessary
-      win.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
-
-      // update vibrancy if necessary
-      win.setVibrancy(toElectronVibrancy(cfg_.vibrancyType));
-
       cfg = cfg_;
     });
 
     rpc.on('init', () => {
+      // we update the backgroundColor once the init is called.
+      // when we do a win.reload() we need need to reset the backgroundColor
+      win.setBackgroundColor(toElectronBackgroundColor(cfg.backgroundColor || '#000'));
+      win.setVibrancy(toElectronVibrancy(cfg.vibrancyType))
       win.show();
 
       // If no callback is passed to createWindow,
@@ -349,6 +350,13 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       cfgUnsubscribe();
       pluginsUnsubscribe();
     });
+
+    // Same deal as above, grabbing the window titlebar when the window
+    // is maximized on Windows results in unmaximize, without hitting any
+    // app buttons
+    for (const ev of ['maximize', 'unmaximize', 'minimize', 'restore']) {
+      win.on(ev, () => rpc.emit('windowGeometry change'));
+    }
 
     win.on('closed', () => {
       if (process.platform !== 'darwin' && windowSet.size === 0) {
