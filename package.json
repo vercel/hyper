@@ -25,7 +25,8 @@
       "new-cap": 0,
       "complexity": 0,
       "react/prop-types": 0,
-      "react/jsx-no-bind": 0
+      "react/jsx-no-bind": 0,
+      "linebreak-style": 0
     },
     "ignores": [
       "build/**",
