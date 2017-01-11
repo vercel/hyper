@@ -12,7 +12,9 @@ module.exports = vibrancyType => {
     'ultra-dark'
   ];
 
-  if (validTypes.includes(vibrancyType) && process.platform === 'darwin') {
+  if (process.platform === 'darwin' &&
+      typeof vibrancyType === 'string' &&
+      validTypes.includes(vibrancyType.toLowerCase())) {
     return vibrancyType;
   }
 

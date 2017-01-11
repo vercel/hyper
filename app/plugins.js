@@ -1,5 +1,4 @@
 const {exec} = require('child_process');
-const {homedir} = require('os');
 const {resolve, basename} = require('path');
 const {writeFileSync} = require('fs');
 
@@ -16,8 +15,8 @@ const notify = require('./notify');
 const cache = new Config();
 
 // modules path
-const path = resolve(homedir(), '.hyper_plugins');
-const localPath = resolve(homedir(), '.hyper_plugins', 'local');
+const path = resolve(config.getConfigDir(), '.hyper_plugins');
+const localPath = resolve(path, 'local');
 const availableExtensions = new Set([
   'onApp', 'onWindow', 'onRendererWindow', 'onUnload', 'middleware',
   'reduceUI', 'reduceSessions', 'reduceTermGroups',
