@@ -85,7 +85,7 @@ function exec(str) {
 }
 
 function crlfify(str) {
-  return str.split('\n').map(x => x.indexOf('\r') ? x : `${x}\r`).join('\n');
+  return str.split('\n').map(x => x.indexOf('\r') < 0 ? x : `${x}\r`).join('\n');
 }
 
 exports.subscribe = function (fn) {
