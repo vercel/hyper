@@ -1,3 +1,4 @@
+
 ![](https://github.com/zeit/art/blob/525bd1bb39d97dd3b91c976106a6d5cc5766b678/hyper/repo-banner.png)
 
 [![Build Status](https://travis-ci.org/zeit/hyper.svg?branch=master)](https://travis-ci.org/zeit/hyper)
@@ -17,6 +18,11 @@ If you're on macOS, you can also use [Homebrew Cask](https://caskroom.github.io/
 ```bash
 brew update
 brew cask install hyper
+```
+
+If you're on windows, you can use [chocolatey](https://chocolatey.org/) to install the app by running the following command (package information can be found [here](https://chocolatey.org/packages/hyper/)):
+```bash
+choco install hyper
 ```
 
 ## Contribute
