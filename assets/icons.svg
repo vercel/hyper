@@ -34,6 +34,19 @@
         <use stroke="currentColor" stroke-width="2" mask="url(#maximize-window-b)" xlink:href="#maximize-window-a"/>
       </g>
     </symbol>
+    <symbol id="restore-window" viewBox="0 0 10.2 10.2">
+      <title>restore window</title>
+      <defs>
+        <mask id="restore-window-b" width="10.2" height="10.2" x="0" y="0">
+          <use xlink:href="#restore-window-a"/>
+        </mask>
+      </defs>
+      <g fill="none" fill-rule="evenodd">
+        <path fill="currentColor"
+              d='M2.1,0v2H0v8.1h8.2v-2h2V0H2.1z M7.2,9.2H1.1V3h6.1V9.2z M9.2,7.1h-1V2H3.1V1h6.1V7.1z' />
+        <use stroke="currentColor" xlink:href="#restore-window-a"/>
+      </g>
+    </symbol>
     <symbol id="close-window" viewBox="0 0 10 10">
       <title>close window</title>
       <g fill="none" fill-rule="evenodd">
