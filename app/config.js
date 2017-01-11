@@ -84,6 +84,10 @@ function exec(str) {
   return true;
 }
 
+function crlfify(str) {
+  return str.split('\n').map(x => x.indexOf('\r') ? x : `${x}\r`).join('\n');
+}
+
 exports.subscribe = function (fn) {
   watchers.push(fn);
   return () => {
@@ -110,9 +114,12 @@ exports.init = function () {
     try {
       console.log('attempting to write default config to', path);
       exec(defaultConfig);
-      writeFileSync(path, defaultConfig);
+
+      writeFileSync(
+        path,
+        process.platform === 'win32' ? crlfify(defaultConfig.toString()) : defaultConfig);
     } catch (err) {
-      throw new Error(`Failed to write config to ${path}`);
+      throw new Error(`Failed to write config to ${path}: ${err.message}`);
     }
   }
   watch();
