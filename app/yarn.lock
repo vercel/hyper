@@ -267,6 +267,13 @@ node-fetch@1.6.3:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
+node-pty@0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/node-pty/-/node-pty-0.4.1.tgz#a80b35fe57b64f055ab19b2d7aa604d836155c04"
+  dependencies:
+    extend "~1.2.1"
+    nan "2.2.1"
+
 npm-run-path@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/npm-run-path/-/npm-run-path-1.0.0.tgz#f5c32bf595fe81ae927daec52e82f8b000ac3c8f"
@@ -316,13 +323,6 @@ pkg-up@^1.0.0:
 pseudomap@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
-
-"pty.js@https://github.com/Tyriar/pty.js/tarball/c75c2dcb6dcad83b0cb3ef2ae42d0448fb912642":
-  version "0.3.0"
-  resolved "https://github.com/Tyriar/pty.js/tarball/c75c2dcb6dcad83b0cb3ef2ae42d0448fb912642#a6ae3472bd63d7a5c489699fa7b50de160d97bd5"
-  dependencies:
-    extend "~1.2.1"
-    nan "2.2.1"
 
 semver@5.3.0, semver@^5.2.0:
   version "5.3.0"

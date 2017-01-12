@@ -10,6 +10,7 @@
     "prepush": "npm test",
     "postinstall": "install-app-deps",
     "pack": "npm run build && build --dir && cross-env BABEL_ENV=production babel --out-file app/dist/bundle.js --no-comments --minified app/dist/bundle.js",
+    "dist": "npm run build && cross-env BABEL_ENV=production babel --out-file app/dist/bundle.js --no-comments --minified app/dist/bundle.js && build",
     "clean": "npm cache clear && rm -rf node_modules && rm -rf app/node_modules && rm -rf app/dist"
   },
   "xo": {
