@@ -33,7 +33,7 @@ before_script:
   - npm prune
 
 after_success:
-  - npm run dist
+  - npm run pack
 
 branches:
   except:
