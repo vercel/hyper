@@ -27,5 +27,5 @@ test_script:
   - npm run test
 
 on_success:
-  - npm run dist
+  - npm run pack
   - ps: ls .\dist\win\*.exe | % { Push-AppveyorArtifact $_.FullName }
