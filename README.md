@@ -19,6 +19,11 @@ brew update
 brew cask install hyper
 ```
 
+If you're on windows, you can use [chocolatey](https://chocolatey.org/) to install the app by running the following command (package information can be found [here](https://chocolatey.org/packages/hyper/)):
+```bash
+choco install hyper
+```
+
 ## Contribute
 
 1. Install the dependencies
