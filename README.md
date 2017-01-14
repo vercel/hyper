@@ -32,7 +32,7 @@ brew cask install hyper
 To make sure that your code works in the finished application, you can generate the binaries like this:
 
 ```bash
-$ npm run pack
+npm run dist
 ```
 
 After that, you'll see the binary in the `./dist` folder!
