@@ -42,10 +42,10 @@ npm run dist
 
 After that, you'll see the binary in the `./dist` folder!
 
-### pty.js issues
+### node-pty issues
 
-If after building during development you get an alert dialog related to `pty.js` issues,
-make sure its build process is working correctly by running `npm rebuild` manually inside 
+If after building during development you get an alert dialog related to `node-pty` issues,
+make sure its build process is working correctly by running `npm rebuild` manually inside
 the `app` directory.
 
 If you're on macOS, this typically is related to Xcode issues (like not having agreed
