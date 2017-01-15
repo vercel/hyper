@@ -7,6 +7,8 @@
     "build": "cross-env NODE_ENV=production webpack",
     "lint": "xo",
     "test": "npm run lint",
+    "test:unit": "ava test/unit",
+    "test:unit:watch": "npm run test:unit -- --watch",
     "prepush": "npm test",
     "postinstall": "install-app-deps",
     "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
