@@ -8,13 +8,13 @@ const {getDecoratedEnv} = require('./plugins');
 const {productName, version} = require('./package');
 const config = require('./config');
 
-const createPtyJsError = () => new Error('`node-pty` failed to load. Typically this means that it was built incorrectly. Please check the `README.me` to more info.');
+const createNodePtyError = () => new Error('`node-pty` failed to load. Typically this means that it was built incorrectly. Please check the `README.me` to more info.');
 
 let spawn;
 try {
   spawn = require('node-pty').spawn;
 } catch (err) {
-  throw createPtyJsError();
+  throw createNodePtyError();
 }
 
 const envFromConfig = config.getConfig().env || {};
@@ -43,7 +43,7 @@ module.exports = class Session extends EventEmitter {
       });
     } catch (err) {
       if (/is not a function/.test(err.message)) {
-        throw createPtyJsError();
+        throw createNodePtyError();
       } else {
         throw err;
       }
