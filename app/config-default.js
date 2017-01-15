@@ -63,6 +63,9 @@ module.exports = {
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
     // if left empty, your system's login shell will be used by default
+    // make sure to use a full path if the binary name doesn't work
+    // (e.g `C:\\Windows\\System32\\bash.exe` instad of just `bash.exe`)
+    // if you're using powershell, make sure to remove the `--login` below
     shell: '',
 
     // for setting shell arguments (i.e. for using interactive shellArgs: ['-i'])
