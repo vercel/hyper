@@ -84,6 +84,13 @@ function exec(str) {
   return true;
 }
 
+// This method will take text formatted as Unix line endings and transform it
+// to text formatted with DOS line endings. We do this because the default
+// text editor on Windows (notepad) doesn't Deal with LF files. Still. In 2017.
+function crlfify(str) {
+  return str.split('\n').map(x => x.indexOf('\r') < 0 ? x : `${x}\r`).join('\n');
+}
+
 exports.subscribe = function (fn) {
   watchers.push(fn);
   return () => {
@@ -110,9 +117,12 @@ exports.init = function () {
     try {
       console.log('attempting to write default config to', path);
       exec(defaultConfig);
-      writeFileSync(path, defaultConfig);
+
+      writeFileSync(
+        path,
+        process.platform === 'win32' ? crlfify(defaultConfig.toString()) : defaultConfig);
     } catch (err) {
-      throw new Error(`Failed to write config to ${path}`);
+      throw new Error(`Failed to write config to ${path}: ${err.message}`);
     }
   }
   watch();
