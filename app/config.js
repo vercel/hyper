@@ -84,6 +84,9 @@ function exec(str) {
   return true;
 }
 
+// This method will take text formatted as Unix line endings and transform it
+// to text formatted with DOS line endings. We do this because the default
+// text editor on Windows (notepad) doesn't Deal with LF files. Still. In 2017.
 function crlfify(str) {
   return str.split('\n').map(x => x.indexOf('\r') < 0 ? x : `${x}\r`).join('\n');
 }
