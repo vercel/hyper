@@ -119,7 +119,7 @@
     "husky": "^0.11.6",
     "redux-logger": "^2.6.1",
     "spectron": "^3.4.0",
-    "webpack": "^2.2.0-rc.3",
+    "webpack": "2.2.0",
     "xo": "^0.17.1"
   }
 }
