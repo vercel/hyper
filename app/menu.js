@@ -211,7 +211,12 @@ module.exports = ({createWindow, updatePlugins}) => {
         accelerator: accelerators.toggleDevTools,
         click(item, focusedWindow) {
           if (focusedWindow) {
-            focusedWindow.webContents.toggleDevTools();
+            const webContents = focusedWindow.webContents;
+            if (webContents.isDevToolsOpened()) {
+              webContents.closeDevTools();
+            } else {
+              webContents.openDevTools({mode: 'detach'});
+            }
           }
         }
       },
