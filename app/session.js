@@ -49,7 +49,7 @@ module.exports = class Session extends EventEmitter {
       }
     }
 
-    this.pty.stdout.on('data', data => {
+    this.pty.on('data', data => {
       if (this.ended) {
         return;
       }
@@ -71,12 +71,12 @@ module.exports = class Session extends EventEmitter {
   }
 
   write(data) {
-    this.pty.stdin.write(data);
+    this.pty.write(data);
   }
 
   resize({cols, rows}) {
     try {
-      this.pty.stdout.resize(cols, rows);
+      this.pty.resize(cols, rows);
     } catch (err) {
       console.error(err.stack);
     }
