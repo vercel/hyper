@@ -15,7 +15,7 @@ install:
   - ps: Install-Product node 6 x64
   - set CI=true
   - npm -g install npm@latest
-  - npm install
+  - yarn
 
 build: off
 
