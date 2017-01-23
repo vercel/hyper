@@ -35,14 +35,15 @@ if (process.platform === 'win32') {
 }
 
 // Native
-const {resolve, isAbsolute} = require('path');
-const {homedir} = require('os');
+const {resolve} = require('path');
+// const {resolve, isAbsolute} = require('path');
+// const {homedir} = require('os');
 
 // Packages
 const {parse: parseUrl} = require('url');
 const {app, BrowserWindow, shell, Menu} = require('electron');
 const {gitDescribe} = require('git-describe');
-const uuid = require('uuid');
+// const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 
@@ -62,8 +63,8 @@ const config = require('./config');
 config.init();
 
 const plugins = require('./plugins');
-const Session = require('./session');
-const BaseSession = require('./baseSession');
+// const Session = require('./session');
+const BaseSession = require('./base-session');
 
 const windowSet = new Set([]);
 
@@ -218,13 +219,14 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       }
     });
 
-    rpc.on('new', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homedir(), splitDirection}) => {
+    // rpc.on('new', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homedir(), splitDirection}) => {
+    rpc.on('new', () => {
       const session = new BaseSession();
       rpc.emit('created', {uid: session.uid});
 
       // const shell = cfg.shell;
       // const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
-      // 
+
       // initSession({rows, cols, cwd, shell, shellArgs}, (uid, session) => {
       //   sessions.set(uid, session);
       //   rpc.emit('session add', {
@@ -235,23 +237,23 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       //     shell: session.shell,
       //     pid: session.pty.pid
       //   });
-      // 
+
       //   session.on('data', data => {
       //     rpc.emit('session data', {uid, data});
       //   });
-      // 
+
       //   session.on('exit', () => {
       //     rpc.emit('session exit', {uid});
       //     sessions.delete(uid);
       //   });
       // });
     });
-    
+
     rpc.on('split request', ({split}) => {
       const session = new BaseSession();
-      rpc.emit('pane splited', {split,uid: session.uid});
+      rpc.emit('pane splited', {split, uid: session.uid});
     });
-    
+
     rpc.on('pane request', ({tabId, root}) => {
       const session = new BaseSession();
       rpc.emit('pane created', {tabId, uid: session.uid, root});
@@ -333,7 +335,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         rpc.emit('session data send', {data: url});
       }
     });
-    
+
     win.on('enter-full-screen', () => {
     });
 
@@ -440,9 +442,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
   console.error('Error while loading devtools extensions', err);
 }));
 
-function initSession(opts, fn) {
-  fn(uuid.v4(), new Session(opts));
-}
+// function initSession(opts, fn) {
+//   fn(uuid.v4(), new Session(opts));
+// }
 
 app.on('open-file', (event, path) => {
   const lastWindow = app.getLastFocusedWindow();
