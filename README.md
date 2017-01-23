@@ -10,6 +10,8 @@ For more details, head to: https://hyper.is
 
 ## Usage
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/zeit/hyper.svg)](https://greenkeeper.io/)
+
 [Download the latest release!](https://hyper.is/#installation)
 
 If you're on macOS, you can also use [Homebrew Cask](https://caskroom.github.io/) to download the app by running these commands:
