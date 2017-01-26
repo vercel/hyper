@@ -26,6 +26,12 @@ module.exports = {
       }
     ]
   },
+  // resolve: {
+  //   alias: {
+  //     'h-xterm': path.resolve(__dirname, 'src')
+  //   },
+  //   extensions: ['', '.js']
+  // },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': { // eslint-disable-line quote-props

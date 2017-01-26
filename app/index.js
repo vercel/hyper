@@ -64,7 +64,8 @@ config.init();
 
 const plugins = require('./plugins');
 // const Session = require('./session');
-const BaseSession = require('./base-session');
+const BaseSession = require('./sessions/base-session');
+const Pty = require('./sessions/pty-session');
 
 const windowSet = new Set([]);
 
@@ -222,6 +223,8 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     // rpc.on('new', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homedir(), splitDirection}) => {
     rpc.on('new', () => {
       const session = new BaseSession();
+      const pty = new Pty();
+      console.log(pty);
       rpc.emit('created', {uid: session.uid});
 
       // const shell = cfg.shell;
