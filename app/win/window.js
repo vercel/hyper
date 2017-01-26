@@ -114,7 +114,14 @@ module.exports = class Window extends BrowserWindow {
     rpc.on('open external', ({url}) => {
       shell.openExternal(url);
     });
-    
+
+    // Same deal as above, grabbing the window titlebar when the window
+    // is maximized on Windows results in unmaximize, without hitting any
+    // app buttons
+    for (const ev of ['maximize', 'unmaximize', 'minimize', 'restore']) {
+      this.on(ev, () => rpc.emit('windowGeometry change'));
+    }
+
     // Same deal as above, grabbing the window titlebar when the window
     // is maximized on Windows results in unmaximize, without hitting any
     // app buttons
@@ -164,7 +171,7 @@ module.exports = class Window extends BrowserWindow {
         rpc.emit('session data send', {data: url});
       }
     });
-    
+
     // expose internals to extension authors
     this.rpc = rpc;
     this.sessions = sessions;
