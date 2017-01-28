@@ -671,8 +671,8 @@
 
         <p><code>Hyper</code> will show a notification when your modules are
         installed to <code>~/.hyper_plugins</code>.</p>
-        
-        <p>You can also take a look at 
+
+        <p>You can also take a look at
           <a href="https://github.com/bnb/awesome-hyper">Awesome Hyper</a>
           for a curated list of plugins and resources.</p>
 
@@ -784,6 +784,22 @@
                 }
               </td>
               <td>Change the behaviour of modifier keys to act as meta key</td>
+            </tr>
+            <tr>
+              <td>"showHamburgerMenu"</td>
+              <td>""</td>
+              <td>
+                Change the visibility of the hamburger menu. Available options
+                are: true, false
+              </td>
+            </tr>
+            <tr>
+              <td>"showWindowControls"</td>
+              <td>""</td>
+              <td>
+                Change the position/visibility of the window controls.
+                Available options are: true, false, "left"
+              </td>
             </tr>
           </tbody>
         </table>
@@ -983,11 +999,39 @@
             </tr>
             <tr>
               <td>
-                <code>getTermProps</code>
+                <code>getTermGroupProps</code>
               </td>
               <td>Renderer</td>
               <td>
                 <p>Passes down props from <code>&lt;Terms&gt;</code>
+                to the <code>&lt;TermGroup&gt;</code> component. Must return
+                the composed props object.</p>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td><code>uid</code></td>
+                      <td>TermGroup uid</td>
+                    </tr>
+                    <tr>
+                      <td><code>parentProps</code></td>
+                      <td>Props form the parent component.</td>
+                    </tr>
+                    <tr>
+                      <td><code>props</code></td>
+                      <td>The existing properties that will be
+                      passed to the component.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>getTermProps</code>
+              </td>
+              <td>Renderer</td>
+              <td>
+                <p>Passes down props from <code>&lt;TermGroup&gt;</code>
                 to the <code>&lt;Term&gt;</code> component. Must return
                 the composed props object.</p>
                 <table>
