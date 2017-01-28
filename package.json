@@ -32,7 +32,8 @@
       "build/**",
       "app/dist/**",
       "app/static/**",
-      "assets/**"
+      "assets/**",
+      "website/**"
     ]
   },
   "babel": {
