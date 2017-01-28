@@ -112,6 +112,7 @@
     "babel-preset-react": "^6.16.0",
     "copy-webpack-plugin": "^4.0.0",
     "cross-env": "3.1.3",
+    "css-loader": "0.26.1",
     "electron": "1.4.7",
     "electron-builder": "8.6.0",
     "electron-devtools-installer": "^2.0.0",
@@ -122,6 +123,7 @@
     "redux-logger": "^2.6.1",
     "spectron": "^3.4.0",
     "webpack": "2.2.0",
+    "style-loader": "0.13.1",
     "xo": "^0.17.1"
   }
 }
