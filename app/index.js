@@ -262,7 +262,6 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       } else {
         session = new BaseSession();
       }
-      console.log(session);
       rpc.emit('pane created', {uid: session.uid});
     });
 
@@ -294,11 +293,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('data', ({uid, data}) => {
-      const session = sessions.get(uid); 
-      console.log(session);
-      session.write(data);
-      // console.log(uid, data);
-      // sessions.get(uid).write(data);
+      sessions.get(uid).write(data);
     });
 
     rpc.on('open external', ({url}) => {
