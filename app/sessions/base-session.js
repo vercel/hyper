@@ -1,7 +1,9 @@
+const {EventEmitter} = require('events');
 const uuid = require('uuid');
 
-class BaseSession {
+class BaseSession extends EventEmitter {
   constructor() {
+    super();
     this.uid = uuid.v4();
   }
 }

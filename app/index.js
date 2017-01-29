@@ -36,9 +36,6 @@ if (process.platform === 'win32') {
 
 // Native
 const {resolve} = require('path');
-// const {resolve, isAbsolute} = require('path');
-// const {homedir} = require('os');
-
 // Packages
 const {parse: parseUrl} = require('url');
 const {app, BrowserWindow, shell, Menu} = require('electron');
@@ -223,15 +220,13 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     // rpc.on('new', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homedir(), splitDirection}) => {
     rpc.on('new', () => {
       const session = new BaseSession();
-      const pty = new Pty();
-      console.log(pty);
       rpc.emit('created', {uid: session.uid});
 
       // const shell = cfg.shell;
       // const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
 
       // initSession({rows, cols, cwd, shell, shellArgs}, (uid, session) => {
-      //   sessions.set(uid, session);
+        // sessions.set(uid, session);
       //   rpc.emit('session add', {
       //     rows,
       //     cols,
@@ -252,14 +247,28 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       // });
     });
 
+    rpc.on('pane request', ({type}) => {
+      let session;
+      if (type === 'PTY') {
+        const shell = cfg.shell;
+        const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
+        const cols =  80;
+        const rows =  24;
+        session = new Pty({rows, cols, shell, shellArgs});
+        sessions.set(session.uid, session);
+        session.on('data', payload => {
+          rpc.emit('pty data', payload);
+        });
+      } else {
+        session = new BaseSession();
+      }
+      console.log(session);
+      rpc.emit('pane created', {uid: session.uid});
+    });
+
     rpc.on('split request', ({split}) => {
       const session = new BaseSession();
       rpc.emit('pane splited', {split, uid: session.uid});
-    });
-
-    rpc.on('pane request', ({tabId, root}) => {
-      const session = new BaseSession();
-      rpc.emit('pane created', {tabId, uid: session.uid, root});
     });
 
     rpc.on('exit', ({uid}) => {
@@ -285,7 +294,11 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('data', ({uid, data}) => {
-      sessions.get(uid).write(data);
+      const session = sessions.get(uid); 
+      console.log(session);
+      session.write(data);
+      // console.log(uid, data);
+      // sessions.get(uid).write(data);
     });
 
     rpc.on('open external', ({url}) => {
