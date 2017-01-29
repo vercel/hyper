@@ -18,10 +18,9 @@ try {
 }
 
 class psess extends Base {
-  constructor({rows, cols, shell, shellArgs}) {
+  constructor({uid, cols: columns, rows, shell, shellArgs}) {
     super();
-    // this.shell = shell;
-    // this.shellArgs = shellArgs;
+    this.uid = uid;
     const cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homedir();
     const baseEnv = Object.assign({}, process.env, {
       LANG: app.getLocale().replace('-', '_') + '.UTF-8',
@@ -37,8 +36,8 @@ class psess extends Base {
     
     try {
       this.term = spawn(this.shell, shellArgs || defaultShellArgs, {
-        cols: cols || 80,
-        rows: rows || 24,
+        cols: columns,
+        rows,
         cwd,
         env: getDecoratedEnv(baseEnv)
       });
@@ -66,6 +65,14 @@ class psess extends Base {
 
   write(data) {
     this.term.write(data);
+  }
+  
+  resize({cols, rows}) {
+    try {
+      this.term.resize(cols, rows);
+    } catch (err) {
+      console.error(err.stack);
+    }
   }
 
 }

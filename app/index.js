@@ -247,22 +247,19 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       // });
     });
 
-    rpc.on('pane request', ({type}) => {
-      let session;
-      if (type === 'PTY') {
+    rpc.on('pane request', () => {
+      const session = new BaseSession();
+      rpc.emit('pane created', {uid: session.uid});
+    });
+    
+    rpc.on('pty request', ({uid, cols, rows}) => {
         const shell = cfg.shell;
         const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
-        const cols =  80;
-        const rows =  24;
-        session = new Pty({rows, cols, shell, shellArgs});
+        const session = new Pty({uid, cols, rows, shell, shellArgs});
         sessions.set(session.uid, session);
         session.on('data', payload => {
           rpc.emit('pty data', payload);
         });
-      } else {
-        session = new BaseSession();
-      }
-      rpc.emit('pane created', {uid: session.uid});
     });
 
     rpc.on('split request', ({split}) => {
