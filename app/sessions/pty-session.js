@@ -8,13 +8,13 @@ const {getDecoratedEnv} = require('../plugins');
 const {productName, version} = require('../package');
 const config = require('../config');
 
-const createPtyJsError = () => new Error('`pty.js` failed to load. Typically this means that it was built incorrectly. Please check the `README.me` to more info.');
+const createNodePtyError = () => new Error('`pty.js` failed to load. Typically this means that it was built incorrectly. Please check the `README.me` to more info.');
 
 let spawn;
 try {
-  spawn = require('pty.js').spawn;
+  spawn = require('node-pty').spawn;
 } catch (err) {
-  throw createPtyJsError();
+  throw createNodePtyError();
 }
 
 class psess extends Base {
@@ -50,7 +50,7 @@ class psess extends Base {
       }
     }
     
-    this.term.stdout.on('data', data => {
+    this.term.on('data', data => {
       if (this.ended) {
         return;
       }
@@ -65,7 +65,7 @@ class psess extends Base {
   }
 
   write(data) {
-    this.term.stdin.write(data);
+    this.term.write(data);
   }
 
 }
