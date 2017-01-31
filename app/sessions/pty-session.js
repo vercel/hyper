@@ -32,21 +32,13 @@ class psess extends Base {
     const decoder = new StringDecoder('utf8');
     const defaultShellArgs = ['--login'];
     this.shell = shell || defaultShell;
-
-    try {
-      this.term = spawn(this.shell, shellArgs || defaultShellArgs, {
-        cols: columns,
-        rows,
-        cwd,
-        env: getDecoratedEnv(baseEnv)
-      });
-    } catch (err) {
-      if (/is not a function/.test(err.message)) {
-        throw createNodePtyError();
-      } else {
-        throw err;
-      }
-    }
+    
+    this.term = spawn(this.shell, shellArgs || defaultShellArgs, {
+      cols: columns,
+      rows,
+      cwd,
+      env: getDecoratedEnv(baseEnv)
+    });
 
     this.term.on('data', data => {
       if (this.ended) {
@@ -66,11 +58,7 @@ class psess extends Base {
   }
 
   resize({cols, rows}) {
-    try {
-      this.term.resize(cols, rows);
-    } catch (err) {
-      console.error(err.stack);
-    }
+    this.term.resize(cols, rows);
   }
 
 }
