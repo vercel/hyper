@@ -45,8 +45,7 @@ After that, you'll see the binary in the `./dist` folder!
 ### node-pty issues
 
 If after building during development you get an alert dialog related to `node-pty` issues,
-make sure its build process is working correctly by running `npm rebuild` manually inside
-the `app` directory.
+make sure its build process is working correctly by running `npm run rebuild-node-pty`.
 
 If you're on macOS, this typically is related to Xcode issues (like not having agreed
 to the Terms of Service by running `sudo xcodebuild` after a fresh Xcode installation).
