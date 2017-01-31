@@ -87,6 +87,7 @@
     "json-loader": "0.5.4",
     "mousetrap": "1.6.0",
     "ms": "0.7.2",
+    "node-pty": "0.6.2",
     "object-values": "1.0.0",
     "php-escape-shell": "1.0.0",
     "react": "15.3.2",

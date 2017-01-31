@@ -3794,7 +3794,7 @@ mz@^2.3.1:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-nan@^2.3.0:
+nan@2.5.0, nan@^2.3.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.5.0.tgz#aa8f1e34531d807e9e27755b234b4a6ec0c152a8"
 
@@ -3888,6 +3888,12 @@ node-pre-gyp@^0.6.29:
     semver "~5.3.0"
     tar "~2.2.1"
     tar-pack "~3.3.0"
+
+node-pty@0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/node-pty/-/node-pty-0.6.2.tgz#d990a447926bbf59b80242c8ae4a85c232040a0c"
+  dependencies:
+    nan "2.5.0"
 
 node-status-codes@^1.0.0:
   version "1.0.0"
