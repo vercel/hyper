@@ -251,15 +251,15 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       const session = new BaseSession();
       rpc.emit('pane created', {uid: session.uid});
     });
-    
+
     rpc.on('pty request', ({uid, cols, rows}) => {
-        const shell = cfg.shell;
-        const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
-        const session = new Pty({uid, cols, rows, shell, shellArgs});
-        sessions.set(session.uid, session);
-        session.on('data', payload => {
-          rpc.emit('pty data', payload);
-        });
+      const shell = cfg.shell;
+      const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
+      const session = new Pty({uid, cols, rows, shell, shellArgs});
+      sessions.set(session.uid, session);
+      session.on('data', payload => {
+        rpc.emit('pty data', payload);
+      });
     });
 
     rpc.on('split request', ({split}) => {

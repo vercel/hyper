@@ -2,11 +2,11 @@ const {StringDecoder} = require('string_decoder');
 const {app} = require('electron');
 const {isAbsolute} = require('path');
 const {homedir} = require('os');
-const Base = require('./base-session');
 const defaultShell = require('default-shell');
 const {getDecoratedEnv} = require('../plugins');
 const {productName, version} = require('../package');
 const config = require('../config');
+const Base = require('./base-session');
 
 const createNodePtyError = () => new Error('`pty.js` failed to load. Typically this means that it was built incorrectly. Please check the `README.me` to more info.');
 
@@ -27,13 +27,12 @@ class psess extends Base {
       TERM: 'xterm-256color',
       TERM_PROGRAM: productName,
       TERM_PROGRAM_VERSION: version
-    },  config.getConfig().env || {});
-    
-    const decoder = new StringDecoder('utf8');
+    }, config.getConfig().env || {});
 
+    const decoder = new StringDecoder('utf8');
     const defaultShellArgs = ['--login'];
     this.shell = shell || defaultShell;
-    
+
     try {
       this.term = spawn(this.shell, shellArgs || defaultShellArgs, {
         cols: columns,
@@ -43,30 +42,29 @@ class psess extends Base {
       });
     } catch (err) {
       if (/is not a function/.test(err.message)) {
-        throw createPtyJsError();
+        throw createNodePtyError();
       } else {
         throw err;
       }
     }
-    
+
     this.term.on('data', data => {
       if (this.ended) {
         return;
       }
-      const payload = {uid:this.uid, data: decoder.write(data)};
+      const payload = {uid: this.uid, data: decoder.write(data)};
       this.emit('data', payload);
     });
-    // 
-    // if(this.term) {
-    //   this.term.kill();    
-    // }
 
+    // if(this.term) {
+    //   this.term.kill();
+    // }
   }
 
   write(data) {
     this.term.write(data);
   }
-  
+
   resize({cols, rows}) {
     try {
       this.term.resize(cols, rows);
@@ -76,5 +74,5 @@ class psess extends Base {
   }
 
 }
-  
+
 module.exports = psess;
