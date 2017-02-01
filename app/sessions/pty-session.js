@@ -32,13 +32,13 @@ class psess extends Base {
     const decoder = new StringDecoder('utf8');
     const defaultShellArgs = ['--login'];
     this.shell = shell || defaultShell;
-    
     this.term = spawn(this.shell, shellArgs || defaultShellArgs, {
       cols: columns,
       rows,
       cwd,
       env: getDecoratedEnv(baseEnv)
     });
+    
 
     this.term.on('data', data => {
       if (this.ended) {
@@ -47,10 +47,7 @@ class psess extends Base {
       const payload = {uid: this.uid, data: decoder.write(data)};
       this.emit('data', payload);
     });
-
-    // if(this.term) {
-    //   this.term.kill();
-    // }
+    
   }
 
   write(data) {
