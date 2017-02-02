@@ -75,7 +75,22 @@ const mousetrap = { // lib/containers/hyper.js
   deleteLine: 'Backspace',
   moveToStart: 'Left',
   moveToEnd: 'Right',
-  selectAll: 'A'
+  selectAll: 'A',
+  
+  moveToPane: 'Alt+1',
+  moveToPane2: 'Alt+2',
+  moveToPane3: 'Alt+3',
+  moveToPane4: 'Alt+4',
+  moveToPane5: 'Alt+5',
+  moveToPane6: 'Alt+6',
+  moveToPane7: 'Alt+7',
+  moveToPane8: 'Alt+8',
+  moveToPane9: 'Alt+9',
+  
+  // leftPane: 'Shift+Left',
+  // rightPane: 'Shift+Right',
+  // topPane: 'Shift+Up',
+  // bottomPane: 'Shift+Down',
 };
 
 const allAccelerators = Object.assign({}, applicationMenu, mousetrap);

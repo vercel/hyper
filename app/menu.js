@@ -332,7 +332,23 @@ module.exports = ({createWindow, updatePlugins}) => {
       },
       {
         role: 'togglefullscreen'
-      }
+      },
+      {
+        label: 'Select Pane Above',
+        accelerator: accelerators.moveToPane
+      },
+      // {
+      //   label: 'Select Pane Bellow',
+      //   accelerator: accelerators.bottomPane
+      // },
+      // {
+      //   label: 'Select Pane Left',
+      //   accelerator: accelerators.leftPane
+      // },
+      // {
+      //   label: 'Select Pane Right',
+      //   accelerator: accelerators.rightPane
+      // }
     ]
   };
 
