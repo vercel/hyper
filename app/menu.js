@@ -335,20 +335,40 @@ module.exports = ({createWindow, updatePlugins}) => {
       },
       {
         label: 'Select Pane Above',
-        accelerator: accelerators.moveToPane
+        accelerator: accelerators.topPane,
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('mv', {arrow: 'up'});
+          }
+        }
       },
-      // {
-      //   label: 'Select Pane Bellow',
-      //   accelerator: accelerators.bottomPane
-      // },
-      // {
-      //   label: 'Select Pane Left',
-      //   accelerator: accelerators.leftPane
-      // },
-      // {
-      //   label: 'Select Pane Right',
-      //   accelerator: accelerators.rightPane
-      // }
+      {
+        label: 'Select Pane Bellow',
+        accelerator: accelerators.bottomPane,
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('mv', {arrow: 'down'});
+          }
+        }
+      },
+      {
+        label: 'Select Pane Left',
+        accelerator: accelerators.leftPane,
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('mv', {arrow: 'left'});
+          }
+        }
+      },
+      {
+        label: 'Select Pane Right',
+        accelerator: accelerators.rightPane,
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('mv', {arrow: 'right'});
+          }
+        }
+      }
     ]
   };
 

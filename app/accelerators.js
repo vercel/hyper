@@ -39,11 +39,16 @@ const applicationMenu = { // app/menu.js
 
   // Window menu
   minimize: 'M',
-  showPreviousTab: 'Alt+Left',
-  showNextTab: 'Alt+Right',
+  // showPreviousTab: 'Alt+Left',
+  // showNextTab: 'Alt+Right',
   selectNextPane: 'Ctrl+Alt+Tab',
   selectPreviousPane: 'Ctrl+Shift+Alt+Tab',
-  enterFullScreen: isMac ? 'Ctrl+Cmd+F' : 'F11'
+  enterFullScreen: isMac ? 'Ctrl+Cmd+F' : 'F11',
+  
+  leftPane: 'Alt+Left',
+  rightPane: 'Alt+Right',
+  topPane: 'Alt+Up',
+  bottomPane: 'Alt+Down'
 };
 
 const mousetrap = { // lib/containers/hyper.js
@@ -86,11 +91,6 @@ const mousetrap = { // lib/containers/hyper.js
   moveToPane7: 'Alt+7',
   moveToPane8: 'Alt+8',
   moveToPane9: 'Alt+9',
-  
-  // leftPane: 'Shift+Left',
-  // rightPane: 'Shift+Right',
-  // topPane: 'Shift+Up',
-  // bottomPane: 'Shift+Down',
 };
 
 const allAccelerators = Object.assign({}, applicationMenu, mousetrap);
