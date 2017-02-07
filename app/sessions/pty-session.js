@@ -38,7 +38,6 @@ class psess extends Base {
       cwd,
       env: getDecoratedEnv(baseEnv)
     });
-    
 
     this.term.on('data', data => {
       if (this.ended) {
@@ -47,7 +46,6 @@ class psess extends Base {
       const payload = {uid: this.uid, data: decoder.write(data)};
       this.emit('data', payload);
     });
-    
   }
 
   write(data) {

@@ -283,21 +283,18 @@ module.exports = ({createWindow, updatePlugins}) => {
         label: 'Show Previous Tab',
         accelerator: accelerators.showPreviousTab,
         click(item, focusedWindow) {
-          console.log(accelerator.showPreviousTab);
-          // if (focusedWindow) {
-          //   focusedWindow.rpc.emit('move left req');
-          // }
+          if (focusedWindow) {
+          // focusedWindow.rpc.emit('move left req');
+          }
         }
       },
       {
         label: 'Show Next Tab',
         accelerator: accelerators.showNextTab,
         click(item, focusedWindow) {
-          console.log(accelerator.showNextTab);
-          
-          // if (focusedWindow) {
+          if (focusedWindow) {
           //   focusedWindow.rpc.emit('move right req');
-          // }
+          }
         }
       },
       {
@@ -307,21 +304,18 @@ module.exports = ({createWindow, updatePlugins}) => {
         label: 'Select Next Pane',
         accelerator: accelerators.selectNextPane,
         click(item, focusedWindow) {
-          console.log(accelerator.selectNextPane);
-          // if (focusedWindow) {
+          if (focusedWindow) {
           //   focusedWindow.rpc.emit('next pane req');
-          // }
+          }
         }
       },
       {
         label: 'Select Previous Pane',
         accelerator: accelerators.selectPreviousPane,
         click(item, focusedWindow) {
-          console.log(accelerator.selectPreviousPane);
-          
-          // if (focusedWindow) {
+          if (focusedWindow) {
           //   focusedWindow.rpc.emit('prev pane req');
-          // }
+          }
         }
       },
       {
