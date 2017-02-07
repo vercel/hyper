@@ -332,7 +332,7 @@ module.exports = ({createWindow, updatePlugins}) => {
         accelerator: accelerators.topPane,
         click(item, focusedWindow) {
           if (focusedWindow) {
-            focusedWindow.rpc.emit('mv', {arrow: 'up'});
+            focusedWindow.rpc.emit('mv', {arrow: 'Up'});
           }
         }
       },
@@ -341,7 +341,7 @@ module.exports = ({createWindow, updatePlugins}) => {
         accelerator: accelerators.bottomPane,
         click(item, focusedWindow) {
           if (focusedWindow) {
-            focusedWindow.rpc.emit('mv', {arrow: 'down'});
+            focusedWindow.rpc.emit('mv', {arrow: 'Down'});
           }
         }
       },
@@ -350,7 +350,7 @@ module.exports = ({createWindow, updatePlugins}) => {
         accelerator: accelerators.leftPane,
         click(item, focusedWindow) {
           if (focusedWindow) {
-            focusedWindow.rpc.emit('mv', {arrow: 'left'});
+            focusedWindow.rpc.emit('mv', {arrow: 'Left'});
           }
         }
       },
@@ -359,7 +359,7 @@ module.exports = ({createWindow, updatePlugins}) => {
         accelerator: accelerators.rightPane,
         click(item, focusedWindow) {
           if (focusedWindow) {
-            focusedWindow.rpc.emit('mv', {arrow: 'right'});
+            focusedWindow.rpc.emit('mv', {arrow: 'Right'});
           }
         }
       }
