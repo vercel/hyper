@@ -41,13 +41,15 @@ const applicationMenu = { // app/menu.js
   minimize: 'M',
   // showPreviousTab: 'Alt+Left',
   // showNextTab: 'Alt+Right',
-  selectNextPane: 'Ctrl+Alt+Tab',
-  selectPreviousPane: 'Ctrl+Shift+Alt+Tab',
+  // selectNextPane: 'Ctrl+Alt+Tab',
+  // selectPreviousPane: 'Ctrl+Shift+Alt+Tab',
   enterFullScreen: isMac ? 'Ctrl+Cmd+F' : 'F11',
   leftPane: 'Alt+Left',
   rightPane: 'Alt+Right',
   topPane: 'Alt+Up',
-  bottomPane: 'Alt+Down'
+  bottomPane: 'Alt+Down',
+  nextTab: 'Shift+[',
+  previousTab: 'Shift+]'
 };
 
 const mousetrap = { // lib/containers/hyper.js

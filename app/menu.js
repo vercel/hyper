@@ -280,43 +280,80 @@ module.exports = ({createWindow, updatePlugins}) => {
         type: 'separator'
       },
       {
-        label: 'Show Previous Tab',
-        accelerator: accelerators.showPreviousTab,
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-          // focusedWindow.rpc.emit('move left req');
+        label: 'Select Tab',
+        submenu: [
+          {
+            label: 'Previous Tab',
+            accelerator: accelerators.previousTab,
+            click(item, focusedWindow) {
+              if (focusedWindow) {
+                focusedWindow.rpc.emit('mv', {type: 'Tab', arrow: 'Left'});
+              }
+            }
+          },
+          {
+            label: 'Next Tab',
+            accelerator: accelerators.nextTab,
+            click(item, focusedWindow) {
+              if (focusedWindow) {
+                focusedWindow.rpc.emit('mv', {type: 'Tab', arrow: 'Right'});
+              }
+            }
           }
-        }
-      },
-      {
-        label: 'Show Next Tab',
-        accelerator: accelerators.showNextTab,
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-          //   focusedWindow.rpc.emit('move right req');
-          }
-        }
+        ]
       },
       {
         type: 'separator'
       },
       {
-        label: 'Select Next Pane',
-        accelerator: accelerators.selectNextPane,
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-          //   focusedWindow.rpc.emit('next pane req');
+        label: 'Select Pane',
+        submenu: [
+          {
+            label: 'Above',
+            accelerator: accelerators.topPane,
+            click(item, focusedWindow) {
+              if (focusedWindow) {
+                focusedWindow.rpc.emit('mv', {type: 'Pane', arrow: 'Up'});
+              }
+            }
+          },
+          {
+            label: 'Bellow',
+            accelerator: accelerators.bottomPane,
+            click(item, focusedWindow) {
+              if (focusedWindow) {
+                focusedWindow.rpc.emit('mv', {type: 'Pane', arrow: 'Down'});
+              }
+            }
+          },
+          {
+            label: 'Left',
+            accelerator: accelerators.leftPane,
+            click(item, focusedWindow) {
+              if (focusedWindow) {
+                focusedWindow.rpc.emit('mv', {arrow: 'Left'});
+              }
+            }
+          },
+          {
+            label: 'Right',
+            accelerator: accelerators.rightPane,
+            click(item, focusedWindow) {
+              if (focusedWindow) {
+                focusedWindow.rpc.emit('mv', {arrow: 'Right'});
+              }
+            }
+          },
+          {
+            type: 'separator'
+          },
+          {
+            label: 'Next'
+          },
+          {
+            label: 'Previous'
           }
-        }
-      },
-      {
-        label: 'Select Previous Pane',
-        accelerator: accelerators.selectPreviousPane,
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-          //   focusedWindow.rpc.emit('prev pane req');
-          }
-        }
+        ]
       },
       {
         type: 'separator'
@@ -326,42 +363,6 @@ module.exports = ({createWindow, updatePlugins}) => {
       },
       {
         role: 'togglefullscreen'
-      },
-      {
-        label: 'Select Pane Above',
-        accelerator: accelerators.topPane,
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('mv', {arrow: 'Up'});
-          }
-        }
-      },
-      {
-        label: 'Select Pane Bellow',
-        accelerator: accelerators.bottomPane,
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('mv', {arrow: 'Down'});
-          }
-        }
-      },
-      {
-        label: 'Select Pane Left',
-        accelerator: accelerators.leftPane,
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('mv', {arrow: 'Left'});
-          }
-        }
-      },
-      {
-        label: 'Select Pane Right',
-        accelerator: accelerators.rightPane,
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('mv', {arrow: 'Right'});
-          }
-        }
       }
     ]
   };
