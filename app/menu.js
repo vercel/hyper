@@ -331,7 +331,7 @@ module.exports = ({createWindow, updatePlugins}) => {
             accelerator: accelerators.leftPane,
             click(item, focusedWindow) {
               if (focusedWindow) {
-                focusedWindow.rpc.emit('mv', {arrow: 'Left'});
+                focusedWindow.rpc.emit('mv', {type: 'Pane', arrow: 'Left'});
               }
             }
           },
@@ -340,7 +340,7 @@ module.exports = ({createWindow, updatePlugins}) => {
             accelerator: accelerators.rightPane,
             click(item, focusedWindow) {
               if (focusedWindow) {
-                focusedWindow.rpc.emit('mv', {arrow: 'Right'});
+                focusedWindow.rpc.emit('mv', {type: 'Pane', arrow: 'Right'});
               }
             }
           },
