@@ -284,7 +284,7 @@ module.exports = ({createWindow, updatePlugins}) => {
         submenu: [
           {
             label: 'Previous Tab',
-            accelerator: accelerators.previousTab,
+            accelerator: accelerators.prevTab,
             click(item, focusedWindow) {
               if (focusedWindow) {
                 focusedWindow.rpc.emit('mv', {type: 'Tab', arrow: 'Left'});

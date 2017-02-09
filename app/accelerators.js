@@ -48,8 +48,8 @@ const applicationMenu = { // app/menu.js
   rightPane: 'Alt+Right',
   topPane: 'Alt+Up',
   bottomPane: 'Alt+Down',
-  nextTab: 'Shift+[',
-  previousTab: 'Shift+]'
+  nextTab: 'Shift+]',
+  prevTab: 'Shift+['
 };
 
 const mousetrap = { // lib/containers/hyper.js
