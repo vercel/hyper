@@ -283,20 +283,20 @@ module.exports = ({createWindow, updatePlugins}) => {
         label: 'Select Tab',
         submenu: [
           {
-            label: 'Previous Tab',
+            label: 'Previous',
             accelerator: accelerators.prevTab,
             click(item, focusedWindow) {
               if (focusedWindow) {
-                focusedWindow.rpc.emit('mv', {type: 'Tab', arrow: 'Left'});
+                focusedWindow.rpc.emit('mv', {type: 'Tab', arrow: 'Prev'});
               }
             }
           },
           {
-            label: 'Next Tab',
+            label: 'Next',
             accelerator: accelerators.nextTab,
             click(item, focusedWindow) {
               if (focusedWindow) {
-                focusedWindow.rpc.emit('mv', {type: 'Tab', arrow: 'Right'});
+                focusedWindow.rpc.emit('mv', {type: 'Tab', arrow: 'Next'});
               }
             }
           }
@@ -348,10 +348,22 @@ module.exports = ({createWindow, updatePlugins}) => {
             type: 'separator'
           },
           {
-            label: 'Next'
+            label: 'Previous',
+            accelerator: accelerators.prevPane,
+            click(item, focusedWindow) {
+              if (focusedWindow) {
+                focusedWindow.rpc.emit('mv', {type: 'Pane', arrow: 'Prev'});
+              }
+            }
           },
           {
-            label: 'Previous'
+            label: 'Next',
+            accelerator: accelerators.nextPane,
+            click(item, focusedWindow) {
+              if (focusedWindow) {
+                focusedWindow.rpc.emit('mv', {type: 'Pane', arrow: 'Next'});
+              }
+            }
           }
         ]
       },
