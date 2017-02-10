@@ -133,10 +133,6 @@ execa@^0.4.0:
     path-key "^1.0.0"
     strip-eof "^1.0.0"
 
-extend@~1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/extend/-/extend-1.2.1.tgz#a0f5fd6cfc83a5fe49ef698d60ec8a624dd4576c"
-
 file-uri-to-path@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/file-uri-to-path/-/file-uri-to-path-0.0.2.tgz#37cdd1b5b905404b3f05e1b23645be694ff70f82"
@@ -256,9 +252,9 @@ ms@0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.2.tgz#ae25cf2512b3885a1d95d7f037868d8431124765"
 
-nan@2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.2.1.tgz#d68693f6b34bb41d66bc68b3a4f9defc79d7149b"
+nan@2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.5.0.tgz#aa8f1e34531d807e9e27755b234b4a6ec0c152a8"
 
 node-fetch@1.6.3:
   version "1.6.3"
@@ -267,12 +263,11 @@ node-fetch@1.6.3:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-pty@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/node-pty/-/node-pty-0.6.0.tgz#6bb7e58e871b903773595e9ca393c07d077b1ca5"
+node-pty@0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/node-pty/-/node-pty-0.6.2.tgz#d990a447926bbf59b80242c8ae4a85c232040a0c"
   dependencies:
-    extend "~1.2.1"
-    nan "2.2.1"
+    nan "2.5.0"
 
 npm-run-path@^1.0.0:
   version "1.0.0"

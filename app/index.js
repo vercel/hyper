@@ -313,6 +313,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         event.preventDefault();
         const path = fileUriToPath(url).replace(/ /g, '\\ ');
         rpc.emit('session data send', {data: path});
+      } else if (protocol === 'http:' || protocol === 'https:') {
+        event.preventDefault();
+        rpc.emit('session data send', {data: url});
       }
     });
 

@@ -1,7 +1,7 @@
 ![](https://github.com/zeit/art/blob/525bd1bb39d97dd3b91c976106a6d5cc5766b678/hyper/repo-banner.png)
 
 [![Build Status](https://travis-ci.org/zeit/hyper.svg?branch=master)](https://travis-ci.org/zeit/hyper)
-[![Build status](https://ci.appveyor.com/api/projects/status/txg5qb0x35h0h65p?svg=true)](https://ci.appveyor.com/project/appveyor-zeit/hyper)
+[![Build status](https://ci.appveyor.com/api/projects/status/txg5qb0x35h0h65p/branch/master?svg=true)](https://ci.appveyor.com/project/appveyor-zeit/hyper/branch/master)
 [![Slack Channel](https://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
 [![Changelog #213](https://img.shields.io/badge/changelog-%23213-lightgrey.svg)](https://changelog.com/213)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
@@ -45,8 +45,7 @@ After that, you'll see the binary in the `./dist` folder!
 ### node-pty issues
 
 If after building during development you get an alert dialog related to `node-pty` issues,
-make sure its build process is working correctly by running `npm rebuild` manually inside
-the `app` directory.
+make sure its build process is working correctly by running `npm run rebuild-node-pty`.
 
 If you're on macOS, this typically is related to Xcode issues (like not having agreed
 to the Terms of Service by running `sudo xcodebuild` after a fresh Xcode installation).
