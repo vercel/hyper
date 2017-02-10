@@ -72,8 +72,8 @@ const mousetrap = { // lib/containers/hyper.js
   moveRight4: 'Ctrl+Tab',
 
   // here we add `+` at the beginning to prevent the prefix from being added
-  moveWordLeft: '+Alt+Left',
-  moveWordRight: '+Alt+Right',
+  // moveWordLeft: '+Alt+Left',
+  // moveWordRight: '+Alt+Right',
   deleteWordLeft: '+Alt+Backspace',
   deleteWordRight: '+Alt+Delete',
   deleteLine: 'Backspace',
