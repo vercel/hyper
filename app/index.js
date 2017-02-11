@@ -62,8 +62,6 @@ config.init();
 const KeymapManager = require('../keymaps/keymap-manager');
 const keymapManager =  new KeymapManager();
 
-const menu = new AppMenu(keymapManager.commands);
-
 const plugins = require('./plugins');
 // const Session = require('./session');
 const BaseSession = require('./sessions/base-session');
@@ -424,6 +422,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
   });
   
   const setupMenu = () => {
+    const menu = new AppMenu(keymapManager.commands, createWindow);
     // const tpl = plugins.decorateMenu(createMenu({
     //   createWindow,
     //   updatePlugins: () => {
@@ -431,17 +430,17 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     //   }
     // }));
   // 
-  //   // If we're on Mac make a Dock Menu
-  //   if (process.platform === 'darwin') {
-      // const dockMenu = Menu.buildFromTemplate([{
-      //   label: 'New Window',
-      //   click() {
-      //     createWindow();
-      //   }
-      // }]);
-      // app.dock.setMenu(dockMenu);
-  //   }
-  // 
+    // If we're on Mac make a Dock Menu
+    if (process.platform === 'darwin') {
+      const dockMenu = Menu.buildFromTemplate([{
+        label: 'New Window',
+        click() {
+          createWindow();
+        }
+      }]);
+      app.dock.setMenu(dockMenu);
+    }
+
   //   Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
     Menu.setApplicationMenu(Menu.buildFromTemplate(menu.template()));
   };

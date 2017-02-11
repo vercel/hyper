@@ -4,7 +4,7 @@ module.exports = function(commands) {
     submenu: [
       { 
         role: 'minimize',
-        // accelerator: accelerators.minimize
+        accelerator: commands['window:minimize']
       },
       {
         role: 'zoom'
