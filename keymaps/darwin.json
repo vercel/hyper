@@ -1,0 +1,11 @@
+{
+  "devtools": "Cmd+Alt+I",
+ "tab:next":"Cmd+shift+]",
+ "tab:prev":"Cmd+shift+[",
+ "pane:next":"Cmd+]",
+ "pane:prev":"Cmd+[",
+ "pane:left":"Cmd+Alt+Left",
+ "pane:right":"Cmd+Alt+Right",
+ "pane:up":"Cmd+Alt+Up",
+ "pane:down":"Cmd+Alt+Down"
+}

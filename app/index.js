@@ -47,7 +47,8 @@ const isDev = require('electron-is-dev');
 // Ours
 const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
-const createMenu = require('./menu');
+// const createMenu = require('./menu/base');
+const AppMenu = require('./menu/base');
 const createRPC = require('./rpc');
 const notify = require('./notify');
 const fetchNotifications = require('./notifications');
@@ -56,8 +57,12 @@ app.commandLine.appendSwitch('js-flags', '--harmony');
 
 // set up config
 const config = require('./config');
-
 config.init();
+
+const KeymapManager = require('../keymaps/keymap-manager');
+const keymapManager =  new KeymapManager();
+
+const menu = new AppMenu(keymapManager.commands);
 
 const plugins = require('./plugins');
 // const Session = require('./session');
@@ -69,6 +74,7 @@ const windowSet = new Set([]);
 // expose to plugins
 app.config = config;
 app.plugins = plugins;
+
 app.getWindows = () => new Set([...windowSet]); // return a clone
 
 // function to retrieve the last focused window in windowSet;
@@ -302,7 +308,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('open hamburger menu', ({x, y}) => {
-      Menu.getApplicationMenu().popup(x, y);
+      // Menu.getApplicationMenu().popup(x, y);
     });
 
     rpc.on('minimize', () => {
@@ -416,27 +422,28 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       createWindow();
     }
   });
-
+  
   const setupMenu = () => {
-    const tpl = plugins.decorateMenu(createMenu({
-      createWindow,
-      updatePlugins: () => {
-        plugins.updatePlugins({force: true});
-      }
-    }));
-
-    // If we're on Mac make a Dock Menu
-    if (process.platform === 'darwin') {
-      const dockMenu = Menu.buildFromTemplate([{
-        label: 'New Window',
-        click() {
-          createWindow();
-        }
-      }]);
-      app.dock.setMenu(dockMenu);
-    }
-
-    Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
+    // const tpl = plugins.decorateMenu(createMenu({
+    //   createWindow,
+    //   updatePlugins: () => {
+    //     plugins.updatePlugins({force: true});
+    //   }
+    // }));
+  // 
+  //   // If we're on Mac make a Dock Menu
+  //   if (process.platform === 'darwin') {
+      // const dockMenu = Menu.buildFromTemplate([{
+      //   label: 'New Window',
+      //   click() {
+      //     createWindow();
+      //   }
+      // }]);
+      // app.dock.setMenu(dockMenu);
+  //   }
+  // 
+  //   Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menu.template()));
   };
 
   const load = () => {
