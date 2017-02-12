@@ -11,7 +11,7 @@
  "window:full": "F11",
  "window:close":"Ctrl+Shift+W",
  
- "tab:new":"Ctrl+T",
+ "tab:new":"Ctrl+Shift+T",
  "tab:next":"Ctrl+Tab",
  "tab:prev":"Ctrl+shift+Tab",
  "pane:next":"Ctrl+Pageup",
@@ -24,12 +24,12 @@
  "pane:horizontal":"Ctrl+Shift+E",
  "pane:close":"Ctrl+Shift+W",
  
- "editor:undo":"Ctrl+Z",
+ "editor:undo":"Ctrl+Shift+Z",
  "editor:redo":"Ctrl+Shift+Z",
- "editor:cut":"Ctrl+X",
- "editor:copy":"Ctrl+C",
- "editor:paste":"Ctrl+V",
- "editor:selectAll":"Ctrl+A",
+ "editor:cut":"Ctrl+Shift+X",
+ "editor:copy":"Ctrl+Shift+C",
+ "editor:paste":"Ctrl+Shift+V",
+ "editor:selectAll":"Ctrl+Shift+A",
  "editor:clearBuffer":"Ctrl+Shift+K",
  
  "plugins:update": "Ctrl+Shift+U"
