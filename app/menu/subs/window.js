@@ -43,7 +43,7 @@ module.exports = function (commands) {
         submenu: [
           {
             label: 'Above',
-            accelerator: commands['tab:up'],
+            accelerator: commands['pane:up'],
             click(item, focusedWindow) {
               if (focusedWindow) {
                 focusedWindow.rpc.emit('mv', {type: 'Pane', arrow: 'Up'});
@@ -52,7 +52,7 @@ module.exports = function (commands) {
           },
           {
             label: 'Bellow',
-            accelerator: commands['tab:down'],
+            accelerator: commands['pane:down'],
             click(item, focusedWindow) {
               if (focusedWindow) {
                 focusedWindow.rpc.emit('mv', {type: 'Pane', arrow: 'Down'});
@@ -61,7 +61,7 @@ module.exports = function (commands) {
           },
           {
             label: 'Left',
-            accelerator: commands['tab:left'],
+            accelerator: commands['pane:left'],
             click(item, focusedWindow) {
               if (focusedWindow) {
                 focusedWindow.rpc.emit('mv', {type: 'Pane', arrow: 'Left'});
@@ -70,7 +70,7 @@ module.exports = function (commands) {
           },
           {
             label: 'Right',
-            accelerator: commands['tab:right'],
+            accelerator: commands['pane:right'],
             click(item, focusedWindow) {
               if (focusedWindow) {
                 focusedWindow.rpc.emit('mv', {type: 'Pane', arrow: 'Right'});
