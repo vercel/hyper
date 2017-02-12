@@ -4,7 +4,7 @@ module.exports = function (commands) {
     submenu: [
       {
         label: 'Reload',
-        accelerator: commands['window:devtools'],
+        accelerator: commands['window:reload'],
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('reload');
