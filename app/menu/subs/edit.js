@@ -1,7 +1,7 @@
-module.exports = function(commands) {
+module.exports = function (commands) {
   return {
-  label: 'Edit',
-  submenu:[
+    label: 'Edit',
+    submenu: [
       {
         role: 'undo',
         accelerator: commands['editor:undo']
@@ -34,13 +34,13 @@ module.exports = function(commands) {
       },
       {
         label: 'Clear Buffer',
-        accelerator: commands['editor:clearBuffer']
-        // click(item, focusedWindow) {
-        //   if (focusedWindow) {
-        //     focusedWindow.rpc.emit('session clear req');
-        //   }
-        // }
+        accelerator: commands['editor:clearBuffer'],
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('session clear req');
+          }
+        }
       }
     ]
   };
-}
+};

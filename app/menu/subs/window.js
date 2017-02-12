@@ -1,8 +1,8 @@
-module.exports = function(commands) {
-    return {
+module.exports = function (commands) {
+  return {
     role: 'window',
     submenu: [
-      { 
+      {
         role: 'minimize',
         accelerator: commands['window:minimize']
       },
@@ -111,4 +111,4 @@ module.exports = function(commands) {
       }
     ]
   };
-}
+};

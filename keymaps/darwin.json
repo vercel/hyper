@@ -1,5 +1,12 @@
 {
- "devtools":"Cmd+Alt+I",
+ "window:devtools":"Cmd+Alt+I",
+ "window:reload":"Cmd+R",
+ "window:reloadFull":"Cmd+Shift+R",
+ "window:preferences":"Cmd+,",
+ 
+ "zoom:reset":"Cmd+0",
+ "zoom:in":"Cmd+plus",
+ "zoom:out":"Cmd+-",
  "window:new":"Cmd+N",
  "window:minimize": "Cmd+M",
  "window:close":"Cmd+Shift+W",
@@ -22,5 +29,7 @@
  "editor:copy":"Cmd+C",
  "editor:paste":"Cmd+V",
  "editor:selectAll":"Cmd+A",
- "editor:clearBuffer":"Cmd+K"
+ "editor:clearBuffer":"Cmd+K",
+ 
+ "plugins:update": "Cmd+Shift+U"
 }

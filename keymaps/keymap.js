@@ -1,9 +1,6 @@
-
 class Keymap {
-  constructor() {
-  }
-  
-  
+  // constructor() {
+  // }
 }
 
 module.exports.Keymap = Keymap;

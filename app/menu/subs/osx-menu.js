@@ -1,26 +1,27 @@
 //   // This menu label is overrided by OSX to be the appName
 //   // The label is set to appName here so it matches actual behavior
 const {app} = require('electron');
-module.exports = function() {
+
+module.exports = function (commands) {
   return {
     label: `${app.getName()}`,
     submenu: [
       {
-        role: 'about',
+        role: 'about'
       },
       {
         type: 'separator'
       },
       {
         label: 'Preferences...',
-        // accelerator: accelerators.preferences,
-        // click(item, focusedWindow) {
-        //   if (focusedWindow) {
-        //     focusedWindow.rpc.emit('preferences');
-        //   } else {
-        //     createWindow(win => win.rpc.emit('preferences'));
-        //   }
-        // }
+        accelerator: commands['window:preferences'],
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('preferences');
+          } else {
+            // createWindow(win => win.rpc.emit('preferences'));
+          }
+        }
       },
       {
         type: 'separator'
@@ -49,4 +50,4 @@ module.exports = function() {
       }
     ]
   };
-}
+};

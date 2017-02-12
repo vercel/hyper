@@ -1,28 +1,28 @@
-module.exports = function(commands) {
-    return {
+module.exports = function (commands) {
+  return {
     label: 'View',
     submenu: [
       {
         label: 'Reload',
-        // accelerator: accelerators.reload,
-        // click(item, focusedWindow) {
-        //   if (focusedWindow) {
-        //     focusedWindow.rpc.emit('reload');
-        //   }
-        // }
+        accelerator: commands['window:devtools'],
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('reload');
+          }
+        }
       },
       {
         label: 'Full Reload',
-        // accelerator: accelerators.fullReload,
-        // click(item, focusedWindow) {
-        //   if (focusedWindow) {
-        //     focusedWindow.reload();
-        //   }
-        // }
+        accelerator: commands['window:reloadFull'],
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.reload();
+          }
+        }
       },
       {
         label: 'Developer Tools',
-        accelerator: commands['devtools'],
+        accelerator: commands['window:devtools'],
         click(item, focusedWindow) {
           if (focusedWindow) {
             const webContents = focusedWindow.webContents;
@@ -39,31 +39,31 @@ module.exports = function(commands) {
       },
       {
         label: 'Reset Zoom Level',
-        // accelerator: accelerators.resetZoom,
-        // click(item, focusedWindow) {
-        //   if (focusedWindow) {
-        //     focusedWindow.rpc.emit('reset fontSize req');
-        //   }
-        // }
+        accelerator: commands['zoom:reset'],
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('reset fontSize req');
+          }
+        }
       },
       {
         label: 'Zoom In',
-        // accelerator: accelerators.zoomIn,
-        // click(item, focusedWindow) {
-        //   if (focusedWindow) {
-        //     focusedWindow.rpc.emit('increase fontSize req');
-        //   }
-        // }
+        accelerator: commands['zoom:in'],
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('increase fontSize req');
+          }
+        }
       },
       {
         label: 'Zoom Out',
-        // accelerator: accelerators.zoomOut,
-        // click(item, focusedWindow) {
-        //   if (focusedWindow) {
-        //     focusedWindow.rpc.emit('decrease fontSize req');
-        //   }
-        // }
+        accelerator: commands['zoom:out'],
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.rpc.emit('decrease fontSize req');
+          }
+        }
       }
     ]
   };
-}
+};

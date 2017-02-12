@@ -10,21 +10,21 @@ module.exports = class CommandRegistry {
     } catch (err) {
     }
   }
-  
+
   attach() {
-    
+
   }
-  
+
   destroy() {
-    
+
   }
-  
+
   clear() {
-    
+
   }
-  
+
   commandRegistered() {
-    
+
   }
-  
-}
+
+};

@@ -1,5 +1,5 @@
-module.exports = function(commands, createWindow) {
-    return {
+module.exports = function (commands, createWindow) {
+  return {
     label: 'Shell',
     submenu: [
       {
@@ -15,7 +15,7 @@ module.exports = function(commands, createWindow) {
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('termgroup add req');
-          } else {  
+          } else {
             createWindow();
           }
         }
@@ -56,8 +56,8 @@ module.exports = function(commands, createWindow) {
       {
         label: 'Close Window',
         role: 'close',
-        accelerator: commands['window:close'],
+        accelerator: commands['window:close']
       }
     ]
   };
-}
+};

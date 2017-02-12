@@ -7,29 +7,30 @@ module.exports = class KeymapManager {
     this.commands = [];
     const path = resolve('keymaps/darwin.json');
     try {
-      let keys = [];
       const commands = JSON.parse(readFileSync(path));
-      for(const command in commands) {
-        this.commands[command] = commands[command]; 
+      for (const command in commands) {
+        if (command) {
+          this.commands[command] = commands[command];
+        }
       }
     } catch (err) {
     }
   }
-  
+
   attach() {
-    
+
   }
-  
+
   destroy() {
-    
+
   }
-  
+
   clear() {
-    
+
   }
-  
+
   commandRegistered() {
-    
+
   }
-  
-}
+
+};

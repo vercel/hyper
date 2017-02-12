@@ -45,6 +45,8 @@ const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 
 // Ours
+const KeymapManager = require('../keymaps/keymap-manager');
+const config = require('./config');
 const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
 // const createMenu = require('./menu/base');
@@ -56,11 +58,8 @@ const fetchNotifications = require('./notifications');
 app.commandLine.appendSwitch('js-flags', '--harmony');
 
 // set up config
-const config = require('./config');
 config.init();
-
-const KeymapManager = require('../keymaps/keymap-manager');
-const keymapManager =  new KeymapManager();
+const keymapManager = new KeymapManager();
 
 const plugins = require('./plugins');
 // const Session = require('./session');
@@ -306,7 +305,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('open hamburger menu', ({x, y}) => {
-      // Menu.getApplicationMenu().popup(x, y);
+      Menu.getApplicationMenu().popup(x, y);
     });
 
     rpc.on('minimize', () => {
@@ -420,16 +419,12 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       createWindow();
     }
   });
-  
+
   const setupMenu = () => {
-    const menu = new AppMenu(keymapManager.commands, createWindow);
-    // const tpl = plugins.decorateMenu(createMenu({
-    //   createWindow,
-    //   updatePlugins: () => {
-    //     plugins.updatePlugins({force: true});
-    //   }
-    // }));
-  // 
+    const menu = new AppMenu(keymapManager.commands, createWindow, () => {
+      plugins.updatePlugins({force: true});
+    });
+
     // If we're on Mac make a Dock Menu
     if (process.platform === 'darwin') {
       const dockMenu = Menu.buildFromTemplate([{
