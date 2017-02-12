@@ -4,9 +4,11 @@ const {resolve} = require('path');
 
 module.exports = class KeymapManager {
   constructor() {
-    this.commands = [];
+    this.platform = process.platform;
+    this.commands = {};
+    this.keys = {};
     const path = () => {
-      switch (process.platform) {
+      switch (this.platform) {
         case 'darwin': return resolve('keymaps/darwin.json');
         case 'win32': return resolve('keymaps/win32.json');
         case 'linux': return resolve('keymaps/linux.json');
@@ -19,10 +21,41 @@ module.exports = class KeymapManager {
       for (const command in commands) {
         if (command) {
           this.commands[command] = commands[command];
+          this.keys[commands[command]] = command;
         }
       }
-    } catch (err) {
+    } catch (err) {}
+  }
+
+  // decides if a keybard event is in Hyper keymap
+  isCommands(e) {
+    let keys = [];
+    if (e.metaKey && this.platform === 'darwin') {
+      keys.push('Cmd');
+    } else if (e.metaKey) {
+      keys.push(e.key);
     }
+
+    if (e.ctrlKey) {
+      keys.push('Ctrl');
+    }
+
+    if (e.shiftKey) {
+      keys.push('Shift');
+    }
+
+    if (e.altKey) {
+      keys.push('Alt');
+    }
+    if (e.key === ' ') {
+      keys.push('space');
+    } else if (e.key !== 'Meta' && e.key !== 'Control' && e.key !== 'Shift' && e.key !== 'Alt') {
+      keys.push(e.key.replace('Arrow', ''));
+    }
+
+    keys = keys.join('+');
+
+    return this.keys[keys];
   }
 
   attach() {
