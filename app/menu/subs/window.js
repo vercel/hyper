@@ -107,7 +107,8 @@ module.exports = function (commands) {
         role: 'front'
       },
       {
-        role: 'togglefullscreen'
+        role: 'togglefullscreen',
+        accelerators: commands['window:full']
       }
     ]
   };

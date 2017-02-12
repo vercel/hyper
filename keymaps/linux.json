@@ -8,6 +8,7 @@
  "zoom:out":"Cmd+-",
  "window:new":"Cmd+N",
  "window:minimize": "Cmd+M",
+ "window:full": "F11",
  "window:close":"Cmd+Shift+W",
  
  "tab:new":"Cmd+T",
