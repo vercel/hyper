@@ -1,0 +1,36 @@
+{
+ "window:devtools":"Cmd+Alt+I",
+ "window:reload":"Cmd+R",
+ "window:reloadFull":"Cmd+Shift+R",
+ "window:preferences":"Cmd+,",
+ "zoom:reset":"Cmd+0",
+ "zoom:in":"Cmd+plus",
+ "zoom:out":"Cmd+-",
+ "window:new":"Cmd+N",
+ "window:minimize": "Cmd+M",
+ "window:full": "Cmd-Ctrl-F",
+ "window:close":"Cmd+Shift+W",
+ 
+ "tab:new":"Cmd+T",
+ "tab:next":"Cmd+shift+]",
+ "tab:prev":"Cmd+shift+[",
+ "pane:next":"Cmd+]",
+ "pane:prev":"Cmd+[",
+ "pane:left":"Cmd+Alt+Left",
+ "pane:right":"Cmd+Alt+Right",
+ "pane:up":"Cmd+Alt+Up",
+ "pane:down":"Cmd+Alt+Down",
+ "pane:vertical":"Cmd+D",
+ "pane:horizontal":"Cmd+Shift+D",
+ "pane:close":"Cmd+W",
+ 
+ "editor:undo":"Cmd+Z",
+ "editor:redo":"Cmd+Shift+Z",
+ "editor:cut":"Cmd+X",
+ "editor:copy":"Cmd+C",
+ "editor:paste":"Cmd+V",
+ "editor:selectAll":"Cmd+A",
+ "editor:clearBuffer":"Cmd+K",
+ 
+ "plugins:update": "Cmd+Shift+U"
+}
