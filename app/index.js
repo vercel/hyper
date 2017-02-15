@@ -177,7 +177,8 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       win.webContents.send('config change');
 
       // notify user that shell changes require new sessions
-      if (cfg_.shell !== cfg.shell || cfg_.shellArgs !== cfg.shellArgs) {
+      if (cfg_.shell !== cfg.shell ||
+        JSON.stringify(cfg_.shellArgs) !== JSON.stringify(cfg.shellArgs)) {
         notify(
           'Shell configuration changed!',
           'Open a new tab or window to start using the new shell'
