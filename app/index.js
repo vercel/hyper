@@ -47,8 +47,6 @@ const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 
 // Ours
-const Keymap = resolve(__dirname, '../keymaps/darwin.json');
-console.log(Keymap);
 const KeymapManager = require('./keymaps/keymap-manager');
 const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');

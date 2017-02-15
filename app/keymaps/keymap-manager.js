@@ -14,8 +14,6 @@ module.exports = class KeymapManager {
         default: return resolve(__dirname, 'darwin.json');
       }
     };
-    
-    console.log(path());
 
     try {
       const commands = JSON.parse(readFileSync(path()));
