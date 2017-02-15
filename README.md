@@ -28,7 +28,7 @@ choco install hyper
 
 1. Install the dependencies
   * If you are running Linux, install `icnsutils`, `graphicsmagick`, `xz-utils` and `rpm`
-  * If you are running Windows, install [VC++ Build Tools Technical Preview](http://go.microsoft.com/fwlink/?LinkId=691126) using the **Default Install option**; Install Python 2.7 and add it to your `%PATH%`; Run `npm config set msvs_version 2015 --global`
+  * If you are running Windows, install `windows-build-tools` with `npm i -g windows-build-tools`.
 2. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
 3. Install the dependencies: `npm install`
 4. Build the code and watch for changes: `npm run dev`
