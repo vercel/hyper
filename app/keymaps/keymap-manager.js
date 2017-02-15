@@ -1,6 +1,5 @@
 const {readFileSync} = require('fs');
 const {resolve} = require('path');
-// const CommandRegistry = require('../keymaps/command-registry');
 
 module.exports = class KeymapManager {
   constructor() {
@@ -9,12 +8,14 @@ module.exports = class KeymapManager {
     this.keys = {};
     const path = () => {
       switch (this.platform) {
-        case 'darwin': return resolve('keymaps/darwin.json');
-        case 'win32': return resolve('keymaps/win32.json');
-        case 'linux': return resolve('keymaps/linux.json');
-        default: return resolve('keymaps/darwin.json');
+        case 'darwin': return resolve(__dirname, 'darwin.json');
+        case 'win32': return resolve(__dirname, 'win32.json');
+        case 'linux': return resolve(__dirname, 'linux.json');
+        default: return resolve(__dirname, 'darwin.json');
       }
     };
+    
+    console.log(path());
 
     try {
       const commands = JSON.parse(readFileSync(path()));
