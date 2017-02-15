@@ -1,6 +1,6 @@
 {
  "window:devtools":"Ctrl+Shift+I",
- "window:reload":"Ctrl+R",
+ "window:reload":"Ctrl+Shift+R",
  "window:reloadFull":"Ctrl+Shift+F5",
  "window:preferences":"Ctrl+,",
  "zoom:reset":"Ctrl+0",
@@ -16,10 +16,6 @@
  "tab:prev":"Ctrl+shift+Tab",
  "pane:next":"Ctrl+Pageup",
  "pane:prev":"Ctrl+Pagedown",
- "pane:left":"Ctrl+Alt+Left",
- "pane:right":"Ctrl+Alt+Right",
- "pane:up":"Ctrl+Alt+Up",
- "pane:down":"Ctrl+Alt+Down",
  "pane:vertical":"Ctrl+Shift+D",
  "pane:horizontal":"Ctrl+Shift+E",
  "pane:close":"Ctrl+Shift+W",
