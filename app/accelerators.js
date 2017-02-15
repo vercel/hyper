@@ -57,6 +57,16 @@ const mousetrap = { // lib/containers/hyper.js
   moveTo8: '8',
   moveToLast: '9',
 
+  moveToPane1: 'Ctrl+1',
+  moveToPane2: 'Ctrl+2',
+  moveToPane3: 'Ctrl+3',
+  moveToPane4: 'Ctrl+4',
+  moveToPane5: 'Ctrl+5',
+  moveToPane6: 'Ctrl+6',
+  moveToPane7: 'Ctrl+7',
+  moveToPane8: 'Ctrl+8',
+  moveToPane9: 'Ctrl+9',
+
   // here `1`, `2` etc are used to "emulate" something like `moveLeft: ['...', '...', etc]`
   moveLeft1: 'Shift+Left',
   moveRight1: 'Shift+Right',
