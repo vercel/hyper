@@ -1,32 +1,31 @@
 const os = require('os');
 const path = require('path');
 const {app, shell, dialog} = require('electron');
+const {getConfigDir} = require('../config');
+
 
 module.exports = class Menu {
   constructor(commands, createWindow, updatePlugins) {
     this.commands = commands;
 
-    this.viewMenu = require('./subs/view')(commands);
-    this.shellMenu = require('./subs/shell')(commands, createWindow);
-    this.editMenu = require('./subs/edit')(commands);
-    this.pluginsMenu = require('./subs/plugins-menu')(commands, updatePlugins);
-    this.windowMenu = require('./subs/window')(commands);
-    this.helpMenu = require('./subs/help')(os, app, shell);
+    this.viewMenu = require('./menu/view')(commands);
+    this.shellMenu = require('./menu/shell')(commands, createWindow);
+    this.editMenu = require('./menu/edit')(commands);
+    this.pluginsMenu = require('./menu/plugins')(commands, updatePlugins);
+    this.windowMenu = require('./menu/window')(commands);
+    this.helpMenu = require('./menu/help')(os, app, shell);
 
     if (process.platform === 'darwin') {
-      this.osxMenu = require('./subs/osx-menu')(commands, createWindow);
+      this.osxMenu = require('./subs/darwin')(commands, createWindow);
     } else {
       this.editMenu.submenu.push(
         {type: 'separator'},
         {
           label: 'Preferences...',
           accelerator: commands['window:preferences'],
-          click(item, focusedWindow) {
-            if (focusedWindow) {
-              focusedWindow.rpc.emit('preferences');
-            } else {
-              createWindow(win => win.rpc.emit('preferences'));
-            }
+          click() {
+            const configFile = path.resolve(getConfigDir(), '.hyper.js');
+            shell.openItem(configFile);
           }
         }
       );
