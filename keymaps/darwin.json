@@ -31,6 +31,7 @@
  "editor:paste":"Cmd+V",
  "editor:selectAll":"Cmd+A",
  "editor:clearBuffer":"Cmd+K",
+ "editor:emojis": "Cmd+Ctrl+Space",
  
  "plugins:update": "Cmd+Shift+U"
 }

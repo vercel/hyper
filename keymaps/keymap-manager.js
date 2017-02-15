@@ -58,20 +58,4 @@ module.exports = class KeymapManager {
     return this.keys[keys];
   }
 
-  attach() {
-
-  }
-
-  destroy() {
-
-  }
-
-  clear() {
-
-  }
-
-  commandRegistered() {
-
-  }
-
 };
