@@ -241,7 +241,7 @@ function install(fn) {
       posix: 'npm prune && npm install --production'
     };
     // determine the shell we're running in
-    const whichShell = cfgShell.match(/fish/) ? 'fish' : 'posix';
+    const whichShell = (typeof cfgShell === 'string' && cfgShell.match(/fish/)) ? 'fish' : 'posix';
     // Use the install command that is appropriate for our shell
     exec(installCommands[whichShell], {
       cwd: path,
