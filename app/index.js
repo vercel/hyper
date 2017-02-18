@@ -233,7 +233,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         });
 
         session.on('data', data => {
-          rpc.emit('session data', {uid, data});
+          rpc.emit('session data', uid + data);
         });
 
         session.on('exit', () => {
