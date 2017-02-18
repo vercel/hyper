@@ -8,7 +8,7 @@ const isProd = nodeEnv === 'production';
 
 module.exports = {
   devtool: isProd ? 'hidden-source-map' : 'cheap-eval-source-map',
-  entry: './lib/index.js',
+  entry: './lib/interface.js',
   output: {
     path: path.join(__dirname, 'app', 'dist'),
     filename: 'bundle.js'
@@ -23,7 +23,8 @@ module.exports = {
       {
         test: /\.json/,
         loader: 'json-loader'
-      }
+      },
+      { test: /\.css$/, loader: "style-loader!css-loader" }
     ]
   },
   plugins: [

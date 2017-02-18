@@ -35,14 +35,12 @@ if (process.platform === 'win32') {
 }
 
 // Native
-const {resolve, isAbsolute} = require('path');
-const {homedir} = require('os');
-
+const {resolve} = require('path');
 // Packages
 const {parse: parseUrl} = require('url');
 const {app, BrowserWindow, shell, Menu} = require('electron');
 const {gitDescribe} = require('git-describe');
-const uuid = require('uuid');
+// const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 
@@ -62,7 +60,9 @@ const config = require('./config');
 config.init();
 
 const plugins = require('./plugins');
-const Session = require('./session');
+// const Session = require('./session');
+const BaseSession = require('./sessions/base-session');
+const Pty = require('./sessions/pty-session');
 
 const windowSet = new Set([]);
 
@@ -198,6 +198,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       // If no callback is passed to createWindow,
       // a new session will be created by default.
       if (!fn) {
+        // fn = win => win.rpc.emit('termgroup add req');
         fn = win => win.rpc.emit('termgroup add req');
       }
 
@@ -217,30 +218,54 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       }
     });
 
-    rpc.on('new', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homedir(), splitDirection}) => {
-      const shell = cfg.shell;
-      const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
+    // rpc.on('new', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homedir(), splitDirection}) => {
+    rpc.on('new', () => {
+      const session = new BaseSession();
+      rpc.emit('created', {uid: session.uid});
 
-      initSession({rows, cols, cwd, shell, shellArgs}, (uid, session) => {
-        sessions.set(uid, session);
-        rpc.emit('session add', {
-          rows,
-          cols,
-          uid,
-          splitDirection,
-          shell: session.shell,
-          pid: session.pty.pid
-        });
+      // const shell = cfg.shell;
+      // const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
 
-        session.on('data', data => {
-          rpc.emit('session data', {uid, data});
-        });
+      // initSession({rows, cols, cwd, shell, shellArgs}, (uid, session) => {
+        // sessions.set(uid, session);
+      //   rpc.emit('session add', {
+      //     rows,
+      //     cols,
+      //     uid,
+      //     splitDirection,
+      //     shell: session.shell,
+      //     pid: session.pty.pid
+      //   });
 
-        session.on('exit', () => {
-          rpc.emit('session exit', {uid});
-          sessions.delete(uid);
+      //   session.on('data', data => {
+      //     rpc.emit('session data', {uid, data});
+      //   });
+
+      //   session.on('exit', () => {
+      //     rpc.emit('session exit', {uid});
+      //     sessions.delete(uid);
+      //   });
+      // });
+    });
+
+    rpc.on('pane request', () => {
+      const session = new BaseSession();
+      rpc.emit('pane created', {uid: session.uid});
+    });
+    
+    rpc.on('pty request', ({uid, cols, rows}) => {
+        const shell = cfg.shell;
+        const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
+        const session = new Pty({uid, cols, rows, shell, shellArgs});
+        sessions.set(session.uid, session);
+        session.on('data', payload => {
+          rpc.emit('pty data', payload);
         });
-      });
+    });
+
+    rpc.on('split request', ({split}) => {
+      const session = new BaseSession();
+      rpc.emit('pane splited', {split, uid: session.uid});
     });
 
     rpc.on('exit', ({uid}) => {
@@ -318,6 +343,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         event.preventDefault();
         rpc.emit('session data send', {data: url});
       }
+    });
+
+    win.on('enter-full-screen', () => {
     });
 
     // expose internals to extension authors
@@ -423,9 +451,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
   console.error('Error while loading devtools extensions', err);
 }));
 
-function initSession(opts, fn) {
-  fn(uuid.v4(), new Session(opts));
-}
+// function initSession(opts, fn) {
+//   fn(uuid.v4(), new Session(opts));
+// }
 
 app.on('open-file', (event, path) => {
   const lastWindow = app.getLastFocusedWindow();
