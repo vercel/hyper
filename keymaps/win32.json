@@ -1,0 +1,36 @@
+{
+ "window:devtools":"Ctrl+Shift+I",
+ "window:reload":"Ctrl+R",
+ "window:reloadFull":"Ctrl+Shift+F5",
+ "window:preferences":"Ctrl+,",
+ "zoom:reset":"Ctrl+0",
+ "zoom:in":"Ctrl+plus",
+ "zoom:out":"Ctrl+-",
+ "window:new":"Ctrl+Shift+N",
+ "window:minimize": "Ctrl+M",
+ "window:full": "F11",
+ "window:close":"Ctrl+Shift+W",
+ 
+ "tab:new":"Ctrl+Shift+T",
+ "tab:next":"Ctrl+Tab",
+ "tab:prev":"Ctrl+shift+Tab",
+ "pane:next":"Ctrl+Pageup",
+ "pane:prev":"Ctrl+Pagedown",
+ "pane:left":"Ctrl+Alt+Left",
+ "pane:right":"Ctrl+Alt+Right",
+ "pane:up":"Ctrl+Alt+Up",
+ "pane:down":"Ctrl+Alt+Down",
+ "pane:vertical":"Ctrl+Shift+D",
+ "pane:horizontal":"Ctrl+Shift+E",
+ "pane:close":"Ctrl+Shift+W",
+ 
+ "editor:undo":"Ctrl+Shift+Z",
+ "editor:redo":"Ctrl+Shift+Z",
+ "editor:cut":"Ctrl+Shift+X",
+ "editor:copy":"Ctrl+Shift+C",
+ "editor:paste":"Ctrl+Shift+V",
+ "editor:selectAll":"Ctrl+Shift+A",
+ "editor:clearBuffer":"Ctrl+Shift+K",
+ 
+ "plugins:update": "Ctrl+Shift+U"
+}
