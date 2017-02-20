@@ -189,6 +189,22 @@ module.exports = ({createWindow, updatePlugins}) => {
     label: 'View',
     submenu: [
       {
+        type: 'checkbox',
+        label: 'Float on Top',
+        click(item, focusedWindow) {
+          if (focusedWindow) {
+            if (focusedWindow.isAlwaysOnTop()) {
+              focusedWindow.setAlwaysOnTop(false);
+            } else {
+              focusedWindow.setAlwaysOnTop(true);
+            }
+          }
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
         label: 'Reload',
         accelerator: accelerators.reload,
         click(item, focusedWindow) {
