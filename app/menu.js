@@ -1,6 +1,6 @@
 const os = require('os');
 const path = require('path');
-const {app, shell, dialog} = require('electron');
+const {app, BrowserWindow, shell, dialog} = require('electron');
 
 const {accelerators} = require('./accelerators');
 
@@ -191,12 +191,15 @@ module.exports = ({createWindow, updatePlugins}) => {
       {
         type: 'checkbox',
         label: 'Float on Top',
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            if (focusedWindow.isAlwaysOnTop()) {
-              focusedWindow.setAlwaysOnTop(false);
-            } else {
-              focusedWindow.setAlwaysOnTop(true);
+        click(item) {
+          const allWindows = BrowserWindow.getAllWindows();
+          if (item.checked) {
+            for (const win of allWindows) {
+              win.setAlwaysOnTop(true);
+            }
+          } else {
+            for (const win of allWindows) {
+              win.setAlwaysOnTop(false);
             }
           }
         }
