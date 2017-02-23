@@ -1,4 +1,4 @@
-module.exports = function (commands, updatePlugins) {
+module.exports = function (commands, update) {
   return {
     label: 'Plugins',
     submenu: [
@@ -6,7 +6,7 @@ module.exports = function (commands, updatePlugins) {
         label: 'Update',
         accelerator: commands['plugins:update'],
         click() {
-          updatePlugins();
+          update();
         }
       }
     ]

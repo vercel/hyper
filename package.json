@@ -50,7 +50,13 @@
           "minify-flip-comparisons",
           "minify-guarded-expressions",
           "minify-infinity",
-          ["minify-mangle-names", { "keepClassName": true, "keepFnName": true }],
+          [
+            "minify-mangle-names",
+            {
+              "keepClassName": true,
+              "keepFnName": true
+            }
+          ],
           "minify-replace",
           "minify-simplify",
           "minify-type-constructors",

@@ -47,23 +47,22 @@ const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 
 // Ours
-const KeymapManager = require('./keymaps/keymap-manager');
 const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
 const AppMenu = require('./menus/menu');
 const createRPC = require('./rpc');
 const notify = require('./notify');
 const fetchNotifications = require('./notifications');
+const config = require('./config');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
 
 // set up config
-const config = require('./config');
+config.setup();
 
-config.init();
-const keymapManager = new KeymapManager();
 const plugins = require('./plugins');
 const Session = require('./session');
+const keymaps = require('./keymaps');
 
 const windowSet = new Set([]);
 
@@ -107,7 +106,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
   function createWindow(fn, options = {}) {
     let cfg = plugins.getDecoratedConfig();
 
-    const winSet = app.config.window.get();
+    const winSet = config.getWin();
     let [startX, startY] = winSet.position;
 
     const [width, height] = options.size ? options.size : (cfg.windowSize || winSet.size);
@@ -354,8 +353,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
-      app.config.window.recordState(win);
-      windowSet.delete(win);
+      config.winRecord(win);
       rpc.destroy();
       deleteSessions();
       cfgUnsubscribe();
@@ -392,7 +390,8 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
   });
 
   const makeMenu = () => {
-    const menu = new AppMenu(keymapManager.commands, createWindow, () => {
+    const menu = new AppMenu(keymaps.commands, createWindow, () => {
+      // plugins.update({force: true});
       plugins.updatePlugins({force: true});
     });
 

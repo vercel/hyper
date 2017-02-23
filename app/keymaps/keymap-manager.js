@@ -2,10 +2,11 @@ const {readFileSync} = require('fs');
 const {resolve} = require('path');
 
 module.exports = class KeymapManager {
-  constructor() {
+  constructor(customsKeys) {
     this.platform = process.platform;
     this.commands = {};
     this.keys = {};
+
     const path = () => {
       switch (this.platform) {
         case 'darwin': return resolve(__dirname, 'darwin.json');
@@ -23,11 +24,22 @@ module.exports = class KeymapManager {
           this.keys[commands[command]] = command;
         }
       }
-    } catch (err) {}
+      this.extract(customsKeys);
+    } catch (err) {
+
+    }
+  }
+
+  extract(keys) {
+    Object.keys(keys).map(key => {
+      this.commands[key] = keys[key];
+      this.keys[fileKEYS[key]] = key;
+    });
   }
 
   // decides if a keybard event is in Hyper keymap
   isCommands(e) {
+    console.log(e);
     let keys = [];
     if (e.metaKey && this.platform === 'darwin') {
       keys.push('Cmd');

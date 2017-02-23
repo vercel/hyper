@@ -21,7 +21,7 @@
   "pane:close":"Ctrl+Shift+W",
   
   "editor:undo":"Ctrl+Shift+Z",
-  "editor:redo":"Ctrl+Shift+Z",
+  "editor:redo":"Ctrl+Shift+Y",
   "editor:cut":"Ctrl+Shift+X",
   "editor:copy":"Ctrl+Shift+C",
   "editor:paste":"Ctrl+Shift+V",
