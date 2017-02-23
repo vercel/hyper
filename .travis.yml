@@ -31,11 +31,8 @@ before_install:
 install:
   - yarn
 
-before_script:
-  - npm prune
-
 after_success:
-  - npm run dist
+  - yarn run dist
 
 branches:
   except:

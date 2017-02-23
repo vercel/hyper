@@ -28,16 +28,16 @@ choco install hyper
 
 1. Install the dependencies
   * If you are running Linux, install `icnsutils`, `graphicsmagick`, `xz-utils` and `rpm`
-  * If you are running Windows, install `windows-build-tools` with `npm i -g windows-build-tools`.
+  * If you are running Windows, install `windows-build-tools` with `yarn global add windows-build-tools`.
 2. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
-3. Install the dependencies: `npm install`
-4. Build the code and watch for changes: `npm run dev`
-5. In another terminal tab/window/pane, run the app: `npm run app`
+3. Install the dependencies: `yarn`
+4. Build the code and watch for changes: `yarn run dev`
+5. In another terminal tab/window/pane, run the app: `yarn run app`
 
 To make sure that your code works in the finished application, you can generate the binaries like this:
 
 ```bash
-npm run dist
+yarn run dist
 ```
 
 After that, you'll see the binary in the `./dist` folder!
@@ -45,7 +45,7 @@ After that, you'll see the binary in the `./dist` folder!
 ### node-pty issues
 
 If after building during development you get an alert dialog related to `node-pty` issues,
-make sure its build process is working correctly by running `npm run rebuild-node-pty`.
+make sure its build process is working correctly by running `yarn run rebuild-node-pty`.
 
 If you're on macOS, this typically is related to Xcode issues (like not having agreed
 to the Terms of Service by running `sudo xcodebuild` after a fresh Xcode installation).
