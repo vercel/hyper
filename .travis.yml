@@ -28,7 +28,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
 
 install:
-  - npm install
+  - yarn
 
 before_script:
   - npm prune
