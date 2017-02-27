@@ -242,12 +242,20 @@ function install(fn) {
     };
     // determine the shell we're running in
     const whichShell = (typeof cfgShell === 'string' && cfgShell.match(/fish/)) ? 'fish' : 'posix';
-    // Use the install command that is appropriate for our shell
-    exec(installCommands[whichShell], {
+    const execOptions = {
       cwd: path,
-      env,
-      shell
-    }, err => {
+      env
+    };
+
+    // https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback
+    // node.js requires command line parsing should be compatible with cmd.exe on Windows, should able to accept `/d /s /c`
+    // but most custom shell doesn't. Instead, falls back to default shell
+    if (process.platform !== 'win32') {
+      execOptions.shell = shell;
+    }
+
+    // Use the install command that is appropriate for our shell
+    exec(installCommands[whichShell], execOptions, err => {
       if (err) {
         return fn(err);
       }
