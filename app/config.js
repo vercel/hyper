@@ -1,12 +1,14 @@
 const {homedir} = require('os');
 const {statSync, renameSync, readFileSync, writeFileSync} = require('fs');
-const {resolve} = require('path');
+const {resolve, dirname} = require('path');
 const vm = require('vm');
 
 const {dialog} = require('electron');
 const isDev = require('electron-is-dev');
 const gaze = require('gaze');
 const Config = require('electron-config');
+const {sync: mkdirpSync} = require('mkdirp');
+const {config: path, root} = require('./config-paths');
 const notify = require('./notify');
 
 // local storage
@@ -17,7 +19,7 @@ const winCfg = new Config({
   }
 });
 
-let configDir = homedir();
+let configDir = root;
 if (isDev) {
   // if a local config file exists, use it
   try {
@@ -31,8 +33,7 @@ if (isDev) {
   }
 }
 
-const path = resolve(configDir, '.hyper.js');
-const pathLegacy = resolve(configDir, '.hyperterm.js');
+const pathLegacy = resolve(homedir(), '.hyperterm.js');
 
 const watchers = [];
 
@@ -118,6 +119,7 @@ exports.init = function () {
       console.log('attempting to write default config to', path);
       exec(defaultConfig);
 
+      mkdirpSync(dirname(path));
       writeFileSync(
         path,
         process.platform === 'win32' ? crlfify(defaultConfig.toString()) : defaultConfig);
