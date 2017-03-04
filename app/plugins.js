@@ -9,7 +9,7 @@ let modules;
 
 const _fetch = ({force = false} = {}) => {
   utils.init(err => {
-    (() => {
+    const clearCache = function () {
       // trigger unload hooks
       modules.forEach(mod => {
         if (mod.onUnload) {
@@ -22,7 +22,8 @@ const _fetch = ({force = false} = {}) => {
           delete require.cache[entry];
         }
       }
-    });
+    };
+    clearCache();
     modules = utils.load();
     if (utils.versionChanged(modules.length)) {
       notify(
@@ -38,14 +39,14 @@ modules = utils.load(() => {
   _fetch();
 });
 
-const _subscribe = function (fn) {
+exports.subscribe = function (fn) {
   watchers.push(fn);
   return () => {
     watchers.splice(watchers.indexOf(fn), 1);
   };
 };
 
-const _update = function ({force = false} = {}) {
+exports.updatePlugins = function ({force = false} = {}) {
   if (utils.shouldUpdate()) {
     _fetch({force});
   }
@@ -69,24 +70,24 @@ function decorateObject(base, key) {
   return decorated;
 }
 
-const _decorateMenu = function (tpl) {
+exports.decorateMenu = function (tpl) {
   return decorateObject(tpl, 'decorateMenu');
 };
 
-const _getDecoratedEnv = function (baseEnv) {
+exports.getDecoratedEnv = function (baseEnv) {
   return decorateObject(baseEnv, 'decorateEnv');
 };
 
-const _getDecoratedConfig = function () {
+exports.getDecoratedConfig = function () {
   const baseConfig = config.getConfig();
   return decorateObject(baseConfig, 'decorateConfig');
 };
 
-const _getDecoratedBrowserOptions = function (defaults) {
+exports.getDecoratedBrowserOptions = function (defaults) {
   return decorateObject(defaults, 'decorateBrowserOptions');
 };
 
-const _onApp = function (app) {
+exports.onApp = function (app) {
   modules.forEach(plugin => {
     if (plugin.onApp) {
       plugin.onApp(app);
@@ -94,7 +95,7 @@ const _onApp = function (app) {
   });
 };
 
-const _onWindow = function (win) {
+exports.onWindow = function (win) {
   modules.forEach(plugin => {
     if (plugin.onWindow) {
       plugin.onWindow(win);
@@ -103,7 +104,7 @@ const _onWindow = function (win) {
 };
 
 // get paths from renderer
-const _getBasePaths = function () {
+exports.getBasePaths = function () {
   return {path: pluginsPath, localPath: localPluginsPath};
 };
 
@@ -116,15 +117,18 @@ config.subscribe(() => {
   }
 });
 
-module.exports = {
-  updatePlugins: _update,
-  getBasePaths: _getBasePaths,  // get paths from renderer
-  getPaths: utils.getPaths, // expose to renderer
-  subscribe: _subscribe,
-  decorateMenu: _decorateMenu,
-  onApp: _onApp,
-  onWindow: _onWindow,
-  getDecoratedEnv: _getDecoratedEnv,
-  getDecoratedConfig: _getDecoratedConfig,
-  getDecoratedBrowserOptions: _getDecoratedBrowserOptions
-};
+exports.getPaths = utils.getPaths;
+
+// module.exports = {
+//   updatePlugins: _update,
+//   getBasePaths: _getBasePaths,  // get paths from renderer
+//   getPaths: utils.getPaths, // expose to renderer
+//   subscribe: _subscribe,
+//   decorateMenu: _decorateMenu,
+//   onApp: _onApp,
+//   onWindow: _onWindow,
+//   getDecoratedEnv: _getDecoratedEnv,
+//   getDecoratedConfig: _getDecoratedConfig,
+//   getDecoratedBrowserOptions: _getDecoratedBrowserOptions,
+//   // getDecoratedKeymaps: _decorateKeymaps
+// };

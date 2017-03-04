@@ -46,7 +46,9 @@ const _syncPackageJSON = function (plugins) {
 
 const _command = function (plugins, cfg, fn) {
   _syncPackageJSON(plugins);
-  const {npmRegistry, cfgShell} = cfg;
+  const {shell: cfgShell, npmRegistry} = cfg;
+  const shell = cfgShell && cfgShell !== '' ? cfgShell : undefined;
+
   shellEnv().then(env => {
     if (npmRegistry) {
       env.NPM_CONFIG_REGISTRY = npmRegistry;

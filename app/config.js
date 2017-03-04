@@ -24,39 +24,32 @@ const _watch = function () {
   });
 };
 
-const _subscribe = function (fn) {
+exports.subscribe = function (fn) {
   watchers.push(fn);
   return () => {
     watchers.splice(watchers.indexOf(fn), 1);
   };
 };
 
-const _getPlugins = function () {
+exports.getPlugins = function () {
   return {
     plugins: cfg.plugins,
     localPlugins: cfg.localPlugins
   };
 };
 
-const _getConfig = function () {
+exports.getConfig = function () {
   return cfg.config;
 };
 
-const _getKeymaps = function () {
+exports.getKeymaps = function () {
   return cfg.keymaps;
 };
 
-const _setup = function() {
+exports.setup = function () {
   cfg = _import();
   _watch();
 };
 
-module.exports = {
-  setup: _setup,
-  subscribe: _subscribe,
-  getPlugins: _getPlugins,
-  getConfig: _getConfig,
-  getKeymaps: _getKeymaps,
-  getWin: win.get,
-  winRecord: win.recordState
-};
+exports.getWin = win.get;
+exports.winRecord = win.recordState;

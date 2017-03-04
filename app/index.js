@@ -62,13 +62,13 @@ config.setup();
 
 const plugins = require('./plugins');
 const Session = require('./session');
-const keymaps = require('./keymaps');
 
 const windowSet = new Set([]);
 
 // expose to plugins
 app.config = config;
 app.plugins = plugins;
+
 app.getWindows = () => new Set([...windowSet]); // return a clone
 
 // function to retrieve the last focused window in windowSet;
@@ -118,6 +118,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     // previous window. This also ensures in multi monitor setups that the
     // new terminal is on the correct screen.
     const focusedWindow = BrowserWindow.getFocusedWindow() || app.getLastFocusedWindow();
+
     // In case of options defaults position and size, we should ignore the focusedWindow.
     if (winPos !== undefined) {
       [startX, startY] = winPos;
@@ -354,6 +355,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     // the window can be closed by the browser process itself
     win.on('close', () => {
       config.winRecord(win);
+      windowSet.delete(win);
       rpc.destroy();
       deleteSessions();
       cfgUnsubscribe();
@@ -390,8 +392,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
   });
 
   const makeMenu = () => {
-    const menu = new AppMenu(keymaps.commands, createWindow, () => {
-      // plugins.update({force: true});
+    const menu = new AppMenu(config.getKeymaps().commands, createWindow, () => {
       plugins.updatePlugins({force: true});
     });
 

@@ -80,11 +80,6 @@ function init(fn) {
             'Error updating plugins.',
             'We could not find the `npm` command. Make sure it\'s in $PATH'
           );
-        } else {
-          notify(
-            'Error updating plugins.',
-            'Check `~/.hyper_plugins/npm-debug.log` for more information.'
-          );
         }
       } else {
         cache.set('hyper.plugins4', _plugins);

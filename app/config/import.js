@@ -2,6 +2,7 @@ const {writeFileSync, readFileSync} = require('fs');
 const {sync: mkdirpSync} = require('mkdirp');
 const _paths = require('./paths');
 const _init = require('./init');
+const _keys = require('./keymaps');
 
 const _write = function (path, data) {
   // This method will take text formatted as Unix line endings and transform it
@@ -38,7 +39,9 @@ const _importPlugins = function () {
 const _import = function () {
   mkdirpSync(_paths.hyperHomeDirPath);
   _importPlugins();
-  return _init(_importConfig());
+  const cfg = _init(_importConfig());
+  cfg.keymaps = _keys(cfg.keymaps);
+  return cfg;
 };
 
 module.exports = _import;
