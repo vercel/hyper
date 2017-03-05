@@ -22,10 +22,10 @@ const availableExtensions = new Set([
   'reduceUI', 'reduceSessions', 'reduceTermGroups',
   'decorateMenu', 'decorateTerm', 'decorateHyper',
   'decorateHyperTerm', // for backwards compatibility with hyperterm
-  'decorateTab',
+  'decorateHeader', 'decorateTerms', 'decorateTab',
   'decorateNotification', 'decorateNotifications',
   'decorateTabs', 'decorateConfig', 'decorateEnv',
-  'decorateTermGroup', 'getTermProps',
+  'decorateTermGroup', 'decorateSplitPane', 'getTermProps',
   'getTabProps', 'getTabsProps', 'getTermGroupProps',
   'mapHyperTermState', 'mapTermsState',
   'mapHeaderState', 'mapNotificationsState',
