@@ -8,16 +8,13 @@ const {getDecoratedEnv} = require('./plugins');
 const {productName, version} = require('./package');
 const config = require('./config');
 
+const createNodePtyError = () => new Error('`node-pty` failed to load. Typically this means that it was built incorrectly. Please check the `readme.md` to more info.');
+
 let spawn;
 try {
-  spawn = require('child_pty').spawn;
+  spawn = require('node-pty').spawn;
 } catch (err) {
-  console.error(
-    'A native module failed to load. Typically this means ' +
-    'you installed the modules incorrectly.\n Use `scripts/install.sh` ' +
-    'to trigger the installation.\n ' +
-    'More information: https://github.com/zeit/hyper/issues/72'
-  );
+  throw createNodePtyError();
 }
 
 const envFromConfig = config.getConfig().env || {};
@@ -37,14 +34,22 @@ module.exports = class Session extends EventEmitter {
 
     const defaultShellArgs = ['--login'];
 
-    this.pty = spawn(shell || defaultShell, shellArgs || defaultShellArgs, {
-      columns,
-      rows,
-      cwd,
-      env: getDecoratedEnv(baseEnv)
-    });
+    try {
+      this.pty = spawn(shell || defaultShell, shellArgs || defaultShellArgs, {
+        cols: columns,
+        rows,
+        cwd,
+        env: getDecoratedEnv(baseEnv)
+      });
+    } catch (err) {
+      if (/is not a function/.test(err.message)) {
+        throw createNodePtyError();
+      } else {
+        throw err;
+      }
+    }
 
-    this.pty.stdout.on('data', data => {
+    this.pty.on('data', data => {
       if (this.ended) {
         return;
       }
@@ -66,12 +71,12 @@ module.exports = class Session extends EventEmitter {
   }
 
   write(data) {
-    this.pty.stdin.write(data);
+    this.pty.write(data);
   }
 
-  resize({cols: columns, rows}) {
+  resize({cols, rows}) {
     try {
-      this.pty.stdout.resize({columns, rows});
+      this.pty.resize(cols, rows);
     } catch (err) {
       console.error(err.stack);
     }
@@ -79,7 +84,7 @@ module.exports = class Session extends EventEmitter {
 
   destroy() {
     try {
-      this.pty.kill('SIGHUP');
+      this.pty.kill();
     } catch (err) {
       console.error('exit error', err.stack);
     }

@@ -1,13 +1,9 @@
 const ms = require('ms');
 const fetch = require('node-fetch');
-const {satisfies} = require('semver');
 
-const {version} = './package';
+const {version} = require('./package');
 
 const NEWS_URL = 'https://hyper-news.now.sh';
-const matchVersion = versions => (
-  versions.some(v => v === '*' || satisfies(version, v))
-);
 
 module.exports = function fetchNotifications(win) {
   const {rpc} = win;
@@ -19,18 +15,22 @@ module.exports = function fetchNotifications(win) {
   };
 
   console.log('Checking for notification messages');
-  fetch(NEWS_URL)
+  fetch(NEWS_URL, {
+    headers: {
+      'X-Hyper-Version': version,
+      'X-Hyper-Platform': process.platform
+    }
+  })
   .then(res => res.json())
   .then(data => {
-    const {messages} = data || {};
-    if (!messages) {
+    const {message} = data || {};
+    if (typeof message !== 'object' && message !== '') {
       throw new Error('Bad response');
     }
-    const message = messages.find(msg => matchVersion(msg.versions));
-    if (message) {
-      rpc.emit('add notification', message);
-    } else {
+    if (message === '') {
       console.log('No matching notification messages');
+    } else {
+      rpc.emit('add notification', message);
     }
 
     retry();

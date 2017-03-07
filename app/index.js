@@ -1,5 +1,42 @@
+// Print diagnostic information for a few arguments instead of running Hyper.
+if (['--help', '-v', '--version'].includes(process.argv[1])) {
+  const {version} = require('./package');
+  const configLocation = process.platform === 'win32' ? process.env.userprofile + '\\.hyper.js' : '~/.hyper.js';
+  console.log(`Hyper version ${version}`);
+  console.log('Hyper does not accept any command line arguments. Please modify the config file instead.');
+  console.log(`Hyper configuration file located at: ${configLocation}`);
+  // eslint-disable-next-line unicorn/no-process-exit
+  process.exit();
+}
+
+// handle startup squirrel events
+if (process.platform === 'win32') {
+  // eslint-disable-next-line import/order
+  const systemContextMenu = require('./system-context-menu');
+
+  switch (process.argv[1]) {
+    case '--squirrel-install':
+    case '--squirrel-updated':
+      systemContextMenu.add(() => {
+        // eslint-disable-next-line curly, unicorn/no-process-exit
+        if (require('electron-squirrel-startup')) process.exit();
+      });
+      break;
+    case '--squirrel-uninstall':
+      systemContextMenu.remove(() => {
+        // eslint-disable-next-line curly, unicorn/no-process-exit
+        if (require('electron-squirrel-startup')) process.exit();
+      });
+      break;
+    default:
+      // eslint-disable-next-line curly, unicorn/no-process-exit
+      if (require('electron-squirrel-startup')) process.exit();
+  }
+}
+
 // Native
-const {resolve} = require('path');
+const {resolve, isAbsolute} = require('path');
+const {homedir} = require('os');
 
 // Packages
 const {parse: parseUrl} = require('url');
@@ -108,16 +145,19 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       height,
       minHeight: 190,
       minWidth: 370,
-      titleBarStyle: 'hidden-inset',
+      titleBarStyle: 'hidden-inset', // macOS only
       title: 'Hyper.app',
       backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
-      transparent: true,
+      // we want to go frameless on windows and linux
+      frame: process.platform === 'darwin',
+      transparent: process.platform === 'darwin',
       icon: resolve(__dirname, 'static/icon.png'),
       // we only want to show when the prompt is ready for user input
       // HYPERTERM_DEBUG for backwards compatibility with hyperterm
       show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
       x: startX,
-      y: startY
+      y: startY,
+      acceptFirstMouse: true
     };
     const browserOptions = plugins.getDecoratedBrowserOptions(browserDefaults);
 
@@ -137,7 +177,8 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       win.webContents.send('config change');
 
       // notify user that shell changes require new sessions
-      if (cfg_.shell !== cfg.shell || cfg_.shellArgs !== cfg.shellArgs) {
+      if (cfg_.shell !== cfg.shell ||
+        JSON.stringify(cfg_.shellArgs) !== JSON.stringify(cfg.shellArgs)) {
         notify(
           'Shell configuration changed!',
           'Open a new tab or window to start using the new shell'
@@ -145,12 +186,13 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       }
 
       // update background color if necessary
-      win.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
-
       cfg = cfg_;
     });
 
     rpc.on('init', () => {
+      // we update the backgroundColor once the init is called.
+      // when we do a win.reload() we need need to reset the backgroundColor
+      win.setBackgroundColor(toElectronBackgroundColor(cfg.backgroundColor || '#000'));
       win.show();
 
       // If no callback is passed to createWindow,
@@ -175,7 +217,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       }
     });
 
-    rpc.on('new', ({rows = 40, cols = 100, cwd = process.env.HOME, splitDirection}) => {
+    rpc.on('new', ({rows = 40, cols = 100, cwd = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homedir(), splitDirection}) => {
       const shell = cfg.shell;
       const shellArgs = cfg.shellArgs && Array.from(cfg.shellArgs);
 
@@ -191,7 +233,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         });
 
         session.on('data', data => {
-          rpc.emit('session data', {uid, data});
+          rpc.emit('session data', uid + data);
         });
 
         session.on('exit', () => {
@@ -235,6 +277,18 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       rpc.emit('move');
     });
 
+    rpc.on('open hamburger menu', ({x, y}) => {
+      Menu.getApplicationMenu().popup(x, y);
+    });
+
+    rpc.on('minimize', () => {
+      win.minimize();
+    });
+
+    rpc.on('close', () => {
+      win.close();
+    });
+
     const deleteSessions = () => {
       sessions.forEach((session, key) => {
         session.removeAllListeners();
@@ -260,6 +314,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         event.preventDefault();
         const path = fileUriToPath(url).replace(/ /g, '\\ ');
         rpc.emit('session data send', {data: path});
+      } else if (protocol === 'http:' || protocol === 'https:') {
+        event.preventDefault();
+        rpc.emit('session data send', {data: url});
       }
     });
 
@@ -304,8 +361,15 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       pluginsUnsubscribe();
     });
 
+    // Same deal as above, grabbing the window titlebar when the window
+    // is maximized on Windows results in unmaximize, without hitting any
+    // app buttons
+    for (const ev of ['maximize', 'unmaximize', 'minimize', 'restore']) {
+      win.on(ev, () => rpc.emit('windowGeometry change'));
+    }
+
     win.on('closed', () => {
-      if (process.platform !== 'darwin') {
+      if (process.platform !== 'darwin' && windowSet.size === 0) {
         app.quit();
       }
     });

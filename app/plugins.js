@@ -1,5 +1,4 @@
 const {exec} = require('child_process');
-const {homedir} = require('os');
 const {resolve, basename} = require('path');
 const {writeFileSync} = require('fs');
 
@@ -16,17 +15,17 @@ const notify = require('./notify');
 const cache = new Config();
 
 // modules path
-const path = resolve(homedir(), '.hyper_plugins');
-const localPath = resolve(homedir(), '.hyper_plugins', 'local');
+const path = resolve(config.getConfigDir(), '.hyper_plugins');
+const localPath = resolve(path, 'local');
 const availableExtensions = new Set([
   'onApp', 'onWindow', 'onRendererWindow', 'onUnload', 'middleware',
   'reduceUI', 'reduceSessions', 'reduceTermGroups',
   'decorateMenu', 'decorateTerm', 'decorateHyper',
   'decorateHyperTerm', // for backwards compatibility with hyperterm
-  'decorateTab',
+  'decorateHeader', 'decorateTerms', 'decorateTab',
   'decorateNotification', 'decorateNotifications',
   'decorateTabs', 'decorateConfig', 'decorateEnv',
-  'decorateTermGroup', 'getTermProps',
+  'decorateTermGroup', 'decorateSplitPane', 'getTermProps',
   'getTabProps', 'getTabsProps', 'getTermGroupProps',
   'mapHyperTermState', 'mapTermsState',
   'mapHeaderState', 'mapNotificationsState',
@@ -233,14 +232,30 @@ function install(fn) {
     }
     /* eslint-disable camelcase  */
     env.npm_config_runtime = 'electron';
-    env.npm_config_target = '1.3.0';
+    env.npm_config_target = process.versions.electron;
     env.npm_config_disturl = 'https://atom.io/download/atom-shell';
     /* eslint-enable camelcase  */
-    exec('npm prune; npm install --production', {
+    // Shell-specific installation commands
+    const installCommands = {
+      fish: 'npm prune; and npm install --production',
+      posix: 'npm prune && npm install --production'
+    };
+    // determine the shell we're running in
+    const whichShell = (typeof cfgShell === 'string' && cfgShell.match(/fish/)) ? 'fish' : 'posix';
+    const execOptions = {
       cwd: path,
-      env,
-      shell
-    }, err => {
+      env
+    };
+
+    // https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback
+    // node.js requires command line parsing should be compatible with cmd.exe on Windows, should able to accept `/d /s /c`
+    // but most custom shell doesn't. Instead, falls back to default shell
+    if (process.platform !== 'win32') {
+      execOptions.shell = shell;
+    }
+
+    // Use the install command that is appropriate for our shell
+    exec(installCommands[whichShell], execOptions, err => {
       if (err) {
         return fn(err);
       }

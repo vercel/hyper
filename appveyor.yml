@@ -1,0 +1,30 @@
+# https://github.com/sindresorhus/appveyor-node/blob/master/appveyor.yml
+
+environment:
+  matrix:
+    - platform: x64
+  GH_TOKEN:
+    secure: tEHrAaRFMrUzagNJsnU+6Esvaw/FdUXZKWz7a690VAy6zzEThB0lThHLFVKZrQrP
+
+image: Visual Studio 2015
+
+init:
+  - yarn config set msvs_version 2015 # we need this to build `pty.js`
+
+install:
+  - ps: Install-Product node 6 x64
+  - set CI=true
+  - yarn
+
+build: off
+
+shallow_clone: true
+
+test_script:
+  - node --version
+  - yarn --version
+  - yarn run test
+
+on_success:
+  - yarn run dist
+  - ps: ls .\dist\win\*.exe | % { Push-AppveyorArtifact $_.FullName }
