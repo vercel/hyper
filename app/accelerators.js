@@ -27,8 +27,8 @@ const applicationMenu = { // app/menu.js
   emojis: isMac ? 'Ctrl+Cmd+Space' : '',
 
   // View menu
-  reload: 'R',
-  fullReload: 'Shift+R',
+  reload: isMac ? 'R' : 'Alt+R',
+  fullReload: isMac ? 'Shift+R' : 'Alt+Shift+R',
   toggleDevTools: isMac ? 'Alt+I' : 'Shift+I',
   resetZoom: '0',
   zoomIn: 'plus',
@@ -39,8 +39,8 @@ const applicationMenu = { // app/menu.js
 
   // Window menu
   minimize: 'M',
-  showPreviousTab: 'Alt+Left',
-  showNextTab: 'Alt+Right',
+  showPreviousTab: isMac ? 'Alt+Left' : 'PageUp',
+  showNextTab: isMac ? 'Alt+Right' : 'PageDown',
   selectNextPane: 'Ctrl+Alt+Tab',
   selectPreviousPane: 'Ctrl+Shift+Alt+Tab',
   enterFullScreen: isMac ? 'Ctrl+Cmd+F' : 'F11'
