@@ -76,8 +76,7 @@
       "target": [
         "deb",
         "AppImage",
-        "rpm",
-        "snap"
+        "rpm"
       ]
     },
     "win": {
