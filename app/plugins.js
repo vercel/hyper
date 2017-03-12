@@ -3,6 +3,7 @@ const {pluginsPath, localPluginsPath} = require('./config/paths');
 const config = require('./config');
 const utils = require('./plugins/init');
 const notify = require('./notify');
+const _keys = require('./config/keymaps');
 
 const watchers = [];
 let modules;
@@ -70,6 +71,15 @@ function decorateObject(base, key) {
   return decorated;
 }
 
+exports.extendKeymaps = function () {
+  modules.forEach(plugin => {
+    if (plugin.extendKeymaps) {
+      const keys = _keys.extend(plugin.extendKeymaps());
+      config.extendKeymaps(keys);
+    }
+  });
+};
+
 exports.decorateMenu = function (tpl) {
   return decorateObject(tpl, 'decorateMenu');
 };
@@ -118,17 +128,3 @@ config.subscribe(() => {
 });
 
 exports.getPaths = utils.getPaths;
-
-// module.exports = {
-//   updatePlugins: _update,
-//   getBasePaths: _getBasePaths,  // get paths from renderer
-//   getPaths: utils.getPaths, // expose to renderer
-//   subscribe: _subscribe,
-//   decorateMenu: _decorateMenu,
-//   onApp: _onApp,
-//   onWindow: _onWindow,
-//   getDecoratedEnv: _getDecoratedEnv,
-//   getDecoratedConfig: _getDecoratedConfig,
-//   getDecoratedBrowserOptions: _getDecoratedBrowserOptions,
-//   // getDecoratedKeymaps: _decorateKeymaps
-// };

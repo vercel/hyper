@@ -412,6 +412,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
   const load = () => {
     plugins.onApp(app);
+    plugins.extendKeymaps();
     makeMenu();
   };
 

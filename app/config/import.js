@@ -40,7 +40,7 @@ const _import = function () {
   mkdirpSync(_paths.hyperHomeDirPath);
   _importPlugins();
   const cfg = _init(_importConfig());
-  cfg.keymaps = _keys(cfg.keymaps);
+  cfg.keymaps = _keys.import(cfg.keymaps);
   return cfg;
 };
 

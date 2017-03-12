@@ -11,7 +11,8 @@ const _extensions = new Set([
   'mapHyperTermState', 'mapTermsState',
   'mapHeaderState', 'mapNotificationsState',
   'mapHyperTermDispatch', 'mapTermsDispatch',
-  'mapHeaderDispatch', 'mapNotificationsDispatch'
+  'mapHeaderDispatch', 'mapNotificationsDispatch',
+  'extendKeymaps'
 ]);
 
 module.exports = _extensions;

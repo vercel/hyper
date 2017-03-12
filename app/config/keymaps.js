@@ -2,9 +2,10 @@ const {readFileSync} = require('fs');
 const {join} = require('path');
 const _paths = require('./paths');
 
-const _keys = function (customsKeys) {
-  const commands = {};
-  const keys = {};
+const commands = {};
+const keys = {};
+
+const _import = function (customsKeys) {
   const path = () => {
     switch (process.platform) {
       case 'darwin': return join(_paths.keymapPath, 'darwin.json');
@@ -36,4 +37,19 @@ const _keys = function (customsKeys) {
   }
 };
 
-module.exports = _keys;
+const _extend = function (customsKeys) {
+  if (customsKeys) {
+    for (const command in customsKeys) {
+      if (command) {
+        commands[command] = customsKeys[command];
+        keys[customsKeys[command]] = command;
+      }
+    }
+  }
+  return {commands, keys};
+};
+
+module.exports = {
+  import: _import,
+  extend: _extend
+};
