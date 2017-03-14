@@ -4,6 +4,7 @@ const config = require('./config');
 const utils = require('./plugins/init');
 const notify = require('./notify');
 const _keys = require('./config/keymaps');
+// const CommandRegistry = require('./command-registry');
 
 const watchers = [];
 let modules;
@@ -79,6 +80,14 @@ exports.extendKeymaps = function () {
     }
   });
 };
+
+// exports.registerCommands = function () {
+//   modules.forEach(plugin => {
+//     if (plugin.registerCommands) {
+//       CommandRegistry.register(plugin.registerCommands());
+//     }
+//   });
+// };
 
 exports.decorateMenu = function (tpl) {
   return decorateObject(tpl, 'decorateMenu');
