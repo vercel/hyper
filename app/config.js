@@ -7,7 +7,7 @@ const {dialog} = require('electron');
 const isDev = require('electron-is-dev');
 const gaze = require('gaze');
 const Config = require('electron-config');
-const deepAssign = require('deep-assign'); // eslint-disable-line import/no-extraneous-dependencies
+const deepAssign = require('deep-assign');
 const notify = require('./notify');
 
 // local storage
