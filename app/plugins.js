@@ -81,14 +81,6 @@ exports.extendKeymaps = function () {
   });
 };
 
-// exports.registerCommands = function () {
-//   modules.forEach(plugin => {
-//     if (plugin.registerCommands) {
-//       CommandRegistry.register(plugin.registerCommands());
-//     }
-//   });
-// };
-
 exports.decorateMenu = function (tpl) {
   return decorateObject(tpl, 'decorateMenu');
 };
