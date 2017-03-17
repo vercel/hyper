@@ -123,7 +123,7 @@ exports.init = function () {
     try {
       console.log('attempting to write default config to', path);
       const defaultConfigContent = readFileSync(resolve(__dirname, 'config-default.js'));
-      exec(defaultConfigContent);
+      cfg = exec(defaultConfigContent);
 
       writeFileSync(
         path,
