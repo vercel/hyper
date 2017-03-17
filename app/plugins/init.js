@@ -7,6 +7,8 @@ const install = require('./install');
 const extensions = require('./extensions');
 
 const cache = new Config();
+const cachePlugins = 'hyper.plugins';
+const cachePluginsVersions = 'hyper.plugins-versions';
 let _plugins;
 let _id;
 let updating = false;
@@ -82,7 +84,7 @@ function init(fn) {
           );
         }
       } else {
-        cache.set('hyper.plugins4', _plugins);
+        cache.set(cachePlugins, _plugins);
       }
       fn(err);
     });
@@ -90,7 +92,7 @@ function init(fn) {
 }
 
 const _shouldUpdate = function () {
-  if (cache.get('hyper.plugins4') !== _id) {
+  if (cache.get(cachePlugins) !== _id) {
     _plugins = config.getPlugins();
     _id = JSON.stringify(_plugins);
     return true;
@@ -102,9 +104,9 @@ const _versionChanged = function (loaded) {
   const paths = _getPaths();
   const total = paths.plugins.length + paths.localPlugins.length;
   const pluginVersions = JSON.stringify(_getPluginVersions(paths));
-  const changed = cache.get('hyper.plugins-versions4') !== pluginVersions && loaded === total;
+  const changed = cache.get(cachePluginsVersions) !== pluginVersions && loaded === total;
   if (changed) {
-    cache.set('hyper.plugins-versions4', pluginVersions);
+    cache.set(cachePluginsVersions, pluginVersions);
   }
   return changed;
 };

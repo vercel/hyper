@@ -98,6 +98,8 @@ exports.getDecoratedBrowserOptions = function (defaults) {
   return decorateObject(defaults, 'decorateBrowserOptions');
 };
 
+exports._toDependencies = utils._toDependencies;
+
 exports.onApp = function (app) {
   modules.forEach(plugin => {
     if (plugin.onApp) {
