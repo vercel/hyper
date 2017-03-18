@@ -139,7 +139,7 @@
     "eslint-config-xo-react": "^0.10.0",
     "eslint-plugin-react": "^6.7.1",
     "husky": "^0.11.6",
-    "redux-logger": "^2.6.1",
+    "redux-logger": "^2.7.0",
     "spectron": "^3.4.0",
     "webpack": "2.2.1",
     "xo": "^0.17.1"
