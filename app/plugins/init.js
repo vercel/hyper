@@ -74,7 +74,7 @@ function init(fn) {
   } else {
     updating = true;
     // notify('Plugin Update', 'Plugin update in progress');
-    install.command(_plugins, config.getConfig(), err => {
+    install.exec(_plugins, config.getConfig(), err => {
       updating = false;
       if (err) {
         if (/not a recognized/.test(err.message) || /command not found/.test(err.message)) {

@@ -4,7 +4,6 @@ const config = require('./config');
 const utils = require('./plugins/init');
 const notify = require('./notify');
 const _keys = require('./config/keymaps');
-// const CommandRegistry = require('./command-registry');
 
 const watchers = [];
 let modules;

@@ -24,28 +24,26 @@ const _toDependencies = function (plugins) {
   return obj;
 };
 
-const _syncPackageJSON = function (plugins) {
+const _pkgSync = function (plugins) {
   const dependencies = _toDependencies(plugins);
-  const pkg = {
-    name: 'hyper-plugins',
-    description: 'Auto-generated from `~/.hyper/config.js`!',
-    private: true,
-    version: '0.0.1',
-    repository: 'zeit/hyper',
-    license: 'MIT',
-    homepage: 'https://hyper.is',
-    dependencies
-  };
-
   try {
-    writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
+    writeFileSync(pkgPath, JSON.stringify({
+      name: 'hyper-plugins',
+      description: 'Auto-generated from `~/.hyper/config.js`!',
+      private: true,
+      version: '0.0.1',
+      repository: 'zeit/hyper',
+      license: 'MIT',
+      homepage: 'https://hyper.is',
+      dependencies
+    }, null, 2));
   } catch (err) {
     notify(`An error occurred writing to ${pkgPath}`);
   }
 };
 
-const _command = function (plugins, cfg, fn) {
-  _syncPackageJSON(plugins);
+const _exec = function (plugins, cfg, fn) {
+  _pkgSync(plugins);
   const {shell: cfgShell, npmRegistry} = cfg;
   const shell = cfgShell && cfgShell !== '' ? cfgShell : undefined;
 
@@ -89,6 +87,6 @@ const _command = function (plugins, cfg, fn) {
 };
 
 module.exports = {
-  command: _command,
+  exec: _exec,
   toDependencies: _toDependencies
 };
