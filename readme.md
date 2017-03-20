@@ -23,6 +23,8 @@ If you're on windows, you can use [chocolatey](https://chocolatey.org/) to insta
 ```bash
 choco install hyper
 ```
+Note: the version of hyper available from chocolatey may not be the latest. Consider using the direct download link, https://hyper-updates.now.sh/download/win
+
 
 ## Contribute
 
