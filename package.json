@@ -98,9 +98,6 @@
     "name": "Zeit, Inc.",
     "email": "team@zeit.co"
   },
-  "greenkeeper": {
-    "emails": false
-  },
   "dependencies": {
     "aphrodite-simple": "0.4.1",
     "color": "0.11.4",
