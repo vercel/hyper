@@ -88,7 +88,7 @@ function exec(str) {
 // to text formatted with DOS line endings. We do this because the default
 // text editor on Windows (notepad) doesn't Deal with LF files. Still. In 2017.
 function crlfify(str) {
-  return str.split('\n').map(x => x.indexOf('\r') < 0 ? x : `${x}\r`).join('\n');
+  return str.replace(/\r?\n/g, '\r\n');
 }
 
 exports.subscribe = function (fn) {
