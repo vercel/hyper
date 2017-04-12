@@ -55,6 +55,6 @@ to the Terms of Service by running `sudo xcodebuild` after a fresh Xcode install
 ## Related Repositories
 
 - [Art](https://github.com/zeit/art/tree/master/hyper)
-- [Website](https://github.com/zeit/hyper-website)
+- [Website](website/)
 - [Sample Extension](https://github.com/zeit/hyperpower)
 - [Sample Theme](https://github.com/zeit/hyperyellow)
