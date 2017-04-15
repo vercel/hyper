@@ -418,7 +418,7 @@ babel-code-frame@^6.16.0, babel-code-frame@^6.22.0:
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-babel-core@6.18.0:
+babel-core@6.18.0, babel-core@^6.17.0, babel-core@^6.18.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.18.0.tgz#bb5ce9bc0a956e6e94e2f12d597abb3b0b330deb"
   dependencies:
@@ -442,7 +442,7 @@ babel-core@6.18.0:
     slash "^1.0.0"
     source-map "^0.5.0"
 
-babel-core@^6.17.0, babel-core@^6.18.0, babel-core@^6.23.0:
+babel-core@^6.23.0:
   version "6.23.1"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.23.1.tgz#c143cb621bb2f621710c220c5d579d15b8a442df"
   dependencies:
@@ -1241,7 +1241,7 @@ babel-traverse@^6.18.0, babel-traverse@^6.22.0, babel-traverse@^6.23.0, babel-tr
     invariant "^2.2.0"
     lodash "^4.2.0"
 
-babel-types@^6.18.0, babel-types@^6.19.0, babel-types@^6.22.0, babel-types@^6.23.0, babel-types@^6.7.2:
+babel-types@^6.18.0, babel-types@^6.22.0, babel-types@^6.23.0, babel-types@^6.7.2:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-types/-/babel-types-6.23.0.tgz#bb17179d7538bad38cd0c9e115d340f77e7e9acf"
   dependencies:
@@ -1250,7 +1250,7 @@ babel-types@^6.18.0, babel-types@^6.19.0, babel-types@^6.22.0, babel-types@^6.23
     lodash "^4.2.0"
     to-fast-properties "^1.0.1"
 
-babel-types@^6.24.1:
+babel-types@^6.19.0, babel-types@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-types/-/babel-types-6.24.1.tgz#a136879dc15b3606bda0d90c1fc74304c2ff0975"
   dependencies:
@@ -3023,9 +3023,9 @@ hosted-git-info@^2.1.4, hosted-git-info@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.2.0.tgz#7a0d097863d886c0fabbdcd37bf1758d8becf8a5"
 
-hterm-umdjs@1.1.3:
-  version "1.1.3+1.58.sha.15ed490"
-  resolved "https://registry.yarnpkg.com/hterm-umdjs/-/hterm-umdjs-1.1.3.tgz#8b57bcaded5ba9541d6c8e32a82b34abb93e885e"
+hterm-umdjs@1.1.4:
+  version "1.1.4+1.60.sha.a65fd91"
+  resolved "https://registry.yarnpkg.com/hterm-umdjs/-/hterm-umdjs-1.1.4.tgz#440e212b7f754536daea78dfe0335697088a00b4"
 
 http-signature@~1.1.0:
   version "1.1.1"
