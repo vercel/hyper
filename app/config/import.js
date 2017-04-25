@@ -44,7 +44,9 @@ const _import = function () {
   mkdirpSync(_paths.hyperHomeDirPath);
   _makePluginsDir();
   const cfg = _init(_importConfig());
-  cfg.keymaps = _keys.import(cfg.keymaps);
+  if (cfg) {
+    cfg.keymaps = _keys.import(cfg.keymaps);
+  }
   return cfg;
 };
 
