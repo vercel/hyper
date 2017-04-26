@@ -12,7 +12,7 @@ const _write = function (path, data) {
     return str.replace(/\r?\n/g, '\r\n');
   };
   const format = process.platform === 'win32' ? crlfify(data) : data;
-  writeFileSync(path, format);
+  writeFileSync(path, format, 'utf8');
 };
 
 const _importConfig = function () {
@@ -23,12 +23,12 @@ const _importConfig = function () {
     try {
       // read previous config on ~/.hyper.js and write to ~/.hyper/config.js
       // write cfg to file
-      const cfg = readFileSync(_paths.previousConfigPath);
+      const cfg = readFileSync(_paths.previousConfigPath, 'utf8');
       _write(_paths.preferencesPath, cfg);
       return cfg;
     } catch (err) {
       // read default config and write cfg to file
-      const cfg = readFileSync(_paths.dotConfigPath);
+      const cfg = readFileSync(_paths.dotConfigPath, 'utf8');
       _write(_paths.preferencesPath, cfg);
       return cfg;
     }
