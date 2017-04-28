@@ -5,6 +5,22 @@ const _paths = require('./paths');
 const commands = {};
 const keys = {};
 
+const _setKeysForCommands = function (keyMap) {
+  for (const command in keyMap) {
+    if (command) {
+      commands[command] = keyMap[command].toLowerCase();
+    }
+  }
+};
+
+const _setCommandsForKeys = function (commands) {
+  for (const command in commands) {
+    if (command) {
+      keys[commands[command]] = command;
+    }
+  }
+};
+
 const _import = function (customsKeys) {
   const path = () => {
     switch (process.platform) {
@@ -15,26 +31,13 @@ const _import = function (customsKeys) {
     }
   };
   try {
-    const cmds = JSON.parse(readFileSync(path()));
-    for (const command in cmds) {
-      if (command) {
-        commands[command] = cmds[command];
-        keys[commands[command]] = command;
-      }
-    }
-
-    if (customsKeys) {
-      for (const command in customsKeys) {
-        if (command) {
-          commands[command] = customsKeys[command];
-          keys[customsKeys[command]] = command;
-        }
-      }
-    }
+    const keyMap = JSON.parse(readFileSync(path()));
+    _setKeysForCommands(keyMap);
+    _setKeysForCommands(customsKeys);
+    _setCommandsForKeys(commands);
 
     return {commands, keys};
-  } catch (err) {
-  }
+  } catch (err) {}
 };
 
 const _extend = function (customsKeys) {
