@@ -39,7 +39,8 @@ const watchers = [];
 let cfg = {};
 
 function watch() {
-  gaze(path, function (err) {
+  // watch for changes on config every 2s
+  gaze(path, {interval: 2000}, function (err) {
     if (err) {
       throw err;
     }
