@@ -17,21 +17,26 @@ const _write = function (path, data) {
 
 const _importConfig = function () {
   try {
-    // read config from ~/.hyper/config.js
-    return readFileSync(_paths.preferencesPath, 'utf8');
-  } catch (err) {
+    const defaultCfg = readFileSync(_paths.dotConfigPath, 'utf8');
     try {
-      // read previous config on ~/.hyper.js and write to ~/.hyper/config.js
-      // write cfg to file
-      const cfg = readFileSync(_paths.previousConfigPath, 'utf8');
-      _write(_paths.preferencesPath, cfg);
-      return cfg;
+      // read config from ~/.hyper/config.js
+      const modified = readFileSync(_paths.preferencesPath, 'utf8');
+      return {modified, defaultCfg};
     } catch (err) {
-      // read default config and write cfg to file
-      const cfg = readFileSync(_paths.dotConfigPath, 'utf8');
-      _write(_paths.preferencesPath, cfg);
-      return cfg;
+      try {
+        // read previous config on ~/.hyper.js and write to ~/.hyper/config.js
+        // write cfg to file
+        const modified = readFileSync(_paths.previousConfigPath, 'utf8');
+        _write(_paths.preferencesPath, modified);
+        return {modified, defaultCfg};
+      } catch (err) {
+        // write cfg to file
+        _write(_paths.preferencesPath, defaultCfg);
+        return {modified: {}, defaultCfg};
+      }
     }
+  } catch (err) {
+    console.log(err);
   }
 };
 

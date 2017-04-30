@@ -13,24 +13,31 @@ const _syntaxValidation = function (cfg) {
   try {
     return new vm.Script(cfg);
   } catch (err) {
-    err.stack = 'Error reading configuration: Syntax error found';
-    throw err;
+    // err.stack = 'Error reading configuration: Syntax error found';
+    // throw err;
+    return undefined;
   }
+};
+
+const _extractDefault = function (cfg) {
+  return _extract(_syntaxValidation(cfg));
 };
 
 // init config
 const _init = function (cfg) {
-  const script = _syntaxValidation(cfg);
+  const script = _syntaxValidation(cfg.modified);
   if (script) {
     const _cfg = _extract(script);
     if (!_cfg.config) {
-      throw new Error('Error reading configuration: `config` key is missing');
+      return _extractDefault(cfg.modified);
+      // throw new Error('Error reading configuration: `config` key is missing');
     }
     _cfg.plugins = _cfg.plugins || [];
     _cfg.localPlugins = _cfg.localPlugins || [];
     _cfg.keymaps = _cfg.keymaps || {};
     return _cfg;
   }
+  return _extractDefault(cfg.defaultCfg);
 };
 
 module.exports = _init;
