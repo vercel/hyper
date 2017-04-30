@@ -8,6 +8,7 @@
  "zoom:out":"cmd+-",
  "window:new":"cmd+n",
  "window:minimize": "cmd+m",
+ "window:zoom": "ctrl+alt+cmd+m",
  "window:full": "cmd+ctrl+f",
  "window:close":"cmd+shift+w",
  

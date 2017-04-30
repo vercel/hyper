@@ -7,7 +7,8 @@ module.exports = function (commands) {
         accelerator: commands['window:minimize']
       },
       {
-        role: 'zoom'
+        role: 'zoom',
+        accelerator: commands['window:zoom']
       },
       {
         type: 'separator'

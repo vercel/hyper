@@ -8,6 +8,7 @@
  "zoom:out":"ctrl+-",
  "window:new":"ctrl+shift+n",
  "window:minimize": "ctrl+m",
+ "window:zoom": "ctrl+shift+alt+m",
  "window:full": "f11",
  "window:close":"ctrl+shift+w",
 
