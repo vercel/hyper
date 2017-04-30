@@ -1,4 +1,5 @@
 const vm = require('vm');
+const notify = require('../notify');
 
 const _extract = function (script) {
   const module = {};
@@ -13,8 +14,7 @@ const _syntaxValidation = function (cfg) {
   try {
     return new vm.Script(cfg);
   } catch (err) {
-    // err.stack = 'Error reading configuration: Syntax error found';
-    // throw err;
+    notify('Error reading configuration: Syntax error found');
     return undefined;
   }
 };
@@ -29,12 +29,12 @@ const _init = function (cfg) {
   if (script) {
     const _cfg = _extract(script);
     if (!_cfg.config) {
-      return _extractDefault(cfg.modified);
-      // throw new Error('Error reading configuration: `config` key is missing');
+      _cfg.plugins = _cfg.plugins || [];
+      _cfg.localPlugins = _cfg.localPlugins || [];
+      _cfg.keymaps = _cfg.keymaps || {};
+      notify('Error reading configuration: `config` key is missing');
+      return _extractDefault(cfg.defaultCfg);
     }
-    _cfg.plugins = _cfg.plugins || [];
-    _cfg.localPlugins = _cfg.localPlugins || [];
-    _cfg.keymaps = _cfg.keymaps || {};
     return _cfg;
   }
   return _extractDefault(cfg.defaultCfg);

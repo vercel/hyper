@@ -17,7 +17,7 @@ try {
   throw createNodePtyError();
 }
 
-const envFromConfig = config.getConfig().env || {};
+const envFromConfig = config.getConfig() ? config.getConfig().env : {};
 
 module.exports = class Session extends EventEmitter {
 
