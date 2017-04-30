@@ -4,11 +4,16 @@ const _paths = require('./paths');
 
 const commands = {};
 const keys = {};
+const defaultKeys = {
+  darwin: 'darwin.json',
+  win32: 'win32.json',
+  linux: 'linux.json'
+};
 
-const _setKeysForCommands = function (keyMap) {
-  for (const command in keyMap) {
+const _setKeysForCommands = function (keymap) {
+  for (const command in keymap) {
     if (command) {
-      commands[command] = keyMap[command].toLowerCase();
+      commands[command] = keymap[command].toLowerCase();
     }
   }
 };
@@ -24,15 +29,15 @@ const _setCommandsForKeys = function (commands) {
 const _import = function (customsKeys) {
   const path = () => {
     switch (process.platform) {
-      case 'darwin': return join(_paths.keymapPath, 'darwin.json');
-      case 'win32': return join(_paths.keymapPath, 'win32.json');
-      case 'linux': return join(_paths.keymapPath, 'linux.json');
-      default: return join(_paths.keymapPath, 'darwin.json');
+      case 'darwin': return join(_paths.keymapPath, defaultKeys.darwin);
+      case 'win32': return join(_paths.keymapPath, defaultKeys.win32);
+      case 'linux': return join(_paths.keymapPath, defaultKeys.linux);
+      default: return join(_paths.keymapPath, defaultKeys.darwin);
     }
   };
   try {
-    const keyMap = JSON.parse(readFileSync(path()));
-    _setKeysForCommands(keyMap);
+    const mapping = JSON.parse(readFileSync(path()));
+    _setKeysForCommands(mapping);
     _setKeysForCommands(customsKeys);
     _setCommandsForKeys(commands);
 
