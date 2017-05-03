@@ -3,6 +3,7 @@ const path = require('path');
 const {app, shell, dialog} = require('electron');
 
 const {accelerators} = require('./accelerators');
+const {getConfigDir} = require('./config');
 
 const isMac = process.platform === 'darwin';
 const appName = app.getName();
@@ -25,12 +26,9 @@ module.exports = ({createWindow, updatePlugins}) => {
       {
         label: 'Preferences...',
         accelerator: accelerators.preferences,
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('preferences');
-          } else {
-            createWindow(win => win.rpc.emit('preferences'));
-          }
+        click() {
+          const configFile = path.resolve(getConfigDir(), '.hyper.js');
+          shell.openItem(configFile);
         }
       },
       {
@@ -174,12 +172,9 @@ module.exports = ({createWindow, updatePlugins}) => {
       {
         label: 'Preferences...',
         accelerator: accelerators.preferences,
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('preferences');
-          } else {
-            createWindow(win => win.rpc.emit('preferences'));
-          }
+        click() {
+          const configFile = path.resolve(getConfigDir(), '.hyper.js');
+          shell.openItem(configFile);
         }
       }
     );
