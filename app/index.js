@@ -278,7 +278,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('open hamburger menu', ({x, y}) => {
-      Menu.getApplicationMenu().popup(x, y);
+      Menu.getApplicationMenu().popup(Math.ceil(x), Math.ceil(y));
     });
 
     rpc.on('minimize', () => {
