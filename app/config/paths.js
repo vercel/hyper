@@ -6,6 +6,9 @@ const isDev = require('electron-is-dev');
 const homeDirPath = homedir();
 const repositoryRootPath = join(__dirname, '..');
 const hyperHomeDirPath = join(homeDirPath, '.hyper');
+const devDir = join(hyperHomeDirPath, 'DEV');
+const devPlugins = join(devDir, 'plugins');
+const devConfig = join(devDir, 'config.js');
 const preferencesPath = join(hyperHomeDirPath, 'config.js');
 const pluginsPath = join(hyperHomeDirPath, 'plugins');
 const keymapPath = join(repositoryRootPath, 'keymaps');
@@ -16,6 +19,6 @@ const dotConfigPath = join(dotHyperPath, 'config-default.js');
 const pkgPath = join(pluginsPath, 'package.json');
 
 module.exports = {
-  isDev, repositoryRootPath, homeDirPath, hyperHomeDirPath, preferencesPath, pluginsPath,
+  isDev, repositoryRootPath, homeDirPath, hyperHomeDirPath, devDir, devPlugins, devConfig, preferencesPath, pluginsPath,
   keymapPath, localPluginsPath, previousConfigPath, dotConfigPath, pkgPath
 };

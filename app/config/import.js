@@ -15,7 +15,7 @@ const _write = function (path, data) {
   writeFileSync(path, format, 'utf8');
 };
 
-const _importConfig = function () {
+const _importProd = function () {
   try {
     const defaultCfg = readFileSync(_paths.dotConfigPath, 'utf8');
     try {
@@ -45,10 +45,43 @@ const _makePluginsDir = function () {
   mkdirpSync(_paths.localPluginsPath);
 };
 
-const _import = function () {
+const _makeDev = function () {
+  mkdirpSync(_paths.devDir);
+  mkdirpSync(_paths.devPlugins);
+};
+
+const _importDev = function () {
+  try {
+    const defaultCfg = readFileSync(_paths.dotConfigPath, 'utf8');
+    try {
+      // read config from ~/.hyper/DEV/config.js
+      const modified = readFileSync(_paths.devConfig, 'utf8');
+      return {modified, defaultCfg};
+    } catch (err) {
+      _write(_paths.devConfig, defaultCfg);
+      return {modified: {}, defaultCfg};
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const _makeEnv = function () {
   mkdirpSync(_paths.hyperHomeDirPath);
   _makePluginsDir();
-  const cfg = _init(_importConfig());
+};
+
+const _import = function () {
+  _makeEnv();
+  let cfg;
+
+  if (_paths.isDev) {
+    _makeDev();
+    cfg = _init(_importDev());
+  } else {
+    cfg = _init(_importProd());
+  }
+
   if (cfg) {
     cfg.keymaps = _keys.import(cfg.keymaps);
   }
