@@ -1,7 +1,7 @@
 const path = require('path');
 const Config = require('electron-config');
 const config = require('../config');
-const {pluginsPath, localPluginsPath, pkgPath} = require('../config/paths');
+const {hyperPlugins, localPlugins, pkg} = require('../config/paths');
 const notify = require('../notify');
 const install = require('./install');
 const extensions = require('./extensions');
@@ -16,25 +16,25 @@ let updating = false;
 const _getPaths = function () {
   const paths = {
     plugins: _plugins.plugins.map(name => {
-      return path.join(pluginsPath, 'node_modules', name.split('#')[0]);
+      return path.join(hyperPlugins, 'node_modules', name.split('#')[0]);
     }),
     localPlugins: _plugins.localPlugins.map(name => {
-      return path.join(localPluginsPath, name);
+      return path.join(localPlugins, name);
     })
   };
   return paths;
 };
 
 const _getPluginVersions = function (paths) {
-  const paths_ = paths.plugins.concat(localPluginsPath);
-  return paths_.map(pluginPath => {
+  const paths_ = paths.plugins.concat(localPlugins);
+  return paths_.map(hyperPlugins => {
     let version = null;
     try {
       // eslint-disable-next-line import/no-dynamic-require
-      version = require(pkgPath).version;
+      version = require(pkg).version;
     } catch (err) { }
     return [
-      path.basename(pluginPath),
+      path.basename(hyperPlugins),
       version
     ];
   });

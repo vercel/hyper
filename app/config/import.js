@@ -17,22 +17,22 @@ const _write = function (path, data) {
 
 const _importProd = function () {
   try {
-    const defaultCfg = readFileSync(_paths.dotConfigPath, 'utf8');
+    const defaultConf = readFileSync(_paths.defaultConf, 'utf8');
     try {
       // read config from ~/.hyper/config.js
-      const modified = readFileSync(_paths.preferencesPath, 'utf8');
-      return {modified, defaultCfg};
+      const prodConf = readFileSync(_paths.prodConf, 'utf8');
+      return {userConf: prodConf, defaultConf};
     } catch (err) {
       try {
         // read previous config on ~/.hyper.js and write to ~/.hyper/config.js
         // write cfg to file
-        const modified = readFileSync(_paths.previousConfigPath, 'utf8');
-        _write(_paths.preferencesPath, modified);
-        return {modified, defaultCfg};
+        const prodConf = readFileSync(_paths.previousConfig, 'utf8');
+        _write(_paths.prodConf, prodConf);
+        return {userConf: prodConf, defaultConf};
       } catch (err) {
         // write cfg to file
-        _write(_paths.preferencesPath, defaultCfg);
-        return {modified: {}, defaultCfg};
+        _write(_paths.prodConf, defaultConf);
+        return {userConf: {}, defaultConf};
       }
     }
   } catch (err) {
@@ -41,25 +41,20 @@ const _importProd = function () {
 };
 
 const _makePluginsDir = function () {
-  mkdirpSync(_paths.pluginsPath);
-  mkdirpSync(_paths.localPluginsPath);
-};
-
-const _makeDev = function () {
-  mkdirpSync(_paths.devDir);
-  mkdirpSync(_paths.devPlugins);
+  mkdirpSync(_paths.hyperPlugins);
+  mkdirpSync(_paths.localPlugins);
 };
 
 const _importDev = function () {
   try {
-    const defaultCfg = readFileSync(_paths.dotConfigPath, 'utf8');
+    const defaultConf = readFileSync(_paths.defaultConf, 'utf8');
     try {
       // read config from ~/.hyper/DEV/config.js
-      const modified = readFileSync(_paths.devConfig, 'utf8');
-      return {modified, defaultCfg};
+      const devConf = readFileSync(_paths.devConfig, 'utf8');
+      return {userConf: devConf, defaultConf};
     } catch (err) {
-      _write(_paths.devConfig, defaultCfg);
-      return {modified: {}, defaultCfg};
+      _write(_paths.devConfig, defaultConf);
+      return {userConf: {}, defaultConf};
     }
   } catch (err) {
     console.log(err);
@@ -67,7 +62,7 @@ const _importDev = function () {
 };
 
 const _makeEnv = function () {
-  mkdirpSync(_paths.hyperHomeDirPath);
+  mkdirpSync(_paths.hyperDir);
   _makePluginsDir();
 };
 
@@ -76,7 +71,7 @@ const _import = function () {
   let cfg;
 
   if (_paths.isDev) {
-    _makeDev();
+    mkdirpSync(_paths.devDir);
     cfg = _init(_importDev());
   } else {
     cfg = _init(_importProd());

@@ -3,22 +3,29 @@ const {join} = require('path');
 const {homedir} = require('os');
 const isDev = require('electron-is-dev');
 
-const homeDirPath = homedir();
-const repositoryRootPath = join(__dirname, '..');
-const hyperHomeDirPath = join(homeDirPath, '.hyper');
-const devDir = join(hyperHomeDirPath, 'DEV');
-const devPlugins = join(devDir, 'plugins');
-const devConfig = join(devDir, 'config.js');
-const preferencesPath = join(hyperHomeDirPath, 'config.js');
-const pluginsPath = join(hyperHomeDirPath, 'plugins');
-const keymapPath = join(repositoryRootPath, 'keymaps');
-const localPluginsPath = join(pluginsPath, 'local');
-const previousConfigPath = join(homeDirPath, '.hyper.js');
-const dotHyperPath = join(repositoryRootPath, 'dot-hyper');
-const dotConfigPath = join(dotHyperPath, 'config-default.js');
-const pkgPath = join(pluginsPath, 'package.json');
+const conf = 'hconf.js';
+const homeDir = homedir();
+const previousConfig = join(homeDir, '.hyper.js');
+
+const root = join(__dirname, '..');
+const hyperDir = join(homeDir, '.hyper');
+const hyperPlugins = join(hyperDir, 'plugins');
+const localPlugins = join(hyperDir, 'local');
+const pkg = join(hyperPlugins, 'package.json');
+const prodConf = join(hyperDir, conf);
+
+const devDir = join(hyperDir, 'DEV');
+const devConfig = join(devDir, conf);
+
+const dotHyper = join(root, 'dot-hyper');
+const defaultConf = join(dotHyper, 'default.js');
+
+const keymapPath = join(root, 'keymaps');
+const darwinKeys = join(keymapPath, 'darwin.json');
+const win32Keys = join(keymapPath, 'win32.json');
+const linuxKeys = join(keymapPath, 'linux.json');
 
 module.exports = {
-  isDev, repositoryRootPath, homeDirPath, hyperHomeDirPath, devDir, devPlugins, devConfig, preferencesPath, pluginsPath,
-  keymapPath, localPluginsPath, previousConfigPath, dotConfigPath, pkgPath
+  isDev, homeDir, hyperDir, hyperPlugins, devDir, devConfig, prodConf, pkg,
+  localPlugins, previousConfig, defaultConf, darwinKeys, win32Keys, linuxKeys
 };

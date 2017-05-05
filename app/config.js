@@ -9,7 +9,7 @@ const scanInterval = 2000;
 let cfg = {};
 
 const _watch = function () {
-  gaze(_paths.preferencesPath, process.platform === 'win32' ? {interval: scanInterval}, function (err) {
+  gaze(_paths.prodConf, process.platform === 'win32' ? {interval: scanInterval}, function (err) {
     if (err) {
       throw err;
     }

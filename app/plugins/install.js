@@ -1,7 +1,7 @@
 const {writeFileSync} = require('fs');
 const {exec} = require('child_process');
 const shellEnv = require('shell-env');
-const {pluginsPath, pkgPath} = require('../config/paths');
+const {isDev, prodConf, devConfig, hyperPlugins, pkg} = require('../config/paths');
 const notify = require('../notify');
 
 const _toDependencies = function (plugins) {
@@ -27,9 +27,14 @@ const _toDependencies = function (plugins) {
 const _pkgSync = function (plugins) {
   const dependencies = _toDependencies(plugins);
   try {
-    writeFileSync(pkgPath, JSON.stringify({
+    let desc = prodConf;
+    if (isDev) {
+      desc = devConfig;
+    }
+
+    writeFileSync(pkg, JSON.stringify({
       name: 'hyper-plugins',
-      description: 'Auto-generated from `~/.hyper/config.js`!',
+      description: 'Auto-generated from ' + desc + '!',
       private: true,
       version: '0.0.1',
       repository: 'zeit/hyper',
@@ -38,7 +43,7 @@ const _pkgSync = function (plugins) {
       dependencies
     }, null, 2));
   } catch (err) {
-    notify(`An error occurred writing to ${pkgPath}`);
+    notify(`An error occurred writing to ${pkg}`);
   }
 };
 
@@ -64,8 +69,12 @@ const _exec = function (plugins, cfg, fn) {
 
     // determine the shell we're running in
     const whichShell = (typeof cfgShell === 'string' && cfgShell.match(/fish/)) ? 'fish' : 'posix';
+    // let plugins = prodPlugins;
+    // if (isDev) {
+    //   plugins = devPlugins;
+    // }
     const execOptions = {
-      cwd: pluginsPath,
+      cwd: hyperPlugins,
       env
     };
 
