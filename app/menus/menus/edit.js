@@ -30,6 +30,11 @@ module.exports = function (commands) {
       accelerator: commands['editor:selectAll']
     },
     {
+      label: 'Find',
+      role: 'find',
+      accelerator: commands['editor:find']
+    },
+    {
       type: 'separator'
     },
     {

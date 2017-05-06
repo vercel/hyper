@@ -6,12 +6,12 @@ module.exports = {
     'decorateHyperTerm', // for backwards compatibility with hyperterm
     'decorateHeader', 'decorateTerms', 'decorateTab',
     'decorateNotification', 'decorateNotifications',
-    'decorateTabs', 'decorateConfig', 'decorateEnv',
+    'decorateTabs', 'decorateConfig', 'decorateEnv', 'decorateSearchbox',
     'decorateTermGroup', 'decorateSplitPane', 'getTermProps',
     'getTabProps', 'getTabsProps', 'getTermGroupProps',
     'mapHyperTermState', 'mapTermsState',
-    'mapHeaderState', 'mapNotificationsState',
-    'mapHyperTermDispatch', 'mapTermsDispatch',
+    'mapHeaderState', 'mapSearchboxState', 'mapNotificationsState',
+    'mapHyperTermDispatch', 'mapTermsDispatch', 'mapSearchboxDispatch',
     'mapHeaderDispatch', 'mapNotificationsDispatch',
     'extendKeymaps'
   ])

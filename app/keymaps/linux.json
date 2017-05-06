@@ -24,6 +24,7 @@
   "editor:cut": "ctrl+shift+x",
   "editor:copy": "ctrl+shift+c",
   "editor:paste": "ctrl+shift+v",
+  "editor:find": "ctrl+f",
   "editor:selectAll": "ctrl+shift+a",
   "editor:clearBuffer": "ctrl+shift+k",
   "plugins:update": "ctrl+shift+u"

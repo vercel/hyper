@@ -24,6 +24,7 @@
   "editor:cut": "cmd+x",
   "editor:copy": "cmd+c",
   "editor:paste": "cmd+v",
+  "editor:find": "cmd+f",
   "editor:selectAll": "cmd+a",
   "editor:clearBuffer": "cmd+k",
   "editor:emojis": "cmd+ctrl+space",
