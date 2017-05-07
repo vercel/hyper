@@ -9,14 +9,17 @@ const ms = require('ms');
 const shellEnv = require('shell-env');
 
 const config = require('./config');
+const {
+  config: configFilePath,
+  plugins: path,
+  localPlugins: localPath
+} = require('./config-paths');
 const notify = require('./notify');
 
 // local storage
 const cache = new Config();
 
 // modules path
-const path = resolve(config.getConfigDir(), '.hyper_plugins');
-const localPath = resolve(path, 'local');
 const availableExtensions = new Set([
   'onApp', 'onWindow', 'onRendererWindow', 'onUnload', 'middleware',
   'reduceUI', 'reduceSessions', 'reduceTermGroups',
@@ -177,7 +180,7 @@ function syncPackageJSON() {
   const dependencies = toDependencies(plugins);
   const pkg = {
     name: 'hyper-plugins',
-    description: 'Auto-generated from `~/.hyper.js`!',
+    description: `Auto-generated from \`${configFilePath}\`!`,
     private: true,
     version: '0.0.1',
     repository: 'zeit/hyper',
