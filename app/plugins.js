@@ -215,7 +215,7 @@ function toDependencies(plugins) {
       pieces[1] = plugin.substring(index + 1, plugin.length);
       obj[pieces[0]] = pieces[1];
     } else {
-      obj[plugin] = 'latest';
+      obj[plugin] = '*';
     }
   });
   return obj;
