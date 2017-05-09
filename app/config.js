@@ -40,7 +40,8 @@ let cfg = {};
 
 function watch() {
   // watch for changes on config every 2s
-  gaze(path, {interval: 2000}, function (err) {
+  // windows interval: https://github.com/zeit/hyper/pull/1772
+  gaze(path, process.platform === 'win32' ? {interval: 2000} : {}, function (err) {
     if (err) {
       throw err;
     }
