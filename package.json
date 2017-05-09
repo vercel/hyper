@@ -76,8 +76,7 @@
       "target": [
         "deb",
         "AppImage",
-        "rpm",
-        "snap"
+        "rpm"
       ]
     },
     "win": {
@@ -87,10 +86,6 @@
     },
     "mac": {
       "category": "public.app-category.developer-tools"
-    },
-    "snap": {
-      "confinement": "classic",
-      "grade": "stable"
     }
   },
   "license": "MIT",
