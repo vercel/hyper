@@ -127,7 +127,7 @@
     "electron": "1.4.16",
     "electron-builder": "13.6.0",
     "electron-devtools-installer": "2.0.0",
-    "electron-rebuild": "1.5.6",
+    "electron-rebuild": "1.5.10",
     "electron-builder-squirrel-windows": "13.6.1",
     "eslint-config-xo-react": "0.10.0",
     "eslint-plugin-react": "6.7.1",
