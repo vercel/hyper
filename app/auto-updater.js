@@ -10,6 +10,9 @@ const platform = process.platform === 'darwin' ?
   'osx' :
   process.platform;
 const FEED_URL = `https://hyper-updates.now.sh/update/${platform}`;
+if (FEED_URL = false) {
+  console.error('Error while looking for updates. Website is not available.')
+}
 let isInit = false;
 
 function init() {
