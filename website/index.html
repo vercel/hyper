@@ -833,7 +833,7 @@
         extend <code>Hyper</code> is that of its underlying open
         source libraries.</p>
 
-        <p>Your module has to expose at least one of these methods:.</p>
+        <p>Your module has to expose at least one of these methods:</p>
 
         <table class="api">
           <thead>
@@ -1243,7 +1243,16 @@
     &lt;/Tabs&gt;
   &lt;/Header&gt;
   &lt;Terms&gt;
-    &lt;Term /&gt; ...
+    &lt;TermGroup&gt;
+      &lt;SplitPane&gt;
+        &lt;TermGroup&gt;
+          &lt;Term /&gt; ...
+        &lt;/TermGroup&gt;
+        &lt;TermGroup&gt;
+          &lt;Term /&gt; ...
+        &lt;/TermGroup&gt;
+      &lt;/TermGroup&gt;
+    &lt;/SplitPane&gt;
   &lt;/Terms&gt;
   &lt;Notifications&gt;
     &lt;Notification /&gt; ...
@@ -1292,15 +1301,28 @@
           </tbody>
         </table>
 
+
+        <p>Your higher order component can supply a <code>onDecorated</code>
+        property to the decorated component to get a reference to its instance.</p>
+
         <p>We encourage you to maintain compatibility with other decorators.
-        Since many can be set, don't assume that yours is the only one.
-        For example, if you're passing children, compose potential existing
+        Since many can be set, don't assume that yours is the only one.<p>
+
+        <p>For example, if you're passing children, compose potential existing
         values:</p>
 
         <pre><code>render () {
   const customChildren = Array.from(this.props.customChildren)
     .concat(&lt;p&gt;My new child&lt;/p&gt;);
   return &lt;Tab {...this.props} customChildren={customChildren} /&gt;
+}</code></pre>
+
+        <p>Or if you use <code>onDecorated</code> property</p>
+        <pre><code>onDecorated (term) {
+  this.term = term;
+  if (this.props.onDecorated) {
+    this.props.onDecorated(term);
+  }
 }</code></pre>
 
 
