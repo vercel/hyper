@@ -39,7 +39,9 @@ const watchers = [];
 let cfg = {};
 
 function watch() {
-  gaze(path, function (err) {
+  // watch for changes on config every 2s
+  // windows interval: https://github.com/zeit/hyper/pull/1772
+  gaze(path, process.platform === 'win32' ? {interval: 2000} : {}, function (err) {
     if (err) {
       throw err;
     }
@@ -88,7 +90,7 @@ function exec(str) {
 // to text formatted with DOS line endings. We do this because the default
 // text editor on Windows (notepad) doesn't Deal with LF files. Still. In 2017.
 function crlfify(str) {
-  return str.split('\n').map(x => x.indexOf('\r') < 0 ? x : `${x}\r`).join('\n');
+  return str.replace(/\r?\n/g, '\r\n');
 }
 
 exports.subscribe = function (fn) {
