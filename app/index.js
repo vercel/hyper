@@ -392,6 +392,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
   });
 
   const makeMenu = () => {
+    // const menu = new AppMenu(config.getKeymaps().commands, createWindow, () => {
     const menu = new AppMenu(config.getKeymaps().commands, createWindow, () => {
       plugins.updatePlugins({force: true});
     });

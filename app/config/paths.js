@@ -3,7 +3,7 @@ const {join} = require('path');
 const {homedir} = require('os');
 const isDev = require('electron-is-dev');
 
-const conf = 'hconf.js';
+const conf = 'config.js';
 const homeDir = homedir();
 const previousConfig = join(homeDir, '.hyper.js');
 

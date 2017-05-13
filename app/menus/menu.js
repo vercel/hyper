@@ -1,22 +1,30 @@
 const os = require('os');
 const path = require('path');
 const {app, shell, dialog} = require('electron');
-const {getConfigDir} = require('../config');
+const _paths = require('../config/paths');
 
+// menus
+const viewMenu = require('./menus/view');
+const shellMenu = require('./menus/shell');
+const editMenu = require('./menus/edit');
+const pluginsMenu = require('./menus/plugins');
+const windowMenu = require('./menus/window');
+const helpMenu = require('./menus/help');
+const darwinMenu = require('./menus/darwin');
 
 module.exports = class Menu {
   constructor(commands, createWindow, updatePlugins) {
     this.commands = commands;
 
-    this.viewMenu = require('./menus/view')(commands);
-    this.shellMenu = require('./menus/shell')(commands, createWindow);
-    this.editMenu = require('./menus/edit')(commands);
-    this.pluginsMenu = require('./menus/plugins')(commands, updatePlugins);
-    this.windowMenu = require('./menus/window')(commands);
-    this.helpMenu = require('./menus/help')(os, app, shell);
+    this.viewMenu = viewMenu(commands);
+    this.shellMenu = shellMenu(commands, createWindow);
+    this.editMenu = editMenu(commands);
+    this.pluginsMenu = pluginsMenu(commands, updatePlugins);
+    this.windowMenu = windowMenu(commands);
+    this.helpMenu = helpMenu(os, app, shell);
 
     if (process.platform === 'darwin') {
-      this.darwinMenu = require('./menus/darwin')(commands, createWindow);
+      this.darwinMenu = darwinMenu(commands, _paths.prodConf);
     } else {
       this.editMenu.submenu.push(
         {type: 'separator'},
@@ -24,8 +32,7 @@ module.exports = class Menu {
           label: 'Preferences...',
           accelerator: commands['window:preferences'],
           click() {
-            const configFile = path.resolve(getConfigDir(), '.hyper.js');
-            shell.openItem(configFile);
+            shell.openItem(_paths.prodConf);
           }
         }
       );
