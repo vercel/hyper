@@ -74,7 +74,7 @@ module.exports = {
     // Windows
     // - Make sure to use a full path if the binary name doesn't work
     // - Remove `--login` in shellArgs
-    // 
+    //
     // Bash on Windows
     // - Example: `C:\\Windows\\System32\\bash.exe`
     //
