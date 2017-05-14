@@ -657,7 +657,7 @@
 
         <pre><code>$ npm search hyper</code></pre>
 
-        <p>Then edit <code>~/.hyper/hconf.js</code> and add it to <code>plugins</code></p>
+        <p>Then edit <code>~/.hyper/config.js</code> and add it to <code>plugins</code></p>
 
         <pre><code>module.exports = {
 
@@ -679,7 +679,7 @@
     <h2 id="keymaps"><a href="#keymaps">Keymaps</a></h2>
     
     <P> All commands keys can be changed. In order to change them, edit 
-      <code>~/.hyper/hconf.js</code> and add to <code>keymaps</code> your desired change.</p>
+      <code>~/.hyper/config.js</code> and add to <code>keymaps</code> your desired change.</p>
       <p> Then Hyper will change the default with your custom change.</p>
       
     <p> Exemple: <code>'window:devtools': 'Cmd+Alt+O'</code> <p>
@@ -695,7 +695,7 @@
 
         <h2 id="cfg"><a href="#cfg">Configuration</a></h2>
 
-        <p>The <code>config</code> object seen above in <code>~/.hyper/hconf.js</code>
+        <p>The <code>config</code> object seen above in <code>~/.hyper/config.js</code>
         admits the following</p>
 
         <table class="config">
@@ -1220,7 +1220,7 @@
 
         <p>When developing, you can add your plugin to
         <code>~/.hyper/local</code> and then specify it
-        under the <code>localPlugins</code> array in <code>~/.hyper/hconf.js</code>.
+        under the <code>localPlugins</code> array in <code>~/.hyper/config.js</code>.
 
         We load new plugins:
         <ul>
