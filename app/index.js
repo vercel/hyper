@@ -395,7 +395,8 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       createWindow,
       updatePlugins: () => {
         plugins.updatePlugins({force: true});
-      }
+      },
+      getPlugins: plugins.getModules
     }));
 
     // If we're on Mac make a Dock Menu

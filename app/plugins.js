@@ -290,6 +290,10 @@ exports.getBasePaths = function () {
   return {path, localPath};
 };
 
+exports.getModules = function() {
+  return modules;
+};
+
 function requirePlugins() {
   const {plugins, localPlugins} = paths;
 

@@ -7,18 +7,36 @@ const {getConfigDir} = require('./config');
 
 const isMac = process.platform === 'darwin';
 const appName = app.getName();
+const appVersion = app.getVersion();
 
 // based on and inspired by
 // https://github.com/sindresorhus/anatine/blob/master/menu.js
 
-module.exports = ({createWindow, updatePlugins}) => {
+module.exports = ({createWindow, updatePlugins, getPlugins}) => {
+  const showAbout = () => {
+    const pluginList = getPlugins().length === 0 ?
+      'none' :
+      getPlugins().map(module => `\n  ${module._name} (${module._version})`);
+    dialog.showMessageBox({
+      title: `About ${appName}`,
+      message: `${appName} ${appVersion}`,
+      detail: `Plugins: ${pluginList}\n\nCreated by Guillermo Rauch`,
+      icon: path.join(__dirname, 'static/icon.png'),
+      buttons: []
+    });
+  }
+
+
   const osxApplicationMenu = {
     // This menu label is overrided by OSX to be the appName
     // The label is set to appName here so it matches actual behavior
     label: appName,
     submenu: [
       {
-        role: 'about'
+        label: 'About Hyper',
+        click() {
+          showAbout();
+        }
       },
       {
         type: 'separator'
@@ -358,13 +376,7 @@ ${process.platform} ${process.arch} ${os.release()}`;
       {
         role: 'about',
         click() {
-          dialog.showMessageBox({
-            title: `About ${appName}`,
-            message: `${appName} ${app.getVersion()}`,
-            detail: 'Created by Guillermo Rauch',
-            icon: path.join(__dirname, 'static/icon.png'),
-            buttons: []
-          });
+          showAbout();
         }
       }
     );
