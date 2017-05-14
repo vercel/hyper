@@ -294,7 +294,7 @@ function requirePlugins() {
   const {plugins, localPlugins} = paths;
 
   const load = path => {
-    let mod;
+    let mod, pjson;
     try {
       // eslint-disable-next-line import/no-dynamic-require
       mod = require(path);
@@ -307,6 +307,9 @@ function requirePlugins() {
 
       // populate the name for internal errors here
       mod._name = basename(path);
+      mod._version = require(resolve(path,'package.json')).version;
+
+      console.log(`Plugin ${mod._name} (${mod._version}) loaded.`);
 
       return mod;
     } catch (err) {
