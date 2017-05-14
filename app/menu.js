@@ -24,8 +24,7 @@ module.exports = ({createWindow, updatePlugins, getPlugins}) => {
       icon: path.join(__dirname, 'static/icon.png'),
       buttons: []
     });
-  }
-
+  };
 
   const osxApplicationMenu = {
     // This menu label is overrided by OSX to be the appName
