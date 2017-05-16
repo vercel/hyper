@@ -55,6 +55,10 @@ const notify = require('./notify');
 const fetchNotifications = require('./notifications');
 
 app.commandLine.appendSwitch('js-flags', '--harmony');
+if (process.platform === 'linux') {
+  app.commandLine.appendSwitch('--enable-transparent-visuals');
+  app.commandLine.appendSwitch('--disable-gpu');
+}
 
 // set up config
 const config = require('./config');
