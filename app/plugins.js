@@ -311,9 +311,12 @@ function requirePlugins() {
 
       // populate the name for internal errors here
       mod._name = basename(path);
-      // eslint-disable-next-line import/no-dynamic-require
-      mod._version = require(resolve(path, 'package.json')).version;
-
+      try {
+        // eslint-disable-next-line import/no-dynamic-require
+        mod._version = require(resolve(path, 'package.json')).version;
+      } catch (err) {
+        console.warn(`No package.json found in ${path}`);
+      }
       console.log(`Plugin ${mod._name} (${mod._version}) loaded.`);
 
       return mod;
