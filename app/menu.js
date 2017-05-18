@@ -12,11 +12,12 @@ const appVersion = app.getVersion();
 // based on and inspired by
 // https://github.com/sindresorhus/anatine/blob/master/menu.js
 
-module.exports = ({createWindow, updatePlugins, getPlugins}) => {
+module.exports = ({createWindow, updatePlugins, getLoadedPluginVersions}) => {
   const showAbout = () => {
-    const pluginList = getPlugins().length === 0 ?
+    const loadedPlugins = getLoadedPluginVersions();
+    const pluginList = loadedPlugins.length === 0 ?
       'none' :
-      getPlugins().map(module => `\n  ${module._name} (${module._version})`);
+      loadedPlugins.map(plugin => `\n  ${plugin.name} (${plugin.version})`);
     dialog.showMessageBox({
       title: `About ${appName}`,
       message: `${appName} ${appVersion}`,

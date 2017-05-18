@@ -159,6 +159,10 @@ function clearCache() {
 
 exports.updatePlugins = updatePlugins;
 
+exports.getLoadedPluginVersions = function () {
+  return modules.map(mod => ({name: mod._name, version: mod._version}));
+};
+
 // we schedule the initial plugins update
 // a bit after the user launches the terminal
 // to prevent slowness
@@ -288,10 +292,6 @@ exports.getPaths = getPaths;
 // get paths from renderer
 exports.getBasePaths = function () {
   return {path, localPath};
-};
-
-exports.getModules = function () {
-  return modules;
 };
 
 function requirePlugins() {
