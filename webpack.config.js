@@ -7,7 +7,7 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
 
 module.exports = {
-  devtool: isProd ? 'hidden-source-map' : 'inline-source-map',
+  devtool: isProd ? 'hidden-source-map' : 'cheap-module-source-map',
   entry: './lib/index.js',
   output: {
     path: path.join(__dirname, 'app', 'dist'),
