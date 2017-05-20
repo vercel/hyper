@@ -54,8 +54,6 @@ const createRPC = require('./rpc');
 const notify = require('./notify');
 const fetchNotifications = require('./notifications');
 
-app.commandLine.appendSwitch('js-flags', '--harmony');
-
 // set up config
 const config = require('./config');
 
