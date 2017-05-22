@@ -49,6 +49,7 @@ const isDev = require('electron-is-dev');
 // Ours
 const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
+const toElectronVibrancy = require('./utils/to-electron-vibrancy');
 const createMenu = require('./menu');
 const createRPC = require('./rpc');
 const notify = require('./notify');
@@ -148,6 +149,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       titleBarStyle: 'hidden-inset', // macOS only
       title: 'Hyper.app',
       backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
+      vibrancy: toElectronVibrancy(cfg.vibrancyType),
       // we want to go frameless on windows and linux
       frame: process.platform === 'darwin',
       transparent: process.platform === 'darwin',
@@ -176,6 +178,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       // notify renderer
       win.webContents.send('config change');
 
+      // Update Vibrancy
+      win.setVibrancy(toElectronVibrancy(cfg_.vibrancyType));
+
       // notify user that shell changes require new sessions
       if (cfg_.shell !== cfg.shell ||
         JSON.stringify(cfg_.shellArgs) !== JSON.stringify(cfg.shellArgs)) {
@@ -185,7 +190,6 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         );
       }
 
-      // update background color if necessary
       cfg = cfg_;
     });
 
@@ -193,6 +197,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       // we update the backgroundColor once the init is called.
       // when we do a win.reload() we need need to reset the backgroundColor
       win.setBackgroundColor(toElectronBackgroundColor(cfg.backgroundColor || '#000'));
+      win.setVibrancy(toElectronVibrancy(cfg.vibrancyType));
       win.show();
 
       // If no callback is passed to createWindow,
