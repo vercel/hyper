@@ -141,6 +141,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     }
 
     const browserDefaults = {
+      autoHideMenuBar: true,
       width,
       height,
       minHeight: 190,
