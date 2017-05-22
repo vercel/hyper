@@ -23,7 +23,7 @@
     "mkdirp": "0.5.1",
     "ms": "0.7.1",
     "node-fetch": "1.6.3",
-    "node-pty": "0.6.4",
+    "node-pty": "0.6.6",
     "semver": "5.3.0",
     "shell-env": "0.2.0",
     "uuid": "3.0.0",
