@@ -1,5 +1,3 @@
-const path = require('path');
-const config = require('../config.js');
 const _paths = require('../config/paths');
 const {accelerators} = require('../accelerators');
 
@@ -13,17 +11,15 @@ const helpMenu = require('./menus/help');
 const darwinMenu = require('./menus/darwin');
 
 module.exports = (createWindow, updatePlugins) => {
-  const configFile = path.resolve(config.getConfigDir(), _paths.conf);
-
   this.viewMenu = viewMenu(accelerators);
   this.shellMenu = shellMenu(accelerators, createWindow);
-  this.editMenu = editMenu(accelerators, configFile);
+  this.editMenu = editMenu(accelerators, _paths.confPath);
   this.pluginsMenu = pluginsMenu(accelerators, updatePlugins);
   this.windowMenu = windowMenu(accelerators);
   this.helpMenu = helpMenu(_paths.icon);
 
   if (process.platform === 'darwin') {
-    this.darwinMenu = darwinMenu(accelerators, configFile);
+    this.darwinMenu = darwinMenu(accelerators, _paths.confPath);
   }
 
   const menu = [].concat(

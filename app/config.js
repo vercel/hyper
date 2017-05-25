@@ -1,5 +1,4 @@
 const {statSync, renameSync, readFileSync, writeFileSync} = require('fs');
-const {resolve} = require('path');
 const vm = require('vm');
 
 const {dialog} = require('electron');
@@ -16,22 +15,8 @@ const winCfg = new Config({
   }
 });
 
-let configDir = _paths.homeDir;
-if (_paths.isDev) {
-  // if a local config file exists, use it
-  try {
-    const devDir = resolve(__dirname, '..');
-    const devConfig = resolve(devDir, _paths.conf);
-    statSync(devConfig);
-    configDir = devDir;
-    console.log('using config file:', devConfig);
-  } catch (err) {
-    // ignore
-  }
-}
-
-const path = resolve(configDir, _paths.conf);
-const pathLegacy = resolve(configDir, '.hyperterm.js');
+const path = _paths.confPath;
+const pathLegacy = _paths.pathLegacy;
 
 const watchers = [];
 
@@ -114,7 +99,7 @@ exports.init = function () {
     exec(readFileSync(path, 'utf8'));
   } catch (err) {
     console.log('read error', path, err.message);
-    const defaultConfig = readFileSync(resolve(__dirname, _paths.defaultConf));
+    const defaultConfig = readFileSync(_paths.defaultConfig);
     try {
       console.log('attempting to write default config to', path);
       exec(defaultConfig);
@@ -131,7 +116,7 @@ exports.init = function () {
 
 exports.getConfigDir = function () {
   // expose config directory to load plugin from the right place
-  return configDir;
+  return _paths.confDir;
 };
 
 exports.getConfig = function () {
