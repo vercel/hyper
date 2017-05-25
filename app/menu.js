@@ -1,6 +1,6 @@
 const os = require('os');
 const path = require('path');
-const {app, shell, dialog} = require('electron');
+const {app, BrowserWindow, shell, dialog} = require('electron');
 
 const {accelerators} = require('./accelerators');
 const {getConfigDir} = require('./config');
@@ -183,6 +183,25 @@ module.exports = ({createWindow, updatePlugins}) => {
   const viewMenu = {
     label: 'View',
     submenu: [
+      {
+        type: 'checkbox',
+        label: 'Float on Top',
+        click(item) {
+          const allWindows = BrowserWindow.getAllWindows();
+          if (item.checked) {
+            for (const win of allWindows) {
+              win.setAlwaysOnTop(true);
+            }
+          } else {
+            for (const win of allWindows) {
+              win.setAlwaysOnTop(false);
+            }
+          }
+        }
+      },
+      {
+        type: 'separator'
+      },
       {
         label: 'Reload',
         accelerator: accelerators.reload,

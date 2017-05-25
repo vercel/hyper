@@ -145,6 +145,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       height,
       minHeight: 190,
       minWidth: 370,
+      alwaysOnTop: focusedWindow ? focusedWindow.isAlwaysOnTop() : false,
       titleBarStyle: 'hidden-inset', // macOS only
       title: 'Hyper.app',
       backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
