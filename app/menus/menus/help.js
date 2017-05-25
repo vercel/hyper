@@ -1,6 +1,7 @@
-const {dialog} = require('electron');
+const os = require('os');
+const {app, shell, dialog} = require('electron');
 
-module.exports = function (os, app, shell, icon) {
+module.exports = function (icon) {
   const submenu = [
     {
       label: `${app.getName()} Website`,

@@ -1,4 +1,6 @@
-module.exports = function (commands, shell, configFile) {
+const {shell} = require('electron');
+
+module.exports = function (commands, configFile) {
   const submenu = [
     {
       role: 'undo',
