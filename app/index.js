@@ -406,7 +406,11 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       app.dock.setMenu(dockMenu);
     }
 
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menu.make()));
+    Menu.setApplicationMenu(
+      Menu.buildFromTemplate(
+        plugins.decorateMenu(menu.make())
+      )
+    );
   };
 
   const load = () => {
