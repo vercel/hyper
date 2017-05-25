@@ -49,7 +49,7 @@ const isDev = require('electron-is-dev');
 // Ours
 const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
-const createMenu = require('./menu');
+const AppMenu = require('./menus/menu');
 const createRPC = require('./rpc');
 const notify = require('./notify');
 const fetchNotifications = require('./notifications');
@@ -390,13 +390,10 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     }
   });
 
-  const setupMenu = () => {
-    const tpl = plugins.decorateMenu(createMenu({
-      createWindow,
-      updatePlugins: () => {
-        plugins.updatePlugins({force: true});
-      }
-    }));
+  const makeMenu = () => {
+    const menu = new AppMenu(createWindow, () => {
+      plugins.updatePlugins({force: true});
+    });
 
     // If we're on Mac make a Dock Menu
     if (process.platform === 'darwin') {
@@ -409,12 +406,12 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       app.dock.setMenu(dockMenu);
     }
 
-    Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menu.make()));
   };
 
   const load = () => {
     plugins.onApp(app);
-    setupMenu();
+    makeMenu();
   };
 
   load();
