@@ -1,4 +1,6 @@
-module.exports = function (isMac, commands, createWindow) {
+module.exports = function (commands, createWindow) {
+  const isMac = process.platform === 'darwin';
+
   return {
     label: isMac ? 'Shell' : 'File',
     submenu: [
