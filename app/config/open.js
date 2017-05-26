@@ -4,6 +4,7 @@ const {confPath} = require('./paths');
 if (process.platform === 'win32') {
   const exec = require('child_process').exec;
 
+  // This mimics shell.openItem, true if it worked, false if not.
   const openNotepad = file => new Promise(resolve => {
     exec(`start notepad.exe ${file}`, error => {
       if (error) {
@@ -14,6 +15,8 @@ if (process.platform === 'win32') {
     });
   });
 
+  // Windows opens .js files with  WScript.exe by default
+  // If the user hasn't set up an editor for .js files, we fallback to notepad.
   const canOpenNative = () => new Promise((resolve, reject) => {
     exec('ftype JSFile', (error, stdout) => {
       if (error) {
