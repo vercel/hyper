@@ -1,6 +1,8 @@
 const {shell} = require('electron');
 const {confPath} = require('./paths');
 
+module.exports = () => Promise.resolve(shell.openItem(confPath));
+
 if (process.platform === 'win32') {
   const exec = require('child_process').exec;
 
@@ -32,6 +34,4 @@ if (process.platform === 'win32') {
   module.exports = () => canOpenNative()
     .then(() => shell.openItem(confPath))
     .catch(() => openNotepad(confPath));
-} else {
-  module.exports = () => Promise.resolve(shell.openItem(confPath));
 }
