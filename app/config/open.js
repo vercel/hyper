@@ -4,12 +4,12 @@ const {confPath} = require('./paths');
 if (process.platform === 'win32') {
   const exec = require('child_process').exec;
 
-  const openNotepad = file => new Promise((resolve, reject) => {
+  const openNotepad = file => new Promise(resolve => {
     exec(`start notepad.exe ${file}`, error => {
       if (error) {
-        reject(error);
+        resolve(false);
       } else {
-        resolve();
+        resolve(true);
       }
     });
   });
