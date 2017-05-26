@@ -6,6 +6,7 @@ const gaze = require('gaze');
 const Config = require('electron-config');
 const notify = require('./notify');
 const _paths = require('./config/paths');
+const _openConfig = require('./config/open');
 
 // local storage
 const winCfg = new Config({
@@ -121,6 +122,10 @@ exports.getConfigDir = function () {
 
 exports.getConfig = function () {
   return cfg.config;
+};
+
+exports.openConfig = function () {
+  return _openConfig();
 };
 
 exports.getPlugins = function () {
