@@ -1,3 +1,5 @@
+const {getKeymaps} = require('../config');
+
 // menus
 const viewMenu = require('./menus/view');
 const shellMenu = require('./menus/shell');
@@ -8,18 +10,19 @@ const helpMenu = require('./menus/help');
 const darwinMenu = require('./menus/darwin');
 
 module.exports = (createWindow, updatePlugins) => {
+  const commands = getKeymaps().commands;
   const menu = [].concat(
-    shellMenu(createWindow),
-    editMenu(),
-    viewMenu(),
-    pluginsMenu(updatePlugins),
-    windowMenu(),
-    helpMenu()
+    shellMenu(commands, createWindow),
+    editMenu(commands),
+    viewMenu(commands),
+    pluginsMenu(commands, updatePlugins),
+    windowMenu(commands),
+    helpMenu(commands)
   );
 
   if (process.platform === 'darwin') {
     menu.unshift(
-      darwinMenu()
+      darwinMenu(commands)
     );
   }
 

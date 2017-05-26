@@ -6,7 +6,6 @@ const isDev = require('electron-is-dev');
 
 const conf = '.hyper.js';
 const defaultConf = 'config-default.js';
-const legacyConf = '.hyperterm.js';
 const homeDir = homedir();
 
 let confPath = resolve(homeDir, conf);
@@ -15,9 +14,13 @@ let confDir = homeDir;
 const devDir = resolve(__dirname, '../..');
 const devConfig = resolve(devDir, conf);
 const defaultConfig = resolve(__dirname, defaultConf);
-const pathLegacy = resolve(homeDir, legacyConf);
 
 const icon = resolve(__dirname, '../static/icon.png');
+
+const keymapPath = resolve(__dirname, '../keymaps');
+const darwinKeys = resolve(keymapPath, 'darwin.json');
+const win32Keys = resolve(keymapPath, 'win32.json');
+const linuxKeys = resolve(keymapPath, 'linux.json');
 
 if (isDev) {
   // if a local config file exists, use it
@@ -32,5 +35,6 @@ if (isDev) {
 }
 
 module.exports = {
-  pathLegacy, confDir, confPath, conf, defaultConfig, defaultConf, icon
+  confDir, confPath, conf, defaultConfig, icon,
+  darwinKeys, win32Keys, linuxKeys
 };

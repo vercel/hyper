@@ -1,0 +1,33 @@
+{
+  "window:devtools":"ctrl+shift+i",
+  "window:reload":"ctrl+shift+r",
+  "window:reloadFull":"ctrl+shift+f5",
+  "window:preferences":"ctrl+,",
+  "zoom:reset":"ctrl+0",
+  "zoom:in":"ctrl+plus",
+  "zoom:out":"ctrl+-",
+  "window:new":"ctrl+shift+n",
+  "window:minimize": "ctrl+shift+m",
+  "window:zoom": "ctrl+shift+alt+m",
+  "window:full": "f11",
+  "window:close":"ctrl+shift+w",
+  
+  "tab:new":"ctrl+shift+t",
+  "tab:next":"ctrl+tab",
+  "tab:prev":"ctrl+shift+tab",
+  "pane:next":"ctrl+pageup",
+  "pane:prev":"ctrl+pagedown",
+  "pane:vertical":"ctrl+shift+d",
+  "pane:horizontal":"ctrl+shift+e",
+  "pane:close":"ctrl+shift+w",
+  
+  "editor:undo":"ctrl+shift+z",
+  "editor:redo":"ctrl+shift+y",
+  "editor:cut":"ctrl+shift+x",
+  "editor:copy":"ctrl+shift+c",
+  "editor:paste":"ctrl+shift+v",
+  "editor:selectAll":"ctrl+shift+a",
+  "editor:clearBuffer":"ctrl+shift+k",
+  
+  "plugins:update": "ctrl+shift+u"
+}

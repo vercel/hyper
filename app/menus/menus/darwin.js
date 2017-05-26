@@ -1,10 +1,9 @@
 // This menu label is overrided by OSX to be the appName
 // The label is set to appName here so it matches actual behavior
 const {app} = require('electron');
-const {accelerators} = require('../../accelerators');
 const {openConfig} = require('../../config');
 
-module.exports = function () {
+module.exports = function (commands) {
   return {
     label: `${app.getName()}`,
     submenu: [
@@ -16,7 +15,7 @@ module.exports = function () {
       },
       {
         label: 'Preferences...',
-        accelerator: accelerators.preferences,
+        accelerator: commands['window:preferences'],
         click() {
           openConfig();
         }

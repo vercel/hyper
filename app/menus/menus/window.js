@@ -1,15 +1,14 @@
-const {accelerators} = require('../../accelerators');
-
-module.exports = function () {
+module.exports = function (commands) {
   return {
     role: 'window',
     submenu: [
       {
         role: 'minimize',
-        accelerator: accelerators.minimize
+        accelerator: commands['window:minimize']
       },
       {
-        role: 'zoom'
+        role: 'zoom',
+        accelerator: commands['window:zoom']
       },
       {
         type: 'separator'
@@ -19,7 +18,7 @@ module.exports = function () {
         submenu: [
           {
             label: 'Previous',
-            accelerator: accelerators.showPreviousTab,
+            accelerator: commands['tab:prev'],
             click(item, focusedWindow) {
               if (focusedWindow) {
                 focusedWindow.rpc.emit('move left req');
@@ -28,7 +27,7 @@ module.exports = function () {
           },
           {
             label: 'Next',
-            accelerator: accelerators.showNextTab,
+            accelerator: commands['tab:next'],
             click(item, focusedWindow) {
               if (focusedWindow) {
                 focusedWindow.rpc.emit('move right req');
@@ -45,7 +44,7 @@ module.exports = function () {
         submenu: [
           {
             label: 'Previous',
-            accelerator: accelerators.selectNextPane,
+            accelerator: commands['pane:prev'],
             click(item, focusedWindow) {
               if (focusedWindow) {
                 focusedWindow.rpc.emit('prev pane req');
@@ -54,7 +53,7 @@ module.exports = function () {
           },
           {
             label: 'Next',
-            accelerator: accelerators.selectPreviousPane,
+            accelerator: commands['pane:next'],
             click(item, focusedWindow) {
               if (focusedWindow) {
                 focusedWindow.rpc.emit('next pane req');
@@ -71,7 +70,7 @@ module.exports = function () {
       },
       {
         role: 'togglefullscreen',
-        accelerators: accelerators.enterFullScreen
+        accelerators: commands['window:full']
       }
     ]
   };
