@@ -13,6 +13,7 @@
   "dependencies": {
     "color": "0.11.3",
     "convert-css-color-name-to-hex": "0.1.1",
+    "deep-assign": "^2.0.0",
     "default-shell": "1.0.1",
     "electron-config": "0.2.1",
     "electron-is-dev": "0.1.1",

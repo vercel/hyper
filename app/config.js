@@ -7,6 +7,7 @@ const {dialog} = require('electron');
 const isDev = require('electron-is-dev');
 const gaze = require('gaze');
 const Config = require('electron-config');
+const deepAssign = require('deep-assign');
 const notify = require('./notify');
 
 // local storage
@@ -82,8 +83,7 @@ function exec(str) {
   }
   _cfg.plugins = _cfg.plugins || [];
   _cfg.localPlugins = _cfg.localPlugins || [];
-  cfg = _cfg;
-  return true;
+  return _cfg;
 }
 
 // This method will take text formatted as Unix line endings and transform it
@@ -112,17 +112,24 @@ exports.init = function () {
   }
 
   try {
-    exec(readFileSync(path, 'utf8'));
+    cfg = exec(readFileSync(path, 'utf8'));
+    try {
+      const defaultConfigContent = readFileSync(resolve(__dirname, 'config-default.js'));
+      const defaultConfig = exec(defaultConfigContent);
+      cfg = deepAssign({}, defaultConfig, cfg);
+    } catch (err) {
+      // ignore
+    }
   } catch (err) {
     console.log('read error', path, err.message);
-    const defaultConfig = readFileSync(resolve(__dirname, 'config-default.js'));
     try {
       console.log('attempting to write default config to', path);
-      exec(defaultConfig);
+      const defaultConfigContent = readFileSync(resolve(__dirname, 'config-default.js'));
+      cfg = exec(defaultConfigContent);
 
       writeFileSync(
         path,
-        process.platform === 'win32' ? crlfify(defaultConfig.toString()) : defaultConfig);
+        process.platform === 'win32' ? crlfify(defaultConfigContent.toString()) : defaultConfigContent);
     } catch (err) {
       throw new Error(`Failed to write config to ${path}: ${err.message}`);
     }
