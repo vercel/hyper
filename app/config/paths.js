@@ -1,7 +1,6 @@
 // This module exports paths, names, and other metadata that is referenced
 const {homedir} = require('os');
 const {statSync} = require('fs');
-
 const {resolve} = require('path');
 const isDev = require('electron-is-dev');
 

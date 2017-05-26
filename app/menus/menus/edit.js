@@ -1,40 +1,42 @@
 const {shell} = require('electron');
+const {accelerators} = require('../../accelerators');
+const {confPath} = require('../../config/paths');
 
-module.exports = function (commands, configFile) {
+module.exports = function () {
   const submenu = [
     {
       role: 'undo',
-      accelerator: commands.undo
+      accelerator: accelerators.undo
     },
     {
       role: 'redo',
-      accelerator: commands.redo
+      accelerator: accelerators.redo
     },
     {
       type: 'separator'
     },
     {
       role: 'cut',
-      accelerator: commands.cut
+      accelerator: accelerators.cut
     },
     {
       role: 'copy',
-      accelerator: commands.copy
+      accelerator: accelerators.copy
     },
     {
       role: 'paste',
-      accelerator: commands.paste
+      accelerator: accelerators.paste
     },
     {
       role: 'selectall',
-      accelerator: commands.selectAll
+      accelerator: accelerators.selectAll
     },
     {
       type: 'separator'
     },
     {
       label: 'Clear Buffer',
-      accelerator: commands.clear,
+      accelerator: accelerators.clear,
       click(item, focusedWindow) {
         if (focusedWindow) {
           focusedWindow.rpc.emit('session clear req');
@@ -48,9 +50,9 @@ module.exports = function (commands, configFile) {
       {type: 'separator'},
       {
         label: 'Preferences...',
-        accelerator: commands.preferences,
+        accelerator: accelerators.preferences,
         click() {
-          shell.openItem(configFile);
+          shell.openItem(confPath);
         }
       }
     );

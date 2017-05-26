@@ -1,7 +1,8 @@
 const os = require('os');
 const {app, shell, dialog} = require('electron');
+const {icon} = require('../../config/paths');
 
-module.exports = function (icon) {
+module.exports = function () {
   const submenu = [
     {
       label: `${app.getName()} Website`,

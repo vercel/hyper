@@ -1,10 +1,12 @@
-module.exports = function (commands) {
+const {accelerators} = require('../../accelerators');
+
+module.exports = function () {
   return {
     role: 'window',
     submenu: [
       {
         role: 'minimize',
-        accelerator: commands.minimize
+        accelerator: accelerators.minimize
       },
       {
         role: 'zoom'
@@ -17,7 +19,7 @@ module.exports = function (commands) {
         submenu: [
           {
             label: 'Previous',
-            accelerator: commands.showPreviousTab,
+            accelerator: accelerators.showPreviousTab,
             click(item, focusedWindow) {
               if (focusedWindow) {
                 focusedWindow.rpc.emit('move left req');
@@ -26,7 +28,7 @@ module.exports = function (commands) {
           },
           {
             label: 'Next',
-            accelerator: commands.showNextTab,
+            accelerator: accelerators.showNextTab,
             click(item, focusedWindow) {
               if (focusedWindow) {
                 focusedWindow.rpc.emit('move right req');
@@ -43,7 +45,7 @@ module.exports = function (commands) {
         submenu: [
           {
             label: 'Previous',
-            accelerator: commands.selectNextPane,
+            accelerator: accelerators.selectNextPane,
             click(item, focusedWindow) {
               if (focusedWindow) {
                 focusedWindow.rpc.emit('prev pane req');
@@ -52,7 +54,7 @@ module.exports = function (commands) {
           },
           {
             label: 'Next',
-            accelerator: commands.selectPreviousPane,
+            accelerator: accelerators.selectPreviousPane,
             click(item, focusedWindow) {
               if (focusedWindow) {
                 focusedWindow.rpc.emit('next pane req');
@@ -69,7 +71,7 @@ module.exports = function (commands) {
       },
       {
         role: 'togglefullscreen',
-        accelerators: commands.enterFullScreen
+        accelerators: accelerators.enterFullScreen
       }
     ]
   };

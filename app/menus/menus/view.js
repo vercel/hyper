@@ -1,10 +1,12 @@
-module.exports = function (commands) {
+const {accelerators} = require('../../accelerators');
+
+module.exports = function () {
   return {
     label: 'View',
     submenu: [
       {
         label: 'Reload',
-        accelerator: commands.reload,
+        accelerator: accelerators.reload,
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('reload');
@@ -13,7 +15,7 @@ module.exports = function (commands) {
       },
       {
         label: 'Full Reload',
-        accelerator: commands.fullReload,
+        accelerator: accelerators.fullReload,
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.reload();
@@ -22,7 +24,7 @@ module.exports = function (commands) {
       },
       {
         label: 'Developer Tools',
-        accelerator: commands.toggleDevTools,
+        accelerator: accelerators.toggleDevTools,
         click(item, focusedWindow) {
           if (focusedWindow) {
             const webContents = focusedWindow.webContents;
@@ -39,7 +41,7 @@ module.exports = function (commands) {
       },
       {
         label: 'Reset Zoom Level',
-        accelerator: commands.resetZoom,
+        accelerator: accelerators.resetZoom,
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('reset fontSize req');
@@ -48,7 +50,7 @@ module.exports = function (commands) {
       },
       {
         label: 'Zoom In',
-        accelerator: commands.zoomIn,
+        accelerator: accelerators.zoomIn,
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('increase fontSize req');
@@ -57,7 +59,7 @@ module.exports = function (commands) {
       },
       {
         label: 'Zoom Out',
-        accelerator: commands.zoomOut,
+        accelerator: accelerators.zoomOut,
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('decrease fontSize req');

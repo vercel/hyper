@@ -1,4 +1,6 @@
-module.exports = function (commands, createWindow) {
+const {accelerators} = require('../../accelerators');
+
+module.exports = function (createWindow) {
   const isMac = process.platform === 'darwin';
 
   return {
@@ -6,14 +8,14 @@ module.exports = function (commands, createWindow) {
     submenu: [
       {
         label: 'New Window',
-        accelerator: commands.newWindow,
+        accelerator: accelerators.newWindow,
         click() {
           createWindow();
         }
       },
       {
         label: 'New Tab',
-        accelerator: commands.newTab,
+        accelerator: accelerators.newTab,
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('termgroup add req');
@@ -27,7 +29,7 @@ module.exports = function (commands, createWindow) {
       },
       {
         label: 'Split Vertically',
-        accelerator: commands.splitVertically,
+        accelerator: accelerators.splitVertically,
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('split request vertical');
@@ -36,7 +38,7 @@ module.exports = function (commands, createWindow) {
       },
       {
         label: 'Split Horizontally',
-        accelerator: commands.splitHorizontally,
+        accelerator: accelerators.splitHorizontally,
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('split request horizontal');
@@ -48,7 +50,7 @@ module.exports = function (commands, createWindow) {
       },
       {
         label: 'Close Session',
-        accelerator: commands.closeSession,
+        accelerator: accelerators.closeSession,
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('termgroup close req');
@@ -58,7 +60,7 @@ module.exports = function (commands, createWindow) {
       {
         label: isMac ? 'Close Window' : 'Quit',
         role: 'close',
-        accelerator: commands.closeWindow
+        accelerator: accelerators.closeWindow
       }
     ]
   };

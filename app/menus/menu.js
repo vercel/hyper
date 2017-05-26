@@ -1,6 +1,3 @@
-const _paths = require('../config/paths');
-const {accelerators} = require('../accelerators');
-
 // menus
 const viewMenu = require('./menus/view');
 const shellMenu = require('./menus/shell');
@@ -11,28 +8,19 @@ const helpMenu = require('./menus/help');
 const darwinMenu = require('./menus/darwin');
 
 module.exports = (createWindow, updatePlugins) => {
-  this.viewMenu = viewMenu(accelerators);
-  this.shellMenu = shellMenu(accelerators, createWindow);
-  this.editMenu = editMenu(accelerators, _paths.confPath);
-  this.pluginsMenu = pluginsMenu(accelerators, updatePlugins);
-  this.windowMenu = windowMenu(accelerators);
-  this.helpMenu = helpMenu(_paths.icon);
-
-  if (process.platform === 'darwin') {
-    this.darwinMenu = darwinMenu(accelerators, _paths.confPath);
-  }
-
   const menu = [].concat(
-    this.shellMenu,
-    this.editMenu,
-    this.viewMenu,
-    this.pluginsMenu,
-    this.windowMenu,
-    this.helpMenu
+    shellMenu(createWindow),
+    editMenu(),
+    viewMenu(),
+    pluginsMenu(updatePlugins),
+    windowMenu(),
+    helpMenu()
   );
 
   if (process.platform === 'darwin') {
-    menu.unshift(this.darwinMenu);
+    menu.unshift(
+      darwinMenu()
+    );
   }
 
   return menu;
