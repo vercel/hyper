@@ -17,7 +17,7 @@ const devConfig = resolve(devDir, conf);
 const defaultConfig = resolve(__dirname, defaultConf);
 const pathLegacy = resolve(homeDir, legacyConf);
 
-const icon = resolve(__dirname, 'static/icon.png');
+const icon = resolve(__dirname, '../static/icon.png');
 
 if (isDev) {
   // if a local config file exists, use it
