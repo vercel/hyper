@@ -1,13 +1,11 @@
-const {homedir} = require('os');
 const {statSync, renameSync, readFileSync, writeFileSync} = require('fs');
-const {resolve} = require('path');
 const vm = require('vm');
 
 const {dialog} = require('electron');
-const isDev = require('electron-is-dev');
 const gaze = require('gaze');
 const Config = require('electron-config');
 const notify = require('./notify');
+const _paths = require('./config/paths');
 
 // local storage
 const winCfg = new Config({
@@ -17,22 +15,8 @@ const winCfg = new Config({
   }
 });
 
-let configDir = homedir();
-if (isDev) {
-  // if a local config file exists, use it
-  try {
-    const devDir = resolve(__dirname, '..');
-    const devConfig = resolve(devDir, '.hyper.js');
-    statSync(devConfig);
-    configDir = devDir;
-    console.log('using config file:', devConfig);
-  } catch (err) {
-    // ignore
-  }
-}
-
-const path = resolve(configDir, '.hyper.js');
-const pathLegacy = resolve(configDir, '.hyperterm.js');
+const path = _paths.confPath;
+const pathLegacy = _paths.pathLegacy;
 
 const watchers = [];
 
@@ -115,7 +99,7 @@ exports.init = function () {
     exec(readFileSync(path, 'utf8'));
   } catch (err) {
     console.log('read error', path, err.message);
-    const defaultConfig = readFileSync(resolve(__dirname, 'config-default.js'));
+    const defaultConfig = readFileSync(_paths.defaultConfig);
     try {
       console.log('attempting to write default config to', path);
       exec(defaultConfig);
@@ -132,7 +116,7 @@ exports.init = function () {
 
 exports.getConfigDir = function () {
   // expose config directory to load plugin from the right place
-  return configDir;
+  return _paths.confDir;
 };
 
 exports.getConfig = function () {
