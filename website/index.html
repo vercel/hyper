@@ -659,7 +659,7 @@
 
         <pre><code>$ npm search hyper</code></pre>
 
-        <p>Then edit <code>~/.hyper.js</code> and add it to <code>plugins</code></p>
+        <p>Then edit <code>~/.hyper/config.js</code> and add it to <code>plugins</code></p>
 
         <pre><code>module.exports = {
 
@@ -672,15 +672,32 @@
 };</code></pre>
 
         <p><code>Hyper</code> will show a notification when your modules are
-        installed to <code>~/.hyper_plugins</code>.</p>
+        installed to <code>~/.hyper/plugins</code>.</p>
 
         <p>You can also take a look at
           <a href="https://github.com/bnb/awesome-hyper">Awesome Hyper</a>
           for a curated list of plugins and resources.</p>
+          
+    <h2 id="keymaps"><a href="#keymaps">Keymaps</a></h2>
+    
+    <P> All commands keys can be changed. In order to change them, edit 
+      <code>~/.hyper/config.js</code> and add to <code>keymaps</code> your desired change.</p>
+      <p> Then Hyper will change the default with your custom change.</p>
+      
+    <p> Exemple: <code>'window:devtools': 'Cmd+Alt+O'</code> <p>
+          <pre><code>module.exports = {
+      config: { /*... */ },
+      
+      keymaps: [
+        'window:devtools': 'Cmd+Alt+O'
+      ]
+
+  };</code></pre>
+  
 
         <h2 id="cfg"><a href="#cfg">Configuration</a></h2>
 
-        <p>The <code>config</code> object seen above in <code>~/.hyper.js</code>
+        <p>The <code>config</code> object seen above in <code>~/.hyper/config.js</code>
         admits the following</p>
 
         <table class="config">
@@ -1204,8 +1221,8 @@
         <p>In the future we might do this automatically.</p>
 
         <p>When developing, you can add your plugin to
-        <code>~/.hyper_plugins/local</code> and then specify it
-        under the <code>localPlugins</code> array in <code>~/.hyper.js</code>.
+        <code>~/.hyper/local</code> and then specify it
+        under the <code>localPlugins</code> array in <code>~/.hyper/config.js</code>.
 
         We load new plugins:
         <ul>
@@ -1218,7 +1235,7 @@
         <p>The process of reloading involves</p>
         <ul>
           <li>Running <code>npm prune</code> and <code>npm install</code>
-            in <code>~/.hyper_plugins</code>.</li>
+            in <code>~/.hyper/plugins</code>.</li>
           <li>Pruning the <code>require.cache</code> in both electron
             and the renderer process</li>
           <li>Invoking <code>on*<code> methods on the existing instances

@@ -1,7 +1,3 @@
-// Future versions of Hyper may add additional config options,
-// which will not automatically be merged into this file.
-// See https://hyper.is#cfg for all currently supported options.
-
 module.exports = {
   config: {
     // default font size in pixels for all tabs
@@ -15,9 +11,6 @@ module.exports = {
 
     // `BEAM` for |, `UNDERLINE` for _, `BLOCK` for █
     cursorShape: 'BLOCK',
-
-    // set to true for blinking cursor
-    cursorBlink: false,
 
     // color of the text
     foregroundColor: '#fff',
@@ -114,7 +107,12 @@ module.exports = {
   plugins: [],
 
   // in development, you can create a directory under
-  // `~/.hyper_plugins/local/` and include it here
+  // `~/.hyper/local/` and include it here
   // to load it and avoid it being `npm install`ed
-  localPlugins: []
+  localPlugins: [],
+
+  keymaps: {
+    // exemple
+    // 'window:devtools': 'Cmd+Alt+O',
+  }
 };

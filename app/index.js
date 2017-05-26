@@ -49,17 +49,16 @@ const isDev = require('electron-is-dev');
 // Ours
 const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
-const createMenu = require('./menu');
+const AppMenu = require('./menus/menu');
 const createRPC = require('./rpc');
 const notify = require('./notify');
 const fetchNotifications = require('./notifications');
+const config = require('./config');
 
 app.commandLine.appendSwitch('js-flags', '--harmony-async-await');
 
 // set up config
-const config = require('./config');
-
-config.init();
+config.setup();
 
 const plugins = require('./plugins');
 const Session = require('./session');
@@ -69,6 +68,7 @@ const windowSet = new Set([]);
 // expose to plugins
 app.config = config;
 app.plugins = plugins;
+
 app.getWindows = () => new Set([...windowSet]); // return a clone
 
 // function to retrieve the last focused window in windowSet;
@@ -106,7 +106,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
   function createWindow(fn, options = {}) {
     let cfg = plugins.getDecoratedConfig();
 
-    const winSet = app.config.window.get();
+    const winSet = config.getWin();
     let [startX, startY] = winSet.position;
 
     const [width, height] = options.size ? options.size : (cfg.windowSize || winSet.size);
@@ -118,6 +118,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     // previous window. This also ensures in multi monitor setups that the
     // new terminal is on the correct screen.
     const focusedWindow = BrowserWindow.getFocusedWindow() || app.getLastFocusedWindow();
+
     // In case of options defaults position and size, we should ignore the focusedWindow.
     if (winPos !== undefined) {
       [startX, startY] = winPos;
@@ -353,7 +354,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
-      app.config.window.recordState(win);
+      config.winRecord(win);
       windowSet.delete(win);
       rpc.destroy();
       deleteSessions();
@@ -390,13 +391,11 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     }
   });
 
-  const setupMenu = () => {
-    const tpl = plugins.decorateMenu(createMenu({
-      createWindow,
-      updatePlugins: () => {
-        plugins.updatePlugins({force: true});
-      }
-    }));
+  const makeMenu = () => {
+    // const menu = new AppMenu(config.getKeymaps().commands, createWindow, () => {
+    const menu = new AppMenu(config.getKeymaps().commands, createWindow, () => {
+      plugins.updatePlugins({force: true});
+    });
 
     // If we're on Mac make a Dock Menu
     if (process.platform === 'darwin') {
@@ -409,12 +408,13 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       app.dock.setMenu(dockMenu);
     }
 
-    Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menu.make()));
   };
 
   const load = () => {
     plugins.onApp(app);
-    setupMenu();
+    plugins.extendKeymaps();
+    makeMenu();
   };
 
   load();

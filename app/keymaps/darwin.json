@@ -1,0 +1,34 @@
+{
+ "window:devtools":"cmd+alt+i",
+ "window:reload":"cmd+r",
+ "window:reloadFull":"cmd+shift+r",
+ "window:preferences":"cmd+,",
+ "zoom:reset":"cmd+0",
+ "zoom:in":"cmd+plus",
+ "zoom:out":"cmd+-",
+ "window:new":"cmd+n",
+ "window:minimize": "cmd+m",
+ "window:zoom": "ctrl+alt+cmd+m",
+ "window:full": "cmd+ctrl+f",
+ "window:close":"cmd+shift+w",
+ 
+ "tab:new":"cmd+t",
+ "tab:next":"cmd+shift+]",
+ "tab:prev":"cmd+shift+[",
+ "pane:next":"cmd+]",
+ "pane:prev":"cmd+[",
+ "pane:vertical":"cmd+d",
+ "pane:horizontal":"cmd+shift+d",
+ "pane:close":"cmd+w",
+ 
+ "editor:undo":"cmd+z",
+ "editor:redo":"cmd+y",
+ "editor:cut":"cmd+x",
+ "editor:copy":"cmd+c",
+ "editor:paste":"cmd+v",
+ "editor:selectAll":"cmd+a",
+ "editor:clearBuffer":"cmd+k",
+ "editor:emojis": "cmd+ctrl+space",
+ 
+ "plugins:update": "cmd+shift+u"
+}
