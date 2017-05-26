@@ -9,11 +9,7 @@ if (process.platform === 'win32') {
   // This mimics shell.openItem, true if it worked, false if not.
   const openNotepad = file => new Promise(resolve => {
     exec(`start notepad.exe ${file}`, error => {
-      if (error) {
-        resolve(false);
-      } else {
-        resolve(true);
-      }
+      resolve(!error);
     });
   });
 
