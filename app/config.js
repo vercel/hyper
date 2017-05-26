@@ -1,11 +1,12 @@
 const {statSync, renameSync, readFileSync, writeFileSync} = require('fs');
 const vm = require('vm');
 
-const {dialog} = require('electron');
+const {dialog, shell} = require('electron');
 const gaze = require('gaze');
 const Config = require('electron-config');
 const notify = require('./notify');
 const _paths = require('./config/paths');
+const checkWindowsDefaultEditor = require('./utils/windows-default-app');
 
 // local storage
 const winCfg = new Config({
@@ -112,6 +113,24 @@ exports.init = function () {
     }
   }
   watch();
+};
+
+exports.openConfig = function () {
+  const configFile = path.resolve(_paths.confDir, '.hyper.js');
+
+  if (process.platform !== 'win32') {
+    return shell.openItem(configFile);
+  }
+
+  // Windows has WScript.exe as default editor for .js files
+  // unless the user has changed this, we use notepad.exe
+  return checkWindowsDefaultEditor()
+    .then(() => {
+      return shell.openItem(configFile);
+    })
+    .catch(() => {
+      require('child_process').exec(`start notepad.exe ${configFile}`);
+    });
 };
 
 exports.getConfigDir = function () {

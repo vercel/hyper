@@ -1,6 +1,5 @@
-const {shell} = require('electron');
 const {accelerators} = require('../../accelerators');
-const {confPath} = require('../../config/paths');
+const {openConfig} = require('../../config');
 
 module.exports = function () {
   const submenu = [
@@ -52,7 +51,7 @@ module.exports = function () {
         label: 'Preferences...',
         accelerator: accelerators.preferences,
         click() {
-          shell.openItem(confPath);
+          openConfig();
         }
       }
     );
