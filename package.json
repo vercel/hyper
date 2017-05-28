@@ -120,7 +120,6 @@
     "json-loader": "0.5.4",
     "mousetrap": "1.6.0",
     "ms": "0.7.2",
-    "object-values": "1.0.0",
     "php-escape-shell": "1.0.0",
     "react": "15.3.2",
     "react-addons-pure-render-mixin": "15.3.2",
@@ -136,7 +135,7 @@
     "uuid": "3.0.0"
   },
   "devDependencies": {
-    "asar":"0.13.0",
+    "asar": "0.13.0",
     "ava": "0.17.0",
     "babel-cli": "6.24.1",
     "babel-core": "6.24.1",
