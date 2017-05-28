@@ -26,7 +26,7 @@ const _extractDefault = function (cfg) {
 
 // init config
 const _init = function (cfg) {
-  const script = _syntaxValidation(cfg.userConf);
+  const script = _syntaxValidation(cfg.userCfg);
   if (script) {
     const _cfg = _extract(script);
     if (!_cfg.config) {
@@ -34,11 +34,11 @@ const _init = function (cfg) {
       _cfg.localPlugins = _cfg.localPlugins || [];
       _cfg.keymaps = _cfg.keymaps || {};
       notify('Error reading configuration: `config` key is missing');
-      return _extractDefault(cfg.defaultConf);
+      return _extractDefault(cfg.defaultCfg);
     }
     return _cfg;
   }
-  return _extractDefault(cfg.defaultConf);
+  return _extractDefault(cfg.defaultCfg);
 };
 
 module.exports = _init;

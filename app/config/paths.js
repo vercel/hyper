@@ -4,16 +4,16 @@ const {statSync} = require('fs');
 const {resolve, join} = require('path');
 const isDev = require('electron-is-dev');
 
-const conf = '.hyper.js';
-const defaultConf = 'config-default.js';
+const cfgFile = '.hyper.js';
+const defaultCfgFile = 'config-default.js';
 const homeDir = homedir();
 
-let confPath = join(homeDir, conf);
-let confDir = homeDir;
+let cfgPath = join(homeDir, cfgFile);
+let cfgDir = homeDir;
 
 const devDir = resolve(__dirname, '../..');
-const devConfig = join(devDir, conf);
-const defaultConfig = resolve(__dirname, defaultConf);
+const devCfg = join(devDir, cfgFile);
+const defaultCfg = resolve(__dirname, defaultCfgFile);
 
 const icon = resolve(__dirname, '../static/icon.png');
 
@@ -34,15 +34,15 @@ const defaultPlatformKeyPath = () => {
 if (isDev) {
   // if a local config file exists, use it
   try {
-    statSync(devConfig);
-    confPath = devConfig;
-    confDir = devDir;
-    console.log('using config file:', confPath);
+    statSync(devCfg);
+    cfgPath = devCfg;
+    cfgDir = devDir;
+    console.log('using config file:', cfgPath);
   } catch (err) {
     // ignore
   }
 }
 
 module.exports = {
-  confDir, confPath, conf, defaultConfig, icon, defaultPlatformKeyPath
+  cfgDir, cfgPath, cfgFile, defaultCfg, icon, defaultPlatformKeyPath
 };

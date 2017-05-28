@@ -1,18 +1,18 @@
 const gaze = require('gaze');
 const notify = require('./notify');
 const _import = require('./config/import');
-const {confPath, confDir} = require('./config/paths');
 const _openConfig = require('./config/open');
 const win = require('./config/windows');
+const {cfgPath, cfgDir} = require('./config/paths');
 
 const watchers = [];
 // watch for changes on config every 2s on windows
 // https://github.com/zeit/hyper/pull/1772
-const watchConfig = process.platform === 'win32' ? {interval: 2000} : {};
+const watchCfg = process.platform === 'win32' ? {interval: 2000} : {};
 let cfg = {};
 
 const _watch = function () {
-  gaze(confPath, watchConfig, function (err) {
+  gaze(cfgPath, watchCfg, function (err) {
     if (err) {
       throw err;
     }
@@ -36,7 +36,7 @@ exports.subscribe = function (fn) {
 
 exports.getConfigDir = function () {
   // expose config directory to load plugin from the right place
-  return confDir;
+  return cfgDir;
 };
 
 exports.getConfig = function () {

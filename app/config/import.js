@@ -1,5 +1,5 @@
 const {writeFileSync, readFileSync} = require('fs');
-const {defaultConfig, confPath} = require('./paths');
+const {defaultCfg, cfgPath} = require('./paths');
 const _init = require('./init');
 const _keymaps = require('./keymaps');
 
@@ -16,13 +16,13 @@ const _write = function (path, data) {
 
 const _importConf = function () {
   try {
-    const defaultConf = readFileSync(defaultConfig, 'utf8');
+    const _defaultCfg = readFileSync(defaultCfg, 'utf8');
     try {
-      const conf = readFileSync(confPath, 'utf8');
-      return {userConf: conf, defaultConf};
+      const _cfgPath = readFileSync(cfgPath, 'utf8');
+      return {userCfg: _cfgPath, defaultCfg: _defaultCfg};
     } catch (err) {
-      _write(confPath, defaultConf);
-      return {userConf: {}, defaultConf};
+      _write(cfgPath, defaultCfg);
+      return {userCfg: {}, defaultCfg: _defaultCfg};
     }
   } catch (err) {
     console.log(err);
