@@ -7,11 +7,11 @@ module.exports = function (commands) {
         accelerator: commands['window:minimize']
       },
       {
+        type: 'separator'
+      },
+      { // It's the same thing as clicking the green traffc-light on macOS
         role: 'zoom',
         accelerator: commands['window:zoom']
-      },
-      {
-        type: 'separator'
       },
       {
         label: 'Select Tab',
