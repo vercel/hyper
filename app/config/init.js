@@ -11,13 +11,13 @@ const _extract = function (script) {
 };
 
 const _syntaxValidation = function (cfg) {
-    try {
-      return new vm.Script(cfg, { filename: '.hyper.js', displayErrors: true })
-    } catch (error) {
-      notify(`Error loading config: ${error.name}, see DevTools for more info`)
-      console.error('Error loading config:', error)
-      return
-    }
+  try {
+    return new vm.Script(cfg, {filename: '.hyper.js', displayErrors: true});
+  } catch (err) {
+    notify(`Error loading config: ${err.name}, see DevTools for more info`);
+    console.error('Error loading config:', err);
+    return;
+  }
 };
 
 const _extractDefault = function (cfg) {

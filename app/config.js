@@ -8,7 +8,7 @@ const win = require('./config/windows');
 const watchers = [];
 // watch for changes on config every 2s on windows
 // https://github.com/zeit/hyper/pull/1772
-const watchConfig = process.platform === 'win32' ?  { interval: 2000 } : {}
+const watchConfig = process.platform === 'win32' ? {interval: 2000} : {};
 let cfg = {};
 
 const _watch = function () {
