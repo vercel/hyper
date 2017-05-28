@@ -1,5 +1,5 @@
 const {readFileSync} = require('fs');
-const {darwinKeys, win32Keys, linuxKeys} = require('./paths');
+const {defaultPlatformKeyPath} = require('./paths');
 
 const commands = {};
 const keys = {};
@@ -21,16 +21,8 @@ const _setCommandsForKeys = function (commands) {
 };
 
 const _import = function (customsKeys) {
-  const path = () => {
-    switch (process.platform) {
-      case 'darwin': return darwinKeys;
-      case 'win32': return win32Keys;
-      case 'linux': return linuxKeys;
-      default: return darwinKeys;
-    }
-  };
   try {
-    const mapping = JSON.parse(readFileSync(path()));
+    const mapping = JSON.parse(readFileSync(defaultPlatformKeyPath()));
     _setKeysForCommands(mapping);
     _setKeysForCommands(customsKeys);
     _setCommandsForKeys(commands);

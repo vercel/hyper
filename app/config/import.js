@@ -1,7 +1,7 @@
 const {writeFileSync, readFileSync} = require('fs');
 const {defaultConfig, confPath} = require('./paths');
 const _init = require('./init');
-const _keys = require('./keymaps');
+const _keymaps = require('./keymaps');
 
 const _write = function (path, data) {
   // This method will take text formatted as Unix line endings and transform it
@@ -33,7 +33,7 @@ const _import = function () {
   const cfg = _init(_importConf());
 
   if (cfg) {
-    cfg.keymaps = _keys.import(cfg.keymaps);
+    cfg.keymaps = _keymaps.import(cfg.keymaps);
   }
   return cfg;
 };

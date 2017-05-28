@@ -27,7 +27,7 @@ module.exports = function (commands, createWindow) {
       },
       {
         label: 'Split Vertically',
-        accelerator: commands['pane:vertical'],
+        accelerator: commands['pane:splitVertical'],
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('split request vertical');
@@ -36,7 +36,7 @@ module.exports = function (commands, createWindow) {
       },
       {
         label: 'Split Horizontally',
-        accelerator: commands['pane:horizontal'],
+        accelerator: commands['pane:splitHorizontal'],
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('split request horizontal');

@@ -6,13 +6,13 @@ const _openConfig = require('./config/open');
 const win = require('./config/windows');
 
 const watchers = [];
-const scanInterval = 2000;
+// watch for changes on config every 2s on windows
+// https://github.com/zeit/hyper/pull/1772
+const watchConfig = process.platform === 'win32' ?  { interval: 2000 } : {}
 let cfg = {};
 
 const _watch = function () {
-  // watch for changes on config every 2s
-  // windows interval: https://github.com/zeit/hyper/pull/1772
-  gaze(confPath, process.platform === 'win32' ? {interval: scanInterval} : {}, function (err) {
+  gaze(confPath, watchConfig, function (err) {
     if (err) {
       throw err;
     }

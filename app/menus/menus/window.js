@@ -70,7 +70,7 @@ module.exports = function (commands) {
       },
       {
         role: 'togglefullscreen',
-        accelerators: commands['window:full']
+        accelerators: commands['window:toggleFullScreen']
       }
     ]
   };
