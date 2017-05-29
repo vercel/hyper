@@ -40,7 +40,7 @@ const {homedir} = require('os');
 
 // Packages
 const {parse: parseUrl} = require('url');
-const {app, BrowserWindow, shell, Menu} = require('electron');
+const {app, BrowserWindow, shell, Menu, globalShortcut} = require('electron');
 const {gitDescribe} = require('git-describe');
 const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
@@ -188,6 +188,13 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       // update background color if necessary
       cfg = cfg_;
     });
+
+    const shortcut = globalShortcut.register('Super+Enter', () => {
+      win.setFullScreen(!win.isFullScreen());
+    });
+    if (!shortcut) {
+      console.log('shortcut registration failed');
+    }
 
     rpc.on('init', () => {
       // we update the backgroundColor once the init is called.
