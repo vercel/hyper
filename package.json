@@ -124,7 +124,7 @@
     "react": "15.3.2",
     "react-addons-pure-render-mixin": "15.3.2",
     "react-deep-force-update": "2.0.1",
-    "react-dom": "15.3.2",
+    "react-dom": "15.4.1",
     "react-redux": "4.4.6",
     "redux": "3.6.0",
     "redux-thunk": "2.1.0",
