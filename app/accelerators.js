@@ -46,9 +46,9 @@ const applicationMenu = { // app/menu.js
   enterFullScreen: isMac ? 'Ctrl+Cmd+F' : 'F11',
 
   //Broadcast Menu
-  broadcastAllTabsAllPanes: isMac ? 'Shift+Cmd+I' : 'Shift+Alt+I',
-  broadcastAllTabsCurrentPane: isMac ? 'Alt+Cmd+I' : 'Ctrl+Alt+I',
-  boradcastCurrentTab: isMac ? 'Alt+Cmd+Shift+i' : 'Shift+Ctrl+Alt+I'
+  broadcastAllTabsAllPanes: isMac ? 'Shift+Cmd+B' : 'Shift+Alt+B',
+  broadcastAllTabsCurrentPane: isMac ? 'Alt+Cmd+B' : 'Ctrl+Alt+B',
+  boradcastCurrentTab: isMac ? 'Alt+Cmd+Shift+B' : 'Shift+Ctrl+Alt+B'
 };
 
 const mousetrap = { // lib/containers/hyper.js

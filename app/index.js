@@ -265,8 +265,16 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       session.resize({cols, rows});
     });
 
-    rpc.on('data', ({uid, data}) => {
-      sessions.get(uid).write(data);
+    rpc.on('data', ({uid, data, broadcast, group}) => {
+      if (broadcast === 'all') {
+        sessions.forEach(sess => sess.write(data));
+      } else if (broadcast === 'tab') {
+          group.forEach((id) => {
+            sessions.get(id).write(data);
+          });
+      } else {
+        sessions.get(uid).write(data);
+      }
     });
 
     rpc.on('open external', ({url}) => {
