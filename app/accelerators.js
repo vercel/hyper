@@ -45,7 +45,7 @@ const applicationMenu = { // app/menu.js
   selectPreviousPane: 'Ctrl+Shift+Alt+Tab',
   enterFullScreen: isMac ? 'Ctrl+Cmd+F' : 'F11',
 
-  //Broadcast Menu
+  // Broadcast Menu
   broadcastAllTabsAllPanes: isMac ? 'Shift+Cmd+B' : 'Shift+Alt+B',
   broadcastAllTabsCurrentPane: isMac ? 'Alt+Cmd+B' : 'Ctrl+Alt+B',
   boradcastCurrentTab: isMac ? 'Alt+Cmd+Shift+B' : 'Shift+Ctrl+Alt+B'

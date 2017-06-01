@@ -269,9 +269,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       if (broadcast === 'all') {
         sessions.forEach(sess => sess.write(data));
       } else if (broadcast === 'tab') {
-          group.forEach((id) => {
-            sessions.get(id).write(data);
-          });
+        group.forEach(id => sessions.get(id).write(data));
       } else {
         sessions.get(uid).write(data);
       }

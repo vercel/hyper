@@ -30,7 +30,7 @@ module.exports = function () {
             focusedWindow.rpc.emit('broadcast one req');
           }
         }
-      },
+      }
     ]
   };
 };
