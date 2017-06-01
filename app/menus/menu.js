@@ -4,6 +4,7 @@ const shellMenu = require('./menus/shell');
 const editMenu = require('./menus/edit');
 const pluginsMenu = require('./menus/plugins');
 const windowMenu = require('./menus/window');
+const broadcastMenu = require('./menus/broadcast');
 const helpMenu = require('./menus/help');
 const darwinMenu = require('./menus/darwin');
 
@@ -14,6 +15,7 @@ module.exports = (createWindow, updatePlugins) => {
     viewMenu(),
     pluginsMenu(updatePlugins),
     windowMenu(),
+    broadcastMenu(),
     helpMenu()
   );
 
