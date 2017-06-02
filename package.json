@@ -10,10 +10,10 @@
     "test:unit": "ava test/unit",
     "test:unit:watch": "npm run test:unit -- --watch",
     "prepush": "npm test",
-    "postinstall": "install-app-deps && npm run rebuild-node-pty",
+    "postinstall": "install-app-deps && npm run rebuild-node-pty && npm install -g rimraf",
     "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
     "dist": "npm run build && cross-env BABEL_ENV=production babel --out-file app/dist/bundle.js --no-comments --minified app/dist/bundle.js && build",
-    "clean": "npm cache clear && rm -rf node_modules && rm -rf app/node_modules && rm -rf app/dist"
+    "clean": "rimraf node_modules && rimraf ./app/node_modules && rimraf ./app/dist"
   },
   "xo": {
     "extends": "xo-react",
