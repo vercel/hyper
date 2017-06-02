@@ -237,8 +237,8 @@ function install(fn) {
     /* eslint-enable camelcase  */
     // Shell-specific installation commands
     const installCommands = {
-      fish: 'npm prune; and npm install --production',
-      posix: 'npm prune && npm install --production'
+      fish: 'npm prune; and npm install --production --no-shrinkwrap',
+      posix: 'npm prune && npm install --production --no-shrinkwrap'
     };
     // determine the shell we're running in
     const whichShell = (typeof cfgShell === 'string' && cfgShell.match(/fish/)) ? 'fish' : 'posix';
