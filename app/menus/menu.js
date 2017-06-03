@@ -12,7 +12,6 @@ const darwinMenu = require('./menus/darwin');
 module.exports = (createWindow, updatePlugins) => {
   const commands = getKeymaps().commands;
   const menu = [
-    (process.platform === 'darwin' ? darwinMenu(commands) : []),
     shellMenu(commands, createWindow),
     editMenu(commands),
     viewMenu(commands),
@@ -21,5 +20,5 @@ module.exports = (createWindow, updatePlugins) => {
     helpMenu(commands)
   ];
 
-  return menu;
+  return (process.platform === 'darwin' ? [darwinMenu(commands), ...menu] : menu);
 };
