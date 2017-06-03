@@ -1,41 +1,40 @@
-const {accelerators} = require('../../accelerators');
 const {openConfig} = require('../../config');
 
-module.exports = function () {
+module.exports = function (commands) {
   const submenu = [
     {
       role: 'undo',
-      accelerator: accelerators.undo
+      accelerator: commands['editor:undo']
     },
     {
       role: 'redo',
-      accelerator: accelerators.redo
+      accelerator: commands['editor:redo']
     },
     {
       type: 'separator'
     },
     {
       role: 'cut',
-      accelerator: accelerators.cut
+      accelerator: commands['editor:cut']
     },
     {
       role: 'copy',
-      accelerator: accelerators.copy
+      accelerator: commands['editor:copy']
     },
     {
       role: 'paste',
-      accelerator: accelerators.paste
+      accelerator: commands['editor:paste']
     },
     {
       role: 'selectall',
-      accelerator: accelerators.selectAll
+      accelerator: commands['editor:selectAll']
     },
     {
       type: 'separator'
     },
     {
       label: 'Clear Buffer',
-      accelerator: accelerators.clear,
+      accelerator: commands['editor:clearBuffer'],
       click(item, focusedWindow) {
         if (focusedWindow) {
           focusedWindow.rpc.emit('session clear req');
@@ -49,7 +48,7 @@ module.exports = function () {
       {type: 'separator'},
       {
         label: 'Preferences...',
-        accelerator: accelerators.preferences,
+        accelerator: commands['window:preferences'],
         click() {
           openConfig();
         }

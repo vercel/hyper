@@ -53,13 +53,12 @@ const AppMenu = require('./menus/menu');
 const createRPC = require('./rpc');
 const notify = require('./notify');
 const fetchNotifications = require('./notifications');
+const config = require('./config');
 
 app.commandLine.appendSwitch('js-flags', '--harmony-async-await');
 
 // set up config
-const config = require('./config');
-
-config.init();
+config.setup();
 
 const plugins = require('./plugins');
 const Session = require('./session');
@@ -106,7 +105,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
   function createWindow(fn, options = {}) {
     let cfg = plugins.getDecoratedConfig();
 
-    const winSet = app.config.window.get();
+    const winSet = config.getWin();
     let [startX, startY] = winSet.position;
 
     const [width, height] = options.size ? options.size : (cfg.windowSize || winSet.size);
@@ -353,7 +352,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
-      app.config.window.recordState(win);
+      config.winRecord(win);
       windowSet.delete(win);
       rpc.destroy();
       deleteSessions();
@@ -415,6 +414,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
   const load = () => {
     plugins.onApp(app);
+    plugins.extendKeymaps();
     makeMenu();
   };
 

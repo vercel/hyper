@@ -10,6 +10,7 @@ const shellEnv = require('shell-env');
 
 const config = require('./config');
 const notify = require('./notify');
+const _keys = require('./config/keymaps');
 
 // local storage
 const cache = new Config();
@@ -30,7 +31,8 @@ const availableExtensions = new Set([
   'mapHyperTermState', 'mapTermsState',
   'mapHeaderState', 'mapNotificationsState',
   'mapHyperTermDispatch', 'mapTermsDispatch',
-  'mapHeaderDispatch', 'mapNotificationsDispatch'
+  'mapHeaderDispatch', 'mapNotificationsDispatch',
+  'extendKeymaps'
 ]);
 
 // init plugin directories if not present
@@ -353,6 +355,15 @@ function decorateObject(base, key) {
 
   return decorated;
 }
+
+exports.extendKeymaps = function () {
+  modules.forEach(plugin => {
+    if (plugin.extendKeymaps) {
+      const keys = _keys.extend(plugin.extendKeymaps());
+      config.extendKeymaps(keys);
+    }
+  });
+};
 
 exports.decorateMenu = function (tpl) {
   return decorateObject(tpl, 'decorateMenu');

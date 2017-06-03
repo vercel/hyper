@@ -1,6 +1,4 @@
-const {accelerators} = require('../../accelerators');
-
-module.exports = function (createWindow) {
+module.exports = function (commands, createWindow) {
   const isMac = process.platform === 'darwin';
 
   return {
@@ -8,14 +6,14 @@ module.exports = function (createWindow) {
     submenu: [
       {
         label: 'New Window',
-        accelerator: accelerators.newWindow,
+        accelerator: commands['window:new'],
         click() {
           createWindow();
         }
       },
       {
         label: 'New Tab',
-        accelerator: accelerators.newTab,
+        accelerator: commands['tab:new'],
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('termgroup add req');
@@ -29,7 +27,7 @@ module.exports = function (createWindow) {
       },
       {
         label: 'Split Vertically',
-        accelerator: accelerators.splitVertically,
+        accelerator: commands['pane:splitVertical'],
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('split request vertical');
@@ -38,7 +36,7 @@ module.exports = function (createWindow) {
       },
       {
         label: 'Split Horizontally',
-        accelerator: accelerators.splitHorizontally,
+        accelerator: commands['pane:splitHorizontal'],
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('split request horizontal');
@@ -50,7 +48,7 @@ module.exports = function (createWindow) {
       },
       {
         label: 'Close Session',
-        accelerator: accelerators.closeSession,
+        accelerator: commands['pane:close'],
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('termgroup close req');
@@ -60,7 +58,7 @@ module.exports = function (createWindow) {
       {
         label: isMac ? 'Close Window' : 'Quit',
         role: 'close',
-        accelerator: accelerators.closeWindow
+        accelerator: commands['window:close']
       }
     ]
   };

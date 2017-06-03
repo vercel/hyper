@@ -1,12 +1,10 @@
-const {accelerators} = require('../../accelerators');
-
-module.exports = function (update) {
+module.exports = function (commands, update) {
   return {
     label: 'Plugins',
     submenu: [
       {
         label: 'Update',
-        accelerator: accelerators.updatePlugins,
+        accelerator: commands['plugins:update'],
         click() {
           update();
         }
