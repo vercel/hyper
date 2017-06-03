@@ -35,7 +35,8 @@
       "app/dist/**",
       "app/static/**",
       "assets/**",
-      "website/**"
+      "website/**",
+      "rimraf-standalone.js"
     ]
   },
   "babel": {
