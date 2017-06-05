@@ -13,7 +13,7 @@
     "postinstall": "install-app-deps && npm run rebuild-node-pty",
     "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
     "dist": "npm run build && cross-env BABEL_ENV=production babel --out-file app/dist/bundle.js --no-comments --minified app/dist/bundle.js && build",
-    "clean": "node rimraf-standalone.js node_modules && node rimraf-standalone.js ./app/node_modules && node rimraf-standalone.js ./app/dist"
+    "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/dist"
   },
   "xo": {
     "extends": "xo-react",
@@ -36,7 +36,7 @@
       "app/static/**",
       "assets/**",
       "website/**",
-      "rimraf-standalone.js"
+      "bin/**"
     ]
   },
   "babel": {
