@@ -49,17 +49,16 @@ const isDev = require('electron-is-dev');
 // Ours
 const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
-const createMenu = require('./menu');
+const AppMenu = require('./menus/menu');
 const createRPC = require('./rpc');
 const notify = require('./notify');
 const fetchNotifications = require('./notifications');
-
-app.commandLine.appendSwitch('js-flags', '--harmony');
-
-// set up config
 const config = require('./config');
 
-config.init();
+app.commandLine.appendSwitch('js-flags', '--harmony-async-await');
+
+// set up config
+config.setup();
 
 const plugins = require('./plugins');
 const Session = require('./session');
@@ -106,7 +105,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
   function createWindow(fn, options = {}) {
     let cfg = plugins.getDecoratedConfig();
 
-    const winSet = app.config.window.get();
+    const winSet = config.getWin();
     let [startX, startY] = winSet.position;
 
     const [width, height] = options.size ? options.size : (cfg.windowSize || winSet.size);
@@ -353,7 +352,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
-      app.config.window.recordState(win);
+      config.winRecord(win);
       windowSet.delete(win);
       rpc.destroy();
       deleteSessions();
@@ -390,14 +389,14 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     }
   });
 
-  const setupMenu = () => {
-    const tpl = plugins.decorateMenu(createMenu({
-      createWindow,
-      updatePlugins: () => {
-        plugins.updatePlugins({force: true});
-      },
-      getLoadedPluginVersions: plugins.getLoadedPluginVersions
-    }));
+  const makeMenu = () => {
+    const menu = plugins.decorateMenu(
+      AppMenu(createWindow, () => {
+          plugins.updatePlugins({force: true});
+        },
+        plugins.getLoadedPluginVersions
+      )
+    );
 
     // If we're on Mac make a Dock Menu
     if (process.platform === 'darwin') {
@@ -410,12 +409,15 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       app.dock.setMenu(dockMenu);
     }
 
-    Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
+    Menu.setApplicationMenu(
+      Menu.buildFromTemplate(menu)
+    );
   };
 
   const load = () => {
     plugins.onApp(app);
-    setupMenu();
+    plugins.extendKeymaps();
+    makeMenu();
   };
 
   load();
