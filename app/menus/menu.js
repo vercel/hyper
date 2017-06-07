@@ -1,4 +1,7 @@
+const {app, dialog} = require('electron');
+
 const {getKeymaps} = require('../config');
+const {icon} = require('../config/paths');
 
 // menus
 const viewMenu = require('./menus/view');
@@ -8,6 +11,9 @@ const pluginsMenu = require('./menus/plugins');
 const windowMenu = require('./menus/window');
 const helpMenu = require('./menus/help');
 const darwinMenu = require('./menus/darwin');
+
+const appName = app.getName();
+const appVersion = app.getVersion();
 
 module.exports = (createWindow, updatePlugins, getLoadedPluginVersions) => {
   const commands = getKeymaps().commands;
@@ -19,9 +25,9 @@ module.exports = (createWindow, updatePlugins, getLoadedPluginVersions) => {
     dialog.showMessageBox({
       title: `About ${appName}`,
       message: `${appName} ${appVersion}`,
-      detail: `Plugins: ${pluginList}\n\nCreated by Guillermo Rauch\n© Zeit`,
-      icon: path.join(__dirname, 'static/icon.png'),
-      buttons: []
+      detail: `Plugins: ${pluginList}\n\nCreated by Guillermo Rauch\nCopyright © 2017 Zeit, Inc.`,
+      buttons: [],
+      icon
     });
   };
   const menu = [

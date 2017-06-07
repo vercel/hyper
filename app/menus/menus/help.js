@@ -1,6 +1,5 @@
 const os = require('os');
-const {app, shell, dialog} = require('electron');
-const {icon} = require('../../config/paths');
+const {app, shell} = require('electron');
 
 module.exports = function (commands, showAbout) {
   const submenu = [
