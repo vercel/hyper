@@ -35,7 +35,9 @@ if (process.platform === 'win32') {
       });
     })));
 
-    const values = valueGroups.reduce((allValues, groupValues) => ([...allValues, ...groupValues]), []);
+    const values = valueGroups
+      .reduce((allValues, groupValues) => ([...allValues, ...groupValues]), [])
+      .filter(value => value && typeof value === 'string');
 
     // No default app set
     if (values.length === 0) {
