@@ -9,7 +9,7 @@ if (process.platform === 'win32') {
 
   // Windows opens .js files with  WScript.exe by default
   // If the user hasn't set up an editor for .js files, we fallback to notepad.
-  const hasDefaultApp = () => new Promise((resolve, reject) => {
+  const hasDefaultSet = () => new Promise((resolve, reject) => {
     Registry({
       hive: Registry.HKCU,
       key: '\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.js'
@@ -17,10 +17,8 @@ if (process.platform === 'win32') {
     .keyExists((error, exists) => {
       if (error) {
         reject(error);
-      } else if (exists) {
-        resolve(exists);
       } else {
-        reject(new Error('No associations for .js exists'));
+        resolve(exists);
       }
     });
   });
@@ -32,10 +30,16 @@ if (process.platform === 'win32') {
     });
   });
 
-  module.exports = () => hasDefaultApp()
-    .then(() => shell.openItem(cfgPath))
+  module.exports = () => hasDefaultSet()
+    .then(yes => {
+      if (yes) {
+        return shell.openItem(cfgPath);
+      }
+      console.warn('No default app set for .js files, using notepad.exe fallback');
+      return openNotepad(cfgPath);
+    })
     .catch(err => {
-      console.error('Error opening config with default app:', err);
-      openNotepad(cfgPath);
+      console.error('Open config with default app error:', err);
+      return openNotepad(cfgPath);
     });
 }
