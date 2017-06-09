@@ -78,17 +78,10 @@ function updatePlugins({force = false} = {}) {
 
     if (err) {
       console.error(err.stack);
-      if (/not a recognized/.test(err.message) || /command not found/.test(err.message)) {
-        notify(
-          'Error updating plugins.',
-          'We could not find the `npm` command. Make sure it\'s in $PATH'
-        );
-      } else {
-        notify(
-          'Error updating plugins.',
-          'Check `~/.hyper_plugins/npm-debug.log` for more information.'
-        );
-      }
+      notify(
+        'Error updating plugins.',
+        err.message
+      );
     } else {
       // flag successful plugin update
       cache.set('hyper.plugins', id_);
@@ -225,8 +218,10 @@ function toDependencies(plugins) {
 function install(fn) {
   const {npmRegistry} = exports.getDecoratedConfig();
   const config = {
+    progress: false, // Using progress leads to some glitches on dev console
     prefix: path,
     production: true,
+    shrinkwrap: false,
     'scripts-prepend-node-path': false
   };
 
@@ -238,11 +233,22 @@ function install(fn) {
     if (err) {
       return fn(err);
     }
-    npm.commands.install([], er => {
+    const {Pruner} = npm.commands.prune;
+    // `npm prune`
+    console.log('launching `npm prune`');
+    new Pruner(path, false, []).run(er => {
       if (er) {
         return fn(er);
       }
-      return fn(null);
+      // `npm install`
+      console.log('launching `npm install`');
+      const {Installer} = npm.commands.install;
+      new Installer(path, false, []).run(er => {
+        if (er) {
+          return fn(er);
+        }
+        return fn(null);
+      });
     });
   });
 }
