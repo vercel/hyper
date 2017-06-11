@@ -8,13 +8,13 @@ const {getDecoratedEnv} = require('./plugins');
 const {productName, version} = require('./package');
 const config = require('./config');
 
-const createPtyJsError = () => new Error('`pty.js` failed to load. Typically this means that it was built incorrectly. Please check the `README.me` to more info.');
+const createNodePtyError = () => new Error('`node-pty` failed to load. Typically this means that it was built incorrectly. Please check the `readme.md` to more info.');
 
 let spawn;
 try {
-  spawn = require('pty.js').spawn;
+  spawn = require('node-pty').spawn;
 } catch (err) {
-  throw createPtyJsError();
+  throw createNodePtyError();
 }
 
 const envFromConfig = config.getConfig().env || {};
@@ -30,6 +30,13 @@ module.exports = class Session extends EventEmitter {
       TERM_PROGRAM_VERSION: version
     }, envFromConfig);
 
+    // Electron has a default value for process.env.GOOGLE_API_KEY
+    // We don't want to leak this to the shell
+    // See https://github.com/zeit/hyper/issues/696
+    if (baseEnv.GOOGLE_API_KEY && process.env.GOOGLE_API_KEY === baseEnv.GOOGLE_API_KEY) {
+      delete baseEnv.GOOGLE_API_KEY;
+    }
+
     const decoder = new StringDecoder('utf8');
 
     const defaultShellArgs = ['--login'];
@@ -43,13 +50,13 @@ module.exports = class Session extends EventEmitter {
       });
     } catch (err) {
       if (/is not a function/.test(err.message)) {
-        throw createPtyJsError();
+        throw createNodePtyError();
       } else {
         throw err;
       }
     }
 
-    this.pty.stdout.on('data', data => {
+    this.pty.on('data', data => {
       if (this.ended) {
         return;
       }
@@ -71,12 +78,12 @@ module.exports = class Session extends EventEmitter {
   }
 
   write(data) {
-    this.pty.stdin.write(data);
+    this.pty.write(data);
   }
 
   resize({cols, rows}) {
     try {
-      this.pty.stdout.resize(cols, rows);
+      this.pty.resize(cols, rows);
     } catch (err) {
       console.error(err.stack);
     }

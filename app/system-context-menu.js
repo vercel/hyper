@@ -8,42 +8,70 @@ const regParts = [
     {name: 'Icon', value: `${appPath}`}
 ];
 
-function isRegistered(callback) {
-  new Registry({
-    hive: 'HKCU',
-    key: `${regKey}\\${regParts[0].key}`
-  }).get(regParts[0].name, (err, entry) => {
-    callback(!err && entry && entry.value === regParts[0].value);
+function addValues(hyperKey, commandKey, callback) {
+  hyperKey.set(regParts[1].name, Registry.REG_SZ, regParts[1].value, err => {
+    if (err) {
+      console.error(err.message);
+    }
+    hyperKey.set(regParts[2].name, Registry.REG_SZ, regParts[2].value, err => {
+      if (err) {
+        console.error(err.message);
+      }
+      commandKey.set(regParts[0].name, Registry.REG_SZ, regParts[0].value, err => {
+        if (err) {
+          console.error(err.message);
+        }
+        callback();
+      });
+    });
   });
 }
 
 exports.add = function (callback) {
-  isRegistered(registered => {
-    if (!registered) {
-      const regPromises = [];
-      regParts.forEach(part => {
-        const reg = new Registry({hive: 'HKCU', key: part.key ? `${regKey}\\${part.key}` : regKey});
-        reg.create(() => {
-          regPromises.push(new Promise((resolve, reject) => {
-            reg.set(part.name, Registry.REG_SZ, part.value, err => {
-              if (err === null) {
-                resolve(true);
-              } else {
-                return reject(err);
-              }
-            });
-          }));
+  const hyperKey = new Registry({hive: 'HKCU', key: regKey});
+  const commandKey = new Registry({hive: 'HKCU', key: `${regKey}\\${regParts[0].key}`});
+
+  hyperKey.keyExists((err, exists) => {
+    if (err) {
+      console.error(err.message);
+    }
+    if (exists) {
+      commandKey.keyExists((err, exists) => {
+        if (err) {
+          console.error(err.message);
+        }
+        if (exists) {
+          addValues(hyperKey, commandKey, callback);
+        } else {
+          commandKey.create(err => {
+            if (err) {
+              console.error(err.message);
+            }
+            addValues(hyperKey, commandKey, callback);
+          });
+        }
+      });
+    } else {
+      hyperKey.create(err => {
+        if (err) {
+          console.error(err.message);
+        }
+        commandKey.create(err => {
+          if (err) {
+            console.error(err.message);
+          }
+          addValues(hyperKey, commandKey, callback);
         });
       });
-      Promise.all(regPromises).then(() => callback());
     }
   });
 };
 
 exports.remove = function (callback) {
-  isRegistered(registered => {
-    if (registered) {
-      new Registry({hive: 'HKCU', key: regKey}).destroy(() => callback());
+  new Registry({hive: 'HKCU', key: regKey}).destroy(err => {
+    if (err) {
+      console.error(err.message);
     }
+    callback();
   });
 };

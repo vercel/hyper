@@ -6,18 +6,11 @@ language: node_js
 matrix:
   include:
     - os: osx
-      node_js: 6
+      node_js: 7.4
     - os: linux
-      node_js: 6
+      node_js: 7.4
       env: CC=clang CXX=clang++ npm_config_clang=1
       compiler: clang
-
-cache:
-  directories:
-    - node_modules
-    - app/node_modules
-    - $HOME/.electron
-    - $HOME/.cache
 
 addons:
   apt:
@@ -28,19 +21,20 @@ addons:
       - xz-utils
       - rpm
       - bsdtar
+      - snapd
 
 before_install:
   - mkdir -p /tmp/git-lfs && curl -L https://github.com/github/git-lfs/releases/download/v1.2.1/git-lfs-$([ "$TRAVIS_OS_NAME" == "linux" ] && echo "linux" || echo "darwin")-amd64-1.2.1.tar.gz | tar -xz -C /tmp/git-lfs --strip-components 1 && /tmp/git-lfs/git-lfs pull
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start; sleep 3; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install yarn; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository ppa:snappy-dev/tools-proposed -y && sudo apt update && sudo apt install snapcraft; fi
 
 install:
-  - npm install
-
-before_script:
-  - npm prune
+  - yarn
 
 after_success:
-  - npm run dist
+  - yarn run dist
 
 branches:
   except:

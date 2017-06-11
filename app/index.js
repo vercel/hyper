@@ -1,3 +1,14 @@
+// Print diagnostic information for a few arguments instead of running Hyper.
+if (['--help', '-v', '--version'].includes(process.argv[1])) {
+  const {version} = require('./package');
+  const configLocation = process.platform === 'win32' ? process.env.userprofile + '\\.hyper.js' : '~/.hyper.js';
+  console.log(`Hyper version ${version}`);
+  console.log('Hyper does not accept any command line arguments. Please modify the config file instead.');
+  console.log(`Hyper configuration file located at: ${configLocation}`);
+  // eslint-disable-next-line unicorn/no-process-exit
+  process.exit();
+}
+
 // handle startup squirrel events
 if (process.platform === 'win32') {
   // eslint-disable-next-line import/order
@@ -38,17 +49,16 @@ const isDev = require('electron-is-dev');
 // Ours
 const AutoUpdater = require('./auto-updater');
 const toElectronBackgroundColor = require('./utils/to-electron-background-color');
-const createMenu = require('./menu');
+const AppMenu = require('./menus/menu');
 const createRPC = require('./rpc');
 const notify = require('./notify');
 const fetchNotifications = require('./notifications');
-
-app.commandLine.appendSwitch('js-flags', '--harmony');
-
-// set up config
 const config = require('./config');
 
-config.init();
+app.commandLine.appendSwitch('js-flags', '--harmony-async-await');
+
+// set up config
+config.setup();
 
 const plugins = require('./plugins');
 const Session = require('./session');
@@ -95,7 +105,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
   function createWindow(fn, options = {}) {
     let cfg = plugins.getDecoratedConfig();
 
-    const winSet = app.config.window.get();
+    const winSet = config.getWin();
     let [startX, startY] = winSet.position;
 
     const [width, height] = options.size ? options.size : (cfg.windowSize || winSet.size);
@@ -139,7 +149,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
       // we want to go frameless on windows and linux
       frame: process.platform === 'darwin',
-      transparent: true,
+      transparent: process.platform === 'darwin',
       icon: resolve(__dirname, 'static/icon.png'),
       // we only want to show when the prompt is ready for user input
       // HYPERTERM_DEBUG for backwards compatibility with hyperterm
@@ -166,7 +176,8 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       win.webContents.send('config change');
 
       // notify user that shell changes require new sessions
-      if (cfg_.shell !== cfg.shell || cfg_.shellArgs !== cfg.shellArgs) {
+      if (cfg_.shell !== cfg.shell ||
+        JSON.stringify(cfg_.shellArgs) !== JSON.stringify(cfg.shellArgs)) {
         notify(
           'Shell configuration changed!',
           'Open a new tab or window to start using the new shell'
@@ -221,7 +232,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         });
 
         session.on('data', data => {
-          rpc.emit('session data', {uid, data});
+          rpc.emit('session data', uid + data);
         });
 
         session.on('exit', () => {
@@ -266,7 +277,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     });
 
     rpc.on('open hamburger menu', ({x, y}) => {
-      Menu.getApplicationMenu().popup(x, y);
+      Menu.getApplicationMenu().popup(Math.ceil(x), Math.ceil(y));
     });
 
     rpc.on('minimize', () => {
@@ -302,6 +313,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         event.preventDefault();
         const path = fileUriToPath(url).replace(/ /g, '\\ ');
         rpc.emit('session data send', {data: path});
+      } else if (protocol === 'http:' || protocol === 'https:') {
+        event.preventDefault();
+        rpc.emit('session data send', {data: url});
       }
     });
 
@@ -338,13 +352,20 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
     // the window can be closed by the browser process itself
     win.on('close', () => {
-      app.config.window.recordState(win);
+      config.winRecord(win);
       windowSet.delete(win);
       rpc.destroy();
       deleteSessions();
       cfgUnsubscribe();
       pluginsUnsubscribe();
     });
+
+    // Same deal as above, grabbing the window titlebar when the window
+    // is maximized on Windows results in unmaximize, without hitting any
+    // app buttons
+    for (const ev of ['maximize', 'unmaximize', 'minimize', 'restore']) {
+      win.on(ev, () => rpc.emit('windowGeometry change'));
+    }
 
     win.on('closed', () => {
       if (process.platform !== 'darwin' && windowSet.size === 0) {
@@ -368,13 +389,12 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     }
   });
 
-  const setupMenu = () => {
-    const tpl = plugins.decorateMenu(createMenu({
-      createWindow,
-      updatePlugins: () => {
+  const makeMenu = () => {
+    const menu = plugins.decorateMenu(
+      AppMenu(createWindow, () => {
         plugins.updatePlugins({force: true});
-      }
-    }));
+      })
+    );
 
     // If we're on Mac make a Dock Menu
     if (process.platform === 'darwin') {
@@ -387,12 +407,15 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       app.dock.setMenu(dockMenu);
     }
 
-    Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
+    Menu.setApplicationMenu(
+      Menu.buildFromTemplate(menu)
+    );
   };
 
   const load = () => {
     plugins.onApp(app);
-    setupMenu();
+    plugins.extendKeymaps();
+    makeMenu();
   };
 
   load();

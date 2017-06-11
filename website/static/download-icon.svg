@@ -1,0 +1,14 @@
+<svg width="17px" height="13px" viewBox="0 0 17 13" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <g id="hyper.is" transform="translate(-1082.000000, -471.000000)" stroke="#50E3C2">
+            <g id="Group" transform="translate(1081.000000, 471.000000)">
+                <path d="M1.5,5.5 L1.5,11.5" id="Line"></path>
+                <path d="M17.5,5.5 L17.5,11.5" id="Line"></path>
+                <path d="M9.5,0.5 L9.5,7.57106781" id="Line"></path>
+                <path d="M6.5,5 L9.32842712,7.82842712" id="Line"></path>
+                <path d="M9.5,5 L12.3284271,7.82842712" id="Line" transform="translate(10.914214, 6.414214) scale(-1, 1) translate(-10.914214, -6.414214) "></path>
+                <path d="M1.5,12 L17.5,12" id="Line"></path>
+            </g>
+        </g>
+    </g>
+</svg>
