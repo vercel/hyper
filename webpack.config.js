@@ -23,6 +23,11 @@ module.exports = {
       {
         test: /\.json/,
         loader: 'json-loader'
+      },
+      // for xterm.js
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
       }
     ]
   },

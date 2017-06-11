@@ -1,0 +1,6 @@
+build
+app/dist
+app/static
+assets
+website
+node_modules
