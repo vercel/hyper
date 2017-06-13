@@ -1,4 +1,3 @@
-const {exec} = require('child_process');
 const {resolve, basename} = require('path');
 const {writeFileSync} = require('fs');
 
@@ -6,7 +5,7 @@ const {app, dialog} = require('electron');
 const {sync: mkdirpSync} = require('mkdirp');
 const Config = require('electron-config');
 const ms = require('ms');
-const shellEnv = require('shell-env');
+const npm = require('npm');
 
 const config = require('./config');
 const notify = require('./notify');
@@ -79,17 +78,10 @@ function updatePlugins({force = false} = {}) {
 
     if (err) {
       console.error(err.stack);
-      if (/not a recognized/.test(err.message) || /command not found/.test(err.message)) {
-        notify(
-          'Error updating plugins.',
-          'We could not find the `npm` command. Make sure it\'s in $PATH'
-        );
-      } else {
-        notify(
-          'Error updating plugins.',
-          'Check `~/.hyper_plugins/npm-debug.log` for more information.'
-        );
-      }
+      notify(
+        'Error updating plugins.',
+        err.message
+      );
     } else {
       // flag successful plugin update
       cache.set('hyper.plugins', id_);
@@ -224,46 +216,41 @@ function toDependencies(plugins) {
 }
 
 function install(fn) {
-  const {shell: cfgShell, npmRegistry} = exports.getDecoratedConfig();
+  const {npmRegistry} = exports.getDecoratedConfig();
+  const config = {
+    progress: false, // Using progress leads to some glitches on dev console
+    prefix: path,
+    production: true,
+    shrinkwrap: false,
+    'scripts-prepend-node-path': false
+  };
 
-  const shell = cfgShell && cfgShell !== '' ? cfgShell : undefined;
+  if (npmRegistry) {
+    config.registry = npmRegistry;
+  }
 
-  shellEnv(shell).then(env => {
-    if (npmRegistry) {
-      env.NPM_CONFIG_REGISTRY = npmRegistry;
+  npm.load(config, err => {
+    if (err) {
+      return fn(err);
     }
-    /* eslint-disable camelcase  */
-    env.npm_config_runtime = 'electron';
-    env.npm_config_target = process.versions.electron;
-    env.npm_config_disturl = 'https://atom.io/download/atom-shell';
-    /* eslint-enable camelcase  */
-    // Shell-specific installation commands
-    const installCommands = {
-      fish: 'npm prune; and npm install --production --no-shrinkwrap',
-      posix: 'npm prune && npm install --production --no-shrinkwrap'
-    };
-    // determine the shell we're running in
-    const whichShell = (typeof cfgShell === 'string' && cfgShell.match(/fish/)) ? 'fish' : 'posix';
-    const execOptions = {
-      cwd: path,
-      env
-    };
-
-    // https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback
-    // node.js requires command line parsing should be compatible with cmd.exe on Windows, should able to accept `/d /s /c`
-    // but most custom shell doesn't. Instead, falls back to default shell
-    if (process.platform !== 'win32') {
-      execOptions.shell = shell;
-    }
-
-    // Use the install command that is appropriate for our shell
-    exec(installCommands[whichShell], execOptions, err => {
-      if (err) {
-        return fn(err);
+    const {Pruner} = npm.commands.prune;
+    // `npm prune`
+    console.log('launching `npm prune`');
+    new Pruner(path, false, []).run(er => {
+      if (er) {
+        return fn(er);
       }
-      fn(null);
+      // `npm install`
+      console.log('launching `npm install`');
+      const {Installer} = npm.commands.install;
+      new Installer(path, false, []).run(er => {
+        if (er) {
+          return fn(er);
+        }
+        return fn(null);
+      });
     });
-  }).catch(fn);
+  });
 }
 
 exports.subscribe = function (fn) {
