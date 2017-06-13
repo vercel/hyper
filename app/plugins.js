@@ -85,7 +85,7 @@ function updatePlugins({force = false} = {}) {
       console.error(err.stack);
       notify(
         'Error updating plugins.',
-        'Check `~/.hyperterm_plugins/npm-debug.log` for more information.'
+        err.message
       );
     } else {
       // flag successful plugin update
