@@ -1,6 +1,4 @@
 const {app, dialog} = require('electron');
-const {homedir} = require('os');
-const {exec} = require('child_process');
 const {resolve, basename} = require('path');
 const {writeFileSync, readFileSync} = require('fs');
 const cp = require('child_process');
