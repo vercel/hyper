@@ -151,7 +151,7 @@
     "eslint-config-xo-react": "0.10.0",
     "eslint-plugin-react": "6.7.1",
     "husky": "0.13.4",
-     "node-gyp": "3.6.2",
+    "node-gyp": "3.6.2",
     "redux-logger": "3.0.6",
     "spectron": "3.6.4",
     "webpack": "2.6.1",
