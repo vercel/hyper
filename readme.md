@@ -52,6 +52,11 @@ make sure its build process is working correctly by running `yarn run rebuild-no
 If you're on macOS, this typically is related to Xcode issues (like not having agreed
 to the Terms of Service by running `sudo xcodebuild` after a fresh Xcode installation).
 
+### Error with `codesign` on mac when running `yarn run dist`
+
+If you have issues in the `codesign` step when running `yarn run dist` on mac, you can temporarily disable code signing locally by setting
+`export CSC_IDENTITY_AUTO_DISCOVERY=false` for the current terminal session.
+
 ## Related Repositories
 
 - [Art](https://github.com/zeit/art/tree/master/hyper)

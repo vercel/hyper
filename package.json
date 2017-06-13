@@ -120,6 +120,7 @@
     "json-loader": "0.5.4",
     "mousetrap": "1.6.1",
     "ms": "0.7.2",
+    "node-gyp": "^3.6.2",
     "php-escape-shell": "1.0.0",
     "react": "15.5.4",
     "react-deep-force-update": "2.0.1",
