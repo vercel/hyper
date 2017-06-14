@@ -311,7 +311,11 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       const protocol = typeof url === 'string' && parseUrl(url).protocol;
       if (protocol === 'file:') {
         event.preventDefault();
-        const path = fileUriToPath(url).replace(/ /g, '\\ ');
+        const path = fileUriToPath(url)
+          .replace(/ /g, '\\ ')
+          .replace(/\(/g, '\\(')
+          .replace(/\)/g, '\\)');
+
         rpc.emit('session data send', {data: path});
       } else if (protocol === 'http:' || protocol === 'https:') {
         event.preventDefault();
