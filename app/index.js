@@ -314,7 +314,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 
         // Inside a single-quoted string nothing is interpreted
         // source: http://wiki.bash-hackers.org/syntax/quoting#strong_quoting
-        const path = `'${fileUriToPath(url)}'`
+        const path = `'${fileUriToPath(url).replace(/'/g, `'\\''`)}'`
 
         rpc.emit('session data send', {data: path});
       } else if (protocol === 'http:' || protocol === 'https:') {
