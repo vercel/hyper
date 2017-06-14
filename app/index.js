@@ -312,11 +312,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       if (protocol === 'file:') {
         event.preventDefault();
 
-        // Inside a single-quoted string nothing is interpreted
-        // source: http://wiki.bash-hackers.org/syntax/quoting#strong_quoting
-        const path = `'${fileUriToPath(url).replace(/'/g, `'\\''`)}'`
+        const path = fileUriToPath(url);
 
-        rpc.emit('session data send', {data: path});
+        rpc.emit('session data send', {data: path, escaped: true});
       } else if (protocol === 'http:' || protocol === 'https:') {
         event.preventDefault();
         rpc.emit('session data send', {data: url});
