@@ -264,8 +264,18 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       session.resize({cols, rows});
     });
 
-    rpc.on('data', ({uid, data}) => {
-      sessions.get(uid).write(data);
+    rpc.on('data', ({uid, data, escaped}) => {
+      const session = sessions.get(uid);
+
+      if (escaped) {
+        const escapedData = session.shell.endsWith('cmd.exe') ?
+        `"${data}"` : // This is how cmd.exe does it
+        `'${data.replace(/'/g, `'\\''`)}'`; // Inside a single-quoted string nothing is interpreted
+
+        session.write(escapedData);
+      } else {
+        session.write(data);
+      }
     });
 
     rpc.on('open external', ({url}) => {
@@ -311,8 +321,10 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       const protocol = typeof url === 'string' && parseUrl(url).protocol;
       if (protocol === 'file:') {
         event.preventDefault();
-        const path = fileUriToPath(url).replace(/ /g, '\\ ');
-        rpc.emit('session data send', {data: path});
+
+        const path = fileUriToPath(url);
+
+        rpc.emit('session data send', {data: path, escaped: true});
       } else if (protocol === 'http:' || protocol === 'https:') {
         event.preventDefault();
         rpc.emit('session data send', {data: url});
