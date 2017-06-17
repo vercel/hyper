@@ -1,6 +1,6 @@
 const {app, dialog} = require('electron');
 const {resolve, basename} = require('path');
-const {writeFileSync, readFileSync} = require('fs');
+const {writeFileSync} = require('fs');
 const cp = require('child_process');
 const {sync: mkdirpSync} = require('mkdirp');
 const Config = require('electron-config');
@@ -219,21 +219,20 @@ function toDependencies(plugins) {
 }
 
 function install(fn) {
+  const appDir = (process.mainModule.filename.indexOf('app.asar') === -1) ? 'app' : 'app.asar.unpacked';
+  const dependenciesPath = resolve(__dirname, '..', appDir, 'node_modules');
+  const yarnPath = resolve(dependenciesPath, 'yarn', 'bin', 'yarn.js');
+
   const env = {
     NODE_ENV: 'production',
-    ELECTRON_RUN_AS_NODE: 'true'
+    ELECTRON_RUN_AS_NODE: 'true',
+    NODE_PATH: dependenciesPath
   };
-
-  const electronPath = resolve(
-    __dirname, '..', 'node_modules', 'electron',
-    readFileSync(resolve(__dirname, '..', 'node_modules', 'electron', 'path.txt')).toString().trim()
-  );
-
-  const yarnPath = resolve(__dirname, '..', 'node_modules', '.bin', 'yarn');
 
   function yarn(args, cb) {
     spawnQueue.push(end => {
-      const fullcmd = [electronPath, yarnPath].concat(args).join(' ');
+      const fullcmd = [process.execPath, yarnPath].concat(args).join(' ');
+      console.log('Launching yarn:', fullcmd);
 
       cp.exec(fullcmd, {
         cwd: path,

@@ -13,6 +13,7 @@
     "postinstall": "install-app-deps && npm run rebuild-node-pty",
     "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
     "dist": "npm run build && cross-env BABEL_ENV=production babel --out-file app/dist/bundle.js --no-comments --minified app/dist/bundle.js && build",
+    "distD": "npm run build && babel --out-file app/dist/bundle.js --no-comments app/dist/bundle.js && build",
     "clean": "npm cache clear && rm -rf node_modules && rm -rf app/node_modules && rm -rf app/dist"
   },
   "xo": {
@@ -73,6 +74,9 @@
   "build": {
     "appId": "co.zeit.hyper",
     "asar": true,
+    "asarUnpack": [
+      "./node_modules/"
+    ],
     "linux": {
       "target": [
         {
