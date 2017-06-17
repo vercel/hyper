@@ -220,13 +220,11 @@ function toDependencies(plugins) {
 
 function install(fn) {
   const appDir = (process.mainModule.filename.indexOf('app.asar') === -1) ? 'app' : 'app.asar.unpacked';
-  const dependenciesPath = resolve(__dirname, '..', appDir, 'node_modules');
-  const yarnPath = resolve(dependenciesPath, 'yarn', 'bin', 'yarn.js');
+  const yarnPath = resolve(__dirname, '..', appDir, 'bin', 'yarn-standalone.js');
 
   const env = {
     NODE_ENV: 'production',
-    ELECTRON_RUN_AS_NODE: 'true',
-    NODE_PATH: dependenciesPath
+    ELECTRON_RUN_AS_NODE: 'true'
   };
 
   function yarn(args, cb) {
