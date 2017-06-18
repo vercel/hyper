@@ -11,7 +11,7 @@
   "repository": "zeit/hyper",
   "xo": false,
   "dependencies": {
-    "chokidar": "^1.7.0",
+    "chokidar": "1.7.0",
     "color": "0.11.3",
     "convert-css-color-name-to-hex": "0.1.1",
     "default-shell": "1.0.1",
