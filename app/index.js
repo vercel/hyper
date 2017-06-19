@@ -405,8 +405,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     const menu = plugins.decorateMenu(
       AppMenu(createWindow, () => {
         plugins.updatePlugins({force: true});
-      })
-    );
+      },
+      plugins.getLoadedPluginVersions
+    ));
 
     // If we're on Mac make a Dock Menu
     if (process.platform === 'darwin') {

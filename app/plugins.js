@@ -161,6 +161,10 @@ function clearCache() {
 
 exports.updatePlugins = updatePlugins;
 
+exports.getLoadedPluginVersions = function () {
+  return modules.map(mod => ({name: mod._name, version: mod._version}));
+};
+
 // we schedule the initial plugins update
 // a bit after the user launches the terminal
 // to prevent slowness
@@ -309,6 +313,13 @@ function requirePlugins() {
 
       // populate the name for internal errors here
       mod._name = basename(path);
+      try {
+        // eslint-disable-next-line import/no-dynamic-require
+        mod._version = require(resolve(path, 'package.json')).version;
+      } catch (err) {
+        console.warn(`No package.json found in ${path}`);
+      }
+      console.log(`Plugin ${mod._name} (${mod._version}) loaded.`);
 
       return mod;
     } catch (err) {
