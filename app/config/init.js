@@ -36,6 +36,9 @@ const _init = function (cfg) {
       notify('Error reading configuration: `config` key is missing');
       return _extractDefault(cfg.defaultCfg);
     }
+    // Ignore undefined values in plugin and localPlugins array Issue #1862
+    _cfg.plugins = (_cfg.plugins && _cfg.plugins.filter(Boolean)) || [];
+    _cfg.localPlugins = (_cfg.localPlugins && _cfg.localPlugins.filter(Boolean)) || [];
     return _cfg;
   }
   return _extractDefault(cfg.defaultCfg);

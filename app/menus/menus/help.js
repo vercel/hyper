@@ -1,8 +1,7 @@
 const os = require('os');
-const {app, shell, dialog} = require('electron');
-const {icon} = require('../../config/paths');
+const {app, shell} = require('electron');
 
-module.exports = function () {
+module.exports = function (commands, showAbout) {
   const submenu = [
     {
       label: `${app.getName()} Website`,
@@ -31,13 +30,7 @@ module.exports = function () {
       {
         role: 'about',
         click() {
-          dialog.showMessageBox({
-            title: `About ${app.getName()}`,
-            message: `${app.getName()} ${app.getVersion()}`,
-            detail: 'Created by Guillermo Rauch',
-            icon,
-            buttons: []
-          });
+          showAbout();
         }
       }
     );

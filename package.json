@@ -13,7 +13,7 @@
     "postinstall": "install-app-deps && npm run rebuild-node-pty",
     "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
     "dist": "npm run build && cross-env BABEL_ENV=production babel --out-file app/dist/bundle.js --no-comments --minified app/dist/bundle.js && build",
-    "clean": "npm cache clear && rm -rf node_modules && rm -rf app/node_modules && rm -rf app/dist"
+    "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/dist"
   },
   "xo": {
     "extends": "xo-react",
@@ -36,7 +36,8 @@
       "app/static/**",
       "app/bin/**",
       "assets/**",
-      "website/**"
+      "website/**",
+      "bin/**"
     ]
   },
   "babel": {
@@ -155,6 +156,7 @@
     "eslint-config-xo-react": "0.10.0",
     "eslint-plugin-react": "6.7.1",
     "husky": "0.13.4",
+    "node-gyp": "3.6.2",
     "redux-logger": "3.0.6",
     "spectron": "3.6.4",
     "webpack": "2.6.1",

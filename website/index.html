@@ -677,6 +677,23 @@
         <p>You can also take a look at
           <a href="https://github.com/bnb/awesome-hyper">Awesome Hyper</a>
           for a curated list of plugins and resources.</p>
+          
+          <h2 id="keymaps"><a href="#keymaps">Keymaps</a></h2>
+    
+          <P> All command keys can be changed. In order to change them, edit 
+             <code>~/.hyper.js</code> and add your desired change to <code>keymaps</code>.
+           </p>
+           <p> Then Hyper will change the default with your custom change.</p>
+           <p> Example: <code>'window:devtools': 'Cmd+Alt+O'</code> <p>
+             <pre><code>module.exports = {
+  config: { /*... */ },
+
+  keymaps: {
+    'window:devtools': 'cmd+alt+o'
+  }
+
+};</code></pre>
+  
 
         <h2 id="cfg"><a href="#cfg">Configuration</a></h2>
 
