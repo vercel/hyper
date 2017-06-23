@@ -223,8 +223,7 @@ function toDependencies(plugins) {
 }
 
 function install(fn) {
-  const appDir = (process.mainModule.filename.indexOf('app.asar') === -1) ? 'app' : 'app.asar.unpacked';
-  const yarnPath = resolve(__dirname, '..', appDir, 'bin', 'yarn-standalone.js');
+  const yarnPath = resolve(__dirname, '..', 'bin', 'yarn-standalone.js');
 
   const env = {
     NODE_ENV: 'production',

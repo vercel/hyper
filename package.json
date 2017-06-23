@@ -75,9 +75,7 @@
   "build": {
     "appId": "co.zeit.hyper",
     "asar": true,
-    "asarUnpack": [
-      "bin"
-    ],
+    "extraResources": "./bin/yarn-standalone.js",
     "linux": {
       "target": [
         {
