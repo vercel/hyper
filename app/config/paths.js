@@ -8,6 +8,10 @@ const cfgFile = '.hyper.js';
 const defaultCfgFile = 'config-default.js';
 const homeDir = homedir();
 
+if (process.platform === 'win32') {
+    homeDir = resolve (homeDir, 'AppData\\Roaming\\Hyper');
+}
+
 let cfgPath = join(homeDir, cfgFile);
 let cfgDir = homeDir;
 
