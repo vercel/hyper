@@ -223,27 +223,24 @@ function toDependencies(plugins) {
 }
 
 function install(fn) {
-  const yarnPath = resolve(__dirname, '..', 'bin', 'yarn-standalone.js');
-
-  const env = {
-    NODE_ENV: 'production',
-    ELECTRON_RUN_AS_NODE: 'true'
-  };
-
   function yarn(args, cb) {
-    spawnQueue.push(end => {
-      const fullcmd = [process.execPath, yarnPath].concat(args).join(' ');
-      console.log('Launching yarn:', fullcmd);
+    const yarnPath = resolve(__dirname, '..', 'bin', 'yarn-standalone.js');
+    const env = {
+      NODE_ENV: 'production',
+      ELECTRON_RUN_AS_NODE: 'true'
+    };
 
-      cp.exec(fullcmd, {
+    spawnQueue.push(end => {
+      const cmd = [process.execPath, yarnPath].concat(args).join(' ');
+      console.log('Launching yarn:', cmd);
+
+      cp.exec(cmd, {
         cwd: path,
         env,
         shell: true,
-        timeout: 1000 * 60 * 5,
+        timeout: ms('5m'),
         stdio: ['ignore', 'ignore', 'inherit']
       }, err => {
-        console.log('Done!');
-
         if (err) {
           cb(err);
         } else {
