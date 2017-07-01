@@ -1,3 +1,4 @@
+const fs = require('fs');
 const vm = require('vm');
 const notify = require('../notify');
 
@@ -14,6 +15,7 @@ const _syntaxValidation = function (cfg) {
   try {
     return new vm.Script(cfg, {filename: '.hyper.js', displayErrors: true});
   } catch (err) {
+    notify(`Configuration Error! Please fix ~/.hyper.js!`);
     notify(`Error loading config: ${err.name}, see DevTools for more info`);
     console.error('Error loading config:', err);
     return;
@@ -39,6 +41,10 @@ const _init = function (cfg) {
     // Ignore undefined values in plugin and localPlugins array Issue #1862
     _cfg.plugins = (_cfg.plugins && _cfg.plugins.filter(Boolean)) || [];
     _cfg.localPlugins = (_cfg.localPlugins && _cfg.localPlugins.filter(Boolean)) || [];
+    if (!fs.existsSync(_cfg.config.shell)) {
+      notify('Could not find shell at ' + _cfg.config.shell + '. Reverting to default shell.');
+      _cfg.config.shell = '';
+    }
     return _cfg;
   }
   return _extractDefault(cfg.defaultCfg);
