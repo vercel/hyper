@@ -15,7 +15,6 @@ const _syntaxValidation = function (cfg) {
   try {
     return new vm.Script(cfg, {filename: '.hyper.js', displayErrors: true});
   } catch (err) {
-    notify(`Configuration Error! Please fix ~/.hyper.js!`);
     notify(`Error loading config: ${err.name}, see DevTools for more info`);
     console.error('Error loading config:', err);
     return;
