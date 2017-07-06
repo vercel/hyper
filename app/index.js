@@ -40,7 +40,7 @@ const {homedir} = require('os');
 
 // Packages
 const {parse: parseUrl} = require('url');
-const {app, BrowserWindow, shell, Menu} = require('electron');
+const {app, BrowserWindow, shell, Menu, systemPreferences} = require('electron');
 const {gitDescribe} = require('git-describe');
 const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
@@ -213,6 +213,10 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         AutoUpdater(win);
       } else {
         console.log('ignoring auto updates during dev');
+      }
+      // Disable accent pop-up
+      if (process.platform === 'darwin') {
+        systemPreferences.setUserDefault('ApplePressAndHoldEnabled', 'boolean', false);
       }
     });
 
