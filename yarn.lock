@@ -3225,10 +3225,6 @@ husky@0.13.4:
     is-ci "^1.0.9"
     normalize-path "^1.0.0"
 
-hyper-xterm-tmp@2.8.0:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/hyper-xterm-tmp/-/hyper-xterm-tmp-2.8.0.tgz#79b9e3577677bf5280eb5eb3439c0f40cb89e46e"
-
 hyphenate-style-name@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz#31160a36930adaf1fc04c6074f7eb41465d4ec4b"
@@ -6364,6 +6360,10 @@ xtend@~2.1.1:
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-2.1.2.tgz#6efecc2a4dad8e6962c4901b337ce7ba87b5d28b"
   dependencies:
     object-keys "~0.4.0"
+
+xterm@2.8.1:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/xterm/-/xterm-2.8.1.tgz#3f6b939bcb8d015a1f247d66257102cb16a0b2e1"
 
 y18n@^3.2.1:
   version "3.2.1"
