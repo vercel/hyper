@@ -1,8 +1,8 @@
 ![](https://github.com/zeit/art/blob/525bd1bb39d97dd3b91c976106a6d5cc5766b678/hyper/repo-banner.png)
 
-[![Build Status](https://travis-ci.org/zeit/hyper.svg?branch=master)](https://travis-ci.org/zeit/hyper)
-[![Build status](https://ci.appveyor.com/api/projects/status/txg5qb0x35h0h65p/branch/master?svg=true)](https://ci.appveyor.com/project/appveyor-zeit/hyper/branch/master)
-[![Slack Channel](https://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
+[![macOS CI status](https://travis-ci.org/zeit/hyper.svg?branch=master)](https://travis-ci.org/zeit/hyper)
+[![Windows CI status](https://ci.appveyor.com/api/projects/status/kqvb4oa772an58sc?svg=true)](https://ci.appveyor.com/project/zeit/hyper)
+[![Slack Channel](http://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
 [![Changelog #213](https://img.shields.io/badge/changelog-%23213-lightgrey.svg)](https://changelog.com/213)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 
@@ -23,6 +23,8 @@ If you're on windows, you can use [chocolatey](https://chocolatey.org/) to insta
 ```bash
 choco install hyper
 ```
+Note: the version of hyper available from chocolatey may not be the latest. Consider using the direct download link, https://hyper-updates.now.sh/download/win
+
 
 ## Contribute
 
@@ -42,7 +44,9 @@ yarn run dist
 
 After that, you'll see the binary in the `./dist` folder!
 
-### node-pty issues
+#### Known issues that can happen during development
+
+##### Error building `node-pty`
 
 If after building during development you get an alert dialog related to `node-pty` issues,
 make sure its build process is working correctly by running `yarn run rebuild-node-pty`.
@@ -50,9 +54,14 @@ make sure its build process is working correctly by running `yarn run rebuild-no
 If you're on macOS, this typically is related to Xcode issues (like not having agreed
 to the Terms of Service by running `sudo xcodebuild` after a fresh Xcode installation).
 
+##### Error with `codesign` on macOS when running `yarn run dist`
+
+If you have issues in the `codesign` step when running `yarn run dist` on macOS, you can temporarily disable code signing locally by setting
+`export CSC_IDENTITY_AUTO_DISCOVERY=false` for the current terminal session.
+
 ## Related Repositories
 
 - [Art](https://github.com/zeit/art/tree/master/hyper)
-- [Website](https://github.com/zeit/hyper-website)
+- [Website](website/)
 - [Sample Extension](https://github.com/zeit/hyperpower)
 - [Sample Theme](https://github.com/zeit/hyperyellow)

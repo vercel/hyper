@@ -316,6 +316,7 @@
       #content table {
         width: 100%;
         border-collapse: collapse;
+        margin-bottom: 20px;
       }
 
       #content td > table {
@@ -510,6 +511,7 @@
         #content table {
           margin-left: 0;
           margin-right: 0;
+          margin-bottom: 20px;
         }
 
         #content table td {
@@ -604,35 +606,35 @@
           <tr>
             <td><b>macOS</b> (.dmg)</td>
             <td id="td-mac-os" colspan="2">
-              <a href="https://hyper-updates.now.sh/download/mac">DOWNLOAD <img src="static/download-icon.svg"/></a>
+              <a href="https://hyper-latest.now.sh/latest/dmg">DOWNLOAD <img src="static/download-icon.svg"/></a>
             </td>
           </tr>
           <tr>
             <td><b>Windows</b> (.exe)</td>
             <td class="soon">COMING SOON</td>
             <td id="td-win">
-              <a href="https://hyper-updates.now.sh/download/win">DOWNLOAD <img src="static/download-icon.svg"/></a>
+              <a href="https://hyper-latest.now.sh/latest/exe">DOWNLOAD <img src="static/download-icon.svg"/></a>
             </td>
           </tr>
           <tr>
             <td><b>Debian</b> (.deb)</td>
             <td class="soon">COMING SOON</td>
             <td id="td-debian">
-              <a href="https://hyper-updates.now.sh/download/linux_deb">DOWNLOAD <img src="static/download-icon.svg"/></a>
+              <a href="https://hyper-latest.now.sh/latest/deb">DOWNLOAD <img src="static/download-icon.svg"/></a>
             </td>
           </tr>
           <tr>
             <td><b>Fedora</b> (.rpm)</td>
             <td class="soon">COMING SOON</td>
             <td id="td-fedora">
-              <a href="https://hyper-updates.now.sh/download/linux_rpm">DOWNLOAD <img src="static/download-icon.svg"/></a>
+              <a href="https://hyper-latest.now.sh/latest/rpm">DOWNLOAD <img src="static/download-icon.svg"/></a>
             </td>
           </tr>
           <tr>
             <td><b>Other Linux distros</b> (.AppImage)</td>
             <td class="soon">COMING SOON</td>
             <td id="td-appimage" colspan="2">
-              <a href="https://github.com/zeit/hyper/releases/download/1.3.1/hyper-1.3.0-x86_64-linux.AppImage">DOWNLOAD <img src="static/download-icon.svg"/></a>
+              <a href="https://hyper-latest.now.sh/latest/AppImage">DOWNLOAD <img src="static/download-icon.svg"/></a>
             </td>
           </tr>
         </table>
@@ -675,6 +677,23 @@
         <p>You can also take a look at
           <a href="https://github.com/bnb/awesome-hyper">Awesome Hyper</a>
           for a curated list of plugins and resources.</p>
+          
+          <h2 id="keymaps"><a href="#keymaps">Keymaps</a></h2>
+    
+          <P> All command keys can be changed. In order to change them, edit 
+             <code>~/.hyper.js</code> and add your desired change to <code>keymaps</code>.
+           </p>
+           <p> Then Hyper will change the default with your custom change.</p>
+           <p> Example: <code>'window:devtools': 'Cmd+Alt+O'</code> <p>
+             <pre><code>module.exports = {
+  config: { /*... */ },
+
+  keymaps: {
+    'window:devtools': 'cmd+alt+o'
+  }
+
+};</code></pre>
+  
 
         <h2 id="cfg"><a href="#cfg">Configuration</a></h2>
 
@@ -833,7 +852,7 @@
         extend <code>Hyper</code> is that of its underlying open
         source libraries.</p>
 
-        <p>Your module has to expose at least one of these methods:.</p>
+        <p>Your module has to expose at least one of these methods:</p>
 
         <table class="api">
           <thead>
@@ -947,27 +966,11 @@
               </td>
             </tr>
             <tr>
-              <td><code>onRendererLoad</code></td>
+              <td><code>onRendererWindow</code></td>
               <td>Renderer</td>
               <td>
                 <p>Invoked when a plugin is first loaded or subsequently
                 reloaded in each window.</p>
-                <p>Parameters:</p>
-                <table>
-                  <tr>
-                    <tbody>
-                      <td><code>window</code></td>
-                      <td>The window object</td>
-                    </tbody>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td><code>onRendererUnload</code></td>
-              <td>Renderer</td>
-              <td>
-                <p>Invoked when a plugin is being unloaded.</p>
                 <p>Parameters:</p>
                 <table>
                   <tr>
@@ -1259,7 +1262,16 @@
     &lt;/Tabs&gt;
   &lt;/Header&gt;
   &lt;Terms&gt;
-    &lt;Term /&gt; ...
+    &lt;TermGroup&gt;
+      &lt;SplitPane&gt;
+        &lt;TermGroup&gt;
+          &lt;Term /&gt; ...
+        &lt;/TermGroup&gt;
+        &lt;TermGroup&gt;
+          &lt;Term /&gt; ...
+        &lt;/TermGroup&gt;
+      &lt;/TermGroup&gt;
+    &lt;/SplitPane&gt;
   &lt;/Terms&gt;
   &lt;Notifications&gt;
     &lt;Notification /&gt; ...
@@ -1308,15 +1320,28 @@
           </tbody>
         </table>
 
+
+        <p>Your higher order component can supply a <code>onDecorated</code>
+        property to the decorated component to get a reference to its instance.</p>
+
         <p>We encourage you to maintain compatibility with other decorators.
-        Since many can be set, don't assume that yours is the only one.
-        For example, if you're passing children, compose potential existing
+        Since many can be set, don't assume that yours is the only one.<p>
+
+        <p>For example, if you're passing children, compose potential existing
         values:</p>
 
         <pre><code>render () {
   const customChildren = Array.from(this.props.customChildren)
     .concat(&lt;p&gt;My new child&lt;/p&gt;);
   return &lt;Tab {...this.props} customChildren={customChildren} /&gt;
+}</code></pre>
+
+        <p>Or if you use <code>onDecorated</code> property</p>
+        <pre><code>onDecorated (term) {
+  this.term = term;
+  if (this.props.onDecorated) {
+    this.props.onDecorated(term);
+  }
 }</code></pre>
 
 
@@ -1610,7 +1635,7 @@ exports.mapTermsState = (state, map) => {
             downloadButtonText.innerHTML += ' for <strong>Fedora</strong>';
             document.getElementById('td-fedora').classList.add('highlighted');
           } else {
-            downloadButton.setAttribute('href', 'https://github.com/zeit/hyper/releases/download/1.2.0/hyper-1.3.1-x86_64-linux.AppImage');
+            downloadButton.setAttribute('href', 'https://hyper-latest.now.sh/latest/AppImage');
             downloadButtonText.innerHTML += ' for <strong>Linux</strong>';
             document.getElementById('td-appimage').classList.add('highlighted');
           }

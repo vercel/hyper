@@ -10,6 +10,7 @@ const shellEnv = require('shell-env');
 
 const config = require('./config');
 const notify = require('./notify');
+const _keys = require('./config/keymaps');
 
 // local storage
 const cache = new Config();
@@ -30,7 +31,8 @@ const availableExtensions = new Set([
   'mapHyperTermState', 'mapTermsState',
   'mapHeaderState', 'mapNotificationsState',
   'mapHyperTermDispatch', 'mapTermsDispatch',
-  'mapHeaderDispatch', 'mapNotificationsDispatch'
+  'mapHeaderDispatch', 'mapNotificationsDispatch',
+  'extendKeymaps'
 ]);
 
 // init plugin directories if not present
@@ -159,6 +161,10 @@ function clearCache() {
 
 exports.updatePlugins = updatePlugins;
 
+exports.getLoadedPluginVersions = function () {
+  return modules.map(mod => ({name: mod._name, version: mod._version}));
+};
+
 // we schedule the initial plugins update
 // a bit after the user launches the terminal
 // to prevent slowness
@@ -237,8 +243,8 @@ function install(fn) {
     /* eslint-enable camelcase  */
     // Shell-specific installation commands
     const installCommands = {
-      fish: 'npm prune; and npm install --production',
-      posix: 'npm prune && npm install --production'
+      fish: 'npm prune; and npm install --production --no-shrinkwrap',
+      posix: 'npm prune && npm install --production --no-shrinkwrap'
     };
     // determine the shell we're running in
     const whichShell = (typeof cfgShell === 'string' && cfgShell.match(/fish/)) ? 'fish' : 'posix';
@@ -307,6 +313,13 @@ function requirePlugins() {
 
       // populate the name for internal errors here
       mod._name = basename(path);
+      try {
+        // eslint-disable-next-line import/no-dynamic-require
+        mod._version = require(resolve(path, 'package.json')).version;
+      } catch (err) {
+        console.warn(`No package.json found in ${path}`);
+      }
+      console.log(`Plugin ${mod._name} (${mod._version}) loaded.`);
 
       return mod;
     } catch (err) {
@@ -353,6 +366,15 @@ function decorateObject(base, key) {
 
   return decorated;
 }
+
+exports.extendKeymaps = function () {
+  modules.forEach(plugin => {
+    if (plugin.extendKeymaps) {
+      const keys = _keys.extend(plugin.extendKeymaps());
+      config.extendKeymaps(keys);
+    }
+  });
+};
 
 exports.decorateMenu = function (tpl) {
   return decorateObject(tpl, 'decorateMenu');
