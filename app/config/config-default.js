@@ -29,7 +29,7 @@ module.exports = {
     borderColor: '#333',
 
     // change font-weight
-    fontWeight: 600,
+    fontWeight: 'bold',
 
     // custom css to embed in the main window
     css: '',
