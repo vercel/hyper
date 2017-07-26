@@ -63,6 +63,8 @@ config.setup();
 const plugins = require('./plugins');
 const Session = require('./session');
 
+const Window = require('./ui/window');
+
 const windowSet = new Set([]);
 
 // expose to plugins
@@ -159,7 +161,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
       acceptFirstMouse: true
     };
     const browserOptions = plugins.getDecoratedBrowserOptions(browserDefaults);
-
+    const hwin = new Window();
     const win = new BrowserWindow(browserOptions);
     windowSet.add(win);
 
