@@ -1,16 +1,13 @@
 const {app, BrowserWindow, shell, Menu} = require('electron');
-const {isAbsolute} = require('path');
 const {parse: parseUrl} = require('url');
 const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
-const AutoUpdater = require('../auto-updater');
-const toElectronBackgroundColor = require('../utils/to-electron-background-color');
-const {icon, cfgDir} = require('../config/paths');
-const createRPC = require('../rpc');
+const {icon} = require('../config/paths');
 const notify = require('../notify');
-const fetchNotifications = require('../notifications');
-const Session = require('../session');
+const toElectronBackgroundColor = require('./utils/to-electron-background-color');
+const Invoker = require('./com/invoker');
+const {parser} = require('./com/parser');
 
 module.exports = class Window {
   constructor(options, cfg, fn) {
@@ -28,15 +25,17 @@ module.exports = class Window {
       acceptFirstMouse: true
     }, options);
     const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(opts));
-    const rpc = createRPC(window);
+    window.uid = uuid.v4();
     const sessions = new Map();
+    const invoker = new Invoker(window);
+    parser(window, cfg, fn);
 
     // config changes
     const cfgUnsubscribe = app.config.subscribe(() => {
       const cfg_ = app.plugins.getDecoratedConfig();
 
       // notify renderer
-      this.webContents.send('config change');
+      window.webContents.send('config change');
 
       // notify user that shell changes require new sessions
       if (cfg_.shell !== cfg.shell ||
@@ -50,117 +49,25 @@ module.exports = class Window {
       // update background color if necessary
       cfg = cfg_;
     });
-
-    rpc.on('init', () => {
-      window.setBackgroundColor(toElectronBackgroundColor(cfg.backgroundColor || '#000'));
-      window.show();
-
-      // If no callback is passed to createWindow,
-      // a new session will be created by default.
-      if (!fn) {
-        fn = win => win.rpc.emit('termgroup add req');
-      }
-
-      // app.windowCallback is the createWindow callback
-      // that can be set before the 'ready' app event
-      // and createWindow deifinition. It's executed in place of
-      // the callback passed as parameter, and deleted right after.
-      (app.windowCallback || fn)(window);
-      delete (app.windowCallback);
-      fetchNotifications(window);
-      // auto updates
-      if (!isDev && process.platform !== 'linux') {
-        AutoUpdater(window);
-      } else {
-        console.log('ignoring auto updates during dev');
-      }
-    });
-
-    rpc.on('new', options => {
-      const opts = Object.assign({
-        rows: 40,
-        cols: 100,
-        cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : cfgDir,
-        splitDirection: undefined,
-        shell: cfg.shell,
-        shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
-      }, options);
-
-      const initSession = (opts, fn) => {
-        fn(uuid.v4(), new Session(opts));
-      };
-
-      initSession(opts, (uid, session) => {
-        sessions.set(uid, session);
-        rpc.emit('session add', {
-          rows: opts.rows,
-          cols: opts.cols,
-          uid,
-          splitDirection: opts.splitDirection,
-          shell: session.shell,
-          pid: session.pty.pid
-        });
-
-        session.on('data', data => {
-          rpc.emit('session data', uid + data);
-        });
-
-        session.on('exit', () => {
-          rpc.emit('session exit', {uid});
-        });
-      });
-    });
-    rpc.on('exit', ({uid}) => {
-      const session = sessions.get(uid);
-      if (session) {
-        session.exit();
-      } else {
-        console.log('session not found by', uid);
-      }
-    });
-    rpc.on('unmaximize', () => {
-      window.unmaximize();
-    });
-    rpc.on('maximize', () => {
-      window.maximize();
-    });
-    rpc.on('minimize', () => {
-      window.minimize();
-    });
-    rpc.on('resize', ({uid, cols, rows}) => {
-      const session = sessions.get(uid);
-      session.resize({cols, rows});
-    });
-    rpc.on('data', ({uid, data, escaped}) => {
-      const session = sessions.get(uid);
-
-      if (escaped) {
-        const escapedData = session.shell.endsWith('cmd.exe') ?
-        `"${data}"` : // This is how cmd.exe does it
-        `'${data.replace(/'/g, `'\\''`)}'`; // Inside a single-quoted string nothing is interpreted
-
-        session.write(escapedData);
-      } else {
-        session.write(data);
-      }
-    });
-    rpc.on('open external', ({url}) => {
+    invoker.on('open external', ({url}) => {
       shell.openExternal(url);
     });
-    rpc.on('open hamburger menu', ({x, y}) => {
+    invoker.on('open hamburger menu', ({x, y}) => {
       Menu.getApplicationMenu().popup(Math.ceil(x), Math.ceil(y));
     });
     // Same deal as above, grabbing the window titlebar when the window
     // is maximized on Windows results in unmaximize, without hitting any
     // app buttons
     for (const ev of ['maximize', 'unmaximize', 'minimize', 'restore']) {
-      window.on(ev, () => rpc.emit('windowGeometry change'));
+      window.on(ev, () => {
+        invoker.emit('windowGeometry change');
+      });
     }
-    rpc.win.on('move', () => {
-      rpc.emit('move');
+    window.on('move', () => {
+      invoker.emit('move');
     });
-    rpc.on('close', () => {
-      this.close();
+    invoker.on('close', () => {
+      window.close();
     });
     const deleteSessions = () => {
       sessions.forEach((session, key) => {
@@ -187,15 +94,15 @@ module.exports = class Window {
 
         const path = fileUriToPath(url);
 
-        rpc.emit('session data send', {data: path, escaped: true});
+        invoker.emit('session data send', {data: path, escaped: true});
       } else if (protocol === 'http:' || protocol === 'https:') {
         event.preventDefault();
-        rpc.emit('session data send', {data: url});
+        invoker.emit('session data send', {data: url});
       }
     });
 
     // expose internals to extension authors
-    window.rpc = rpc;
+    window.rpc = invoker;
     window.sessions = sessions;
 
     const load = () => {
@@ -226,7 +133,7 @@ module.exports = class Window {
     // the window can be closed by the browser process itself
     window.clean = () => {
       app.config.winRecord(window);
-      rpc.destroy();
+      invoker.destroy();
       deleteSessions();
       cfgUnsubscribe();
       pluginsUnsubscribe();
