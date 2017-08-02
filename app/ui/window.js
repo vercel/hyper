@@ -13,8 +13,8 @@ const fetchNotifications = require('../notifications');
 const Session = require('../session');
 
 module.exports = class Window extends BrowserWindow {
-  constructor(opts, cfg, fn) {
-    opts = Object.assign({
+  constructor(options, cfg, fn) {
+    const opts = Object.assign({
       minWidth: 370,
       minHeight: 190,
       backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
@@ -26,9 +26,9 @@ module.exports = class Window extends BrowserWindow {
       icon,
       show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
       acceptFirstMouse: true
-    }, opts);
-    opts = app.plugins.getDecoratedBrowserOptions(opts);
-    super(opts);
+    }, options);
+    const modOpts = app.plugins.getDecoratedBrowserOptions(opts);
+    super(modOpts);
     const rpc = createRPC(this);
     const sessions = new Map();
 
@@ -77,15 +77,15 @@ module.exports = class Window extends BrowserWindow {
       }
     });
 
-    rpc.on('new', opts => {
-      opts = Object.assign({
+    rpc.on('new', options => {
+      const opts = Object.assign({
         rows: 40,
         cols: 100,
         cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : cfgDir,
         splitDirection: undefined,
         shell: cfg.shell,
         shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
-      }, opts);
+      }, options);
 
       const initSession = (opts, fn) => {
         fn(uuid.v4(), new Session(opts));
