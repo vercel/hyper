@@ -137,7 +137,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
     // the window can be closed by the browser process itself
     hwin.on('close', () => {
       hwin.clean();
-      windowSet.delete(this);
+      windowSet.delete(hwin);
     });
 
     hwin.on('closed', () => {

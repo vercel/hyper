@@ -27,8 +27,7 @@ module.exports = class Window {
       show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
       acceptFirstMouse: true
     }, options);
-    const modOpts = app.plugins.getDecoratedBrowserOptions(opts);
-    const window = new BrowserWindow(modOpts);
+    const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(opts));
     const rpc = createRPC(window);
     const sessions = new Map();
 
