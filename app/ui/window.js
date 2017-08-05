@@ -12,7 +12,7 @@ const notify = require('../notify');
 const fetchNotifications = require('../notifications');
 const Session = require('../session');
 
-module.exports = class Window extends BrowserWindow {
+module.exports = class Window {
   constructor(options, cfg, fn) {
     const opts = Object.assign({
       minWidth: 370,
@@ -28,8 +28,8 @@ module.exports = class Window extends BrowserWindow {
       acceptFirstMouse: true
     }, options);
     const modOpts = app.plugins.getDecoratedBrowserOptions(opts);
-    super(modOpts);
-    const rpc = createRPC(this);
+    const window = new BrowserWindow(modOpts);
+    const rpc = createRPC(window);
     const sessions = new Map();
 
     // config changes
@@ -53,8 +53,8 @@ module.exports = class Window extends BrowserWindow {
     });
 
     rpc.on('init', () => {
-      this.setBackgroundColor(toElectronBackgroundColor(cfg.backgroundColor || '#000'));
-      this.show();
+      window.setBackgroundColor(toElectronBackgroundColor(cfg.backgroundColor || '#000'));
+      window.show();
 
       // If no callback is passed to createWindow,
       // a new session will be created by default.
@@ -66,12 +66,12 @@ module.exports = class Window extends BrowserWindow {
       // that can be set before the 'ready' app event
       // and createWindow deifinition. It's executed in place of
       // the callback passed as parameter, and deleted right after.
-      (app.windowCallback || fn)(this);
+      (app.windowCallback || fn)(window);
       delete (app.windowCallback);
-      fetchNotifications(this);
+      fetchNotifications(window);
       // auto updates
       if (!isDev && process.platform !== 'linux') {
-        AutoUpdater(this);
+        AutoUpdater(window);
       } else {
         console.log('ignoring auto updates during dev');
       }
@@ -120,13 +120,13 @@ module.exports = class Window extends BrowserWindow {
       }
     });
     rpc.on('unmaximize', () => {
-      this.unmaximize();
+      window.unmaximize();
     });
     rpc.on('maximize', () => {
-      this.maximize();
+      window.maximize();
     });
     rpc.on('minimize', () => {
-      this.minimize();
+      window.minimize();
     });
     rpc.on('resize', ({uid, cols, rows}) => {
       const session = sessions.get(uid);
@@ -155,7 +155,7 @@ module.exports = class Window extends BrowserWindow {
     // is maximized on Windows results in unmaximize, without hitting any
     // app buttons
     for (const ev of ['maximize', 'unmaximize', 'minimize', 'restore']) {
-      this.on(ev, () => rpc.emit('windowGeometry change'));
+      window.on(ev, () => rpc.emit('windowGeometry change'));
     }
     rpc.win.on('move', () => {
       rpc.emit('move');
@@ -173,7 +173,7 @@ module.exports = class Window extends BrowserWindow {
     // we reset the rpc channel only upon
     // subsequent refreshes (ie: F5)
     let i = 0;
-    this.webContents.on('did-navigate', () => {
+    window.webContents.on('did-navigate', () => {
       if (i++) {
         deleteSessions();
       }
@@ -181,7 +181,7 @@ module.exports = class Window extends BrowserWindow {
 
     // If file is dropped onto the terminal window, navigate event is prevented
     // and his path is added to active session.
-    this.webContents.on('will-navigate', (event, url) => {
+    window.webContents.on('will-navigate', (event, url) => {
       const protocol = typeof url === 'string' && parseUrl(url).protocol;
       if (protocol === 'file:') {
         event.preventDefault();
@@ -196,11 +196,11 @@ module.exports = class Window extends BrowserWindow {
     });
 
     // expose internals to extension authors
-    this.rpc = rpc;
-    this.sessions = sessions;
+    window.rpc = rpc;
+    window.sessions = sessions;
 
     const load = () => {
-      app.plugins.onWindow(this);
+      app.plugins.onWindow(window);
     };
 
     // load plugins
@@ -217,16 +217,16 @@ module.exports = class Window extends BrowserWindow {
     // which one of the existing window is the last focused.
     // Works nicely even if a window is closed and removed.
     const updateFocusTime = () => {
-      this.focusTime = process.uptime();
+      window.focusTime = process.uptime();
     };
 
-    this.on('focus', () => {
+    window.on('focus', () => {
       updateFocusTime();
     });
 
     // the window can be closed by the browser process itself
-    this.clean = () => {
-      app.config.winRecord(this);
+    window.clean = () => {
+      app.config.winRecord(window);
       rpc.destroy();
       deleteSessions();
       cfgUnsubscribe();
@@ -235,5 +235,7 @@ module.exports = class Window extends BrowserWindow {
     // Ensure focusTime is set on window open. The focus event doesn't
     // fire from the dock (see bug #583)
     updateFocusTime();
+
+    return window;
   }
 };
