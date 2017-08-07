@@ -32,6 +32,7 @@ module.exports = {
         NODE_ENV: JSON.stringify(nodeEnv)
       }
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new Copy([
       {
         from: './assets',
