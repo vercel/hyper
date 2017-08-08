@@ -7,6 +7,9 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
 
 module.exports = {
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   devtool: isProd ? 'hidden-source-map' : 'cheap-module-source-map',
   entry: './lib/index.js',
   output: {
@@ -14,7 +17,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
