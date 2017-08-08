@@ -102,6 +102,7 @@ module.exports = class Window {
     });
 
     // expose internals to extension authors
+    // keep rpc for backward compatibility
     window.rpc = invoker;
     window.sessions = sessions;
 
