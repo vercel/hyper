@@ -208,7 +208,7 @@ module.exports = class Window {
     const pluginsUnsubscribe = app.plugins.subscribe(err => {
       if (!err) {
         load();
-        this.webContents.send('plugins change');
+        window.webContents.send('plugins change');
       }
     });
 
