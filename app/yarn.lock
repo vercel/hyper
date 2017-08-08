@@ -263,9 +263,9 @@ node-fetch@1.6.3:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-pty@0.6.6:
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/node-pty/-/node-pty-0.6.6.tgz#7f507148f917aa809a714c2864d98f0e6d3afcd6"
+node-pty@0.6.10:
+  version "0.6.10"
+  resolved "https://registry.yarnpkg.com/node-pty/-/node-pty-0.6.10.tgz#b7d355bb2002d16e14c3c353e58c48f7ee131a67"
   dependencies:
     nan "2.5.0"
 
