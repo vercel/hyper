@@ -160,7 +160,7 @@ module.exports = class Window {
       rpc.emit('move');
     });
     rpc.on('close', () => {
-      this.close();
+      window.close();
     });
     const deleteSessions = () => {
       sessions.forEach((session, key) => {
