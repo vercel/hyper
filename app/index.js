@@ -51,6 +51,7 @@ const {resolve} = require('path');
 const {app, BrowserWindow, Menu} = require('electron');
 const {gitDescribe} = require('git-describe');
 const isDev = require('electron-is-dev');
+const AutoUpdater = require('./auto-updater');
 
 const AppMenu = require('./menus/menu');
 const config = require('./config');
@@ -209,6 +210,9 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 }).catch(err => {
   console.error('Error while loading devtools extensions', err);
 }));
+
+// auto updates
+AutoUpdater.start();
 
 app.on('open-file', (event, path) => {
   const lastWindow = app.getLastFocusedWindow();

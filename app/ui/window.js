@@ -4,7 +4,6 @@ const {parse: parseUrl} = require('url');
 const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
-const AutoUpdater = require('../auto-updater');
 const toElectronBackgroundColor = require('../utils/to-electron-background-color');
 const {icon, cfgDir} = require('../config/paths');
 const createRPC = require('../rpc');
@@ -69,11 +68,11 @@ module.exports = class Window {
       delete (app.windowCallback);
       fetchNotifications(window);
       // auto updates
-      if (!isDev && process.platform !== 'linux') {
-        AutoUpdater(window);
-      } else {
-        console.log('ignoring auto updates during dev');
-      }
+      // if (process.platform !== 'linux') {
+      //   AutoUpdater(window);
+      // } else {
+      //   console.log('ignoring auto updates during dev');
+      // }
     });
 
     rpc.on('new', options => {
