@@ -36,7 +36,7 @@ module.exports = class Window {
       const cfg_ = app.plugins.getDecoratedConfig();
 
       // notify renderer
-      this.webContents.send('config change');
+      window.webContents.send('config change');
 
       // notify user that shell changes require new sessions
       if (cfg_.shell !== cfg.shell ||
