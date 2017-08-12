@@ -11,6 +11,7 @@
   "repository": "zeit/hyper",
   "xo": false,
   "dependencies": {
+    "chokidar": "1.7.0",
     "color": "0.11.3",
     "convert-css-color-name-to-hex": "0.1.1",
     "default-shell": "1.0.1",
@@ -18,7 +19,6 @@
     "electron-is-dev": "0.1.1",
     "electron-squirrel-startup": "1.0.0",
     "file-uri-to-path": "0.0.2",
-    "gaze": "1.1.2",
     "git-describe": "3.0.2",
     "mkdirp": "0.5.1",
     "ms": "0.7.1",
