@@ -9,6 +9,19 @@ if (['--help', '-v', '--version'].includes(process.argv[1])) {
   process.exit();
 }
 
+const checkSquirrel = () => {
+  let squirrel;
+
+  try {
+    squirrel = require('electron-squirrel-startup');
+  } catch (err) {}
+
+  if (squirrel) {
+    // eslint-disable-next-line unicorn/no-process-exit
+    process.exit();
+  }
+};
+
 // handle startup squirrel events
 if (process.platform === 'win32') {
   // eslint-disable-next-line import/order
@@ -18,19 +31,16 @@ if (process.platform === 'win32') {
     case '--squirrel-install':
     case '--squirrel-updated':
       systemContextMenu.add(() => {
-        // eslint-disable-next-line curly, unicorn/no-process-exit
-        if (require('electron-squirrel-startup')) process.exit();
+        checkSquirrel();
       });
       break;
     case '--squirrel-uninstall':
       systemContextMenu.remove(() => {
-        // eslint-disable-next-line curly, unicorn/no-process-exit
-        if (require('electron-squirrel-startup')) process.exit();
+        checkSquirrel();
       });
       break;
     default:
-      // eslint-disable-next-line curly, unicorn/no-process-exit
-      if (require('electron-squirrel-startup')) process.exit();
+      checkSquirrel();
   }
 }
 
