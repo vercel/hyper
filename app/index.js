@@ -10,13 +10,14 @@ if (['--help', '-v', '--version'].includes(process.argv[1])) {
 }
 
 const checkSquirrel = () => {
-  let squirrel
+  let squirrel;
 
   try {
-    squirrel = require('electron-squirrel-startup')
+    squirrel = require('electron-squirrel-startup');
   } catch (err) {}
 
   if (squirrel) {
+    // eslint-disable-next-line unicorn/no-process-exit
     process.exit();
   }
 }
