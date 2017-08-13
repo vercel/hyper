@@ -7,14 +7,17 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
 
 module.exports = {
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   devtool: isProd ? 'hidden-source-map' : 'cheap-module-source-map',
   entry: './lib/index.js',
   output: {
-    path: path.join(__dirname, 'app', 'dist'),
+    path: path.join(__dirname, 'app', 'renderer'),
     filename: 'bundle.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -32,6 +35,7 @@ module.exports = {
         NODE_ENV: JSON.stringify(nodeEnv)
       }
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new Copy([
       {
         from: './assets',
