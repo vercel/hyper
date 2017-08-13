@@ -143,10 +143,10 @@
     "babel-preset-babili": "0.1.4",
     "babel-preset-react": "6.24.1",
     "copy-webpack-plugin": "4.0.1",
-    "cross-env": "5.0.1",
-    "electron": "1.6.12",
-    "electron-builder": "19.19.1",
-    "electron-builder-squirrel-windows": "19.19.1",
+    "cross-env": "5.0.5",
+    "electron": "1.7.5",
+    "electron-builder": "19.20.1",
+    "electron-builder-squirrel-windows": "19.21.1",
     "electron-devtools-installer": "2.2.0",
     "electron-rebuild": "1.6.0",
     "eslint-config-xo-react": "0.10.0",
@@ -154,7 +154,7 @@
     "husky": "0.14.3",
     "node-gyp": "3.6.2",
     "redux-logger": "3.0.6",
-    "spectron": "3.6.4",
+    "spectron": "3.7.2",
     "webpack": "3.4.1",
     "xo": "0.17.1"
   }
