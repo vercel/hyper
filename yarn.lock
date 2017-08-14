@@ -3210,9 +3210,9 @@ hosted-git-info@^2.1.4, hosted-git-info@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.5.0.tgz#6d60e34b3abbc8313062c3b798ef8d901a07af3c"
 
-hterm-umdjs@1.1.3:
-  version "1.1.3+1.58.sha.15ed490"
-  resolved "https://registry.yarnpkg.com/hterm-umdjs/-/hterm-umdjs-1.1.3.tgz#8b57bcaded5ba9541d6c8e32a82b34abb93e885e"
+hterm-umdjs@1.2.0:
+  version "1.2.0+1.63.sha.a543c06"
+  resolved "https://registry.yarnpkg.com/hterm-umdjs/-/hterm-umdjs-1.2.0.tgz#c6bb793f60669f17619a06b113db1bc14c2065cd"
 
 http-signature@~1.1.0:
   version "1.1.1"
