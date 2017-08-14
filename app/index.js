@@ -155,6 +155,8 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
         app.quit();
       }
     });
+
+    return hwin;
   }
 
   // when opening create a new window
