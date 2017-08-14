@@ -1,12 +1,13 @@
-const {exec} = require('child_process');
+const {app, dialog} = require('electron');
 const {resolve, basename} = require('path');
 const {writeFileSync} = require('fs');
-
-const {app, dialog} = require('electron');
+const cp = require('child_process');
 const {sync: mkdirpSync} = require('mkdirp');
 const Config = require('electron-config');
 const ms = require('ms');
-const shellEnv = require('shell-env');
+const queue = require('queue');
+
+const spawnQueue = queue({concurrency: 1});
 
 const config = require('./config');
 const notify = require('./notify');
@@ -18,6 +19,7 @@ const cache = new Config();
 // modules path
 const path = resolve(config.getConfigDir(), '.hyper_plugins');
 const localPath = resolve(path, 'local');
+const cachePath = resolve(path, 'cache');
 const availableExtensions = new Set([
   'onApp', 'onWindow', 'onRendererWindow', 'onUnload', 'middleware',
   'reduceUI', 'reduceSessions', 'reduceTermGroups',
@@ -79,17 +81,10 @@ function updatePlugins({force = false} = {}) {
 
     if (err) {
       console.error(err.stack);
-      if (/not a recognized/.test(err.message) || /command not found/.test(err.message)) {
-        notify(
-          'Error updating plugins.',
-          'We could not find the `npm` command. Make sure it\'s in $PATH'
-        );
-      } else {
-        notify(
-          'Error updating plugins.',
-          'Check `~/.hyper_plugins/npm-debug.log` for more information.'
-        );
-      }
+      notify(
+        'Error updating plugins.',
+        err.message
+      );
     } else {
       // flag successful plugin update
       cache.set('hyper.plugins', id_);
@@ -228,46 +223,44 @@ function toDependencies(plugins) {
 }
 
 function install(fn) {
-  const {shell: cfgShell, npmRegistry} = exports.getDecoratedConfig();
-
-  const shell = cfgShell && cfgShell !== '' ? cfgShell : undefined;
-
-  shellEnv(shell).then(env => {
-    if (npmRegistry) {
-      env.NPM_CONFIG_REGISTRY = npmRegistry;
-    }
-    /* eslint-disable camelcase  */
-    env.npm_config_runtime = 'electron';
-    env.npm_config_target = process.versions.electron;
-    env.npm_config_disturl = 'https://atom.io/download/atom-shell';
-    /* eslint-enable camelcase  */
-    // Shell-specific installation commands
-    const installCommands = {
-      fish: 'npm prune; and npm install --production --no-shrinkwrap',
-      posix: 'npm prune && npm install --production --no-shrinkwrap'
-    };
-    // determine the shell we're running in
-    const whichShell = (typeof cfgShell === 'string' && cfgShell.match(/fish/)) ? 'fish' : 'posix';
-    const execOptions = {
-      cwd: path,
-      env
+  function yarn(args, cb) {
+    const yarnPath = resolve(__dirname, '..', 'bin', 'yarn-standalone.js');
+    const env = {
+      NODE_ENV: 'production',
+      ELECTRON_RUN_AS_NODE: 'true'
     };
 
-    // https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback
-    // node.js requires command line parsing should be compatible with cmd.exe on Windows, should able to accept `/d /s /c`
-    // but most custom shell doesn't. Instead, falls back to default shell
-    if (process.platform !== 'win32') {
-      execOptions.shell = shell;
-    }
+    spawnQueue.push(end => {
+      const cmd = [process.execPath, yarnPath].concat(args).join(' ');
+      console.log('Launching yarn:', cmd);
 
-    // Use the install command that is appropriate for our shell
-    exec(installCommands[whichShell], execOptions, err => {
-      if (err) {
-        return fn(err);
-      }
-      fn(null);
+      cp.exec(cmd, {
+        cwd: path,
+        env,
+        shell: true,
+        timeout: ms('5m'),
+        stdio: ['ignore', 'ignore', 'inherit']
+      }, err => {
+        if (err) {
+          cb(err);
+        } else {
+          cb(null);
+        }
+
+        end();
+        spawnQueue.start();
+      });
     });
-  }).catch(fn);
+
+    spawnQueue.start();
+  }
+
+  yarn(['install', '--no-emoji', '--no-lockfile', '--cache-folder', cachePath], err => {
+    if (err) {
+      return fn(err);
+    }
+    fn(null);
+  });
 }
 
 exports.subscribe = function (fn) {

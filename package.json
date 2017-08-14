@@ -34,6 +34,7 @@
       "build/**",
       "app/dist/**",
       "app/static/**",
+      "app/bin/**",
       "assets/**",
       "website/**",
       "bin/**"
@@ -74,6 +75,7 @@
   "build": {
     "appId": "co.zeit.hyper",
     "asar": true,
+    "extraResources": "./bin/yarn-standalone.js",
     "linux": {
       "target": [
         {
