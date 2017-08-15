@@ -81,18 +81,18 @@ module.exports = class Window {
     rpc.on('tab', options => {
       const tab = new Tab(uuid.v4(), window);
       rpc.emit('tab created', {uid: tab.uid});
-      const _I = this.tabs.size;
-      this.activeTab = _I;
+      const _index = this.tabs.size;
+      this.activeTab = _index;
       tab.main(options, cfg);
-      this.tabs.set(_I, tab);
+      this.tabs.set(_index, tab);
     });
 
     rpc.on('close tab', () => {
-      const _I = this.activeTab;
+      const _index = this.activeTab;
       const activeTab = this.tabs.get(this.activeTab);
       activeTab.close();
       this.tabs.delete(this.activeTab);
-      this.activeTab = _I - 1;
+      this.activeTab = _index - 1;
       const _activeTab = this.tabs.get(this.activeTab);
       rpc.emit('tab change', _activeTab);
     });
@@ -106,12 +106,12 @@ module.exports = class Window {
       const session = sessions.get(uid);
       if (session) {
         session.exit();
-        const _I = this.activeTab;
-        const activeTab = this.tabs.get(_I);
+        const _index = this.activeTab;
+        const activeTab = this.tabs.get(_index);
         activeTab.removePane(uid);
         if (activeTab.panes.size === 0) {
-          this.tabs.delete(_I);
-          this.activeTab = _I - 1;
+          this.tabs.delete(_index);
+          this.activeTab = _index - 1;
           const _activeTab = this.tabs.get(this.activeTab);
           rpc.emit('tab change', _activeTab);
         }
