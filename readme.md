@@ -25,7 +25,7 @@ If you're on windows, you can use [chocolatey](https://chocolatey.org/) to insta
 choco install hyper
 ```
 
-**Note:** The version available on [Homebrew Cask](https://caskroom.github.io/) or [Chocolatey](https://chocolatey.org) may not be the latest. Please consider downloading it from [here](https://hyper-updates.now.sh/download/win) if that's the case.
+**Note:** The version available on [Homebrew Cask](https://caskroom.github.io/) or [Chocolatey](https://chocolatey.org) may not be the latest. Please consider downloading it from [here](https://releases.hyper.is/download/win) if that's the case.
 
 
 ## Contribute
