@@ -1,16 +1,15 @@
 const {app, BrowserWindow, shell, Menu} = require('electron');
-const {isAbsolute} = require('path');
 const {parse: parseUrl} = require('url');
 const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 const AutoUpdater = require('../auto-updater');
 const toElectronBackgroundColor = require('../utils/to-electron-background-color');
-const {icon, cfgDir} = require('../config/paths');
+const {icon} = require('../config/paths');
 const createRPC = require('../rpc');
 const notify = require('../notify');
 const fetchNotifications = require('../notifications');
-const Session = require('../session');
+const Tab = require('./tab');
 
 module.exports = class Window {
   constructor(options, cfg, fn) {
@@ -28,6 +27,9 @@ module.exports = class Window {
       acceptFirstMouse: true
     }, options);
     const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(opts));
+    this.tabs = new Map();
+    this.activeTab = undefined;
+    this.cfg = cfg;
     const rpc = createRPC(window);
     const sessions = new Map();
 
@@ -76,48 +78,48 @@ module.exports = class Window {
       }
     });
 
-    rpc.on('new', options => {
-      const opts = Object.assign({
-        rows: 40,
-        cols: 100,
-        cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : cfgDir,
-        splitDirection: undefined,
-        shell: cfg.shell,
-        shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
-      }, options);
-
-      const initSession = (opts, fn) => {
-        fn(uuid.v4(), new Session(opts));
-      };
-
-      initSession(opts, (uid, session) => {
-        sessions.set(uid, session);
-        rpc.emit('session add', {
-          rows: opts.rows,
-          cols: opts.cols,
-          uid,
-          splitDirection: opts.splitDirection,
-          shell: session.shell,
-          pid: session.pty.pid
-        });
-
-        session.on('data', data => {
-          rpc.emit('session data', uid + data);
-        });
-
-        session.on('exit', () => {
-          rpc.emit('session exit', {uid});
-        });
-      });
+    rpc.on('tab', options => {
+      const tab = new Tab(uuid.v4(), window);
+      rpc.emit('tab created', {uid: tab.uid});
+      const _I = this.tabs.size;
+      this.activeTab = _I;
+      tab.main(options, cfg);
+      this.tabs.set(_I, tab);
     });
+
+    rpc.on('close tab', () => {
+      const _I = this.activeTab;
+      const activeTab = this.tabs.get(this.activeTab);
+      activeTab.close();
+      this.tabs.delete(this.activeTab);
+      this.activeTab = _I - 1;
+      const _activeTab = this.tabs.get(this.activeTab);
+      rpc.emit('tab change', _activeTab);
+    });
+
+    rpc.on('pane', options => {
+      const activeTab = this.tabs.get(this.activeTab);
+      activeTab.split(options, cfg);
+    });
+
     rpc.on('exit', ({uid}) => {
       const session = sessions.get(uid);
       if (session) {
         session.exit();
+        const _I = this.activeTab;
+        const activeTab = this.tabs.get(_I);
+        activeTab.removePane(uid);
+        if (activeTab.panes.size === 0) {
+          this.tabs.delete(_I);
+          this.activeTab = _I - 1;
+          const _activeTab = this.tabs.get(this.activeTab);
+          rpc.emit('tab change', _activeTab);
+        }
       } else {
         console.log('session not found by', uid);
       }
     });
+
     rpc.on('unmaximize', () => {
       window.unmaximize();
     });
