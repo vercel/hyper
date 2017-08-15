@@ -15,27 +15,26 @@ const start = () => {
     });
 
     autoUpdater.setFeedURL(`${FEED_URL}/${version}`);
-
-    const win = app.getLastFocusedWindow();
-
     setInterval(() => {
       autoUpdater.checkForUpdates();
     }, ms('30m'));
 
-    if (win) {
-      const {rpc} = win;
-      const onupdate = (ev, releaseNotes, releaseName) => {
-        rpc.emit('update available', {releaseNotes, releaseName});
-      };
+    app.getWindows().forEach(win => {
+      if (win) {
+        const {rpc} = win;
+        const onupdate = (ev, releaseNotes, releaseName) => {
+          rpc.emit('update available', {releaseNotes, releaseName});
+        };
 
-      rpc.once('quit and install', () => {
-        autoUpdater.quitAndInstall();
-      });
+        rpc.once('quit and install', () => {
+          autoUpdater.quitAndInstall();
+        });
 
-      win.on('close', () => {
-        autoUpdater.removeListener('update-downloaded', onupdate);
-      });
-    }
+        win.on('close', () => {
+          autoUpdater.removeListener('update-downloaded', onupdate);
+        });
+      }
+    });
   } else {
     console.log('ignoring auto updates during dev');
   }
