@@ -67,12 +67,6 @@ module.exports = class Window {
       (app.windowCallback || fn)(window);
       delete (app.windowCallback);
       fetchNotifications(window);
-      // auto updates
-      // if (process.platform !== 'linux') {
-      //   AutoUpdater(window);
-      // } else {
-      //   console.log('ignoring auto updates during dev');
-      // }
     });
 
     rpc.on('new', options => {
