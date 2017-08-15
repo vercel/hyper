@@ -27,7 +27,6 @@ choco install hyper
 
 **Note:** The version available on [Homebrew Cask](https://caskroom.github.io/) or [Chocolatey](https://chocolatey.org) may not be the latest. Please consider downloading it from [here](https://hyper.is/#installation) if that's the case.
 
-
 ## Contribute
 
 1. Install the dependencies
