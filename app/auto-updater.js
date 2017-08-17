@@ -15,9 +15,13 @@ const start = () => {
     });
 
     autoUpdater.setFeedURL(`${FEED_URL}/${version}`);
-    setInterval(() => {
-      autoUpdater.checkForUpdates();
-    }, ms('30m'));
+    autoUpdater.checkForUpdates();
+
+    autoUpdater.on('checking-for-update', () => {
+      setInterval(() => {
+        autoUpdater.checkForUpdates();
+      }, ms('30m'));
+    });
 
     app.getWindows().forEach(win => {
       if (win) {
@@ -25,6 +29,8 @@ const start = () => {
         const onupdate = (ev, releaseNotes, releaseName) => {
           rpc.emit('update available', {releaseNotes, releaseName});
         };
+
+        autoUpdater.on('update-downloaded', onupdate);
 
         rpc.once('quit and install', () => {
           autoUpdater.quitAndInstall();
