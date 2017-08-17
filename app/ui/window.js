@@ -28,7 +28,6 @@ module.exports = class Window {
     }, options);
     const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(opts));
     this.tabs = new Map();
-    // this.tabs = new Set([]);
     this.activeTab = undefined;
     this.cfg = cfg;
     const rpc = createRPC(window);
@@ -82,16 +81,13 @@ module.exports = class Window {
     rpc.on('tab', options => {
       const _index = this.tabs.size;
       const tab = new Tab({uid: uuid.v4(), position: _index}, window);
-      console.log('_tab', tab.position, ' ; ', tab.uid);
       rpc.emit('tab created', {uid: tab.uid, position: tab.position});
       this.activeTab = _index;
       tab.main(options, cfg);
       this.tabs.set(_index, tab);
-      // this.tabs.add(tab);
     });
 
     rpc.on('change tab', ({position}) => {
-      console.log('change tab: ', position);
       const _activeTab = this.tabs.get(position);
       this.activeTab = position;
       rpc.emit('tab change', _activeTab);
@@ -99,81 +95,23 @@ module.exports = class Window {
 
     rpc.on('close tab', () => {
       const _index = this.activeTab;
-      console.log('close tab ', _index);
       const _activeTab = this.tabs.get(_index);
-      console.log('_index ', _index, '_activeTab ', _activeTab.uid );
       _activeTab.close();
       this.tabs.delete(this.activeTab);
       let _position = 0;
       const reorder = new Map();
-      this.tabs.forEach((tab, key) => {
+      this.tabs.forEach(tab => {
         tab.position = _position;
         reorder.set(_position, tab);
         rpc.emit('tab position', {uid: tab.uid, position: tab.position});
         _position++;
-        console.log('_tab POS', tab.position, ' ; ', tab.uid);
       });
       this.tabs = reorder;
       if (_index > 0) {
         this.changeTab = _index - 1;
       }
       const _active = this.tabs.get(this.changeTab);
-      console.log('_index ', this.changeTab, '_activeTab ', _active.uid );
-      rpc.emit('tab change', _activeTab);
-      this.tabs.forEach((tab, key) => {    console.log('_tab TEST', tab.position, ' ; ', tab.uid)});
-      // this.tabs.forEach((tab) => {
-      //   if (tab.position === _index) {
-      //     this.tabs.delete(tab);
-      //   } else {
-      //     tab.position = _position;
-      //     _position++;  
-      //   }
-        // console.log('close tab ', tab.position);
-        // if(i >= size) {
-        //   this.tabs.delete(i);
-        //   return;
-        // }
-        // tab.position = i;
-        // this.tabs.set(i, tab);
-        // i++;
-        // console.log('_tab', tab.position, ' ; ', tab.uid,'origin: ', key);
-      // });
-      // 
-      // this.tabs.forEach((tab) => {
-      //   console.log('_tab', tab.position, ' ; ', tab.uid);
-      // });
-      // const _index = this.activeTab;
-      // let position = _index;
-      // console.log(_index);
-      // const activeTab = this.tabs.get(this.activeTab);
-      // console.log('_index ', _index, '_activeTab ', activeTab.uid );
-      // activeTab.close();
-      // this.tabs.delete(this.activeTab);
-      // if (_index === 0) {
-      //   this.activeTab = _index + 1;
-      // } else {
-      //   this.activeTab = _index - 1;
-      // }
-      // console.log('_index ', _index );
-      // console.log('position ', position );
-      // let i = 0;
-      // const size = this.tabs.size;
-      // this.tabs.forEach((tab, key) => {
-      //   if(i >= size) {
-      //     this.tabs.delete(i);
-      //     return;
-      //   }
-      //   tab.position = i;
-      //   this.tabs.set(i, tab);
-      //   i++;
-      //   console.log('_tab', tab.position, ' ; ', tab.uid,'origin: ', key);
-      // });
-      // this.tabs.forEach((tab, key) => {
-      //   console.log('_tab', tab.position, ' ; ', tab.uid);
-      // });
-      // const _activeTab = this.tabs.get(this.activeTab);
-      // console.log('_index ', _index, '_activeTab ', _activeTab.uid );
-      // rpc.emit('tab change', _activeTab);
+      rpc.emit('tab change', _active);
     });
 
     rpc.on('pane', options => {
@@ -187,26 +125,24 @@ module.exports = class Window {
         session.exit();
         const _index = this.activeTab;
         const _activeTab = this.tabs.get(_index);
-        console.log('_index ', _index, '_activeTab ', _activeTab.uid );
         _activeTab.removePane(uid);
         if (_activeTab.panes.size === 0) {
-            this.tabs.delete(_index);
-            let _position = 0;
-            const reorder = new Map();
-            this.tabs.forEach((tab, key) => {
-              tab.position = _position;
-              reorder.set(_position, tab);
-              rpc.emit('tab position', {uid: tab.uid, position: tab.position});
-              _position++;
-              console.log('_tab POS', tab.position, ' ; ', tab.uid);
-            });
-            this.tabs = reorder;
-            if (_index > 0) {
-              this.changeTab = _index - 1;
-            }
-            const _active = this.tabs.get(this.changeTab);
-            console.log('_index ', this.changeTab, '_activeTab ', _active.uid );
-            rpc.emit('tab change', _active);
+          this.tabs.delete(_index);
+          rpc.emit('tab exit', {uid: _activeTab.uid});
+          let _position = 0;
+          const reorder = new Map();
+          this.tabs.forEach(tab => {
+            tab.position = _position;
+            reorder.set(_position, tab);
+            rpc.emit('tab position', {uid: tab.uid, position: tab.position});
+            _position++;
+          });
+          this.tabs = reorder;
+          if (_index > 0) {
+            this.changeTab = _index - 1;
+          }
+          const _active = this.tabs.get(this.changeTab);
+          rpc.emit('tab change', _active);
         }
       } else {
         console.log('session not found by', uid);
