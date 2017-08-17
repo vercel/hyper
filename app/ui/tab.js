@@ -4,8 +4,9 @@ const {cfgDir} = require('../config/paths');
 const Pane = require('./pane');
 
 module.exports = class Tab {
-  constructor(uid, window) {
+  constructor({uid, position}, window) {
     this.uid = uid;
+    this.position = position;
     this.head = undefined;
     this.panes = new Map();
     this.activePane = undefined;
