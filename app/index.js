@@ -212,7 +212,7 @@ app.on('ready', () => installDevExtensions(isDev).then(() => {
 }));
 
 // auto updates
-AutoUpdater.start();
+AutoUpdater.initialize();
 
 app.on('open-file', (event, path) => {
   const lastWindow = app.getLastFocusedWindow();

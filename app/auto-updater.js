@@ -8,7 +8,7 @@ const {version} = require('./package');
 const {platform} = process;
 const FEED_URL = `https://releases.hyper.is/update/${platform}`;
 
-const start = () => {
+const initialize = () => {
   if (!isDev && process.platform !== 'linux') {
     autoUpdater.on('error', (err, msg) => {
       console.error('Error fetching updates', msg + ' (' + err.stack + ')');
@@ -47,5 +47,5 @@ const start = () => {
 };
 
 module.exports = {
-  start
+  initialize
 };
