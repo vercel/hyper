@@ -604,37 +604,37 @@
             <td style="width: 33.333%">64-bit</td>
           </tr>
           <tr>
-            <td><b>macOS</b> (.dmg)</td>
+            <td><b>macOS</b> (.app)</td>
             <td id="td-mac-os" colspan="2">
-              <a href="https://latest.hyper.is/latest/dmg">DOWNLOAD <img src="static/download-icon.svg"/></a>
+              <a href="https://releases.hyper.is/download/mac">DOWNLOAD <img src="static/download-icon.svg"/></a>
             </td>
           </tr>
           <tr>
             <td><b>Windows</b> (.exe)</td>
             <td class="soon">COMING SOON</td>
             <td id="td-win">
-              <a href="https://latest.hyper.is/latest/exe">DOWNLOAD <img src="static/download-icon.svg"/></a>
+              <a href="https://releases.hyper.is/download/win">DOWNLOAD <img src="static/download-icon.svg"/></a>
             </td>
           </tr>
           <tr>
             <td><b>Debian</b> (.deb)</td>
             <td class="soon">COMING SOON</td>
             <td id="td-debian">
-              <a href="https://latest.hyper.is/latest/deb">DOWNLOAD <img src="static/download-icon.svg"/></a>
+              <a href="https://releases.hyper.is/download/deb">DOWNLOAD <img src="static/download-icon.svg"/></a>
             </td>
           </tr>
           <tr>
             <td><b>Fedora</b> (.rpm)</td>
             <td class="soon">COMING SOON</td>
             <td id="td-fedora">
-              <a href="https://latest.hyper.is/latest/rpm">DOWNLOAD <img src="static/download-icon.svg"/></a>
+              <a href="https://releases.hyper.is/download/rpm">DOWNLOAD <img src="static/download-icon.svg"/></a>
             </td>
           </tr>
           <tr>
             <td><b>Other Linux distros</b> (.AppImage)</td>
             <td class="soon">COMING SOON</td>
             <td id="td-appimage" colspan="2">
-              <a href="https://latest.hyper.is/latest/AppImage">DOWNLOAD <img src="static/download-icon.svg"/></a>
+              <a href="https://releases.hyper.is/download/AppImage">DOWNLOAD <img src="static/download-icon.svg"/></a>
             </td>
           </tr>
         </table>
@@ -1615,27 +1615,27 @@ exports.mapTermsState = (state, map) => {
         var downloadButtonText = document.getElementById('download-button-text');
 
         if (/Mac/.test(userAgent) && !/iPhone/.test(userAgent) && !/iPad/.test(userAgent)) {
-          downloadButton.setAttribute('href', 'https://hyper-updates.now.sh/download/mac');
+          downloadButton.setAttribute('href', 'https://releases.hyper.is/download/mac');
           downloadButtonText.innerHTML += ' for <strong>macOS</strong>';
           document.getElementById('td-mac-os').classList.add('highlighted');
           document.getElementById('mac-os-icon').classList.remove('is-hidden');
         } else if (/Windows/.test(userAgent)) {
-          downloadButton.setAttribute('href', 'https://hyper-updates.now.sh/download/win');
+          downloadButton.setAttribute('href', 'https://releases.hyper.is/download/win');
           downloadButtonText.innerHTML += ' for <strong>Windows</strong>';
           document.getElementById('td-win').classList.add('highlighted');
           document.getElementById('windows-icon').classList.remove('is-hidden');
         } else if (/Linux/.test(userAgent) && !/Android/.test(userAgent)) {
           document.getElementById('linux-icon').classList.remove('is-hidden');
           if (/Ubuntu/.test(userAgent)) { // needs to be improved with other debian distros
-            downloadButton.setAttribute('href', 'https://hyper-updates.now.sh/download/linux_deb');
+            downloadButton.setAttribute('href', 'https://releases.hyper.is/download/deb');
             downloadButtonText.innerHTML += ' for <strong>Debian</strong>';
             document.getElementById('td-debian').classList.add('highlighted');
           } else if (/Fedora/.test(userAgent)) {
-            downloadButton.setAttribute('href', 'https://hyper-updates.now.sh/download/linux_rpm');
+            downloadButton.setAttribute('href', 'https://releases.hyper.is/download/rpm');
             downloadButtonText.innerHTML += ' for <strong>Fedora</strong>';
             document.getElementById('td-fedora').classList.add('highlighted');
           } else {
-            downloadButton.setAttribute('href', 'https://latest.hyper.is/latest/AppImage');
+            downloadButton.setAttribute('href', 'https://releases.hyper.is/download/AppImage');
             downloadButtonText.innerHTML += ' for <strong>Linux</strong>';
             document.getElementById('td-appimage').classList.add('highlighted');
           }
