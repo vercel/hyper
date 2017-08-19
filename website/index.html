@@ -1615,27 +1615,27 @@ exports.mapTermsState = (state, map) => {
         var downloadButtonText = document.getElementById('download-button-text');
 
         if (/Mac/.test(userAgent) && !/iPhone/.test(userAgent) && !/iPad/.test(userAgent)) {
-          downloadButton.setAttribute('href', 'https://hyper-updates.now.sh/download/mac');
+          downloadButton.setAttribute('href', 'https://releases.hyper.is/download/mac');
           downloadButtonText.innerHTML += ' for <strong>macOS</strong>';
           document.getElementById('td-mac-os').classList.add('highlighted');
           document.getElementById('mac-os-icon').classList.remove('is-hidden');
         } else if (/Windows/.test(userAgent)) {
-          downloadButton.setAttribute('href', 'https://hyper-updates.now.sh/download/win');
+          downloadButton.setAttribute('href', 'https://releases.hyper.is/download/win');
           downloadButtonText.innerHTML += ' for <strong>Windows</strong>';
           document.getElementById('td-win').classList.add('highlighted');
           document.getElementById('windows-icon').classList.remove('is-hidden');
         } else if (/Linux/.test(userAgent) && !/Android/.test(userAgent)) {
           document.getElementById('linux-icon').classList.remove('is-hidden');
           if (/Ubuntu/.test(userAgent)) { // needs to be improved with other debian distros
-            downloadButton.setAttribute('href', 'https://hyper-updates.now.sh/download/linux_deb');
+            downloadButton.setAttribute('href', 'https://releases.hyper.is/download/deb');
             downloadButtonText.innerHTML += ' for <strong>Debian</strong>';
             document.getElementById('td-debian').classList.add('highlighted');
           } else if (/Fedora/.test(userAgent)) {
-            downloadButton.setAttribute('href', 'https://hyper-updates.now.sh/download/linux_rpm');
+            downloadButton.setAttribute('href', 'https://releases.hyper.is/download/rpm');
             downloadButtonText.innerHTML += ' for <strong>Fedora</strong>';
             document.getElementById('td-fedora').classList.add('highlighted');
           } else {
-            downloadButton.setAttribute('href', 'https://latest.hyper.is/latest/AppImage');
+            downloadButton.setAttribute('href', 'https://releases.hyper.is/download/AppImage');
             downloadButtonText.innerHTML += ' for <strong>Linux</strong>';
             document.getElementById('td-appimage').classList.add('highlighted');
           }
