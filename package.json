@@ -74,7 +74,6 @@
   },
   "build": {
     "appId": "co.zeit.hyper",
-    "asar": true,
     "extraResources": "./bin/yarn-standalone.js",
     "linux": {
       "target": [
@@ -137,7 +136,6 @@
     "uuid": "3.0.1"
   },
   "devDependencies": {
-    "asar": "0.13.0",
     "ava": "0.17.0",
     "babel-cli": "6.24.1",
     "babel-core": "6.25.0",
