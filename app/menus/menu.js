@@ -17,10 +17,9 @@ const appVersion = app.getVersion();
 
 module.exports = (createWindow, updatePlugins, getLoadedPluginVersions) => {
   const config = getConfig();
-  const keymaps = getKeymaps();
+  const {commands} = getKeymaps();
 
   const updateChannel = config.canaryUpdates ? 'canary' : 'stable';
-  const commands = keymaps.commands;
 
   const showAbout = () => {
     const loadedPlugins = getLoadedPluginVersions();
