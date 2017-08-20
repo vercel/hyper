@@ -4,6 +4,10 @@
 
 module.exports = {
   config: {
+    // Choose either `false` for receiving highly polished,
+    // or `true` for less polished but more frequent updates
+    canaryUpdates: false,
+
     // default font size in pixels for all tabs
     fontSize: 12,
 
