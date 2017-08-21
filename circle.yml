@@ -17,7 +17,7 @@ deployment:
     branch: /.*/
     owner: zeit
     commands:
-      - yarn run dist -p 'never'
+      - yarn run dist -- -p 'never'
       - cp dist/*.zip $CIRCLE_ARTIFACTS
   release:
     tag: /.*/
