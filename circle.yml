@@ -15,10 +15,12 @@ test:
 deployment:
   artifacts:
     branch: /.*/
+    owner: zeit
     commands:
       - yarn run dist
       - cp dist/*.zip $CIRCLE_ARTIFACTS
   release:
     tag: /.*/
+    owner: zeit
     commands:
       - yarn run dist
