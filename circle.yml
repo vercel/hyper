@@ -1,14 +1,26 @@
 machine:
   xcode:
     version: 8.2
+  environment:
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+
+dependencies:
+  override:
+    - yarn
+  cache_directories:
+    - ~/.cache/yarn
+
+test:
+  override:
+    - yarn test
 
 deployment:
   artifacts:
     branch: /.*/
     commands:
-      - npm run dist
+      - yarn run dist
       - cp dist/mac/*.dmg $CIRCLE_ARTIFACTS
   release:
     tag: /.*/
     commands:
-      - npm run dist
+      - yarn run dist
