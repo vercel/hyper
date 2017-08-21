@@ -1,0 +1,13 @@
+machine:
+  node:
+    version: 8.2.0
+dependencies:
+  pre:
+    - sudo apt-get update; sudo apt-get install gcc-multilib g++-multilib libgnome-keyring-dev icnsutils graphicsmagick xz-utils rpm bsdtar snapd
+  override:
+    - yarn install
+deployment:
+  release:
+    tag: /.*/
+    commands:
+      - yarn run dist
