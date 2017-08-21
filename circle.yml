@@ -17,7 +17,7 @@ deployment:
     branch: /.*/
     commands:
       - yarn run dist
-      - cp dist/* $CIRCLE_ARTIFACTS
+      - cp dist/*.zip $CIRCLE_ARTIFACTS
   release:
     tag: /.*/
     commands:
