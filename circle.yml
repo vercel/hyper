@@ -7,8 +7,6 @@ dependencies:
     - npm install -g yarn
   override:
     - yarn
-  cache_directories:
-    - ~/.cache/yarn
 
 test:
   override:
@@ -19,7 +17,7 @@ deployment:
     branch: /.*/
     commands:
       - yarn run dist
-      - cp dist/mac/*.dmg $CIRCLE_ARTIFACTS
+      - cp dist/* $CIRCLE_ARTIFACTS
   release:
     tag: /.*/
     commands:
