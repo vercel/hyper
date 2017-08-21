@@ -1,0 +1,11 @@
+machine:
+  xcode:
+    version: 8.2
+dependencies:
+  override:
+    - yarn install
+deployment:
+  release:
+    tag: /.*/
+    commands:
+      - yarn run dist
