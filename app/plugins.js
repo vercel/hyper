@@ -1,30 +1,21 @@
 const {app, dialog} = require('electron');
 const {resolve, basename} = require('path');
 const {writeFileSync} = require('fs');
-const cp = require('child_process');
-const {sync: mkdirpSync} = require('mkdirp');
 const Config = require('electron-config');
 const ms = require('ms');
-const queue = require('queue');
-
-const spawnQueue = queue({concurrency: 1});
 
 const config = require('./config');
 const notify = require('./notify');
 const _keys = require('./config/keymaps');
 const {availableExtensions} = require('./plugins/extensions');
+const {install} = require('./plugins/install');
+const {plugs} = require('./config/paths');
 
 // local storage
 const cache = new Config();
 
-// modules path
-const path = resolve(config.getConfigDir(), '.hyper_plugins');
-const localPath = resolve(path, 'local');
-const cachePath = resolve(path, 'cache');
-
-// init plugin directories if not present
-mkdirpSync(path);
-mkdirpSync(localPath);
+const path = plugs.base;
+const localPath = plugs.local;
 
 // caches
 let plugins = config.getPlugins();
@@ -205,47 +196,6 @@ function toDependencies(plugins) {
     }
   });
   return obj;
-}
-
-function install(fn) {
-  function yarn(args, cb) {
-    const yarnPath = resolve(__dirname, '..', 'bin', 'yarn-standalone.js');
-    const env = {
-      NODE_ENV: 'production',
-      ELECTRON_RUN_AS_NODE: 'true'
-    };
-
-    spawnQueue.push(end => {
-      const cmd = [process.execPath, yarnPath].concat(args).join(' ');
-      console.log('Launching yarn:', cmd);
-
-      cp.exec(cmd, {
-        cwd: path,
-        env,
-        shell: true,
-        timeout: ms('5m'),
-        stdio: ['ignore', 'ignore', 'inherit']
-      }, err => {
-        if (err) {
-          cb(err);
-        } else {
-          cb(null);
-        }
-
-        end();
-        spawnQueue.start();
-      });
-    });
-
-    spawnQueue.start();
-  }
-
-  yarn(['install', '--no-emoji', '--no-lockfile', '--cache-folder', cachePath], err => {
-    if (err) {
-      return fn(err);
-    }
-    fn(null);
-  });
 }
 
 exports.subscribe = function (fn) {

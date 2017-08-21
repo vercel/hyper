@@ -1,5 +1,6 @@
 const {writeFileSync, readFileSync} = require('fs');
-const {defaultCfg, cfgPath} = require('./paths');
+const {sync: mkdirpSync} = require('mkdirp');
+const {defaultCfg, cfgPath, plugs} = require('./paths');
 const _init = require('./init');
 const _keymaps = require('./keymaps');
 
@@ -15,6 +16,10 @@ const _write = function (path, data) {
 };
 
 const _importConf = function () {
+  // init plugin directories if not present
+  mkdirpSync(plugs.base);
+  mkdirpSync(plugs.local);
+
   try {
     const _defaultCfg = readFileSync(defaultCfg, 'utf8');
     try {
