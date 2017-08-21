@@ -1,10 +1,13 @@
 machine:
   xcode:
     version: 8.2
-dependencies:
-  override:
-    - npm install
+
 deployment:
+  artifacts:
+    branch: /.*/
+    commands:
+      - npm run dist
+      - cp dist/mac/*.dmg $CIRCLE_ARTIFACTS
   release:
     tag: /.*/
     commands:
