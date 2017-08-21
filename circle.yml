@@ -3,9 +3,9 @@ machine:
     version: 8.2
 dependencies:
   override:
-    - yarn install
+    - npm install
 deployment:
   release:
     tag: /.*/
     commands:
-      - yarn run dist
+      - npm run dist
