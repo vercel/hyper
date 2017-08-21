@@ -1,10 +1,10 @@
 machine:
   xcode:
     version: 8.2
-  environment:
-    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
 
 dependencies:
+  pre:
+    - npm install -g yarn
   override:
     - yarn
   cache_directories:
