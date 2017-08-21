@@ -1,11 +1,26 @@
 machine:
   xcode:
     version: 8.2
+
 dependencies:
+  pre:
+    - npm install -g yarn
   override:
-    - yarn install
+    - yarn
+
+test:
+  override:
+    - yarn test
+
 deployment:
+  artifacts:
+    branch: /.*/
+    owner: zeit
+    commands:
+      - yarn run dist
+      - cp dist/*.zip $CIRCLE_ARTIFACTS
   release:
     tag: /.*/
+    owner: zeit
     commands:
       - yarn run dist
