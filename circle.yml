@@ -1,10 +1,15 @@
 machine:
   xcode:
     version: 8.2
+  pre:
+    - mkdir ~/.yarn-cache
 
 dependencies:
   pre:
     - npm install -g yarn
+    - yarn config set cache-folder ~/.yarn-cache
+  cache_directories:
+    - ~/.yarn-cache
   override:
     - yarn
 
