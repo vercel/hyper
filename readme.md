@@ -31,8 +31,9 @@ choco install hyper
 ## Contribute
 
 1. Install the dependencies
-  * If you are running Linux, install `icnsutils`, `graphicsmagick`, `xz-utils` and `rpm`
-  * If you are running Windows, install `windows-build-tools` with `yarn global add windows-build-tools`.
+  * If you are running Linux, install `icnsutils`, `graphicsmagick`, `xz-utils` `rpm` and `yarn`
+  * If you are running Windows, install `yarn` and `windows-build-tools` with `yarn global add windows-build-tools`.
+  * Yarn installation instructions: https://yarnpkg.com/en/docs/install
 2. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
 3. Install the dependencies: `yarn`
 4. Build the code and watch for changes: `yarn run dev`
