@@ -23,6 +23,8 @@ function init() {
     if (!content) {
       throw new Error('No config content loaded');
     }
+
+    return content
   });
 
   // Default to the "stable" update channel
