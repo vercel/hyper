@@ -1,6 +1,7 @@
 // Packages
 const {autoUpdater} = require('electron');
 const ms = require('ms');
+const retry = require('async-retry');
 
 // Utilities
 const notify = require('./notify'); // eslint-disable-line no-unused-vars
@@ -16,7 +17,13 @@ function init() {
     console.error('Error fetching updates', msg + ' (' + err.stack + ')');
   });
 
-  const config = getConfig();
+  const config = retry(() => {
+    const content = getConfig();
+
+    if (!content) {
+      throw new Error('No config content loaded');
+    }
+  });
 
   // Default to the "stable" update channel
   let canaryUpdates = false;
