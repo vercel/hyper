@@ -33,7 +33,7 @@
     },
     "ignores": [
       "build/**",
-      "app/dist/**",
+      "app/renderer/**",
       "app/static/**",
       "app/bin/**",
       "assets/**",
