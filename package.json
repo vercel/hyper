@@ -28,7 +28,8 @@
       "complexity": 0,
       "react/prop-types": 0,
       "react/jsx-no-bind": 0,
-      "linebreak-style": 0
+      "linebreak-style": 0,
+      "import/no-extraneous-dependencies": 0
     },
     "ignores": [
       "build/**",
