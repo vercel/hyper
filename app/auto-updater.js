@@ -24,7 +24,7 @@ function init() {
       throw new Error('No config content loaded');
     }
 
-    return content
+    return content;
   });
 
   // Default to the "stable" update channel
