@@ -14,6 +14,7 @@
     "chokidar": "1.7.0",
     "color": "0.11.3",
     "convert-css-color-name-to-hex": "0.1.1",
+    "deepmerge": "1.5.1",
     "default-shell": "1.0.1",
     "electron-config": "0.2.1",
     "electron-is-dev": "0.1.1",
