@@ -26,7 +26,7 @@ const _importConf = function () {
       const _cfgPath = readFileSync(cfgPath, 'utf8');
       return {userCfg: _cfgPath, defaultCfg: _defaultCfg};
     } catch (err) {
-      _write(cfgPath, defaultCfg);
+      _write(cfgPath, _defaultCfg);
       return {userCfg: {}, defaultCfg: _defaultCfg};
     }
   } catch (err) {
