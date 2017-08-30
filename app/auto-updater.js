@@ -17,7 +17,16 @@ function init() {
   });
 
   const config = getConfig();
-  const updatePrefix = config.canaryUpdates ? 'releases-canary' : 'releases';
+
+  // Default to the "stable" update channel
+  let canaryUpdates = false;
+
+  // If defined in the config, switch to the "canary" channel
+  if (config.updateChannel && config.updateChannel === 'canary') {
+    canaryUpdates = true;
+  }
+
+  const updatePrefix = canaryUpdates ? 'releases-canary' : 'releases';
   const feedURL = `https://${updatePrefix}.hyper.is/update/${platform}`;
 
   autoUpdater.setFeedURL(`${feedURL}/${version}`);
