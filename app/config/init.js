@@ -16,7 +16,6 @@ const _syntaxValidation = function (cfg) {
   } catch (err) {
     notify(`Error loading config: ${err.name}, see DevTools for more info`);
     console.error('Error loading config:', err);
-    return;
   }
 };
 
