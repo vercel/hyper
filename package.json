@@ -29,7 +29,10 @@
       "react/prop-types": 0,
       "react/jsx-no-bind": 0,
       "linebreak-style": 0,
-      "import/no-extraneous-dependencies": 0
+      "import/no-extraneous-dependencies": 0,
+      "capitalized-comments": 0,
+      "react/jsx-closing-tag-location": 0,
+      "react/jsx-closing-bracket-location": 0
     },
     "ignores": [
       "build/**",
