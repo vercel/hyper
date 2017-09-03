@@ -148,7 +148,7 @@
     "semver": "5.3.0",
     "style-loader": "^0.18.2",
     "uuid": "3.0.1",
-    "hyper-xterm-tmp": "2.8.0"
+    "xterm": "2.8.1"
   },
   "devDependencies": {
     "asar": "0.13.0",
