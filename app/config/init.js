@@ -1,5 +1,5 @@
 const vm = require('vm');
-const merge = require('merge');
+const merge = require('lodash/merge');
 const notify = require('../notify');
 
 const _extract = function (script) {
