@@ -3,12 +3,15 @@
 const {app} = require('electron');
 const {openConfig} = require('../../config');
 
-module.exports = function (commands) {
+module.exports = function (commands, showAbout) {
   return {
     label: `${app.getName()}`,
     submenu: [
       {
-        role: 'about'
+        label: 'About Hyper',
+        click() {
+          showAbout();
+        }
       },
       {
         type: 'separator'

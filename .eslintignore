@@ -1,6 +1,8 @@
 build
-app/dist
+app/renderer
 app/static
+app/bin
+app/node_modules
 assets
 website
-node_modules
+bin

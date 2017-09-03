@@ -15,6 +15,14 @@ const devDir = resolve(__dirname, '../..');
 const devCfg = join(devDir, cfgFile);
 const defaultCfg = resolve(__dirname, defaultCfgFile);
 
+const plugins = resolve(cfgDir, '.hyper_plugins');
+const plugs = {
+  base: plugins,
+  local: resolve(plugins, 'local'),
+  cache: resolve(plugins, 'cache')
+};
+const yarn = resolve(__dirname, '../../bin/yarn-standalone.js');
+
 const icon = resolve(__dirname, '../static/icon.png');
 
 const keymapPath = resolve(__dirname, '../keymaps');
@@ -44,5 +52,5 @@ if (isDev) {
 }
 
 module.exports = {
-  cfgDir, cfgPath, cfgFile, defaultCfg, icon, defaultPlatformKeyPath
+  cfgDir, cfgPath, cfgFile, defaultCfg, icon, defaultPlatformKeyPath, plugs, yarn
 };

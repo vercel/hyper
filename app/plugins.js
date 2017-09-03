@@ -1,43 +1,21 @@
-const {exec} = require('child_process');
+const {app, dialog} = require('electron');
 const {resolve, basename} = require('path');
 const {writeFileSync} = require('fs');
-
-const {app, dialog} = require('electron');
-const {sync: mkdirpSync} = require('mkdirp');
 const Config = require('electron-config');
 const ms = require('ms');
-const shellEnv = require('shell-env');
 
 const config = require('./config');
 const notify = require('./notify');
 const _keys = require('./config/keymaps');
+const {availableExtensions} = require('./plugins/extensions');
+const {install} = require('./plugins/install');
+const {plugs} = require('./config/paths');
 
 // local storage
 const cache = new Config();
 
-// modules path
-const path = resolve(config.getConfigDir(), '.hyper_plugins');
-const localPath = resolve(path, 'local');
-const availableExtensions = new Set([
-  'onApp', 'onWindow', 'onRendererWindow', 'onUnload', 'middleware',
-  'reduceUI', 'reduceSessions', 'reduceTermGroups',
-  'decorateMenu', 'decorateTerm', 'decorateHyper',
-  'decorateHyperTerm', // for backwards compatibility with hyperterm
-  'decorateHeader', 'decorateTerms', 'decorateTab',
-  'decorateNotification', 'decorateNotifications',
-  'decorateTabs', 'decorateConfig', 'decorateEnv',
-  'decorateTermGroup', 'decorateSplitPane', 'getTermProps',
-  'getTabProps', 'getTabsProps', 'getTermGroupProps',
-  'mapHyperTermState', 'mapTermsState',
-  'mapHeaderState', 'mapNotificationsState',
-  'mapHyperTermDispatch', 'mapTermsDispatch',
-  'mapHeaderDispatch', 'mapNotificationsDispatch',
-  'extendKeymaps'
-]);
-
-// init plugin directories if not present
-mkdirpSync(path);
-mkdirpSync(localPath);
+const path = plugs.base;
+const localPath = plugs.local;
 
 // caches
 let plugins = config.getPlugins();
@@ -79,17 +57,10 @@ function updatePlugins({force = false} = {}) {
 
     if (err) {
       console.error(err.stack);
-      if (/not a recognized/.test(err.message) || /command not found/.test(err.message)) {
-        notify(
-          'Error updating plugins.',
-          'We could not find the `npm` command. Make sure it\'s in $PATH'
-        );
-      } else {
-        notify(
-          'Error updating plugins.',
-          'Check `~/.hyper_plugins/npm-debug.log` for more information.'
-        );
-      }
+      notify(
+        'Error updating plugins.',
+        err.message
+      );
     } else {
       // flag successful plugin update
       cache.set('hyper.plugins', id_);
@@ -161,6 +132,10 @@ function clearCache() {
 
 exports.updatePlugins = updatePlugins;
 
+exports.getLoadedPluginVersions = function () {
+  return modules.map(mod => ({name: mod._name, version: mod._version}));
+};
+
 // we schedule the initial plugins update
 // a bit after the user launches the terminal
 // to prevent slowness
@@ -223,49 +198,6 @@ function toDependencies(plugins) {
   return obj;
 }
 
-function install(fn) {
-  const {shell: cfgShell, npmRegistry} = exports.getDecoratedConfig();
-
-  const shell = cfgShell && cfgShell !== '' ? cfgShell : undefined;
-
-  shellEnv(shell).then(env => {
-    if (npmRegistry) {
-      env.NPM_CONFIG_REGISTRY = npmRegistry;
-    }
-    /* eslint-disable camelcase  */
-    env.npm_config_runtime = 'electron';
-    env.npm_config_target = process.versions.electron;
-    env.npm_config_disturl = 'https://atom.io/download/atom-shell';
-    /* eslint-enable camelcase  */
-    // Shell-specific installation commands
-    const installCommands = {
-      fish: 'npm prune; and npm install --production --no-shrinkwrap',
-      posix: 'npm prune && npm install --production --no-shrinkwrap'
-    };
-    // determine the shell we're running in
-    const whichShell = (typeof cfgShell === 'string' && cfgShell.match(/fish/)) ? 'fish' : 'posix';
-    const execOptions = {
-      cwd: path,
-      env
-    };
-
-    // https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback
-    // node.js requires command line parsing should be compatible with cmd.exe on Windows, should able to accept `/d /s /c`
-    // but most custom shell doesn't. Instead, falls back to default shell
-    if (process.platform !== 'win32') {
-      execOptions.shell = shell;
-    }
-
-    // Use the install command that is appropriate for our shell
-    exec(installCommands[whichShell], execOptions, err => {
-      if (err) {
-        return fn(err);
-      }
-      fn(null);
-    });
-  }).catch(fn);
-}
-
 exports.subscribe = function (fn) {
   watchers.push(fn);
   return () => {
@@ -309,6 +241,13 @@ function requirePlugins() {
 
       // populate the name for internal errors here
       mod._name = basename(path);
+      try {
+        // eslint-disable-next-line import/no-dynamic-require
+        mod._version = require(resolve(path, 'package.json')).version;
+      } catch (err) {
+        console.warn(`No package.json found in ${path}`);
+      }
+      console.log(`Plugin ${mod._name} (${mod._version}) loaded.`);
 
       return mod;
     } catch (err) {

@@ -4,6 +4,10 @@
 
 module.exports = {
   config: {
+    // Choose either "stable" for receiving highly polished,
+    // or "canary" for less polished but more frequent updates
+    updateChannel: 'stable',
+
     // default font size in pixels for all tabs
     fontSize: 12,
 
@@ -116,5 +120,10 @@ module.exports = {
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
   // to load it and avoid it being `npm install`ed
-  localPlugins: []
+  localPlugins: [],
+
+  keymaps: {
+    // Example
+    // 'window:devtools': 'cmd+alt+o',
+  }
 };
