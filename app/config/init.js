@@ -1,5 +1,5 @@
 const vm = require('vm');
-const deepmerge = require('deepmerge');
+const merge = require('merge');
 const notify = require('../notify');
 
 const _extract = function (script) {
@@ -39,7 +39,7 @@ const _init = function (cfg) {
     }
 
     // Use options from default config  when not specified in user config #1588
-    _cfg.config = deepmerge(_extractDefault(cfg.defaultCfg).config, _cfg.config);
+    _cfg.config = merge(_extractDefault(cfg.defaultCfg).config, _cfg.config);
 
     // Ignore undefined values in plugin and localPlugins array Issue #1862
     _cfg.plugins = (_cfg.plugins && _cfg.plugins.filter(Boolean)) || [];
