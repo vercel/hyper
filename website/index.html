@@ -287,6 +287,10 @@
       #content h3:before {
         content: '### ';
       }
+      
+      #content h4:before {
+        content: '#### ';
+      }
 
       #content code {
         font: 12px Menlo, "DejaVu Sans Mono", "Lucida Console", monospace;
@@ -677,7 +681,7 @@
         <p>You can also take a look at
           <a href="https://github.com/bnb/awesome-hyper">Awesome Hyper</a>
           for a curated list of plugins and resources.</p>
-<!--
+
           <h2 id="keymaps"><a href="#keymaps">Keymaps</a></h2>
 
           <P> All command keys can be changed. In order to change them, edit
@@ -692,7 +696,7 @@
     'window:devtools': 'cmd+alt+o'
   }
 
-};</code></pre>-->
+};</code></pre>
 
 
         <h2 id="cfg"><a href="#cfg">Configuration</a></h2>
@@ -1217,6 +1221,9 @@
         <p>The user can hot-load and hot-reload plugins by pressing
         Command + R (refresh). Please strive to make plugins that don't
         require a complete restart of the application to work.</p>
+        
+        <h4>Notice</h4>
+        <p>Plugins affecting the `BrowserWindow` will the effect on new windows after hot-reload.</p>
 
         <p>In the future we might do this automatically.</p>
 

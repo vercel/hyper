@@ -19,7 +19,11 @@ module.exports = (createWindow, updatePlugins, getLoadedPluginVersions) => {
   const config = getConfig();
   const {commands} = getKeymaps();
 
-  const updateChannel = config.canaryUpdates ? 'canary' : 'stable';
+  let updateChannel = 'stable';
+
+  if (config && config.updateChannel && config.updateChannel === 'canary') {
+    updateChannel = 'canary';
+  }
 
   const showAbout = () => {
     const loadedPlugins = getLoadedPluginVersions();

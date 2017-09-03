@@ -1,6 +1,7 @@
 // Packages
 const {autoUpdater} = require('electron');
 const ms = require('ms');
+const retry = require('async-retry');
 
 // Utilities
 const notify = require('./notify'); // eslint-disable-line no-unused-vars
@@ -16,8 +17,25 @@ function init() {
     console.error('Error fetching updates', msg + ' (' + err.stack + ')');
   });
 
-  const config = getConfig();
-  const updatePrefix = config.canaryUpdates ? 'releases-canary' : 'releases';
+  const config = retry(() => {
+    const content = getConfig();
+
+    if (!content) {
+      throw new Error('No config content loaded');
+    }
+
+    return content;
+  });
+
+  // Default to the "stable" update channel
+  let canaryUpdates = false;
+
+  // If defined in the config, switch to the "canary" channel
+  if (config.updateChannel && config.updateChannel === 'canary') {
+    canaryUpdates = true;
+  }
+
+  const updatePrefix = canaryUpdates ? 'releases-canary' : 'releases';
   const feedURL = `https://${updatePrefix}.hyper.is/update/${platform}`;
 
   autoUpdater.setFeedURL(`${feedURL}/${version}`);

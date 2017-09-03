@@ -55,8 +55,6 @@ const isDev = require('electron-is-dev');
 const AppMenu = require('./menus/menu');
 const config = require('./config');
 
-app.commandLine.appendSwitch('js-flags', '--harmony-async-await');
-
 // set up config
 config.setup();
 
