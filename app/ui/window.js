@@ -1,16 +1,15 @@
 const {app, BrowserWindow, shell, Menu} = require('electron');
-const {isAbsolute} = require('path');
 const {parse: parseUrl} = require('url');
 const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 const AutoUpdater = require('../auto-updater');
 const toElectronBackgroundColor = require('../utils/to-electron-background-color');
-const {icon, cfgDir} = require('../config/paths');
+const {icon} = require('../config/paths');
 const createRPC = require('../rpc');
 const notify = require('../notify');
 const fetchNotifications = require('../notifications');
-const Session = require('../session');
+const Tab = require('./tab');
 
 module.exports = class Window {
   constructor(options, cfg, fn) {
@@ -28,6 +27,9 @@ module.exports = class Window {
       acceptFirstMouse: true
     }, options);
     const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(opts));
+    this.tabs = new Map();
+    this.activeTab = undefined;
+    this.cfg = cfg;
     const rpc = createRPC(window);
     const sessions = new Map();
 
@@ -76,48 +78,77 @@ module.exports = class Window {
       }
     });
 
-    rpc.on('new', options => {
-      const opts = Object.assign({
-        rows: 40,
-        cols: 100,
-        cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : cfgDir,
-        splitDirection: undefined,
-        shell: cfg.shell,
-        shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
-      }, options);
-
-      const initSession = (opts, fn) => {
-        fn(uuid.v4(), new Session(opts));
-      };
-
-      initSession(opts, (uid, session) => {
-        sessions.set(uid, session);
-        rpc.emit('session add', {
-          rows: opts.rows,
-          cols: opts.cols,
-          uid,
-          splitDirection: opts.splitDirection,
-          shell: session.shell,
-          pid: session.pty.pid
-        });
-
-        session.on('data', data => {
-          rpc.emit('session data', uid + data);
-        });
-
-        session.on('exit', () => {
-          rpc.emit('session exit', {uid});
-        });
-      });
+    rpc.on('tab', options => {
+      const _index = this.tabs.size;
+      const tab = new Tab({uid: uuid.v4(), position: _index}, window);
+      rpc.emit('tab created', {uid: tab.uid, position: tab.position});
+      this.activeTab = _index;
+      tab.main(options, cfg);
+      this.tabs.set(_index, tab);
     });
+
+    rpc.on('change tab', ({position}) => {
+      const _activeTab = this.tabs.get(position);
+      this.activeTab = position;
+      rpc.emit('tab change', _activeTab);
+    });
+
+    rpc.on('close tab', () => {
+      const _index = this.activeTab;
+      const _activeTab = this.tabs.get(_index);
+      _activeTab.close();
+      this.tabs.delete(this.activeTab);
+      let _position = 0;
+      const reorder = new Map();
+      this.tabs.forEach(tab => {
+        tab.position = _position;
+        reorder.set(_position, tab);
+        rpc.emit('tab position', {uid: tab.uid, position: tab.position});
+        _position++;
+      });
+      this.tabs = reorder;
+      if (_index > 0) {
+        this.changeTab = _index - 1;
+      }
+      const _active = this.tabs.get(this.changeTab);
+      rpc.emit('tab change', _active);
+    });
+
+    rpc.on('pane', options => {
+      const _active = this.tabs.get(this.activeTab);
+      _active.split(options, cfg);
+    });
+
     rpc.on('exit', ({uid}) => {
       const session = sessions.get(uid);
       if (session) {
         session.exit();
+        const _index = this.activeTab;
+        const _activeTab = this.tabs.get(_index);
+        _activeTab.removePane(uid);
+        if (_activeTab.panes.size === 0) {
+          this.tabs.delete(_index);
+          rpc.emit('tab exit', {uid: _activeTab.uid});
+          let _position = 0;
+          const reorder = new Map();
+          this.tabs.forEach(tab => {
+            tab.position = _position;
+            reorder.set(_position, tab);
+            rpc.emit('tab position', {uid: tab.uid, position: tab.position});
+            _position++;
+          });
+          this.tabs = reorder;
+          if (_index > 0) {
+            this.changeTab = _index - 1;
+          }
+          const _active = this.tabs.get(this.changeTab);
+          rpc.emit('tab change', _active);
+        }
       } else {
         console.log('session not found by', uid);
       }
     });
+
     rpc.on('unmaximize', () => {
       window.unmaximize();
     });
