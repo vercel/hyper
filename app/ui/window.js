@@ -11,6 +11,9 @@ const createRPC = require('../rpc');
 const notify = require('../notify');
 const fetchNotifications = require('../notifications');
 const Session = require('../session');
+const editMenu = require('../menus/menus/edit');
+const shellMenu = require('../menus/menus/shell');
+const {getKeymaps} = require('../config');
 
 module.exports = class Window {
   constructor(options_, cfg, fn) {
@@ -151,6 +154,13 @@ module.exports = class Window {
     });
     rpc.on('open external', ({url}) => {
       shell.openExternal(url);
+    });
+    rpc.on('open context menu', () => {
+      const {commands} = getKeymaps();
+      const contextMenuTemplate = editMenu(commands).submenu
+        .concat({type: 'separator'}, shellMenu(commands, app.createWindow).submenu);
+      const contextMenu = Menu.buildFromTemplate(contextMenuTemplate);
+      contextMenu.popup();
     });
     rpc.on('open hamburger menu', ({x, y}) => {
       Menu.getApplicationMenu().popup(Math.ceil(x), Math.ceil(y));
