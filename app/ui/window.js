@@ -107,6 +107,7 @@ module.exports = class Window {
 
         session.on('exit', () => {
           rpc.emit('session exit', {uid});
+          sessions.delete(uid);
         });
       });
     });
