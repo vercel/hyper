@@ -668,6 +668,7 @@ kind-of@^4.0.0:
   dependencies:
     is-buffer "^1.1.5"
 
+
 locate-path@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-2.0.0.tgz#2b568b265eec944c6d9c0de9c3dbbbca0354cd8e"
@@ -676,6 +677,7 @@ locate-path@^2.0.0:
     path-exists "^3.0.0"
 
 lodash@^4.16.6:
+
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 

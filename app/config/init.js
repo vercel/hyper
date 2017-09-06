@@ -1,4 +1,5 @@
 const vm = require('vm');
+const merge = require('lodash/merge');
 const notify = require('../notify');
 
 const _extract = function (script) {
@@ -35,6 +36,10 @@ const _init = function (cfg) {
       notify('Error reading configuration: `config` key is missing');
       return _extractDefault(cfg.defaultCfg);
     }
+
+    // Use options from default config  when not specified in user config #1588
+    _cfg.config = merge(_extractDefault(cfg.defaultCfg).config, _cfg.config);
+
     // Ignore undefined values in plugin and localPlugins array Issue #1862
     _cfg.plugins = (_cfg.plugins && _cfg.plugins.filter(Boolean)) || [];
     _cfg.localPlugins = (_cfg.localPlugins && _cfg.localPlugins.filter(Boolean)) || [];
