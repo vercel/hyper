@@ -37,8 +37,10 @@ choco install hyper
 2. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
 3. Install the dependencies: `yarn`
 4. Build the code and watch for changes: `yarn run dev`
-5. In another terminal tab/window/pane, run the app: `yarn run app`
-
+5. To run `hyper`
+  * `yarn run app` from another terminal tab/window/pane
+  * If you are using **Visual Studio Code**, select `Launch Hyper` in debugger configuration to launch a new Hyper instance with debugger attached. 
+ 
 To make sure that your code works in the finished application, you can generate the binaries like this:
 
 ```bash
