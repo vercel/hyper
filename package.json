@@ -80,6 +80,7 @@
     "appId": "co.zeit.hyper",
     "extraResources": "./bin/yarn-standalone.js",
     "linux": {
+      "category": "TerminalEmulator",
       "target": [
         {
           "target": "deb",
