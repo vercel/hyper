@@ -304,6 +304,24 @@ exports.extendKeymaps = function () {
   });
 };
 
+exports.getDeprecatedConfig = () => {
+  const deprecated = {};
+  const baseConfig = config.getConfig();
+  modules.forEach(plugin => {
+    if (!plugin.decorateConfig) {
+      return;
+    }
+    // We need to clone config in case of plugin modifies config directly.
+    const configTmp = plugin.decorateConfig(JSON.parse(JSON.stringify(baseConfig)));
+    const pluginCSSDeprecated = config.getDeprecatedCSS(configTmp);
+    if (pluginCSSDeprecated.length === 0) {
+      return;
+    }
+    deprecated[plugin._name] = {css: pluginCSSDeprecated};
+  })
+  return deprecated;
+}
+
 exports.decorateMenu = function (tpl) {
   return decorateObject(tpl, 'decorateMenu');
 };

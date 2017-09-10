@@ -23,6 +23,7 @@ const _watch = function () {
     cfg = _import();
     notify('Configuration updated', 'Hyper configuration reloaded!');
     watchers.forEach(fn => fn());
+    checkDeprecatedConfig()
   });
 
   _watcher.on('error', error => {
@@ -70,7 +71,38 @@ exports.extendKeymaps = function (keymaps) {
 exports.setup = function () {
   cfg = _import();
   _watch();
+  checkDeprecatedConfig()
 };
 
 exports.getWin = win.get;
 exports.winRecord = win.recordState;
+
+const getDeprecatedCSS = function (config) {
+  const deprecated = [];
+  const deprecatedCSS = [
+    'x-screen',
+    'x-row',
+    'cursor-node',
+    '::selection'
+  ];
+  deprecatedCSS.forEach(css => {
+    if ((config.css && config.css.indexOf(css) !== -1) ||
+        (config.termCSS && config.termCSS.indexOf(css) !== -1)) {
+      deprecated.push(css);
+    }
+  })
+  return deprecated;
+}
+exports.getDeprecatedCSS = getDeprecatedCSS;
+
+const checkDeprecatedConfig = function () {
+  if (!cfg.config) {
+    return;
+  }
+  const deprecated = getDeprecatedCSS(cfg.config);
+  if (deprecated.length === 0) {
+    return;
+  }
+  const deprecatedStr = deprecated.join(', ');
+  notify('Configuration warning', `Your configuration uses some deprecated CSS classes (${deprecatedStr})`)
+}
