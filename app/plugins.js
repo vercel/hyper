@@ -332,7 +332,9 @@ exports.getDecoratedEnv = function (baseEnv) {
 
 exports.getDecoratedConfig = function () {
   const baseConfig = config.getConfig();
-  return decorateObject(baseConfig, 'decorateConfig');
+  const decoratedConfig = decorateObject(baseConfig, 'decorateConfig');
+  const translatedConfig = config.htermConfigTranslate(decoratedConfig);
+  return translatedConfig;
 };
 
 exports.getDecoratedBrowserOptions = function (defaults) {

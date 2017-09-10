@@ -106,3 +106,20 @@ const checkDeprecatedConfig = function () {
   const deprecatedStr = deprecated.join(', ');
   notify('Configuration warning', `Your configuration uses some deprecated CSS classes (${deprecatedStr})`)
 }
+
+exports.htermConfigTranslate = (config) => {
+  const cssReplacements = {
+    'x-screen x-row([ \{\.\[])': '.xterm-rows > div$1',
+    '.cursor-node([ \{\.\[])': '.terminal-cursor$1',
+    '::selection([ \{\.\[])': '.terminal .xterm-selection div$1',
+    'x-screen a([ \{\.\[])': '.terminal a$1',
+    'x-row a([ \{\.\[])': '.terminal a$1'
+  }
+  Object.keys(cssReplacements).forEach(pattern => {
+    const searchvalue = new RegExp(pattern, 'g');
+    const newvalue = cssReplacements[pattern];
+    config.css = config.css.replace(searchvalue, newvalue);
+    config.termCSS = config.termCSS.replace(searchvalue, newvalue);
+  })
+  return config;
+}
