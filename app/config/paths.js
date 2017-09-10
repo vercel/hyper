@@ -15,6 +15,18 @@ const devDir = resolve(__dirname, '../..');
 const devCfg = join(devDir, cfgFile);
 const defaultCfg = resolve(__dirname, defaultCfgFile);
 
+if (isDev) {
+  // if a local config file exists, use it
+  try {
+    statSync(devCfg);
+    cfgPath = devCfg;
+    cfgDir = devDir;
+    console.log('using config file:', cfgPath);
+  } catch (err) {
+    // ignore
+  }
+}
+
 const plugins = resolve(cfgDir, '.hyper_plugins');
 const plugs = {
   base: plugins,
@@ -38,18 +50,6 @@ const defaultPlatformKeyPath = () => {
     default: return darwinKeys;
   }
 };
-
-if (isDev) {
-  // if a local config file exists, use it
-  try {
-    statSync(devCfg);
-    cfgPath = devCfg;
-    cfgDir = devDir;
-    console.log('using config file:', cfgPath);
-  } catch (err) {
-    // ignore
-  }
-}
 
 module.exports = {
   cfgDir, cfgPath, cfgFile, defaultCfg, icon, defaultPlatformKeyPath, plugs, yarn
