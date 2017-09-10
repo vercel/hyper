@@ -13,24 +13,29 @@ module.exports = {
       };
       spawnQueue.push(end => {
         const cmd = [process.execPath, yarn].concat(args).join(' ');
+        //eslint-disable-next-line no-console
         console.log('Launching yarn:', cmd);
 
-        cp.exec(cmd, {
-          cwd: plugs.base,
-          env,
-          shell: true,
-          timeout: ms('5m'),
-          stdio: ['ignore', 'ignore', 'inherit']
-        }, err => {
-          if (err) {
-            cb(err);
-          } else {
-            cb(null);
-          }
+        cp.exec(
+          cmd,
+          {
+            cwd: plugs.base,
+            env,
+            shell: true,
+            timeout: ms('5m'),
+            stdio: ['ignore', 'ignore', 'inherit']
+          },
+          err => {
+            if (err) {
+              cb(err);
+            } else {
+              cb(null);
+            }
 
-          end();
-          spawnQueue.start();
-        });
+            end();
+            spawnQueue.start();
+          }
+        );
       });
 
       spawnQueue.start();

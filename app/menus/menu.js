@@ -27,9 +27,8 @@ module.exports = (createWindow, updatePlugins, getLoadedPluginVersions) => {
 
   const showAbout = () => {
     const loadedPlugins = getLoadedPluginVersions();
-    const pluginList = loadedPlugins.length === 0 ?
-      'none' :
-      loadedPlugins.map(plugin => `\n  ${plugin.name} (${plugin.version})`);
+    const pluginList =
+      loadedPlugins.length === 0 ? 'none' : loadedPlugins.map(plugin => `\n  ${plugin.name} (${plugin.version})`);
 
     dialog.showMessageBox({
       title: `About ${appName}`,

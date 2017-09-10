@@ -1,4 +1,4 @@
-module.exports = function (commands) {
+module.exports = commands => {
   return {
     role: 'window',
     submenu: [
@@ -9,7 +9,8 @@ module.exports = function (commands) {
       {
         type: 'separator'
       },
-      { // It's the same thing as clicking the green traffc-light on macOS
+      {
+        // It's the same thing as clicking the green traffc-light on macOS
         role: 'zoom',
         accelerator: commands['window:zoom']
       },

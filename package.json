@@ -17,11 +17,13 @@
   },
   "eslintConfig": {
     "plugins": [
-      "react"
+      "react",
+      "prettier"
     ],
     "extends": [
       "eslint:recommended",
-      "plugin:react/recommended"
+      "plugin:react/recommended",
+      "prettier"
     ],
     "parserOptions": {
       "ecmaVersion": 8,
@@ -49,7 +51,21 @@
       "react/react-in-jsx-scope": 0,
       "react/no-unescaped-entities": 0,
       "react/jsx-no-target-blank": 0,
-      "react/no-string-refs": 0
+      "react/no-string-refs": 0,
+      "prettier/prettier": [
+        "error",
+        {
+          "printWidth": 120,
+          "tabWidth": 2,
+          "singleQuote": true,
+          "trailingComma": "none",
+          "bracketSpacing": false,
+          "semi": true,
+          "useTabs": false,
+          "parser": "babylon",
+          "jsxBracketSameLine": false
+        }
+      ]
     }
   },
   "babel": {
@@ -88,7 +104,7 @@
     "appId": "co.zeit.hyper",
     "extraResources": "./bin/yarn-standalone.js",
     "linux": {
-     "category": "TerminalEmulator",
+      "category": "TerminalEmulator",
       "target": [
         {
           "target": "deb",
@@ -162,9 +178,12 @@
     "electron-devtools-installer": "2.2.0",
     "electron-rebuild": "1.6.0",
     "eslint": "3.19.0",
+    "eslint-config-prettier": "2.4.0",
+    "eslint-plugin-prettier": "2.2.0",
     "eslint-plugin-react": "7.3.0",
     "husky": "0.14.3",
     "node-gyp": "3.6.2",
+    "prettier": "1.6.1",
     "redux-logger": "3.0.6",
     "spectron": "3.7.2",
     "style-loader": "0.18.2",

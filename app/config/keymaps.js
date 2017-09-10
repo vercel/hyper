@@ -4,7 +4,7 @@ const {defaultPlatformKeyPath} = require('./paths');
 const commands = {};
 const keys = {};
 
-const _setKeysForCommands = function (keymap) {
+const _setKeysForCommands = function(keymap) {
   for (const command in keymap) {
     if (command) {
       commands[command] = keymap[command].toLowerCase();
@@ -12,15 +12,15 @@ const _setKeysForCommands = function (keymap) {
   }
 };
 
-const _setCommandsForKeys = function (commands) {
-  for (const command in commands) {
+const _setCommandsForKeys = function(commands_) {
+  for (const command in commands_) {
     if (command) {
-      keys[commands[command]] = command;
+      keys[commands_[command]] = command;
     }
   }
 };
 
-const _import = function (customsKeys) {
+const _import = function(customsKeys) {
   try {
     const mapping = JSON.parse(readFileSync(defaultPlatformKeyPath()));
     _setKeysForCommands(mapping);
@@ -28,10 +28,13 @@ const _import = function (customsKeys) {
     _setCommandsForKeys(commands);
 
     return {commands, keys};
-  } catch (err) {}
+  } catch (err) {
+    //eslint-disable-next-line no-console
+    console.error(err);
+  }
 };
 
-const _extend = function (customsKeys) {
+const _extend = function(customsKeys) {
   if (customsKeys) {
     for (const command in customsKeys) {
       if (command) {

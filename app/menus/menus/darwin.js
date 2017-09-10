@@ -3,7 +3,7 @@
 const {app} = require('electron');
 const {openConfig} = require('../../config');
 
-module.exports = function (commands, showAbout) {
+module.exports = (commands, showAbout) => {
   return {
     label: `${app.getName()}`,
     submenu: [

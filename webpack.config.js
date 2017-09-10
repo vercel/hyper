@@ -36,7 +36,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': { // eslint-disable-line quote-props
+      'process.env': {
         NODE_ENV: JSON.stringify(nodeEnv)
       }
     }),

@@ -56,11 +56,9 @@ function updatePlugins({force = false} = {}) {
     updating = false;
 
     if (err) {
+      //eslint-disable-next-line no-console
       console.error(err.stack);
-      notify(
-        'Error updating plugins.',
-        err.message
-      );
+      notify('Error updating plugins.', err.message);
     } else {
       // flag successful plugin update
       cache.set('hyper.plugins', id_);
@@ -83,15 +81,9 @@ function updatePlugins({force = false} = {}) {
       // notify watchers
       if (force || changed) {
         if (changed) {
-          notify(
-            'Plugins Updated',
-            'Restart the app or hot-reload with "View" > "Reload" to enjoy the updates!'
-          );
+          notify('Plugins Updated', 'Restart the app or hot-reload with "View" > "Reload" to enjoy the updates!');
         } else {
-          notify(
-            'Plugins Updated',
-            'No changes!'
-          );
+          notify('Plugins Updated', 'No changes!');
         }
         watchers.forEach(fn => fn(err, {force}));
       }
@@ -101,16 +93,14 @@ function updatePlugins({force = false} = {}) {
 
 function getPluginVersions() {
   const paths_ = paths.plugins.concat(paths.localPlugins);
-  return paths_.map(path => {
+  return paths_.map(path_ => {
     let version = null;
     try {
-      // eslint-disable-next-line import/no-dynamic-require
-      version = require(resolve(path, 'package.json')).version;
-    } catch (err) { }
-    return [
-      basename(path),
-      version
-    ];
+      //eslint-disable-next-line import/no-dynamic-require
+      version = require(resolve(path_, 'package.json')).version;
+      //eslint-disable-next-line no-empty
+    } catch (err) {}
+    return [basename(path_), version];
   });
 }
 
@@ -132,7 +122,7 @@ function clearCache() {
 
 exports.updatePlugins = updatePlugins;
 
-exports.getLoadedPluginVersions = function () {
+exports.getLoadedPluginVersions = () => {
   return modules.map(mod => ({name: mod._name, version: mod._version}));
 };
 
@@ -141,6 +131,7 @@ exports.getLoadedPluginVersions = function () {
 // to prevent slowness
 if (cache.get('hyper.plugins') !== id || process.env.HYPER_FORCE_UPDATE) {
   // install immediately if the user changed plugins
+  //eslint-disable-next-line no-console
   console.log('plugins have changed / not init, scheduling plugins installation');
   setTimeout(() => {
     updatePlugins();
@@ -178,9 +169,9 @@ function alert(message) {
   });
 }
 
-function toDependencies(plugins) {
+function toDependencies(plugins_) {
   const obj = {};
-  plugins.plugins.forEach(plugin => {
+  plugins_.plugins.forEach(plugin => {
     const regex = /.(@|#)/;
     const match = regex.exec(plugin);
 
@@ -198,7 +189,7 @@ function toDependencies(plugins) {
   return obj;
 }
 
-exports.subscribe = function (fn) {
+exports.subscribe = fn => {
   watchers.push(fn);
   return () => {
     watchers.splice(watchers.indexOf(fn), 1);
@@ -220,56 +211,59 @@ function getPaths() {
 exports.getPaths = getPaths;
 
 // get paths from renderer
-exports.getBasePaths = function () {
+exports.getBasePaths = () => {
   return {path, localPath};
 };
 
 function requirePlugins() {
-  const {plugins, localPlugins} = paths;
+  const {plugins: plugins_, localPlugins} = paths;
 
-  const load = path => {
+  const load = path_ => {
     let mod;
     try {
       // eslint-disable-next-line import/no-dynamic-require
-      mod = require(path);
+      mod = require(path_);
       const exposed = mod && Object.keys(mod).some(key => availableExtensions.has(key));
       if (!exposed) {
-        notify('Plugin error!', `Plugin "${basename(path)}" does not expose any ` +
-          'Hyper extension API methods');
+        notify('Plugin error!', `Plugin "${basename(path_)}" does not expose any ` + 'Hyper extension API methods');
         return;
       }
 
       // populate the name for internal errors here
-      mod._name = basename(path);
+      mod._name = basename(path_);
       try {
         // eslint-disable-next-line import/no-dynamic-require
-        mod._version = require(resolve(path, 'package.json')).version;
+        mod._version = require(resolve(path_, 'package.json')).version;
       } catch (err) {
-        console.warn(`No package.json found in ${path}`);
+        //eslint-disable-next-line no-console
+        console.warn(`No package.json found in ${path_}`);
       }
+      //eslint-disable-next-line no-console
       console.log(`Plugin ${mod._name} (${mod._version}) loaded.`);
 
       return mod;
     } catch (err) {
+      //eslint-disable-next-line no-console
       console.error(err);
-      notify('Plugin error!', `Plugin "${basename(path)}" failed to load (${err.message})`);
+      notify('Plugin error!', `Plugin "${basename(path_)}" failed to load (${err.message})`);
     }
   };
 
-  return plugins.map(load)
+  return plugins_
+    .map(load)
     .concat(localPlugins.map(load))
     .filter(v => Boolean(v));
 }
 
-exports.onApp = function (app) {
+exports.onApp = app_ => {
   modules.forEach(plugin => {
     if (plugin.onApp) {
-      plugin.onApp(app);
+      plugin.onApp(app_);
     }
   });
 };
 
-exports.onWindow = function (win) {
+exports.onWindow = win => {
   modules.forEach(plugin => {
     if (plugin.onWindow) {
       plugin.onWindow(win);
@@ -295,7 +289,7 @@ function decorateObject(base, key) {
   return decorated;
 }
 
-exports.extendKeymaps = function () {
+exports.extendKeymaps = () => {
   modules.forEach(plugin => {
     if (plugin.extendKeymaps) {
       const keys = _keys.extend(plugin.extendKeymaps());
@@ -318,26 +312,26 @@ exports.getDeprecatedConfig = () => {
       return;
     }
     deprecated[plugin._name] = {css: pluginCSSDeprecated};
-  })
+  });
   return deprecated;
-}
+};
 
-exports.decorateMenu = function (tpl) {
+exports.decorateMenu = tpl => {
   return decorateObject(tpl, 'decorateMenu');
 };
 
-exports.getDecoratedEnv = function (baseEnv) {
+exports.getDecoratedEnv = baseEnv => {
   return decorateObject(baseEnv, 'decorateEnv');
 };
 
-exports.getDecoratedConfig = function () {
+exports.getDecoratedConfig = () => {
   const baseConfig = config.getConfig();
   const decoratedConfig = decorateObject(baseConfig, 'decorateConfig');
   const translatedConfig = config.htermConfigTranslate(decoratedConfig);
   return translatedConfig;
 };
 
-exports.getDecoratedBrowserOptions = function (defaults) {
+exports.getDecoratedBrowserOptions = defaults => {
   return decorateObject(defaults, 'decorateBrowserOptions');
 };
 

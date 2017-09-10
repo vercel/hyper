@@ -1,7 +1,7 @@
 const os = require('os');
 const {app, shell} = require('electron');
 
-module.exports = function (commands, showAbout) {
+module.exports = (commands, showAbout) => {
   const submenu = [
     {
       label: `${app.getName()} Website`,

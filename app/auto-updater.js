@@ -4,7 +4,8 @@ const ms = require('ms');
 const retry = require('async-retry');
 
 // Utilities
-const notify = require('./notify'); // eslint-disable-line no-unused-vars
+// eslint-disable-next-line no-unused-vars
+const notify = require('./notify');
 const {version} = require('./package');
 const {getConfig} = require('./config');
 
@@ -14,6 +15,7 @@ let isInit = false;
 
 function init() {
   autoUpdater.on('error', (err, msg) => {
+    //eslint-disable-next-line no-console
     console.error('Error fetching updates', msg + ' (' + err.stack + ')');
   });
 
@@ -51,7 +53,7 @@ function init() {
   isInit = true;
 }
 
-module.exports = function (win) {
+module.exports = win => {
   if (!isInit) {
     init();
   }

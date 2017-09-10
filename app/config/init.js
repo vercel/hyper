@@ -2,7 +2,7 @@ const vm = require('vm');
 const merge = require('lodash/merge');
 const notify = require('../notify');
 
-const _extract = function (script) {
+const _extract = function(script) {
   const module = {};
   script.runInNewContext({module});
   if (!module.exports) {
@@ -11,21 +11,22 @@ const _extract = function (script) {
   return module.exports;
 };
 
-const _syntaxValidation = function (cfg) {
+const _syntaxValidation = function(cfg) {
   try {
     return new vm.Script(cfg, {filename: '.hyper.js', displayErrors: true});
   } catch (err) {
     notify(`Error loading config: ${err.name}, see DevTools for more info`);
+    //eslint-disable-next-line no-console
     console.error('Error loading config:', err);
   }
 };
 
-const _extractDefault = function (cfg) {
+const _extractDefault = function(cfg) {
   return _extract(_syntaxValidation(cfg));
 };
 
 // init config
-const _init = function (cfg) {
+const _init = function(cfg) {
   const script = _syntaxValidation(cfg.userCfg);
   if (script) {
     const _cfg = _extract(script);

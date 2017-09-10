@@ -1,4 +1,4 @@
-module.exports = function (commands, update) {
+module.exports = (commands, update) => {
   return {
     label: 'Plugins',
     submenu: [

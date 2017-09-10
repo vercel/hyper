@@ -2,8 +2,11 @@
 if (['--help', '-v', '--version'].includes(process.argv[1])) {
   const {version} = require('./package');
   const configLocation = process.platform === 'win32' ? process.env.userprofile + '\\.hyper.js' : '~/.hyper.js';
+  //eslint-disable-next-line no-console
   console.log(`Hyper version ${version}`);
+  //eslint-disable-next-line no-console
   console.log('Hyper does not accept any command line arguments. Please modify the config file instead.');
+  //eslint-disable-next-line no-console
   console.log(`Hyper configuration file located at: ${configLocation}`);
   // eslint-disable-next-line unicorn/no-process-exit
   process.exit();
@@ -14,6 +17,7 @@ const checkSquirrel = () => {
 
   try {
     squirrel = require('electron-squirrel-startup');
+    //eslint-disable-next-line no-empty
   } catch (err) {}
 
   if (squirrel) {
@@ -81,6 +85,7 @@ app.getLastFocusedWindow = () => {
 };
 
 if (isDev) {
+  //eslint-disable-next-line no-console
   console.log('running in dev mode');
 
   // Overide default appVersion which is set from package.json
@@ -90,123 +95,132 @@ if (isDev) {
     }
   });
 } else {
+  //eslint-disable-next-line no-console
   console.log('running in prod mode');
 }
 
-const url = 'file://' + resolve(
-  isDev ? __dirname : app.getAppPath(),
-  'index.html'
-);
-
+const url = 'file://' + resolve(isDev ? __dirname : app.getAppPath(), 'index.html');
+//eslint-disable-next-line no-console
 console.log('electron will open', url);
 
-app.on('ready', () => installDevExtensions(isDev).then(() => {
-  function createWindow(fn, options = {}) {
-    const cfg = plugins.getDecoratedConfig();
+app.on('ready', () =>
+  installDevExtensions(isDev)
+    .then(() => {
+      function createWindow(fn, options = {}) {
+        const cfg = plugins.getDecoratedConfig();
 
-    const winSet = config.getWin();
-    let [startX, startY] = winSet.position;
+        const winSet = config.getWin();
+        let [startX, startY] = winSet.position;
 
-    const [width, height] = options.size ? options.size : (cfg.windowSize || winSet.size);
-    const {screen} = require('electron');
+        const [width, height] = options.size ? options.size : cfg.windowSize || winSet.size;
+        const {screen} = require('electron');
 
-    const winPos = options.position;
+        const winPos = options.position;
 
-    // Open the new window roughly the height of the header away from the
-    // previous window. This also ensures in multi monitor setups that the
-    // new terminal is on the correct screen.
-    const focusedWindow = BrowserWindow.getFocusedWindow() || app.getLastFocusedWindow();
-    // In case of options defaults position and size, we should ignore the focusedWindow.
-    if (winPos !== undefined) {
-      [startX, startY] = winPos;
-    } else if (focusedWindow) {
-      const points = focusedWindow.getPosition();
-      const currentScreen = screen.getDisplayNearestPoint({x: points[0], y: points[1]});
+        // Open the new window roughly the height of the header away from the
+        // previous window. This also ensures in multi monitor setups that the
+        // new terminal is on the correct screen.
+        const focusedWindow = BrowserWindow.getFocusedWindow() || app.getLastFocusedWindow();
+        // In case of options defaults position and size, we should ignore the focusedWindow.
+        if (winPos !== undefined) {
+          [startX, startY] = winPos;
+        } else if (focusedWindow) {
+          const points = focusedWindow.getPosition();
+          const currentScreen = screen.getDisplayNearestPoint({
+            x: points[0],
+            y: points[1]
+          });
 
-      const biggestX = ((points[0] + 100 + width) - currentScreen.bounds.x);
-      const biggestY = ((points[1] + 100 + height) - currentScreen.bounds.y);
+          const biggestX = points[0] + 100 + width - currentScreen.bounds.x;
+          const biggestY = points[1] + 100 + height - currentScreen.bounds.y;
 
-      if (biggestX > currentScreen.size.width) {
-        startX = 50;
-      } else {
-        startX = points[0] + 34;
+          if (biggestX > currentScreen.size.width) {
+            startX = 50;
+          } else {
+            startX = points[0] + 34;
+          }
+          if (biggestY > currentScreen.size.height) {
+            startY = 50;
+          } else {
+            startY = points[1] + 34;
+          }
+        }
+
+        const hwin = new Window({width, height, x: startX, y: startY}, cfg, fn);
+        windowSet.add(hwin);
+        hwin.loadURL(url);
+
+        // the window can be closed by the browser process itself
+        hwin.on('close', () => {
+          hwin.clean();
+          windowSet.delete(hwin);
+        });
+
+        hwin.on('closed', () => {
+          if (process.platform !== 'darwin' && windowSet.size === 0) {
+            app.quit();
+          }
+        });
+
+        return hwin;
       }
-      if (biggestY > currentScreen.size.height) {
-        startY = 50;
-      } else {
-        startY = points[1] + 34;
-      }
-    }
 
-    const hwin = new Window({width, height, x: startX, y: startY}, cfg, fn);
-    windowSet.add(hwin);
-    hwin.loadURL(url);
-
-    // the window can be closed by the browser process itself
-    hwin.on('close', () => {
-      hwin.clean();
-      windowSet.delete(hwin);
-    });
-
-    hwin.on('closed', () => {
-      if (process.platform !== 'darwin' && windowSet.size === 0) {
-        app.quit();
-      }
-    });
-
-    return hwin;
-  }
-
-  // when opening create a new window
-  createWindow();
-
-  // expose to plugins
-  app.createWindow = createWindow;
-
-  // mac only. when the dock icon is clicked
-  // and we don't have any active windows open,
-  // we open one
-  app.on('activate', () => {
-    if (!windowSet.size) {
+      // when opening create a new window
       createWindow();
-    }
-  });
 
-  const makeMenu = () => {
-    const menu = plugins.decorateMenu(
-      AppMenu(createWindow, () => {
-        plugins.updatePlugins({force: true});
-      },
-      plugins.getLoadedPluginVersions
-    ));
+      // expose to plugins
+      app.createWindow = createWindow;
 
-    // If we're on Mac make a Dock Menu
-    if (process.platform === 'darwin') {
-      const dockMenu = Menu.buildFromTemplate([{
-        label: 'New Window',
-        click() {
+      // mac only. when the dock icon is clicked
+      // and we don't have any active windows open,
+      // we open one
+      app.on('activate', () => {
+        if (!windowSet.size) {
           createWindow();
         }
-      }]);
-      app.dock.setMenu(dockMenu);
-    }
+      });
 
-    Menu.setApplicationMenu(
-      Menu.buildFromTemplate(menu)
-    );
-  };
+      const makeMenu = () => {
+        const menu = plugins.decorateMenu(
+          AppMenu(
+            createWindow,
+            () => {
+              plugins.updatePlugins({force: true});
+            },
+            plugins.getLoadedPluginVersions
+          )
+        );
 
-  const load = () => {
-    plugins.onApp(app);
-    plugins.extendKeymaps();
-    makeMenu();
-  };
+        // If we're on Mac make a Dock Menu
+        if (process.platform === 'darwin') {
+          const dockMenu = Menu.buildFromTemplate([
+            {
+              label: 'New Window',
+              click() {
+                createWindow();
+              }
+            }
+          ]);
+          app.dock.setMenu(dockMenu);
+        }
 
-  load();
-  plugins.subscribe(load);
-}).catch(err => {
-  console.error('Error while loading devtools extensions', err);
-}));
+        Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
+      };
+
+      const load = () => {
+        plugins.onApp(app);
+        plugins.extendKeymaps();
+        makeMenu();
+      };
+
+      load();
+      plugins.subscribe(load);
+    })
+    .catch(err => {
+      //eslint-disable-next-line no-console
+      console.error('Error while loading devtools extensions', err);
+    })
+);
 
 app.on('open-file', (event, path) => {
   const lastWindow = app.getLastFocusedWindow();
@@ -222,17 +236,14 @@ app.on('open-file', (event, path) => {
   }
 });
 
-function installDevExtensions(isDev) {
-  if (!isDev) {
+function installDevExtensions(isDev_) {
+  if (!isDev_) {
     return Promise.resolve();
   }
   // eslint-disable-next-line import/no-extraneous-dependencies
   const installer = require('electron-devtools-installer');
 
-  const extensions = [
-    'REACT_DEVELOPER_TOOLS',
-    'REDUX_DEVTOOLS'
-  ];
+  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
   const forceDownload = Boolean(process.env.UPGRADE_EXTENSIONS);
 
   return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload)));

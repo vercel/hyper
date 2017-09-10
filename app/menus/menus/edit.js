@@ -1,6 +1,6 @@
 const {openConfig} = require('../../config');
 
-module.exports = function (commands) {
+module.exports = commands => {
   const submenu = [
     {
       role: 'undo',

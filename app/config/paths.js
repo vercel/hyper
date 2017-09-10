@@ -32,10 +32,14 @@ const linuxKeys = join(keymapPath, 'linux.json');
 
 const defaultPlatformKeyPath = () => {
   switch (process.platform) {
-    case 'darwin': return darwinKeys;
-    case 'win32': return win32Keys;
-    case 'linux': return linuxKeys;
-    default: return darwinKeys;
+    case 'darwin':
+      return darwinKeys;
+    case 'win32':
+      return win32Keys;
+    case 'linux':
+      return linuxKeys;
+    default:
+      return darwinKeys;
   }
 };
 
@@ -45,6 +49,7 @@ if (isDev) {
     statSync(devCfg);
     cfgPath = devCfg;
     cfgDir = devDir;
+    //eslint-disable-next-line no-console
     console.log('using config file:', cfgPath);
   } catch (err) {
     // ignore
@@ -52,5 +57,12 @@ if (isDev) {
 }
 
 module.exports = {
-  cfgDir, cfgPath, cfgFile, defaultCfg, icon, defaultPlatformKeyPath, plugs, yarn
+  cfgDir,
+  cfgPath,
+  cfgFile,
+  defaultCfg,
+  icon,
+  defaultPlatformKeyPath,
+  plugs,
+  yarn
 };

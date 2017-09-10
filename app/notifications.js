@@ -10,10 +10,11 @@ module.exports = function fetchNotifications(win) {
   const retry = err => {
     setTimeout(() => fetchNotifications(win), ms('30m'));
     if (err) {
+      //eslint-disable-next-line no-console
       console.error('Notification messages fetch error', err.stack);
     }
   };
-
+  //eslint-disable-next-line no-console
   console.log('Checking for notification messages');
   fetch(NEWS_URL, {
     headers: {
@@ -21,19 +22,20 @@ module.exports = function fetchNotifications(win) {
       'X-Hyper-Platform': process.platform
     }
   })
-  .then(res => res.json())
-  .then(data => {
-    const {message} = data || {};
-    if (typeof message !== 'object' && message !== '') {
-      throw new Error('Bad response');
-    }
-    if (message === '') {
-      console.log('No matching notification messages');
-    } else {
-      rpc.emit('add notification', message);
-    }
+    .then(res => res.json())
+    .then(data => {
+      const {message} = data || {};
+      if (typeof message !== 'object' && message !== '') {
+        throw new Error('Bad response');
+      }
+      if (message === '') {
+        //eslint-disable-next-line no-console
+        console.log('No matching notification messages');
+      } else {
+        rpc.emit('add notification', message);
+      }
 
-    retry();
-  })
-  .catch(retry);
+      retry();
+    })
+    .catch(retry);
 };

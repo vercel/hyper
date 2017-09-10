@@ -1,4 +1,4 @@
-module.exports = function (commands, createWindow) {
+module.exports = (commands, createWindow) => {
   const isMac = process.platform === 'darwin';
 
   return {

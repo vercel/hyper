@@ -1,4 +1,4 @@
-module.exports = function (commands) {
+module.exports = commands => {
   return {
     label: 'View',
     submenu: [
