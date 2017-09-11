@@ -159,10 +159,9 @@ module.exports = class Window {
       shell.openExternal(url);
     });
     rpc.on('open context menu', () => {
-      window.focus();
       // allow enough time to select text before calling .popup()
       setTimeout(() => {
-        Menu.buildFromTemplate(contextMenuTemplate).popup();
+        Menu.buildFromTemplate(contextMenuTemplate).popup(window);
       }, 100);
     });
     rpc.on('open hamburger menu', ({x, y}) => {
