@@ -10,7 +10,7 @@
   "window:minimize": "ctrl+shift+m",
   "window:zoom": "ctrl+shift+alt+m",
   "window:toggleFullScreen": "f11",
-  "window:close": "ctrl+shift+w",
+  "window:close": "ctrl+shift+q",
   "tab:new": "ctrl+shift+t",
   "tab:next": "ctrl+tab",
   "tab:prev": "ctrl+shift+tab",

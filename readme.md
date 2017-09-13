@@ -1,7 +1,8 @@
 ![](https://github.com/zeit/art/blob/525bd1bb39d97dd3b91c976106a6d5cc5766b678/hyper/repo-banner.png)
 
-[![macOS CI status](https://travis-ci.org/zeit/hyper.svg?branch=master)](https://travis-ci.org/zeit/hyper)
+[![macOS CI Status](https://circleci.com/gh/zeit/hyper.svg?style=shield)](https://circleci.com/gh/zeit/hyper)
 [![Windows CI status](https://ci.appveyor.com/api/projects/status/kqvb4oa772an58sc?svg=true)](https://ci.appveyor.com/project/zeit/hyper)
+[![Linux CI status](https://travis-ci.org/zeit/hyper.svg?branch=master)](https://travis-ci.org/zeit/hyper)
 [![Slack Channel](http://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
 [![Changelog #213](https://img.shields.io/badge/changelog-%23213-lightgrey.svg)](https://changelog.com/213)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
@@ -20,22 +21,26 @@ brew cask install hyper
 ```
 
 If you're on windows, you can use [chocolatey](https://chocolatey.org/) to install the app by running the following command (package information can be found [here](https://chocolatey.org/packages/hyper/)):
+
 ```bash
 choco install hyper
 ```
-Note: the version of hyper available from chocolatey may not be the latest. Consider using the direct download link, https://hyper-updates.now.sh/download/win
 
+**Note:** The version available on [Homebrew Cask](https://caskroom.github.io/) or [Chocolatey](https://chocolatey.org) may not be the latest. Please consider downloading it from [here](https://hyper.is/#installation) if that's the case.
 
 ## Contribute
 
 1. Install the dependencies
-  * If you are running Linux, install `icnsutils`, `graphicsmagick`, `xz-utils` and `rpm`
-  * If you are running Windows, install `windows-build-tools` with `yarn global add windows-build-tools`.
+  * If you are running Linux, install `icnsutils`, `graphicsmagick`, `xz-utils`, `npm`, `rpm` and `yarn`
+  * If you are running Windows, install `yarn` (If you use the MSI installer you will need to install npm), and `windows-build-tools` with `yarn global add windows-build-tools`.
+  * Yarn installation instructions: https://yarnpkg.com/en/docs/install
 2. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
 3. Install the dependencies: `yarn`
 4. Build the code and watch for changes: `yarn run dev`
-5. In another terminal tab/window/pane, run the app: `yarn run app`
-
+5. To run `hyper`
+  * `yarn run app` from another terminal tab/window/pane
+  * If you are using **Visual Studio Code**, select `Launch Hyper` in debugger configuration to launch a new Hyper instance with debugger attached. 
+ 
 To make sure that your code works in the finished application, you can generate the binaries like this:
 
 ```bash

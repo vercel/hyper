@@ -1,4 +1,4 @@
-const gaze = require('gaze');
+const chokidar = require('chokidar');
 const notify = require('./notify');
 const _import = require('./config/import');
 const _openConfig = require('./config/open');
@@ -10,20 +10,23 @@ const watchers = [];
 // https://github.com/zeit/hyper/pull/1772
 const watchCfg = process.platform === 'win32' ? {interval: 2000} : {};
 let cfg = {};
+let _watcher;
 
 const _watch = function () {
-  gaze(cfgPath, watchCfg, function (err) {
-    if (err) {
-      throw err;
-    }
-    this.on('changed', () => {
-      cfg = _import();
-      notify('Configuration updated', 'Hyper configuration reloaded!');
-      watchers.forEach(fn => fn());
-    });
-    this.on('error', () => {
-      // Ignore file watching errors
-    });
+  if (_watcher) {
+    return _watcher;
+  }
+
+  _watcher = chokidar.watch(cfgPath, watchCfg);
+
+  _watcher.on('change', () => {
+    cfg = _import();
+    notify('Configuration updated', 'Hyper configuration reloaded!');
+    watchers.forEach(fn => fn());
+  });
+
+  _watcher.on('error', error => {
+    console.error('error watching config', error);
   });
 };
 

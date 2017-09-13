@@ -3,8 +3,6 @@
 environment:
   matrix:
     - platform: x64
-  GH_TOKEN:
-    secure: tEHrAaRFMrUzagNJsnU+6Esvaw/FdUXZKWz7a690VAy6zzEThB0lThHLFVKZrQrP
 
 image: Visual Studio 2015
 
@@ -12,11 +10,14 @@ init:
   - yarn config set msvs_version 2015 # we need this to build `pty.js`
 
 install:
-  - ps: Install-Product node 6 x64
+  - ps: Install-Product node 8 x64
   - set CI=true
   - yarn
 
 build: off
+
+matrix:
+  fast_finish: true
 
 shallow_clone: true
 

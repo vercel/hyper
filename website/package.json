@@ -1,5 +1,5 @@
 {
-  "name": "hyper-website",
+  "name": "website",
   "version": "0.0.1",
   "description": "The official website for hyper.app",
   "dependencies": {
@@ -7,5 +7,8 @@
   },
   "scripts": {
     "start": "serve . -c 5"
+  },
+  "now": {
+    "alias": "hyper.is"
   }
 }

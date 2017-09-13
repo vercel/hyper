@@ -1,9 +1,9 @@
+// Packages
 const {app, dialog} = require('electron');
 
-const {getKeymaps} = require('../config');
+// Utilities
+const {getKeymaps, getConfig} = require('../config');
 const {icon} = require('../config/paths');
-
-// menus
 const viewMenu = require('./menus/view');
 const shellMenu = require('./menus/shell');
 const editMenu = require('./menus/edit');
@@ -16,15 +16,24 @@ const appName = app.getName();
 const appVersion = app.getVersion();
 
 module.exports = (createWindow, updatePlugins, getLoadedPluginVersions) => {
-  const commands = getKeymaps().commands;
+  const config = getConfig();
+  const {commands} = getKeymaps();
+
+  let updateChannel = 'stable';
+
+  if (config && config.updateChannel && config.updateChannel === 'canary') {
+    updateChannel = 'canary';
+  }
+
   const showAbout = () => {
     const loadedPlugins = getLoadedPluginVersions();
     const pluginList = loadedPlugins.length === 0 ?
       'none' :
       loadedPlugins.map(plugin => `\n  ${plugin.name} (${plugin.version})`);
+
     dialog.showMessageBox({
       title: `About ${appName}`,
-      message: `${appName} ${appVersion}`,
+      message: `${appName} ${appVersion} (${updateChannel})`,
       detail: `Plugins: ${pluginList}\n\nCreated by Guillermo Rauch\nCopyright © 2017 Zeit, Inc.`,
       buttons: [],
       icon

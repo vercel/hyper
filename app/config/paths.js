@@ -15,6 +15,26 @@ const devDir = resolve(__dirname, '../..');
 const devCfg = join(devDir, cfgFile);
 const defaultCfg = resolve(__dirname, defaultCfgFile);
 
+if (isDev) {
+  // if a local config file exists, use it
+  try {
+    statSync(devCfg);
+    cfgPath = devCfg;
+    cfgDir = devDir;
+    console.log('using config file:', cfgPath);
+  } catch (err) {
+    // ignore
+  }
+}
+
+const plugins = resolve(cfgDir, '.hyper_plugins');
+const plugs = {
+  base: plugins,
+  local: resolve(plugins, 'local'),
+  cache: resolve(plugins, 'cache')
+};
+const yarn = resolve(__dirname, '../../bin/yarn-standalone.js');
+
 const icon = resolve(__dirname, '../static/icon.png');
 
 const keymapPath = resolve(__dirname, '../keymaps');
@@ -31,18 +51,6 @@ const defaultPlatformKeyPath = () => {
   }
 };
 
-if (isDev) {
-  // if a local config file exists, use it
-  try {
-    statSync(devCfg);
-    cfgPath = devCfg;
-    cfgDir = devDir;
-    console.log('using config file:', cfgPath);
-  } catch (err) {
-    // ignore
-  }
-}
-
 module.exports = {
-  cfgDir, cfgPath, cfgFile, defaultCfg, icon, defaultPlatformKeyPath
+  cfgDir, cfgPath, cfgFile, defaultCfg, icon, defaultPlatformKeyPath, plugs, yarn
 };
