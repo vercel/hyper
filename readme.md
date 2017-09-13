@@ -32,7 +32,7 @@ choco install hyper
 
 Regardless of the platform you are working on, you will need to have Yarn installed. If you have never installed Yarn before, you can find out how at: https://yarnpkg.com/en/docs/install.
 
-1. Installing necessary dependencies:
+1. Install necessary packages:
   * Windows
     - `windows-build-tools`
         + Install with `yarn global add windows-build-tools`.
