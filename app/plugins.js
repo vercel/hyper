@@ -258,7 +258,11 @@ function requirePlugins() {
 exports.onApp = app_ => {
   modules.forEach(plugin => {
     if (plugin.onApp) {
-      plugin.onApp(app_);
+      try {
+        plugin.onApp(app_);
+      } catch (e) {
+        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
+      }
     }
   });
 };
@@ -266,7 +270,11 @@ exports.onApp = app_ => {
 exports.onWindow = win => {
   modules.forEach(plugin => {
     if (plugin.onWindow) {
-      plugin.onWindow(win);
+      try {
+        plugin.onWindow(win);
+      } catch (e) {
+        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
+      }
     }
   });
 };
@@ -277,7 +285,13 @@ function decorateObject(base, key) {
   let decorated = base;
   modules.forEach(plugin => {
     if (plugin[key]) {
-      const res = plugin[key](decorated);
+      let res;
+      try {
+        res = plugin[key](decorated);
+      } catch (e) {
+        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
+        return;
+      }
       if (res && typeof res === 'object') {
         decorated = res;
       } else {
@@ -292,7 +306,14 @@ function decorateObject(base, key) {
 exports.extendKeymaps = () => {
   modules.forEach(plugin => {
     if (plugin.extendKeymaps) {
-      const keys = _keys.extend(plugin.extendKeymaps());
+      let pluginKeymap;
+      try {
+        pluginKeymap = plugin.extendKeymaps();
+      } catch (e) {
+        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
+        return;
+      }
+      const keys = _keys.extend(pluginKeymap);
       config.extendKeymaps(keys);
     }
   });
@@ -306,7 +327,13 @@ exports.getDeprecatedConfig = () => {
       return;
     }
     // We need to clone config in case of plugin modifies config directly.
-    const configTmp = plugin.decorateConfig(JSON.parse(JSON.stringify(baseConfig)));
+    let configTmp;
+    try {
+      configTmp = plugin.decorateConfig(JSON.parse(JSON.stringify(baseConfig)));
+    } catch (e) {
+      notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
+      return;
+    }
     const pluginCSSDeprecated = config.getDeprecatedCSS(configTmp);
     if (pluginCSSDeprecated.length === 0) {
       return;
