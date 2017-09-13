@@ -199,6 +199,15 @@ module.exports = class Window {
       }
     });
 
+    // xterm makes link clickable
+    window.webContents.on('new-window', (event, url) => {
+      const protocol = typeof url === 'string' && parseUrl(url).protocol;
+      if (protocol === 'http:' || protocol === 'https:') {
+        event.preventDefault();
+        shell.openExternal(url);
+      }
+    });
+
     // expose internals to extension authors
     window.rpc = rpc;
     window.sessions = sessions;
