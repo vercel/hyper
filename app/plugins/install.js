@@ -19,9 +19,8 @@ module.exports = {
           cwd: plugs.base,
           env,
           timeout: ms('5m'),
-          maxBuffer: 1024 * 1024,
-        }, (err, stdout, stderr) => {
-          console.log(err, stdout, stderr);
+          maxBuffer: 1024 * 1024
+        }, err => {
           if (err) {
             cb(err);
           } else {
