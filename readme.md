@@ -34,21 +34,17 @@ Regardless of the platform you are working on, you will need to have Yarn instal
 
 1. Install necessary packages:
   * Windows
-    - `windows-build-tools`
-        + Install with `yarn global add windows-build-tools`.
-    - `npm` (If you use the MSI installer.)
+    - Be sure to run  `yarn global add windows-build-tools` to install `windows-build-tools`.
   * macOS
     - Once you have installed Yarn, you can skip this section!
   * Linux
     - RPM-based
         + `GraphicsMagick`
         + `libicns-utils`
-        + `npm`
         + `xz` (Installed by default on some distributions.)
     - Debian-based
         + `graphicsmagick`
         + `icnsutils`
-        + `npm`
         + `xz-utils`
 2. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
 3. Install the dependencies: `yarn`
