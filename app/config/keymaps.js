@@ -8,7 +8,7 @@ const keys = {};
 const _setKeysForCommands = function (keymap) {
   for (const command in keymap) {
     if (command) {
-      commands[command] = normalize(keymap[command].toLowerCase());
+      commands[command] = normalize(keymap[command]);
     }
   }
 };
