@@ -5,8 +5,8 @@ const expectedCommand = 'test-command';
 const expectedLocalizedCommand = 'test-localized-command';
 
 const commands = {
-  'alt+shift+p': expectedCommand,
-  'cmd+ctrl+ç': expectedLocalizedCommand
+  'alt+p+shift': expectedCommand,
+  'ç+cmd+ctrl': expectedLocalizedCommand
 };
 
 test(`returns a command`, t => {
