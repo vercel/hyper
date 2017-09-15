@@ -24,6 +24,16 @@ test(`returns a command`, t => {
     returnCommand('p+alt+shift', commands),
     expectedCommand
   );
+
+  t.is(
+    returnCommand('alt+shift+P', commands),
+    expectedCommand
+  );
+
+  t.is(
+    returnCommand('Shift+P+Alt', commands),
+    expectedCommand
+  );
 });
 
 test(`returns a localized command`, t => {
@@ -39,6 +49,16 @@ test(`returns a localized command`, t => {
 
   t.is(
     returnCommand('ctrl+ç+cmd', commands),
+    expectedLocalizedCommand
+  );
+
+  t.is(
+    returnCommand('ctrl+Ç+cmd', commands),
+    expectedLocalizedCommand
+  );
+
+  t.is(
+    returnCommand('Cmd+Ctrl+Ç', commands),
     expectedLocalizedCommand
   );
 });
