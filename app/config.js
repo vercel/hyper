@@ -14,23 +14,29 @@ const _watch = function () {
     return _watcher;
   }
 
-  if (process.platform === 'win32') {
-    // watch for changes on config every 2s on windows
-    // https://github.com/zeit/hyper/pull/1772
-    _watcher = fs.watchFile(cfgPath, {interval: 2000});
-  } else {
-    _watcher = fs.watch(cfgPath);
-  }
-
-  _watcher.on('change', () => {
+  const onChange = () => {
     cfg = _import();
     notify('Configuration updated', 'Hyper configuration reloaded!');
     watchers.forEach(fn => fn());
-  });
+  };
 
-  _watcher.on('error', error => {
-    console.error('error watching config', error);
-  });
+  if (process.platform === 'win32') {
+    // watch for changes on config every 2s on windows
+    // https://github.com/zeit/hyper/pull/1772
+    _watcher = fs.watchFile(cfgPath, {interval: 2000}, (curr, prev) => {
+      if (curr.mtime === 0) {
+        console.error('error watching config');
+      } else if (curr.mtime !== prev.mtime) {
+        onChange();
+      }
+    });
+  } else {
+    _watcher = fs.watch(cfgPath);
+    _watcher.on('change', onChange);
+    _watcher.on('error', error => {
+      console.error('error watching config', error);
+    });
+  }
 };
 
 exports.subscribe = function (fn) {
