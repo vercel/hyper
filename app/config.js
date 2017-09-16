@@ -1,4 +1,4 @@
-const chokidar = require('chokidar');
+const fs = require('fs');
 const notify = require('./notify');
 const _import = require('./config/import');
 const _openConfig = require('./config/open');
@@ -6,9 +6,6 @@ const win = require('./config/windows');
 const {cfgPath, cfgDir} = require('./config/paths');
 
 const watchers = [];
-// watch for changes on config every 2s on windows
-// https://github.com/zeit/hyper/pull/1772
-const watchCfg = process.platform === 'win32' ? {interval: 2000} : {};
 let cfg = {};
 let _watcher;
 
@@ -17,7 +14,13 @@ const _watch = function () {
     return _watcher;
   }
 
-  _watcher = chokidar.watch(cfgPath, watchCfg);
+  if (process.platform === 'win32') {
+    // watch for changes on config every 2s on windows
+    // https://github.com/zeit/hyper/pull/1772
+    _watcher = fs.watchFile(cfgPath, {interval: 2000});
+  } else {
+    _watcher = fs.watch(cfgPath);
+  }
 
   _watcher.on('change', () => {
     cfg = _import();
