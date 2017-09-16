@@ -16,14 +16,14 @@ module.exports = {
         //eslint-disable-next-line no-console
         console.log('Launching yarn:', cmd);
 
-        cp.exec(
-          cmd,
+        cp.execFile(
+          process.execPath,
+          [yarn].concat(args),
           {
             cwd: plugs.base,
             env,
-            shell: true,
             timeout: ms('5m'),
-            stdio: ['ignore', 'ignore', 'inherit']
+            maxBuffer: 1024 * 1024
           },
           err => {
             if (err) {
@@ -31,7 +31,6 @@ module.exports = {
             } else {
               cb(null);
             }
-
             end();
             spawnQueue.start();
           }

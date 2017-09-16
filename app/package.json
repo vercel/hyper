@@ -2,7 +2,7 @@
   "name": "hyper",
   "productName": "Hyper",
   "description": "A terminal built on web technologies",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "license": "MIT",
   "author": {
     "name": "Zeit, Inc.",
@@ -19,7 +19,6 @@
     "electron-config": "1.0.0",
     "electron-is-dev": "0.3.0",
     "electron-squirrel-startup": "1.0.0",
-    "lodash": "4.17.4",
     "file-uri-to-path": "1.0.0",
     "git-describe": "4.0.2",
     "mkdirp": "0.5.1",
