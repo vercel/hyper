@@ -1,5 +1,4 @@
 const {readFileSync} = require('fs');
-const {normalize} = require('../utils/keymaps-normalize');
 const {defaultPlatformKeyPath} = require('./paths');
 
 const commands = {};
@@ -8,7 +7,7 @@ const keys = {};
 const _setKeysForCommands = function (keymap) {
   for (const command in keymap) {
     if (command) {
-      commands[command] = normalize(keymap[command]);
+      commands[command] = keymap[command].toLowerCase();
     }
   }
 };
@@ -36,8 +35,8 @@ const _extend = function (customsKeys) {
   if (customsKeys) {
     for (const command in customsKeys) {
       if (command) {
-        commands[command] = normalize(customsKeys[command]);
-        keys[normalize(customsKeys[command])] = command;
+        commands[command] = customsKeys[command];
+        keys[customsKeys[command]] = command;
       }
     }
   }
