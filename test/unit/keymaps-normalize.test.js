@@ -1,5 +1,5 @@
 import test from 'ava';
-import {returnCommand} from '../../lib/utils/keymaps-normalize';
+import {findCommandByKeys} from '../../app/utils/keymaps-normalize';
 
 const expectedCommand = 'test-command';
 const expectedLocalizedCommand = 'test-localized-command';
@@ -11,54 +11,54 @@ const commands = {
 
 test(`returns a command`, t => {
   t.is(
-    returnCommand('alt+shift+p', commands),
+    findCommandByKeys('alt+shift+p', commands),
     expectedCommand
   );
 
   t.is(
-    returnCommand('shift+p+alt', commands),
+    findCommandByKeys('shift+p+alt', commands),
     expectedCommand
   );
 
   t.is(
-    returnCommand('p+alt+shift', commands),
+    findCommandByKeys('p+alt+shift', commands),
     expectedCommand
   );
 
   t.is(
-    returnCommand('alt+shift+P', commands),
+    findCommandByKeys('alt+shift+P', commands),
     expectedCommand
   );
 
   t.is(
-    returnCommand('Shift+P+Alt', commands),
+    findCommandByKeys('Shift+P+Alt', commands),
     expectedCommand
   );
 });
 
 test(`returns a localized command`, t => {
   t.is(
-    returnCommand('cmd+ctrl+ç', commands),
+    findCommandByKeys('cmd+ctrl+ç', commands),
     expectedLocalizedCommand
   );
 
   t.is(
-    returnCommand('ç+cmd+ctrl', commands),
+    findCommandByKeys('ç+cmd+ctrl', commands),
     expectedLocalizedCommand
   );
 
   t.is(
-    returnCommand('ctrl+ç+cmd', commands),
+    findCommandByKeys('ctrl+ç+cmd', commands),
     expectedLocalizedCommand
   );
 
   t.is(
-    returnCommand('ctrl+Ç+cmd', commands),
+    findCommandByKeys('ctrl+Ç+cmd', commands),
     expectedLocalizedCommand
   );
 
   t.is(
-    returnCommand('Cmd+Ctrl+Ç', commands),
+    findCommandByKeys('Cmd+Ctrl+Ç', commands),
     expectedLocalizedCommand
   );
 });
