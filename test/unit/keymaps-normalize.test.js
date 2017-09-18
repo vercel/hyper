@@ -1,5 +1,5 @@
 import test from 'ava';
-import normalize from '../../app/utils/keymaps-normalize';
+import normalize from '../../app/utils/keymaps/normalize';
 
 test(`is normalizing keymaps correctly`, t => {
   const notNormalized = 'cmd+alt+o';

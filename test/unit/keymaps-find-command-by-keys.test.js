@@ -1,5 +1,5 @@
 import test from 'ava';
-import findCommandByKeys from '../../app/utils/keymaps-find-command-by-keys';
+import findCommandByKeys from '../../app/utils/keymaps/find-command-by-keys';
 
 const expectedCommand = 'test-command';
 const expectedLocalizedCommand = 'test-localized-command';

@@ -1,5 +1,5 @@
 const {readFileSync} = require('fs');
-const normalize = require('../utils/keymaps-normalize');
+const normalize = require('../utils/keymaps/normalize');
 const {defaultPlatformKeyPath} = require('./paths');
 
 const commands = {};
