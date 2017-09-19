@@ -33,6 +33,7 @@ install:
   - yarn
 
 after_success:
+  - if [[ "$TRAVIS_BRANCH" == "canary" ]]; then cp build/canary.icns build/icon.icns; fi
   - yarn run dist
 
 branches:

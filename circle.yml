@@ -13,6 +13,10 @@ dependencies:
   override:
     - yarn
 
+checkout:
+  post:
+    - if [[ "$CIRCLE_BRANCH" == "canary" ]]; then cp build/canary.icns build/icon.icns; fi
+
 test:
   override:
     - yarn test
