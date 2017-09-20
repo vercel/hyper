@@ -45,4 +45,7 @@ const _init = function(cfg) {
   return _extractDefault(cfg.defaultCfg);
 };
 
-module.exports = _init;
+module.exports = {
+  _init,
+  _extractDefault
+};
