@@ -13,14 +13,14 @@ const {platform} = process;
 
 let isInit = false;
 
-function init() {
+async function init() {
   autoUpdater.on('error', (err, msg) => {
     //eslint-disable-next-line no-console
     console.error('Error fetching updates', msg + ' (' + err.stack + ')');
   });
 
-  const config = retry(() => {
-    const content = getConfig();
+  const config = await retry(async () => {
+    const content = await getConfig();
 
     if (!content) {
       throw new Error('No config content loaded');
