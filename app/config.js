@@ -1,6 +1,6 @@
 const fs = require('fs');
 const notify = require('./notify');
-const _import = require('./config/import');
+const {_import, getDefaultConfig} = require('./config/import');
 const _openConfig = require('./config/open');
 const win = require('./config/windows');
 const {cfgPath, cfgDir} = require('./config/paths');
@@ -110,6 +110,13 @@ const checkDeprecatedConfig = function() {
   }
   const deprecatedStr = deprecated.join(', ');
   notify('Configuration warning', `Your configuration uses some deprecated CSS classes (${deprecatedStr})`);
+};
+
+exports.fixConfigDefaults = decoratedConfig => {
+  const defaultConfig = getDefaultConfig().config;
+  // We must have default colors for xterm css.
+  decoratedConfig.colors = Object.assign({}, defaultConfig.colors, decoratedConfig.colors);
+  return decoratedConfig;
 };
 
 exports.htermConfigTranslate = config => {
