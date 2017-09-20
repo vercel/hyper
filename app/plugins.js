@@ -354,7 +354,8 @@ exports.getDecoratedEnv = baseEnv => {
 exports.getDecoratedConfig = () => {
   const baseConfig = config.getConfig();
   const decoratedConfig = decorateObject(baseConfig, 'decorateConfig');
-  const translatedConfig = config.htermConfigTranslate(decoratedConfig);
+  const fixedConfig = config.fixConfigDefaults(decoratedConfig);
+  const translatedConfig = config.htermConfigTranslate(fixedConfig);
   return translatedConfig;
 };
 

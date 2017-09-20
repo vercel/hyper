@@ -1,8 +1,10 @@
 const {writeFileSync, readFileSync} = require('fs');
 const {sync: mkdirpSync} = require('mkdirp');
 const {defaultCfg, cfgPath, plugs} = require('./paths');
-const _init = require('./init');
+const {_init, _extractDefault} = require('./init');
 const _keymaps = require('./keymaps');
+
+let defaultConfig;
 
 const _write = function(path, data) {
   // This method will take text formatted as Unix line endings and transform it
@@ -35,8 +37,10 @@ const _importConf = function() {
   }
 };
 
-const _import = function() {
-  const cfg = _init(_importConf());
+exports._import = () => {
+  const imported = _importConf();
+  defaultConfig = _extractDefault(imported.defaultCfg);
+  const cfg = _init(imported);
 
   if (cfg) {
     cfg.keymaps = _keymaps.import(cfg.keymaps);
@@ -44,4 +48,9 @@ const _import = function() {
   return cfg;
 };
 
-module.exports = _import;
+exports.getDefaultConfig = () => {
+  if (!defaultConfig) {
+    defaultConfig = _extractDefault(_importConf().defaultCfg);
+  }
+  return defaultConfig;
+};
