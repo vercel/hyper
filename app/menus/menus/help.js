@@ -1,10 +1,13 @@
-const os = require('os');
+const {release} = require('os');
 const {app, shell} = require('electron');
+
+const appName = app.getName();
+const appVersion = app.getVersion();
 
 module.exports = function (commands, showAbout) {
   const submenu = [
     {
-      label: `${app.getName()} Website`,
+      label: `${appName} Website`,
       click() {
         shell.openExternal('https://hyper.is');
       }
@@ -15,9 +18,9 @@ module.exports = function (commands, showAbout) {
         const body = `
         <!-- Please succinctly describe your issue and steps to reproduce it. -->
         -
-        ${app.getName()} ${app.getVersion()}
+        ${appName} ${appVersion}
         Electron ${process.versions.electron}
-        ${process.platform} ${process.arch} ${os.release()}`;
+        ${process.platform} ${process.arch} ${release()}`;
 
         shell.openExternal(`https://github.com/zeit/hyper/issues/new?body=${encodeURIComponent(body)}`);
       }
