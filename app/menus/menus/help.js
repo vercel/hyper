@@ -1,5 +1,6 @@
 const {release} = require('os');
 const {app, shell} = require('electron');
+const {getConfig, getPlugins} = require('../../config.js');
 
 const appName = app.getName();
 const appVersion = app.getVersion();
@@ -20,7 +21,10 @@ module.exports = function (commands, showAbout) {
         -
         ${appName} ${appVersion}
         Electron ${process.versions.electron}
-        ${process.platform} ${process.arch} ${release()}`;
+        ${process.platform} ${process.arch} ${release()}
+        ${JSON.stringify(getConfig(), null, 2)}
+        ${JSON.stringify(getPlugins(), null, 2)}
+        `;
 
         shell.openExternal(`https://github.com/zeit/hyper/issues/new?body=${encodeURIComponent(body)}`);
       }
