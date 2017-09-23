@@ -51,8 +51,15 @@ module.exports = function (commands, showAbout) {
   My version is ${appName} ${appVersion} (${updateChannel})
   Electron ${process.versions.electron}
   ${process.platform} ${process.arch} ${release()}
-  ${JSON.stringify(getConfig(), null, 2)}
-  ${JSON.stringify(getPlugins(), null, 2)}
+<details>
+  <summary>.hyper.js contents</summary>
+    <pre>
+      <code>
+     ${JSON.stringify(getConfig(), null, 2)},
+     ${JSON.stringify(getPlugins(), null, 2)}
+      </code>
+    </pre>
+</details>
 
   - **Relevant information from devtools** _(CMD+ALT+I on Mac OS, CTRL+SHIFT+I elsewhere)_:
 <!-- Replace with info if applicable, or N/A -->
