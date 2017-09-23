@@ -38,21 +38,11 @@ module.exports = function (commands, showAbout) {
   - [ ] I am on the [latest](https://github.com/zeit/hyper/releases/latest) Hyper.app version
   - [ ] I have searched the [issues](https://github.com/zeit/hyper/issues) of this repo and believe that this is not a duplicate
 
-<!--
-  Once those are done, if you're able to fill in the following list with your information,
-  it'd be very helpful to whoever handles the issue.
--->
+- **Hyper.app version**: ${appName} ${appVersion} (${updateChannel})
+- **OS platform, arch, version**: ${process.platform} ${process.arch}, ${release()}, Electron: ${process.versions.electron}
 
-- **OS version and name**: <!-- Replace with version + name -->
-- **Hyper.app version**: <!-- Replace with version -->
-- **Link of a [Gist](https://gist.github.com/) with the contents of your .hyper.js**: <!-- Gist Link Here -->
-
-  -
-  My version is ${appName} ${appVersion} (${updateChannel})
-  Electron ${process.versions.electron}
-  ${process.platform} ${process.arch} ${release()}
 <details>
-  <summary>.hyper.js contents</summary>
+  <summary><strong>.hyper.js contents</strong></summary>
     <pre>
       <code>
      ${JSON.stringify(getConfig(), null, 2)},
@@ -61,6 +51,7 @@ module.exports = function (commands, showAbout) {
     </pre>
 </details>
 
+---
   - **Relevant information from devtools** _(CMD+ALT+I on Mac OS, CTRL+SHIFT+I elsewhere)_:
 <!-- Replace with info if applicable, or N/A -->
   - **The issue is reproducible in vanilla Hyper.app**
