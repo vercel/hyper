@@ -2,6 +2,7 @@ build
 app/renderer
 app/static
 app/bin
+app/dist
 app/node_modules
 assets
 website
