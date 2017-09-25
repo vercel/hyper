@@ -36,7 +36,7 @@ const plugs = {
 };
 const yarn = resolve(__dirname, '../../bin/yarn-standalone.js');
 
-const icon = resolve(__dirname, '../static/icon.png');
+const icon = resolve(__dirname, '../static/icon96x96.png');
 
 const keymapPath = resolve(__dirname, '../keymaps');
 const darwinKeys = join(keymapPath, 'darwin.json');
