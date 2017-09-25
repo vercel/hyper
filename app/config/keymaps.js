@@ -21,23 +21,23 @@ const _setCommandsForKeys = function (commands) {
   }
 };
 
-const _import = function (customsKeys) {
+const _import = function (customKeys) {
   try {
     const mapping = JSON.parse(readFileSync(defaultPlatformKeyPath()));
     _setKeysForCommands(mapping);
-    _setKeysForCommands(customsKeys);
+    _setKeysForCommands(customKeys);
     _setCommandsForKeys(commands);
 
     return {commands, keys};
   } catch (err) {}
 };
 
-const _extend = function (customsKeys) {
-  if (customsKeys) {
-    for (const command in customsKeys) {
+const _extend = function (customKeys) {
+  if (customKeys) {
+    for (const command in customKeys) {
       if (command) {
-        commands[command] = normalize(customsKeys[command]);
-        keys[normalize(customsKeys[command])] = command;
+        commands[command] = normalize(customKeys[command]);
+        keys[normalize(customKeys[command])] = command;
       }
     }
   }
