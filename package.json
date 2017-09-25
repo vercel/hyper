@@ -183,7 +183,6 @@
     "husky": "0.14.3",
     "node-gyp": "3.6.2",
     "prettier": "1.6.1",
-    "redux-logger": "3.0.6",
     "spectron": "3.7.2",
     "style-loader": "0.18.2",
     "webpack": "3.5.5"
