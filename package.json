@@ -160,7 +160,7 @@
     "seamless-immutable": "7.1.2",
     "semver": "5.4.1",
     "uuid": "3.1.0",
-    "xterm": "2.8.1"
+    "xterm": "2.9.2"
   },
   "devDependencies": {
     "ava": "0.22.0",
