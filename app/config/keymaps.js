@@ -1,11 +1,7 @@
-const {readFileSync} = require('fs');
 const normalize = require('../utils/keymaps/normalize');
-const {defaultPlatformKeyPath} = require('./paths');
 
-const keys = {};
-
-const addKeys = function(keymap) {
-  Object.keys(keymap).forEach(command => {
+const mapKeys = function(keymap) {
+  return Object.keys(keymap).reduce((keys, command) => {
     if (!command) {
       return;
     }
@@ -14,24 +10,10 @@ const addKeys = function(keymap) {
     shortcuts.forEach(shortcut => {
       keys[normalize(shortcut)] = command;
     });
-  });
-  return keys;
-};
-
-const importConfig = function(customKeys) {
-  try {
-    const content = readFileSync(defaultPlatformKeyPath(), 'utf8');
-    const mapping = JSON.parse(content);
-    addKeys(mapping);
-    addKeys(customKeys);
     return keys;
-  } catch (err) {
-    //eslint-disable-next-line no-console
-    console.error(err);
-  }
+  }, {});
 };
 
 module.exports = {
-  importConfig,
-  addKeys
+  mapKeys
 };

@@ -1,5 +1,5 @@
-const normalize = require('./normalize');
+const {normalize} = require('./normalize');
 
-module.exports = (keys, commands) => {
-  return commands[normalize(keys)];
+module.exports = (keys, keymap) => {
+  return keymap[normalize(keys)];
 };

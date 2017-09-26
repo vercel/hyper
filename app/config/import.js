@@ -1,6 +1,6 @@
 const {writeFileSync, readFileSync} = require('fs');
 const {sync: mkdirpSync} = require('mkdirp');
-const {defaultCfg, cfgPath, plugs} = require('./paths');
+const {defaultCfg, cfgPath, plugs, defaultPlatformKeyPath} = require('./paths');
 const {_init, _extractDefault} = require('./init');
 const _keymaps = require('./keymaps');
 
@@ -42,8 +42,15 @@ exports._import = () => {
   defaultConfig = _extractDefault(imported.defaultCfg);
   const cfg = _init(imported);
 
-  if (cfg) {
-    cfg.keymaps = _keymaps.import(cfg.keymaps);
+  try {
+    const content = readFileSync(defaultPlatformKeyPath(), 'utf8');
+    const mapping = JSON.parse(content);
+    addKeys(mapping);
+    addKeys(customKeys);
+    return keys;
+  } catch (err) {
+    //eslint-disable-next-line no-console
+    console.error(err);
   }
   return cfg;
 };

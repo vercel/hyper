@@ -4,7 +4,7 @@ const {_import, getDefaultConfig} = require('./config/import');
 const _openConfig = require('./config/open');
 const win = require('./config/windows');
 const {cfgPath, cfgDir} = require('./config/paths');
-const normalize = require('./utils/keymaps/normalize');
+const {normalize} = require('./utils/keymaps/normalize');
 
 const watchers = [];
 let cfg = {};
@@ -74,6 +74,7 @@ exports.getKeymaps = () => {
   return cfg.keymaps;
 };
 
+//TODO mapKeys
 exports.mergeKeymaps = (keymaps, origin) => {
   Object.keys(keymaps).forEach(key => {
     const normalizedKeys = normalize(key);
