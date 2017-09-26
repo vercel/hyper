@@ -5,7 +5,7 @@
 // internally parse. By doing this, you can set your keymaps in any given order
 // eg.: alt+cmd+o, cmd+alt+o, o+alt+cmd, etc. #2195
 
-const normalize = keybinding => {
+module.exports = keybinding => {
   function sortAlphabetically(a, b) {
     return a.localeCompare(b);
   }
@@ -15,23 +15,4 @@ const normalize = keybinding => {
     .split('+')
     .sort(sortAlphabetically)
     .join('+');
-};
-
-const mapKeys = function(config) {
-  return Object.keys(config).reduce((keymap, command) => {
-    if (!command) {
-      return;
-    }
-    // We can have different keys for a same command.
-    const shortcuts = Array.isArray(keymap[command]) ? keymap[command] : [keymap[command]];
-    shortcuts.forEach(shortcut => {
-      keymap[normalize(shortcut)] = command;
-    });
-    return keymap;
-  }, {});
-};
-
-module.exports = {
-  normalize,
-  mapKeys
 };

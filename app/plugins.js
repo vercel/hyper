@@ -6,7 +6,6 @@ const ms = require('ms');
 
 const config = require('./config');
 const notify = require('./notify');
-const {mergeKeys} = require('./config/keymaps');
 const {availableExtensions} = require('./plugins/extensions');
 const {install} = require('./plugins/install');
 const {plugs} = require('./config/paths');
