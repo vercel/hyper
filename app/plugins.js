@@ -6,7 +6,7 @@ const ms = require('ms');
 
 const config = require('./config');
 const notify = require('./notify');
-const _keys = require('./config/keymaps');
+const keymap = require('./config/keymaps');
 const {availableExtensions} = require('./plugins/extensions');
 const {install} = require('./plugins/install');
 const {plugs} = require('./config/paths');
@@ -19,7 +19,7 @@ const localPath = plugs.local;
 
 // caches
 let plugins = config.getPlugins();
-let paths = getPaths(plugins);
+let paths = getPaths();
 let id = getId(plugins);
 let modules = requirePlugins();
 
@@ -64,7 +64,7 @@ function updatePlugins({force = false} = {}) {
       cache.set('hyper.plugins', id_);
 
       // cache paths
-      paths = getPaths(plugins);
+      paths = getPaths();
 
       // clear require cache
       clearCache();
@@ -313,7 +313,7 @@ exports.extendKeymaps = () => {
         notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
         return;
       }
-      const keys = _keys.extend(pluginKeymap);
+      const keys = keymap.addKeys(pluginKeymap);
       config.extendKeymaps(keys);
     }
   });
