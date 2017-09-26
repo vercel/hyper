@@ -6,7 +6,7 @@ const ms = require('ms');
 
 const config = require('./config');
 const notify = require('./notify');
-const keymap = require('./config/keymaps');
+const {mergeKeys} = require('./config/keymaps');
 const {availableExtensions} = require('./plugins/extensions');
 const {install} = require('./plugins/install');
 const {plugs} = require('./config/paths');
@@ -310,11 +310,12 @@ exports.extendKeymaps = () => {
       try {
         pluginKeymap = plugin.extendKeymaps();
       } catch (e) {
+        //eslint-disable-next-line no-console
+        console.error(e);
         notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
         return;
       }
-      const keys = keymap.addKeys(pluginKeymap);
-      config.extendKeymaps(keys);
+      config.mergeKeymaps(pluginKeymap, `${plugin._name} plugin`);
     }
   });
 };
