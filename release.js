@@ -16,6 +16,5 @@ module.exports = async markdown => {
     process.exit(1);
   }
 
-  markdown = `${intro}\n\n${markdown}`;
-  return markdown;
+  return `${intro}\n\n${markdown}`;
 };
