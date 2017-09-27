@@ -80,7 +80,7 @@
     "appId": "co.zeit.hyper",
     "extraResources": "./bin/yarn-standalone.js",
     "linux": {
-     "category": "TerminalEmulator",
+      "category": "TerminalEmulator",
       "target": [
         {
           "target": "deb",
@@ -154,6 +154,7 @@
     "eslint-config-xo-react": "0.13.0",
     "eslint-plugin-react": "7.3.0",
     "husky": "0.14.3",
+    "inquirer": "3.3.0",
     "node-gyp": "3.6.2",
     "redux-logger": "3.0.6",
     "spectron": "3.7.2",
