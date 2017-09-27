@@ -4,13 +4,13 @@ const {prompt} = require('inquirer');
 module.exports = async markdown => {
   const answers = await prompt([{
     name: 'intro',
-    message: 'Release intro'
+    message: 'One-Line Release Summary'
   }]);
 
   const {intro} = answers;
 
   if (intro === '') {
-    console.error('Please specify a release intro!');
+    console.error('Please specify a release summary!');
 
     // eslint-disable-next-line unicorn/no-process-exit
     process.exit(1);
