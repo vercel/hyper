@@ -199,7 +199,7 @@ exports.subscribe = fn => {
 function getPaths() {
   return {
     plugins: plugins.plugins.map(name => {
-      return resolve(path, 'node_modules', name.split('#')[0]);
+      return resolve(path, 'node_modules', name.split('#')[0].split('@')[0]);
     }),
     localPlugins: plugins.localPlugins.map(name => {
       return resolve(localPath, name);
