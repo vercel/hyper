@@ -17,7 +17,7 @@ const appVersion = app.getVersion();
 
 module.exports = (createWindow, updatePlugins, getLoadedPluginVersions) => {
   const config = getConfig();
-  const {commands} = getKeymaps();
+  const commands = getKeymaps();
 
   let updateChannel = 'stable';
 

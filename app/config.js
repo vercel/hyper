@@ -4,7 +4,6 @@ const {_import, getDefaultConfig} = require('./config/import');
 const _openConfig = require('./config/open');
 const win = require('./config/windows');
 const {cfgPath, cfgDir} = require('./config/paths');
-const mapKeys = require('./utils/keymaps/map-keys');
 
 const watchers = [];
 let cfg = {};
@@ -74,15 +73,14 @@ exports.getKeymaps = () => {
   return cfg.keymaps;
 };
 
+// Add some keymaps with origin reference for suitable warnings printing
 exports.mergeKeymaps = (config, origin) => {
-  const normalizedKeymap = mapKeys(config);
-  cfg.keymaps = Object.keys(normalizedKeymap).reduce((keymaps, keys) => {
-    const normalizedKeys = normalizedKeymap[keys];
-    if (origin && keymaps[normalizedKeys]) {
+  cfg.keymaps = Object.keys(config).reduce((keymaps, action) => {
+    if (origin && keymaps[action]) {
       //eslint-disable-next-line no-console
-      console.warn(`Warning! ${origin} has overwritten existing keymap: ${keys}`);
+      console.warn(`Warning! ${origin} has overwritten existing action keymap: ${action}`);
     }
-    keymaps[normalizedKeys] = normalizedKeymap[normalizedKeys];
+    keymaps[action] = config[action];
     return keymaps;
   }, cfg.keymaps || {});
 };
