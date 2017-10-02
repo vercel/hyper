@@ -209,7 +209,7 @@ app.on('ready', () =>
 
       const load = () => {
         plugins.onApp(app);
-        plugins.extendKeymaps();
+        plugins.checkDeprecatedExtendKeymaps();
         makeMenu();
       };
 

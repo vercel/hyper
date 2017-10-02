@@ -302,23 +302,6 @@ function decorateObject(base, key) {
   return decorated;
 }
 
-exports.extendKeymaps = () => {
-  modules.forEach(plugin => {
-    if (plugin.extendKeymaps) {
-      let pluginKeymap;
-      try {
-        pluginKeymap = plugin.extendKeymaps();
-      } catch (e) {
-        //eslint-disable-next-line no-console
-        console.error(e);
-        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
-        return;
-      }
-      config.mergeKeymaps(pluginKeymap, `${plugin._name} plugin`);
-    }
-  });
-};
-
 exports.getDeprecatedConfig = () => {
   const deprecated = {};
   const baseConfig = config.getConfig();
@@ -357,6 +340,21 @@ exports.getDecoratedConfig = () => {
   const fixedConfig = config.fixConfigDefaults(decoratedConfig);
   const translatedConfig = config.htermConfigTranslate(fixedConfig);
   return translatedConfig;
+};
+
+exports.checkDeprecatedExtendKeymaps = () => {
+  modules.forEach(plugin => {
+    if (plugin.extendKeymaps) {
+      notify('Plugin warning!', `"${plugin._name}" use deprecated "extendKeymaps" handler`);
+      return;
+    }
+  });
+};
+
+exports.getDecoratedKeymaps = () => {
+  const baseKeymaps = config.getKeymaps();
+  const decoratedKeymaps = decorateObject(baseKeymaps, 'decorateKeymaps');
+  return decoratedKeymaps;
 };
 
 exports.getDecoratedBrowserOptions = defaults => {
