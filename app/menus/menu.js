@@ -1,5 +1,5 @@
 // Packages
-const {app, dialog} = require('electron');
+const {app, dialog, BrowserWindow, Menu} = require('electron');
 
 // Utilities
 const {getKeymaps, getConfig} = require('../config');
@@ -15,7 +15,9 @@ const darwinMenu = require('./menus/darwin');
 const appName = app.getName();
 const appVersion = app.getVersion();
 
-module.exports = (createWindow, updatePlugins, getLoadedPluginVersions) => {
+let menu_ = [];
+
+exports.createMenu = (createWindow, updatePlugins, getLoadedPluginVersions) => {
   const config = getConfig();
   const commands = getKeymaps();
 
@@ -49,4 +51,38 @@ module.exports = (createWindow, updatePlugins, getLoadedPluginVersions) => {
   ];
 
   return menu;
+};
+
+exports.buildMenu = template => {
+  menu_ = Menu.buildFromTemplate(template);
+  return menu_;
+};
+
+// Find recursi
+const findCommand = (command, menu) => {
+  for (const idx in menu.items) {
+    const menuItem = menu.items[idx];
+    if (menuItem.command === command) {
+      return menuItem;
+    }
+    if (menuItem.submenu) {
+      const target = findCommand(command, menuItem.submenu);
+      if (target) {
+        return target;
+      }
+    }
+  }
+
+  return false;
+};
+
+exports.execCommand = command => {
+  const menuItem = findCommand(command, menu_);
+  if (!menuItem) {
+    console.warn('menuItem not found for command', command, JSON.stringify(menu_));
+    return;
+  }
+  const focusedWindow = BrowserWindow.getFocusedWindow();
+  const focusedwebContents = focusedWindow ? focusedWindow.webContents : undefined;
+  menuItem.click(undefined, focusedWindow, focusedwebContents);
 };

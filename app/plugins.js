@@ -354,7 +354,13 @@ exports.checkDeprecatedExtendKeymaps = () => {
 exports.getDecoratedKeymaps = () => {
   const baseKeymaps = config.getKeymaps();
   const decoratedKeymaps = decorateObject(baseKeymaps, 'decorateKeymaps');
-  return decoratedKeymaps;
+  // Ensure that all keys are in an array
+  const normalizedKeymaps = {};
+  for (const command in decoratedKeymaps) {
+    const keys = decoratedKeymaps[command];
+    normalizedKeymaps[command] = Array.isArray(keys) ? keys : [keys];
+  }
+  return normalizedKeymaps;
 };
 
 exports.getDecoratedBrowserOptions = defaults => {

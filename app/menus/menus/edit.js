@@ -19,6 +19,7 @@ module.exports = commands => {
     },
     {
       role: 'copy',
+      command: 'editor:copy',
       accelerator: commands['editor:copy']
     },
     {

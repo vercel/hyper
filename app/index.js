@@ -182,7 +182,7 @@ app.on('ready', () =>
 
       const makeMenu = () => {
         const menu = plugins.decorateMenu(
-          AppMenu(
+          AppMenu.createMenu(
             createWindow,
             () => {
               plugins.updatePlugins({force: true});
@@ -204,7 +204,7 @@ app.on('ready', () =>
           app.dock.setMenu(dockMenu);
         }
 
-        Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
+        Menu.setApplicationMenu(AppMenu.buildMenu(menu));
       };
 
       const load = () => {
