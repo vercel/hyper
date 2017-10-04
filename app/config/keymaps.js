@@ -5,10 +5,25 @@ const {defaultPlatformKeyPath} = require('./paths');
 const commands = {};
 const keys = {};
 
+const generatePrefixedCommand = function(command, key) {
+  const baseCmd = command.replace(/:prefix$/, '');
+  for (let i = 1; i <= 9; i++) {
+    // 9 is a special number because it means 'last'
+    const index = i === 9 ? 'last' : i;
+    commands[`${baseCmd}:${index}`] = normalize(`${key}+${i}`);
+  }
+};
+
 const _setKeysForCommands = function(keymap) {
   for (const command in keymap) {
     if (command) {
-      commands[command] = normalize(keymap[command]);
+      // In case of a command finishing by :prefix
+      // we need to generate commands and keys
+      if (command.endsWith(':prefix')) {
+        generatePrefixedCommand(command, keymap[command]);
+      } else {
+        commands[command] = normalize(keymap[command]);
+      }
     }
   }
 };

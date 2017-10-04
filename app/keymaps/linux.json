@@ -14,6 +14,7 @@
   "tab:new": "ctrl+shift+t",
   "tab:next": "ctrl+tab",
   "tab:prev": "ctrl+shift+tab",
+  "tab:jump:prefix": "ctrl",
   "pane:next": "ctrl+pageup",
   "pane:prev": "ctrl+pagedown",
   "pane:splitVertical": "ctrl+shift+d",
