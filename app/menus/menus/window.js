@@ -1,4 +1,21 @@
 module.exports = commands => {
+  // Generating tab:jump array
+  const tabJump = [];
+  for (let i = 1; i <= 9; i++) {
+    // 9 is a special number because it means 'last'
+    const label = i === 9 ? 'Last' : `${i}`;
+    const tabIndex = i === 9 ? 'last' : i - 1;
+    tabJump.push({
+      label: label,
+      accelerator: commands[`tab:jump:${label.toLowerCase()}`],
+      click(item, focusedWindow) {
+        if (focusedWindow) {
+          focusedWindow.rpc.emit('move jump req', tabIndex);
+        }
+      }
+    });
+  }
+
   return {
     role: 'window',
     submenu: [
@@ -34,7 +51,11 @@ module.exports = commands => {
                 focusedWindow.rpc.emit('move right req');
               }
             }
-          }
+          },
+          {
+            type: 'separator'
+          },
+          ...tabJump
         ]
       },
       {
