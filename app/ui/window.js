@@ -22,7 +22,7 @@ module.exports = class Window {
       title: 'Hyper.app',
       // we want to go frameless on windows and linux
       frame: process.platform === 'darwin',
-      transparent: process.platform === 'darwin',
+      transparent: false, // revert the transparent bar on mac now with fullscreen fix
       icon,
       show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
       acceptFirstMouse: true
@@ -162,6 +162,13 @@ module.exports = class Window {
     });
     rpc.on('close', () => {
       window.close();
+    });
+    // pass on the full screen events from the window to react
+    rpc.win.on('enter-full-screen', () => {
+      rpc.emit('enter full screen');
+    });
+    rpc.win.on('leave-full-screen', () => {
+      rpc.emit('leave full screen');
     });
     const deleteSessions = () => {
       sessions.forEach((session, key) => {
