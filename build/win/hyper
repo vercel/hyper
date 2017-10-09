@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Deeply inspired by https://github.com/Microsoft/vscode/blob/1.17.0/resources/win/bin/code.sh
+
+NAME="@@NAME@@"
+HYPER_PATH="$(dirname "$(dirname "$(realpath "$0")")")"
+ELECTRON="$HYPER_PATH/$NAME.exe"
+if grep -q Microsoft /proc/version; then
+	# If running under WSL don't pass cli.js to Electron as environment vars
+	# cannot be transferred from WSL to Windows
+	# See: https://github.com/Microsoft/BashOnWindows/issues/1363
+	#      https://github.com/Microsoft/BashOnWindows/issues/1494
+	"$ELECTRON" "$@"
+	exit $?
+fi
+if [ "$(expr substr $(uname -s) 1 9)" == "CYGWIN_NT" ]; then
+	CLI=$(cygpath -m "$HYPER_PATH/resources/bin/cli.js")
+else
+	CLI="$HYPER_PATH/resources/bin/cli.js"
+fi
+ELECTRON_RUN_AS_NODE=1 "$ELECTRON" "$CLI" "$@"
+exit $?
