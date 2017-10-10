@@ -1,12 +1,12 @@
 const {cliScriptPath} = require('../config/paths');
 
-const promisify = require('util.promisify');
+const pify = require('pify');
 const fs = require('fs');
 
-const lstat = promisify(fs.lstat);
-const readlink = promisify(fs.readlink);
-const unlink = promisify(fs.unlink);
-const symlink = promisify(fs.symlink);
+const lstat = pify(fs.lstat);
+const readlink = pify(fs.readlink);
+const unlink = pify(fs.unlink);
+const symlink = pify(fs.symlink);
 
 const target = process.platform === 'darwin' ? '/usr/local/bin/hyper' : '/usr/bin/hyper';
 const source = cliScriptPath;
