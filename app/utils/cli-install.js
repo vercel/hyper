@@ -12,7 +12,7 @@ const target = process.platform === 'darwin' ? '/usr/local/bin/hyper' : '/usr/bi
 const source = cliScriptPath;
 
 const checkInstall = () => {
-  lstat(target)
+  return lstat(target)
     .then(stat => stat.isSymbolicLink())
     .then(() => readlink(target))
     .then(link => link === source)
@@ -25,7 +25,7 @@ const checkInstall = () => {
 };
 
 const createSymlink = () => {
-  unlink(target)
+  return unlink(target)
     .catch(err => {
       if (err.code === 'ENOENT') {
         return;
@@ -36,7 +36,7 @@ const createSymlink = () => {
 };
 
 exports.addSymlink = () => {
-  checkInstall().then(isInstalled => {
+  return checkInstall().then(isInstalled => {
     if (isInstalled) {
       return Promise.resolve();
     }
