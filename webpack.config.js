@@ -56,7 +56,7 @@ module.exports = [
   {
     name: 'hyper-cli',
     resolve: {
-      extensions: ['.js', '.jsx']
+      extensions: ['.js', '.jsx', '.json']
     },
     devtool: isProd ? 'none' : 'cheap-module-source-map',
     entry: './cli/index.js',
@@ -72,17 +72,17 @@ module.exports = [
           loader: 'babel-loader'
         },
         {
-          test: /\.json/,
-          loader: 'json-loader'
+          test: /index.js/,
+          loader: 'shebang-loader',
+          include: [/node_modules\/rc/]
         }
       ]
     },
     plugins: [
-      new webpack.IgnorePlugin(/.*\.js.map$/i),
+      // spawn-sync is required by execa if node <= 0.10
+      new webpack.IgnorePlugin(/(.*\.js.map|spawn-sync)$/i),
       new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify(nodeEnv)
-        }
+        'process.env.NODE_ENV': JSON.stringify(nodeEnv)
       })
     ],
     target: 'node'
