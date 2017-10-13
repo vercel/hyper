@@ -1634,8 +1634,8 @@ exports.mapTermsState = (state, map) => {
     <script>
       document.getElementById('vid').playbackRate = 1.7;
       document.getElementById('vid').onended = function () {
-        document.getElementById('top-content').style.animationDelay = '100ms';
-        document.getElementById('top-content').style.animationName = 'arrow-video-finish';
+        document.getElementsByClassName('top-content')[0].style.animationDelay = '100ms';
+        document.getElementsByClassName('top-content')[0].style.animationName = 'arrow-video-finish';
       }
       document.addEventListener('DOMContentLoaded', () => {
         var userAgent = navigator.userAgent;
