@@ -15,8 +15,9 @@ const editMenu = require('../menus/menus/edit');
 const shellMenu = require('../menus/menus/shell');
 const {getKeymaps: commands} = require('../config');
 
-const contextMenuTemplate = editMenu(commands).submenu
-  .concat({type: 'separator'}, shellMenu(commands, app.createWindow).submenu);
+const contextMenuTemplate = createWindow => {
+  return editMenu(commands).submenu.concat({type: 'separator'}, shellMenu(commands, createWindow).submenu);
+};
 
 module.exports = class Window {
   constructor(options_, cfg, fn) {
