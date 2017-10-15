@@ -15,8 +15,16 @@ const editMenu = require('../menus/menus/edit');
 const shellMenu = require('../menus/menus/shell');
 const {getKeymaps: commands} = require('../config');
 
-const contextMenuTemplate = createWindow => {
-  return editMenu(commands).submenu.concat({type: 'separator'}, shellMenu(commands, createWindow).submenu);
+const contextMenuTemplate = (createWindow, selection) => {
+  const _shell = shellMenu(commands, createWindow).submenu;
+  const _edit = editMenu(commands).submenu.filter(menuItem => {
+    /* only display cut/copy when there's a cursor selection */
+    if (/^cut$|^copy$/.test(menuItem.role) && !selection) {
+      return;
+    }
+    return menuItem;
+  });
+  return _edit.concat({type: 'separator'}, _shell);
 };
 
 module.exports = class Window {
@@ -159,8 +167,10 @@ module.exports = class Window {
     rpc.on('open external', ({url}) => {
       shell.openExternal(url);
     });
-    rpc.on('open context menu', () => {
-      Menu.buildFromTemplate(contextMenuTemplate(app.createWindow)).popup(window);
+    rpc.on('open context menu', selection => {
+      const {createWindow} = app;
+      const {buildFromTemplate} = Menu;
+      buildFromTemplate(contextMenuTemplate(createWindow, selection)).popup(window);
     });
     rpc.on('open hamburger menu', ({x, y}) => {
       Menu.getApplicationMenu().popup(Math.ceil(x), Math.ceil(y));
