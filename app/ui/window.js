@@ -11,21 +11,7 @@ const createRPC = require('../rpc');
 const notify = require('../notify');
 const fetchNotifications = require('../notifications');
 const Session = require('../session');
-const editMenu = require('../menus/menus/edit');
-const shellMenu = require('../menus/menus/shell');
-const {getKeymaps: commands} = require('../config');
-
-const contextMenuTemplate = (createWindow, selection) => {
-  const _shell = shellMenu(commands, createWindow).submenu;
-  const _edit = editMenu(commands).submenu.filter(menuItem => {
-    /* only display cut/copy when there's a cursor selection */
-    if (/^cut$|^copy$/.test(menuItem.role) && !selection) {
-      return;
-    }
-    return menuItem;
-  });
-  return _edit.concat({type: 'separator'}, _shell);
-};
+const contextMenuTemplate = require('./contextmenu');
 
 module.exports = class Window {
   constructor(options_, cfg, fn) {
