@@ -8,7 +8,7 @@ const readlink = pify(fs.readlink);
 const unlink = pify(fs.unlink);
 const symlink = pify(fs.symlink);
 
-const target = process.platform === 'darwin' ? '/usr/local/bin/hyper' : '/usr/bin/hyper';
+const target = '/usr/local/bin/hyper';
 const source = cliScriptPath;
 
 const checkInstall = () => {
