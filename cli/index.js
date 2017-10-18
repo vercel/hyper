@@ -3,10 +3,10 @@
 const {spawn} = require('child_process');
 const args = require('args');
 const chalk = require('chalk');
-const columnify = require('columnify');
-const got = require('got');
+//const columnify = require('columnify');
+//const got = require('got');
 const opn = require('opn');
-const ora = require('ora');
+//const ora = require('ora');
 const api = require('./api');
 
 let commandUsed = false;
@@ -47,7 +47,7 @@ args.command(['ls', 'list'], 'List installed plugins', () => {
   }
   process.exit(1);
 });
-
+/*
 const lsRemote = () => {
   // note that no errors are catched by this function
   const URL =
@@ -114,17 +114,20 @@ args.command(['lsr', 'list-remote', 'ls-remote'], 'List plugins available on npm
       spinner.fail();
       console.error(chalk.red(err)); // TODO
     });
-});
+});*/
 
 args.command(['d', 'docs', 'h', 'home'], 'Open the npm page of a plugin', (name, args_) => {
   commandUsed = true;
   return opn(`http://ghub.io/${args_[0]}`, {wait: false});
 });
 
+args.command(['<default>'], 'Launch Hyper');
+
 args.option(['v', 'verbose'], 'Verbose mode', false);
 
 const main = argv => {
   const flags = args.parse(argv, {
+    name: 'hyper',
     version: false
   });
 
