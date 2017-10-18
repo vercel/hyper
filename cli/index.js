@@ -132,8 +132,6 @@ const main = argv => {
     return Promise.resolve();
   }
 
-  console.log('flags', flags);
-
   const env = Object.assign({}, process.env, {
     // this will signal Hyper that it was spawned from this module
     HYPER_CLI: '1',
