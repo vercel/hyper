@@ -8,6 +8,7 @@ module.exports = {
     'reduceUI',
     'reduceSessions',
     'reduceTermGroups',
+    'decorateBrowserOptions',
     'decorateMenu',
     'decorateTerm',
     'decorateHyper',
