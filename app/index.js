@@ -70,6 +70,7 @@ const Window = require('./ui/window');
 const windowSet = new Set([]);
 
 const mainWindowState = new WindowStateManager('hwin', {
+  //For Testing
   defaultWidth: 1024,
   defaultHeight: 768
 });
