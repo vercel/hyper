@@ -152,7 +152,6 @@ app.on('ready', () =>
           }
         }
 
-       
         const hwin = new Window({width, height, x: startX, y: startY}, cfg, fn);
         windowSet.add(hwin);
         if (mainWindowState.maximized) {
