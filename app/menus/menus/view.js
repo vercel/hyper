@@ -12,7 +12,15 @@ module.exports = commands => {
       },
       {
         label: 'Developer Tools',
-        accelerator: commands['window:devtools']
+        accelerator: commands['window:devtools'],
+        click: (item, focusedWindow) => {
+          const webContents = focusedWindow.webContents;
+          if (webContents.isDevToolsOpened()) {
+            webContents.closeDevTools();
+          } else {
+            webContents.openDevTools({mode: 'detach'});
+          }
+        }
       },
       {
         type: 'separator'
