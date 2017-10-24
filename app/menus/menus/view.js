@@ -4,67 +4,30 @@ module.exports = commands => {
     submenu: [
       {
         label: 'Reload',
-        accelerator: commands['window:reload'],
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('reload');
-          }
-        }
+        accelerator: commands['window:reload']
       },
       {
         label: 'Full Reload',
-        accelerator: commands['window:reloadFull'],
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.reload();
-          }
-        }
+        accelerator: commands['window:reloadFull']
       },
       {
         label: 'Developer Tools',
-        command: 'window:devtools',
-        accelerator: commands['window:devtools'],
-        role: 'toggledevtools'
-        // click(item, focusedWindow) {
-        //   if (focusedWindow) {
-        //     const webContents = focusedWindow.webContents;
-        //     if (webContents.isDevToolsOpened()) {
-        //       webContents.closeDevTools();
-        //     } else {
-        //       webContents.openDevTools({mode: 'detach'});
-        //     }
-        //   }
-        // }
+        accelerator: commands['window:devtools']
       },
       {
         type: 'separator'
       },
       {
         label: 'Reset Zoom Level',
-        accelerator: commands['zoom:reset'],
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('reset fontSize req');
-          }
-        }
+        accelerator: commands['zoom:reset']
       },
       {
         label: 'Zoom In',
-        accelerator: commands['zoom:in'],
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('increase fontSize req');
-          }
-        }
+        accelerator: commands['zoom:in']
       },
       {
         label: 'Zoom Out',
-        accelerator: commands['zoom:out'],
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('decrease fontSize req');
-          }
-        }
+        accelerator: commands['zoom:out']
       }
     ]
   };

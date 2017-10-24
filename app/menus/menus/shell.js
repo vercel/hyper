@@ -6,15 +6,20 @@ module.exports = (commands, createWindow) => {
     submenu: [
       {
         label: 'New Window',
-        accelerator: commands['window:new']
+        accelerator: commands['window:new'],
+        click(item, focusedWindow) {
+          if (!focusedWindow) {
+            //Without focused window, it can't be intercepted by mousetrap
+            createWindow();
+          }
+        }
       },
       {
         label: 'New Tab',
         accelerator: commands['tab:new'],
         click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('termgroup add req');
-          } else {
+          if (!focusedWindow) {
+            //Without focused window, it can't be intercepted by mousetrap
             createWindow();
           }
         }
@@ -35,12 +40,7 @@ module.exports = (commands, createWindow) => {
       },
       {
         label: 'Close Session',
-        accelerator: commands['pane:close'],
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('termgroup close req');
-          }
-        }
+        accelerator: commands['pane:close']
       },
       {
         label: isMac ? 'Close Window' : 'Quit',

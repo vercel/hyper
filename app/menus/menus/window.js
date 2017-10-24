@@ -19,21 +19,11 @@ module.exports = commands => {
         submenu: [
           {
             label: 'Previous',
-            accelerator: commands['tab:prev'],
-            click(item, focusedWindow) {
-              if (focusedWindow) {
-                focusedWindow.rpc.emit('move left req');
-              }
-            }
+            accelerator: commands['tab:prev']
           },
           {
             label: 'Next',
-            accelerator: commands['tab:next'],
-            click(item, focusedWindow) {
-              if (focusedWindow) {
-                focusedWindow.rpc.emit('move right req');
-              }
-            }
+            accelerator: commands['tab:next']
           }
         ]
       },
@@ -45,21 +35,11 @@ module.exports = commands => {
         submenu: [
           {
             label: 'Previous',
-            accelerator: commands['pane:prev'],
-            click(item, focusedWindow) {
-              if (focusedWindow) {
-                focusedWindow.rpc.emit('prev pane req');
-              }
-            }
+            accelerator: commands['pane:prev']
           },
           {
             label: 'Next',
-            accelerator: commands['pane:next'],
-            click(item, focusedWindow) {
-              if (focusedWindow) {
-                focusedWindow.rpc.emit('next pane req');
-              }
-            }
+            accelerator: commands['pane:next']
           }
         ]
       },

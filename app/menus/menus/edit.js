@@ -1,5 +1,3 @@
-const {openConfig} = require('../../config');
-
 module.exports = commands => {
   const submenu = [
     {
@@ -35,12 +33,7 @@ module.exports = commands => {
     },
     {
       label: 'Clear Buffer',
-      accelerator: commands['editor:clearBuffer'],
-      click(item, focusedWindow) {
-        if (focusedWindow) {
-          focusedWindow.rpc.emit('session clear req');
-        }
-      }
+      accelerator: commands['editor:clearBuffer']
     }
   ];
 
@@ -49,10 +42,7 @@ module.exports = commands => {
       {type: 'separator'},
       {
         label: 'Preferences...',
-        accelerator: commands['window:preferences'],
-        click() {
-          openConfig();
-        }
+        accelerator: commands['window:preferences']
       }
     );
   }

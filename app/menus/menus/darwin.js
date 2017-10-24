@@ -1,7 +1,6 @@
 // This menu label is overrided by OSX to be the appName
 // The label is set to appName here so it matches actual behavior
 const {app} = require('electron');
-const {openConfig} = require('../../config');
 
 module.exports = (commands, showAbout) => {
   return {
@@ -18,10 +17,7 @@ module.exports = (commands, showAbout) => {
       },
       {
         label: 'Preferences...',
-        accelerator: commands['window:preferences'],
-        click() {
-          openConfig();
-        }
+        accelerator: commands['window:preferences']
       },
       {
         type: 'separator'

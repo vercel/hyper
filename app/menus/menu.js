@@ -17,7 +17,7 @@ const appVersion = app.getVersion();
 
 let menu_ = [];
 
-exports.createMenu = (createWindow, updatePlugins, getLoadedPluginVersions) => {
+exports.createMenu = (createWindow, getLoadedPluginVersions) => {
   const config = getConfig();
   const commands = getKeymaps();
 
@@ -45,7 +45,7 @@ exports.createMenu = (createWindow, updatePlugins, getLoadedPluginVersions) => {
     shellMenu(commands, createWindow),
     editMenu(commands),
     viewMenu(commands),
-    pluginsMenu(commands, updatePlugins),
+    pluginsMenu(commands),
     windowMenu(commands),
     helpMenu(commands, showAbout)
   ];
