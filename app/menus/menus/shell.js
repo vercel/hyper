@@ -27,12 +27,12 @@ module.exports = (commands, createWindow) => {
       },
       {
         label: 'Split Vertically',
-        accelerator: commands['pane:splitVertical'],
+        accelerator: commands['pane:splitVertical']/*
         click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.rpc.emit('split request vertical');
           }
-        }
+        }*/
       },
       {
         label: 'Split Horizontally',
