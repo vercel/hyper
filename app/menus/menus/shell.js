@@ -6,10 +6,7 @@ module.exports = (commands, createWindow) => {
     submenu: [
       {
         label: 'New Window',
-        accelerator: commands['window:new'],
-        click() {
-          createWindow();
-        }
+        accelerator: commands['window:new']
       },
       {
         label: 'New Tab',
@@ -27,21 +24,11 @@ module.exports = (commands, createWindow) => {
       },
       {
         label: 'Split Vertically',
-        accelerator: commands['pane:splitVertical']/*
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('split request vertical');
-          }
-        }*/
+        accelerator: commands['pane:splitVertical']
       },
       {
         label: 'Split Horizontally',
-        accelerator: commands['pane:splitHorizontal'],
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('split request horizontal');
-          }
-        }
+        accelerator: commands['pane:splitHorizontal']
       },
       {
         type: 'separator'
