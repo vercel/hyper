@@ -9,6 +9,7 @@ const notify = require('./notify');
 const {availableExtensions} = require('./plugins/extensions');
 const {install} = require('./plugins/install');
 const {plugs} = require('./config/paths');
+const mapKeys = require('./utils/map-keys');
 
 // local storage
 const cache = new Config();
@@ -354,13 +355,9 @@ exports.checkDeprecatedExtendKeymaps = () => {
 exports.getDecoratedKeymaps = () => {
   const baseKeymaps = config.getKeymaps();
   const decoratedKeymaps = decorateObject(baseKeymaps, 'decorateKeymaps');
-  // Ensure that all keys are in an array
-  const normalizedKeymaps = {};
-  for (const command in decoratedKeymaps) {
-    const keys = decoratedKeymaps[command];
-    normalizedKeymaps[command] = Array.isArray(keys) ? keys : [keys];
-  }
-  return normalizedKeymaps;
+  console.log('decoratedKeymaps', decoratedKeymaps);
+  // Ensure that all keys are in an array and don't use deprecated key combination
+  return mapKeys(decoratedKeymaps);
 };
 
 exports.getDecoratedBrowserOptions = defaults => {

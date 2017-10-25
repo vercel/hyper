@@ -1,5 +1,6 @@
 const vm = require('vm');
 const notify = require('../notify');
+const mapKeys = require('../utils/map-keys')
 
 const _extract = function(script) {
   const module = {};
@@ -33,10 +34,11 @@ const _init = function(cfg) {
       notify('Error reading configuration: `config` key is missing');
       return cfg.defaultCfg;
     }
-
+    console.log('CFG KEYMAP', _cfg.keymaps);
     // Merging platform specific keymaps with user defined keymaps
-    _cfg.keymaps = Object.assign({}, cfg.defaultCfg.keymaps, _cfg.keymaps);
-
+    _cfg.keymaps = mapKeys(Object.assign({}, cfg.defaultCfg.keymaps, _cfg.keymaps));
+    console.log('DefaultKeymap', cfg.defaultCfg.keymaps);
+    console.log('CFG KEYMAP', _cfg.keymaps);
     // Ignore undefined values in plugin and localPlugins array Issue #1862
     _cfg.plugins = (_cfg.plugins && _cfg.plugins.filter(Boolean)) || [];
     _cfg.localPlugins = (_cfg.localPlugins && _cfg.localPlugins.filter(Boolean)) || [];

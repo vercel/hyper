@@ -19,7 +19,13 @@ let menu_ = [];
 
 exports.createMenu = (createWindow, getLoadedPluginVersions) => {
   const config = getConfig();
-  const commands = getKeymaps();
+  // We take only first shortcut in array for each command
+  const allCommands = getKeymaps();
+  console.log('allCommands', allCommands);
+  const commands = Object.keys(allCommands).reduce((result, command) => {
+    result[command] = allCommands[command][0];
+    return result;
+  }, {})
 
   let updateChannel = 'stable';
 

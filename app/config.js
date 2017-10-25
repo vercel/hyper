@@ -72,7 +72,7 @@ exports.getPlugins = () => {
 exports.getKeymaps = () => {
   return cfg.keymaps;
 };
-
+/*
 // Add some keymaps with origin reference for suitable warnings printing
 exports.mergeKeymaps = (config, origin) => {
   cfg.keymaps = Object.keys(config).reduce((keymaps, action) => {
@@ -84,7 +84,7 @@ exports.mergeKeymaps = (config, origin) => {
     return keymaps;
   }, cfg.keymaps || {});
 };
-
+*/
 exports.setup = () => {
   cfg = _import();
   _watch();

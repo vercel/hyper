@@ -1,4 +1,5 @@
 module.exports = commands => {
+  console.log(commands);
   return {
     label: 'View',
     submenu: [
