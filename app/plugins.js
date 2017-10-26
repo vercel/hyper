@@ -289,7 +289,7 @@ function decorateObject(base, key) {
       try {
         res = plugin[key](decorated);
       } catch (e) {
-        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
+        notify('Plugin error!', `"${plugin._name}" when decorating ${key}`);
         return;
       }
       if (res && typeof res === 'object') {
@@ -354,10 +354,10 @@ exports.checkDeprecatedExtendKeymaps = () => {
 
 exports.getDecoratedKeymaps = () => {
   const baseKeymaps = config.getKeymaps();
-  const decoratedKeymaps = decorateObject(baseKeymaps, 'decorateKeymaps');
+  const decoratedKeymaps = mapKeys(decorateObject(baseKeymaps, 'decorateKeymaps'));
   console.log('decoratedKeymaps', decoratedKeymaps);
   // Ensure that all keys are in an array and don't use deprecated key combination
-  return mapKeys(decoratedKeymaps);
+  return decoratedKeymaps;
 };
 
 exports.getDecoratedBrowserOptions = defaults => {

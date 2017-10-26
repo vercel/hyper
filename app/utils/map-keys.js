@@ -13,9 +13,9 @@ module.exports = config => {
         console.warn('Your config use deprecated `cmd` in key combination. Please use `command` instead.');
         newShortcut = newShortcut.replace('cmd', 'command');
       }
-      fixedShortcuts.push(shortcut);
+      fixedShortcuts.push(newShortcut);
     });
-    keymap[command] = shortcuts;
+    keymap[command] = fixedShortcuts;
     return keymap;
   }, {});
 };
