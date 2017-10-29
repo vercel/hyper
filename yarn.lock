@@ -2997,7 +2997,7 @@ hosted-git-info@^2.1.4, hosted-git-info@^2.5.0:
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.5.0.tgz#6d60e34b3abbc8313062c3b798ef8d901a07af3c"
 
 hterm-umdjs@1.1.3:
-  version "1.1.3+1.58.sha.15ed490"
+  version "1.1.3"
   resolved "https://registry.yarnpkg.com/hterm-umdjs/-/hterm-umdjs-1.1.3.tgz#8b57bcaded5ba9541d6c8e32a82b34abb93e885e"
 
 html-comment-regex@^1.1.0:
@@ -3893,9 +3893,9 @@ mkdirp@0.5.0:
   dependencies:
     minimist "0.0.8"
 
-mousetrap@1.6.1:
+mousetrap@chabou/mousetrap#useCapture:
   version "1.6.1"
-  resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.1.tgz#2a085f5c751294c75e7e81f6ec2545b29cbf42d9"
+  resolved "https://codeload.github.com/chabou/mousetrap/tar.gz/c95eeeaafba1131dd8d35bc130d4a79b2ff9261a"
 
 ms@0.7.1:
   version "0.7.1"
