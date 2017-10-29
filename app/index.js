@@ -56,13 +56,14 @@ const {app, BrowserWindow, Menu} = require('electron');
 const {gitDescribe} = require('git-describe');
 const isDev = require('electron-is-dev');
 
-const AppMenu = require('./menus/menu');
 const config = require('./config');
 
 // set up config
 config.setup();
 
 const plugins = require('./plugins');
+
+const AppMenu = require('./menus/menu');
 
 const Window = require('./ui/window');
 

@@ -72,19 +72,7 @@ exports.getPlugins = () => {
 exports.getKeymaps = () => {
   return cfg.keymaps;
 };
-/*
-// Add some keymaps with origin reference for suitable warnings printing
-exports.mergeKeymaps = (config, origin) => {
-  cfg.keymaps = Object.keys(config).reduce((keymaps, action) => {
-    if (origin && keymaps[action]) {
-      //eslint-disable-next-line no-console
-      console.warn(`Warning! ${origin} has overwritten existing action keymap: ${action}`);
-    }
-    keymaps[action] = config[action];
-    return keymaps;
-  }, cfg.keymaps || {});
-};
-*/
+
 exports.setup = () => {
   cfg = _import();
   _watch();

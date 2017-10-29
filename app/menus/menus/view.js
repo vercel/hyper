@@ -1,26 +1,26 @@
-module.exports = commands => {
+module.exports = (commandKeys, execCommand) => {
   return {
     label: 'View',
     submenu: [
       {
         label: 'Reload',
-        accelerator: commands['window:reload']
+        accelerator: commandKeys['window:reload'],
+        click(item, focusedWindow) {
+          execCommand('window:reload', focusedWindow);
+        }
       },
       {
         label: 'Full Reload',
-        accelerator: commands['window:reloadFull']
+        accelerator: commandKeys['window:reloadFull'],
+        click(item, focusedWindow) {
+          execCommand('window:reloadFull', focusedWindow);
+        }
       },
       {
         label: 'Developer Tools',
-        accelerator: commands['window:devtools'],
-        // We keep this with a click method to open devTools even if Hyper is broken.
+        accelerator: commandKeys['window:devtools'],
         click: (item, focusedWindow) => {
-          const webContents = focusedWindow.webContents;
-          if (webContents.isDevToolsOpened()) {
-            webContents.closeDevTools();
-          } else {
-            webContents.openDevTools({mode: 'detach'});
-          }
+          execCommand('window:reloadFull', focusedWindow);
         }
       },
       {
@@ -28,15 +28,24 @@ module.exports = commands => {
       },
       {
         label: 'Reset Zoom Level',
-        accelerator: commands['zoom:reset']
+        accelerator: commandKeys['zoom:reset'],
+        click(item, focusedWindow) {
+          execCommand('zoom:reset', focusedWindow);
+        }
       },
       {
         label: 'Zoom In',
-        accelerator: commands['zoom:in']
+        accelerator: commandKeys['zoom:in'],
+        click(item, focusedWindow) {
+          execCommand('zoom:in', focusedWindow);
+        }
       },
       {
         label: 'Zoom Out',
-        accelerator: commands['zoom:out']
+        accelerator: commandKeys['zoom:out'],
+        click(item, focusedWindow) {
+          execCommand('zoom:out', focusedWindow);
+        }
       }
     ]
   };

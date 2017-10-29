@@ -1,4 +1,4 @@
-module.exports = commands => {
+module.exports = (commandKeys, execCommand) => {
   // Generating tab:jump array
   const tabJump = [];
   for (let i = 1; i <= 9; i++) {
@@ -6,7 +6,7 @@ module.exports = commands => {
     const label = i === 9 ? 'Last' : `${i}`;
     tabJump.push({
       label: label,
-      accelerator: commands[`tab:jump:${label.toLowerCase()}`]
+      accelerator: commandKeys[`tab:jump:${label.toLowerCase()}`]
     });
   }
 
@@ -15,7 +15,7 @@ module.exports = commands => {
     submenu: [
       {
         role: 'minimize',
-        accelerator: commands['window:minimize']
+        accelerator: commandKeys['window:minimize']
       },
       {
         type: 'separator'
@@ -23,18 +23,24 @@ module.exports = commands => {
       {
         // It's the same thing as clicking the green traffc-light on macOS
         role: 'zoom',
-        accelerator: commands['window:zoom']
+        accelerator: commandKeys['window:zoom']
       },
       {
         label: 'Select Tab',
         submenu: [
           {
             label: 'Previous',
-            accelerator: commands['tab:prev']
+            accelerator: commandKeys['tab:prev'],
+            click: (item, focusedWindow) => {
+              execCommand('tab:prev', focusedWindow);
+            }
           },
           {
             label: 'Next',
-            accelerator: commands['tab:next']
+            accelerator: commandKeys['tab:next'],
+            click: (item, focusedWindow) => {
+              execCommand('tab:next', focusedWindow);
+            }
           },
           {
             type: 'separator'
@@ -50,11 +56,17 @@ module.exports = commands => {
         submenu: [
           {
             label: 'Previous',
-            accelerator: commands['pane:prev']
+            accelerator: commandKeys['pane:prev'],
+            click: (item, focusedWindow) => {
+              execCommand('pane:prev', focusedWindow);
+            }
           },
           {
             label: 'Next',
-            accelerator: commands['pane:next']
+            accelerator: commandKeys['pane:next'],
+            click: (item, focusedWindow) => {
+              execCommand('pane:next', focusedWindow);
+            }
           }
         ]
       },
@@ -66,7 +78,7 @@ module.exports = commands => {
       },
       {
         role: 'togglefullscreen',
-        accelerators: commands['window:toggleFullScreen']
+        accelerators: commandKeys['window:toggleFullScreen']
       }
     ]
   };

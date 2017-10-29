@@ -1,3 +1,16 @@
+const generatePrefixedCommand = (command, shortcuts) => {
+  const result = {};
+  const baseCmd = command.replace(/:prefix$/, '');
+  for (let i = 1; i <= 9; i++) {
+    // 9 is a special number because it means 'last'
+    const index = i === 9 ? 'last' : i;
+    const prefixedShortcuts = shortcuts.map(shortcut => `${shortcut}+${i}`);
+    result[`${baseCmd}:${index}`] = prefixedShortcuts;
+  }
+
+  return result;
+};
+
 module.exports = config => {
   return Object.keys(config).reduce((keymap, command) => {
     if (!command) {
@@ -16,7 +29,13 @@ module.exports = config => {
       }
       fixedShortcuts.push(newShortcut);
     });
+
+    if (command.endsWith(':prefix')) {
+      return Object.assign(keymap, generatePrefixedCommand(command, fixedShortcuts));
+    }
+
     keymap[command] = fixedShortcuts;
+
     return keymap;
   }, {});
 };

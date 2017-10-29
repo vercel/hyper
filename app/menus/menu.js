@@ -2,7 +2,7 @@
 const {app, dialog, Menu} = require('electron');
 
 // Utilities
-const {getKeymaps, getConfig} = require('../config');
+const {getConfig} = require('../config');
 const {icon} = require('../config/paths');
 const viewMenu = require('./menus/view');
 const shellMenu = require('./menus/shell');
@@ -11,6 +11,8 @@ const pluginsMenu = require('./menus/plugins');
 const windowMenu = require('./menus/window');
 const helpMenu = require('./menus/help');
 const darwinMenu = require('./menus/darwin');
+const {getDecoratedKeymaps} = require('../plugins');
+const {execCommand} = require('../commands');
 
 const appName = app.getName();
 const appVersion = app.getVersion();
@@ -20,9 +22,9 @@ let menu_ = [];
 exports.createMenu = (createWindow, getLoadedPluginVersions) => {
   const config = getConfig();
   // We take only first shortcut in array for each command
-  const allCommands = getKeymaps();
-  const commands = Object.keys(allCommands).reduce((result, command) => {
-    result[command] = allCommands[command][0];
+  const allCommandKeys = getDecoratedKeymaps();
+  const commandKeys = Object.keys(allCommandKeys).reduce((result, command) => {
+    result[command] = allCommandKeys[command][0];
     return result;
   }, {});
 
@@ -46,13 +48,13 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
     });
   };
   const menu = [
-    ...(process.platform === 'darwin' ? [darwinMenu(commands, showAbout)] : []),
-    shellMenu(commands, createWindow),
-    editMenu(commands),
-    viewMenu(commands),
-    pluginsMenu(commands),
-    windowMenu(commands),
-    helpMenu(commands, showAbout)
+    ...(process.platform === 'darwin' ? [darwinMenu(commandKeys, showAbout)] : []),
+    shellMenu(commandKeys, execCommand),
+    editMenu(commandKeys, execCommand),
+    viewMenu(commandKeys, execCommand),
+    pluginsMenu(commandKeys, execCommand),
+    windowMenu(commandKeys, execCommand),
+    helpMenu(commandKeys, showAbout)
   ];
 
   return menu;

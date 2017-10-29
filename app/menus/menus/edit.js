@@ -1,39 +1,42 @@
-module.exports = commands => {
+module.exports = (commandKeys, execCommand) => {
   const submenu = [
     {
       role: 'undo',
-      accelerator: commands['editor:undo']
+      accelerator: commandKeys['editor:undo']
     },
     {
       role: 'redo',
-      accelerator: commands['editor:redo']
+      accelerator: commandKeys['editor:redo']
     },
     {
       type: 'separator'
     },
     {
       role: 'cut',
-      accelerator: commands['editor:cut']
+      accelerator: commandKeys['editor:cut']
     },
     {
       role: 'copy',
       command: 'editor:copy',
-      accelerator: commands['editor:copy']
+      accelerator: commandKeys['editor:copy']
     },
     {
       role: 'paste',
-      accelerator: commands['editor:paste']
+      accelerator: commandKeys['editor:paste']
     },
     {
       role: 'selectall',
-      accelerator: commands['editor:selectAll']
+      accelerator: commandKeys['editor:selectAll']
     },
     {
       type: 'separator'
     },
     {
       label: 'Clear Buffer',
-      accelerator: commands['editor:clearBuffer']
+      accelerator: commandKeys['editor:clearBuffer'],
+      click(item, focusedWindow) {
+        execCommand('editor:clearBuffer', focusedWindow);
+      }
     }
   ];
 
@@ -42,7 +45,7 @@ module.exports = commands => {
       {type: 'separator'},
       {
         label: 'Preferences...',
-        accelerator: commands['window:preferences']
+        accelerator: commandKeys['window:preferences']
       }
     );
   }

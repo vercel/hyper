@@ -2,7 +2,7 @@
 // The label is set to appName here so it matches actual behavior
 const {app} = require('electron');
 
-module.exports = (commands, showAbout) => {
+module.exports = (commandKeys, showAbout) => {
   return {
     label: `${app.getName()}`,
     submenu: [
@@ -17,7 +17,7 @@ module.exports = (commands, showAbout) => {
       },
       {
         label: 'Preferences...',
-        accelerator: commands['window:preferences']
+        accelerator: commandKeys['window:preferences']
       },
       {
         type: 'separator'
