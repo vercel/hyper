@@ -1,5 +1,4 @@
 module.exports = commands => {
-  console.log(commands);
   return {
     label: 'View',
     submenu: [
@@ -14,6 +13,7 @@ module.exports = commands => {
       {
         label: 'Developer Tools',
         accelerator: commands['window:devtools'],
+        // We keep this with a click method to open devTools even if Hyper is broken.
         click: (item, focusedWindow) => {
           const webContents = focusedWindow.webContents;
           if (webContents.isDevToolsOpened()) {

@@ -171,7 +171,7 @@ module.exports = class Window {
     rpc.on('command', command => {
       const focusedWindow = BrowserWindow.getFocusedWindow();
       execCommand(command, focusedWindow);
-    })
+    });
     const deleteSessions = () => {
       sessions.forEach((session, key) => {
         session.removeAllListeners();

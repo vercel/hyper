@@ -1,5 +1,5 @@
 // Packages
-const {app, dialog, BrowserWindow, Menu} = require('electron');
+const {app, dialog, Menu} = require('electron');
 
 // Utilities
 const {getKeymaps, getConfig} = require('../config');
@@ -21,11 +21,10 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
   const config = getConfig();
   // We take only first shortcut in array for each command
   const allCommands = getKeymaps();
-  console.log('allCommands', allCommands);
   const commands = Object.keys(allCommands).reduce((result, command) => {
     result[command] = allCommands[command][0];
     return result;
-  }, {})
+  }, {});
 
   let updateChannel = 'stable';
 
@@ -62,33 +61,4 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
 exports.buildMenu = template => {
   menu_ = Menu.buildFromTemplate(template);
   return menu_;
-};
-
-// Find recursi
-const findCommand = (command, menu) => {
-  for (const idx in menu.items) {
-    const menuItem = menu.items[idx];
-    if (menuItem.command === command) {
-      return menuItem;
-    }
-    if (menuItem.submenu) {
-      const target = findCommand(command, menuItem.submenu);
-      if (target) {
-        return target;
-      }
-    }
-  }
-
-  return false;
-};
-
-exports.execCommand = command => {
-  const menuItem = findCommand(command, menu_);
-  if (!menuItem) {
-    console.warn('menuItem not found for command', command, JSON.stringify(menu_));
-    return;
-  }
-  const focusedWindow = BrowserWindow.getFocusedWindow();
-  const focusedwebContents = focusedWindow ? focusedWindow.webContents : undefined;
-  menuItem.click(undefined, focusedWindow, focusedwebContents);
 };

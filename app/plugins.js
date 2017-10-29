@@ -354,9 +354,8 @@ exports.checkDeprecatedExtendKeymaps = () => {
 
 exports.getDecoratedKeymaps = () => {
   const baseKeymaps = config.getKeymaps();
+  // Ensure that all keys are in an array and don't use deprecated key combination`
   const decoratedKeymaps = mapKeys(decorateObject(baseKeymaps, 'decorateKeymaps'));
-  console.log('decoratedKeymaps', decoratedKeymaps);
-  // Ensure that all keys are in an array and don't use deprecated key combination
   return decoratedKeymaps;
 };
 

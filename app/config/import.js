@@ -28,7 +28,6 @@ const _importConf = function() {
       const content = readFileSync(defaultPlatformKeyPath(), 'utf8');
       const mapping = JSON.parse(content);
       _defaultCfg.keymaps = mapping;
-      console.log('miport default', _defaultCfg.keymaps);
     } catch (err) {
       //eslint-disable-next-line no-console
       console.error(err);
