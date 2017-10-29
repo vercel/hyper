@@ -65,6 +65,14 @@ const commands = {
   }
 };
 
+//Special numeric command
+[1, 2, 3, 4, 5, 6, 7, 8, 'last'].forEach(cmdIndex => {
+  const index = cmdIndex === 'last' ? cmdIndex : cmdIndex - 1;
+  commands[`tab:jump:${cmdIndex}`] = focusedWindow => {
+    focusedWindow.rpc.emit('move jump req', index);
+  };
+});
+
 exports.execCommand = (command, focusedWindow) => {
   const fn = commands[command];
   if (fn) {
