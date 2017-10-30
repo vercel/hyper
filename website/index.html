@@ -287,7 +287,7 @@
       #content h3:before {
         content: '### ';
       }
-      
+
       #content h4:before {
         content: '#### ';
       }
@@ -925,7 +925,8 @@
               <td><code>onUnload</code></td>
               <td>Electron</td>
               <td>
-                <p>Invoked when a plugin is removed by the user.</p>
+                <p>Invoked when a plugin is removed by the user and during
+                  plugin updates.</p>
                 <p>Parameters:</p>
                 <table>
                   <tbody>
@@ -1242,7 +1243,7 @@
         <p>The user can hot-load and hot-reload plugins by pressing
         Command + R (refresh). Please strive to make plugins that don't
         require a complete restart of the application to work.</p>
-        
+
         <h4>Notice</h4>
         <p>Plugins affecting the `BrowserWindow` will the effect on new windows after hot-reload.</p>
 
