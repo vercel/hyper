@@ -1,6 +1,6 @@
 machine:
   xcode:
-    version: 9
+    version: "9.0"
   pre:
     - mkdir ~/.yarn-cache
 
