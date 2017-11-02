@@ -119,7 +119,8 @@
       "./bin/cli.js",
       {
         "from": "./build/${os}/",
-        "to": "./bin/"
+        "to": "./bin/",
+        "filter": ["hyper*"]
       }
     ],
     "linux": {
@@ -145,6 +146,12 @@
     "mac": {
       "category": "public.app-category.developer-tools",
       "extendInfo": "build/Info.plist"
+    },
+    "deb": {
+      "afterInstall": "./build/linux/after-install.tpl"
+    },
+    "rpm": {
+      "afterInstall": "./build/linux/after-install.tpl"
     }
   },
   "license": "MIT",

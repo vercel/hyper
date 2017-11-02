@@ -17,18 +17,18 @@ fi
 
 if [ ! -L $0 ]; then
 	# if path is not a symlink, find relatively
-	HYPER_PATH="$(dirname $0)/.."
+	HYPER_PATH="$(dirname $0)../.."
 else
 	if which readlink >/dev/null; then
 		# if readlink exists, follow the symlink and find relatively
-		HYPER_PATH="$(dirname $(readlink -f $0))/.."
+		HYPER_PATH="$(dirname $(readlink -f $0))/../.."
 	else
 		# else use the standard install location
-		HYPER_PATH="/usr/share/@@NAME@@"
+		HYPER_PATH="/opt/Hyper"
 	fi
 fi
 
-ELECTRON="$HYPER_PATH/@@NAME@@"
+ELECTRON="$HYPER_PATH/hyper"
 CLI="$HYPER_PATH/resources/bin/cli.js"
 ELECTRON_RUN_AS_NODE=1 "$ELECTRON" "$CLI" "$@"
 exit $?
