@@ -1,6 +1,7 @@
 // This is a CLI tool, using console is OK
 /* eslint no-console: 0 */
-const {spawn} = require('child_process');
+const {spawn, exec} = require('child_process');
+const pify = require('pify');
 const args = require('args');
 const chalk = require('chalk');
 //const columnify = require('columnify');
@@ -152,11 +153,20 @@ const main = argv => {
     env
   };
 
+  const args_ = args.sub;
+
   if (!flags.verbose) {
     options['stdio'] = 'ignore';
+    if (process.platform === 'darwin') {
+      //Use `open` to prevent multiple Hyper process
+      const cmd = `open -b co.zeit.hyper ${args_}`;
+      const opts = {
+        env
+      };
+      return pify(exec)(cmd, opts);
+    }
   }
 
-  const args_ = args.sub;
   const child = spawn(process.execPath, args_, options);
 
   if (flags.verbose) {
