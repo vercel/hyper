@@ -66,7 +66,26 @@
           "jsxBracketSameLine": false
         }
       ]
-    }
+    },
+    "overrides": [{
+      "files": "app/config/config-default.js",
+      "rules": {
+        "prettier/prettier": [
+          "error",
+          {
+            "printWidth": 120,
+            "tabWidth": 2,
+            "singleQuote": true,
+            "trailingComma": "es5",
+            "bracketSpacing": false,
+            "semi": true,
+            "useTabs": false,
+            "parser": "babylon",
+            "jsxBracketSameLine": false
+          }
+        ]
+      }
+    }]
   },
   "babel": {
     "presets": [
@@ -107,7 +126,8 @@
       "./bin/cli.js",
       {
         "from": "./build/${os}/",
-        "to": "./bin/"
+        "to": "./bin/",
+        "filter": ["hyper*"]
       }
     ],
     "linux": {
@@ -141,6 +161,12 @@
     "mac": {
       "category": "public.app-category.developer-tools",
       "extendInfo": "build/Info.plist"
+    },
+    "deb": {
+      "afterInstall": "./build/linux/after-install.tpl"
+    },
+    "rpm": {
+      "afterInstall": "./build/linux/after-install.tpl"
     }
   },
   "license": "MIT",
@@ -154,7 +180,7 @@
     "chalk": "2.1.0",
     "color": "2.0.0",
     "columnify": "1.5.4",
-    "css-loader": "0.28.4",
+    "css-loader": "0.28.7",
     "got": "7.1.0",
     "json-loader": "0.5.7",
     "ms": "2.0.0",
@@ -171,7 +197,7 @@
     "redux": "3.7.2",
     "redux-thunk": "2.2.0",
     "reselect": "3.0.1",
-    "runes": "0.4.2",
+    "runes": "0.4.3",
     "seamless-immutable": "7.1.2",
     "semver": "5.4.1",
     "shebang-loader": "false0.0.1",
@@ -179,7 +205,7 @@
     "xterm": "2.9.2"
   },
   "devDependencies": {
-    "ava": "0.22.0",
+    "ava": "0.23.0",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
@@ -187,10 +213,10 @@
     "babel-preset-react": "6.24.1",
     "copy-webpack-plugin": "4.0.1",
     "cross-env": "5.0.5",
-    "electron": "1.7.8",
-    "electron-builder": "19.33.0",
-    "electron-builder-squirrel-windows": "19.33.0",
-    "electron-devtools-installer": "2.2.0",
+    "electron": "1.7.9",
+    "electron-builder": "19.43.0",
+    "electron-builder-squirrel-windows": "19.43.0",
+    "electron-devtools-installer": "2.2.1",
     "electron-rebuild": "1.6.0",
     "eslint": "^4.7.2",
     "eslint-config-prettier": "^2.6.0",
@@ -199,9 +225,9 @@
     "husky": "0.14.3",
     "inquirer": "3.3.0",
     "node-gyp": "3.6.2",
-    "prettier": "1.6.1",
+    "prettier": "1.7.4",
     "spectron": "3.7.2",
-    "style-loader": "0.18.2",
-    "webpack": "3.5.5"
+    "style-loader": "0.19.0",
+    "webpack": "3.8.1"
   }
 }
