@@ -22,7 +22,8 @@ const _importConf = function() {
   mkdirpSync(plugs.local);
 
   try {
-    const _defaultCfg = _extractDefault(readFileSync(defaultCfg, 'utf8'));
+    const defaultCfgRaw = readFileSync(defaultCfg, 'utf8');
+    const _defaultCfg = _extractDefault(defaultCfgRaw);
     // Importing platform specific keymap
     try {
       const content = readFileSync(defaultPlatformKeyPath(), 'utf8');
@@ -37,8 +38,8 @@ const _importConf = function() {
       const _cfgPath = readFileSync(cfgPath, 'utf8');
       return {userCfg: _cfgPath, defaultCfg: _defaultCfg};
     } catch (err) {
-      _write(cfgPath, _defaultCfg);
-      return {userCfg: {}, defaultCfg: _defaultCfg};
+      _write(cfgPath, defaultCfgRaw);
+      return {userCfg: defaultCfgRaw, defaultCfg: _defaultCfg};
     }
   } catch (err) {
     //eslint-disable-next-line no-console
@@ -49,7 +50,8 @@ const _importConf = function() {
 exports._import = () => {
   const imported = _importConf();
   defaultConfig = imported.defaultCfg;
-  return _init(imported);
+  const result = _init(imported);
+  return result;
 };
 
 exports.getDefaultConfig = () => {
