@@ -48,7 +48,7 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
     });
   };
   const menu = [
-    ...(process.platform === 'darwin' ? [darwinMenu(commandKeys, showAbout)] : []),
+    ...(process.platform === 'darwin' ? [darwinMenu(commandKeys, execCommand, showAbout)] : []),
     shellMenu(commandKeys, execCommand),
     editMenu(commandKeys, execCommand),
     viewMenu(commandKeys, execCommand),

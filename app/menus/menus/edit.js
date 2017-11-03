@@ -45,7 +45,10 @@ module.exports = (commandKeys, execCommand) => {
       {type: 'separator'},
       {
         label: 'Preferences...',
-        accelerator: commandKeys['window:preferences']
+        accelerator: commandKeys['window:preferences'],
+        click() {
+          execCommand('window:preferences');
+        }
       }
     );
   }
