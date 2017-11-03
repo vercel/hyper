@@ -11,6 +11,7 @@ const createRPC = require('../rpc');
 const notify = require('../notify');
 const fetchNotifications = require('../notifications');
 const Session = require('../session');
+const contextMenuTemplate = require('./contextmenu');
 const {execCommand} = require('../commands');
 
 module.exports = class Window {
@@ -152,6 +153,11 @@ module.exports = class Window {
     });
     rpc.on('open external', ({url}) => {
       shell.openExternal(url);
+    });
+    rpc.on('open context menu', selection => {
+      const {createWindow} = app;
+      const {buildFromTemplate} = Menu;
+      buildFromTemplate(contextMenuTemplate(createWindow, selection)).popup(window);
     });
     rpc.on('open hamburger menu', ({x, y}) => {
       Menu.getApplicationMenu().popup(Math.ceil(x), Math.ceil(y));
