@@ -1,6 +1,7 @@
 // This is a CLI tool, using console is OK
 /* eslint no-console: 0 */
 const {spawn, exec} = require('child_process');
+const {isAbsolute, resolve} = require('path');
 const pify = require('pify');
 const args = require('args');
 const chalk = require('chalk');
@@ -153,7 +154,11 @@ const main = argv => {
     env
   };
 
-  const args_ = args.sub;
+  const args_ = args.sub.map(arg => {
+    return isAbsolute(arg) ? arg : resolve(process.cwd(), arg);
+  });
+
+  console.log(args_);
 
   if (!flags.verbose) {
     options['stdio'] = 'ignore';
