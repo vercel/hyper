@@ -5,6 +5,9 @@ NAME="Hyper"
 HYPER_PATH="$(dirname "$(dirname "$(dirname "$(realpath "$0")")")")"
 ELECTRON="$HYPER_PATH/$NAME.exe"
 if grep -q Microsoft /proc/version; then
+	echo "Warning! Due to WSL limitations, you can use CLI commands here. Please use Hyper CLI on cmd, PowerShell or GitBash/CygWin."
+	echo "Please see: https://github.com/Microsoft/WSL/issues/1494"
+	echo ""
 	# If running under WSL don't pass cli.js to Electron as environment vars
 	# cannot be transferred from WSL to Windows
 	# See: https://github.com/Microsoft/BashOnWindows/issues/1363
