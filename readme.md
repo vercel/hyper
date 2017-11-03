@@ -20,7 +20,7 @@ brew update
 brew cask install hyper
 ```
 
-If you are on windows, you can use [chocolatey](https://chocolatey.org/) to install the app by running the following command (package information can be found [here](https://chocolatey.org/packages/hyper/)):
+If you are on Windows, you can use [chocolatey](https://chocolatey.org/) to install the app by running the following command (package information can be found [here](https://chocolatey.org/packages/hyper/)):
 
 ```bash
 choco install hyper
@@ -51,8 +51,8 @@ Regardless of the platform you are working on, you will need to have Yarn instal
 4. Build the code and watch for changes: `yarn run dev`
 5. To run `hyper`
   * `yarn run app` from another terminal tab/window/pane
-  * If you are using **Visual Studio Code**, select `Launch Hyper` in debugger configuration to launch a new Hyper instance with debugger attached. 
- 
+  * If you are using **Visual Studio Code**, select `Launch Hyper` in debugger configuration to launch a new Hyper instance with debugger attached.
+
 To make sure that your code works in the finished application, you can generate the binaries like this:
 
 ```bash
