@@ -1109,13 +1109,7 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bluebird-lst@^1.0.2, bluebird-lst@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/bluebird-lst/-/bluebird-lst-1.0.3.tgz#cc56c18660eff0a0b86e2c33d1659618f7005158"
-  dependencies:
-    bluebird "^3.5.0"
-
-bluebird-lst@^1.0.4, bluebird-lst@^1.0.5:
+bluebird-lst@^1.0.3, bluebird-lst@^1.0.4, bluebird-lst@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/bluebird-lst/-/bluebird-lst-1.0.5.tgz#bebc83026b7e92a72871a3dc599e219cbfb002a9"
   dependencies:
@@ -1385,7 +1379,7 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
-chalk@2.1.0, chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0:
+chalk@2.1.0, chalk@^2.0.1:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.1.0.tgz#ac5becf14fa21b99c6c92ca7a7d7cfd5b17e743e"
   dependencies:
@@ -1411,7 +1405,7 @@ chalk@^1.0.0, chalk@^1.1.1, chalk@^1.1.3:
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
 
-chalk@^2.3.0:
+chalk@^2.0.0, chalk@^2.1.0, chalk@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.3.0.tgz#b5ea48efc9c1793dccc9b4767c93914d3f2d52ba"
   dependencies:
@@ -2757,14 +2751,7 @@ form-data@~2.3.1:
     combined-stream "^1.0.5"
     mime-types "^2.1.12"
 
-fs-extra-p@^4.4.0:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/fs-extra-p/-/fs-extra-p-4.4.2.tgz#b6abd882a9b89f41b977771d3da788ce38f085f3"
-  dependencies:
-    bluebird-lst "^1.0.2"
-    fs-extra "^4.0.2"
-
-fs-extra-p@^4.4.4:
+fs-extra-p@^4.4.0, fs-extra-p@^4.4.4:
   version "4.4.4"
   resolved "https://registry.yarnpkg.com/fs-extra-p/-/fs-extra-p-4.4.4.tgz#396ad6f914eb2954e1700fd0e18288301ed45f04"
   dependencies:
