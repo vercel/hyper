@@ -67,25 +67,27 @@
         }
       ]
     },
-    "overrides": [{
-      "files": "app/config/config-default.js",
-      "rules": {
-        "prettier/prettier": [
-          "error",
-          {
-            "printWidth": 120,
-            "tabWidth": 2,
-            "singleQuote": true,
-            "trailingComma": "es5",
-            "bracketSpacing": false,
-            "semi": true,
-            "useTabs": false,
-            "parser": "babylon",
-            "jsxBracketSameLine": false
-          }
-        ]
+    "overrides": [
+      {
+        "files": "app/config/config-default.js",
+        "rules": {
+          "prettier/prettier": [
+            "error",
+            {
+              "printWidth": 120,
+              "tabWidth": 2,
+              "singleQuote": true,
+              "trailingComma": "es5",
+              "bracketSpacing": false,
+              "semi": true,
+              "useTabs": false,
+              "parser": "babylon",
+              "jsxBracketSameLine": false
+            }
+          ]
+        }
       }
-    }]
+    ]
   },
   "babel": {
     "presets": [
@@ -183,6 +185,7 @@
     "css-loader": "0.28.7",
     "got": "7.1.0",
     "json-loader": "0.5.7",
+    "mousetrap": "chabou/mousetrap#useCapture",
     "ms": "2.0.0",
     "npm-name": "3.1.0",
     "opn": "5.1.0",
@@ -197,7 +200,6 @@
     "redux": "3.7.2",
     "redux-thunk": "2.2.0",
     "reselect": "3.0.1",
-    "runes": "0.4.3",
     "seamless-immutable": "7.1.2",
     "semver": "5.4.1",
     "shebang-loader": "false0.0.1",

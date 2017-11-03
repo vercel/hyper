@@ -1,18 +1,12 @@
-module.exports = commands => {
+module.exports = (commandKeys, execCommand) => {
   // Generating tab:jump array
   const tabJump = [];
   for (let i = 1; i <= 9; i++) {
     // 9 is a special number because it means 'last'
     const label = i === 9 ? 'Last' : `${i}`;
-    const tabIndex = i === 9 ? 'last' : i - 1;
     tabJump.push({
       label: label,
-      accelerator: commands[`tab:jump:${label.toLowerCase()}`],
-      click(item, focusedWindow) {
-        if (focusedWindow) {
-          focusedWindow.rpc.emit('move jump req', tabIndex);
-        }
-      }
+      accelerator: commandKeys[`tab:jump:${label.toLowerCase()}`]
     });
   }
 
@@ -21,7 +15,7 @@ module.exports = commands => {
     submenu: [
       {
         role: 'minimize',
-        accelerator: commands['window:minimize']
+        accelerator: commandKeys['window:minimize']
       },
       {
         type: 'separator'
@@ -29,27 +23,23 @@ module.exports = commands => {
       {
         // It's the same thing as clicking the green traffc-light on macOS
         role: 'zoom',
-        accelerator: commands['window:zoom']
+        accelerator: commandKeys['window:zoom']
       },
       {
         label: 'Select Tab',
         submenu: [
           {
             label: 'Previous',
-            accelerator: commands['tab:prev'],
-            click(item, focusedWindow) {
-              if (focusedWindow) {
-                focusedWindow.rpc.emit('move left req');
-              }
+            accelerator: commandKeys['tab:prev'],
+            click: (item, focusedWindow) => {
+              execCommand('tab:prev', focusedWindow);
             }
           },
           {
             label: 'Next',
-            accelerator: commands['tab:next'],
-            click(item, focusedWindow) {
-              if (focusedWindow) {
-                focusedWindow.rpc.emit('move right req');
-              }
+            accelerator: commandKeys['tab:next'],
+            click: (item, focusedWindow) => {
+              execCommand('tab:next', focusedWindow);
             }
           },
           {
@@ -66,20 +56,16 @@ module.exports = commands => {
         submenu: [
           {
             label: 'Previous',
-            accelerator: commands['pane:prev'],
-            click(item, focusedWindow) {
-              if (focusedWindow) {
-                focusedWindow.rpc.emit('prev pane req');
-              }
+            accelerator: commandKeys['pane:prev'],
+            click: (item, focusedWindow) => {
+              execCommand('pane:prev', focusedWindow);
             }
           },
           {
             label: 'Next',
-            accelerator: commands['pane:next'],
-            click(item, focusedWindow) {
-              if (focusedWindow) {
-                focusedWindow.rpc.emit('next pane req');
-              }
+            accelerator: commandKeys['pane:next'],
+            click: (item, focusedWindow) => {
+              execCommand('pane:next', focusedWindow);
             }
           }
         ]
@@ -92,7 +78,7 @@ module.exports = commands => {
       },
       {
         role: 'togglefullscreen',
-        accelerators: commands['window:toggleFullScreen']
+        accelerators: commandKeys['window:toggleFullScreen']
       }
     ]
   };
