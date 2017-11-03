@@ -1,8 +1,7 @@
 {
   "repository": "zeit/hyper",
   "scripts": {
-    "start":
-      "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
+    "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
     "app": "electron app",
     "dev": "webpack -w",
     "build": "cross-env NODE_ENV=production webpack",
@@ -11,18 +10,21 @@
     "test:unit": "ava test/unit",
     "test:unit:watch": "yarn run test:unit -- --watch",
     "prepush": "yarn test",
-    "postinstall":
-      "electron-builder install-app-deps && yarn run rebuild-node-pty",
-    "rebuild-node-pty":
-      "electron-rebuild -f -w app/node_modules/node-pty -m app",
-    "dist":
-      "yarn run build && cross-env BABEL_ENV=production babel --out-file app/renderer/bundle.js --no-comments --minified app/renderer/bundle.js && build",
-    "clean":
-      "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
+    "postinstall": "electron-builder install-app-deps && yarn run rebuild-node-pty",
+    "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
+    "dist": "yarn run build && cross-env BABEL_ENV=production babel --out-file app/renderer/bundle.js --no-comments --minified app/renderer/bundle.js && build",
+    "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
   },
   "eslintConfig": {
-    "plugins": ["react", "prettier"],
-    "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
+    "plugins": [
+      "react",
+      "prettier"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "prettier"
+    ],
     "parserOptions": {
       "ecmaVersion": 8,
       "sourceType": "module",
@@ -39,7 +41,10 @@
       "node": true
     },
     "rules": {
-      "func-names": ["error", "as-needed"],
+      "func-names": [
+        "error",
+        "as-needed"
+      ],
       "no-shadow": "error",
       "no-extra-semi": 0,
       "react/prop-types": 0,
@@ -62,28 +67,32 @@
         }
       ]
     },
-    "overrides": [{
-      "files": "app/config/config-default.js",
-      "rules": {
-        "prettier/prettier": [
-          "error",
-          {
-            "printWidth": 120,
-            "tabWidth": 2,
-            "singleQuote": true,
-            "trailingComma": "es5",
-            "bracketSpacing": false,
-            "semi": true,
-            "useTabs": false,
-            "parser": "babylon",
-            "jsxBracketSameLine": false
-          }
-        ]
+    "overrides": [
+      {
+        "files": "app/config/config-default.js",
+        "rules": {
+          "prettier/prettier": [
+            "error",
+            {
+              "printWidth": 120,
+              "tabWidth": 2,
+              "singleQuote": true,
+              "trailingComma": "es5",
+              "bracketSpacing": false,
+              "semi": true,
+              "useTabs": false,
+              "parser": "babylon",
+              "jsxBracketSameLine": false
+            }
+          ]
+        }
       }
-    }]
+    ]
   },
   "babel": {
-    "presets": ["react"],
+    "presets": [
+      "react"
+    ],
     "env": {
       "production": {
         "plugins": [
@@ -120,20 +129,28 @@
       "target": [
         {
           "target": "deb",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         },
         {
           "target": "AppImage",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         },
         {
           "target": "rpm",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         }
       ]
     },
     "win": {
-      "target": ["squirrel"]
+      "target": [
+        "squirrel"
+      ]
     },
     "mac": {
       "category": "public.app-category.developer-tools",
@@ -150,6 +167,7 @@
     "color": "2.0.0",
     "css-loader": "0.28.7",
     "json-loader": "0.5.7",
+    "mousetrap": "chabou/mousetrap#useCapture",
     "ms": "2.0.0",
     "php-escape-shell": "1.0.0",
     "react": "16.0.0",
@@ -159,7 +177,6 @@
     "redux": "3.7.2",
     "redux-thunk": "2.2.0",
     "reselect": "3.0.1",
-    "runes": "0.4.3",
     "seamless-immutable": "7.1.2",
     "semver": "5.4.1",
     "uuid": "3.1.0",
