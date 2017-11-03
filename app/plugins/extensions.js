@@ -8,6 +8,7 @@ module.exports = {
     'reduceUI',
     'reduceSessions',
     'reduceTermGroups',
+    'decorateBrowserOptions',
     'decorateMenu',
     'decorateTerm',
     'decorateHyper',
@@ -19,6 +20,7 @@ module.exports = {
     'decorateNotifications',
     'decorateTabs',
     'decorateConfig',
+    'decorateKeymaps',
     'decorateEnv',
     'decorateTermGroup',
     'decorateSplitPane',
@@ -33,7 +35,6 @@ module.exports = {
     'mapHyperTermDispatch',
     'mapTermsDispatch',
     'mapHeaderDispatch',
-    'mapNotificationsDispatch',
-    'extendKeymaps'
+    'mapNotificationsDispatch'
   ])
 };

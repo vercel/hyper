@@ -12,6 +12,7 @@ const notify = require('../notify');
 const fetchNotifications = require('../notifications');
 const Session = require('../session');
 const contextMenuTemplate = require('./contextmenu');
+const {execCommand} = require('../commands');
 
 module.exports = class Window {
   constructor(options_, cfg, fn) {
@@ -172,6 +173,10 @@ module.exports = class Window {
     });
     rpc.on('close', () => {
       window.close();
+    });
+    rpc.on('command', command => {
+      const focusedWindow = BrowserWindow.getFocusedWindow();
+      execCommand(command, focusedWindow);
     });
     const deleteSessions = () => {
       sessions.forEach((session, key) => {

@@ -6,10 +6,10 @@ const ms = require('ms');
 
 const config = require('./config');
 const notify = require('./notify');
-const _keys = require('./config/keymaps');
 const {availableExtensions} = require('./plugins/extensions');
 const {install} = require('./plugins/install');
 const {plugs} = require('./config/paths');
+const mapKeys = require('./utils/map-keys');
 
 // local storage
 const cache = new Config();
@@ -19,7 +19,7 @@ const localPath = plugs.local;
 
 // caches
 let plugins = config.getPlugins();
-let paths = getPaths(plugins);
+let paths = getPaths();
 let id = getId(plugins);
 let modules = requirePlugins();
 
@@ -64,7 +64,7 @@ function updatePlugins({force = false} = {}) {
       cache.set('hyper.plugins', id_);
 
       // cache paths
-      paths = getPaths(plugins);
+      paths = getPaths();
 
       // clear require cache
       clearCache();
@@ -289,7 +289,7 @@ function decorateObject(base, key) {
       try {
         res = plugin[key](decorated);
       } catch (e) {
-        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
+        notify('Plugin error!', `"${plugin._name}" when decorating ${key}`);
         return;
       }
       if (res && typeof res === 'object') {
@@ -302,22 +302,6 @@ function decorateObject(base, key) {
 
   return decorated;
 }
-
-exports.extendKeymaps = () => {
-  modules.forEach(plugin => {
-    if (plugin.extendKeymaps) {
-      let pluginKeymap;
-      try {
-        pluginKeymap = plugin.extendKeymaps();
-      } catch (e) {
-        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
-        return;
-      }
-      const keys = _keys.extend(pluginKeymap);
-      config.extendKeymaps(keys);
-    }
-  });
-};
 
 exports.getDeprecatedConfig = () => {
   const deprecated = {};
@@ -357,6 +341,22 @@ exports.getDecoratedConfig = () => {
   const fixedConfig = config.fixConfigDefaults(decoratedConfig);
   const translatedConfig = config.htermConfigTranslate(fixedConfig);
   return translatedConfig;
+};
+
+exports.checkDeprecatedExtendKeymaps = () => {
+  modules.forEach(plugin => {
+    if (plugin.extendKeymaps) {
+      notify('Plugin warning!', `"${plugin._name}" use deprecated "extendKeymaps" handler`);
+      return;
+    }
+  });
+};
+
+exports.getDecoratedKeymaps = () => {
+  const baseKeymaps = config.getKeymaps();
+  // Ensure that all keys are in an array and don't use deprecated key combination`
+  const decoratedKeymaps = mapKeys(decorateObject(baseKeymaps, 'decorateKeymaps'));
+  return decoratedKeymaps;
 };
 
 exports.getDecoratedBrowserOptions = defaults => {
