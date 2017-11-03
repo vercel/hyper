@@ -165,7 +165,7 @@
   "dependencies": {
     "aphrodite-simple": "0.4.1",
     "color": "2.0.0",
-    "css-loader": "0.28.4",
+    "css-loader": "0.28.7",
     "json-loader": "0.5.7",
     "mousetrap": "chabou/mousetrap#useCapture",
     "ms": "2.0.0",
@@ -183,7 +183,7 @@
     "xterm": "2.9.2"
   },
   "devDependencies": {
-    "ava": "0.22.0",
+    "ava": "0.23.0",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
@@ -192,9 +192,9 @@
     "copy-webpack-plugin": "4.0.1",
     "cross-env": "5.0.5",
     "electron": "1.7.9",
-    "electron-builder": "19.33.0",
-    "electron-builder-squirrel-windows": "19.33.0",
-    "electron-devtools-installer": "2.2.0",
+    "electron-builder": "19.43.0",
+    "electron-builder-squirrel-windows": "19.43.0",
+    "electron-devtools-installer": "2.2.1",
     "electron-rebuild": "1.6.0",
     "eslint": "^4.7.2",
     "eslint-config-prettier": "^2.6.0",
@@ -203,9 +203,9 @@
     "husky": "0.14.3",
     "inquirer": "3.3.0",
     "node-gyp": "3.6.2",
-    "prettier": "1.6.1",
+    "prettier": "1.7.4",
     "spectron": "3.7.2",
-    "style-loader": "0.18.2",
-    "webpack": "3.5.5"
+    "style-loader": "0.19.0",
+    "webpack": "3.8.1"
   }
 }
