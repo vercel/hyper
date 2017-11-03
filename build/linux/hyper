@@ -17,7 +17,7 @@ fi
 
 if [ ! -L $0 ]; then
 	# if path is not a symlink, find relatively
-	HYPER_PATH="$(dirname $0)../.."
+	HYPER_PATH="$(dirname $0)/../.."
 else
 	if which readlink >/dev/null; then
 		# if readlink exists, follow the symlink and find relatively
