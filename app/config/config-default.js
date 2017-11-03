@@ -20,7 +20,7 @@ module.exports = {
     // `'BEAM'` for |, `'UNDERLINE'` for _, `'BLOCK'` for █
     cursorShape: 'BLOCK',
 
-    // set to `true` for blinking cursor
+    // set to `true` (without backticks and without quotes) for blinking cursor
     cursorBlink: false,
 
     // color of the text
@@ -38,14 +38,14 @@ module.exports = {
     // custom CSS to embed in the terminal window
     termCSS: '',
 
-    // set to `true` (without backticks) if you're using a
+    // set to `true` (without backticks and without quotes) if you're using a
     // Linux setup that doesn't show native menus
     // default: `false` on Linux, `true` on Windows, ignored on macOS
     showHamburgerMenu: '',
 
-    // set to `false` if you want to hide the minimize, maximize and close buttons
+    // set to `false` (without backticks and without quotes) if you want to hide the minimize, maximize and close buttons
     // additionally, set to `'left'` if you want them on the left, like in Ubuntu
-    // default: `true` on Windows and Linux, ignored on macOS
+    // default: `true` (without backticks and without quotes) on Windows and Linux, ignored on macOS
     showWindowControls: '',
 
     // custom padding (CSS format, i.e.: `top right bottom left`)
@@ -97,10 +97,10 @@ module.exports = {
     // set to `false` for no bell
     bell: 'SOUND',
 
-    // if `true`, selected text will automatically be copied to the clipboard
+    // if `true` (without backticks and without quotes), selected text will automatically be copied to the clipboard
     copyOnSelect: false,
 
-    // if `true`, on right click selected text will be copied or pasted if no
+    // if `true` (without backticks and without quotes), on right click selected text will be copied or pasted if no
     // selection is present (`true` by default on Windows and disables the context menu feature)
     // quickEdit: true,
 
