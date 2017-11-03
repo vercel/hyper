@@ -73,12 +73,6 @@ exports.getKeymaps = () => {
   return cfg.keymaps;
 };
 
-exports.extendKeymaps = keymaps => {
-  if (keymaps) {
-    cfg.keymaps = keymaps;
-  }
-};
-
 exports.setup = () => {
   cfg = _import();
   _watch();

@@ -20,6 +20,7 @@ module.exports = {
     'decorateNotifications',
     'decorateTabs',
     'decorateConfig',
+    'decorateKeymaps',
     'decorateEnv',
     'decorateTermGroup',
     'decorateSplitPane',
@@ -34,7 +35,6 @@ module.exports = {
     'mapHyperTermDispatch',
     'mapTermsDispatch',
     'mapHeaderDispatch',
-    'mapNotificationsDispatch',
-    'extendKeymaps'
+    'mapNotificationsDispatch'
   ])
 };

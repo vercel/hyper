@@ -1,5 +1,6 @@
 const vm = require('vm');
 const notify = require('../notify');
+const mapKeys = require('../utils/map-keys');
 
 const _extract = function(script) {
   const module = {};
@@ -14,7 +15,7 @@ const _syntaxValidation = function(cfg) {
   try {
     return new vm.Script(cfg, {filename: '.hyper.js', displayErrors: true});
   } catch (err) {
-    notify(`Error loading config: ${err.name}, see DevTools for more info`);
+    notify('Error loading config:', `${err.name}, see DevTools for more info`);
     //eslint-disable-next-line no-console
     console.error('Error loading config:', err);
   }
@@ -30,19 +31,17 @@ const _init = function(cfg) {
   if (script) {
     const _cfg = _extract(script);
     if (!_cfg.config) {
-      _cfg.plugins = _cfg.plugins || [];
-      _cfg.localPlugins = _cfg.localPlugins || [];
-      _cfg.keymaps = _cfg.keymaps || {};
       notify('Error reading configuration: `config` key is missing');
-      return _extractDefault(cfg.defaultCfg);
+      return cfg.defaultCfg;
     }
-
+    // Merging platform specific keymaps with user defined keymaps
+    _cfg.keymaps = mapKeys(Object.assign({}, cfg.defaultCfg.keymaps, _cfg.keymaps));
     // Ignore undefined values in plugin and localPlugins array Issue #1862
     _cfg.plugins = (_cfg.plugins && _cfg.plugins.filter(Boolean)) || [];
     _cfg.localPlugins = (_cfg.localPlugins && _cfg.localPlugins.filter(Boolean)) || [];
     return _cfg;
   }
-  return _extractDefault(cfg.defaultCfg);
+  return cfg.defaultCfg;
 };
 
 module.exports = {
