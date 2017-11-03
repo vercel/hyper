@@ -2,7 +2,7 @@
 # Deeply inspired by https://github.com/Microsoft/vscode/blob/1.17.0/resources/win/bin/code.sh
 
 NAME="Hyper"
-HYPER_PATH="$(dirname "$(dirname "$(dirname "$(dirname "$(realpath "$0")")")")")"
+HYPER_PATH="$(dirname "$(dirname "$(dirname "$(realpath "$0")")")")"
 ELECTRON="$HYPER_PATH/$NAME.exe"
 if grep -q Microsoft /proc/version; then
 	# If running under WSL don't pass cli.js to Electron as environment vars
