@@ -158,8 +158,6 @@ const main = argv => {
     return isAbsolute(arg) ? arg : resolve(process.cwd(), arg);
   });
 
-  console.log(args_);
-
   if (!flags.verbose) {
     options['stdio'] = 'ignore';
     if (process.platform === 'darwin') {
