@@ -13,15 +13,19 @@ const api = require('./api');
 
 let commandUsed = false;
 
-if (!api.exists()) {
+const checkConfig = () => {
+  if (api.exists()) {
+    return true;
+  }
   let msg = chalk.red(`Error! Config file not found: ${api.configPath}\n`);
   msg += 'Please launch Hyper and retry.';
   console.error(msg);
   process.exit(1);
-}
+};
 
 args.command(['i', 'install'], 'Install a plugin', (name, args_) => {
   commandUsed = true;
+  checkConfig();
   const plugin = args_[0];
   return api
     .install(plugin)
@@ -31,6 +35,7 @@ args.command(['i', 'install'], 'Install a plugin', (name, args_) => {
 
 args.command(['u', 'uninstall', 'rm', 'remove'], 'Uninstall a plugin', (name, args_) => {
   commandUsed = true;
+  checkConfig();
   const plugin = args_[0];
   return api
     .uninstall(plugin)
@@ -40,6 +45,7 @@ args.command(['u', 'uninstall', 'rm', 'remove'], 'Uninstall a plugin', (name, ar
 
 args.command(['ls', 'list'], 'List installed plugins', () => {
   commandUsed = true;
+  checkConfig();
   let plugins = api.list();
 
   if (plugins) {
