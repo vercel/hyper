@@ -2,6 +2,7 @@
 /* eslint no-console: 0 */
 const {spawn, exec} = require('child_process');
 const {isAbsolute, resolve} = require('path');
+const {existsSync} = require('fs');
 const pify = require('pify');
 const args = require('args');
 const chalk = require('chalk');
@@ -164,7 +165,12 @@ const main = argv => {
   };
 
   const args_ = args.sub.map(arg => {
-    return isAbsolute(arg) ? arg : resolve(process.cwd(), arg);
+    const cwd = isAbsolute(arg) ? arg : resolve(process.cwd(), arg);
+    if (!existsSync(cwd)) {
+      console.error(chalk.red(`Error! Directory or file does not exist: ${cwd}`));
+      process.exit(1);
+    }
+    return cwd;
   });
 
   if (!flags.verbose) {
