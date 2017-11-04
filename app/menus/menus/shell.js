@@ -5,13 +5,6 @@ module.exports = (commandKeys, execCommand) => {
     label: isMac ? 'Shell' : 'File',
     submenu: [
       {
-        label: 'New Window',
-        accelerator: commandKeys['window:new'],
-        click(item, focusedWindow) {
-          execCommand('window:new', focusedWindow);
-        }
-      },
-      {
         label: 'New Tab',
         accelerator: commandKeys['tab:new'],
         click(item, focusedWindow) {
@@ -19,14 +12,14 @@ module.exports = (commandKeys, execCommand) => {
         }
       },
       {
-        type: 'separator'
+        label: 'New Window',
+        accelerator: commandKeys['window:new'],
+        click(item, focusedWindow) {
+          execCommand('window:new', focusedWindow);
+        }
       },
       {
-        label: 'Split Vertically',
-        accelerator: commandKeys['pane:splitVertical'],
-        click(item, focusedWindow) {
-          execCommand('pane:splitVertical', focusedWindow);
-        }
+        type: 'separator'
       },
       {
         label: 'Split Horizontally',
@@ -36,10 +29,17 @@ module.exports = (commandKeys, execCommand) => {
         }
       },
       {
+        label: 'Split Vertically',
+        accelerator: commandKeys['pane:splitVertical'],
+        click(item, focusedWindow) {
+          execCommand('pane:splitVertical', focusedWindow);
+        }
+      },
+      {
         type: 'separator'
       },
       {
-        label: 'Close Session',
+        label: 'Close Tab',
         accelerator: commandKeys['pane:close'],
         click(item, focusedWindow) {
           execCommand('pane:close', focusedWindow);
