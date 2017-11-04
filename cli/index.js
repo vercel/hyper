@@ -136,7 +136,10 @@ args.option(['v', 'verbose'], 'Verbose mode', false);
 const main = argv => {
   const flags = args.parse(argv, {
     name: 'hyper',
-    version: false
+    version: false,
+    mri: {
+      boolean: ['v', 'verbose']
+    }
   });
 
   if (commandUsed) {
