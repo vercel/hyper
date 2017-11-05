@@ -6,13 +6,13 @@ const {existsSync} = require('fs');
 const pify = require('pify');
 const args = require('args');
 const chalk = require('chalk');
-//const columnify = require('columnify');
-//const got = require('got');
 const opn = require('opn');
-//const ora = require('ora');
+// const columnify = require('columnify');
+// const got = require('got');
+// const ora = require('ora');
 const api = require('./api');
 
-let commandUsed = false;
+let commandPromise;
 
 const checkConfig = () => {
   if (api.exists()) {
@@ -25,27 +25,24 @@ const checkConfig = () => {
 };
 
 args.command(['i', 'install'], 'Install a plugin', (name, args_) => {
-  commandUsed = true;
   checkConfig();
   const plugin = args_[0];
-  return api
+  commandPromise = api
     .install(plugin)
     .then(() => console.log(chalk.green(`${plugin} installed successfully!`)))
     .catch(err => console.error(chalk.red(err)));
 });
 
 args.command(['u', 'uninstall', 'rm', 'remove'], 'Uninstall a plugin', (name, args_) => {
-  commandUsed = true;
   checkConfig();
   const plugin = args_[0];
-  return api
+  commandPromise = api
     .uninstall(plugin)
     .then(() => console.log(chalk.green(`${plugin} uninstalled successfully!`)))
     .catch(err => console.log(chalk.red(err)));
 });
 
 args.command(['ls', 'list'], 'List installed plugins', () => {
-  commandUsed = true;
   checkConfig();
   let plugins = api.list();
 
@@ -78,11 +75,10 @@ const lsRemote = () => {
 };
 
 args.command(['s', 'search'], 'Search for plugins on npm', (name, args_) => {
-  commandUsed = true;
   const spinner = ora('Searching').start();
   const query = args_[0] ? args_[0].toLowerCase() : '';
 
-  return lsRemote()
+  commandPromise = lsRemote()
     .then(entries => {
       return entries.filter(entry => {
         return entry.name.indexOf(query) !== -1 || entry.description.toLowerCase().indexOf(query) !== -1;
@@ -108,10 +104,9 @@ args.command(['s', 'search'], 'Search for plugins on npm', (name, args_) => {
 });
 
 args.command(['lsr', 'list-remote', 'ls-remote'], 'List plugins available on npm', () => {
-  commandUsed = true;
   const spinner = ora('Searching').start();
 
-  return lsRemote()
+  commandPromise = lsRemote()
     .then(entries => {
       let msg = columnify(entries);
 
@@ -126,7 +121,6 @@ args.command(['lsr', 'list-remote', 'ls-remote'], 'List plugins available on npm
 });*/
 
 args.command(['d', 'docs', 'h', 'home'], 'Open the npm page of a plugin', (name, args_) => {
-  commandUsed = true;
   return opn(`http://ghub.io/${args_[0]}`, {wait: false});
 });
 
@@ -143,8 +137,8 @@ const main = argv => {
     }
   });
 
-  if (commandUsed) {
-    return Promise.resolve();
+  if (commandPromise) {
+    return commandPromise;
   }
 
   const env = Object.assign({}, process.env, {
