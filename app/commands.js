@@ -62,6 +62,30 @@ const commands = {
   },
   'pane:next': focusedWindow => {
     focusedWindow.rpc.emit('next pane req');
+  },
+  'editor:movePreviousWord': focusedWindow => {
+    focusedWindow.rpc.emit('session move word left req');
+  },
+  'editor:moveNextWord': focusedWindow => {
+    focusedWindow.rpc.emit('session move word right req');
+  },
+  'editor:moveBeginningLine': focusedWindow => {
+    focusedWindow.rpc.emit('session move line beginning req');
+  },
+  'editor:moveEndLine': focusedWindow => {
+    focusedWindow.rpc.emit('session move line end req');
+  },
+  'editor:deletePreviousWord': focusedWindow => {
+    focusedWindow.rpc.emit('session del word left req');
+  },
+  'editor:deleteNextWord': focusedWindow => {
+    focusedWindow.rpc.emit('session del word right req');
+  },
+  'editor:deleteBeginningLine': focusedWindow => {
+    focusedWindow.rpc.emit('session del line beginning req');
+  },
+  'editor:deleteEndLine': focusedWindow => {
+    focusedWindow.rpc.emit('session del line end req');
   }
 };
 
