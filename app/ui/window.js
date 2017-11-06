@@ -23,7 +23,7 @@ module.exports = class Window {
         backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
         titleBarStyle: 'hidden-inset',
         title: 'Hyper.app',
-        // we want to go frameless on windows and linux
+        // we want to go frameless on Windows and Linux
         frame: process.platform === 'darwin',
         transparent: process.platform === 'darwin',
         icon,
