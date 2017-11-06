@@ -39,7 +39,7 @@ module.exports = (commandKeys, execCommand) => {
         type: 'separator'
       },
       {
-        label: 'Close Pane',
+        label: 'Close',
         accelerator: commandKeys['pane:close'],
         click(item, focusedWindow) {
           execCommand('pane:close', focusedWindow);
