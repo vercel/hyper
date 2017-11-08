@@ -57,8 +57,7 @@ function updatePlugins({force = false} = {}) {
 
     if (err) {
       //eslint-disable-next-line no-console
-      console.error(err.stack);
-      notify('Error updating plugins.', err.message);
+      notify('Error updating plugins.', err);
     } else {
       // flag successful plugin update
       cache.set('hyper.plugins', id_);
@@ -135,7 +134,7 @@ if (cache.get('hyper.plugins') !== id || process.env.HYPER_FORCE_UPDATE) {
   console.log('plugins have changed / not init, scheduling plugins installation');
   setTimeout(() => {
     updatePlugins();
-  }, 5000);
+  }, 1000);
 }
 
 // otherwise update plugins every 5 hours
@@ -243,9 +242,14 @@ function requirePlugins() {
 
       return mod;
     } catch (err) {
-      //eslint-disable-next-line no-console
-      console.error(err);
-      notify('Plugin error!', `Plugin "${basename(path_)}" failed to load (${err.message})`);
+      if (err.code === 'MODULE_NOT_FOUND') {
+        //eslint-disable-next-line no-console
+        console.warn(`Plugin "${basename(path_)}" not found: ${path_}`);
+      } else {
+        //eslint-disable-next-line no-console
+        console.error(err);
+        notify('Plugin error!', `Plugin "${basename(path_)}" failed to load (${err.message})`);
+      }
     }
   };
 
