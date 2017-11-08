@@ -1,19 +1,22 @@
 module.exports = (commandKeys, execCommand) => {
   const submenu = [
     {
-      role: 'undo',
-      accelerator: commandKeys['editor:undo']
+      label: 'Undo',
+      accelerator: commandKeys['editor:undo'],
+      enabled: false
     },
     {
-      role: 'redo',
-      accelerator: commandKeys['editor:redo']
+      label: 'Redo',
+      accelerator: commandKeys['editor:redo'],
+      enabled: false
     },
     {
       type: 'separator'
     },
     {
-      role: 'cut',
-      accelerator: commandKeys['editor:cut']
+      label: 'Cut',
+      accelerator: commandKeys['editor:cut'],
+      enabled: false
     },
     {
       role: 'copy',
