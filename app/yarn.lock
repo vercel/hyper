@@ -234,9 +234,9 @@ node-fetch@1.7.3:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-pty@0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/node-pty/-/node-pty-0.7.2.tgz#b6cff79fd01f58b84947c034434c8cbeb157da43"
+node-pty@0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/node-pty/-/node-pty-0.7.3.tgz#4bb36a24a62ee9f3332e2e2310d6642d9daed1f7"
   dependencies:
     nan "^2.6.2"
 
