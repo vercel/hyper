@@ -43,6 +43,15 @@ config.subscribe(() => {
   }
 });
 
+function checkDeprecatedExtendKeymaps() {
+  modules.forEach(plugin => {
+    if (plugin.extendKeymaps) {
+      notify('Plugin warning!', `"${plugin._name}" use deprecated "extendKeymaps" handler`);
+      return;
+    }
+  });
+}
+
 let updating = false;
 
 function updatePlugins({force = false} = {}) {
@@ -84,6 +93,7 @@ function updatePlugins({force = false} = {}) {
         } else {
           notify('Plugins Updated', 'No changes!');
         }
+        checkDeprecatedExtendKeymaps();
         watchers.forEach(fn => fn(err, {force}));
       }
     }
@@ -345,15 +355,6 @@ exports.getDecoratedConfig = () => {
   const fixedConfig = config.fixConfigDefaults(decoratedConfig);
   const translatedConfig = config.htermConfigTranslate(fixedConfig);
   return translatedConfig;
-};
-
-exports.checkDeprecatedExtendKeymaps = () => {
-  modules.forEach(plugin => {
-    if (plugin.extendKeymaps) {
-      notify('Plugin warning!', `"${plugin._name}" use deprecated "extendKeymaps" handler`);
-      return;
-    }
-  });
 };
 
 exports.getDecoratedKeymaps = () => {
