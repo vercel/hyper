@@ -20,7 +20,7 @@ module.exports = (commandKeys, execCommand) => {
         label: 'Developer Tools',
         accelerator: commandKeys['window:devtools'],
         click: (item, focusedWindow) => {
-          execCommand('window:reloadFull', focusedWindow);
+          execCommand('window:devtools', focusedWindow);
         }
       },
       {
