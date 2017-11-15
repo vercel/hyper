@@ -35,6 +35,5 @@ module.exports = {
   recordState(win) {
     cfg.set('windowPosition', win.getPosition());
     cfg.set('windowSize', win.getSize());
-  },
-  validateAndFixWindowPosition
+  }
 };
