@@ -26,6 +26,14 @@
   "editor:copy": "ctrl+shift+c",
   "editor:paste": "ctrl+shift+v",
   "editor:selectAll": "ctrl+shift+a",
+  "editor:movePreviousWord": "ctrl+left",
+  "editor:moveNextWord": "ctrl+right",
+  "editor:moveBeginningLine": "home",
+  "editor:moveEndLine": "end",
+  "editor:deletePreviousWord": "ctrl+backspace",
+  "editor:deleteNextWord": "cltr+del",
+  "editor:deleteBeginningLine": "ctrl+home",
+  "editor:deleteEndLine": "ctrl+end",
   "editor:clearBuffer": "ctrl+shift+k",
   "plugins:update": "ctrl+shift+u"
 }

@@ -11,6 +11,8 @@ const createRPC = require('../rpc');
 const notify = require('../notify');
 const fetchNotifications = require('../notifications');
 const Session = require('../session');
+const contextMenuTemplate = require('./contextmenu');
+const {execCommand} = require('../commands');
 
 module.exports = class Window {
   constructor(options_, cfg, fn) {
@@ -21,7 +23,7 @@ module.exports = class Window {
         backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
         titleBarStyle: 'hidden-inset',
         title: 'Hyper.app',
-        // we want to go frameless on windows and linux
+        // we want to go frameless on Windows and Linux
         frame: process.platform === 'darwin',
         transparent: process.platform === 'darwin',
         icon,
@@ -152,6 +154,11 @@ module.exports = class Window {
     rpc.on('open external', ({url}) => {
       shell.openExternal(url);
     });
+    rpc.on('open context menu', selection => {
+      const {createWindow} = app;
+      const {buildFromTemplate} = Menu;
+      buildFromTemplate(contextMenuTemplate(createWindow, selection)).popup(window);
+    });
     rpc.on('open hamburger menu', ({x, y}) => {
       Menu.getApplicationMenu().popup(Math.ceil(x), Math.ceil(y));
     });
@@ -166,6 +173,10 @@ module.exports = class Window {
     });
     rpc.on('close', () => {
       window.close();
+    });
+    rpc.on('command', command => {
+      const focusedWindow = BrowserWindow.getFocusedWindow();
+      execCommand(command, focusedWindow);
     });
     const deleteSessions = () => {
       sessions.forEach((session, key) => {

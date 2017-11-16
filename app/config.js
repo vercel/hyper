@@ -22,7 +22,7 @@ const _watch = function() {
   };
 
   if (process.platform === 'win32') {
-    // watch for changes on config every 2s on windows
+    // watch for changes on config every 2s on Windows
     // https://github.com/zeit/hyper/pull/1772
     _watcher = fs.watchFile(cfgPath, {interval: 2000}, (curr, prev) => {
       if (curr.mtime === 0) {
@@ -71,12 +71,6 @@ exports.getPlugins = () => {
 
 exports.getKeymaps = () => {
   return cfg.keymaps;
-};
-
-exports.extendKeymaps = keymaps => {
-  if (keymaps) {
-    cfg.keymaps = keymaps;
-  }
 };
 
 exports.setup = () => {

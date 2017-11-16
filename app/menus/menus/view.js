@@ -1,37 +1,26 @@
-module.exports = commands => {
+module.exports = (commandKeys, execCommand) => {
   return {
     label: 'View',
     submenu: [
       {
         label: 'Reload',
-        accelerator: commands['window:reload'],
+        accelerator: commandKeys['window:reload'],
         click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('reload');
-          }
+          execCommand('window:reload', focusedWindow);
         }
       },
       {
         label: 'Full Reload',
-        accelerator: commands['window:reloadFull'],
+        accelerator: commandKeys['window:reloadFull'],
         click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.reload();
-          }
+          execCommand('window:reloadFull', focusedWindow);
         }
       },
       {
         label: 'Developer Tools',
-        accelerator: commands['window:devtools'],
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            const webContents = focusedWindow.webContents;
-            if (webContents.isDevToolsOpened()) {
-              webContents.closeDevTools();
-            } else {
-              webContents.openDevTools({mode: 'detach'});
-            }
-          }
+        accelerator: commandKeys['window:devtools'],
+        click: (item, focusedWindow) => {
+          execCommand('window:devtools', focusedWindow);
         }
       },
       {
@@ -39,29 +28,23 @@ module.exports = commands => {
       },
       {
         label: 'Reset Zoom Level',
-        accelerator: commands['zoom:reset'],
+        accelerator: commandKeys['zoom:reset'],
         click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('reset fontSize req');
-          }
+          execCommand('zoom:reset', focusedWindow);
         }
       },
       {
         label: 'Zoom In',
-        accelerator: commands['zoom:in'],
+        accelerator: commandKeys['zoom:in'],
         click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('increase fontSize req');
-          }
+          execCommand('zoom:in', focusedWindow);
         }
       },
       {
         label: 'Zoom Out',
-        accelerator: commands['zoom:out'],
+        accelerator: commandKeys['zoom:out'],
         click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('decrease fontSize req');
-          }
+          execCommand('zoom:out', focusedWindow);
         }
       }
     ]

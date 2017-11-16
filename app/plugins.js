@@ -6,10 +6,10 @@ const ms = require('ms');
 
 const config = require('./config');
 const notify = require('./notify');
-const _keys = require('./config/keymaps');
 const {availableExtensions} = require('./plugins/extensions');
 const {install} = require('./plugins/install');
 const {plugs} = require('./config/paths');
+const mapKeys = require('./utils/map-keys');
 
 // local storage
 const cache = new Config();
@@ -19,7 +19,7 @@ const localPath = plugs.local;
 
 // caches
 let plugins = config.getPlugins();
-let paths = getPaths(plugins);
+let paths = getPaths();
 let id = getId(plugins);
 let modules = requirePlugins();
 
@@ -43,6 +43,15 @@ config.subscribe(() => {
   }
 });
 
+function checkDeprecatedExtendKeymaps() {
+  modules.forEach(plugin => {
+    if (plugin.extendKeymaps) {
+      notify('Plugin warning!', `"${plugin._name}" use deprecated "extendKeymaps" handler`);
+      return;
+    }
+  });
+}
+
 let updating = false;
 
 function updatePlugins({force = false} = {}) {
@@ -57,14 +66,13 @@ function updatePlugins({force = false} = {}) {
 
     if (err) {
       //eslint-disable-next-line no-console
-      console.error(err.stack);
-      notify('Error updating plugins.', err.message);
+      notify('Error updating plugins.', err);
     } else {
       // flag successful plugin update
       cache.set('hyper.plugins', id_);
 
       // cache paths
-      paths = getPaths(plugins);
+      paths = getPaths();
 
       // clear require cache
       clearCache();
@@ -85,6 +93,7 @@ function updatePlugins({force = false} = {}) {
         } else {
           notify('Plugins Updated', 'No changes!');
         }
+        checkDeprecatedExtendKeymaps();
         watchers.forEach(fn => fn(err, {force}));
       }
     }
@@ -135,7 +144,7 @@ if (cache.get('hyper.plugins') !== id || process.env.HYPER_FORCE_UPDATE) {
   console.log('plugins have changed / not init, scheduling plugins installation');
   setTimeout(() => {
     updatePlugins();
-  }, 5000);
+  }, 1000);
 }
 
 // otherwise update plugins every 5 hours
@@ -243,9 +252,14 @@ function requirePlugins() {
 
       return mod;
     } catch (err) {
-      //eslint-disable-next-line no-console
-      console.error(err);
-      notify('Plugin error!', `Plugin "${basename(path_)}" failed to load (${err.message})`);
+      if (err.code === 'MODULE_NOT_FOUND') {
+        //eslint-disable-next-line no-console
+        console.warn(`Plugin "${basename(path_)}" not found: ${path_}`);
+      } else {
+        //eslint-disable-next-line no-console
+        console.error(err);
+        notify('Plugin error!', `Plugin "${basename(path_)}" failed to load (${err.message})`);
+      }
     }
   };
 
@@ -289,7 +303,7 @@ function decorateObject(base, key) {
       try {
         res = plugin[key](decorated);
       } catch (e) {
-        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
+        notify('Plugin error!', `"${plugin._name}" when decorating ${key}`);
         return;
       }
       if (res && typeof res === 'object') {
@@ -302,22 +316,6 @@ function decorateObject(base, key) {
 
   return decorated;
 }
-
-exports.extendKeymaps = () => {
-  modules.forEach(plugin => {
-    if (plugin.extendKeymaps) {
-      let pluginKeymap;
-      try {
-        pluginKeymap = plugin.extendKeymaps();
-      } catch (e) {
-        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
-        return;
-      }
-      const keys = _keys.extend(pluginKeymap);
-      config.extendKeymaps(keys);
-    }
-  });
-};
 
 exports.getDeprecatedConfig = () => {
   const deprecated = {};
@@ -357,6 +355,13 @@ exports.getDecoratedConfig = () => {
   const fixedConfig = config.fixConfigDefaults(decoratedConfig);
   const translatedConfig = config.htermConfigTranslate(fixedConfig);
   return translatedConfig;
+};
+
+exports.getDecoratedKeymaps = () => {
+  const baseKeymaps = config.getKeymaps();
+  // Ensure that all keys are in an array and don't use deprecated key combination`
+  const decoratedKeymaps = mapKeys(decorateObject(baseKeymaps, 'decorateKeymaps'));
+  return decoratedKeymaps;
 };
 
 exports.getDecoratedBrowserOptions = defaults => {

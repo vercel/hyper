@@ -1,8 +1,8 @@
 // Packages
-const {app, dialog} = require('electron');
+const {app, dialog, Menu} = require('electron');
 
 // Utilities
-const {getKeymaps, getConfig} = require('../config');
+const {getConfig} = require('../config');
 const {icon} = require('../config/paths');
 const viewMenu = require('./menus/view');
 const shellMenu = require('./menus/shell');
@@ -11,13 +11,22 @@ const pluginsMenu = require('./menus/plugins');
 const windowMenu = require('./menus/window');
 const helpMenu = require('./menus/help');
 const darwinMenu = require('./menus/darwin');
+const {getDecoratedKeymaps} = require('../plugins');
+const {execCommand} = require('../commands');
 
 const appName = app.getName();
 const appVersion = app.getVersion();
 
-module.exports = (createWindow, updatePlugins, getLoadedPluginVersions) => {
+let menu_ = [];
+
+exports.createMenu = (createWindow, getLoadedPluginVersions) => {
   const config = getConfig();
-  const {commands} = getKeymaps();
+  // We take only first shortcut in array for each command
+  const allCommandKeys = getDecoratedKeymaps();
+  const commandKeys = Object.keys(allCommandKeys).reduce((result, command) => {
+    result[command] = allCommandKeys[command][0];
+    return result;
+  }, {});
 
   let updateChannel = 'stable';
 
@@ -39,14 +48,19 @@ module.exports = (createWindow, updatePlugins, getLoadedPluginVersions) => {
     });
   };
   const menu = [
-    ...(process.platform === 'darwin' ? [darwinMenu(commands, showAbout)] : []),
-    shellMenu(commands, createWindow),
-    editMenu(commands),
-    viewMenu(commands),
-    pluginsMenu(commands, updatePlugins),
-    windowMenu(commands),
-    helpMenu(commands, showAbout)
+    ...(process.platform === 'darwin' ? [darwinMenu(commandKeys, execCommand, showAbout)] : []),
+    shellMenu(commandKeys, execCommand),
+    editMenu(commandKeys, execCommand),
+    viewMenu(commandKeys, execCommand),
+    pluginsMenu(commandKeys, execCommand),
+    windowMenu(commandKeys, execCommand),
+    helpMenu(commandKeys, showAbout)
   ];
 
   return menu;
+};
+
+exports.buildMenu = template => {
+  menu_ = Menu.buildFromTemplate(template);
+  return menu_;
 };

@@ -56,13 +56,14 @@ const {app, BrowserWindow, Menu} = require('electron');
 const {gitDescribe} = require('git-describe');
 const isDev = require('electron-is-dev');
 
-const AppMenu = require('./menus/menu');
 const config = require('./config');
 
 // set up config
 config.setup();
 
 const plugins = require('./plugins');
+
+const AppMenu = require('./menus/menu');
 
 const Window = require('./ui/window');
 
@@ -181,15 +182,7 @@ app.on('ready', () =>
       });
 
       const makeMenu = () => {
-        const menu = plugins.decorateMenu(
-          AppMenu(
-            createWindow,
-            () => {
-              plugins.updatePlugins({force: true});
-            },
-            plugins.getLoadedPluginVersions
-          )
-        );
+        const menu = plugins.decorateMenu(AppMenu.createMenu(createWindow, plugins.getLoadedPluginVersions));
 
         // If we're on Mac make a Dock Menu
         if (process.platform === 'darwin') {
@@ -204,17 +197,13 @@ app.on('ready', () =>
           app.dock.setMenu(dockMenu);
         }
 
-        Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
+        Menu.setApplicationMenu(AppMenu.buildMenu(menu));
       };
 
-      const load = () => {
-        plugins.onApp(app);
-        plugins.extendKeymaps();
-        makeMenu();
-      };
-
-      load();
-      plugins.subscribe(load);
+      plugins.onApp(app);
+      makeMenu();
+      plugins.subscribe(plugins.onApp.bind(undefined, app));
+      config.subscribe(makeMenu);
     })
     .catch(err => {
       //eslint-disable-next-line no-console

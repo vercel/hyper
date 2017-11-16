@@ -1,64 +1,54 @@
-module.exports = (commands, createWindow) => {
+module.exports = (commandKeys, execCommand) => {
   const isMac = process.platform === 'darwin';
 
   return {
     label: isMac ? 'Shell' : 'File',
     submenu: [
       {
-        label: 'New Window',
-        accelerator: commands['window:new'],
-        click() {
-          createWindow();
+        label: 'New Tab',
+        accelerator: commandKeys['tab:new'],
+        click(item, focusedWindow) {
+          execCommand('tab:new', focusedWindow);
         }
       },
       {
-        label: 'New Tab',
-        accelerator: commands['tab:new'],
+        label: 'New Window',
+        accelerator: commandKeys['window:new'],
         click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('termgroup add req');
-          } else {
-            createWindow();
-          }
+          execCommand('window:new', focusedWindow);
         }
       },
       {
         type: 'separator'
-      },
-      {
-        label: 'Split Vertically',
-        accelerator: commands['pane:splitVertical'],
-        click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('split request vertical');
-          }
-        }
       },
       {
         label: 'Split Horizontally',
-        accelerator: commands['pane:splitHorizontal'],
+        accelerator: commandKeys['pane:splitHorizontal'],
         click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('split request horizontal');
-          }
+          execCommand('pane:splitHorizontal', focusedWindow);
+        }
+      },
+      {
+        label: 'Split Vertically',
+        accelerator: commandKeys['pane:splitVertical'],
+        click(item, focusedWindow) {
+          execCommand('pane:splitVertical', focusedWindow);
         }
       },
       {
         type: 'separator'
       },
       {
-        label: 'Close Session',
-        accelerator: commands['pane:close'],
+        label: 'Close',
+        accelerator: commandKeys['pane:close'],
         click(item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.rpc.emit('termgroup close req');
-          }
+          execCommand('pane:close', focusedWindow);
         }
       },
       {
         label: isMac ? 'Close Window' : 'Quit',
         role: 'close',
-        accelerator: commands['window:close']
+        accelerator: commandKeys['window:close']
       }
     ]
   };

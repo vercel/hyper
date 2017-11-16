@@ -1,44 +1,113 @@
-const {openConfig} = require('../../config');
-
-module.exports = commands => {
+module.exports = (commandKeys, execCommand) => {
   const submenu = [
     {
-      role: 'undo',
-      accelerator: commands['editor:undo']
+      label: 'Undo',
+      accelerator: commandKeys['editor:undo'],
+      enabled: false
     },
     {
-      role: 'redo',
-      accelerator: commands['editor:redo']
+      label: 'Redo',
+      accelerator: commandKeys['editor:redo'],
+      enabled: false
     },
     {
       type: 'separator'
     },
     {
-      role: 'cut',
-      accelerator: commands['editor:cut']
+      label: 'Cut',
+      accelerator: commandKeys['editor:cut'],
+      enabled: false
     },
     {
       role: 'copy',
-      accelerator: commands['editor:copy']
+      command: 'editor:copy',
+      accelerator: commandKeys['editor:copy']
     },
     {
       role: 'paste',
-      accelerator: commands['editor:paste']
+      accelerator: commandKeys['editor:paste']
     },
     {
       role: 'selectall',
-      accelerator: commands['editor:selectAll']
+      accelerator: commandKeys['editor:selectAll']
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Move to...',
+      submenu: [
+        {
+          label: 'Previous word',
+          accelerator: commandKeys['editor:movePreviousWord'],
+          click(item, focusedWindow) {
+            execCommand('editor:movePreviousWord', focusedWindow);
+          }
+        },
+        {
+          label: 'Next word',
+          accelerator: commandKeys['editor:moveNextWord'],
+          click(item, focusedWindow) {
+            execCommand('editor:moveNextWord', focusedWindow);
+          }
+        },
+        {
+          label: 'Line beginning',
+          accelerator: commandKeys['editor:moveBeginningLine'],
+          click(item, focusedWindow) {
+            execCommand('editor:moveBeginningLine', focusedWindow);
+          }
+        },
+        {
+          label: 'Line end',
+          accelerator: commandKeys['editor:moveEndLine'],
+          click(item, focusedWindow) {
+            execCommand('editor:moveEndLine', focusedWindow);
+          }
+        }
+      ]
+    },
+    {
+      label: 'Delete...',
+      submenu: [
+        {
+          label: 'Previous word',
+          accelerator: commandKeys['editor:deletePreviousWord'],
+          click(item, focusedWindow) {
+            execCommand('editor:deletePreviousWord', focusedWindow);
+          }
+        },
+        {
+          label: 'Next word',
+          accelerator: commandKeys['editor:deleteNextWord'],
+          click(item, focusedWindow) {
+            execCommand('editor:deleteNextWord', focusedWindow);
+          }
+        },
+        {
+          label: 'Line beginning',
+          accelerator: commandKeys['editor:deleteBeginningLine'],
+          click(item, focusedWindow) {
+            execCommand('editor:deleteBeginningLine', focusedWindow);
+          }
+        },
+        {
+          label: 'Line end',
+          accelerator: commandKeys['editor:deleteEndLine'],
+          click(item, focusedWindow) {
+            execCommand('editor:deleteEndLine', focusedWindow);
+          }
+        }
+      ]
     },
     {
       type: 'separator'
     },
     {
       label: 'Clear Buffer',
-      accelerator: commands['editor:clearBuffer'],
+      accelerator: commandKeys['editor:clearBuffer'],
       click(item, focusedWindow) {
-        if (focusedWindow) {
-          focusedWindow.rpc.emit('session clear req');
-        }
+        execCommand('editor:clearBuffer', focusedWindow);
       }
     }
   ];
@@ -48,9 +117,9 @@ module.exports = commands => {
       {type: 'separator'},
       {
         label: 'Preferences...',
-        accelerator: commands['window:preferences'],
+        accelerator: commandKeys['window:preferences'],
         click() {
-          openConfig();
+          execCommand('window:preferences');
         }
       }
     );
