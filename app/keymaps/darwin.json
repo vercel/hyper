@@ -5,7 +5,7 @@
   "window:preferences": "command+,",
   "zoom:reset": "command+0",
   "zoom:in": "command+plus",
-  "zoom:out": "command+minus",
+  "zoom:out": "command+-",
   "window:new": "command+n",
   "window:minimize": "command+m",
   "window:zoom": "ctrl+alt+command+m",
