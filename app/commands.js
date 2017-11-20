@@ -8,7 +8,11 @@ const commands = {
     setTimeout(app.createWindow, 0);
   },
   'tab:new': focusedWindow => {
-    focusedWindow.rpc.emit('termgroup add req');
+    if (focusedWindow) {
+      focusedWindow.rpc.emit('termgroup add req');
+    } else {
+      setTimeout(app.createWindow, 0);
+    }
   },
   'pane:splitVertical': focusedWindow => {
     focusedWindow.rpc.emit('split request vertical');
