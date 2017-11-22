@@ -50,7 +50,7 @@ Regardless of the platform you are working on, you will need to have Yarn instal
 3. Install the dependencies: `yarn`
 4. Build the code and watch for changes: `yarn run dev`
 5. To run `hyper`
-  * `yarn run app` from another terminal tab/window/pane
+  * `yarn run app` from another terminal tab/window/pane OR press ctrl+c then `yarn run app`
   * If you are using **Visual Studio Code**, select `Launch Hyper` in debugger configuration to launch a new Hyper instance with debugger attached.
 
 To make sure that your code works in the finished application, you can generate the binaries like this:
