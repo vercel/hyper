@@ -5,7 +5,7 @@
   "window:preferences": "ctrl+,",
   "zoom:reset": "ctrl+0",
   "zoom:in": "ctrl+plus",
-  "zoom:out": "ctrl+minus",
+  "zoom:out": "ctrl+-",
   "window:new": "ctrl+shift+n",
   "window:minimize": "ctrl+shift+m",
   "window:zoom": "ctrl+shift+alt+m",
