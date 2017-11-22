@@ -12,8 +12,18 @@
   "window:toggleFullScreen": "command+ctrl+f",
   "window:close": "command+shift+w",
   "tab:new": "command+t",
-  "tab:next": "command+shift+]",
-  "tab:prev": "command+shift+[",
+  "tab:next": [
+    "command+shift+]",
+    "command+shift+right",
+    "command+alt+right",
+    "ctrl+tab"
+  ],
+  "tab:prev": [
+    "command+shift+[",
+    "command+shift+left",
+    "command+alt+left",
+    "ctrl+shift+tab"
+  ],
   "tab:jump:prefix": "command",
   "pane:next": "command+]",
   "pane:prev": "command+[",
