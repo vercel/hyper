@@ -32,6 +32,9 @@ module.exports = {
     // border color (window, tabs)
     borderColor: '#333',
 
+    // change font-weight
+    fontWeight: 'bold',
+
     // custom css to embed in the main window
     css: '',
 
