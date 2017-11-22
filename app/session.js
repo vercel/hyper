@@ -26,6 +26,7 @@ module.exports = class Session extends EventEmitter {
     const baseEnv = Object.assign({}, process.env, {
       LANG: app.getLocale().replace('-', '_') + '.UTF-8',
       TERM: 'xterm-256color',
+      COLORTERM: 'truecolor',
       TERM_PROGRAM: productName,
       TERM_PROGRAM_VERSION: version
     }, envFromConfig);
