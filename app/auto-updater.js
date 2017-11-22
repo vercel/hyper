@@ -1,5 +1,5 @@
 // Packages
-const {autoUpdater} = require('electron');
+const {autoUpdater, app} = require('electron');
 const ms = require('ms');
 const retry = require('async-retry');
 
@@ -12,6 +12,15 @@ const {getConfig} = require('./config');
 const {platform} = process;
 
 let isInit = false;
+// Default to the "stable" update channel
+let canaryUpdates = false;
+
+const buildFeedUrl = canary => {
+  const updatePrefix = canary ? 'releases-canary' : 'releases';
+  return `https://${updatePrefix}.hyper.is/update/${platform}`;
+};
+
+const isCanary = updateChannel => updateChannel === 'canary';
 
 async function init() {
   autoUpdater.on('error', (err, msg) => {
@@ -29,16 +38,12 @@ async function init() {
     return content;
   });
 
-  // Default to the "stable" update channel
-  let canaryUpdates = false;
-
   // If defined in the config, switch to the "canary" channel
-  if (config.updateChannel && config.updateChannel === 'canary') {
+  if (config.updateChannel && isCanary(config.updateChannel)) {
     canaryUpdates = true;
   }
 
-  const updatePrefix = canaryUpdates ? 'releases-canary' : 'releases';
-  const feedURL = `https://${updatePrefix}.hyper.is/update/${platform}`;
+  const feedURL = buildFeedUrl(canaryUpdates);
 
   autoUpdater.setFeedURL(`${feedURL}/${version}`);
 
@@ -68,6 +73,20 @@ module.exports = win => {
 
   rpc.once('quit and install', () => {
     autoUpdater.quitAndInstall();
+  });
+
+  app.config.subscribe(() => {
+    const {updateChannel} = app.plugins.getDecoratedConfig();
+    const newUpdateIsCanary = isCanary(updateChannel);
+
+    if (newUpdateIsCanary !== canaryUpdates) {
+      const feedURL = buildFeedUrl(newUpdateIsCanary);
+
+      autoUpdater.setFeedURL(`${feedURL}/${version}`);
+      autoUpdater.checkForUpdates();
+
+      canaryUpdates = newUpdateIsCanary;
+    }
   });
 
   win.on('close', () => {
