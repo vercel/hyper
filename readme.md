@@ -61,6 +61,9 @@ yarn run dist
 
 After that, you will see the binary in the `./dist` folder!
 
+
+* Ubuntu Linux installation Guide [Video](https://www.youtube.com/watch?v=X_x3Genh78I)
+
 #### Known issues that can happen during development
 
 ##### Error building `node-pty`
