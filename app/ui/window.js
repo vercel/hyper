@@ -13,6 +13,7 @@ const fetchNotifications = require('../notifications');
 const Session = require('../session');
 const contextMenuTemplate = require('./contextmenu');
 const {execCommand} = require('../commands');
+const {confirmClose} = require('../utils/dialogs');
 
 module.exports = class Window {
   constructor(options_, cfg, fn) {
@@ -172,6 +173,15 @@ module.exports = class Window {
       rpc.emit('move');
     });
     rpc.on('close', () => {
+      let closeFlag;
+      sessions.forEach(session => {
+        let userCanceled = confirmClose(session.pty._pid);
+        if (userCanceled) {
+          closeFlag = -1;
+          return;
+        }
+      });
+      if (closeFlag == -1) return;
       window.close();
     });
     rpc.on('command', command => {
