@@ -11,7 +11,7 @@ const {version} = require('./package');
 const {getDecoratedConfig} = require('./plugins');
 
 const {platform} = process;
-const isLinux = true; //platform === 'linux';
+const isLinux = platform === 'linux';
 
 const autoUpdater = isLinux ? require('./auto-updater-linux') : electron.autoUpdater;
 
