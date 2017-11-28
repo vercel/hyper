@@ -33,9 +33,10 @@ install:
   - yarn
 
 after_success:
-  - if [[ "$TRAVIS_BRANCH" == "canary" ]]; then cp build/canary.icns build/icon.icns; fi
+  - git branch --contains $TRAVIS_COMMIT | grep canary >/dev/null && cp build/canary.icns build/icon.icns
   - yarn run dist
 
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
+
