@@ -33,7 +33,7 @@ install:
   - yarn
 
 after_success:
-  - git branch --contains $TRAVIS_COMMIT | grep canary >/dev/null && cp build/canary.icns build/icon.icns
+  - git branch --contains $TRAVIS_COMMIT | grep canary >/dev/null && (cd build; cp canary.icns icon.icns; cp canary.ico icon.ico)
   - yarn run dist
 
 branches:
