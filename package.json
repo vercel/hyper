@@ -123,7 +123,15 @@
   },
   "build": {
     "appId": "co.zeit.hyper",
-    "extraResources": "./bin/yarn-standalone.js",
+    "extraResources": [
+      "./bin/yarn-standalone.js",
+      "./bin/cli.js",
+      {
+        "from": "./build/${os}/",
+        "to": "./bin/",
+        "filter": ["hyper*"]
+      }
+    ],
     "linux": {
       "category": "TerminalEmulator",
       "target": [
@@ -155,6 +163,12 @@
     "mac": {
       "category": "public.app-category.developer-tools",
       "extendInfo": "build/Info.plist"
+    },
+    "deb": {
+      "afterInstall": "./build/linux/after-install.tpl"
+    },
+    "rpm": {
+      "afterInstall": "./build/linux/after-install.tpl"
     }
   },
   "license": "MIT",
@@ -170,6 +184,7 @@
     "mousetrap": "chabou/mousetrap#useCapture",
     "ms": "2.0.0",
     "php-escape-shell": "1.0.0",
+    "pify": "false3.0.0",
     "react": "16.0.0",
     "react-deep-force-update": "2.0.1",
     "react-dom": "16.0.0",

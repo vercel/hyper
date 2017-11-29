@@ -1,6 +1,7 @@
 # build output
 dist
 app/renderer
+bin/cli.js
 
 # dependencies
 node_modules
