@@ -2,83 +2,40 @@ const {EventEmitter} = require('events');
 const {StringDecoder} = require('string_decoder');
 
 const {app} = require('electron');
-const defaultShell = require('default-shell');
 
 const {getDecoratedEnv} = require('./plugins');
 const {productName, version} = require('./package');
 const config = require('./config');
 
-const createNodePtyError = () =>
-  new Error(
-    '`node-pty` failed to load. Typically this means that it was built incorrectly. Please check the `readme.md` to more info.'
-  );
+let SerialPort;
+SerialPort = require('serialport');
 
-let spawn;
-try {
-  spawn = require('node-pty').spawn;
-} catch (err) {
-  throw createNodePtyError();
-}
-
-const envFromConfig = config.getConfig().env || {};
 
 module.exports = class Session extends EventEmitter {
-  constructor({rows, cols: columns, cwd, shell, shellArgs}) {
+  constructor({rows, cols: columns, cwd, port, shellArgs}) {
     super();
-    const baseEnv = Object.assign(
-      {},
-      process.env,
-      {
-        LANG: app.getLocale().replace('-', '_') + '.UTF-8',
-        TERM: 'xterm-256color',
-        COLORTERM: 'truecolor',
-        TERM_PROGRAM: productName,
-        TERM_PROGRAM_VERSION: version
-      },
-      envFromConfig
-    );
 
-    // Electron has a default value for process.env.GOOGLE_API_KEY
-    // We don't want to leak this to the shell
-    // See https://github.com/zeit/hyper/issues/696
-    if (baseEnv.GOOGLE_API_KEY && process.env.GOOGLE_API_KEY === baseEnv.GOOGLE_API_KEY) {
-      delete baseEnv.GOOGLE_API_KEY;
-    }
-
+    console.log("starting session!");
+    console.log(port);
     const decoder = new StringDecoder('utf8');
 
-    const defaultShellArgs = ['--login'];
+    this.port = new SerialPort(port);
 
-    try {
-      this.pty = spawn(shell || defaultShell, shellArgs || defaultShellArgs, {
-        cols: columns,
-        rows,
-        cwd,
-        env: getDecoratedEnv(baseEnv)
-      });
-    } catch (err) {
-      if (/is not a function/.test(err.message)) {
-        throw createNodePtyError();
-      } else {
-        throw err;
-      }
-    }
-
-    this.pty.on('data', data => {
+    this.port.on('data', data => {
       if (this.ended) {
         return;
       }
       this.emit('data', decoder.write(data));
     });
 
-    this.pty.on('exit', () => {
+    this.port.on('close', () => {
       if (!this.ended) {
         this.ended = true;
         this.emit('exit');
       }
     });
 
-    this.shell = shell || defaultShell;
+    this.shell = "serialport";
   }
 
   exit() {
@@ -86,25 +43,14 @@ module.exports = class Session extends EventEmitter {
   }
 
   write(data) {
-    this.pty.write(data);
+    this.port.write(data);
   }
 
   resize({cols, rows}) {
-    try {
-      this.pty.resize(cols, rows);
-    } catch (err) {
-      //eslint-disable-next-line no-console
-      console.error(err.stack);
-    }
   }
 
   destroy() {
-    try {
-      this.pty.kill();
-    } catch (err) {
-      //eslint-disable-next-line no-console
-      console.error('exit error', err.stack);
-    }
+    this.port.close();
     this.emit('exit');
     this.ended = true;
   }
