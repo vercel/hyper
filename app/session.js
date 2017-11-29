@@ -1,22 +1,13 @@
 const {EventEmitter} = require('events');
 const {StringDecoder} = require('string_decoder');
 
-const {app} = require('electron');
-
-const {getDecoratedEnv} = require('./plugins');
-const {productName, version} = require('./package');
-const config = require('./config');
-
 let SerialPort;
 SerialPort = require('serialport');
 
-
 module.exports = class Session extends EventEmitter {
-  constructor({rows, cols: columns, cwd, port, shellArgs}) {
+  constructor({port}) {
     super();
 
-    console.log("starting session!");
-    console.log(port);
     const decoder = new StringDecoder('utf8');
 
     this.port = new SerialPort(port);
@@ -35,7 +26,7 @@ module.exports = class Session extends EventEmitter {
       }
     });
 
-    this.shell = "serialport";
+    this.shell = 'serialport';
   }
 
   exit() {
@@ -46,8 +37,7 @@ module.exports = class Session extends EventEmitter {
     this.port.write(data);
   }
 
-  resize({cols, rows}) {
-  }
+  resize() {}
 
   destroy() {
     this.port.close();

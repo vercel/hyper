@@ -104,37 +104,33 @@ module.exports = class Window {
         fn_(uuid.v4(), new Session(opts));
       };
 
-      SerialPort.list(function (err, ports) {
-            ports.forEach(function(port) {
-                if (port.vendorId !== "239a" && port.vendorId !== "239A") {
-                console.log(port.vendorId);
-                    return;
-                }
-                initSession(Object.assign(
-                  {
-                      port: port.comName
-                }), (uid, session) => {
-                    sessions.set(uid, session);
-                    rpc.emit('session add', {
-                      rows: sessionOpts.rows,
-                      cols: sessionOpts.cols,
-                      uid,
-                      splitDirection: sessionOpts.splitDirection,
-                      shell: session.shell,
-                      pid: 0
-                    });
-
-                    session.on('data', data => {
-                      rpc.emit('session data', uid + data);
-                    });
-
-                    session.on('exit', () => {
-                      rpc.emit('session exit', {uid});
-                      sessions.delete(uid);
-                    });
-                  });
+      SerialPort.list((err, ports) => {
+        ports.forEach(port => {
+          if (port.vendorId !== '239a' && port.vendorId !== '239A') {
+            return;
+          }
+          initSession(Object.assign({port: port.comName}), (uid, session) => {
+            sessions.set(uid, session);
+            rpc.emit('session add', {
+              rows: sessionOpts.rows,
+              cols: sessionOpts.cols,
+              uid,
+              splitDirection: sessionOpts.splitDirection,
+              shell: session.shell,
+              pid: 0
             });
+
+            session.on('data', data => {
+              rpc.emit('session data', uid + data);
+            });
+
+            session.on('exit', () => {
+              rpc.emit('session exit', {uid});
+              sessions.delete(uid);
+            });
+          });
         });
+      });
     });
     rpc.on('exit', ({uid}) => {
       const session = sessions.get(uid);
