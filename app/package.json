@@ -26,6 +26,7 @@
     "node-pty": "0.7.3",
     "queue": "4.4.2",
     "semver": "5.4.1",
+    "serialport": "6.0.4",
     "shell-env": "0.3.0",
     "uuid": "3.1.0",
     "winreg": "1.2.4"

@@ -10,8 +10,9 @@
     "test:unit": "ava test/unit",
     "test:unit:watch": "yarn run test:unit -- --watch",
     "prepush": "yarn test",
-    "postinstall": "electron-builder install-app-deps && yarn run rebuild-node-pty",
+    "postinstall": "electron-builder install-app-deps && yarn run rebuild-node-pty && yarn run rebuild-serialport",
     "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
+    "rebuild-serialport": "electron-rebuild -f -w app/node_modules/serialport -m app",
     "dist": "yarn run build && cross-env BABEL_ENV=production babel --out-file app/renderer/bundle.js --no-comments --minified app/renderer/bundle.js && build",
     "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
   },
@@ -204,6 +205,7 @@
     "inquirer": "3.3.0",
     "node-gyp": "3.6.2",
     "prettier": "1.7.4",
+    "serialport": "6.0.4",
     "spectron": "3.7.2",
     "style-loader": "0.19.0",
     "webpack": "3.8.1"

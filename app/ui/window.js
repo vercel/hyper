@@ -14,6 +14,9 @@ const Session = require('../session');
 const contextMenuTemplate = require('./contextmenu');
 const {execCommand} = require('../commands');
 
+let SerialPort;
+SerialPort = require('serialport');
+
 module.exports = class Window {
   constructor(options_, cfg, fn) {
     const winOpts = Object.assign(
@@ -101,24 +104,33 @@ module.exports = class Window {
         fn_(uuid.v4(), new Session(opts));
       };
 
-      initSession(sessionOpts, (uid, session) => {
-        sessions.set(uid, session);
-        rpc.emit('session add', {
-          rows: sessionOpts.rows,
-          cols: sessionOpts.cols,
-          uid,
-          splitDirection: sessionOpts.splitDirection,
-          shell: session.shell,
-          pid: session.pty.pid
-        });
+      SerialPort.list((err, ports) => {
+        ports.forEach(port => {
+          if (port.vendorId !== '239a' && port.vendorId !== '239A') {
+            return;
+          }
 
-        session.on('data', data => {
-          rpc.emit('session data', uid + data);
-        });
+          initSession(Object.assign({port: port.comName, productId: port.productId}), (uid, session) => {
+            sessions.set(uid, session);
+            rpc.emit('session add', {
+              rows: sessionOpts.rows,
+              cols: sessionOpts.cols,
+              uid,
+              splitDirection: sessionOpts.splitDirection,
+              shell: session.shell,
+              pid: 0,
+              title: session.title
+            });
 
-        session.on('exit', () => {
-          rpc.emit('session exit', {uid});
-          sessions.delete(uid);
+            session.on('data', data => {
+              rpc.emit('session data', uid + data);
+            });
+
+            session.on('exit', () => {
+              rpc.emit('session exit', {uid});
+              sessions.delete(uid);
+            });
+          });
         });
       });
     });
