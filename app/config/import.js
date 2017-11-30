@@ -60,3 +60,15 @@ exports.getDefaultConfig = () => {
   }
   return defaultConfig;
 };
+
+exports.updateState = function(path, data) {
+  _write(path, data);
+};
+
+exports.importState = function(path) {
+  try {
+    return readFileSync(path, 'utf8');
+  } catch (err) {
+    return 0;
+  }  
+};

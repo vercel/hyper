@@ -6,9 +6,11 @@ const isDev = require('electron-is-dev');
 
 const cfgFile = '.hyper.js';
 const defaultCfgFile = 'config-default.js';
+const cfgFileState = '.hyperState.js';
 const homeDir = homedir();
 
 let cfgPath = join(homeDir, cfgFile);
+let cfgPathState = join(homeDir, cfgFileState);
 let cfgDir = homeDir;
 
 const devDir = resolve(__dirname, '../..');
@@ -60,6 +62,7 @@ module.exports = {
   cfgDir,
   cfgPath,
   cfgFile,
+  cfgPathState,
   defaultCfg,
   icon,
   defaultPlatformKeyPath,
