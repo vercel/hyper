@@ -225,9 +225,9 @@ app.on('open-file', (event, path) => {
   }
 });
 
-app.on('open-url', (event, url) => {
+app.on('open-url', (event, sshUrl) => {
   const lastWindow = app.getLastFocusedWindow();
-  const callback = win => win.rpc.emit('open ssh', {url});
+  const callback = win => win.rpc.emit('open ssh', {sshUrl});
   if (lastWindow) {
     callback(lastWindow);
   } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
