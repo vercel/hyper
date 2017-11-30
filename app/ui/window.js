@@ -6,13 +6,14 @@ const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 const updater = require('../updater');
 const toElectronBackgroundColor = require('../utils/to-electron-background-color');
-const {icon, cfgDir} = require('../config/paths');
+const {icon, cfgDir, cfgPathState} = require('../config/paths');
 const createRPC = require('../rpc');
 const notify = require('../notify');
 const fetchNotifications = require('../notifications');
 const Session = require('../session');
 const contextMenuTemplate = require('./contextmenu');
 const {execCommand} = require('../commands');
+const {updateState, importState} = require('../config/import');
 
 module.exports = class Window {
   constructor(options_, cfg, fn) {
@@ -61,6 +62,10 @@ module.exports = class Window {
 
     rpc.on('init', () => {
       window.show();
+
+      if (importState(cfgPathState)=="true"){
+        window.maximize();
+      }
 
       // If no callback is passed to createWindow,
       // a new session will be created by default.
@@ -132,7 +137,12 @@ module.exports = class Window {
       }
     });
     rpc.on('unmaximize', () => {
-      window.unmaximize();
+      if (importState(cfgPathState)=="true"){
+        window.setSize(cfg.windowWidth, cfg.windowHeight);
+        window.center();
+      } else {
+        window.unmaximize();
+      }
     });
     rpc.on('maximize', () => {
       window.maximize();
@@ -178,6 +188,11 @@ module.exports = class Window {
       rpc.emit('move');
     });
     rpc.on('close', () => {
+      if (window.isMaximized()==true){
+        updateState(cfgPathState, "true");
+      }else{
+        updateState(cfgPathState, "false");
+      }
       window.close();
     });
     rpc.on('command', command => {
