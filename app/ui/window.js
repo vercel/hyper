@@ -63,7 +63,7 @@ module.exports = class Window {
     rpc.on('init', () => {
       window.show();
 
-      if (importState(cfgPathState)=="true"){
+      if (importState(cfgPathState) == 'true') {
         window.maximize();
       }
 
@@ -137,7 +137,7 @@ module.exports = class Window {
       }
     });
     rpc.on('unmaximize', () => {
-      if (importState(cfgPathState)=="true"){
+      if (importState(cfgPathState) == 'true') {
         window.setSize(cfg.windowWidth, cfg.windowHeight);
         window.center();
       } else {
@@ -188,10 +188,10 @@ module.exports = class Window {
       rpc.emit('move');
     });
     rpc.on('close', () => {
-      if (window.isMaximized()==true){
-        updateState(cfgPathState, "true");
-      }else{
-        updateState(cfgPathState, "false");
+      if (window.isMaximized() == true) {
+        updateState(cfgPathState, 'true');
+      } else {
+        updateState(cfgPathState, 'false');
       }
       window.close();
     });
