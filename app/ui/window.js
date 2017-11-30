@@ -109,7 +109,8 @@ module.exports = class Window {
           if (port.vendorId !== '239a' && port.vendorId !== '239A') {
             return;
           }
-          initSession(Object.assign({port: port.comName}), (uid, session) => {
+
+          initSession(Object.assign({port: port.comName, productId: port.productId}), (uid, session) => {
             sessions.set(uid, session);
             rpc.emit('session add', {
               rows: sessionOpts.rows,
@@ -117,7 +118,8 @@ module.exports = class Window {
               uid,
               splitDirection: sessionOpts.splitDirection,
               shell: session.shell,
-              pid: 0
+              pid: 0,
+              title: session.title
             });
 
             session.on('data', data => {
