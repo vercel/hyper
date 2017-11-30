@@ -61,14 +61,14 @@ exports.getDefaultConfig = () => {
   return defaultConfig;
 };
 
-exports.updateState = function(path, data) {
+exports.updateState = (path, data) => {
   _write(path, data);
 };
 
-exports.importState = function(path) {
+exports.importState = path => {
   try {
     return readFileSync(path, 'utf8');
   } catch (err) {
     return 0;
-  }  
+  }
 };

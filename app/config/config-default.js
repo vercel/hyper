@@ -54,7 +54,7 @@ module.exports = {
 
     // default window width
     windowWidth: 500,
-    
+
     // default window heigth
     windowHeight: 370,
 
