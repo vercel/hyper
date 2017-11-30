@@ -225,6 +225,21 @@ app.on('open-file', (event, path) => {
   }
 });
 
+app.on('open-url', (event, url) => {
+  const lastWindow = app.getLastFocusedWindow();
+  const callback = win => win.rpc.emit('open ssh', {url});
+  if (lastWindow) {
+    callback(lastWindow);
+  } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
+    app.createWindow(callback);
+  } else {
+    // If createWindow doesn't exist yet ('ready' event was not fired),
+    // sets his callback to an app.windowCallback property.
+    app.windowCallback = callback;
+  }
+});
+
+
 function installDevExtensions(isDev_) {
   if (!isDev_) {
     return Promise.resolve();
