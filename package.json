@@ -1,211 +1,215 @@
-{
-  "repository": "zeit/hyper",
-  "scripts": {
-    "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
-    "app": "electron app",
-    "dev": "webpack -w",
-    "build": "cross-env NODE_ENV=production webpack",
-    "lint": "eslint .",
-    "test": "yarn run lint",
-    "test:unit": "ava test/unit",
-    "test:unit:watch": "yarn run test:unit -- --watch",
-    "prepush": "yarn test",
-    "postinstall": "electron-builder install-app-deps && yarn run rebuild-node-pty",
-    "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
-    "dist": "yarn run build && cross-env BABEL_ENV=production babel --out-file app/renderer/bundle.js --no-comments --minified app/renderer/bundle.js && build",
-    "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
-  },
-  "eslintConfig": {
-    "plugins": [
-      "react",
-      "prettier"
-    ],
-    "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "prettier"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 8,
-      "sourceType": "module",
-      "ecmaFeatures": {
-        "jsx": true,
-        "impliedStrict": true,
-        "experimentalObjectRestSpread": true
-      },
-      "allowImportExportEverywhere": true
+  {
+    "repository": "zeit/hyper",
+    "scripts": {
+      "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
+      "app": "electron app",
+      "dev": "webpack -w",
+      "build": "cross-env NODE_ENV=production webpack",
+      "lint": "eslint .",
+      "test": "yarn run lint",
+      "test:unit": "ava test/unit",
+      "test:unit:watch": "yarn run test:unit -- --watch",
+      "prepush": "yarn test",
+      "postinstall": "electron-builder install-app-deps && yarn run rebuild-node-pty",
+      "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
+      "dist": "yarn run build && cross-env BABEL_ENV=production babel --out-file app/renderer/bundle.js --no-comments --minified app/renderer/bundle.js && build",
+      "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
     },
-    "env": {
-      "es6": true,
-      "browser": true,
-      "node": true
-    },
-    "rules": {
-      "func-names": [
-        "error",
-        "as-needed"
+    "eslintConfig": {
+      "plugins": [
+        "react",
+        "prettier"
       ],
-      "no-shadow": "error",
-      "no-extra-semi": 0,
-      "react/prop-types": 0,
-      "react/react-in-jsx-scope": 0,
-      "react/no-unescaped-entities": 0,
-      "react/jsx-no-target-blank": 0,
-      "react/no-string-refs": 0,
-      "prettier/prettier": [
-        "error",
-        {
-          "printWidth": 120,
-          "tabWidth": 2,
-          "singleQuote": true,
-          "trailingComma": "none",
-          "bracketSpacing": false,
-          "semi": true,
-          "useTabs": false,
-          "parser": "babylon",
-          "jsxBracketSameLine": false
-        }
-      ]
-    },
-    "overrides": [
-      {
-        "files": "app/config/config-default.js",
-        "rules": {
-          "prettier/prettier": [
-            "error",
-            {
-              "printWidth": 120,
-              "tabWidth": 2,
-              "singleQuote": true,
-              "trailingComma": "es5",
-              "bracketSpacing": false,
-              "semi": true,
-              "useTabs": false,
-              "parser": "babylon",
-              "jsxBracketSameLine": false
-            }
-          ]
-        }
-      }
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react"
-    ],
-    "env": {
-      "production": {
-        "plugins": [
-          "minify-constant-folding",
-          "minify-dead-code-elimination",
-          "minify-flip-comparisons",
-          "minify-guarded-expressions",
-          "minify-infinity",
-          [
-            "minify-mangle-names",
-            {
-              "keepClassName": true,
-              "keepFnName": true
-            }
-          ],
-          "minify-replace",
-          "minify-simplify",
-          "minify-type-constructors",
-          "transform-member-expression-literals",
-          "transform-merge-sibling-variables",
-          "transform-minify-booleans",
-          "transform-property-literals",
-          "transform-simplify-comparison-operators",
-          "transform-undefined-to-void"
+      "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "prettier"
+      ],
+      "parserOptions": {
+        "ecmaVersion": 8,
+        "sourceType": "module",
+        "ecmaFeatures": {
+          "jsx": true,
+          "impliedStrict": true,
+          "experimentalObjectRestSpread": true
+        },
+        "allowImportExportEverywhere": true
+      },
+      "env": {
+        "es6": true,
+        "browser": true,
+        "node": true
+      },
+      "rules": {
+        "func-names": [
+          "error",
+          "as-needed"
+        ],
+        "no-shadow": "error",
+        "no-extra-semi": 0,
+        "react/prop-types": 0,
+        "react/react-in-jsx-scope": 0,
+        "react/no-unescaped-entities": 0,
+        "react/jsx-no-target-blank": 0,
+        "react/no-string-refs": 0,
+        "prettier/prettier": [
+          "error",
+          {
+            "printWidth": 120,
+            "tabWidth": 2,
+            "singleQuote": true,
+            "trailingComma": "none",
+            "bracketSpacing": false,
+            "semi": true,
+            "useTabs": false,
+            "parser": "babylon",
+            "jsxBracketSameLine": false
+          }
         ]
-      }
-    }
-  },
-  "build": {
-    "appId": "co.zeit.hyper",
-    "extraResources": "./bin/yarn-standalone.js",
-    "linux": {
-      "category": "TerminalEmulator",
-      "target": [
+      },
+      "overrides": [
         {
-          "target": "deb",
-          "arch": [
-            "x64"
-          ]
-        },
-        {
-          "target": "AppImage",
-          "arch": [
-            "x64"
-          ]
-        },
-        {
-          "target": "rpm",
-          "arch": [
-            "x64"
-          ]
+          "files": "app/config/config-default.js",
+          "rules": {
+            "prettier/prettier": [
+              "error",
+              {
+                "printWidth": 120,
+                "tabWidth": 2,
+                "singleQuote": true,
+                "trailingComma": "es5",
+                "bracketSpacing": false,
+                "semi": true,
+                "useTabs": false,
+                "parser": "babylon",
+                "jsxBracketSameLine": false
+              }
+            ]
+          }
         }
       ]
     },
-    "win": {
-      "target": [
-        "squirrel"
-      ]
+    "babel": {
+      "presets": [
+        "react"
+      ],
+      "env": {
+        "production": {
+          "plugins": [
+            "minify-constant-folding",
+            "minify-dead-code-elimination",
+            "minify-flip-comparisons",
+            "minify-guarded-expressions",
+            "minify-infinity",
+            [
+              "minify-mangle-names",
+              {
+                "keepClassName": true,
+                "keepFnName": true
+              }
+            ],
+            "minify-replace",
+            "minify-simplify",
+            "minify-type-constructors",
+            "transform-member-expression-literals",
+            "transform-merge-sibling-variables",
+            "transform-minify-booleans",
+            "transform-property-literals",
+            "transform-simplify-comparison-operators",
+            "transform-undefined-to-void"
+          ]
+        }
+      }
     },
-    "mac": {
-      "category": "public.app-category.developer-tools",
-      "extendInfo": "build/Info.plist"
+    "build": {
+      "appId": "co.zeit.hyper",
+      "extraResources": "./bin/yarn-standalone.js",
+      "linux": {
+        "category": "TerminalEmulator",
+        "target": [
+          {
+            "target": "deb",
+            "arch": [
+              "x64"
+            ]
+          },
+          {
+            "target": "AppImage",
+            "arch": [
+              "x64"
+            ]
+          },
+          {
+            "target": "rpm",
+            "arch": [
+              "x64"
+            ]
+          }
+        ]
+      },
+      "win": {
+        "target": [
+          "squirrel"
+        ]
+      },
+      "mac": {
+        "category": "public.app-category.developer-tools",
+        "extendInfo": "build/Info.plist"
+      },
+      "protocols": {
+        "name": "SSH",
+        "schemes": ["ssh"]
+      }
+    },
+    "license": "MIT",
+    "author": {
+      "name": "Zeit, Inc.",
+      "email": "team@zeit.co"
+    },
+    "dependencies": {
+      "aphrodite-simple": "0.4.1",
+      "color": "2.0.0",
+      "css-loader": "0.28.7",
+      "json-loader": "0.5.7",
+      "mousetrap": "chabou/mousetrap#useCapture",
+      "ms": "2.0.0",
+      "php-escape-shell": "1.0.0",
+      "react": "16.0.0",
+      "react-deep-force-update": "2.0.1",
+      "react-dom": "16.0.0",
+      "react-redux": "5.0.6",
+      "redux": "3.7.2",
+      "redux-thunk": "2.2.0",
+      "reselect": "3.0.1",
+      "seamless-immutable": "7.1.2",
+      "semver": "5.4.1",
+      "uuid": "3.1.0",
+      "xterm": "2.9.2"
+    },
+    "devDependencies": {
+      "ava": "0.23.0",
+      "babel-cli": "6.26.0",
+      "babel-core": "6.26.0",
+      "babel-loader": "7.1.2",
+      "babel-preset-babili": "0.1.4",
+      "babel-preset-react": "6.24.1",
+      "copy-webpack-plugin": "4.0.1",
+      "cross-env": "5.0.5",
+      "electron": "1.7.9",
+      "electron-builder": "19.43.0",
+      "electron-builder-squirrel-windows": "19.43.0",
+      "electron-devtools-installer": "2.2.1",
+      "electron-rebuild": "1.6.0",
+      "eslint": "^4.7.2",
+      "eslint-config-prettier": "^2.6.0",
+      "eslint-plugin-prettier": "^2.3.1",
+      "eslint-plugin-react": "^7.3.0",
+      "husky": "0.14.3",
+      "inquirer": "3.3.0",
+      "node-gyp": "3.6.2",
+      "prettier": "1.7.4",
+      "spectron": "3.7.2",
+      "style-loader": "0.19.0",
+      "webpack": "3.8.1"
     }
-  },
-  "license": "MIT",
-  "author": {
-    "name": "Zeit, Inc.",
-    "email": "team@zeit.co"
-  },
-  "dependencies": {
-    "aphrodite-simple": "0.4.1",
-    "color": "2.0.0",
-    "css-loader": "0.28.7",
-    "json-loader": "0.5.7",
-    "mousetrap": "chabou/mousetrap#useCapture",
-    "ms": "2.0.0",
-    "php-escape-shell": "1.0.0",
-    "react": "16.0.0",
-    "react-deep-force-update": "2.0.1",
-    "react-dom": "16.0.0",
-    "react-redux": "5.0.6",
-    "redux": "3.7.2",
-    "redux-thunk": "2.2.0",
-    "reselect": "3.0.1",
-    "seamless-immutable": "7.1.2",
-    "semver": "5.4.1",
-    "uuid": "3.1.0",
-    "xterm": "2.9.2"
-  },
-  "devDependencies": {
-    "ava": "0.23.0",
-    "babel-cli": "6.26.0",
-    "babel-core": "6.26.0",
-    "babel-loader": "7.1.2",
-    "babel-preset-babili": "0.1.4",
-    "babel-preset-react": "6.24.1",
-    "copy-webpack-plugin": "4.0.1",
-    "cross-env": "5.0.5",
-    "electron": "1.7.9",
-    "electron-builder": "19.43.0",
-    "electron-builder-squirrel-windows": "19.43.0",
-    "electron-devtools-installer": "2.2.1",
-    "electron-rebuild": "1.6.0",
-    "eslint": "^4.7.2",
-    "eslint-config-prettier": "^2.6.0",
-    "eslint-plugin-prettier": "^2.3.1",
-    "eslint-plugin-react": "^7.3.0",
-    "husky": "0.14.3",
-    "inquirer": "3.3.0",
-    "node-gyp": "3.6.2",
-    "prettier": "1.7.4",
-    "spectron": "3.7.2",
-    "style-loader": "0.19.0",
-    "webpack": "3.8.1"
   }
-}
