@@ -239,7 +239,6 @@ app.on('open-url', (event, sshUrl) => {
   }
 });
 
-
 function installDevExtensions(isDev_) {
   if (!isDev_) {
     return Promise.resolve();
