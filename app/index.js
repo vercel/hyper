@@ -173,7 +173,7 @@ app.on('ready', () =>
       app.createWindow = createWindow;
 
       // check if should be set as default ssh protocol client
-      if (config.getConfig().defaultSSHApp == true) {
+      if (config.getConfig().defaultSSHApp == true && !app.isDefaultProtocolClient('ssh')) {
         app.setAsDefaultProtocolClient('ssh');
       }
 
