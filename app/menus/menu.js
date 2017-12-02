@@ -54,7 +54,7 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
   };
     const installUpdate = () => {
       try{
-        let status=autoUpdater.quitAndInstall();
+        autoUpdater.quitAndInstall();
       }
       catch (e) {
         console.log(e);
