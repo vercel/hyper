@@ -5,12 +5,18 @@ const {getConfig, getPlugins} = require('../../config');
 const {arch, env, platform, versions} = process;
 const {version} = require('../../package.json');
 
-module.exports = (commands, showAbout) => {
+module.exports = (commands, showAbout, installUpdate) => {
   const submenu = [
     {
       label: `${app.getName()} Website`,
       click() {
         shell.openExternal('https://hyper.is');
+      }
+    },
+    {
+      label: 'Restart and update',
+      click() {
+        installUpdate();
       }
     },
     {
