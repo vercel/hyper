@@ -52,18 +52,14 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
       icon
     });
   };
-    const installUpdate = () => {
-      try{
-        autoUpdater.quitAndInstall();
+  const installUpdate = () => {
+    try{ 
+      autoUpdater.quitAndInstall();
+    }catch (e) {
       }
-      catch (e) {
-        console.log(e);
-      }
-      try{
-        notify('No updates were found for install.');
-      }
-      catch(e){
-        console.log(e);
+    try{
+      notify('No updates were found for install.');
+    }catch(e){
     }};
 
   
