@@ -23,6 +23,7 @@ const appName = app.getName();
 const appVersion = app.getVersion();
 
 let menu_ = [];
+let upgradable=false;
 
 exports.createMenu = (createWindow, getLoadedPluginVersions) => {
   const config = getConfig();
@@ -53,18 +54,19 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
     });
   };
 
+  const onupdate = () => {
+    upgradable=true;
+  };
+
+  const eventName = isLinux ? 'update-available' : 'update-downloaded';
+  autoUpdater.on(eventName, onupdate);
+
   const installUpdate = () => {
-      let upgradable;
-      try {
-          autoUpdater.quitAndInstall();
-      } catch (e) {
-          upgradable = false;
-      }
-      try {
-          notify('No updates were found for install.');
-      } catch (e) {
-          upgradable = false;
-      }
+    if (upgradable){
+      autoUpdater.quitAndInstall();
+    } else {
+      notify('No updates were found for install.');
+    }
   };
 
   const menu = [
