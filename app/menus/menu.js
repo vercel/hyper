@@ -23,7 +23,7 @@ const appName = app.getName();
 const appVersion = app.getVersion();
 
 let menu_ = [];
-let upgradable=false;
+let upgradable = false;
 
 exports.createMenu = (createWindow, getLoadedPluginVersions) => {
   const config = getConfig();
@@ -55,14 +55,14 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
   };
 
   const onupdate = () => {
-    upgradable=true;
+    upgradable = true;
   };
 
   const eventName = isLinux ? 'update-available' : 'update-downloaded';
   autoUpdater.on(eventName, onupdate);
 
   const installUpdate = () => {
-    if (upgradable){
+    if (upgradable) {
       autoUpdater.quitAndInstall();
     } else {
       notify('No updates were found for install.');
