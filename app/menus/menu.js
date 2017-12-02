@@ -52,17 +52,21 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
       icon
     });
   };
-  const installUpdate = () => {
-    try{ 
-      autoUpdater.quitAndInstall();
-    }catch (e) {
-      }
-    try{
-      notify('No updates were found for install.');
-    }catch(e){
-    }};
 
-  
+  const installUpdate = () => {
+      let upgradable;
+      try {
+          autoUpdater.quitAndInstall();
+      } catch (e) {
+          upgradable = false;
+      }
+      try {
+          notify('No updates were found for install.');
+      } catch (e) {
+          upgradable = false;
+      }
+  };
+
   const menu = [
     ...(process.platform === 'darwin' ? [darwinMenu(commandKeys, execCommand, showAbout)] : []),
     shellMenu(commandKeys, execCommand),
