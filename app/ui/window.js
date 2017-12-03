@@ -13,6 +13,13 @@ const fetchNotifications = require('../notifications');
 const Session = require('../session');
 const contextMenuTemplate = require('./contextmenu');
 const {execCommand} = require('../commands');
+const electron = require('electron');
+const {platform} = process;
+const isLinux = platform === 'linux';
+const autoUpdater = isLinux ? require('./auto-updater-linux') : electron.autoUpdater;
+const eventName = isLinux ? 'update-available' : 'update-downloaded';
+
+let upgradable = false;
 
 module.exports = class Window {
   constructor(options_, cfg, fn) {
@@ -81,6 +88,16 @@ module.exports = class Window {
       } else {
         //eslint-disable-next-line no-console
         console.log('ignoring auto updates during dev');
+      }
+    });
+
+    const onupdate = () => {
+      upgradable = true;
+    };
+    autoUpdater.on(eventName, onupdate);
+    window.on('closed', () => {
+      if (app.getWindows().size === 0 && upgradable) {
+        autoUpdater.quitAndInstall();
       }
     });
 
