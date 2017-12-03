@@ -157,7 +157,7 @@
         "extendInfo": "build/Info.plist"
       },
       "protocols": {
-        "name": "SSH",
+        "name": "ssh URL",
         "schemes": ["ssh"]
       }
     },
