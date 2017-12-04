@@ -5,9 +5,11 @@ const mapKeys = require('../utils/map-keys');
 const _extract = function(script) {
   const module = {};
   script.runInNewContext({module});
+
   if (!module.exports) {
     throw new Error('Error reading configuration: `module.exports` not set');
   }
+
   return module.exports;
 };
 
