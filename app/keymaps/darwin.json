@@ -46,5 +46,6 @@
   "editor:deleteEndLine": "command+delete",
   "editor:clearBuffer": "command+k",
   "editor:emojis": "command+ctrl+space",
-  "plugins:update": "command+shift+u"
+  "plugins:update": "command+shift+u",
+  "editor:show": "command+p"
 }

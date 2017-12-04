@@ -1,7 +1,6 @@
 const {shell} = require('electron');
-const {cfgPath} = require('./paths');
 
-module.exports = () => Promise.resolve(shell.openItem(cfgPath));
+module.exports = path => Promise.resolve(shell.openItem(path));
 
 if (process.platform === 'win32') {
   const Registry = require('winreg');
@@ -68,19 +67,19 @@ if (process.platform === 'win32') {
       });
     });
 
-  module.exports = () =>
+  module.exports = path =>
     hasDefaultSet()
       .then(yes => {
         if (yes) {
-          return shell.openItem(cfgPath);
+          return shell.openItem(path);
         }
         //eslint-disable-next-line no-console
         console.warn('No default app set for .js files, using notepad.exe fallback');
-        return openNotepad(cfgPath);
+        return openNotepad(path);
       })
       .catch(err => {
         //eslint-disable-next-line no-console
         console.error('Open config with default app error:', err);
-        return openNotepad(cfgPath);
+        return openNotepad(path);
       });
 }

@@ -15,6 +15,9 @@ const devDir = resolve(__dirname, '../..');
 const devCfg = join(devDir, cfgFile);
 const defaultCfg = resolve(__dirname, defaultCfgFile);
 
+const cfgFileKeyPath = '.hyperKeyMap.js';
+let cfgPathKeyPath = join(homeDir, cfgFileKeyPath);
+
 if (isDev) {
   // if a local config file exists, use it
   try {
@@ -62,6 +65,7 @@ module.exports = {
   cfgFile,
   defaultCfg,
   icon,
+  cfgPathKeyPath,
   defaultPlatformKeyPath,
   plugs,
   yarn

@@ -3,7 +3,7 @@ const notify = require('./notify');
 const {_import, getDefaultConfig} = require('./config/import');
 const _openConfig = require('./config/open');
 const win = require('./config/windows');
-const {cfgPath, cfgDir} = require('./config/paths');
+const {cfgPath, cfgDir, cfgPathKeyPath} = require('./config/paths');
 
 const watchers = [];
 let cfg = {};
@@ -59,7 +59,19 @@ exports.getConfig = () => {
 };
 
 exports.openConfig = () => {
-  return _openConfig();
+  return _openConfig(cfgPath);
+};
+
+exports.openConfigKeymap = () => {
+  let keystring = JSON.stringify(cfg.keymaps, null);
+  let a = keystring.split(/(?!\B"[^"]*),(?![^"]*"\B)/);
+  const {writeFileSync} = require('fs');
+  //write to file
+  writeFileSync(cfgPathKeyPath, a[0]);
+  for (let i = 1; i < a.length; i++) {
+    fs.appendFileSync(cfgPathKeyPath, '\r\n' + a[i]);
+  }
+  return _openConfig(cfgPathKeyPath);
 };
 
 exports.getPlugins = () => {
