@@ -15,10 +15,12 @@ const _watch = function() {
   }
 
   const onChange = () => {
-    cfg = _import();
-    notify('Configuration updated', 'Hyper configuration reloaded!');
-    watchers.forEach(fn => fn());
-    checkDeprecatedConfig();
+    new Promise(resolve => setTimeout(resolve, 2000)).then(() => {
+      cfg = _import();
+      notify('Configuration updated', 'Hyper configuration reloaded!');
+      watchers.forEach(fn => fn());
+      checkDeprecatedConfig();
+    })
   };
 
   if (process.platform === 'win32') {
