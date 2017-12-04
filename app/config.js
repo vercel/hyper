@@ -20,7 +20,7 @@ const _watch = function() {
       notify('Configuration updated', 'Hyper configuration reloaded!');
       watchers.forEach(fn => fn());
       checkDeprecatedConfig();
-    })
+    });
   };
 
   if (process.platform === 'win32') {
