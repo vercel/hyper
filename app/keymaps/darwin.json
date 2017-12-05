@@ -47,5 +47,5 @@
   "editor:clearBuffer": "command+k",
   "editor:emojis": "command+ctrl+space",
   "plugins:update": "command+shift+u",
-  "editor:show": "command+shift+h"
+  "editor:showKeymap": "command+shift+h"
 }

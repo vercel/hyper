@@ -26,7 +26,7 @@ const commands = {
   'window:preferences': () => {
     openConfig();
   },
-  'editor:show': () => {
+  'editor:showKeymap': () => {
     openConfigKeymap();
   },
   'editor:clearBuffer': focusedWindow => {

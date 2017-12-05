@@ -49,5 +49,5 @@
   "editor:deleteEndLine": "ctrl+end",
   "editor:clearBuffer": "ctrl+shift+k",
   "plugins:update": "ctrl+shift+u",
-  "editor:show": "ctrl+shift+h"
+  "editor:showKeymap": "ctrl+shift+h"
 }
