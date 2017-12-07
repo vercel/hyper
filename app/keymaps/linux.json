@@ -30,7 +30,7 @@
   "pane:splitVertical": "ctrl+shift+d",
   "pane:splitHorizontal": "ctrl+shift+e",
   "pane:close": "ctrl+shift+w",
-  "pane:zoomReset": "ctrl+shift+0",
+  "pane:zoomReset": "ctrl+alt+0",
   "pane:zoomIn": "ctrl+shift+=",
   "pane:zoomOut": "ctrl+shift+-",
   "editor:undo": "ctrl+shift+z",
