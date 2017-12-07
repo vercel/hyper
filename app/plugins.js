@@ -11,6 +11,9 @@ const {availableExtensions} = require('./plugins/extensions');
 const {install} = require('./plugins/install');
 const {plugs} = require('./config/paths');
 
+
+let FINISHED_PLUGINS =false; 
+
 // local storage
 const cache = new Config();
 
@@ -86,6 +89,7 @@ function updatePlugins({force = false} = {}) {
           notify('Plugins Updated', 'No changes!');
         }
         watchers.forEach(fn => fn(err, {force}));
+        FINISHED_PLUGINS=true;
       }
     }
   });
@@ -134,6 +138,11 @@ if (cache.get('hyper.plugins') !== id || process.env.HYPER_FORCE_UPDATE) {
   //eslint-disable-next-line no-console
   console.log('plugins have changed / not init, scheduling plugins installation');
   setTimeout(() => {
+
+    notify(
+      'Plugins Updating',
+      ` Your plugins are currently updating `
+    );
     updatePlugins();
   }, 5000);
 }
@@ -245,7 +254,7 @@ function requirePlugins() {
     } catch (err) {
       //eslint-disable-next-line no-console
       console.error(err);
-      notify('Plugin error!', `Plugin "${basename(path_)}" failed to load (${err.message})`);
+     // notify('Plugin error!', `Plugin "${basename(path_)}" failed to load (${err.message})`);
     }
   };
 
