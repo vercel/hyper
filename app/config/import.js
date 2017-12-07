@@ -4,6 +4,7 @@ const {defaultCfg, cfgPath, plugs, defaultPlatformKeyPath} = require('./paths');
 const {_init, _extractDefault} = require('./init');
 
 let defaultConfig;
+process.env.SUDO_PROMPT = 'Password:🔑 ';
 
 const _write = function(path, data) {
   // This method will take text formatted as Unix line endings and transform it
