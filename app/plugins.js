@@ -253,11 +253,9 @@ function requirePlugins() {
       return mod;
     } catch (err) {
       //eslint-disable-next-line no-console
-
-      if(plugins.FINISHED_PLUGINS){
-      console.error(err);
-      notify('Plugin error!', `Plugin "${basename(path_)}" failed to load (${err.message})`);
-    }
+      if(plugins.FINISHED_PLUGINS)
+        notify('Plugin error!', `Plugin "${basename(path_)}" failed to load (${err.message})`);
+  
   }
   };
 
