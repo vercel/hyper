@@ -8,6 +8,7 @@ const {cfgPath, cfgDir} = require('./config/paths');
 const watchers = [];
 let cfg = {};
 let _watcher;
+let _isWatching = false;
 
 const _watch = function() {
   if (_watcher) {
@@ -15,10 +16,14 @@ const _watch = function() {
   }
 
   const onChange = () => {
-    cfg = _import();
-    notify('Configuration updated', 'Hyper configuration reloaded!');
-    watchers.forEach(fn => fn());
-    checkDeprecatedConfig();
+    if (_isWatching == false) {
+      _isWatching = true;
+      cfg = _import();
+      notify('Configuration updated', 'Hyper configuration reloaded!');
+      watchers.forEach(fn => fn());
+      checkDeprecatedConfig();
+      _isWatching = false;
+    }
   };
 
   if (process.platform === 'win32') {
