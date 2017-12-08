@@ -48,5 +48,6 @@
   "editor:deleteBeginningLine": "ctrl+home",
   "editor:deleteEndLine": "ctrl+end",
   "editor:clearBuffer": "ctrl+shift+k",
+  "editor:break": "ctrl+c",
   "plugins:update": "ctrl+shift+u"
 }
