@@ -173,9 +173,8 @@ app.on('ready', () =>
       app.createWindow = createWindow;
 
       // check if should be set as default ssh protocol client
-      if (config.getConfig().defaultSSHApp == true && !app.isDefaultProtocolClient('ssh')) {
+      if (config.getConfig().defaultSSHApp && !app.isDefaultProtocolClient('ssh'))
         app.setAsDefaultProtocolClient('ssh');
-      }
 
       // mac only. when the dock icon is clicked
       // and we don't have any active windows open,
