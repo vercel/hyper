@@ -55,6 +55,7 @@ const {resolve} = require('path');
 const {app, BrowserWindow, Menu} = require('electron');
 const {gitDescribe} = require('git-describe');
 const isDev = require('electron-is-dev');
+const WindowStateManager = require('electron-window-state-manager');
 
 const config = require('./config');
 
@@ -68,6 +69,12 @@ const AppMenu = require('./menus/menu');
 const Window = require('./ui/window');
 
 const windowSet = new Set([]);
+
+const mainWindowState = new WindowStateManager('hwin', {
+  //For Testing
+  defaultWidth: 1024,
+  defaultHeight: 768
+});
 
 // expose to plugins
 app.config = config;
@@ -149,10 +156,14 @@ app.on('ready', () =>
 
         const hwin = new Window({width, height, x: startX, y: startY}, cfg, fn);
         windowSet.add(hwin);
+        if (mainWindowState.maximized) {
+          hwin.maximize();
+        }
         hwin.loadURL(url);
 
         // the window can be closed by the browser process itself
         hwin.on('close', () => {
+          mainWindowState.saveState(hwin);
           hwin.clean();
           windowSet.delete(hwin);
         });

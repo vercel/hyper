@@ -17,6 +17,7 @@
     "electron-config": "1.0.0",
     "electron-is-dev": "0.3.0",
     "electron-squirrel-startup": "1.0.0",
+    "electron-window-state-manager": "false0.3.2",
     "file-uri-to-path": "1.0.0",
     "git-describe": "4.0.2",
     "lodash": "4.17.4",
