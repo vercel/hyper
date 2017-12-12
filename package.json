@@ -164,15 +164,15 @@
   },
   "dependencies": {
     "aphrodite-simple": "0.4.1",
-    "color": "2.0.0",
+    "color": "2.0.1",
     "css-loader": "0.28.7",
     "json-loader": "0.5.7",
     "mousetrap": "chabou/mousetrap#useCapture",
-    "ms": "2.0.0",
+    "ms": "2.1.1",
     "php-escape-shell": "1.0.0",
-    "react": "16.0.0",
+    "react": "16.2.0",
     "react-deep-force-update": "2.0.1",
-    "react-dom": "16.0.0",
+    "react-dom": "16.2.0",
     "react-redux": "5.0.6",
     "redux": "3.7.2",
     "redux-thunk": "2.2.0",
@@ -183,17 +183,17 @@
     "xterm": "2.9.2"
   },
   "devDependencies": {
-    "ava": "0.23.0",
+    "ava": "0.24.0",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-preset-babili": "0.1.4",
     "babel-preset-react": "6.24.1",
-    "copy-webpack-plugin": "4.0.1",
-    "cross-env": "5.0.5",
+    "copy-webpack-plugin": "4.2.3",
+    "cross-env": "5.1.1",
     "electron": "1.7.9",
-    "electron-builder": "19.47.1",
-    "electron-builder-squirrel-windows": "19.47.0",
+    "electron-builder": "19.48.2",
+    "electron-builder-squirrel-windows": "19.48.0",
     "electron-devtools-installer": "2.2.1",
     "electron-rebuild": "1.6.0",
     "eslint": "^4.7.2",
@@ -206,6 +206,6 @@
     "prettier": "1.7.4",
     "spectron": "3.7.2",
     "style-loader": "0.19.0",
-    "webpack": "3.8.1"
+    "webpack": "3.10.0"
   }
 }
