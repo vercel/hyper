@@ -1,7 +1,7 @@
 {
   "repository": "zeit/hyper",
   "scripts": {
-    "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
+    "start": "concurrently --names \"WEBPACK,APP\" -c \"bgBlue.bold,bgMagenta.bold\" -k -s first \"npm run dev\" \"npm run app\"",
     "app": "electron app",
     "dev": "webpack -w",
     "build": "cross-env NODE_ENV=production webpack",
@@ -189,6 +189,7 @@
     "babel-loader": "7.1.2",
     "babel-preset-babili": "0.1.4",
     "babel-preset-react": "6.24.1",
+    "concurrently": "^3.5.0",
     "copy-webpack-plugin": "4.0.1",
     "cross-env": "5.0.5",
     "electron": "1.7.9",
