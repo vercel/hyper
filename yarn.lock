@@ -6290,9 +6290,9 @@ xtend@~2.1.1:
   dependencies:
     object-keys "~0.4.0"
 
-xterm@xtermjs/xterm.js#v3:
+xterm@chabou/xterm.js#transparency:
   version "2.9.1"
-  resolved "https://codeload.github.com/xtermjs/xterm.js/tar.gz/4f144dc6eb8bdb56dd4d705ca356694248ac2acc"
+  resolved "https://codeload.github.com/chabou/xterm.js/tar.gz/9c5aaed4415428a0a28eac51dd80762520110888"
 
 y18n@^3.2.1:
   version "3.2.1"

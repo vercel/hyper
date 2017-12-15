@@ -180,7 +180,7 @@
     "seamless-immutable": "7.1.2",
     "semver": "5.4.1",
     "uuid": "3.1.0",
-    "xterm": "xtermjs/xterm.js#v3"
+    "xterm": "chabou/xterm.js#transparency"
   },
   "devDependencies": {
     "ava": "0.24.0",
