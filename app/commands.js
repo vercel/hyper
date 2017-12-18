@@ -93,6 +93,9 @@ const commands = {
   },
   'editor:deleteEndLine': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('session del line end req');
+  },
+  'editor:break': focusedWindow => {
+    focusedWindow && focusedWindow.rpc.emit('session break req');
   }
 };
 
