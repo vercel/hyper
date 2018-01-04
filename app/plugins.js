@@ -87,6 +87,8 @@ function updatePlugins({force = false} = {}) {
       cache.set('hyper.plugin-versions', pluginVersions);
 
       // notify watchers
+      watchers.forEach(fn => fn(err, {force}));
+
       if (force || changed) {
         if (changed) {
           notify('Plugins Updated', 'Restart the app or hot-reload with "View" > "Reload" to enjoy the updates!');
@@ -94,7 +96,6 @@ function updatePlugins({force = false} = {}) {
           notify('Plugins Updated', 'No changes!');
         }
         checkDeprecatedExtendKeymaps();
-        watchers.forEach(fn => fn(err, {force}));
       }
     }
   });
