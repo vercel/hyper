@@ -165,7 +165,7 @@
     "seamless-immutable": "7.1.2",
     "semver": "5.4.1",
     "uuid": "3.1.0",
-    "xterm": "chabou/xterm.js#transparency"
+    "xterm": "chabou/xterm.js#hyper"
   },
   "devDependencies": {
     "ava": "0.24.0",
