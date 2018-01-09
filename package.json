@@ -123,7 +123,15 @@
   },
   "build": {
     "appId": "co.zeit.hyper",
-    "extraResources": "./bin/yarn-standalone.js",
+    "extraResources": [
+      "./bin/yarn-standalone.js",
+      "./bin/cli.js",
+      {
+        "from": "./build/${os}/",
+        "to": "./bin/",
+        "filter": ["hyper*"]
+      }
+    ],
     "linux": {
       "category": "TerminalEmulator",
       "target": [
@@ -155,6 +163,12 @@
     "mac": {
       "category": "public.app-category.developer-tools",
       "extendInfo": "build/Info.plist"
+    },
+    "deb": {
+      "afterInstall": "./build/linux/after-install.tpl"
+    },
+    "rpm": {
+      "afterInstall": "./build/linux/after-install.tpl"
     }
   },
   "license": "MIT",
@@ -164,21 +178,31 @@
   },
   "dependencies": {
     "aphrodite-simple": "0.4.1",
+    "args": "3.0.6",
+    "chalk": "2.1.0",
     "color": "2.0.1",
+    "columnify": "1.5.4",
     "css-loader": "0.28.7",
+    "got": "7.1.0",
     "json-loader": "0.5.7",
     "mousetrap": "chabou/mousetrap#useCapture",
     "ms": "2.1.1",
+    "npm-name": "3.1.0",
+    "opn": "5.1.0",
+    "ora": "1.3.0",
     "php-escape-shell": "1.0.0",
+    "pify": "3.0.0",
     "react": "16.2.0",
     "react-deep-force-update": "2.0.1",
     "react-dom": "16.2.0",
     "react-redux": "5.0.6",
+    "recast": "0.12.6",
     "redux": "3.7.2",
     "redux-thunk": "2.2.0",
     "reselect": "3.0.1",
     "seamless-immutable": "7.1.2",
     "semver": "5.4.1",
+    "shebang-loader": "false0.0.1",
     "uuid": "3.1.0",
     "xterm": "2.9.2"
   },
@@ -207,5 +231,8 @@
     "spectron": "3.7.2",
     "style-loader": "0.19.0",
     "webpack": "3.10.0"
+  },
+  "resolutions": {
+    "rc": "1.2.3"
   }
 }
