@@ -7,9 +7,9 @@ const pify = require('pify');
 const args = require('args');
 const chalk = require('chalk');
 const opn = require('opn');
-// const columnify = require('columnify');
-// const got = require('got');
-// const ora = require('ora');
+const columnify = require('columnify');
+const got = require('got');
+const ora = require('ora');
 const api = require('./api');
 
 let commandPromise;
@@ -51,19 +51,19 @@ args.command(['ls', 'list'], 'List installed plugins', () => {
   } else {
     console.log(chalk.red(`No plugins installed yet.`));
   }
-  process.exit(1);
+  process.exit(0);
 });
-/*
-const lsRemote = () => {
+
+const lsRemote = pattern => {
   // note that no errors are catched by this function
-  const URL =
-    'http://registry.npmjs.org/-/_view/byKeyword?startkey=[%22hyperterm%22,%22hyper%22]&endkey=[%22hyperterm%22,{}]&group_level=4';
+  const URL = `https://api.npms.io/v2/search?q=${(pattern && `${pattern}+`) || ''}keywords:hyper-plugin,hyper-theme`;
   return got(URL)
-    .then(response => JSON.parse(response.body).rows)
-    .then(entries => entries.map(entry => entry.key))
+    .then(response => JSON.parse(response.body).results)
+    .then(entries => entries.map(entry => entry.package))
+    .then(entries => entries.filter(entry => entry.name.indexOf('hyper-') === 0))
     .then(entries =>
-      entries.map(entry => {
-        return {name: entry[1], description: entry[2]};
+      entries.map(({name, description}) => {
+        return {name, description};
       })
     )
     .then(entries =>
@@ -78,17 +78,12 @@ args.command(['s', 'search'], 'Search for plugins on npm', (name, args_) => {
   const spinner = ora('Searching').start();
   const query = args_[0] ? args_[0].toLowerCase() : '';
 
-  commandPromise = lsRemote()
-    .then(entries => {
-      return entries.filter(entry => {
-        return entry.name.indexOf(query) !== -1 || entry.description.toLowerCase().indexOf(query) !== -1;
-      });
-    })
+  commandPromise = lsRemote(query)
     .then(entries => {
       if (entries.length === 0) {
         spinner.fail();
         console.error(chalk.red(`Your search '${query}' did not match any plugins`));
-        console.error(`${chalk.red('Try')} ${chalk.green('hpm ls-remote')}`);
+        console.error(`${chalk.red('Try')} ${chalk.green('hyper ls-remote')}`);
         process.exit(1);
       } else {
         let msg = columnify(entries);
@@ -118,10 +113,11 @@ args.command(['lsr', 'list-remote', 'ls-remote'], 'List plugins available on npm
       spinner.fail();
       console.error(chalk.red(err)); // TODO
     });
-});*/
+});
 
 args.command(['d', 'docs', 'h', 'home'], 'Open the npm page of a plugin', (name, args_) => {
-  return opn(`http://ghub.io/${args_[0]}`, {wait: false});
+  opn(`http://ghub.io/${args_[0]}`, {wait: false});
+  process.exit(0);
 });
 
 args.command(['<default>'], 'Launch Hyper');
