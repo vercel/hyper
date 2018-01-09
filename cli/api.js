@@ -1,6 +1,6 @@
 const fs = require('fs');
 const os = require('os');
-const npmName = () => Promise.resolve(); //require('npm-name');
+const npmName = require('npm-name');
 const pify = require('pify');
 const recast = require('recast');
 
