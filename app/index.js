@@ -208,14 +208,10 @@ app.on('ready', () =>
         Menu.setApplicationMenu(AppMenu.buildMenu(menu));
       };
 
-      const load = () => {
-        plugins.onApp(app);
-        plugins.checkDeprecatedExtendKeymaps();
-        makeMenu();
-      };
-
-      load();
-      plugins.subscribe(load);
+      plugins.onApp(app);
+      makeMenu();
+      plugins.subscribe(plugins.onApp.bind(undefined, app));
+      config.subscribe(makeMenu);
     })
     .catch(err => {
       //eslint-disable-next-line no-console

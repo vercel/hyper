@@ -4,8 +4,8 @@
 
 module.exports = {
   config: {
-    // Choose either "stable" for receiving highly polished,
-    // or "canary" for less polished but more frequent updates
+    // choose either `'stable'` for receiving highly polished,
+    // or `'canary'` for less polished but more frequent updates
     updateChannel: 'stable',
 
     // default font size in pixels for all tabs
@@ -17,38 +17,39 @@ module.exports = {
     // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
     cursorColor: 'rgba(248,28,229,0.8)',
 
-    // `BEAM` for |, `UNDERLINE` for _, `BLOCK` for █
+    // `'BEAM'` for |, `'UNDERLINE'` for _, `'BLOCK'` for █
     cursorShape: 'BLOCK',
 
-    // set to true for blinking cursor
+    // set to `true` (without backticks and without quotes) for blinking cursor
     cursorBlink: false,
 
     // color of the text
     foregroundColor: '#fff',
 
     // terminal background color
+    // opacity is only supported on macOS
     backgroundColor: '#000',
 
     // border color (window, tabs)
     borderColor: '#333',
 
-    // custom css to embed in the main window
+    // custom CSS to embed in the main window
     css: '',
 
-    // custom css to embed in the terminal window
+    // custom CSS to embed in the terminal window
     termCSS: '',
 
     // set to `true` (without backticks and without quotes) if you're using a
     // Linux setup that doesn't show native menus
-    // default: `false` on Linux, `true` on Windows (ignored on macOS)
+    // default: `false` on Linux, `true` on Windows, ignored on macOS
     showHamburgerMenu: '',
 
-    // set to `false` if you want to hide the minimize, maximize and close buttons
+    // set to `false` (without backticks and without quotes) if you want to hide the minimize, maximize and close buttons
     // additionally, set to `'left'` if you want them on the left, like in Ubuntu
-    // default: `true` on windows and Linux (ignored on macOS)
+    // default: `true` (without backticks and without quotes) on Windows and Linux, ignored on macOS
     showWindowControls: '',
 
-    // custom padding (css format, i.e.: `top right bottom left`)
+    // custom padding (CSS format, i.e.: `top right bottom left`)
     padding: '12px 14px',
 
     // the full list. if you're going to provide the full color palette,
@@ -83,25 +84,25 @@ module.exports = {
     // Bash on Windows
     // - Example: `C:\\Windows\\System32\\bash.exe`
     //
-    // Powershell on Windows
+    // PowerShell on Windows
     // - Example: `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
     shell: '',
 
-    // for setting shell arguments (i.e. for using interactive shellArgs: ['-i'])
-    // by default ['--login'] will be used
+    // for setting shell arguments (i.e. for using interactive shellArgs: `['-i']`)
+    // by default `['--login']` will be used
     shellArgs: ['--login'],
 
     // for environment variables
     env: {},
 
-    // set to false for no bell
+    // set to `false` for no bell
     bell: 'SOUND',
 
-    // if true, selected text will automatically be copied to the clipboard
+    // if `true` (without backticks and without quotes), selected text will automatically be copied to the clipboard
     copyOnSelect: false,
 
-    // if true, on right click selected text will be copied or pasted if no
-    // selection is present (true by default on Windows)
+    // if `true` (without backticks and without quotes), on right click selected text will be copied or pasted if no
+    // selection is present (`true` by default on Windows and disables the context menu feature)
     // quickEdit: true,
 
     // URL to custom bell

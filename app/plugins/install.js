@@ -25,9 +25,9 @@ module.exports = {
             timeout: ms('5m'),
             maxBuffer: 1024 * 1024
           },
-          err => {
+          (err, stdout, stderr) => {
             if (err) {
-              cb(err);
+              cb(stderr);
             } else {
               cb(null);
             }
