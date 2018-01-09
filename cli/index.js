@@ -12,7 +12,16 @@ const got = require('got');
 const ora = require('ora');
 const api = require('./api');
 
+const PLUGIN_PREFIX = 'hyper-';
+
 let commandPromise;
+
+const getPluginName = arg => {
+  if (arg.indexOf(PLUGIN_PREFIX) !== 0) {
+    return `${PLUGIN_PREFIX}${arg}`;
+  }
+  return arg;
+};
 
 const checkConfig = () => {
   if (api.exists()) {
@@ -26,7 +35,7 @@ const checkConfig = () => {
 
 args.command(['i', 'install'], 'Install a plugin', (name, args_) => {
   checkConfig();
-  const plugin = args_[0];
+  const plugin = getPluginName(args_[0]);
   commandPromise = api
     .install(plugin)
     .then(() => console.log(chalk.green(`${plugin} installed successfully!`)))
@@ -35,7 +44,7 @@ args.command(['i', 'install'], 'Install a plugin', (name, args_) => {
 
 args.command(['u', 'uninstall', 'rm', 'remove'], 'Uninstall a plugin', (name, args_) => {
   checkConfig();
-  const plugin = args_[0];
+  const plugin = getPluginName(args_[0]);
   commandPromise = api
     .uninstall(plugin)
     .then(() => console.log(chalk.green(`${plugin} uninstalled successfully!`)))
@@ -60,7 +69,7 @@ const lsRemote = pattern => {
   return got(URL)
     .then(response => JSON.parse(response.body).results)
     .then(entries => entries.map(entry => entry.package))
-    .then(entries => entries.filter(entry => entry.name.indexOf('hyper-') === 0))
+    .then(entries => entries.filter(entry => entry.name.indexOf(PLUGIN_PREFIX) === 0))
     .then(entries =>
       entries.map(({name, description}) => {
         return {name, description};
@@ -116,7 +125,8 @@ args.command(['lsr', 'list-remote', 'ls-remote'], 'List plugins available on npm
 });
 
 args.command(['d', 'docs', 'h', 'home'], 'Open the npm page of a plugin', (name, args_) => {
-  opn(`http://ghub.io/${args_[0]}`, {wait: false});
+  const plugin = getPluginName(args_[0]);
+  opn(`http://ghub.io/${plugin}`, {wait: false});
   process.exit(0);
 });
 
