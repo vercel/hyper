@@ -55,7 +55,7 @@ exports.addBinToUserPath = () => {
         reject(err);
         return;
       }
-      // C:\Users\<user>\AppData\Local\hyper\app-2.0.4\resources\bin
+      // C:\Users\<user>\AppData\Local\hyper\app-<version>\resources\bin
       const binPath = path.dirname(cliScriptPath);
       // C:\Users\<user>\AppData\Local\hyper
       const basePath = path.resolve(binPath, '../../..');
