@@ -44,7 +44,7 @@
   "editor:moveBeginningLine": "home",
   "editor:moveEndLine": "end",
   "editor:deletePreviousWord": "ctrl+backspace",
-  "editor:deleteNextWord": "cltr+del",
+  "editor:deleteNextWord": "ctrl+del",
   "editor:deleteBeginningLine": "ctrl+home",
   "editor:deleteEndLine": "ctrl+end",
   "editor:clearBuffer": "ctrl+shift+k",
