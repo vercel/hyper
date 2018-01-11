@@ -1,7 +1,8 @@
 {
   "repository": "zeit/hyper",
   "scripts": {
-    "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
+    "start":
+      "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
     "app": "electron app",
     "dev": "webpack -w",
     "build": "cross-env NODE_ENV=production webpack",
@@ -10,21 +11,18 @@
     "test:unit": "ava test/unit",
     "test:unit:watch": "yarn run test:unit -- --watch",
     "prepush": "yarn test",
-    "postinstall": "electron-builder install-app-deps && yarn run rebuild-node-pty",
-    "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
-    "dist": "yarn run build && cross-env BABEL_ENV=production babel --out-file app/renderer/bundle.js --no-comments --minified app/renderer/bundle.js && build",
-    "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
+    "postinstall":
+      "electron-builder install-app-deps && yarn run rebuild-node-pty && yarn --cwd node_modules/xterm",
+    "rebuild-node-pty":
+      "electron-rebuild -f -w app/node_modules/node-pty -m app",
+    "dist":
+      "yarn run build && cross-env BABEL_ENV=production babel --out-file app/renderer/bundle.js --no-comments --minified app/renderer/bundle.js && build",
+    "clean":
+      "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
   },
   "eslintConfig": {
-    "plugins": [
-      "react",
-      "prettier"
-    ],
-    "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "prettier"
-    ],
+    "plugins": ["react", "prettier"],
+    "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
     "parserOptions": {
       "ecmaVersion": 8,
       "sourceType": "module",
@@ -41,10 +39,7 @@
       "node": true
     },
     "rules": {
-      "func-names": [
-        "error",
-        "as-needed"
-      ],
+      "func-names": ["error", "as-needed"],
       "no-shadow": "error",
       "no-extra-semi": 0,
       "react/prop-types": 0,
@@ -90,9 +85,7 @@
     ]
   },
   "babel": {
-    "presets": [
-      "react"
-    ],
+    "presets": ["react"],
     "env": {
       "production": {
         "plugins": [
@@ -123,38 +116,44 @@
   },
   "build": {
     "appId": "co.zeit.hyper",
-    "extraResources": "./bin/yarn-standalone.js",
+    "extraResources": [
+      "./bin/yarn-standalone.js",
+      "./bin/cli.js",
+      {
+        "from": "./build/${os}/",
+        "to": "./bin/",
+        "filter": ["hyper*"]
+      }
+    ],
     "linux": {
       "category": "TerminalEmulator",
       "target": [
         {
           "target": "deb",
-          "arch": [
-            "x64"
-          ]
+          "arch": ["x64"]
         },
         {
           "target": "AppImage",
-          "arch": [
-            "x64"
-          ]
+          "arch": ["x64"]
         },
         {
           "target": "rpm",
-          "arch": [
-            "x64"
-          ]
+          "arch": ["x64"]
         }
       ]
     },
     "win": {
-      "target": [
-        "squirrel"
-      ]
+      "target": ["squirrel"]
     },
     "mac": {
       "category": "public.app-category.developer-tools",
       "extendInfo": "build/Info.plist"
+    },
+    "deb": {
+      "afterInstall": "./build/linux/after-install.tpl"
+    },
+    "rpm": {
+      "afterInstall": "./build/linux/after-install.tpl"
     }
   },
   "license": "MIT",
@@ -164,36 +163,46 @@
   },
   "dependencies": {
     "aphrodite-simple": "0.4.1",
-    "color": "2.0.0",
+    "args": "3.0.6",
+    "chalk": "2.1.0",
+    "color": "2.0.1",
+    "columnify": "1.5.4",
     "css-loader": "0.28.7",
+    "got": "7.1.0",
     "json-loader": "0.5.7",
     "mousetrap": "chabou/mousetrap#useCapture",
-    "ms": "2.0.0",
+    "ms": "2.1.1",
+    "npm-name": "3.1.0",
+    "opn": "5.1.0",
+    "ora": "1.3.0",
     "php-escape-shell": "1.0.0",
-    "react": "16.0.0",
+    "pify": "3.0.0",
+    "react": "16.2.0",
     "react-deep-force-update": "2.0.1",
-    "react-dom": "16.0.0",
+    "react-dom": "16.2.0",
     "react-redux": "5.0.6",
+    "recast": "0.12.6",
     "redux": "3.7.2",
     "redux-thunk": "2.2.0",
     "reselect": "3.0.1",
     "seamless-immutable": "7.1.2",
     "semver": "5.4.1",
+    "shebang-loader": "false0.0.1",
     "uuid": "3.1.0",
-    "xterm": "2.9.2"
+    "xterm": "chabou/xterm.js#hyper"
   },
   "devDependencies": {
-    "ava": "0.23.0",
+    "ava": "0.24.0",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-preset-babili": "0.1.4",
     "babel-preset-react": "6.24.1",
-    "copy-webpack-plugin": "4.0.1",
-    "cross-env": "5.0.5",
+    "copy-webpack-plugin": "4.2.3",
+    "cross-env": "5.1.1",
     "electron": "1.7.9",
-    "electron-builder": "19.47.1",
-    "electron-builder-squirrel-windows": "19.47.0",
+    "electron-builder": "19.48.2",
+    "electron-builder-squirrel-windows": "19.48.0",
     "electron-devtools-installer": "2.2.1",
     "electron-rebuild": "1.6.0",
     "eslint": "^4.7.2",
@@ -206,6 +215,9 @@
     "prettier": "1.7.4",
     "spectron": "3.7.2",
     "style-loader": "0.19.0",
-    "webpack": "3.8.1"
+    "webpack": "3.10.0"
+  },
+  "resolutions": {
+    "rc": "1.2.3"
   }
 }
