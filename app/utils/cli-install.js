@@ -60,21 +60,26 @@ exports.addBinToUserPath = () => {
       // C:\Users\<user>\AppData\Local\hyper
       const basePath = path.resolve(binPath, '../../..');
 
-      const pathItem = items.find(item => item.name === 'Path');
-      const pathParts = pathItem.value.split(';');
-      const existingPath = pathParts.find(pathPart => pathPart === binPath);
-      if (existingPath) {
-        resolve();
-        return;
+      const pathItem = items.find(item => item.name.toUpperCase() === 'PATH');
+
+      let newPathValue = binPath;
+      const pathItemName = pathItem ? pathItem.name : 'PATH';
+      if (pathItem) {
+        const pathParts = pathItem.value.split(';');
+        const existingPath = pathParts.find(pathPart => pathPart === binPath);
+        if (existingPath) {
+          resolve();
+          return;
+        }
+
+        // Because version is in path we need to remove old path if present and add current path
+        newPathValue = pathParts
+          .filter(pathPart => !pathPart.startsWith(basePath))
+          .concat([binPath])
+          .join(';');
       }
 
-      // Because version is in path we need to remove old path if present and add current path
-      const newPathValue = pathParts
-        .filter(pathPart => !pathPart.startsWith(basePath))
-        .concat([binPath])
-        .join(';');
-
-      envKey.set(pathItem.name, Registry.REG_SZ, newPathValue, error => {
+      envKey.set(pathItemName, Registry.REG_SZ, newPathValue, error => {
         if (error) {
           reject(error);
           return;
