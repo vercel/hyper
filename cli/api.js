@@ -6,37 +6,51 @@ const recast = require('recast');
 
 const fileName = `${os.homedir()}/.hyper.js`;
 
-let fileContents;
-let parsedFile;
-let plugins;
-let localPlugins;
-
-try {
-  fileContents = fs.readFileSync(fileName, 'utf8');
-
-  parsedFile = recast.parse(fileContents);
-
-  const properties = parsedFile.program.body[0].expression.right.properties;
-  plugins = properties.find(property => {
-    return property.key.name === 'plugins';
-  }).value.elements;
-
-  localPlugins = properties.find(property => {
-    return property.key.name === 'localPlugins';
-  }).value.elements;
-} catch (err) {
-  if (err.code !== 'ENOENT') {
-    // ENOENT === !exists()
-    throw err;
-  }
+/**
+ * We need to make sure the file reading and parsing is lazy so that failure to
+ * statically analyze the hyper configuration isn't fatal for all kinds of
+ * subcommands. We can use memoization to make reading and parsing lazy.
+ */
+function memoize(fn) {
+  let hasResult = false;
+  let result;
+  return (...args) => {
+    if (!hasResult) {
+      result = fn(...args);
+      hasResult = true;
+    }
+    return result;
+  };
 }
 
+const getFileContents = memoize(() => {
+  try {
+    return fs.readFileSync(fileName, 'utf8');
+  } catch (err) {
+    if (err.code !== 'ENOENT') {
+      // ENOENT === !exists()
+      throw err;
+    }
+  }
+  return null;
+});
+
+const getParsedFile = memoize(() => recast.parse(getFileContents()));
+
+const getProperties = memoize(() => getParsedFile().program.body[0].expression.right.properties);
+
+const getPlugins = memoize(() => getProperties().find(property => property.key.name === 'plugins').value.elements);
+
+const getLocalPlugins = memoize(
+  () => getProperties().find(property => property.key.name === 'localPlugins').value.elements
+);
+
 function exists() {
-  return fileContents !== undefined;
+  return getFileContents() !== undefined;
 }
 
 function isInstalled(plugin, locally) {
-  const array = locally ? localPlugins : plugins;
+  const array = locally ? getLocalPlugins() : getPlugins();
   if (array && Array.isArray(array)) {
     return array.find(entry => entry.value === plugin) !== undefined;
   }
@@ -44,7 +58,7 @@ function isInstalled(plugin, locally) {
 }
 
 function save() {
-  return pify(fs.writeFile)(fileName, recast.print(parsedFile).code, 'utf8');
+  return pify(fs.writeFile)(fileName, recast.print(getParsedFile()).code, 'utf8');
 }
 
 function existsOnNpm(plugin) {
@@ -59,7 +73,7 @@ function existsOnNpm(plugin) {
 }
 
 function install(plugin, locally) {
-  const array = locally ? localPlugins : plugins;
+  const array = locally ? getLocalPlugins() : getPlugins();
   return new Promise((resolve, reject) => {
     existsOnNpm(plugin)
       .then(() => {
@@ -88,8 +102,8 @@ function uninstall(plugin) {
       return reject(`${plugin} is not installed`);
     }
 
-    const index = plugins.findIndex(entry => entry.value === plugin);
-    plugins.splice(index, 1);
+    const index = getPlugins().findIndex(entry => entry.value === plugin);
+    getPlugins().splice(index, 1);
     save()
       .then(resolve)
       .catch(err => reject(err));
@@ -97,8 +111,10 @@ function uninstall(plugin) {
 }
 
 function list() {
-  if (Array.isArray(plugins)) {
-    return plugins.map(plugin => plugin.value).join('\n');
+  if (Array.isArray(getPlugins())) {
+    return getPlugins()
+      .map(plugin => plugin.value)
+      .join('\n');
   }
   return false;
 }
