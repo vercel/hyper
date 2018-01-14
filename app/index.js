@@ -70,6 +70,8 @@ const Window = require('./ui/window');
 
 const windowSet = new Set([]);
 
+app.commandLine.appendSwitch('supports-dual-gpus', 'true');
+
 // expose to plugins
 app.config = config;
 app.plugins = plugins;
