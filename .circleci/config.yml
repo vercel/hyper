@@ -10,9 +10,7 @@ jobs:
       - checkout
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - restore_cache:
-        - keys:
-          - yarn-cache-{{ checksum "yarn.lock" }}
-          - yarn-cache-
+        key:  yarn-cache-{{ checksum "yarn.lock" }}
       - run: yarn --cache-folder ~/.yarn-cache
       - save_cache:
         key: yarn-cache-{{ checksum "yarn.lock" }}
