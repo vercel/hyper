@@ -42,7 +42,7 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
     dialog.showMessageBox({
       title: `About ${appName}`,
       message: `${appName} ${appVersion} (${updateChannel})`,
-      detail: `Plugins: ${pluginList}\n\nCreated by Guillermo Rauch\nCopyright © 2017 ZEIT, Inc.`,
+      detail: `Plugins: ${pluginList}\n\nCreated by Guillermo Rauch\nCopyright © 2018 ZEIT, Inc.`,
       buttons: [],
       icon
     });
