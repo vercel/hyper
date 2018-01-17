@@ -1,0 +1,24 @@
+version: 2
+jobs:
+  build:
+    environment:
+      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
+      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+    macos:
+      xcode: '9.0'
+    steps:
+      - checkout
+      - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
+      - restore_cache:
+        - keys:
+          - yarn-cache-{{ checksum "yarn.lock" }}
+          - yarn-cache-
+      - run: yarn --cache-folder ~/.yarn-cache
+      - save_cache:
+        key: yarn-cache-{{ checksum "yarn.lock" }}
+        paths:
+          - ~/.yarn-cache
+      - if [[ "$CIRCLE_BRANCH" == "canary" ]]; then cp build/canary.icns build/icon.icns; fi
+      - run: yarn test
+      - run: yarn run dist
+      - run: mv dist/*.zip $CIRCLE_ARTIFACTS
