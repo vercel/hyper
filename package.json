@@ -189,7 +189,7 @@
     "semver": "5.4.1",
     "shebang-loader": "false0.0.1",
     "uuid": "3.1.0",
-    "xterm": "chabou/xterm.js#a7b9059"
+    "xterm": "chabou/xterm.js#a7b9059050f8f77ca0d9469b77086617ad67e2fa"
   },
   "devDependencies": {
     "ava": "0.24.0",
