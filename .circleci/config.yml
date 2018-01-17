@@ -19,4 +19,5 @@ jobs:
       - run: if [[ $CIRCLE_BRANCH == canary ]]; then cp build/canary.icns build/icon.icns; fi
       - run: yarn test
       - run: yarn run dist
-      - run: mv dist/*.zip $CIRCLE_ARTIFACTS
+      - store_artifacts:
+          path: dist
