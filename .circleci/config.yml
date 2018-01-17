@@ -10,12 +10,12 @@ jobs:
       - checkout
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - restore_cache:
-        key:  yarn-cache-{{ checksum "yarn.lock" }}
+          key:  yarn-cache-{{ checksum "yarn.lock" }}
       - run: yarn --cache-folder ~/.yarn-cache
       - save_cache:
-        key: yarn-cache-{{ checksum "yarn.lock" }}
-        paths:
-          - ~/.yarn-cache
+          key: yarn-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.yarn-cache
       - if [[ "$CIRCLE_BRANCH" == "canary" ]]; then cp build/canary.icns build/icon.icns; fi
       - run: yarn test
       - run: yarn run dist
