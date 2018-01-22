@@ -5669,7 +5669,7 @@ shebang-command@^1.2.0:
   dependencies:
     shebang-regex "^1.0.0"
 
-shebang-loader@false0.0.1:
+shebang-loader@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/shebang-loader/-/shebang-loader-0.0.1.tgz#a4000495d44cceefbec63435e7b1698569fa52ec"
 
@@ -6604,9 +6604,9 @@ xtend@~2.1.1:
   dependencies:
     object-keys "~0.4.0"
 
-xterm@chabou/xterm.js#7b741fe:
-  version "3.0.0-hyper.0"
-  resolved "https://codeload.github.com/chabou/xterm.js/tar.gz/7b741fe51ca8a2f1e4ddec771b3cc140581b3eef"
+xterm@chabou/xterm.js#95178dd:
+  version "3.0.0-hyper.1"
+  resolved "https://codeload.github.com/chabou/xterm.js/tar.gz/95178dddcb7c9e88b3a9444188789696b41788d1"
 
 y18n@^3.2.1:
   version "3.2.1"
