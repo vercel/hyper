@@ -149,15 +149,15 @@
       "category": "public.app-category.developer-tools",
       "extendInfo": "build/Info.plist"
     },
-
-    "protocols": {
-      "name": "ssh URL",
-      "schemes": ["ssh"]
     "deb": {
       "afterInstall": "./build/linux/after-install.tpl"
     },
     "rpm": {
       "afterInstall": "./build/linux/after-install.tpl"
+    },
+    "protocols": {
+      "name": "ssh URL",
+      "schemes": ["ssh"]
     }
   },
   "license": "MIT",
