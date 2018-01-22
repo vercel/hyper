@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Deeply inspired by https://github.com/Microsoft/vscode/blob/1.17.0/resources/linux/bin/code.sh
+
+# If root, ensure that --user-data-dir is specified
+if [ "$(id -u)" = "0" ]; then
+	for i in $@
+	do
+		if [[ $i == --user-data-dir=* ]]; then
+			DATA_DIR_SET=1
+		fi
+	done
+	if [ -z $DATA_DIR_SET ]; then
+		echo "It is recommended to start hyper as a normal user. To run as root, you must specify an alternate user data directory with the --user-data-dir argument." 1>&2
+		exit 1
+	fi
+fi
+
+if [ ! -L $0 ]; then
+	# if path is not a symlink, find relatively
+	HYPER_PATH="$(dirname $0)/../.."
+else
+	if which readlink >/dev/null; then
+		# if readlink exists, follow the symlink and find relatively
+		HYPER_PATH="$(dirname $(readlink -f $0))/../.."
+	else
+		# else use the standard install location
+		HYPER_PATH="/opt/Hyper"
+	fi
+fi
+
+ELECTRON="$HYPER_PATH/hyper"
+CLI="$HYPER_PATH/resources/bin/cli.js"
+ELECTRON_RUN_AS_NODE=1 "$ELECTRON" "$CLI" "$@"
+exit $?

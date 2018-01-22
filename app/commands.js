@@ -29,6 +29,9 @@ const commands = {
   'editor:clearBuffer': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('session clear req');
   },
+  'editor:selectAll': focusedWindow => {
+    focusedWindow.rpc.emit('term selectAll');
+  },
   'plugins:update': () => {
     updatePlugins();
   },
@@ -93,6 +96,9 @@ const commands = {
   },
   'editor:deleteEndLine': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('session del line end req');
+  },
+  'editor:break': focusedWindow => {
+    focusedWindow && focusedWindow.rpc.emit('session break req');
   }
 };
 
