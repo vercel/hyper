@@ -3,61 +3,52 @@ const {cfgPath} = require('./paths');
 
 module.exports = () => Promise.resolve(shell.openItem(cfgPath));
 
+// Windows opens .js files with  WScript.exe by default
+// If the user hasn't set up an editor for .js files, we fallback to notepad.
 if (process.platform === 'win32') {
   const Registry = require('winreg');
   const {exec} = require('child_process');
 
-  // Windows opens .js files with  WScript.exe by default
-  // If the user hasn't set up an editor for .js files, we fallback to notepad.
-  const getFileExtKeys = () =>
-    new Promise((resolve, reject) => {
-      Registry({
+  const getUserChoiceKey = async () => {
+    // Load FileExts keys for .js files
+    const keys = await new Promise((resolve, reject) => {
+      new Registry({
         hive: Registry.HKCU,
         key: '\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.js'
-      }).keys((error, keys) => {
+      }).keys((error, items) => {
         if (error) {
           reject(error);
         } else {
-          resolve(keys || []);
+          resolve(items || []);
         }
       });
     });
 
-  const hasDefaultSet = async () => {
-    const keys = await getFileExtKeys();
+    // Find UserChoice key
+    const userChoice = keys.filter(k => k.key.endsWith('UserChoice'));
+    return userChoice[0];
+  };
 
-    const valueGroups = await Promise.all(
-      keys.map(
-        key =>
-          new Promise((resolve, reject) => {
-            key.values((error, items) => {
-              if (error) {
-                reject(error);
-              }
-              resolve(items.map(item => item.value || '') || []);
-            });
-          })
-      )
+  const hasDefaultSet = async () => {
+    let userChoice = await getUserChoiceKey();
+    if (!userChoice) return false;
+
+    // Load key values
+    let values = await new Promise((resolve, reject) => {
+      userChoice.values((error, items) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(items.map(item => item.value || '') || []);
+      });
+    });
+
+    // Look for default program
+    const hasDefaultProgramConfigured = values.some(
+      value => value && typeof value === 'string' && value.endsWith('.exe') && !value.includes('WScript.exe')
     );
 
-    const values = valueGroups
-      .reduce((allValues, groupValues) => [...allValues, ...groupValues], [])
-      .filter(value => value && typeof value === 'string');
-
-    // No default app set
-    if (values.length === 0) {
-      return false;
-    }
-
-    // WScript is in default apps list
-    if (values.some(value => value.includes('WScript.exe'))) {
-      const userDefaults = values.filter(value => value.endsWith('.exe') && !value.includes('WScript.exe'));
-
-      // WScript.exe is overidden
-      return userDefaults.length > 0;
-    }
-
-    return true;
+    return hasDefaultProgramConfigured;
   };
 
   // This mimics shell.openItem, true if it worked, false if not.
