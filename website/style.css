@@ -502,15 +502,7 @@ body, html {
     margin-right: 0;
     margin-bottom: 20px;
   }
-
-  #content table td {
-    width: 50% !important;
-  }
-
-  #content table td:nth-child(3) {
-    display: none;
-  }
-
+  
   #content .table-note:after {
     margin: 15px 0;
     content: "Please note: the complete table information is available in bigger resolutions!";
