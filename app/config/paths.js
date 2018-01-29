@@ -35,6 +35,7 @@ const plugs = {
   cache: resolve(plugins, 'cache')
 };
 const yarn = resolve(__dirname, '../../bin/yarn-standalone.js');
+const cliScriptPath = resolve(__dirname, '../../bin/hyper');
 
 const icon = resolve(__dirname, '../static/icon96x96.png');
 
@@ -64,5 +65,6 @@ module.exports = {
   icon,
   defaultPlatformKeyPath,
   plugs,
-  yarn
+  yarn,
+  cliScriptPath
 };

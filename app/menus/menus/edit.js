@@ -28,8 +28,11 @@ module.exports = (commandKeys, execCommand) => {
       accelerator: commandKeys['editor:paste']
     },
     {
-      role: 'selectall',
-      accelerator: commandKeys['editor:selectAll']
+      label: 'Select All',
+      accelerator: commandKeys['editor:selectAll'],
+      click(item, focusedWindow) {
+        execCommand('editor:selectAll', focusedWindow);
+      }
     },
     {
       type: 'separator'
