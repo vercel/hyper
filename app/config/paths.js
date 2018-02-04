@@ -1,15 +1,25 @@
 // This module exports paths, names, and other metadata that is referenced
 const {homedir} = require('os');
-const {statSync} = require('fs');
-const {resolve, join} = require('path');
+const {statSync, existsSync} = require('fs');
+const {resolve, join, dirname} = require('path');
 const isDev = require('electron-is-dev');
+const {app} = require('electron');
 
 const cfgFile = '.hyper.js';
 const defaultCfgFile = 'config-default.js';
 const homeDir = homedir();
+const appDir = resolve(dirname(app.getPath('exe')), '..');
+
+let cfgLocalPath = join(appDir, cfgFile);
 
 let cfgPath = join(homeDir, cfgFile);
 let cfgDir = homeDir;
+
+// make portable if can
+if (existsSync(cfgLocalPath)) {
+  cfgPath = cfgLocalPath;
+  cfgDir = appDir;
+}
 
 const devDir = resolve(__dirname, '../..');
 const devCfg = join(devDir, cfgFile);
