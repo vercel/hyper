@@ -1,7 +1,8 @@
 {
   "repository": "zeit/hyper",
   "scripts": {
-    "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
+    "start":
+      "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
     "app": "electron app",
     "dev": "webpack -w",
     "build": "cross-env NODE_ENV=production webpack",
@@ -10,21 +11,18 @@
     "test:unit": "ava test/unit",
     "test:unit:watch": "yarn run test:unit -- --watch",
     "prepush": "yarn test",
-    "postinstall": "electron-builder install-app-deps && yarn run rebuild-node-pty && yarn --cwd node_modules/xterm",
-    "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
-    "dist": "yarn run build && cross-env BABEL_ENV=production babel --out-file app/renderer/bundle.js --no-comments --minified app/renderer/bundle.js && build",
-    "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
+    "postinstall":
+      "electron-builder install-app-deps && yarn run rebuild-node-pty && yarn --cwd node_modules/xterm",
+    "rebuild-node-pty":
+      "electron-rebuild -f -w app/node_modules/node-pty -m app",
+    "dist":
+      "yarn run build && cross-env BABEL_ENV=production babel --out-file app/renderer/bundle.js --no-comments --minified app/renderer/bundle.js && build",
+    "clean":
+      "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
   },
   "eslintConfig": {
-    "plugins": [
-      "react",
-      "prettier"
-    ],
-    "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "prettier"
-    ],
+    "plugins": ["react", "prettier"],
+    "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
     "parserOptions": {
       "ecmaVersion": 8,
       "sourceType": "module",
@@ -41,10 +39,7 @@
       "node": true
     },
     "rules": {
-      "func-names": [
-        "error",
-        "as-needed"
-      ],
+      "func-names": ["error", "as-needed"],
       "no-shadow": "error",
       "no-extra-semi": 0,
       "react/prop-types": 0,
@@ -90,9 +85,7 @@
     ]
   },
   "babel": {
-    "presets": [
-      "react"
-    ],
+    "presets": ["react"],
     "env": {
       "production": {
         "plugins": [
@@ -129,9 +122,7 @@
       {
         "from": "./build/${os}/",
         "to": "./bin/",
-        "filter": [
-          "hyper*"
-        ]
+        "filter": ["hyper*"]
       }
     ],
     "linux": {
@@ -139,28 +130,20 @@
       "target": [
         {
           "target": "deb",
-          "arch": [
-            "x64"
-          ]
+          "arch": ["x64"]
         },
         {
           "target": "AppImage",
-          "arch": [
-            "x64"
-          ]
+          "arch": ["x64"]
         },
         {
           "target": "rpm",
-          "arch": [
-            "x64"
-          ]
+          "arch": ["x64"]
         }
       ]
     },
     "win": {
-      "target": [
-        "squirrel"
-      ]
+      "target": ["squirrel"]
     },
     "mac": {
       "category": "public.app-category.developer-tools",
@@ -174,9 +157,7 @@
     },
     "protocols": {
       "name": "ssh URL",
-      "schemes": [
-        "ssh"
-      ]
+      "schemes": ["ssh"]
     }
   },
   "license": "MIT",
@@ -198,7 +179,7 @@
     "npm-name": "3.1.0",
     "opn": "5.1.0",
     "ora": "1.3.0",
-    "parse-url": "^3.0.2",
+    "parse-url": "3.0.2",
     "php-escape-shell": "1.0.0",
     "pify": "3.0.0",
     "react": "16.2.0",
