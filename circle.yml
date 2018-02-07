@@ -6,7 +6,6 @@ machine:
 
 dependencies:
   pre:
-    - npm install -g yarn
     - yarn config set cache-folder ~/.yarn-cache
   cache_directories:
     - ~/.yarn-cache
