@@ -1,11 +1,9 @@
 import test from 'ava';
 const proxyquire = require('proxyquire').noCallThru();
 
-test("get() doesn't change window position when valid", t => {
+test('positionIsValid() returns true when window is on only screen', t => {
   const position = [50, 50];
-  const size = [100, 100];
   const windowUtils = proxyquire('../../app/utils/window-utils', {
-    '../config/windows': {},
     electron: {
       screen: {
         getAllDisplays: () => {
@@ -24,16 +22,14 @@ test("get() doesn't change window position when valid", t => {
     }
   });
 
-  const result = windowUtils.validateAndFixWindowPosition(position, size);
+  const result = windowUtils.positionIsValid(position);
 
-  t.is(result, position);
+  t.true(result);
 });
 
-test("get() doesn't change window position when on second screen", t => {
+test('positionIsValid() returns true when window is on second screen', t => {
   const position = [750, 50];
-  const size = [100, 100];
   const windowUtils = proxyquire('../../app/utils/window-utils', {
-    '../config/windows': {},
     electron: {
       screen: {
         getAllDisplays: () => {
@@ -60,12 +56,12 @@ test("get() doesn't change window position when on second screen", t => {
     }
   });
 
-  const result = windowUtils.validateAndFixWindowPosition(position, size);
+  const result = windowUtils.positionIsValid(position);
 
-  t.is(result, position);
+  t.true(result);
 });
 
-test('validateAndFixWindowPosition() uses default position when position isnt valid', t => {
+test('positionIsValid() returns false when position isnt valid', t => {
   const primaryDisplay = {
     workArea: {
       x: 0,
@@ -75,9 +71,7 @@ test('validateAndFixWindowPosition() uses default position when position isnt va
     }
   };
   const position = [600, 50];
-  const size = [100, 100];
-  const mockConfig = {
-    'electron-config': function ctor() {},
+  const windowUtils = proxyquire('../../app/utils/window-utils', {
     electron: {
       screen: {
         getAllDisplays: () => {
@@ -86,11 +80,9 @@ test('validateAndFixWindowPosition() uses default position when position isnt va
         getPrimaryDisplay: () => primaryDisplay
       }
     }
-  };
-  const {defaults} = proxyquire('../../app/config/windows', mockConfig);
-  const windowUtils = proxyquire('../../app/utils/window-utils', mockConfig);
+  });
 
-  const result = windowUtils.validateAndFixWindowPosition(position, size);
+  const result = windowUtils.positionIsValid(position);
 
-  t.deepEqual(result, defaults.windowPosition);
+  t.false(result);
 });

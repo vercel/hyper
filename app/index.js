@@ -154,7 +154,9 @@ app.on('ready', () =>
           }
         }
 
-        [startX, startY] = windowUtils.validateAndFixWindowPosition([startX, startY], [width, height]);
+        if (!windowUtils.positionIsValid([startX, startY])) {
+          [startX, startY] = config.windowDefaults.windowPosition;
+        }
 
         const hwin = new Window({width, height, x: startX, y: startY}, cfg, fn);
         windowSet.add(hwin);
