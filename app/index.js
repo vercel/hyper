@@ -62,6 +62,7 @@ const config = require('./config');
 config.setup();
 
 const plugins = require('./plugins');
+const {addSymlink, addBinToUserPath} = require('./utils/cli-install');
 const AppMenu = require('./menus/menu');
 const Window = require('./ui/window');
 const windowUtils = require('./utils/window-utils');
@@ -97,6 +98,13 @@ if (isDev) {
 } else {
   //eslint-disable-next-line no-console
   console.log('running in prod mode');
+  if (process.platform === 'win32') {
+    //eslint-disable-next-line no-console
+    addBinToUserPath().catch(err => console.error('Failed to add Hyper CLI path to user PATH', err));
+  } else {
+    //eslint-disable-next-line no-console
+    addSymlink().catch(err => console.error('Failed to symlink Hyper CLI', err));
+  }
 }
 
 const url = 'file://' + resolve(isDev ? __dirname : app.getAppPath(), 'index.html');

@@ -17,6 +17,9 @@ module.exports = {
     // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
     cursorColor: 'rgba(248,28,229,0.8)',
 
+    // terminal text color under BLOCK cursor
+    cursorAccentColor: '#000',
+
     // `'BEAM'` for |, `'UNDERLINE'` for _, `'BLOCK'` for █
     cursorShape: 'BLOCK',
 
@@ -27,7 +30,11 @@ module.exports = {
     foregroundColor: '#fff',
 
     // terminal background color
+    // opacity is only supported on macOS
     backgroundColor: '#000',
+
+    // terminal selection color
+    selectionColor: 'rgba(248,28,229,0.3)',
 
     // border color (window, tabs)
     borderColor: '#333',
