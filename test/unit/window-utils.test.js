@@ -4,17 +4,8 @@ const proxyquire = require('proxyquire').noCallThru();
 test("get() doesn't change window position when valid", t => {
   const position = [50, 50];
   const size = [100, 100];
-  const windowConfig = proxyquire('../../app/config/windows', {
-    'electron-config': function ctor() {
-      this.get = key => {
-        switch (key) {
-          case 'windowPosition':
-            return position;
-          case 'windowSize':
-            return size;
-        }
-      };
-    },
+  const windowUtils = proxyquire('../../app/utils/window-utils', {
+    '../config/windows': {},
     electron: {
       screen: {
         getAllDisplays: () => {
@@ -33,26 +24,16 @@ test("get() doesn't change window position when valid", t => {
     }
   });
 
-  const result = windowConfig.get();
+  const result = windowUtils.validateAndFixWindowPosition(position, size);
 
-  t.is(result.position, position);
-  t.is(result.size, size);
+  t.is(result, position);
 });
 
 test("get() doesn't change window position when on second screen", t => {
   const position = [750, 50];
   const size = [100, 100];
-  const windowConfig = proxyquire('../../app/config/windows', {
-    'electron-config': function ctor() {
-      this.get = key => {
-        switch (key) {
-          case 'windowPosition':
-            return position;
-          case 'windowSize':
-            return size;
-        }
-      };
-    },
+  const windowUtils = proxyquire('../../app/utils/window-utils', {
+    '../config/windows': {},
     electron: {
       screen: {
         getAllDisplays: () => {
@@ -79,13 +60,12 @@ test("get() doesn't change window position when on second screen", t => {
     }
   });
 
-  const result = windowConfig.get();
+  const result = windowUtils.validateAndFixWindowPosition(position, size);
 
-  t.is(result.position, position);
-  t.is(result.size, size);
+  t.is(result, position);
 });
 
-test('validateAndFixWindowPosition() centers on primary display when position isnt valid', t => {
+test('validateAndFixWindowPosition() uses default position when position isnt valid', t => {
   const primaryDisplay = {
     workArea: {
       x: 0,
@@ -96,18 +76,8 @@ test('validateAndFixWindowPosition() centers on primary display when position is
   };
   const position = [600, 50];
   const size = [100, 100];
-  const windowConfig = proxyquire('../../app/config/windows', {
-    'electron-config': function ctor() {
-      this.get = key => {
-        switch (key) {
-          case 'windowPosition':
-            return position;
-          case 'windowSize':
-            return size;
-        }
-      };
-      this.set = () => {};
-    },
+  const mockConfig = {
+    'electron-config': function ctor() {},
     electron: {
       screen: {
         getAllDisplays: () => {
@@ -116,10 +86,11 @@ test('validateAndFixWindowPosition() centers on primary display when position is
         getPrimaryDisplay: () => primaryDisplay
       }
     }
-  });
+  };
+  const {defaults} = proxyquire('../../app/config/windows', mockConfig);
+  const windowUtils = proxyquire('../../app/utils/window-utils', mockConfig);
 
-  const result = windowConfig.get();
+  const result = windowUtils.validateAndFixWindowPosition(position, size);
 
-  t.deepEqual(result.position, [200, 200]);
-  t.is(result.size, size);
+  t.deepEqual(result, defaults.windowPosition);
 });

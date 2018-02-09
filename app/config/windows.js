@@ -1,36 +1,19 @@
-const electron = require('electron');
 const Config = require('electron-config');
 
+const defaults = {
+  windowPosition: [50, 50],
+  windowSize: [540, 380]
+};
+
 // local storage
-const cfg = new Config({
-  defaults: {
-    windowPosition: [50, 50],
-    windowSize: [540, 380]
-  }
-});
-
-function validateAndFixWindowPosition(position, size) {
-  const displays = electron.screen.getAllDisplays();
-  const [x, y] = position;
-  const positionIsValid = displays.some(({workArea}) => {
-    return x >= workArea.x && x <= workArea.x + workArea.width && y >= workArea.y && y <= workArea.y + workArea.height;
-  });
-
-  if (!positionIsValid) {
-    const {workArea} = electron.screen.getPrimaryDisplay();
-    position[0] = workArea.x + (workArea.width - size[0]) / 2;
-    position[1] = workArea.y + (workArea.height - size[1]) / 2;
-    cfg.set('windowPosition', position);
-  }
-
-  return {position, size};
-}
+const cfg = new Config({defaults});
 
 module.exports = {
+  defaults,
   get() {
     const position = cfg.get('windowPosition');
     const size = cfg.get('windowSize');
-    return validateAndFixWindowPosition(position, size);
+    return {position, size};
   },
   recordState(win) {
     cfg.set('windowPosition', win.getPosition());

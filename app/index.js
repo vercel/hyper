@@ -62,10 +62,9 @@ const config = require('./config');
 config.setup();
 
 const plugins = require('./plugins');
-
 const AppMenu = require('./menus/menu');
-
 const Window = require('./ui/window');
+const windowUtils = require('./utils/window-utils');
 
 const windowSet = new Set([]);
 
@@ -146,6 +145,8 @@ app.on('ready', () =>
             startY = points[1] + 34;
           }
         }
+
+        [startX, startY] = windowUtils.validateAndFixWindowPosition([startX, startY], [width, height]);
 
         const hwin = new Window({width, height, x: startX, y: startY}, cfg, fn);
         windowSet.add(hwin);
