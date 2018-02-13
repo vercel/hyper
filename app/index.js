@@ -183,6 +183,17 @@ app.on('ready', () =>
       // expose to plugins
       app.createWindow = createWindow;
 
+      // check if should be set/removed as default ssh protocol client
+      if (config.getConfig().defaultSSHApp && !app.isDefaultProtocolClient('ssh')) {
+        //eslint-disable-next-line no-console
+        console.log('Setting Hyper as default client for ssh:// protocol');
+        app.setAsDefaultProtocolClient('ssh');
+      } else if (!config.getConfig().defaultSSHApp && app.isDefaultProtocolClient('ssh')) {
+        //eslint-disable-next-line no-console
+        console.log('Removing Hyper from default client for ssh:// protocl');
+        app.removeAsDefaultProtocolClient('ssh');
+      }
+
       // mac only. when the dock icon is clicked
       // and we don't have any active windows open,
       // we open one
@@ -225,6 +236,20 @@ app.on('ready', () =>
 app.on('open-file', (event, path) => {
   const lastWindow = app.getLastFocusedWindow();
   const callback = win => win.rpc.emit('open file', {path});
+  if (lastWindow) {
+    callback(lastWindow);
+  } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
+    app.createWindow(callback);
+  } else {
+    // If createWindow doesn't exist yet ('ready' event was not fired),
+    // sets his callback to an app.windowCallback property.
+    app.windowCallback = callback;
+  }
+});
+
+app.on('open-url', (event, sshUrl) => {
+  const lastWindow = app.getLastFocusedWindow();
+  const callback = win => win.rpc.emit('open ssh', sshUrl);
   if (lastWindow) {
     callback(lastWindow);
   } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
