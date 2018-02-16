@@ -6,6 +6,7 @@
 [![Slack Channel](http://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
 [![Changelog #213](https://img.shields.io/badge/changelog-%23213-lightgrey.svg)](https://changelog.com/213)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
+[![Open Source Helpers](https://www.codetriage.com/zeit/hyper/badges/users.svg)](https://www.codetriage.com/zeit/hyper)
 
 For more details, head to: https://hyper.is
 
