@@ -1,6 +1,7 @@
 const vm = require('vm');
 const notify = require('../notify');
 const mapKeys = require('../utils/map-keys');
+const platformSpecific = require('./platform-specific');
 
 const _extract = function(script) {
   const module = {};
@@ -39,6 +40,10 @@ const _init = function(cfg) {
     // Ignore undefined values in plugin and localPlugins array Issue #1862
     _cfg.plugins = (_cfg.plugins && _cfg.plugins.filter(Boolean)) || [];
     _cfg.localPlugins = (_cfg.localPlugins && _cfg.localPlugins.filter(Boolean)) || [];
+
+    // Extract platform specific config values
+    _cfg.config = platformSpecific(_cfg.config);
+
     return _cfg;
   }
   return cfg.defaultCfg;
