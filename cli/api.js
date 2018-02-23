@@ -64,18 +64,11 @@ function save() {
 
 function existsOnNpm(plugin) {
   const name = plugin.split('#')[0].split('@')[0];
-  return got
-    .get(registryUrl + name.toLowerCase(), {timeout: 10000, json: true})
-    .then(res => {
-      if (!res.body.versions) {
-        throw new Error();
-      }
-    })
-    .catch(() => {
-      const err = new Error(`${plugin} not found on npm`);
-      err.code = 'NOT_FOUND_ON_NPM';
-      throw err;
-    });
+  return got.get(registryUrl + name.toLowerCase(), {timeout: 10000, json: true}).then(res => {
+    if (!res.body.versions) {
+      return Promise.reject(res);
+    }
+  });
 }
 
 function install(plugin, locally) {
@@ -93,11 +86,11 @@ function install(plugin, locally) {
           .catch(err => reject(err));
       })
       .catch(err => {
-        if (err.code === 'NOT_FOUND_ON_NPM') {
-          reject(err.message);
-        } else {
-          reject(err);
+        const {statusCode} = err;
+        if (statusCode && (statusCode === 404 || statusCode === 200)) {
+          return reject(`${plugin} not found on npm`);
         }
+        return reject(`Plugin check failed. Check your internet connection or retry later.`);
       });
   });
 }
