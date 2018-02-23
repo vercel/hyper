@@ -98,13 +98,17 @@ module.exports = {
     //
     // PowerShell on Windows
     // - Example: `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
+    //
+    // supports platform specific configuration: shell.windows|linux|osx: ''
     shell: '',
 
     // for setting shell arguments (i.e. for using interactive shellArgs: `['-i']`)
     // by default `['--login']` will be used
+    // supports platform specific configuration: shellArgs.windows|linux|osx: []
     shellArgs: ['--login'],
 
     // for environment variables
+    // supports platform specific configuration: env.windows|linux|osx:{}
     env: {},
 
     // set to `false` for no bell

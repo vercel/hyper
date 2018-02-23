@@ -268,7 +268,7 @@
               <td>A list of overrides for the color palette. The names of the keys represent the "ANSI 16", which can all be seen <a href="https://github.com/zeit/hyper/blob/aaed99abac97a3d6b1766f194522a69e8a994bcb/lib/utils/colors.js">in the default config</a>.</td>
             </tr>
             <tr>
-              <td>"shell"</td>
+              <td>"shell" <sup>1</sup></td>
               <td>""</td>
               <td>A path to a custom shell to run when Hyper starts a new session</td>
             </tr>
@@ -330,7 +330,10 @@
             </tr>
           </tbody>
         </table>
-        <span class="table-note"></span>
+
+        <span class="table-note">
+          <sup>1</sup> Supports platform specific configuration for windows, linux and osx: <code>shell.windows = 'powershell.exe'</code>. Options inc
+        </span>
 
         <h2 id="extensions-api"><a href="#extensions-api">Extensions API</a></h2>
 
