@@ -36,7 +36,7 @@ const commands = {
     updatePlugins();
   },
   'window:reload': focusedWindow => {
-    focusedWindow && focusedWindow.rpc.emit('reload');
+    focusedWindow && focusedWindow.rpc.emit('session clear req');
   },
   'window:reloadFull': focusedWindow => {
     focusedWindow && focusedWindow.reload();
