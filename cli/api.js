@@ -90,7 +90,7 @@ function install(plugin, locally) {
         if (statusCode && (statusCode === 404 || statusCode === 200)) {
           return reject(`${plugin} not found on npm`);
         }
-        return reject(`Plugin check failed. Check your internet connection or retry later.`);
+        return reject(`${err.message}\nPlugin check failed. Check your internet connection or retry later.`);
       });
   });
 }
