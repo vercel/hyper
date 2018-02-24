@@ -7,7 +7,7 @@
     "dev": "webpack -w",
     "build": "cross-env NODE_ENV=production webpack",
     "lint": "eslint .",
-    "test": "yarn run lint",
+    "test": "yarn run lint && yarn run test:unit",
     "test:unit": "ava test/unit",
     "test:unit:watch": "yarn run test:unit -- --watch",
     "prepush": "yarn test",
