@@ -66,7 +66,10 @@ const config = require('./config')
 // set up config
 config.setup()
 
-const plugins = require('./plugins')
+
+const plugins = require('./plugins');
+const {addSymlink, addBinToUserPath} = require('./utils/cli-install');
+
 
 const AppMenu = require('./menus/menu')
 
@@ -102,7 +105,14 @@ if (isDev) {
   })
 } else {
   //eslint-disable-next-line no-console
-  console.log('running in prod mode')
+  console.log('running in prod mode');
+  if (process.platform === 'win32') {
+    //eslint-disable-next-line no-console
+    addBinToUserPath().catch(err => console.error('Failed to add Hyper CLI path to user PATH', err));
+  } else {
+    //eslint-disable-next-line no-console
+    addSymlink().catch(err => console.error('Failed to symlink Hyper CLI', err));
+  }
 }
 
 const url =
@@ -187,6 +197,17 @@ app.on('ready', () =>
       // expose to plugins
       app.createWindow = createWindow
 
+      // check if should be set/removed as default ssh protocol client
+      if (config.getConfig().defaultSSHApp && !app.isDefaultProtocolClient('ssh')) {
+        //eslint-disable-next-line no-console
+        console.log('Setting Hyper as default client for ssh:// protocol');
+        app.setAsDefaultProtocolClient('ssh');
+      } else if (!config.getConfig().defaultSSHApp && app.isDefaultProtocolClient('ssh')) {
+        //eslint-disable-next-line no-console
+        console.log('Removing Hyper from default client for ssh:// protocl');
+        app.removeAsDefaultProtocolClient('ssh');
+      }
+
       // mac only. when the dock icon is clicked
       // and we don't have any active windows open,
       // we open one
@@ -241,6 +262,20 @@ app.on('open-file', (event, path) => {
     app.windowCallback = callback
   }
 })
+
+app.on('open-url', (event, sshUrl) => {
+  const lastWindow = app.getLastFocusedWindow();
+  const callback = win => win.rpc.emit('open ssh', sshUrl);
+  if (lastWindow) {
+    callback(lastWindow);
+  } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
+    app.createWindow(callback);
+  } else {
+    // If createWindow doesn't exist yet ('ready' event was not fired),
+    // sets his callback to an app.windowCallback property.
+    app.windowCallback = callback;
+  }
+});
 
 function installDevExtensions(isDev_) {
   if (!isDev_) {

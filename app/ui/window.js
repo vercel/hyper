@@ -61,6 +61,7 @@ module.exports = class Window {
 
     rpc.on('init', () => {
       window.show();
+      updateBackgroundColor();
 
       // If no callback is passed to createWindow,
       // a new session will be created by default.
