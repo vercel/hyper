@@ -50,7 +50,7 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
   const menu = [
     ...(process.platform === 'darwin' ? [darwinMenu(commandKeys, execCommand, showAbout)] : []),
     shellMenu(commandKeys, execCommand),
-    editMenu(commandKeys, execCommand),
+    editMenu(commandKeys, execCommand, updateChannel),
     viewMenu(commandKeys, execCommand),
     pluginsMenu(commandKeys, execCommand),
     windowMenu(commandKeys, execCommand),

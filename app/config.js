@@ -4,6 +4,7 @@ const {_import, getDefaultConfig} = require('./config/import');
 const _openConfig = require('./config/open');
 const win = require('./config/windows');
 const {cfgPath, cfgDir} = require('./config/paths');
+const {toggleUpdateChannel} = require('./config/edit');
 
 const watchers = [];
 let cfg = {};
@@ -63,6 +64,10 @@ exports.getConfig = () => {
 
 exports.openConfig = () => {
   return _openConfig();
+};
+
+exports.toggleUpdateChannel = () => {
+  return toggleUpdateChannel();
 };
 
 exports.getPlugins = () => {

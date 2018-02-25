@@ -1,4 +1,4 @@
-module.exports = (commandKeys, execCommand) => {
+module.exports = (commandKeys, execCommand, updateChannel) => {
   const submenu = [
     {
       label: 'Undo',
@@ -118,6 +118,14 @@ module.exports = (commandKeys, execCommand) => {
   if (process.platform !== 'darwin') {
     submenu.push(
       {type: 'separator'},
+      {
+        label: 'Use Canary Version',
+        type: 'checkbox',
+        checked: updateChannel === 'canary',
+        click() {
+          execCommand('prefs:toggleUpdateChannel');
+        }
+      },
       {
         label: 'Preferences...',
         accelerator: commandKeys['window:preferences'],
