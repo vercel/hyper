@@ -16,6 +16,8 @@ function toggleUpdateChannel() {
       .find(property => property.key.name === 'config')
       .value.properties.find(property => property.key.name === 'updateChannel').value.value;
   } catch (err) {
+    //eslint-disable-next-line no-console
+    console.error("Can't read the config file: ", err);
     return;
   }
 
@@ -27,7 +29,14 @@ function toggleUpdateChannel() {
 
   // write to the config file
   const output = recast.print(configFile).code;
-  fs.writeFileSync(cfgPath, output, 'utf8');
+
+  try {
+    fs.writeFileSync(cfgPath, output, 'utf8');
+  } catch (err) {
+    //eslint-disable-next-line no-console
+    console.error("Can't write to the config file: ", err);
+    return;
+  }
 }
 
 function getFileContents(fileName) {
