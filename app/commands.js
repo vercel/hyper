@@ -1,5 +1,5 @@
 const {app} = require('electron');
-const {openConfig} = require('./config');
+const {openConfig, toggleUpdateChannel} = require('./config');
 const {updatePlugins} = require('./plugins');
 
 const commands = {
@@ -25,6 +25,9 @@ const commands = {
   },
   'window:preferences': () => {
     openConfig();
+  },
+  'prefs:toggleUpdateChannel': () => {
+    toggleUpdateChannel();
   },
   'editor:clearBuffer': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('session clear req');
