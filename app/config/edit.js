@@ -3,27 +3,27 @@ const fs = require('fs');
 const recast = require('recast');
 
 function toggleUpdateChannel() {
-  // Get the config file using recast
-  const configFile = recast.parse(getFileContents(cfgPath));
+  let updateChannel = '';
+  let configFile = '';
 
   // Search the config file for the property with the name 'updateChannel'
   try {
     // Get the config file using recast
-    const configFile = recast.parse(getFileContents(cfgPath));
+    configFile = recast.parse(getFileContents(cfgPath));
 
     // Search the config file for the property with the name 'updateChannel'
-    const updateChannel = configFile.program.body[0].expression.right.properties
+    updateChannel = configFile.program.body[0].expression.right.properties
       .find(property => property.key.name === 'config')
       .value.properties.find(property => property.key.name === 'updateChannel').value.value;
   } catch (err) {
-      return;
+    return;
   }
 
   // select the new value for update channel
   updateChannel = updateChannel === 'canary' ? 'stable' : 'canary';
   configFile.program.body[0].expression.right.properties
-    .find(property => property.key.name === 'config').value.properties
-    .find(property => property.key.name === 'updateChannel').value.value = updateChannel;
+    .find(property => property.key.name === 'config')
+    .value.properties.find(property => property.key.name === 'updateChannel').value.value = updateChannel;
 
   // write to the config file
   const output = recast.print(configFile).code;
