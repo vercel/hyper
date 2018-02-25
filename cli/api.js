@@ -1,6 +1,7 @@
 const fs = require('fs');
 const os = require('os');
-const npmName = require('npm-name');
+const got = require('got');
+const registryUrl = require('registry-url')();
 const pify = require('pify');
 const recast = require('recast');
 
@@ -62,12 +63,10 @@ function save() {
 }
 
 function existsOnNpm(plugin) {
-  plugin = plugin.split('#')[0].split('@')[0];
-  return npmName(plugin).then(unavailable => {
-    if (unavailable) {
-      const err = new Error(`${plugin} not found on npm`);
-      err.code = 'NOT_FOUND_ON_NPM';
-      throw err;
+  const name = plugin.split('#')[0].split('@')[0];
+  return got.get(registryUrl + name.toLowerCase(), {timeout: 10000, json: true}).then(res => {
+    if (!res.body.versions) {
+      return Promise.reject(res);
     }
   });
 }
@@ -87,11 +86,11 @@ function install(plugin, locally) {
           .catch(err => reject(err));
       })
       .catch(err => {
-        if (err.code === 'NOT_FOUND_ON_NPM') {
-          reject(err.message);
-        } else {
-          reject(err);
+        const {statusCode} = err;
+        if (statusCode && (statusCode === 404 || statusCode === 200)) {
+          return reject(`${plugin} not found on npm`);
         }
+        return reject(`${err.message}\nPlugin check failed. Check your internet connection or retry later.`);
       });
   });
 }
