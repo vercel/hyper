@@ -2,14 +2,14 @@
 
 ## Workflow
 
-### Run Hyper on dev mode
-On dev mode (built and launched from source after cloning repository), you'll get more ouput and React/Redux dev-tools in Electron.
+### Run Hyper in dev mode
+In dev mode (built and launched from source after cloning repository), you'll get more ouput and React/Redux dev-tools in Electron.
 Prerequisites and steps are discribed in [Contributing section of our README](https://github.com/zeit/hyper#contribute).
 Be sure to use canary branch.
 
 ### Create a dev config file
 Copy your config file `.hyper.js` in your cloned repository. Hyper in dev mode will use this one. That means that you can continue to use installed Hyper with your day-to-day config.
-After a first run, Hyper on dev mode will have created a new `.hyper_plugins` directory in your repository directory.
+After a first run, Hyper in dev mode will have created a new `.hyper_plugins` directory in your repository directory.
 
 ### Setup your plugin
 Go to your recently created `<repository_root>/.hyper_plugins/local` directory and create/clone your plugin repo or better on macOS/Linux: add a symlink to your plugin directory.
@@ -29,7 +29,7 @@ module.exports = {
 ### Running your plugin
 To be loaded, your plugin should expose at least one API method. All possible methods are listed [here]( https://github.com/zeit/hyper/blob/canary/app/plugins/extensions.js).
 
-After launching Hyper on dev mode `yarn run app`, it will be logged that your plugin has been correcty loaded: `Plugin hyper-awesome-plugin (0.1.0) loaded.`. Name and version printed are the ones in your plugin `package.json` file.
+After launching Hyper in dev mode `yarn run app`, it will be logged that your plugin has been correcty loaded: `Plugin hyper-awesome-plugin (0.1.0) loaded.`. Name and version printed are the ones in your plugin `package.json` file.
 
 When you put a `console.log()` in your plugin code, it will be displayed in Electron dev-tools only if it is located in a renderer method, like component decorators. If it is located in Electron main process method, like `onApp` handler, it will be displayed in your terminal where you made your `yarn run app` or in your VSCode console.
 
