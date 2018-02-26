@@ -4,7 +4,7 @@ const mapKeys = require('../utils/map-keys');
 
 const _extract = function(script) {
   const module = {};
-  script.runInNewContext({module});
+  script.runInNewContext({module, process});
   if (!module.exports) {
     throw new Error('Error reading configuration: `module.exports` not set');
   }
