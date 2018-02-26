@@ -3,7 +3,10 @@
 ## Workflow
 
 ### Run Hyper in dev mode
-In dev mode (built and launched from source after cloning repository), you'll get more ouput and React/Redux dev-tools in Electron.
+Hyper can be run in dev mode by cloning the repository and following the [Contributing section of our README](https://github.com/zeit/hyper#contribute).
+
+In dev mode you'll get more ouput and React/Redux dev-tools in Electron.
+
 Prerequisites and steps are discribed in [Contributing section of our README](https://github.com/zeit/hyper#contribute).
 Be sure to use canary branch.
 
