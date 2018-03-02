@@ -63,10 +63,9 @@ config.setup();
 
 const plugins = require('./plugins');
 const {addSymlink, addBinToUserPath} = require('./utils/cli-install');
-
 const AppMenu = require('./menus/menu');
-
 const Window = require('./ui/window');
+const windowUtils = require('./utils/window-utils');
 
 const windowSet = new Set([]);
 
@@ -153,6 +152,10 @@ app.on('ready', () =>
           } else {
             startY = points[1] + 34;
           }
+        }
+
+        if (!windowUtils.positionIsValid([startX, startY])) {
+          [startX, startY] = config.windowDefaults.windowPosition;
         }
 
         const hwin = new Window({width, height, x: startX, y: startY}, cfg, fn);

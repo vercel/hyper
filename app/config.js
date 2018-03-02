@@ -84,6 +84,7 @@ exports.setup = () => {
 
 exports.getWin = win.get;
 exports.winRecord = win.recordState;
+exports.windowDefaults = win.defaults;
 
 const getDeprecatedCSS = function(config) {
   const deprecated = [];
