@@ -154,10 +154,7 @@ app.on('ready', () =>
           }
         }
 
-        // We need to test if new window center will be visible
-        const centerX = startX + width / 2;
-        const centerY = startY + height / 2;
-        if (!windowUtils.positionIsValid([centerX, centerY])) {
+        if (!windowUtils.positionIsValid([startX, startY])) {
           [startX, startY] = config.windowDefaults.windowPosition;
         }
 
