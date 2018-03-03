@@ -24,6 +24,7 @@ const _watch = function() {
     }, 100);
   };
 
+  // Windows
   if (process.platform === 'win32') {
     // watch for changes on config every 2s on Windows
     // https://github.com/zeit/hyper/pull/1772
@@ -35,8 +36,24 @@ const _watch = function() {
         onChange();
       }
     });
-  } else {
-    _watcher = fs.watch(cfgPath);
+    return;
+  }
+  // macOS/Linux
+  setWatcher();
+  function setWatcher() {
+    try {
+      _watcher = fs.watch(cfgPath, eventType => {
+        if (eventType === 'rename') {
+          _watcher.close();
+          // Ensure that new file has been written
+          setTimeout(() => setWatcher(), 500);
+        }
+      });
+    } catch (e) {
+      //eslint-disable-next-line no-console
+      console.error('Failed to watch config file:', cfgPath, e);
+      return;
+    }
     _watcher.on('change', onChange);
     _watcher.on('error', error => {
       //eslint-disable-next-line no-console
