@@ -41,13 +41,19 @@ const _watch = function() {
   // macOS/Linux
   setWatcher();
   function setWatcher() {
-    _watcher = fs.watch(cfgPath, eventType => {
-      if (eventType === 'rename') {
-        _watcher.close();
-        // Ensure that new file has been written
-        setTimeout(() => setWatcher(), 500);
-      }
-    });
+    try {
+      _watcher = fs.watch(cfgPath, eventType => {
+        if (eventType === 'rename') {
+          _watcher.close();
+          // Ensure that new file has been written
+          setTimeout(() => setWatcher(), 500);
+        }
+      });
+    } catch (e) {
+      //eslint-disable-next-line no-console
+      console.error('Failed to watch config file:', cfgPath, e);
+      return;
+    }
     _watcher.on('change', onChange);
     _watcher.on('error', error => {
       //eslint-disable-next-line no-console
