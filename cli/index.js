@@ -18,7 +18,7 @@ let commandPromise;
 
 const assertPluginName = pluginName => {
   if (!pluginName) {
-    console.error(chalk.red("Plugin name is required"));
+    console.error(chalk.red('Plugin name is required'));
     process.exit(1);
   }
 };
