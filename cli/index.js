@@ -16,6 +16,13 @@ const PLUGIN_PREFIX = 'hyper-';
 
 let commandPromise;
 
+const assertPluginName = pluginName => {
+  if (!pluginName) {
+    console.error(chalk.red('Plugin name is required'));
+    process.exit(1);
+  }
+};
+
 const getPluginName = arg => {
   if (arg.indexOf(PLUGIN_PREFIX) !== 0) {
     return `${PLUGIN_PREFIX}${arg}`;
@@ -35,6 +42,7 @@ const checkConfig = () => {
 
 args.command(['i', 'install'], 'Install a plugin', (name, args_) => {
   checkConfig();
+  assertPluginName(args_[0]);
   const plugin = getPluginName(args_[0]);
   commandPromise = api
     .install(plugin)
@@ -44,6 +52,7 @@ args.command(['i', 'install'], 'Install a plugin', (name, args_) => {
 
 args.command(['u', 'uninstall', 'rm', 'remove'], 'Uninstall a plugin', (name, args_) => {
   checkConfig();
+  assertPluginName(args_[0]);
   const plugin = getPluginName(args_[0]);
   commandPromise = api
     .uninstall(plugin)
@@ -125,6 +134,7 @@ args.command(['lsr', 'list-remote', 'ls-remote'], 'List plugins available on npm
 });
 
 args.command(['d', 'docs', 'h', 'home'], 'Open the npm page of a plugin', (name, args_) => {
+  assertPluginName(args_[0]);
   const plugin = getPluginName(args_[0]);
   opn(`http://ghub.io/${plugin}`, {wait: false});
   process.exit(0);
