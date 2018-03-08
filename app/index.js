@@ -195,7 +195,7 @@ app.on('ready', () =>
           app.removeAsDefaultProtocolClient('ssh');
         }
       }
-      
+
       // mac only. when the dock icon is clicked
       // and we don't have any active windows open,
       // we open one
