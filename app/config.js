@@ -145,8 +145,8 @@ exports.htermConfigTranslate = config => {
   Object.keys(cssReplacements).forEach(pattern => {
     const searchvalue = new RegExp(pattern, 'g');
     const newvalue = cssReplacements[pattern];
-    config.css = config.css.replace(searchvalue, newvalue);
-    config.termCSS = config.termCSS.replace(searchvalue, newvalue);
+    config.css = config.css && config.css.replace(searchvalue, newvalue);
+    config.termCSS = config.termCSS && config.termCSS.replace(searchvalue, newvalue);
   });
   return config;
 };
