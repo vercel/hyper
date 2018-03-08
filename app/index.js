@@ -183,17 +183,19 @@ app.on('ready', () =>
       // expose to plugins
       app.createWindow = createWindow;
 
-      // check if should be set/removed as default ssh protocol client
-      if (config.getConfig().defaultSSHApp && !app.isDefaultProtocolClient('ssh')) {
-        //eslint-disable-next-line no-console
-        console.log('Setting Hyper as default client for ssh:// protocol');
-        app.setAsDefaultProtocolClient('ssh');
-      } else if (!config.getConfig().defaultSSHApp && app.isDefaultProtocolClient('ssh')) {
-        //eslint-disable-next-line no-console
-        console.log('Removing Hyper from default client for ssh:// protocl');
-        app.removeAsDefaultProtocolClient('ssh');
+      if (!isDev) {
+        // check if should be set/removed as default ssh protocol client
+        if (config.getConfig().defaultSSHApp && !app.isDefaultProtocolClient('ssh')) {
+          //eslint-disable-next-line no-console
+          console.log('Setting Hyper as default client for ssh:// protocol');
+          app.setAsDefaultProtocolClient('ssh');
+        } else if (!config.getConfig().defaultSSHApp && app.isDefaultProtocolClient('ssh')) {
+          //eslint-disable-next-line no-console
+          console.log('Removing Hyper from default client for ssh:// protocl');
+          app.removeAsDefaultProtocolClient('ssh');
+        }
       }
-
+      
       // mac only. when the dock icon is clicked
       // and we don't have any active windows open,
       // we open one
