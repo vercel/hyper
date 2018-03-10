@@ -31,7 +31,7 @@ if (isDev) {
 const plugins = resolve(cfgDir, '.hyper_plugins');
 const plugs = {
   base: plugins,
-  local: resolve(plugins, 'local'),
+  local: process.env.LOCAL_PLUGINS_PATH || resolve(plugins, 'local'),
   cache: resolve(plugins, 'cache')
 };
 const yarn = resolve(__dirname, '../../bin/yarn-standalone.js');
