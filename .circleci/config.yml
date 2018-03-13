@@ -1,23 +1,88 @@
 version: 2
 jobs:
-  build:
-    environment:
-      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
-      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+  install:
     macos:
-      xcode: '9.0'
+      xcode: "9.2.0"
+    working_directory: ~/repo
     steps:
       - checkout
-      - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - restore_cache:
-          key:  yarn-cache-{{ checksum "yarn.lock" }}
-      - run: yarn --cache-folder ~/.yarn-cache
+          key: cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: Installing Dependencies
+          command: yarn --ignore-engines
       - save_cache:
-          key: yarn-cache-{{ checksum "yarn.lock" }}
+          key: cache-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.yarn-cache
-      - run: if [[ $CIRCLE_BRANCH == canary ]]; then cp build/canary.icns build/icon.icns; fi
-      - run: yarn test
-      - run: yarn run dist
+            - node_modules
+      - run:
+          name: Getting build icon
+          command: if [[ $CIRCLE_BRANCH == canary ]]; then cp build/canary.icns build/icon.icns; fi
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+
+  test:
+    macos:
+      xcode: "9.2.0"
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Testing
+          command: yarn test
+
+  build:
+    macos:
+      xcode: "9.2.0"
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Building
+          command: yarn dist --publish 'never'
       - store_artifacts:
-          path: dist
+          path: dist/*
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
+
+  release:
+    macos:
+      xcode: "9.2.0"
+    steps:
+      - checkout
+      - run:
+          name: Deploying to GitHub
+          command: yarn run dist
+
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - install
+      - build:
+          requires:
+            - install
+          filters:
+            branches:
+              only:
+                - master
+                - canary
+                - circleci-2
+      - test:
+          requires:
+            - build
+      - release:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
