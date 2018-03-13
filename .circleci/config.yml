@@ -45,7 +45,7 @@ jobs:
           name: Building
           command: yarn dist --publish 'never'
       - store_artifacts:
-          path: dist/*.zip
+          path: dist
       - persist_to_workspace:
           root: .
           paths:
