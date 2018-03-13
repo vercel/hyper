@@ -24,9 +24,6 @@ const assertPluginName = pluginName => {
 };
 
 const getPluginName = arg => {
-  if (arg.indexOf(PLUGIN_PREFIX) !== 0) {
-    return `${PLUGIN_PREFIX}${arg}`;
-  }
   return arg;
 };
 
