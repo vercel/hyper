@@ -74,7 +74,6 @@ workflows:
               only:
                 - master
                 - canary
-                - circleci-2
       - test:
           requires:
             - build
