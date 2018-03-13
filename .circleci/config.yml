@@ -45,7 +45,7 @@ jobs:
           name: Building
           command: yarn dist --publish 'never'
       - store_artifacts:
-          path: dist/*
+          path: dist/*.zip
       - persist_to_workspace:
           root: .
           paths:
@@ -58,7 +58,7 @@ jobs:
       - checkout
       - run:
           name: Deploying to GitHub
-          command: yarn run dist
+          command: yarn dist
 
 
 workflows:
