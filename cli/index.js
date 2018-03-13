@@ -23,10 +23,6 @@ const assertPluginName = pluginName => {
   }
 };
 
-const getPluginName = arg => {
-  return arg;
-};
-
 const checkConfig = () => {
   if (api.exists()) {
     return true;
@@ -40,7 +36,7 @@ const checkConfig = () => {
 args.command(['i', 'install'], 'Install a plugin', (name, args_) => {
   checkConfig();
   assertPluginName(args_[0]);
-  const plugin = getPluginName(args_[0]);
+  const plugin = args_[0];
   commandPromise = api
     .install(plugin)
     .then(() => console.log(chalk.green(`${plugin} installed successfully!`)))
@@ -50,7 +46,7 @@ args.command(['i', 'install'], 'Install a plugin', (name, args_) => {
 args.command(['u', 'uninstall', 'rm', 'remove'], 'Uninstall a plugin', (name, args_) => {
   checkConfig();
   assertPluginName(args_[0]);
-  const plugin = getPluginName(args_[0]);
+  const plugin = args_[0];
   commandPromise = api
     .uninstall(plugin)
     .then(() => console.log(chalk.green(`${plugin} uninstalled successfully!`)))
@@ -132,7 +128,7 @@ args.command(['lsr', 'list-remote', 'ls-remote'], 'List plugins available on npm
 
 args.command(['d', 'docs', 'h', 'home'], 'Open the npm page of a plugin', (name, args_) => {
   assertPluginName(args_[0]);
-  const plugin = getPluginName(args_[0]);
+  const plugin = args_[0];
   opn(`http://ghub.io/${plugin}`, {wait: false});
   process.exit(0);
 });
