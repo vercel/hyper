@@ -93,6 +93,9 @@
     "presets": [
       "react"
     ],
+    "plugins": [
+      "styled-jsx/babel"
+    ],
     "env": {
       "production": {
         "plugins": [
@@ -211,6 +214,7 @@
     "seamless-immutable": "7.1.2",
     "semver": "5.4.1",
     "shebang-loader": "0.0.1",
+    "styled-jsx": "2.2.6",
     "uuid": "3.1.0",
     "xterm": "chabou/xterm.js#b9dac85"
   },
