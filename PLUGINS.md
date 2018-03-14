@@ -11,7 +11,7 @@ Prerequisites and steps are described in the ["Contributing" section of our READ
 Be sure to use the `canary` branch.
 
 ### Create a dev config file
-Copy your config file `.hyper.js` to the root of your cloned repository. Hyper, in dev mode, will use this copid config file. That means that you can continue to use your main installation of Hyper with your day-to-day configuration.
+Copy your config file `.hyper.js` to the root of your cloned repository. Hyper, in dev mode, will use this copied config file. That means that you can continue to use your main installation of Hyper with your day-to-day configuration.
 After the first run, Hyper, in dev mode, will have created a new `.hyper_plugins` directory in your repository directory.
 
 ### Setup your plugin
