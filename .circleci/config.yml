@@ -65,7 +65,7 @@ workflows:
   version: 2
   build:
     jobs:
-      - install
+      - install:
           filters:
             tags:
               only: /.*/
