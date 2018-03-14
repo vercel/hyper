@@ -65,18 +65,26 @@ workflows:
   version: 2
   build:
     jobs:
-      - install
-      - build:
+      - install:
+          filters:
+            tags:
+              only: /.*/
+      - test:
           requires:
             - install
+          filters:
+            tags:
+              only: /.*/
+      - build:
+          requires:
+            - test
           filters:
             branches:
               only:
                 - master
                 - canary
-      - test:
-          requires:
-            - build
+            tags:
+              only: /.*/
       - release:
           requires:
             - test
