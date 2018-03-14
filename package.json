@@ -94,7 +94,7 @@
       "react"
     ],
     "plugins": [
-      "styled-jsx/babel"
+      ["styled-jsx/babel", {"vendorPrefixes": false}]
     ],
     "env": {
       "production": {
