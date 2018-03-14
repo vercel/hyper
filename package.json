@@ -94,7 +94,12 @@
       "react"
     ],
     "plugins": [
-      ["styled-jsx/babel", {"vendorPrefixes": false}]
+      [
+        "styled-jsx/babel",
+        {
+          "vendorPrefixes": false
+        }
+      ]
     ],
     "env": {
       "production": {
@@ -188,7 +193,6 @@
     "email": "team@zeit.co"
   },
   "dependencies": {
-    "aphrodite-simple": "0.4.1",
     "args": "3.0.8",
     "chalk": "2.3.0",
     "color": "2.0.1",
