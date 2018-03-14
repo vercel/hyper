@@ -15,7 +15,7 @@ Copy your config file `.hyper.js` to the root of your cloned repository. Hyper, 
 After the first run, Hyper, in dev mode, will have created a new `.hyper_plugins` directory in your repository directory.
 
 ### Setup your plugin
-Go to your recently created `<repository_root>/.hyper_plugins/local` directory and create/clone your plugin repo. And even better method on macOS/Linux is to add a symlink to your plugin directory.
+Go to your recently created `<repository_root>/.hyper_plugins/local` directory and create/clone your plugin repo. An even better method on macOS/Linux is to add a symlink to your plugin directory.
 
 Edit your dev config file, and add your plugin name (directory name in your `local` directory) in the `localPlugins` array.
 ```js
