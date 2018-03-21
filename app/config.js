@@ -4,6 +4,7 @@ const {_import, getDefaultConfig} = require('./config/import');
 const _openConfig = require('./config/open');
 const win = require('./config/windows');
 const {cfgPath, cfgDir} = require('./config/paths');
+const {getColorMap} = require('./utils/colors');
 
 const watchers = [];
 let cfg = {};
@@ -129,6 +130,7 @@ const checkDeprecatedConfig = function() {
 
 exports.fixConfigDefaults = decoratedConfig => {
   const defaultConfig = getDefaultConfig().config;
+  decoratedConfig.colors = getColorMap(decoratedConfig.colors) || {};
   // We must have default colors for xterm css.
   decoratedConfig.colors = Object.assign({}, defaultConfig.colors, decoratedConfig.colors);
   return decoratedConfig;
