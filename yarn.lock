@@ -6693,9 +6693,9 @@ xtend@~2.1.1:
   dependencies:
     object-keys "~0.4.0"
 
-xterm@chabou/xterm.js#b2e393f:
-  version "3.2.0-hyper.0"
-  resolved "https://codeload.github.com/chabou/xterm.js/tar.gz/b2e393f48029ff638d20d2ba6347d0829bd20c42"
+xterm@chabou/xterm.js#7c3a30f:
+  version "3.2.0"
+  resolved "https://codeload.github.com/chabou/xterm.js/tar.gz/7c3a30f23969423709f284820986335b277c63ad"
 
 y18n@^3.2.1:
   version "3.2.1"
