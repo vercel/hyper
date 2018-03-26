@@ -56,6 +56,8 @@ jobs:
       xcode: "9.2.0"
     steps:
       - checkout
+      - attach_workspace:
+          at: .
       - run:
           name: Deploying to GitHub
           command: yarn dist
