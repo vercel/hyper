@@ -86,7 +86,7 @@ workflows:
                 - master
                 - canary
             tags:
-              only: /.*/
+              ignore: /.*/
       - release:
           requires:
             - test
