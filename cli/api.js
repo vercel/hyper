@@ -5,8 +5,12 @@ const registryUrl = require('registry-url')();
 const pify = require('pify');
 const recast = require('recast');
 
-const fileName = process.env.NODE_ENV !== 'production' ? `${os.homedir()}/.hyper-dev.js` : `${os.homedir()}/.hyper.js`;
+const devConfigFileName = '../.hyper.js';
 
+let fileName =
+  process.env.NODE_ENV !== 'production' && fs.existsSync(devConfigFileName)
+    ? devConfigFileName
+    : `${os.homedir()}/.hyper.js`;
 /**
  * We need to make sure the file reading and parsing is lazy so that failure to
  * statically analyze the hyper configuration isn't fatal for all kinds of
@@ -42,16 +46,16 @@ const getProperties = memoize(() => getParsedFile().program.body[0].expression.r
 
 const getPlugins = memoize(() => getProperties().find(property => property.key.name === 'plugins').value.elements);
 
-const getLocalPlugins = memoize(
-  () => getProperties().find(property => property.key.name === 'localPlugins').value.elements
-);
+const getLocalPlugins = memoize(() => getProperties().find(property => property.key.name === 'localPlugins').value.elements);
 
 function exists() {
   return getFileContents() !== undefined;
 }
 
 function isInstalled(plugin, locally) {
-  const array = locally ? getLocalPlugins() : getPlugins();
+  const array = locally
+    ? getLocalPlugins()
+    : getPlugins();
   if (array && Array.isArray(array)) {
     return array.find(entry => entry.value === plugin) !== undefined;
   }
@@ -63,8 +67,13 @@ function save() {
 }
 
 function existsOnNpm(plugin) {
-  const name = plugin.split('#')[0].split('@')[0];
-  return got.get(registryUrl + name.toLowerCase(), {timeout: 10000, json: true}).then(res => {
+  const name = plugin
+    .split('#')[0]
+    .split('@')[0];
+  return got.get(registryUrl + name.toLowerCase(), {
+    timeout: 10000,
+    json: true
+  }).then(res => {
     if (!res.body.versions) {
       return Promise.reject(res);
     }
@@ -72,26 +81,26 @@ function existsOnNpm(plugin) {
 }
 
 function install(plugin, locally) {
-  const array = locally ? getLocalPlugins() : getPlugins();
+  const array = locally
+    ? getLocalPlugins()
+    : getPlugins();
   return new Promise((resolve, reject) => {
-    existsOnNpm(plugin)
-      .then(() => {
-        if (isInstalled(plugin, locally)) {
-          return reject(`${plugin} is already installed`);
-        }
+    existsOnNpm(plugin).then(() => {
+      if (isInstalled(plugin, locally)) {
+        return reject(`${plugin} is already installed`);
+      }
 
-        array.push(recast.types.builders.literal(plugin));
-        save()
-          .then(resolve)
-          .catch(err => reject(err));
-      })
-      .catch(err => {
-        const {statusCode} = err;
-        if (statusCode && (statusCode === 404 || statusCode === 200)) {
-          return reject(`${plugin} not found on npm`);
-        }
-        return reject(`${err.message}\nPlugin check failed. Check your internet connection or retry later.`);
-      });
+      array.push(recast.types.builders.literal(plugin));
+      save()
+        .then(resolve)
+        .catch(err => reject(err));
+    }).catch(err => {
+      const {statusCode} = err;
+      if (statusCode && (statusCode === 404 || statusCode === 200)) {
+        return reject(`${plugin} not found on npm`);
+      }
+      return reject(`${err.message}\nPlugin check failed. Check your internet connection or retry later.`);
+    });
   });
 }
 
