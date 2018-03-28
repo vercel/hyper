@@ -5,7 +5,7 @@ const registryUrl = require('registry-url')();
 const pify = require('pify');
 const recast = require('recast');
 
-const fileName = `${os.homedir()}/.hyper.js`;
+const fileName = process.env.NODE_ENV !== 'production' ? `${os.homedir()}/.hyper-dev.js` : `${os.homedir()}/.hyper.js`;
 
 /**
  * We need to make sure the file reading and parsing is lazy so that failure to
