@@ -4,9 +4,10 @@ const got = require('got');
 const registryUrl = require('registry-url')();
 const pify = require('pify');
 const recast = require('recast');
+const path = require('path');
 
-const devConfigFileName = '../.hyper.js';
-
+const devConfigFileName = path.join(__dirname, `../.hyper.js`);
+console.log(devConfigFileName);
 let fileName =
   process.env.NODE_ENV !== 'production' && fs.existsSync(devConfigFileName)
     ? devConfigFileName
