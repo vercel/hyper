@@ -7,7 +7,7 @@ const recast = require('recast');
 const path = require('path');
 
 const devConfigFileName = path.join(__dirname, `../.hyper.js`);
-console.log(devConfigFileName);
+
 let fileName =
   process.env.NODE_ENV !== 'production' && fs.existsSync(devConfigFileName)
     ? devConfigFileName
