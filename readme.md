@@ -12,20 +12,32 @@ For more details, head to: https://hyper.is
 
 [Download the latest release!](https://hyper.is/#installation)
 
-If you are on macOS, you can also use [Homebrew Cask](https://caskroom.github.io/) to download the app by running these commands:
+### Linux
+#### Arch and derivatives
+Hyper is available in the [AUR](https://aur.archlinux.org/packages/hyper/). Use an AUR package manager like [aurman](https://github.com/polygamma/aurman)
+
+```sh
+aurman -S hyper
+```
+
+### macOS
+
+Use [Homebrew Cask](https://caskroom.github.io/) to download the app by running these commands:
 
 ```bash
 brew update
 brew cask install hyper
 ```
 
-If you are on Windows, you can use [chocolatey](https://chocolatey.org/) to install the app by running the following command (package information can be found [here](https://chocolatey.org/packages/hyper/)):
+### Windows
+
+Use [chocolatey](https://chocolatey.org/) to install the app by running the following command (package information can be found [here](https://chocolatey.org/packages/hyper/)):
 
 ```bash
 choco install hyper
 ```
 
-**Note:** The version available on [Homebrew Cask](https://caskroom.github.io/) or [Chocolatey](https://chocolatey.org) may not be the latest. Please consider downloading it from [here](https://hyper.is/#installation) if that's the case.
+**Note:** The version available on [Homebrew Cask](https://caskroom.github.io/), [Chocolatey](https://chocolatey.org) or the [AUR](https://aur.archlinux.org) may not be the latest. Please consider downloading it from [here](https://hyper.is/#installation) if that's the case.
 
 ## Contribute
 
