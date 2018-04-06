@@ -2,7 +2,7 @@
   "name": "hyper",
   "productName": "Hyper",
   "description": "A terminal built on web technologies",
-  "version": "2.0.0-canary.15",
+  "version": "2.0.0-canary.16",
   "license": "MIT",
   "author": {
     "name": "ZEIT, Inc.",
