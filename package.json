@@ -149,7 +149,7 @@
     },
     "win": {
       "target": ["squirrel"],
-      "timeStampServer": "http://timestamp.globalsign.com/scripts/timstamp.dll"
+      "rfc3161TimeStampServer": "http://tsa.startssl.com/rfc3161"
     },
     "mac": {
       "category": "public.app-category.developer-tools",
