@@ -6,7 +6,11 @@ const isDev = require('electron-is-dev');
 
 const cfgFile = '.hyper.js';
 const defaultCfgFile = 'config-default.js';
-const homeDir = homedir();
+let homeDir = homedir();
+
+if (process.platform === 'win32') {
+  homeDir = resolve(homeDir, 'AppData\\Roaming\\Hyper');
+}
 
 let cfgPath = join(homeDir, cfgFile);
 let cfgDir = homeDir;
