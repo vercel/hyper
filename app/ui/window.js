@@ -4,32 +4,42 @@ const {parse: parseUrl} = require('url');
 const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
-const AutoUpdater = require('../auto-updater');
+const updater = require('../updater');
 const toElectronBackgroundColor = require('../utils/to-electron-background-color');
 const {icon, cfgDir} = require('../config/paths');
 const createRPC = require('../rpc');
 const notify = require('../notify');
 const fetchNotifications = require('../notifications');
 const Session = require('../session');
+const contextMenuTemplate = require('./contextmenu');
+const {execCommand} = require('../commands');
 
 module.exports = class Window {
-  constructor(options, cfg, fn) {
-    const opts = Object.assign({
-      minWidth: 370,
-      minHeight: 190,
-      backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
-      titleBarStyle: 'hidden-inset',
-      title: 'Hyper.app',
-      // we want to go frameless on windows and linux
-      frame: process.platform === 'darwin',
-      transparent: process.platform === 'darwin',
-      icon,
-      show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
-      acceptFirstMouse: true
-    }, options);
-    const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(opts));
+  constructor(options_, cfg, fn) {
+    const winOpts = Object.assign(
+      {
+        minWidth: 370,
+        minHeight: 190,
+        backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
+        titleBarStyle: 'hidden-inset',
+        title: 'Hyper.app',
+        // we want to go frameless on Windows and Linux
+        frame: process.platform === 'darwin',
+        transparent: process.platform === 'darwin',
+        icon,
+        show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
+        acceptFirstMouse: true
+      },
+      options_
+    );
+    const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(winOpts));
     const rpc = createRPC(window);
     const sessions = new Map();
+
+    const updateBackgroundColor = () => {
+      const cfg_ = app.plugins.getDecoratedConfig();
+      window.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
+    };
 
     // config changes
     const cfgUnsubscribe = app.config.subscribe(() => {
@@ -39,21 +49,19 @@ module.exports = class Window {
       window.webContents.send('config change');
 
       // notify user that shell changes require new sessions
-      if (cfg_.shell !== cfg.shell ||
-        JSON.stringify(cfg_.shellArgs) !== JSON.stringify(cfg.shellArgs)) {
-        notify(
-          'Shell configuration changed!',
-          'Open a new tab or window to start using the new shell'
-        );
+      if (cfg_.shell !== cfg.shell || JSON.stringify(cfg_.shellArgs) !== JSON.stringify(cfg.shellArgs)) {
+        notify('Shell configuration changed!', 'Open a new tab or window to start using the new shell');
       }
 
       // update background color if necessary
+      updateBackgroundColor();
+
       cfg = cfg_;
     });
 
     rpc.on('init', () => {
-      window.setBackgroundColor(toElectronBackgroundColor(cfg.backgroundColor || '#000'));
       window.show();
+      updateBackgroundColor();
 
       // If no callback is passed to createWindow,
       // a new session will be created by default.
@@ -66,37 +74,41 @@ module.exports = class Window {
       // and createWindow deifinition. It's executed in place of
       // the callback passed as parameter, and deleted right after.
       (app.windowCallback || fn)(window);
-      delete (app.windowCallback);
+      delete app.windowCallback;
       fetchNotifications(window);
       // auto updates
-      if (!isDev && process.platform !== 'linux') {
-        AutoUpdater(window);
+      if (!isDev) {
+        updater(window);
       } else {
+        //eslint-disable-next-line no-console
         console.log('ignoring auto updates during dev');
       }
     });
 
     rpc.on('new', options => {
-      const opts = Object.assign({
-        rows: 40,
-        cols: 100,
-        cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : cfgDir,
-        splitDirection: undefined,
-        shell: cfg.shell,
-        shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
-      }, options);
+      const sessionOpts = Object.assign(
+        {
+          rows: 40,
+          cols: 100,
+          cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : cfgDir,
+          splitDirection: undefined,
+          shell: cfg.shell,
+          shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
+        },
+        options
+      );
 
-      const initSession = (opts, fn) => {
-        fn(uuid.v4(), new Session(opts));
+      const initSession = (opts, fn_) => {
+        fn_(uuid.v4(), new Session(opts));
       };
 
-      initSession(opts, (uid, session) => {
+      initSession(sessionOpts, (uid, session) => {
         sessions.set(uid, session);
         rpc.emit('session add', {
-          rows: opts.rows,
-          cols: opts.cols,
+          rows: sessionOpts.rows,
+          cols: sessionOpts.cols,
           uid,
-          splitDirection: opts.splitDirection,
+          splitDirection: sessionOpts.splitDirection,
           shell: session.shell,
           pid: session.pty.pid
         });
@@ -116,6 +128,7 @@ module.exports = class Window {
       if (session) {
         session.exit();
       } else {
+        //eslint-disable-next-line no-console
         console.log('session not found by', uid);
       }
     });
@@ -136,9 +149,9 @@ module.exports = class Window {
       const session = sessions.get(uid);
 
       if (escaped) {
-        const escapedData = session.shell.endsWith('cmd.exe') ?
-        `"${data}"` : // This is how cmd.exe does it
-        `'${data.replace(/'/g, `'\\''`)}'`; // Inside a single-quoted string nothing is interpreted
+        const escapedData = session.shell.endsWith('cmd.exe')
+          ? `"${data}"` // This is how cmd.exe does it
+          : `'${data.replace(/'/g, `'\\''`)}'`; // Inside a single-quoted string nothing is interpreted
 
         session.write(escapedData);
       } else {
@@ -147,6 +160,11 @@ module.exports = class Window {
     });
     rpc.on('open external', ({url}) => {
       shell.openExternal(url);
+    });
+    rpc.on('open context menu', selection => {
+      const {createWindow} = app;
+      const {buildFromTemplate} = Menu;
+      buildFromTemplate(contextMenuTemplate(createWindow, selection)).popup(window);
     });
     rpc.on('open hamburger menu', ({x, y}) => {
       Menu.getApplicationMenu().popup(Math.ceil(x), Math.ceil(y));
@@ -162,6 +180,10 @@ module.exports = class Window {
     });
     rpc.on('close', () => {
       window.close();
+    });
+    rpc.on('command', command => {
+      const focusedWindow = BrowserWindow.getFocusedWindow();
+      execCommand(command, focusedWindow);
     });
     const deleteSessions = () => {
       sessions.forEach((session, key) => {
@@ -195,6 +217,15 @@ module.exports = class Window {
       }
     });
 
+    // xterm makes link clickable
+    window.webContents.on('new-window', (event, url) => {
+      const protocol = typeof url === 'string' && parseUrl(url).protocol;
+      if (protocol === 'http:' || protocol === 'https:') {
+        event.preventDefault();
+        shell.openExternal(url);
+      }
+    });
+
     // expose internals to extension authors
     window.rpc = rpc;
     window.sessions = sessions;
@@ -210,6 +241,7 @@ module.exports = class Window {
       if (!err) {
         load();
         window.webContents.send('plugins change');
+        updateBackgroundColor();
       }
     });
 

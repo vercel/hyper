@@ -16,10 +16,7 @@ app.on('ready', () => {
   const win_ = new BrowserWindow({
     show: false
   });
-  const url = 'file://' + resolve(
-    isDev ? __dirname : app.getAppPath(),
-    'notify.html'
-  );
+  const url = 'file://' + resolve(isDev ? __dirname : app.getAppPath(), 'notify.html');
   win_.loadURL(url);
   win_.webContents.on('dom-ready', () => {
     win = win_;
@@ -31,6 +28,7 @@ app.on('ready', () => {
 });
 
 function notify(title, body) {
+  //eslint-disable-next-line no-console
   console.log(`[Notification] ${title}: ${body}`);
   if (win) {
     win.webContents.send('notification', {title, body});

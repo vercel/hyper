@@ -3,7 +3,6 @@ const {ipcMain} = require('electron');
 const uuid = require('uuid');
 
 class Server extends EventEmitter {
-
   constructor(win) {
     super();
     this.win = win;
@@ -48,7 +47,6 @@ class Server extends EventEmitter {
       this.destroyed = true;
     }
   }
-
 }
 
 module.exports = win => {

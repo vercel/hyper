@@ -14,39 +14,15 @@ test(`returns a color that's in hex`, t => {
   const hslaColor = 'hsl(15, 100%, 50%, 1)';
   const colorKeyword = 'pink';
 
-  t.true(
-    isHexColor(
-      toElectronBackgroundColor(hexColor)
-    )
-  );
+  t.true(isHexColor(toElectronBackgroundColor(hexColor)));
 
-  t.true(
-    isHexColor(
-      toElectronBackgroundColor(rgbColor)
-    )
-  );
+  t.true(isHexColor(toElectronBackgroundColor(rgbColor)));
 
-  t.true(
-    isHexColor(
-      toElectronBackgroundColor(rgbaColor)
-    )
-  );
+  t.true(isHexColor(toElectronBackgroundColor(rgbaColor)));
 
-  t.true(
-    isHexColor(
-      toElectronBackgroundColor(hslColor)
-    )
-  );
+  t.true(isHexColor(toElectronBackgroundColor(hslColor)));
 
-  t.true(
-    isHexColor(
-      toElectronBackgroundColor(hslaColor)
-    )
-  );
+  t.true(isHexColor(toElectronBackgroundColor(hslaColor)));
 
-  t.true(
-    isHexColor(
-      toElectronBackgroundColor(colorKeyword)
-    )
-  );
+  t.true(isHexColor(toElectronBackgroundColor(colorKeyword)));
 });

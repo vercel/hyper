@@ -21,6 +21,7 @@ if (isDev) {
     statSync(devCfg);
     cfgPath = devCfg;
     cfgDir = devDir;
+    //eslint-disable-next-line no-console
     console.log('using config file:', cfgPath);
   } catch (err) {
     // ignore
@@ -34,6 +35,7 @@ const plugs = {
   cache: resolve(plugins, 'cache')
 };
 const yarn = resolve(__dirname, '../../bin/yarn-standalone.js');
+const cliScriptPath = resolve(__dirname, '../../bin/hyper');
 
 const icon = resolve(__dirname, '../static/icon96x96.png');
 
@@ -44,13 +46,25 @@ const linuxKeys = join(keymapPath, 'linux.json');
 
 const defaultPlatformKeyPath = () => {
   switch (process.platform) {
-    case 'darwin': return darwinKeys;
-    case 'win32': return win32Keys;
-    case 'linux': return linuxKeys;
-    default: return darwinKeys;
+    case 'darwin':
+      return darwinKeys;
+    case 'win32':
+      return win32Keys;
+    case 'linux':
+      return linuxKeys;
+    default:
+      return darwinKeys;
   }
 };
 
 module.exports = {
-  cfgDir, cfgPath, cfgFile, defaultCfg, icon, defaultPlatformKeyPath, plugs, yarn
+  cfgDir,
+  cfgPath,
+  cfgFile,
+  defaultCfg,
+  icon,
+  defaultPlatformKeyPath,
+  plugs,
+  yarn,
+  cliScriptPath
 };

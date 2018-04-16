@@ -8,7 +8,10 @@ const {getDecoratedEnv} = require('./plugins');
 const {productName, version} = require('./package');
 const config = require('./config');
 
-const createNodePtyError = () => new Error('`node-pty` failed to load. Typically this means that it was built incorrectly. Please check the `readme.md` to more info.');
+const createNodePtyError = () =>
+  new Error(
+    '`node-pty` failed to load. Typically this means that it was built incorrectly. Please check the `readme.md` to more info.'
+  );
 
 let spawn;
 try {
@@ -20,15 +23,20 @@ try {
 const envFromConfig = config.getConfig().env || {};
 
 module.exports = class Session extends EventEmitter {
-
   constructor({rows, cols: columns, cwd, shell, shellArgs}) {
     super();
-    const baseEnv = Object.assign({}, process.env, {
-      LANG: app.getLocale().replace('-', '_') + '.UTF-8',
-      TERM: 'xterm-256color',
-      TERM_PROGRAM: productName,
-      TERM_PROGRAM_VERSION: version
-    }, envFromConfig);
+    const baseEnv = Object.assign(
+      {},
+      process.env,
+      {
+        LANG: app.getLocale().replace('-', '_') + '.UTF-8',
+        TERM: 'xterm-256color',
+        COLORTERM: 'truecolor',
+        TERM_PROGRAM: productName,
+        TERM_PROGRAM_VERSION: version
+      },
+      envFromConfig
+    );
 
     // Electron has a default value for process.env.GOOGLE_API_KEY
     // We don't want to leak this to the shell
@@ -85,6 +93,7 @@ module.exports = class Session extends EventEmitter {
     try {
       this.pty.resize(cols, rows);
     } catch (err) {
+      //eslint-disable-next-line no-console
       console.error(err.stack);
     }
   }
@@ -93,10 +102,10 @@ module.exports = class Session extends EventEmitter {
     try {
       this.pty.kill();
     } catch (err) {
+      //eslint-disable-next-line no-console
       console.error('exit error', err.stack);
     }
     this.emit('exit');
     this.ended = true;
   }
-
 };

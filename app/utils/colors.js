@@ -19,13 +19,14 @@ const colorList = [
   'grayscale'
 ];
 
-export default function getColorList(colors) {
-  // For backwards compatibility, return early if it's already an array
-  if (Array.isArray(colors)) {
+exports.getColorMap = colors => {
+  if (!Array.isArray(colors)) {
     return colors;
   }
-
-  return colorList.map(colorName => {
-    return colors[colorName];
-  });
-}
+  return colors.reduce((result, color, index) => {
+    if (index < colorList.length) {
+      result[colorList[index]] = color;
+    }
+    return result;
+  }, {});
+};
