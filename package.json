@@ -148,7 +148,8 @@
       ]
     },
     "win": {
-      "target": ["squirrel"]
+      "target": ["squirrel"],
+      "timeStampServer": "http://timestamp.globalsign.com/scripts/timstamp.dll"
     },
     "mac": {
       "category": "public.app-category.developer-tools",
