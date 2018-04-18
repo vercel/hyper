@@ -17,6 +17,8 @@ const cache = new Config();
 const path = plugs.base;
 const localPath = plugs.local;
 
+patchModuleLoad();
+
 // caches
 let plugins = config.getPlugins();
 let paths = getPaths();
@@ -42,6 +44,34 @@ config.subscribe(() => {
     }
   }
 });
+
+// patching Module._load
+// so plugins can `require` them without needing their own version
+// https://github.com/zeit/hyper/issues/619
+function patchModuleLoad() {
+  const React = require('react');
+  const PureComponent = React.PureComponent;
+  const ReactDOM = require('react-dom');
+
+  const Module = require('module');
+  const originalLoad = Module._load;
+  Module._load = function _load(modulePath) {
+    switch (modulePath) {
+      case 'react':
+        return React;
+      case 'react-dom':
+        return ReactDOM;
+      case 'hyper/component':
+        return PureComponent;
+      case 'hyper/Notification':
+      case 'hyper/notify':
+      case 'hyper/decorate':
+        return Object;
+      default:
+        return originalLoad.apply(this, arguments);
+    }
+  };
+}
 
 function checkDeprecatedExtendKeymaps() {
   modules.forEach(plugin => {
