@@ -85,6 +85,10 @@ app.getLastFocusedWindow = () => {
   });
 };
 
+//eslint-disable-next-line no-console
+console.log('Disabling Chromium GPU blacklist');
+app.commandLine.appendSwitch('ignore-gpu-blacklist');
+
 if (isDev) {
   //eslint-disable-next-line no-console
   console.log('running in dev mode');
