@@ -4,8 +4,14 @@ const got = require('got');
 const registryUrl = require('registry-url')();
 const pify = require('pify');
 const recast = require('recast');
+const path = require('path');
 
-const fileName = `${os.homedir()}/.hyper.js`;
+const devConfigFileName = path.join(__dirname, `../.hyper.js`);
+
+let fileName =
+  process.env.NODE_ENV !== 'production' && fs.existsSync(devConfigFileName)
+    ? devConfigFileName
+    : `${os.homedir()}/.hyper.js`;
 
 /**
  * We need to make sure the file reading and parsing is lazy so that failure to
