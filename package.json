@@ -1,5 +1,6 @@
 {
   "repository": "zeit/hyper",
+  "version": "2.0.0-canary.18",
   "scripts": {
     "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
     "app": "electron app",
