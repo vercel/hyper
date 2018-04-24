@@ -8,6 +8,7 @@ node_modules
 
 # logs
 npm-debug.log
+yarn-error.log
 
 # optional dev config file and plugins directory
 .hyper.js
