@@ -71,8 +71,8 @@ const windowUtils = require('./utils/window-utils');
 const windowSet = new Set([]);
 
 const mainWindowState = new WindowStateManager('hwin', {
-  defaultWidth: 1024,
-  defaultHeight: 768
+  defaultWidth: 540,
+  defaultHeight: 380
 });
 
 // expose to plugins
