@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/bin/node /usr/bin/yarn run list --fix
+  /usr/bin/node /usr/bin/yarn run lint --fix
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
@@ -7061,14 +7061,16 @@ Lockfile:
       readable-stream "^2.0.0"
 
 Trace: 
-  Error: Command "list" not found. Did you mean "dist"?
-      at new MessageError (/usr/lib/node_modules/yarn/lib/cli.js:186:110)
-      at /usr/lib/node_modules/yarn/lib/cli.js:87307:17
-      at Generator.next (<anonymous>)
-      at step (/usr/lib/node_modules/yarn/lib/cli.js:98:30)
-      at /usr/lib/node_modules/yarn/lib/cli.js:116:14
-      at new Promise (<anonymous>)
-      at new F (/usr/lib/node_modules/yarn/lib/cli.js:23451:28)
-      at /usr/lib/node_modules/yarn/lib/cli.js:95:12
-      at runCommand (/usr/lib/node_modules/yarn/lib/cli.js:87312:22)
-      at Object.<anonymous> (/usr/lib/node_modules/yarn/lib/cli.js:87412:14)
+  Error: Command failed.
+  Exit code: 1
+  Command: sh
+  Arguments: -c eslint . --fix
+  Directory: /home/steve/Workspace/github/hyper
+  Output:
+  
+      at ProcessTermError.MessageError (/usr/lib/node_modules/yarn/lib/cli.js:186:110)
+      at new ProcessTermError (/usr/lib/node_modules/yarn/lib/cli.js:226:113)
+      at ChildProcess.<anonymous> (/usr/lib/node_modules/yarn/lib/cli.js:30281:17)
+      at ChildProcess.emit (events.js:180:13)
+      at maybeClose (internal/child_process.js:936:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:220:5)
