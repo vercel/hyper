@@ -52,7 +52,7 @@ if (process.platform === 'win32') {
 const {resolve} = require('path');
 
 // Packages
-const {app, BrowserWindow, Menu} = require('electron');
+const {app, BrowserWindow, Menu, protocol} = require('electron');
 const {gitDescribe} = require('git-describe');
 const isDev = require('electron-is-dev');
 
@@ -65,7 +65,6 @@ const plugins = require('./plugins');
 const {installCLI} = require('./utils/cli-install');
 const AppMenu = require('./menus/menu');
 const Window = require('./ui/window');
-const windowUtils = require('./utils/window-utils');
 
 const windowSet = new Set([]);
 
@@ -110,7 +109,7 @@ console.log('electron will open', url);
 
 app.on('ready', () =>
   installDevExtensions(isDev)
-    .then(() => {
+    .then(async () => {
       function createWindow(fn, options = {}) {
         const cfg = plugins.getDecoratedConfig();
 
@@ -151,31 +150,31 @@ app.on('ready', () =>
           }
         }
 
-        if (!windowUtils.positionIsValid([startX, startY])) {
-          [startX, startY] = config.windowDefaults.windowPosition;
-        }
+        protocol.unregisterProtocol('', () => {
+          const hwin = new Window({width, height, x: startX, y: startY}, cfg, fn);
+          windowSet.add(hwin);
+          hwin.loadURL(url);
 
-        const hwin = new Window({width, height, x: startX, y: startY}, cfg, fn);
-        windowSet.add(hwin);
-        hwin.loadURL(url);
+          hwin.on('close', () => {
+            hwin.clean();
+            windowSet.delete(hwin);
+          });
 
-        // the window can be closed by the browser process itself
-        hwin.on('close', () => {
-          hwin.clean();
-          windowSet.delete(hwin);
+          hwin.on('closed', () => {
+            if (process.platform !== 'darwin' && windowSet.size === 0) {
+              app.quit();
+            }
+          });
+
+          // the window can be closed by the browser process itself
+          return hwin;
         });
-
-        hwin.on('closed', () => {
-          if (process.platform !== 'darwin' && windowSet.size === 0) {
-            app.quit();
-          }
-        });
-
-        return hwin;
       }
 
       // when opening create a new window
-      createWindow();
+      const delay = time => new Promise(res => setTimeout(() => res(), time));
+      await delay(10);
+      await createWindow();
 
       // expose to plugins
       app.createWindow = createWindow;
