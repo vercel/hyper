@@ -20,6 +20,9 @@ module.exports = {
     // font weight for bold characters: 'normal' or 'bold'
     fontWeightBold: 'bold',
 
+    // line height as a relative unit
+    lineHeight: 1,
+
     // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
     cursorColor: 'rgba(248,28,229,0.8)',
 
@@ -51,9 +54,8 @@ module.exports = {
     // custom CSS to embed in the terminal window
     termCSS: '',
 
-    // set to `true` (without backticks and without quotes) if you're using a
-    // Linux setup that doesn't show native menus
-    // default: `false` on Linux, `true` on Windows, ignored on macOS
+    // if you're using a Linux setup which show native menus, set to false
+    // default: `true` on Linux, `true` on Windows, ignored on macOS
     showHamburgerMenu: '',
 
     // set to `false` (without backticks and without quotes) if you want to hide the minimize, maximize and close buttons

@@ -1,2 +1,2 @@
 * text=auto
-*.sh eol=lf
+*.js text eol=lf

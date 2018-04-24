@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "checkJs": true,
     "jsx": "react",
     "target": "es6"
   },
