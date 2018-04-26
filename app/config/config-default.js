@@ -122,7 +122,7 @@ module.exports = {
     // selection is present (`true` by default on Windows and disables the context menu feature)
     // quickEdit: true,
 
-    // URL to custom bell
+    // Either a URL to a custom sound to use for the bell, or an absolute file path to a sound file on the machine.
     // bellSoundURL: 'http://example.com/bell.mp3',
 
     // for advanced config flags please refer to https://hyper.is/#cfg
