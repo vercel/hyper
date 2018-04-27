@@ -24,6 +24,7 @@
     "ms": "2.1.1",
     "node-fetch": "1.7.3",
     "node-pty": "0.7.4",
+    "os-locale": "2.1.0",
     "parse-url": "3.0.2",
     "queue": "4.4.2",
     "semver": "5.5.0",
