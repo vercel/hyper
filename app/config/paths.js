@@ -1,12 +1,12 @@
 // This module exports paths, names, and other metadata that is referenced
-const {homedir} = require('os');
+const {app} = require('electron');
 const {statSync} = require('fs');
 const {resolve, join} = require('path');
 const isDev = require('electron-is-dev');
 
 const cfgFile = '.hyper.js';
 const defaultCfgFile = 'config-default.js';
-const homeDir = homedir();
+const homeDir = app.getPath('userData');
 
 let cfgPath = join(homeDir, cfgFile);
 let cfgDir = homeDir;
