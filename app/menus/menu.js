@@ -1,5 +1,6 @@
 // Packages
 const {app, dialog, Menu} = require('electron');
+const electron = require('electron');
 
 // Utilities
 const {getConfig} = require('../config');
@@ -13,11 +14,16 @@ const helpMenu = require('./menus/help');
 const darwinMenu = require('./menus/darwin');
 const {getDecoratedKeymaps} = require('../plugins');
 const {execCommand} = require('../commands');
+const {platform} = process;
+const isLinux = platform === 'linux';
+const autoUpdater = isLinux ? require('./auto-updater-linux') : electron.autoUpdater;
+const notify = require('../notify');
 
 const appName = app.getName();
 const appVersion = app.getVersion();
 
 let menu_ = [];
+let upgradable = false;
 
 exports.createMenu = (createWindow, getLoadedPluginVersions) => {
   const config = getConfig();
@@ -47,6 +53,22 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
       icon
     });
   };
+
+  const onupdate = () => {
+    upgradable = true;
+  };
+
+  const eventName = isLinux ? 'update-available' : 'update-downloaded';
+  autoUpdater.on(eventName, onupdate);
+
+  const installUpdate = () => {
+    if (upgradable) {
+      autoUpdater.quitAndInstall();
+    } else {
+      notify('No updates were found for install.');
+    }
+  };
+
   const menu = [
     ...(process.platform === 'darwin' ? [darwinMenu(commandKeys, execCommand, showAbout)] : []),
     shellMenu(commandKeys, execCommand),
@@ -54,7 +76,7 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
     viewMenu(commandKeys, execCommand),
     pluginsMenu(commandKeys, execCommand),
     windowMenu(commandKeys, execCommand),
-    helpMenu(commandKeys, showAbout)
+    helpMenu(commandKeys, showAbout, installUpdate)
   ];
 
   return menu;
