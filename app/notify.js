@@ -27,12 +27,12 @@ app.on('ready', () => {
   });
 });
 
-function notify(title, body, error) {
+function notify(title, body, details = {}) {
   //eslint-disable-next-line no-console
   console.log(`[Notification] ${title}: ${body}`);
-  if (error) {
+  if (details.error) {
     //eslint-disable-next-line no-console
-    console.error(error);
+    console.error(details.error);
   }
   if (win) {
     win.webContents.send('notification', {title, body});
