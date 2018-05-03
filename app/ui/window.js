@@ -167,7 +167,11 @@ module.exports = class Window {
       buildFromTemplate(contextMenuTemplate(createWindow, selection)).popup(window);
     });
     rpc.on('open hamburger menu', ({x, y}) => {
-      Menu.getApplicationMenu().popup(Math.ceil(x), Math.ceil(y));
+      const options = {
+        x: Math.ceil(x),
+        y: Math.ceil(y)
+      };
+      Menu.getApplicationMenu().popup(options);
     });
     // Same deal as above, grabbing the window titlebar when the window
     // is maximized on Windows results in unmaximize, without hitting any
