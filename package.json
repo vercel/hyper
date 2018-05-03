@@ -148,7 +148,8 @@
       ]
     },
     "win": {
-      "target": ["squirrel"]
+      "target": ["squirrel"],
+      "rfc3161TimeStampServer": "http://timestamp.comodoca.com"
     },
     "mac": {
       "category": "public.app-category.developer-tools",

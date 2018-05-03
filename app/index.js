@@ -62,7 +62,7 @@ const config = require('./config');
 config.setup();
 
 const plugins = require('./plugins');
-const {addSymlink, addBinToUserPath} = require('./utils/cli-install');
+const {installCLI} = require('./utils/cli-install');
 const AppMenu = require('./menus/menu');
 const Window = require('./ui/window');
 const windowUtils = require('./utils/window-utils');
@@ -85,6 +85,10 @@ app.getLastFocusedWindow = () => {
   });
 };
 
+//eslint-disable-next-line no-console
+console.log('Disabling Chromium GPU blacklist');
+app.commandLine.appendSwitch('ignore-gpu-blacklist');
+
 if (isDev) {
   //eslint-disable-next-line no-console
   console.log('running in dev mode');
@@ -98,13 +102,6 @@ if (isDev) {
 } else {
   //eslint-disable-next-line no-console
   console.log('running in prod mode');
-  if (process.platform === 'win32') {
-    //eslint-disable-next-line no-console
-    addBinToUserPath().catch(err => console.error('Failed to add Hyper CLI path to user PATH', err));
-  } else {
-    //eslint-disable-next-line no-console
-    addSymlink().catch(err => console.error('Failed to symlink Hyper CLI', err));
-  }
 }
 
 const url = 'file://' + resolve(isDev ? __dirname : app.getAppPath(), 'index.html');
@@ -183,19 +180,6 @@ app.on('ready', () =>
       // expose to plugins
       app.createWindow = createWindow;
 
-      if (!isDev) {
-        // check if should be set/removed as default ssh protocol client
-        if (config.getConfig().defaultSSHApp && !app.isDefaultProtocolClient('ssh')) {
-          //eslint-disable-next-line no-console
-          console.log('Setting Hyper as default client for ssh:// protocol');
-          app.setAsDefaultProtocolClient('ssh');
-        } else if (!config.getConfig().defaultSSHApp && app.isDefaultProtocolClient('ssh')) {
-          //eslint-disable-next-line no-console
-          console.log('Removing Hyper from default client for ssh:// protocl');
-          app.removeAsDefaultProtocolClient('ssh');
-        }
-      }
-
       // mac only. when the dock icon is clicked
       // and we don't have any active windows open,
       // we open one
@@ -228,6 +212,19 @@ app.on('ready', () =>
       makeMenu();
       plugins.subscribe(plugins.onApp.bind(undefined, app));
       config.subscribe(makeMenu);
+      if (!isDev) {
+        // check if should be set/removed as default ssh protocol client
+        if (config.getConfig().defaultSSHApp && !app.isDefaultProtocolClient('ssh')) {
+          //eslint-disable-next-line no-console
+          console.log('Setting Hyper as default client for ssh:// protocol');
+          app.setAsDefaultProtocolClient('ssh');
+        } else if (!config.getConfig().defaultSSHApp && app.isDefaultProtocolClient('ssh')) {
+          //eslint-disable-next-line no-console
+          console.log('Removing Hyper from default client for ssh:// protocl');
+          app.removeAsDefaultProtocolClient('ssh');
+        }
+        installCLI(false);
+      }
     })
     .catch(err => {
       //eslint-disable-next-line no-console

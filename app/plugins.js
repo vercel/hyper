@@ -96,7 +96,7 @@ function updatePlugins({force = false} = {}) {
 
     if (err) {
       //eslint-disable-next-line no-console
-      notify('Error updating plugins.', err);
+      notify('Error updating plugins.', err, {error: err});
     } else {
       // flag successful plugin update
       cache.set('hyper.plugins', id_);
@@ -287,9 +287,7 @@ function requirePlugins() {
         //eslint-disable-next-line no-console
         console.warn(`Plugin "${basename(path_)}" not found: ${path_}`);
       } else {
-        //eslint-disable-next-line no-console
-        console.error(err);
-        notify('Plugin error!', `Plugin "${basename(path_)}" failed to load (${err.message})`);
+        notify('Plugin error!', `Plugin "${basename(path_)}" failed to load (${err.message})`, {error: err});
       }
     }
   };
@@ -306,7 +304,9 @@ exports.onApp = app_ => {
       try {
         plugin.onApp(app_);
       } catch (e) {
-        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
+        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`, {
+          error: e
+        });
       }
     }
   });
@@ -318,7 +318,9 @@ exports.onWindow = win => {
       try {
         plugin.onWindow(win);
       } catch (e) {
-        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
+        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`, {
+          error: e
+        });
       }
     }
   });
@@ -334,7 +336,7 @@ function decorateObject(base, key) {
       try {
         res = plugin[key](decorated);
       } catch (e) {
-        notify('Plugin error!', `"${plugin._name}" when decorating ${key}`);
+        notify('Plugin error!', `"${plugin._name}" when decorating ${key}`, {error: e});
         return;
       }
       if (res && typeof res === 'object') {
@@ -360,7 +362,9 @@ exports.getDeprecatedConfig = () => {
     try {
       configTmp = plugin.decorateConfig(JSON.parse(JSON.stringify(baseConfig)));
     } catch (e) {
-      notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
+      notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`, {
+        error: e
+      });
       return;
     }
     const pluginCSSDeprecated = config.getDeprecatedCSS(configTmp);
