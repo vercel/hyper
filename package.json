@@ -148,8 +148,7 @@
       ]
     },
     "win": {
-      "target": ["squirrel"],
-      "rfc3161TimeStampServer": "http://tsa.startssl.com/rfc3161"
+      "target": ["squirrel"]
     },
     "mac": {
       "category": "public.app-category.developer-tools",
