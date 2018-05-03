@@ -56,6 +56,8 @@ function patchModuleLoad() {
   const Module = require('module');
   const originalLoad = Module._load;
   Module._load = function _load(modulePath) {
+    // PLEASE NOTE: Code changes here, also need to be changed in
+    // lib/utils/plugins.js
     switch (modulePath) {
       case 'react':
         return React;
