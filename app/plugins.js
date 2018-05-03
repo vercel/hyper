@@ -65,6 +65,8 @@ function patchModuleLoad() {
         return ReactDOM;
       case 'hyper/component':
         return PureComponent;
+      // These return Object, since they work differently on the backend, than on the frontend.
+      // Still needs to be here, to prevent errors, while loading plugins.
       case 'hyper/Notification':
       case 'hyper/notify':
       case 'hyper/decorate':
