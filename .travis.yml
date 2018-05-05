@@ -9,6 +9,10 @@ matrix:
       node_js: 8
       env: CC=clang CXX=clang++ npm_config_clang=1
       compiler: clang
+    - os: linux
+      node_js: 10
+      env: CC=clang CXX=clang++ npm_config_clang=1
+      compiler: clang
 
 addons:
   apt:
