@@ -120,7 +120,7 @@ module.exports = class Window {
 
         session.on('exit', () => {
           rpc.emit('session exit', {uid});
-          sessions.delete(uid);
+          window.deleteSession(uid);
         });
       });
     });
@@ -166,6 +166,9 @@ module.exports = class Window {
     window.handleSessionData = (uid, data, handleSessionCallback) => {
       // By default, just execute the callback.  Plugins can override.
       return handleSessionCallback(uid, data);
+    };
+    window.deleteSession = uid => {
+      sessions.delete(uid);
     };
     rpc.on('open external', ({url}) => {
       shell.openExternal(url);
