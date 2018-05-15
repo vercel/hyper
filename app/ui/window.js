@@ -41,6 +41,14 @@ module.exports = class Window {
       window.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
     };
 
+    // set startup directory
+    let workingDirectory = cfgDir;
+    if (process.argv[1] && isAbsolute(process.argv[1])) {
+      workingDirectory = process.argv[1];
+    } else if (cfg.startupDirectory && isAbsolute(cfg.startupDirectory)) {
+      workingDirectory = cfg.startupDirectory;
+    }
+
     // config changes
     const cfgUnsubscribe = app.config.subscribe(() => {
       const cfg_ = app.plugins.getDecoratedConfig();
@@ -90,7 +98,7 @@ module.exports = class Window {
         {
           rows: 40,
           cols: 100,
-          cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : cfgDir,
+          cwd: workingDirectory,
           splitDirection: undefined,
           shell: cfg.shell,
           shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
