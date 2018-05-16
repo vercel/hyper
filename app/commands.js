@@ -1,7 +1,6 @@
 const {app} = require('electron');
 const {openConfig} = require('./config');
 const {updatePlugins} = require('./plugins');
-const {installCLI} = require('./utils/cli-install');
 
 const commands = {
   'window:new': () => {
@@ -100,9 +99,6 @@ const commands = {
   },
   'editor:break': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('session break req');
-  },
-  'cli:install': () => {
-    installCLI(true);
   }
 };
 

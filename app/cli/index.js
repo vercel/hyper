@@ -1,9 +1,6 @@
 // This is a CLI tool, using console is OK
+//
 /* eslint no-console: 0 */
-const {spawn, exec} = require('child_process');
-const {isAbsolute, resolve} = require('path');
-const {existsSync} = require('fs');
-const pify = require('pify');
 const args = require('args');
 const chalk = require('chalk');
 const opn = require('opn');
@@ -11,11 +8,15 @@ const columnify = require('columnify');
 const got = require('got');
 const ora = require('ora');
 const api = require('./api');
-
+const isDev = require('electron-is-dev');
+const promiseFinally = require('promise.prototype.finally');
+promiseFinally.shim();
 const PLUGIN_PREFIX = 'hyper-';
 
-let commandPromise;
-
+const configLocation = process.platform === 'win32' ? process.env.userprofile + '\\.hyper.js' : '~/.hyper.js';
+//eslint-disable-next-line no-console
+console.log(`Hyper configuration file located at: ${configLocation}`);
+let commandInvoked = false;
 const assertPluginName = pluginName => {
   if (!pluginName) {
     console.error(chalk.red('Plugin name is required'));
@@ -34,26 +35,31 @@ const checkConfig = () => {
 };
 
 args.command(['i', 'install'], 'Install a plugin', (name, args_) => {
+  commandInvoked = true;
   checkConfig();
   const pluginName = args_[0];
   assertPluginName(pluginName);
-  commandPromise = api
+  api
     .install(pluginName)
     .then(() => console.log(chalk.green(`${pluginName} installed successfully!`)))
-    .catch(err => console.error(chalk.red(err)));
+    .catch(err => console.error(chalk.red(err)))
+    .finally(() => process.exit(0));
 });
 
 args.command(['u', 'uninstall', 'rm', 'remove'], 'Uninstall a plugin', (name, args_) => {
+  commandInvoked = true;
   checkConfig();
   const pluginName = args_[0];
   assertPluginName(pluginName);
-  commandPromise = api
+  api
     .uninstall(pluginName)
     .then(() => console.log(chalk.green(`${pluginName} uninstalled successfully!`)))
-    .catch(err => console.log(chalk.red(err)));
+    .catch(err => console.log(chalk.red(err)))
+    .finally(() => process.exit(0));
 });
 
 args.command(['ls', 'list'], 'List installed plugins', () => {
+  commandInvoked = true;
   checkConfig();
   let plugins = api.list();
 
@@ -82,15 +88,18 @@ const lsRemote = pattern => {
         entry.name = chalk.green(entry.name);
         return entry;
       })
-    );
+    )
+    .finally(() => process.exit(0));
 };
 
 args.command(['s', 'search'], 'Search for plugins on npm', (name, args_) => {
+  commandInvoked = true;
   const spinner = ora('Searching').start();
   const query = args_[0] ? args_[0].toLowerCase() : '';
-
-  commandPromise = lsRemote(query)
+  console.log(1);
+  lsRemote(query)
     .then(entries => {
+      console.log(2);
       if (entries.length === 0) {
         spinner.fail();
         console.error(chalk.red(`Your search '${query}' did not match any plugins`));
@@ -106,13 +115,15 @@ args.command(['s', 'search'], 'Search for plugins on npm', (name, args_) => {
     .catch(err => {
       spinner.fail();
       console.error(chalk.red(err)); // TODO
-    });
+    })
+    .finally(() => process.exit(0));
 });
 
 args.command(['lsr', 'list-remote', 'ls-remote'], 'List plugins available on npm', () => {
+  commandInvoked = true;
   const spinner = ora('Searching').start();
 
-  commandPromise = lsRemote()
+  lsRemote()
     .then(entries => {
       let msg = columnify(entries);
 
@@ -123,10 +134,12 @@ args.command(['lsr', 'list-remote', 'ls-remote'], 'List plugins available on npm
     .catch(err => {
       spinner.fail();
       console.error(chalk.red(err)); // TODO
-    });
+    })
+    .finally(() => process.exit(0));
 });
 
 args.command(['d', 'docs', 'h', 'home'], 'Open the npm page of a plugin', (name, args_) => {
+  commandInvoked = true;
   const pluginName = args_[0];
   assertPluginName(pluginName);
   opn(`http://ghub.io/${pluginName}`, {wait: false});
@@ -137,8 +150,15 @@ args.command(['<default>'], 'Launch Hyper');
 
 args.option(['v', 'verbose'], 'Verbose mode', false);
 
-const main = argv => {
-  const flags = args.parse(argv, {
+module.exports = () => {
+  //Need ancillary variable because parse slices first 2 arguments, issue with
+  //electron packed apps https://github.com/electron/electron/issues/4690
+  const argv = isDev ? process.argv : ['dummy', ...process.argv];
+  //Fallthrough to hyper exececution without commandline arguments
+  if (argv.length === 2) {
+    return true;
+  }
+  args.parse(argv, {
     name: 'hyper',
     version: false,
     mri: {
@@ -146,68 +166,9 @@ const main = argv => {
     }
   });
 
-  if (commandPromise) {
-    return commandPromise;
+  //Shows usage and terminates node process
+  if (!commandInvoked) {
+    args.showHelp();
   }
-
-  const env = Object.assign({}, process.env, {
-    // this will signal Hyper that it was spawned from this module
-    HYPER_CLI: '1',
-    ELECTRON_NO_ATTACH_CONSOLE: '1'
-  });
-
-  delete env['ELECTRON_RUN_AS_NODE'];
-
-  if (flags.verbose) {
-    env['ELECTRON_ENABLE_LOGGING'] = '1';
-  }
-
-  const options = {
-    detached: true,
-    env
-  };
-
-  const args_ = args.sub.map(arg => {
-    const cwd = isAbsolute(arg) ? arg : resolve(process.cwd(), arg);
-    if (!existsSync(cwd)) {
-      console.error(chalk.red(`Error! Directory or file does not exist: ${cwd}`));
-      process.exit(1);
-    }
-    return cwd;
-  });
-
-  if (!flags.verbose) {
-    options['stdio'] = 'ignore';
-    if (process.platform === 'darwin') {
-      //Use `open` to prevent multiple Hyper process
-      const cmd = `open -b co.zeit.hyper ${args_}`;
-      const opts = {
-        env
-      };
-      return pify(exec)(cmd, opts);
-    }
-  }
-
-  const child = spawn(process.execPath, args_, options);
-
-  if (flags.verbose) {
-    child.stdout.on('data', data => console.log(data.toString('utf8')));
-    child.stderr.on('data', data => console.error(data.toString('utf8')));
-  }
-  if (flags.verbose) {
-    return new Promise(c => child.once('exit', () => c(null)));
-  }
-  child.unref();
-  return Promise.resolve();
+  return false;
 };
-
-function eventuallyExit(code) {
-  setTimeout(() => process.exit(code), 100);
-}
-
-main(process.argv)
-  .then(() => eventuallyExit(0))
-  .catch(err => {
-    console.error(err.stack ? err.stack : err);
-    eventuallyExit(1);
-  });

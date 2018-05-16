@@ -52,39 +52,5 @@ module.exports = [
       ])
     ],
     target: 'electron'
-  },
-  {
-    name: 'hyper-cli',
-    resolve: {
-      extensions: ['.js', '.jsx', '.json']
-    },
-    devtool: isProd ? 'none' : 'cheap-module-source-map',
-    entry: './cli/index.js',
-    output: {
-      path: path.join(__dirname, 'bin'),
-      filename: 'cli.js'
-    },
-    module: {
-      rules: [
-        {
-          test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
-          loader: 'babel-loader'
-        },
-        {
-          test: /index.js/,
-          loader: 'shebang-loader',
-          include: [/node_modules\/rc/]
-        }
-      ]
-    },
-    plugins: [
-      // spawn-sync is required by execa if node <= 0.10
-      new webpack.IgnorePlugin(/(.*\.js.map|spawn-sync)$/i),
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(nodeEnv)
-      })
-    ],
-    target: 'node'
   }
 ];

@@ -1,265 +1,253 @@
-// Print diagnostic information for a few arguments instead of running Hyper.
-if (['--help', '-v', '--version'].includes(process.argv[1])) {
-  const {version} = require('./package');
-  const configLocation = process.platform === 'win32' ? process.env.userprofile + '\\.hyper.js' : '~/.hyper.js';
-  //eslint-disable-next-line no-console
-  console.log(`Hyper version ${version}`);
-  //eslint-disable-next-line no-console
-  console.log('Hyper does not accept any command line arguments. Please modify the config file instead.');
-  //eslint-disable-next-line no-console
-  console.log(`Hyper configuration file located at: ${configLocation}`);
-  // eslint-disable-next-line unicorn/no-process-exit
-  process.exit();
-}
+const cli = require('./cli/index');
 
-const checkSquirrel = () => {
-  let squirrel;
+//Returns true if there are no command line arguments to parse
+if (cli()) {
+  const checkSquirrel = () => {
+    let squirrel;
 
-  try {
-    squirrel = require('electron-squirrel-startup');
-    //eslint-disable-next-line no-empty
-  } catch (err) {}
+    try {
+      squirrel = require('electron-squirrel-startup');
+      //eslint-disable-next-line no-empty
+    } catch (err) {}
 
-  if (squirrel) {
-    // eslint-disable-next-line unicorn/no-process-exit
-    process.exit();
-  }
-};
-
-// handle startup squirrel events
-if (process.platform === 'win32') {
-  // eslint-disable-next-line import/order
-  const systemContextMenu = require('./system-context-menu');
-
-  switch (process.argv[1]) {
-    case '--squirrel-install':
-    case '--squirrel-updated':
-      systemContextMenu.add(() => {
-        checkSquirrel();
-      });
-      break;
-    case '--squirrel-uninstall':
-      systemContextMenu.remove(() => {
-        checkSquirrel();
-      });
-      break;
-    default:
-      checkSquirrel();
-  }
-}
-
-// Native
-const {resolve} = require('path');
-
-// Packages
-const {app, BrowserWindow, Menu} = require('electron');
-const {gitDescribe} = require('git-describe');
-const isDev = require('electron-is-dev');
-
-const config = require('./config');
-
-// set up config
-config.setup();
-
-const plugins = require('./plugins');
-const {installCLI} = require('./utils/cli-install');
-const AppMenu = require('./menus/menu');
-const Window = require('./ui/window');
-const windowUtils = require('./utils/window-utils');
-
-const windowSet = new Set([]);
-
-// expose to plugins
-app.config = config;
-app.plugins = plugins;
-app.getWindows = () => new Set([...windowSet]); // return a clone
-
-// function to retrieve the last focused window in windowSet;
-// added to app object in order to expose it to plugins.
-app.getLastFocusedWindow = () => {
-  if (!windowSet.size) {
-    return null;
-  }
-  return Array.from(windowSet).reduce((lastWindow, win) => {
-    return win.focusTime > lastWindow.focusTime ? win : lastWindow;
-  });
-};
-
-//eslint-disable-next-line no-console
-console.log('Disabling Chromium GPU blacklist');
-app.commandLine.appendSwitch('ignore-gpu-blacklist');
-
-if (isDev) {
-  //eslint-disable-next-line no-console
-  console.log('running in dev mode');
-
-  // Overide default appVersion which is set from package.json
-  gitDescribe({customArguments: ['--tags']}, (error, gitInfo) => {
-    if (!error) {
-      app.setVersion(gitInfo.raw);
+    if (squirrel) {
+      // eslint-disable-next-line unicorn/no-process-exit
+      process.exit();
     }
-  });
-} else {
+  };
+
+  // handle startup squirrel events
+  if (process.platform === 'win32') {
+    // eslint-disable-next-line import/order
+    const systemContextMenu = require('./system-context-menu');
+
+    switch (process.argv[1]) {
+      case '--squirrel-install':
+      case '--squirrel-updated':
+        systemContextMenu.add(() => {
+          checkSquirrel();
+        });
+        break;
+      case '--squirrel-uninstall':
+        systemContextMenu.remove(() => {
+          checkSquirrel();
+        });
+        break;
+      default:
+        checkSquirrel();
+    }
+  }
+
+  // Native
+  const {resolve} = require('path');
+
+  // Packages
+  const {app, BrowserWindow, Menu} = require('electron');
+  const {gitDescribe} = require('git-describe');
+  const isDev = require('electron-is-dev');
+
+  const config = require('./config');
+
+  // set up config
+  config.setup();
+
+  const plugins = require('./plugins');
+  const AppMenu = require('./menus/menu');
+  const Window = require('./ui/window');
+  const windowUtils = require('./utils/window-utils');
+
+  const windowSet = new Set([]);
+
+  // expose to plugins
+  app.config = config;
+  app.plugins = plugins;
+  app.getWindows = () => new Set([...windowSet]); // return a clone
+
+  // function to retrieve the last focused window in windowSet;
+  // added to app object in order to expose it to plugins.
+  app.getLastFocusedWindow = () => {
+    if (!windowSet.size) {
+      return null;
+    }
+    return Array.from(windowSet).reduce((lastWindow, win) => {
+      return win.focusTime > lastWindow.focusTime ? win : lastWindow;
+    });
+  };
+
   //eslint-disable-next-line no-console
-  console.log('running in prod mode');
-}
+  console.log('Disabling Chromium GPU blacklist');
+  app.commandLine.appendSwitch('ignore-gpu-blacklist');
 
-const url = 'file://' + resolve(isDev ? __dirname : app.getAppPath(), 'index.html');
-//eslint-disable-next-line no-console
-console.log('electron will open', url);
+  if (isDev) {
+    //eslint-disable-next-line no-console
+    console.log('running in dev mode');
 
-app.on('ready', () =>
-  installDevExtensions(isDev)
-    .then(() => {
-      function createWindow(fn, options = {}) {
-        const cfg = plugins.getDecoratedConfig();
+    // Overide default appVersion which is set from package.json
+    gitDescribe({customArguments: ['--tags']}, (error, gitInfo) => {
+      if (!error) {
+        app.setVersion(gitInfo.raw);
+      }
+    });
+  } else {
+    //eslint-disable-next-line no-console
+    console.log('running in prod mode');
+  }
 
-        const winSet = config.getWin();
-        let [startX, startY] = winSet.position;
+  const url = 'file://' + resolve(isDev ? __dirname : app.getAppPath(), 'index.html');
+  //eslint-disable-next-line no-console
+  console.log('electron will open', url);
 
-        const [width, height] = options.size ? options.size : cfg.windowSize || winSet.size;
-        const {screen} = require('electron');
+  app.on('ready', () =>
+    installDevExtensions(isDev)
+      .then(() => {
+        function createWindow(fn, options = {}) {
+          const cfg = plugins.getDecoratedConfig();
 
-        const winPos = options.position;
+          const winSet = config.getWin();
+          let [startX, startY] = winSet.position;
 
-        // Open the new window roughly the height of the header away from the
-        // previous window. This also ensures in multi monitor setups that the
-        // new terminal is on the correct screen.
-        const focusedWindow = BrowserWindow.getFocusedWindow() || app.getLastFocusedWindow();
-        // In case of options defaults position and size, we should ignore the focusedWindow.
-        if (winPos !== undefined) {
-          [startX, startY] = winPos;
-        } else if (focusedWindow) {
-          const points = focusedWindow.getPosition();
-          const currentScreen = screen.getDisplayNearestPoint({
-            x: points[0],
-            y: points[1]
+          const [width, height] = options.size ? options.size : cfg.windowSize || winSet.size;
+          const {screen} = require('electron');
+
+          const winPos = options.position;
+
+          // Open the new window roughly the height of the header away from the
+          // previous window. This also ensures in multi monitor setups that the
+          // new terminal is on the correct screen.
+          const focusedWindow = BrowserWindow.getFocusedWindow() || app.getLastFocusedWindow();
+          // In case of options defaults position and size, we should ignore the focusedWindow.
+          if (winPos !== undefined) {
+            [startX, startY] = winPos;
+          } else if (focusedWindow) {
+            const points = focusedWindow.getPosition();
+            const currentScreen = screen.getDisplayNearestPoint({
+              x: points[0],
+              y: points[1]
+            });
+
+            const biggestX = points[0] + 100 + width - currentScreen.bounds.x;
+            const biggestY = points[1] + 100 + height - currentScreen.bounds.y;
+
+            if (biggestX > currentScreen.size.width) {
+              startX = 50;
+            } else {
+              startX = points[0] + 34;
+            }
+            if (biggestY > currentScreen.size.height) {
+              startY = 50;
+            } else {
+              startY = points[1] + 34;
+            }
+          }
+
+          if (!windowUtils.positionIsValid([startX, startY])) {
+            [startX, startY] = config.windowDefaults.windowPosition;
+          }
+
+          const hwin = new Window({width, height, x: startX, y: startY}, cfg, fn);
+          windowSet.add(hwin);
+          hwin.loadURL(url);
+
+          // the window can be closed by the browser process itself
+          hwin.on('close', () => {
+            hwin.clean();
+            windowSet.delete(hwin);
           });
 
-          const biggestX = points[0] + 100 + width - currentScreen.bounds.x;
-          const biggestY = points[1] + 100 + height - currentScreen.bounds.y;
-
-          if (biggestX > currentScreen.size.width) {
-            startX = 50;
-          } else {
-            startX = points[0] + 34;
-          }
-          if (biggestY > currentScreen.size.height) {
-            startY = 50;
-          } else {
-            startY = points[1] + 34;
-          }
-        }
-
-        if (!windowUtils.positionIsValid([startX, startY])) {
-          [startX, startY] = config.windowDefaults.windowPosition;
-        }
-
-        const hwin = new Window({width, height, x: startX, y: startY}, cfg, fn);
-        windowSet.add(hwin);
-        hwin.loadURL(url);
-
-        // the window can be closed by the browser process itself
-        hwin.on('close', () => {
-          hwin.clean();
-          windowSet.delete(hwin);
-        });
-
-        hwin.on('closed', () => {
-          if (process.platform !== 'darwin' && windowSet.size === 0) {
-            app.quit();
-          }
-        });
-
-        return hwin;
-      }
-
-      // when opening create a new window
-      createWindow();
-
-      // expose to plugins
-      app.createWindow = createWindow;
-
-      // mac only. when the dock icon is clicked
-      // and we don't have any active windows open,
-      // we open one
-      app.on('activate', () => {
-        if (!windowSet.size) {
-          createWindow();
-        }
-      });
-
-      const makeMenu = () => {
-        const menu = plugins.decorateMenu(AppMenu.createMenu(createWindow, plugins.getLoadedPluginVersions));
-
-        // If we're on Mac make a Dock Menu
-        if (process.platform === 'darwin') {
-          const dockMenu = Menu.buildFromTemplate([
-            {
-              label: 'New Window',
-              click() {
-                createWindow();
-              }
+          hwin.on('closed', () => {
+            if (process.platform !== 'darwin' && windowSet.size === 0) {
+              app.quit();
             }
-          ]);
-          app.dock.setMenu(dockMenu);
+          });
+
+          return hwin;
         }
 
-        Menu.setApplicationMenu(AppMenu.buildMenu(menu));
-      };
+        // when opening create a new window
+        createWindow();
 
-      plugins.onApp(app);
-      makeMenu();
-      plugins.subscribe(plugins.onApp.bind(undefined, app));
-      config.subscribe(makeMenu);
-      if (!isDev) {
-        // check if should be set/removed as default ssh protocol client
-        if (config.getConfig().defaultSSHApp && !app.isDefaultProtocolClient('ssh')) {
-          //eslint-disable-next-line no-console
-          console.log('Setting Hyper as default client for ssh:// protocol');
-          app.setAsDefaultProtocolClient('ssh');
-        } else if (!config.getConfig().defaultSSHApp && app.isDefaultProtocolClient('ssh')) {
-          //eslint-disable-next-line no-console
-          console.log('Removing Hyper from default client for ssh:// protocl');
-          app.removeAsDefaultProtocolClient('ssh');
+        // expose to plugins
+        app.createWindow = createWindow;
+
+        // mac only. when the dock icon is clicked
+        // and we don't have any active windows open,
+        // we open one
+        app.on('activate', () => {
+          if (!windowSet.size) {
+            createWindow();
+          }
+        });
+
+        const makeMenu = () => {
+          const menu = plugins.decorateMenu(AppMenu.createMenu(createWindow, plugins.getLoadedPluginVersions));
+
+          // If we're on Mac make a Dock Menu
+          if (process.platform === 'darwin') {
+            const dockMenu = Menu.buildFromTemplate([
+              {
+                label: 'New Window',
+                click() {
+                  createWindow();
+                }
+              }
+            ]);
+            app.dock.setMenu(dockMenu);
+          }
+
+          Menu.setApplicationMenu(AppMenu.buildMenu(menu));
+        };
+
+        plugins.onApp(app);
+        makeMenu();
+        plugins.subscribe(plugins.onApp.bind(undefined, app));
+        config.subscribe(makeMenu);
+        if (!isDev) {
+          // check if should be set/removed as default ssh protocol client
+          if (config.getConfig().defaultSSHApp && !app.isDefaultProtocolClient('ssh')) {
+            //eslint-disable-next-line no-console
+            console.log('Setting Hyper as default client for ssh:// protocol');
+            app.setAsDefaultProtocolClient('ssh');
+          } else if (!config.getConfig().defaultSSHApp && app.isDefaultProtocolClient('ssh')) {
+            //eslint-disable-next-line no-console
+            console.log('Removing Hyper from default client for ssh:// protocl');
+            app.removeAsDefaultProtocolClient('ssh');
+          }
         }
-        installCLI(false);
-      }
-    })
-    .catch(err => {
-      //eslint-disable-next-line no-console
-      console.error('Error while loading devtools extensions', err);
-    })
-);
+      })
+      .catch(err => {
+        //eslint-disable-next-line no-console
+        console.error('Error while loading devtools extensions', err);
+      })
+  );
 
-app.on('open-file', (event, path) => {
-  const lastWindow = app.getLastFocusedWindow();
-  const callback = win => win.rpc.emit('open file', {path});
-  if (lastWindow) {
-    callback(lastWindow);
-  } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
-    app.createWindow(callback);
-  } else {
-    // If createWindow doesn't exist yet ('ready' event was not fired),
-    // sets his callback to an app.windowCallback property.
-    app.windowCallback = callback;
-  }
-});
+  app.on('open-file', (event, path) => {
+    const lastWindow = app.getLastFocusedWindow();
+    const callback = win => win.rpc.emit('open file', {path});
+    if (lastWindow) {
+      callback(lastWindow);
+    } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
+      app.createWindow(callback);
+    } else {
+      // If createWindow doesn't exist yet ('ready' event was not fired),
+      // sets his callback to an app.windowCallback property.
+      app.windowCallback = callback;
+    }
+  });
 
-app.on('open-url', (event, sshUrl) => {
-  const lastWindow = app.getLastFocusedWindow();
-  const callback = win => win.rpc.emit('open ssh', sshUrl);
-  if (lastWindow) {
-    callback(lastWindow);
-  } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
-    app.createWindow(callback);
-  } else {
-    // If createWindow doesn't exist yet ('ready' event was not fired),
-    // sets his callback to an app.windowCallback property.
-    app.windowCallback = callback;
-  }
-});
-
+  app.on('open-url', (event, sshUrl) => {
+    const lastWindow = app.getLastFocusedWindow();
+    const callback = win => win.rpc.emit('open ssh', sshUrl);
+    if (lastWindow) {
+      callback(lastWindow);
+    } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
+      app.createWindow(callback);
+    } else {
+      // If createWindow doesn't exist yet ('ready' event was not fired),
+      // sets his callback to an app.windowCallback property.
+      app.windowCallback = callback;
+    }
+  });
+}
 function installDevExtensions(isDev_) {
   if (!isDev_) {
     return Promise.resolve();
