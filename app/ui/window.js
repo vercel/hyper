@@ -147,6 +147,17 @@ module.exports = class Window {
       session.resize({cols, rows});
     });
     rpc.on('data', ({uid, data, escaped}) => {
+      window.handleSessionInput(uid, data, escaped);
+    });
+    window.initSession = (opts, fn_) => {
+      fn_(uuid.v4(), new Session(opts));
+    };
+
+    window.handleSessionData = (uid, data, handleSessionCallback) => {
+      // By default, just execute the callback.  Plugins can override.
+      return handleSessionCallback(uid, data);
+    };
+    window.handleSessionInput = (uid, data, escaped) => {
       const session = sessions.get(uid);
 
       if (escaped) {
@@ -158,14 +169,6 @@ module.exports = class Window {
       } else {
         session.write(data);
       }
-    });
-    window.initSession = (opts, fn_) => {
-      fn_(uuid.v4(), new Session(opts));
-    };
-
-    window.handleSessionData = (uid, data, handleSessionCallback) => {
-      // By default, just execute the callback.  Plugins can override.
-      return handleSessionCallback(uid, data);
     };
     window.deleteSession = uid => {
       sessions.delete(uid);
