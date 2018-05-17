@@ -67,7 +67,7 @@ module.exports = class Window {
       // If no callback is passed to createWindow,
       // a new session will be created by default.
       if (!fn) {
-        fn = win => win.rpc.emit('termgroup add req', {});
+        fn = win => win.rpc.emit('termgroup add req', {termGroupUid: uuid.v4(), sessionUid: uuid.v4()});
       }
 
       // app.windowCallback is the createWindow callback
@@ -107,7 +107,7 @@ module.exports = class Window {
           uid,
           splitDirection: sessionOpts.splitDirection,
           shell: session.shell,
-          pid: typeof session.pty !== 'undefined' ? session.pty.pid : null,
+          pid: session.pty ? session.pty.pid : null,
           termGroupUid: sessionOpts.termGroupUid,
           activeUid: sessionOpts.activeUid
         });
@@ -150,7 +150,7 @@ module.exports = class Window {
       window.handleSessionInput(uid, data, escaped);
     });
     window.initSession = (opts, fn_) => {
-      fn_(uuid.v4(), new Session(opts));
+      fn_(opts.sessionUid, new Session(opts));
     };
 
     window.handleSessionData = (uid, data, handleSessionCallback) => {

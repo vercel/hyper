@@ -1,4 +1,5 @@
 const {app} = require('electron');
+const uuid = require('uuid');
 const {openConfig} = require('./config');
 const {updatePlugins} = require('./plugins');
 const {installCLI} = require('./utils/cli-install');
@@ -10,16 +11,16 @@ const commands = {
   },
   'tab:new': focusedWindow => {
     if (focusedWindow) {
-      focusedWindow.rpc.emit('termgroup add req', {});
+      focusedWindow.rpc.emit('termgroup add req', {termGroupUid: uuid.v4(), sessionUid: uuid.v4()});
     } else {
       setTimeout(app.createWindow, 0);
     }
   },
   'pane:splitVertical': focusedWindow => {
-    focusedWindow && focusedWindow.rpc.emit('split request vertical', {});
+    focusedWindow && focusedWindow.rpc.emit('split request vertical', {sessionUid: uuid.v4()});
   },
   'pane:splitHorizontal': focusedWindow => {
-    focusedWindow && focusedWindow.rpc.emit('split request horizontal', {});
+    focusedWindow && focusedWindow.rpc.emit('split request horizontal', {sessionUid: uuid.v4()});
   },
   'pane:close': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('termgroup close req');
