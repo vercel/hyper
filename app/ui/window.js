@@ -4,6 +4,7 @@ const {parse: parseUrl} = require('url');
 const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
+
 const updater = require('../updater');
 const toElectronBackgroundColor = require('../utils/to-electron-background-color');
 const {icon, cfgDir} = require('../config/paths');
@@ -66,7 +67,7 @@ module.exports = class Window {
       // If no callback is passed to createWindow,
       // a new session will be created by default.
       if (!fn) {
-        fn = win => win.rpc.emit('termgroup add req');
+        fn = win => win.rpc.emit('termgroup add req', {});
       }
 
       // app.windowCallback is the createWindow callback
@@ -98,11 +99,7 @@ module.exports = class Window {
         options
       );
 
-      const initSession = (opts, fn_) => {
-        fn_(uuid.v4(), new Session(opts));
-      };
-
-      initSession(sessionOpts, (uid, session) => {
+      window.initSession(sessionOpts, (uid, session) => {
         sessions.set(uid, session);
         rpc.emit('session add', {
           rows: sessionOpts.rows,
@@ -110,16 +107,20 @@ module.exports = class Window {
           uid,
           splitDirection: sessionOpts.splitDirection,
           shell: session.shell,
-          pid: session.pty.pid
+          pid: typeof session.pty !== 'undefined' ? session.pty.pid : null,
+          termGroupUid: sessionOpts.termGroupUid,
+          activeUid: sessionOpts.activeUid
         });
 
         session.on('data', data => {
-          rpc.emit('session data', uid + data);
+          window.handleSessionData(uid, data, (innerUid, innerData) => {
+            rpc.emit('session data', {uid: innerUid, data: innerData});
+          });
         });
 
         session.on('exit', () => {
           rpc.emit('session exit', {uid});
-          sessions.delete(uid);
+          window.deleteSession(uid);
         });
       });
     });
@@ -146,6 +147,17 @@ module.exports = class Window {
       session.resize({cols, rows});
     });
     rpc.on('data', ({uid, data, escaped}) => {
+      window.handleSessionInput(uid, data, escaped);
+    });
+    window.initSession = (opts, fn_) => {
+      fn_(uuid.v4(), new Session(opts));
+    };
+
+    window.handleSessionData = (uid, data, handleSessionCallback) => {
+      // By default, just execute the callback.  Plugins can override.
+      return handleSessionCallback(uid, data);
+    };
+    window.handleSessionInput = (uid, data, escaped) => {
       const session = sessions.get(uid);
 
       if (escaped) {
@@ -157,7 +169,10 @@ module.exports = class Window {
       } else {
         session.write(data);
       }
-    });
+    };
+    window.deleteSession = uid => {
+      sessions.delete(uid);
+    };
     rpc.on('open external', ({url}) => {
       shell.openExternal(url);
     });
