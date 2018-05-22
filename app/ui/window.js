@@ -93,7 +93,7 @@ module.exports = class Window {
           cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : cfgDir,
           splitDirection: undefined,
           shell: cfg.shell,
-          isWsl: /(?:bash|debian|kali|opensuse|ubuntu|wsl)\.exe$/.test(cfg.shell),
+          isWsl: /(?:bash|debian|kali|opensuse|ubuntu(?:1804)?|wsl)\.exe$/.test(cfg.shell),
           shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
         },
         options
