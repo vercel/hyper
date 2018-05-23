@@ -69,12 +69,23 @@ function save() {
 }
 
 function existsOnNpm(plugin) {
-  const name = plugin.split('#')[0].split('@')[0];
+  const name = getPackageName(plugin);
   return got.get(registryUrl + name.toLowerCase(), {timeout: 10000, json: true}).then(res => {
     if (!res.body.versions) {
       return Promise.reject(res);
     }
   });
+}
+
+function getPackageName(plugin) {
+  const isScoped = plugin[0] === '@';
+  const nameWithoutVersion = plugin.split('#')[0];
+
+  if (isScoped) {
+    return '@' + nameWithoutVersion.split('@')[1].replace('/', '%2f');
+  }
+
+  return nameWithoutVersion.split('@')[0];
 }
 
 function install(plugin, locally) {
