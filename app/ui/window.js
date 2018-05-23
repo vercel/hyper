@@ -13,6 +13,7 @@ const fetchNotifications = require('../notifications');
 const Session = require('../session');
 const contextMenuTemplate = require('./contextmenu');
 const {execCommand} = require('../commands');
+const {isWslShell} = require('../utils/wsl');
 
 module.exports = class Window {
   constructor(options_, cfg, fn) {
@@ -93,7 +94,7 @@ module.exports = class Window {
           cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : cfgDir,
           splitDirection: undefined,
           shell: cfg.shell,
-          isWsl: /(bash|debian|kali|opensuse|ubuntu(1804)?|wsl)\.exe$/.test(cfg.shell),
+          isWsl: isWslShell(cfg.shell),
           shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
         },
         options
