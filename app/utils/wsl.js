@@ -13,7 +13,7 @@ const WSL_SHELL_EXECUTABLES = [
 ];
 
 // Returns true if given shell executable is from WSL, false otherwise
-function isWslShell(shell) {
+function isWslShell(shell = '') {
   return WSL_SHELL_EXECUTABLES.indexOf(shell.split(path.sep).pop()) !== -1;
 }
 
