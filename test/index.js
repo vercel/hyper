@@ -39,6 +39,10 @@ test.after(async () => {
 });
 
 test('see if dev tools are open', async t => {
+  app.mainProcess.on('uncaughtException', () => {
+    // throw e;
+  });
+
   await app.client.waitUntilWindowLoaded();
   t.false(await app.browserWindow.isDevToolsOpened());
 });
