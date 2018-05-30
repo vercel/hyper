@@ -9,6 +9,7 @@
     "test": "yarn run lint && yarn run test:unit",
     "test:unit": "ava test/unit",
     "test:unit:watch": "yarn run test:unit -- --watch",
+    "test:release": "yarn run ava ./test/index.js",
     "prepush": "yarn test",
     "postinstall": "electron-builder install-app-deps && yarn run rebuild-node-pty && yarn --cwd node_modules/xterm",
     "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
