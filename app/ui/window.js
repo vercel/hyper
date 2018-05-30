@@ -4,7 +4,6 @@ const {parse: parseUrl} = require('url');
 const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
-
 const updater = require('../updater');
 const toElectronBackgroundColor = require('../utils/to-electron-background-color');
 const {icon, cfgDir} = require('../config/paths');
@@ -99,7 +98,11 @@ module.exports = class Window {
         options
       );
 
-      window.initSession(sessionOpts, (uid, session) => {
+      const initSession = (opts, fn_) => {
+        fn_(opts.sessionUid, app.plugins.extendSession(opts, new Session(opts)));
+      };
+
+      initSession(sessionOpts, (uid, session) => {
         sessions.set(uid, session);
         rpc.emit('session add', {
           rows: sessionOpts.rows,
@@ -113,14 +116,12 @@ module.exports = class Window {
         });
 
         session.on('data', data => {
-          window.handleSessionData(uid, data, (innerUid, innerData) => {
-            rpc.emit('session data', {uid: innerUid, data: innerData});
-          });
+          rpc.emit('session data', {uid, data});
         });
 
         session.on('exit', () => {
           rpc.emit('session exit', {uid});
-          window.deleteSession(uid);
+          sessions.delete(uid);
         });
       });
     });
@@ -147,17 +148,6 @@ module.exports = class Window {
       session.resize({cols, rows});
     });
     rpc.on('data', ({uid, data, escaped}) => {
-      window.handleSessionInput(uid, data, escaped);
-    });
-    window.initSession = (opts, fn_) => {
-      fn_(opts.sessionUid, new Session(opts));
-    };
-
-    window.handleSessionData = (uid, data, handleSessionCallback) => {
-      // By default, just execute the callback.  Plugins can override.
-      return handleSessionCallback(uid, data);
-    };
-    window.handleSessionInput = (uid, data, escaped) => {
       const session = sessions.get(uid);
 
       if (escaped) {
@@ -169,10 +159,7 @@ module.exports = class Window {
       } else {
         session.write(data);
       }
-    };
-    window.deleteSession = uid => {
-      sessions.delete(uid);
-    };
+    });
     rpc.on('open external', ({url}) => {
       shell.openExternal(url);
     });
@@ -203,8 +190,8 @@ module.exports = class Window {
     const deleteSessions = () => {
       sessions.forEach((session, key) => {
         session.removeAllListeners();
-        session.destroy();
         sessions.delete(key);
+        session.destroy();
       });
     };
     // we reset the rpc channel only upon
