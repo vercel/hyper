@@ -55,12 +55,8 @@ function patchModuleLoad() {
     // PLEASE NOTE: Code changes here, also need to be changed in
     // lib/utils/plugins.js
     switch (modulePath) {
-      // case 'hyper/component':
-      //   return PureComponent;
       // These return Object, since they work differently on the backend, than on the frontend.
       // Still needs to be here, to prevent errors, while loading plugins.
-      // case 'react':
-      // case 'react-dom':
       case 'hyper/component':
       case 'hyper/Notification':
       case 'hyper/notify':
