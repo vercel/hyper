@@ -49,24 +49,19 @@ config.subscribe(() => {
 // so plugins can `require` them without needing their own version
 // https://github.com/zeit/hyper/issues/619
 function patchModuleLoad() {
-  const React = require('react');
-  const PureComponent = React.PureComponent;
-  const ReactDOM = require('react-dom');
-
   const Module = require('module');
   const originalLoad = Module._load;
   Module._load = function _load(modulePath) {
     // PLEASE NOTE: Code changes here, also need to be changed in
     // lib/utils/plugins.js
     switch (modulePath) {
-      case 'react':
-        return React;
-      case 'react-dom':
-        return ReactDOM;
-      case 'hyper/component':
-        return PureComponent;
+      // case 'hyper/component':
+      //   return PureComponent;
       // These return Object, since they work differently on the backend, than on the frontend.
       // Still needs to be here, to prevent errors, while loading plugins.
+      // case 'react':
+      // case 'react-dom':
+      case 'hyper/component':
       case 'hyper/Notification':
       case 'hyper/notify':
       case 'hyper/decorate':
