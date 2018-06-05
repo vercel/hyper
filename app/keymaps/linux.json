@@ -4,7 +4,7 @@
   "window:reloadFull": "ctrl+shift+f5",
   "window:preferences": "ctrl+,",
   "zoom:reset": "ctrl+0",
-  "zoom:in": "ctrl+plus",
+  "zoom:in": "ctrl+=",
   "zoom:out": "ctrl+-",
   "window:new": "ctrl+shift+n",
   "window:minimize": "ctrl+shift+m",
