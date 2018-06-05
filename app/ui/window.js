@@ -99,7 +99,9 @@ module.exports = class Window {
       );
 
       const initSession = (opts, fn_) => {
-        fn_(opts.sessionUid, app.plugins.extendSession(opts, new Session(opts)));
+        const newSession = app.plugins.extendSession(opts, new Session());
+        newSession.init(opts);
+        fn_(opts.sessionUid, newSession);
       };
 
       initSession(sessionOpts, (uid, session) => {

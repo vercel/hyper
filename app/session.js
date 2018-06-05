@@ -23,8 +23,11 @@ try {
 const envFromConfig = config.getConfig().env || {};
 
 module.exports = class Session extends EventEmitter {
-  constructor({rows, cols: columns, cwd, shell, shellArgs}) {
+  constructor() {
     super();
+  }
+
+  init({rows, cols: columns, cwd, shell, shellArgs}) {
     const baseEnv = Object.assign(
       {},
       process.env,
