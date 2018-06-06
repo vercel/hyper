@@ -4,6 +4,9 @@ const {writeFileSync} = require('fs');
 const Config = require('electron-config');
 const ms = require('ms');
 
+const React = require('react');
+const ReactDom = require('react-dom');
+
 const config = require('./config');
 const notify = require('./notify');
 const {availableExtensions} = require('./plugins/extensions');
@@ -55,9 +58,17 @@ function patchModuleLoad() {
     // PLEASE NOTE: Code changes here, also need to be changed in
     // lib/utils/plugins.js
     switch (modulePath) {
+      case 'react':
+        // DEPRECATED
+        return React;
+      case 'react-dom':
+        // DEPRECATED
+        return ReactDom;
+      case 'hyper/component':
+        // DEPRECATED
+        return React.PureComponent;
       // These return Object, since they work differently on the backend, than on the frontend.
       // Still needs to be here, to prevent errors, while loading plugins.
-      case 'hyper/component':
       case 'hyper/Notification':
       case 'hyper/notify':
       case 'hyper/decorate':
