@@ -112,6 +112,13 @@ module.exports = (commandKeys, execCommand) => {
       click(item, focusedWindow) {
         execCommand('editor:clearBuffer', focusedWindow);
       }
+    },
+    {
+      label: 'Search',
+      accelerator: commandKeys['editor:search'],
+      click(item, focusedWindow) {
+        execCommand('editor:search', focusedWindow);
+      }
     }
   ];
 

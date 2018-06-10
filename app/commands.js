@@ -101,6 +101,9 @@ const commands = {
   'editor:break': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('session break req');
   },
+  'editor:search': focusedWindow => {
+    focusedWindow && focusedWindow.rpc.emit('session search');
+  },
   'cli:install': () => {
     installCLI(true);
   }
