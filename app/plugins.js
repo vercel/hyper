@@ -4,6 +4,9 @@ const {writeFileSync} = require('fs');
 const Config = require('electron-config');
 const ms = require('ms');
 
+const React = require('react');
+const ReactDom = require('react-dom');
+
 const config = require('./config');
 const notify = require('./notify');
 const {availableExtensions} = require('./plugins/extensions');
@@ -49,10 +52,6 @@ config.subscribe(() => {
 // so plugins can `require` them without needing their own version
 // https://github.com/zeit/hyper/issues/619
 function patchModuleLoad() {
-  const React = require('react');
-  const PureComponent = React.PureComponent;
-  const ReactDOM = require('react-dom');
-
   const Module = require('module');
   const originalLoad = Module._load;
   Module._load = function _load(modulePath) {
@@ -60,11 +59,14 @@ function patchModuleLoad() {
     // lib/utils/plugins.js
     switch (modulePath) {
       case 'react':
+        // DEPRECATED
         return React;
       case 'react-dom':
-        return ReactDOM;
+        // DEPRECATED
+        return ReactDom;
       case 'hyper/component':
-        return PureComponent;
+        // DEPRECATED
+        return React.PureComponent;
       // These return Object, since they work differently on the backend, than on the frontend.
       // Still needs to be here, to prevent errors, while loading plugins.
       case 'hyper/Notification':
