@@ -37,7 +37,7 @@ After launching Hyper in dev mode, run `yarn run app`, it should log that your p
 When you put a `console.log()` in your plugin code, it will be displayed in the Electron dev-tools, but only if it is located in a renderer method, like component decorators. If it is located in the Electron main process method, like the `onApp` handler, it will be displayed in your terminal where you ran `yarn run app` or in your VSCode console.
 
 ## Recipes
-Almost all available API methods can be found on https://www.hyper.is.
+Almost all available API methods can be found on https://hyper.is.
 If there's any missing, let us know or submit a PR to document it!
 
 ### Components
