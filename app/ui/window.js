@@ -24,7 +24,7 @@ module.exports = class Window {
         titleBarStyle: 'hidden-inset',
         title: 'Hyper.app',
         // we want to go frameless on Windows and Linux
-        frame: process.platform === 'darwin',
+        frame: true, // We don't want shitty Windows look on Linux
         transparent: process.platform === 'darwin',
         icon,
         show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
