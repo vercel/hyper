@@ -44,7 +44,18 @@ const getFileContents = memoize(() => {
 
 const getParsedFile = memoize(() => recast.parse(getFileContents()));
 
-const getProperties = memoize(() => getParsedFile().program.body[0].expression.right.properties);
+const getProperties = memoize(() => {
+  let parsedFile = getParsedFile();
+  let moduleExports = parsedFile.program.body.find(node => {
+    return (
+      node.type === 'ExpressionStatement' &&
+      node.expression.left.object.name === 'module' &&
+      node.expression.left.property.name === 'exports'
+    );
+  });
+
+  return moduleExports.expression.right.properties;
+});
 
 const getPlugins = memoize(() => getProperties().find(property => property.key.name === 'plugins').value.elements);
 
