@@ -1,7 +1,11 @@
 const Registry = require('winreg');
 
 const appPath = `"${process.execPath}"`;
-const regKey = `\\Software\\Classes\\Directory\\background\\shell\\Hyper`;
+const regKeys = [
+  `\\Software\\Classes\\Directory\\shell\\Hyper`,
+  `\\Software\\Classes\\Directory\\background\\shell\\Hyper`
+];
+
 const regParts = [
   {key: 'command', name: '', value: `${appPath} "%V"`},
   {name: '', value: 'Open Hyper here'},
@@ -31,59 +35,85 @@ function addValues(hyperKey, commandKey, callback) {
 }
 
 exports.add = callback => {
-  const hyperKey = new Registry({hive: 'HKCU', key: regKey});
-  const commandKey = new Registry({
-    hive: 'HKCU',
-    key: `${regKey}\\${regParts[0].key}`
-  });
+  const hyperKeys = [
+    new Registry({hive: 'HKCU', key: regKeys[0]}),
+    new Registry({hive: 'HKCU', key: regKeys[1]})
+  ];
 
-  hyperKey.keyExists((error, exists) => {
+  const commandKeys = [
+    new Registry({
+      hive: 'HKCU',
+      key: `${regKeys[0]}\\${regParts[0].key}`
+    }),
+    new Registry({
+      hive: 'HKCU',
+      key: `${regKeys[1]}\\${regParts[0].key}`
+    })
+  ];
+
+  let i = 0;
+  hyperKeys[0].keyExists(createKey);
+
+  function createKey(error, exists) {
     if (error) {
       //eslint-disable-next-line no-console
       console.error(error.message);
     }
     if (exists) {
-      commandKey.keyExists((err_, exists_) => {
+      commandKeys[i].keyExists((err_, exists_) => {
         if (err_) {
           //eslint-disable-next-line no-console
           console.error(err_.message);
         }
         if (exists_) {
-          addValues(hyperKey, commandKey, callback);
+          addValues(hyperKeys[i], commandKeys[i],
+             i ? callback : function() {i++;hyperKeys[i].keyExists(createKey);} );
         } else {
-          commandKey.create(err => {
+          commandKeys[i].create(err => {
             if (err) {
               //eslint-disable-next-line no-console
               console.error(err.message);
             }
-            addValues(hyperKey, commandKey, callback);
+            addValues(hyperKeys[i], commandKeys[i],
+              i ? callback : function() {i++;hyperKeys[i].keyExists(createKey);} );
           });
         }
       });
     } else {
-      hyperKey.create(err => {
+      hyperKeys[i].create(err => {
         if (err) {
           //eslint-disable-next-line no-console
           console.error(err.message);
         }
-        commandKey.create(err_ => {
+        commandKeys[i].create(err_ => {
           if (err_) {
             //eslint-disable-next-line no-console
             console.error(err_.message);
           }
-          addValues(hyperKey, commandKey, callback);
+          addValues(hyperKeys[i], commandKeys[i], 
+            i ? callback : function() {i++;hyperKeys[i].keyExists(createKey);} );
         });
       });
     }
-  });
+  }
 };
 
 exports.remove = callback => {
-  new Registry({hive: 'HKCU', key: regKey}).destroy(err => {
+  let firstRegistry = new Registry({hive: 'HKCU', key: regKeys[0]});
+  let secondRegistry = new Registry({hive: 'HKCU', key: regKeys[1]});
+
+  firstRegistry.destroy(err => {
     if (err) {
       //eslint-disable-next-line no-console
       console.error(err.message);
     }
-    callback();
+    secondRegistry.destroy(err => {
+      if (err) {
+        //eslint-disable-next-line no-console
+        console.error(err.message);
+      }
+      callback();
+    });
   });
+
 };
