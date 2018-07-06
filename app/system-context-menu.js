@@ -35,10 +35,7 @@ function addValues(hyperKey, commandKey, callback) {
 }
 
 exports.add = callback => {
-  const hyperKeys = [
-    new Registry({hive: 'HKCU', key: regKeys[0]}),
-    new Registry({hive: 'HKCU', key: regKeys[1]})
-  ];
+  const hyperKeys = [new Registry({hive: 'HKCU', key: regKeys[0]}), new Registry({hive: 'HKCU', key: regKeys[1]})];
 
   const commandKeys = [
     new Registry({
@@ -66,16 +63,32 @@ exports.add = callback => {
           console.error(err_.message);
         }
         if (exists_) {
-          addValues(hyperKeys[i], commandKeys[i],
-             i ? callback : function() {i++;hyperKeys[i].keyExists(createKey);} );
+          addValues(
+            hyperKeys[i],
+            commandKeys[i],
+            i
+              ? callback
+              : () => {
+                  i++;
+                  hyperKeys[i].keyExists(createKey);
+                }
+          );
         } else {
           commandKeys[i].create(err => {
             if (err) {
               //eslint-disable-next-line no-console
               console.error(err.message);
             }
-            addValues(hyperKeys[i], commandKeys[i],
-              i ? callback : function() {i++;hyperKeys[i].keyExists(createKey);} );
+            addValues(
+              hyperKeys[i],
+              commandKeys[i],
+              i
+                ? callback
+                : () => {
+                    i++;
+                    hyperKeys[i].keyExists(createKey);
+                  }
+            );
           });
         }
       });
@@ -90,8 +103,16 @@ exports.add = callback => {
             //eslint-disable-next-line no-console
             console.error(err_.message);
           }
-          addValues(hyperKeys[i], commandKeys[i], 
-            i ? callback : function() {i++;hyperKeys[i].keyExists(createKey);} );
+          addValues(
+            hyperKeys[i],
+            commandKeys[i],
+            i
+              ? callback
+              : () => {
+                  i++;
+                  hyperKeys[i].keyExists(createKey);
+                }
+          );
         });
       });
     }
@@ -107,6 +128,7 @@ exports.remove = callback => {
       //eslint-disable-next-line no-console
       console.error(err.message);
     }
+    // eslint-disable-next-line no-shadow
     secondRegistry.destroy(err => {
       if (err) {
         //eslint-disable-next-line no-console
@@ -115,5 +137,4 @@ exports.remove = callback => {
       callback();
     });
   });
-
 };
