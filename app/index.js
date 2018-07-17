@@ -93,7 +93,7 @@ if (isDev) {
   //eslint-disable-next-line no-console
   console.log('running in dev mode');
 
-  // Overide default appVersion which is set from package.json
+  // Override default appVersion which is set from package.json
   gitDescribe({customArguments: ['--tags']}, (error, gitInfo) => {
     if (!error) {
       app.setVersion(gitInfo.raw);
@@ -220,7 +220,7 @@ app.on('ready', () =>
           app.setAsDefaultProtocolClient('ssh');
         } else if (!config.getConfig().defaultSSHApp && app.isDefaultProtocolClient('ssh')) {
           //eslint-disable-next-line no-console
-          console.log('Removing Hyper from default client for ssh:// protocl');
+          console.log('Removing Hyper from default client for ssh:// protocol');
           app.removeAsDefaultProtocolClient('ssh');
         }
         installCLI(false);
