@@ -2,7 +2,7 @@
   "name": "hyper",
   "productName": "Hyper",
   "description": "A terminal built on web technologies",
-  "version": "2.1.0-canary.1",
+  "version": "2.1.0-canary.2",
   "license": "MIT",
   "author": {
     "name": "ZEIT, Inc.",
@@ -27,6 +27,8 @@
     "os-locale": "2.1.0",
     "parse-url": "3.0.2",
     "queue": "4.4.2",
+    "react": "16.2.0",
+    "react-dom": "16.2.0",
     "semver": "5.5.0",
     "shell-env": "0.3.0",
     "uuid": "3.2.1",
