@@ -45,18 +45,22 @@ const darwinKeys = join(keymapPath, 'darwin.json');
 const win32Keys = join(keymapPath, 'win32.json');
 const linuxKeys = join(keymapPath, 'linux.json');
 
-const defaultPlatformKeyPath = () => {
-  switch (process.platform) {
-    case 'darwin':
-      return darwinKeys;
-    case 'win32':
-      return win32Keys;
-    case 'linux':
-      return linuxKeys;
-    default:
-      return darwinKeys;
-  }
-};
+var defaultPlatformKeyPath;
+
+switch (process.platform) {
+  case 'darwin':
+    defaultPlatformKeyPath = darwinKeys;
+    break;
+  case 'win32':
+    defaultPlatformKeyPath = win32Keys;
+    break;
+  case 'linux':
+    defaultPlatformKeyPath = linuxKeys;
+    break;
+  default:
+    defaultPlatformKeyPath = darwinKeys;
+    break;
+}
 
 module.exports = {
   cfgDir,
