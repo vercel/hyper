@@ -211,7 +211,7 @@
     "babel-preset-react": "6.24.1",
     "copy-webpack-plugin": "4.3.1",
     "cross-env": "5.1.4",
-    "electron": "1.8.4",
+    "electron": "1.8.7",
     "electron-builder": "20.5.1",
     "electron-builder-squirrel-windows": "20.5.0",
     "electron-devtools-installer": "2.2.3",
