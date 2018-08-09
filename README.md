@@ -13,7 +13,9 @@ For more details, head to: https://hyper.is
 [Download the latest release!](https://hyper.is/#installation)
 
 ### Linux
+
 #### Arch and derivatives
+
 Hyper is available in the [AUR](https://aur.archlinux.org/packages/hyper/). Use an AUR package manager like [aurman](https://github.com/polygamma/aurman)
 
 ```sh
@@ -43,27 +45,30 @@ choco install hyper
 
 Regardless of the platform you are working on, you will need to have Yarn installed. If you have never installed Yarn before, you can find out how at: https://yarnpkg.com/en/docs/install.
 
-1. Install necessary packages:
-  * Windows
-    - Be sure to run  `yarn global add windows-build-tools` to install `windows-build-tools`.
-  * macOS
-    - Once you have installed Yarn, you can skip this section!
-  * Linux(You can see [here](https://en.wikipedia.org/wiki/List_of_Linux_distributions) what your Linux is based on.)
-    - RPM-based
-        + `GraphicsMagick`
-        + `libicns-utils`
-        + `xz` (Installed by default on some distributions.)
-    - Debian-based
-        + `graphicsmagick`
-        + `icnsutils`
-        + `xz-utils`
-2. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
-3. Install the dependencies: `yarn`
-4. Build the code and watch for changes: `yarn run dev`
-5. To run `hyper`
-  * `yarn run app` from another terminal tab/window/pane
-  * If you are using **Visual Studio Code**, select `Launch Hyper` in debugger configuration to launch a new Hyper instance with debugger attached.
-  * If you interrupt `yarn run dev`, you'll need to relaunch it each time you want to test something. Webpack will watch changes and will rebuild renderer code when needed (and only what have changed). You'll just have to relaunch electron by using yarn run app or VSCode launch task.
+1.  Install necessary packages:
+
+* Windows
+  * Be sure to run `yarn global add windows-build-tools` to install `windows-build-tools`.
+* macOS
+  * Once you have installed Yarn, you can skip this section!
+* Linux(You can see [here](https://en.wikipedia.org/wiki/List_of_Linux_distributions) what your Linux is based on.)
+  * RPM-based
+    * `GraphicsMagick`
+    * `libicns-utils`
+    * `xz` (Installed by default on some distributions.)
+  * Debian-based
+    * `graphicsmagick`
+    * `icnsutils`
+    * `xz-utils`
+
+2.  [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
+3.  Install the dependencies: `yarn`
+4.  Build the code and watch for changes: `yarn run dev`
+5.  To run `hyper`
+
+* `yarn run app` from another terminal tab/window/pane
+* If you are using **Visual Studio Code**, select `Launch Hyper` in debugger configuration to launch a new Hyper instance with debugger attached.
+* If you interrupt `yarn run dev`, you'll need to relaunch it each time you want to test something. Webpack will watch changes and will rebuild renderer code when needed (and only what have changed). You'll just have to relaunch electron by using yarn run app or VSCode launch task.
 
 To make sure that your code works in the finished application, you can generate the binaries like this:
 
@@ -90,8 +95,8 @@ If you have issues in the `codesign` step when running `yarn run dist` on macOS,
 
 ## Related Repositories
 
-- [Art](https://github.com/zeit/art/tree/master/hyper)
-- [Website](https://github.com/zeit/hyper-site)
-- [Sample Extension](https://github.com/zeit/hyperpower)
-- [Sample Theme](https://github.com/zeit/hyperyellow)
-- [Awesome Hyper](https://github.com/bnb/awesome-hyper)
+* [Art](https://github.com/zeit/art/tree/master/hyper)
+* [Website](https://github.com/zeit/hyper-site)
+* [Sample Extension](https://github.com/zeit/hyperpower)
+* [Sample Theme](https://github.com/zeit/hyperyellow)
+* [Awesome Hyper](https://github.com/bnb/awesome-hyper)
