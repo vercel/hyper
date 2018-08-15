@@ -12,14 +12,20 @@
     "prepush": "yarn test",
     "postinstall": "electron-builder install-app-deps && yarn run rebuild-node-pty",
     "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
-    "dist":
-      "yarn run build && cross-env BABEL_ENV=production babel --out-file app/renderer/bundle.js --no-comments --minified app/renderer/bundle.js && build",
-    "clean":
-      "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
+    "dist": "yarn run build && cross-env BABEL_ENV=production babel --out-file app/renderer/bundle.js --no-comments --minified app/renderer/bundle.js && build",
+    "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
   },
   "eslintConfig": {
-    "plugins": ["react", "prettier"],
-    "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
+    "plugins": [
+      "react",
+      "prettier"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "prettier"
+    ],
+    "parser": "babel-eslint",
     "parserOptions": {
       "ecmaVersion": 8,
       "sourceType": "module",
@@ -36,7 +42,10 @@
       "node": true
     },
     "rules": {
-      "func-names": ["error", "as-needed"],
+      "func-names": [
+        "error",
+        "as-needed"
+      ],
       "no-shadow": "error",
       "no-extra-semi": 0,
       "react/prop-types": 0,
@@ -82,7 +91,9 @@
     ]
   },
   "babel": {
-    "presets": ["react"],
+    "presets": [
+      "react"
+    ],
     "plugins": [
       [
         "styled-jsx/babel",
@@ -127,7 +138,9 @@
       {
         "from": "./build/${os}/",
         "to": "./bin/",
-        "filter": ["hyper*"]
+        "filter": [
+          "hyper*"
+        ]
       }
     ],
     "linux": {
@@ -135,20 +148,28 @@
       "target": [
         {
           "target": "deb",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         },
         {
           "target": "AppImage",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         },
         {
           "target": "rpm",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         }
       ]
     },
     "win": {
-      "target": ["squirrel"],
+      "target": [
+        "squirrel"
+      ],
       "rfc3161TimeStampServer": "http://timestamp.comodoca.com"
     },
     "mac": {
@@ -163,7 +184,9 @@
     },
     "protocols": {
       "name": "ssh URL",
-      "schemes": ["ssh"]
+      "schemes": [
+        "ssh"
+      ]
     }
   },
   "license": "MIT",
@@ -206,6 +229,7 @@
     "ava": "0.25.0",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.0",
+    "babel-eslint": "8.2.6",
     "babel-loader": "7.1.2",
     "babel-preset-babili": "0.1.4",
     "babel-preset-react": "6.24.1",
