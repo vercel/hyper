@@ -231,6 +231,7 @@
     "babel-core": "6.26.0",
     "babel-eslint": "8.2.6",
     "babel-loader": "7.1.2",
+    "babel-plugin-transform-class-properties": "6.24.1",
     "babel-preset-babili": "0.1.4",
     "babel-preset-react": "6.24.1",
     "copy-webpack-plugin": "4.3.1",
