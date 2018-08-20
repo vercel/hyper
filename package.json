@@ -200,7 +200,7 @@
     "styled-jsx": "2.2.6",
     "stylis": "3.5.0",
     "uuid": "3.1.0",
-    "xterm": "3.5.1"
+    "xterm": "3.6.0"
   },
   "devDependencies": {
     "ava": "0.25.0",
