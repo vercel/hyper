@@ -332,6 +332,19 @@ exports.onWindow = win => {
   });
 };
 
+exports.extendSession = (window, opts, newSession) => {
+  modules.forEach(plugin => {
+    if (plugin.extendSession) {
+      try {
+        newSession = plugin.extendSession(window, opts, newSession);
+      } catch (e) {
+        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`);
+      }
+    }
+  });
+  return newSession;
+};
+
 // decorates the base object by calling plugin[key]
 // for all the available plugins
 function decorateObject(base, key) {

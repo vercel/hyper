@@ -66,7 +66,7 @@ module.exports = class Window {
       // If no callback is passed to createWindow,
       // a new session will be created by default.
       if (!fn) {
-        fn = win => win.rpc.emit('termgroup add req');
+        fn = win => win.rpc.emit('termgroup add req', {termGroupUid: uuid.v4(), sessionUid: uuid.v4()});
       }
 
       // app.windowCallback is the createWindow callback
@@ -99,7 +99,10 @@ module.exports = class Window {
       );
 
       const initSession = (opts, fn_) => {
-        fn_(uuid.v4(), new Session(opts));
+        const session = new Session();
+        const newSession = app.plugins.extendSession(window, opts, session);
+        newSession.init(opts);
+        fn_(opts.sessionUid, newSession);
       };
 
       initSession(sessionOpts, (uid, session) => {
@@ -110,11 +113,13 @@ module.exports = class Window {
           uid,
           splitDirection: sessionOpts.splitDirection,
           shell: session.shell,
-          pid: session.pty.pid
+          pid: session.pty ? session.pty.pid : null,
+          termGroupUid: sessionOpts.termGroupUid,
+          activeUid: sessionOpts.activeUid
         });
 
         session.on('data', data => {
-          rpc.emit('session data', uid + data);
+          rpc.emit('session data', {uid, data});
         });
 
         session.on('exit', () => {
@@ -188,8 +193,8 @@ module.exports = class Window {
     const deleteSessions = () => {
       sessions.forEach((session, key) => {
         session.removeAllListeners();
-        session.destroy();
         sessions.delete(key);
+        session.destroy();
       });
     };
     // we reset the rpc channel only upon

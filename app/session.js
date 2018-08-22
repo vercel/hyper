@@ -22,9 +22,12 @@ try {
 const envFromConfig = config.getConfig().env || {};
 
 module.exports = class Session extends EventEmitter {
-  constructor({rows, cols: columns, cwd, shell, shellArgs}) {
-    const osLocale = require('os-locale');
+  constructor() {
     super();
+  }
+
+  init({rows, cols: columns, cwd, shell, shellArgs}) {
+    const osLocale = require('os-locale');
     const baseEnv = Object.assign(
       {},
       process.env,
@@ -68,7 +71,7 @@ module.exports = class Session extends EventEmitter {
       if (this.ended) {
         return;
       }
-      this.emit('data', decoder.write(data));
+      this.read(decoder.write(data));
     });
 
     this.pty.on('exit', () => {
@@ -83,6 +86,10 @@ module.exports = class Session extends EventEmitter {
 
   exit() {
     this.destroy();
+  }
+
+  read(data) {
+    this.emit('data', data);
   }
 
   write(data) {
