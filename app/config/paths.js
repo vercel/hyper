@@ -54,7 +54,10 @@ const getCommonPaths = () => {
   };
 };
 
-const getCompatPaths = ({ dataRoot, configFile, pluginsDir, devDataRoot, }) => {
+const getCompatPaths = ({ dataRoot, devDataRoot, }) => {
+  const configFile = '.hyper.js';
+  const pluginsDir = '.hyper_plugins';
+
   const pluginsRoot = resolve(dataRoot, pluginsDir);
   const pluginsLocal = resolve(pluginsRoot, 'local');
   const pluginsCache = resolve(pluginsRoot, 'cache');
@@ -116,23 +119,15 @@ const mapToExports = paths => ({
 
 const commonPaths = getCommonPaths();
 
-const legacyPaths = getCompatPaths(Object.assign(
-  {
-    dataRoot: homedir(),
-    configFile: '.hyper.js',
-    pluginsDir: '.hyper_plugins',
-  },
-  commonPaths,
-));
+const legacyPaths = getCompatPaths({
+  dataRoot: homedir(),
+  devDataRoot: commonPaths.devDataRoot,
+});
 
-const conventionalPaths = getCompatPaths(Object.assign(
-  {
-    dataRoot: resolve(app.getPath('appData'), app.getName(), 'hyper-data'),
-    configFile: 'hyper.js',
-    pluginsDir: 'plugins',
-  },
-  commonPaths,
-));
+const conventionalPaths = getCompatPaths({
+  dataRoot: resolve(app.getPath('appData'), app.getName()),
+  devDataRoot: commonPaths.devDataRoot,
+});
 
 upgrade(legacyPaths, conventionalPaths);
 
