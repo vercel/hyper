@@ -1,72 +1,143 @@
 // This module exports paths, names, and other metadata that is referenced
-const {homedir} = require('os');
-const {statSync} = require('fs');
-const {resolve, join} = require('path');
+
+const { homedir, platform } = require('os');
+const { statSync } = require('fs');
+const { resolve, join } = require('path');
+
+const { app } = require('electron');
+
 const isDev = require('electron-is-dev');
 
-const cfgFile = '.hyper.js';
-const defaultCfgFile = 'config-default.js';
-const homeDir = homedir();
+const upgrade = require('./upgrade');
 
-let cfgPath = join(homeDir, cfgFile);
-let cfgDir = homeDir;
+const getCommonPaths = () => {
+  const defaultConfigPath = resolve(__dirname, 'config-default.js');
+  const devDataRoot = resolve(__dirname, '../..');
 
-const devDir = resolve(__dirname, '../..');
-const devCfg = join(devDir, cfgFile);
-const defaultCfg = resolve(__dirname, defaultCfgFile);
+  const yarn = resolve(__dirname, '../../bin/yarn-standalone.js');
+  const cliScriptPath = resolve(__dirname, '../../bin/hyper');
+  const cliLinkPath = '/usr/local/bin/hyper';
 
-if (isDev) {
-  // if a local config file exists, use it
-  try {
-    statSync(devCfg);
-    cfgPath = devCfg;
-    cfgDir = devDir;
-    //eslint-disable-next-line no-console
-    console.log('using config file:', cfgPath);
-  } catch (err) {
-    // ignore
+  const icon = resolve(__dirname, '../static/icon96x96.png');
+
+  const keymapPath = resolve(__dirname, '../keymaps');
+  const darwinKeys = join(keymapPath, 'darwin.json');
+  const win32Keys = join(keymapPath, 'win32.json');
+  const linuxKeys = join(keymapPath, 'linux.json');
+
+  const getKeymap = () => {
+    switch (process.platform) {
+      case 'darwin':
+        return darwinKeys;
+      case 'win32':
+        return win32Keys;
+      case 'linux':
+        return linuxKeys;
+      default:
+        return darwinKeys;
+    }
+  };
+
+  return {
+    defaultConfigPath,
+
+    devDataRoot,
+
+    yarn,
+
+    cliScriptPath,
+    cliLinkPath,
+
+    icon,
+
+    getKeymap,
+  };
+};
+
+const getCompatPaths = ({ dataRoot, configFile, pluginsDir, devDataRoot, }) => {
+  const pluginsRoot = resolve(dataRoot, pluginsDir);
+  const pluginsLocal = resolve(pluginsRoot, 'local');
+  const pluginsCache = resolve(pluginsRoot, 'cache');
+  const configPath = resolve(dataRoot, configFile);
+
+  const devConfigPath = resolve(devDataRoot, configFile);
+
+  const prod = {
+    dataRoot,
+    pluginsRoot,
+    pluginsLocal,
+    pluginsCache,
+    configFile,
+    configPath,
+  };
+
+  const dev = {
+    dataRoot: devDataRoot,
+    pluginsRoot, // TODO: Maybe override plugins paths too.
+    pluginsLocal,
+    pluginsCache,
+    configFile,
+    configPath: devConfigPath,
+  };
+
+  if (isDev) {
+    // if a local config file exists, use it
+    try {
+      statSync(devConfigPath);
+
+      //eslint-disable-next-line no-console
+      console.log('using config file:', devConfigPath);
+
+      return dev;
+    } catch (e) {
+      return prod;
+    }
+  } else {
+    return prod;
   }
-}
-
-const plugins = resolve(cfgDir, '.hyper_plugins');
-const plugs = {
-  base: plugins,
-  local: resolve(plugins, 'local'),
-  cache: resolve(plugins, 'cache')
-};
-const yarn = resolve(__dirname, '../../bin/yarn-standalone.js');
-const cliScriptPath = resolve(__dirname, '../../bin/hyper');
-const cliLinkPath = '/usr/local/bin/hyper';
-
-const icon = resolve(__dirname, '../static/icon96x96.png');
-
-const keymapPath = resolve(__dirname, '../keymaps');
-const darwinKeys = join(keymapPath, 'darwin.json');
-const win32Keys = join(keymapPath, 'win32.json');
-const linuxKeys = join(keymapPath, 'linux.json');
-
-const defaultPlatformKeyPath = () => {
-  switch (process.platform) {
-    case 'darwin':
-      return darwinKeys;
-    case 'win32':
-      return win32Keys;
-    case 'linux':
-      return linuxKeys;
-    default:
-      return darwinKeys;
-  }
 };
 
-module.exports = {
-  cfgDir,
-  cfgPath,
-  cfgFile,
-  defaultCfg,
-  icon,
-  defaultPlatformKeyPath,
-  plugs,
-  yarn,
-  cliScriptPath,
-  cliLinkPath
-};
+const mapToExports = paths => ({
+  cfgDir: paths.dataRoot,
+  cfgPath: paths.configPath,
+  cfgFile: paths.configFile,
+  defaultCfg: paths.defaultConfigPath,
+  icon: paths.icon,
+  defaultPlatformKeyPath: paths.getKeymap,
+  plugs: {
+    base: paths.pluginsRoot,
+    local: paths.pluginsLocal,
+    cache: paths.pluginsCache,
+  },
+  yarn: paths.yarn,
+  cliScriptPath: paths.cliScriptPath,
+  cliLinkPath: paths.cliLinkPath
+});
+
+const commonPaths = getCommonPaths();
+
+const legacyPaths = getCompatPaths(Object.assign(
+  {
+    dataRoot: homedir(),
+    configFile: '.hyper.js',
+    pluginsDir: '.hyper_plugins',
+  },
+  commonPaths,
+));
+
+const conventionalPaths = getCompatPaths(Object.assign(
+  {
+    dataRoot: resolve(app.getPath('appData'), app.getName(), 'hyper-data'),
+    configFile: 'hyper.js',
+    pluginsDir: 'plugins',
+  },
+  commonPaths,
+));
+
+upgrade(legacyPaths, conventionalPaths);
+
+module.exports = mapToExports(Object.assign(
+  {},
+  commonPaths,
+  conventionalPaths,
+));

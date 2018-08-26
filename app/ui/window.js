@@ -1,18 +1,18 @@
-const {app, BrowserWindow, shell, Menu} = require('electron');
-const {isAbsolute} = require('path');
-const {parse: parseUrl} = require('url');
+const { app, BrowserWindow, shell, Menu } = require('electron');
+const { isAbsolute } = require('path');
+const { parse: parseUrl } = require('url');
 const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 const updater = require('../updater');
 const toElectronBackgroundColor = require('../utils/to-electron-background-color');
-const {icon, cfgDir} = require('../config/paths');
+const { icon, cfgDir } = require('../config/paths');
 const createRPC = require('../rpc');
 const notify = require('../notify');
 const fetchNotifications = require('../notifications');
 const Session = require('../session');
 const contextMenuTemplate = require('./contextmenu');
-const {execCommand} = require('../commands');
+const { execCommand } = require('../commands');
 
 module.exports = class Window {
   constructor(options_, cfg, fn) {
@@ -90,7 +90,7 @@ module.exports = class Window {
         {
           rows: 40,
           cols: 100,
-          cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : cfgDir,
+          cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : process.cwd(),
           splitDirection: undefined,
           shell: cfg.shell,
           shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
@@ -118,12 +118,12 @@ module.exports = class Window {
         });
 
         session.on('exit', () => {
-          rpc.emit('session exit', {uid});
+          rpc.emit('session exit', { uid });
           sessions.delete(uid);
         });
       });
     });
-    rpc.on('exit', ({uid}) => {
+    rpc.on('exit', ({ uid }) => {
       const session = sessions.get(uid);
       if (session) {
         session.exit();
@@ -138,13 +138,13 @@ module.exports = class Window {
     rpc.on('minimize', () => {
       window.minimize();
     });
-    rpc.on('resize', ({uid, cols, rows}) => {
+    rpc.on('resize', ({ uid, cols, rows }) => {
       const session = sessions.get(uid);
       if (session) {
-        session.resize({cols, rows});
+        session.resize({ cols, rows });
       }
     });
-    rpc.on('data', ({uid, data, escaped}) => {
+    rpc.on('data', ({ uid, data, escaped }) => {
       const session = sessions.get(uid);
       if (session) {
         if (escaped) {
@@ -158,15 +158,15 @@ module.exports = class Window {
         }
       }
     });
-    rpc.on('open external', ({url}) => {
+    rpc.on('open external', ({ url }) => {
       shell.openExternal(url);
     });
     rpc.on('open context menu', selection => {
-      const {createWindow} = app;
-      const {buildFromTemplate} = Menu;
+      const { createWindow } = app;
+      const { buildFromTemplate } = Menu;
       buildFromTemplate(contextMenuTemplate(createWindow, selection)).popup(window);
     });
-    rpc.on('open hamburger menu', ({x, y}) => {
+    rpc.on('open hamburger menu', ({ x, y }) => {
       Menu.getApplicationMenu().popup(Math.ceil(x), Math.ceil(y));
     });
     // Same deal as above, grabbing the window titlebar when the window
@@ -210,10 +210,10 @@ module.exports = class Window {
 
         const path = fileUriToPath(url);
 
-        rpc.emit('session data send', {data: path, escaped: true});
+        rpc.emit('session data send', { data: path, escaped: true });
       } else if (protocol === 'http:' || protocol === 'https:') {
         event.preventDefault();
-        rpc.emit('session data send', {data: url});
+        rpc.emit('session data send', { data: url });
       }
     });
 
