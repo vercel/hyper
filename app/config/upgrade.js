@@ -5,7 +5,6 @@
 const {statSync, renameSync} = require('fs');
 
 const {sync: mkdirpSync} = require('mkdirp');
-const {sync: rimrafSync} = require('rimraf');
 
 const exists = path => {
   try {
