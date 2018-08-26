@@ -2,10 +2,10 @@
  * @fileoverview Upgrade legacy config paths to conventional.
  */
 
-const { statSync, renameSync } = require('fs');
+const {statSync, renameSync} = require('fs');
 
-const { sync: mkdirpSync } = require('mkdirp');
-const { sync: rimrafSync } = require('rimraf');
+const {sync: mkdirpSync} = require('mkdirp');
+const {sync: rimrafSync} = require('rimraf');
 
 const exists = path => {
   try {
@@ -17,10 +17,10 @@ const exists = path => {
   }
 };
 
-const checkLegacyConfig = ({ configPath }) => exists(configPath);
-const checkLegacyPlugins = ({ pluginsRoot }) => exists(pluginsRoot);
-const checkConventionalConfig = ({ configPath }) => exists(configPath);
-const checkConventionalPlugins = ({ pluginsRoot }) => exists(pluginsRoot);
+const checkLegacyConfig = ({configPath}) => exists(configPath);
+const checkLegacyPlugins = ({pluginsRoot}) => exists(pluginsRoot);
+const checkConventionalConfig = ({configPath}) => exists(configPath);
+const checkConventionalPlugins = ({pluginsRoot}) => exists(pluginsRoot);
 
 module.exports = (legacy, conventional) => {
   const legacyConfig = checkLegacyConfig(legacy);
@@ -45,4 +45,4 @@ module.exports = (legacy, conventional) => {
       rimrafSync(legacy.pluginsRoot);
     }
   }
-}
+};
