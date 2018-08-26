@@ -30,19 +30,33 @@ module.exports = (legacy, conventional) => {
 
   if (legacyConfig) {
     if (!conventionalConfig) {
+      // eslint-disable-next-line no-console
+      console.log('Moving config from legacy location to conventional.');
       mkdirpSync(conventional.dataRoot);
       renameSync(legacy.configPath, conventional.configPath);
     } else {
-      rimrafSync(legacy.configPath);
+      // eslint-disable-next-line no-console
+      console.log('Config is found at both legacy and conventional locations.');
+      // eslint-disable-next-line no-console
+      console.log('Config at `$HOME` will be ignored. Recommended to delete it to avoid bloating `$HOME`.');
+
+      // rimrafSync(legacy.configPath);
     }
   }
 
   if (legacyPlugins) {
     if (!conventionalPlugins) {
+      // eslint-disable-next-line no-console
+      console.log('Moving plugins from legacy location to conventional.');
       mkdirpSync(conventional.dataRoot);
       renameSync(legacy.pluginsRoot, conventional.pluginsRoot);
     } else {
-      rimrafSync(legacy.pluginsRoot);
+      // eslint-disable-next-line no-console
+      console.log('Plugins are found at both legacy and conventional locations.');
+      // eslint-disable-next-line no-console
+      console.log('Plugins at `$HOME` will be ignored. Recommended to delete them to avoid bloating `$HOME`.');
+
+      // rimrafSync(legacy.pluginsRoot);
     }
   }
 };
