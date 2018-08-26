@@ -1,10 +1,10 @@
 // This module exports paths, names, and other metadata that is referenced
 
-const { homedir, platform } = require('os');
-const { statSync } = require('fs');
-const { resolve, join } = require('path');
+const {homedir} = require('os');
+const {statSync} = require('fs');
+const {resolve, join} = require('path');
 
-const { app } = require('electron');
+const {app} = require('electron');
 
 const isDev = require('electron-is-dev');
 
@@ -50,11 +50,11 @@ const getCommonPaths = () => {
 
     icon,
 
-    getKeymap,
+    getKeymap
   };
 };
 
-const getCompatPaths = ({ dataRoot, devDataRoot, }) => {
+const getCompatPaths = ({dataRoot, devDataRoot}) => {
   const configFile = '.hyper.js';
   const pluginsDir = '.hyper_plugins';
 
@@ -71,7 +71,7 @@ const getCompatPaths = ({ dataRoot, devDataRoot, }) => {
     pluginsLocal,
     pluginsCache,
     configFile,
-    configPath,
+    configPath
   };
 
   const dev = {
@@ -80,7 +80,7 @@ const getCompatPaths = ({ dataRoot, devDataRoot, }) => {
     pluginsLocal,
     pluginsCache,
     configFile,
-    configPath: devConfigPath,
+    configPath: devConfigPath
   };
 
   if (isDev) {
@@ -110,7 +110,7 @@ const mapToExports = paths => ({
   plugs: {
     base: paths.pluginsRoot,
     local: paths.pluginsLocal,
-    cache: paths.pluginsCache,
+    cache: paths.pluginsCache
   },
   yarn: paths.yarn,
   cliScriptPath: paths.cliScriptPath,
@@ -121,18 +121,14 @@ const commonPaths = getCommonPaths();
 
 const legacyPaths = getCompatPaths({
   dataRoot: homedir(),
-  devDataRoot: commonPaths.devDataRoot,
+  devDataRoot: commonPaths.devDataRoot
 });
 
 const conventionalPaths = getCompatPaths({
   dataRoot: resolve(app.getPath('appData'), app.getName()),
-  devDataRoot: commonPaths.devDataRoot,
+  devDataRoot: commonPaths.devDataRoot
 });
 
 upgrade(legacyPaths, conventionalPaths);
 
-module.exports = mapToExports(Object.assign(
-  {},
-  commonPaths,
-  conventionalPaths,
-));
+module.exports = mapToExports(Object.assign({}, commonPaths, conventionalPaths));
