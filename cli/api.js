@@ -91,6 +91,13 @@ function getPackageName(plugin) {
 function install(plugin, locally) {
   const array = locally ? getLocalPlugins() : getPlugins();
   return existsOnNpm(plugin)
+    .catch(err => {
+      const {statusCode} = err;
+      if (statusCode && (statusCode === 404 || statusCode === 200)) {
+        return Promise.reject(`${plugin} not found on npm`);
+      }
+      return Promise.reject(`${err.message}\nPlugin check failed. Check your internet connection or retry later.`);
+    })
     .then(() => {
       if (isInstalled(plugin, locally)) {
         return Promise.reject(`${plugin} is already installed`);
@@ -98,13 +105,6 @@ function install(plugin, locally) {
 
       array.push(recast.types.builders.literal(plugin));
       return save();
-    })
-    .catch(err => {
-      const {statusCode} = err;
-      if (statusCode && (statusCode === 404 || statusCode === 200)) {
-        return Promise.reject(`${plugin} not found on npm`);
-      }
-      return Promise.reject(`${err.message}\nPlugin check failed. Check your internet connection or retry later.`);
     });
 }
 
