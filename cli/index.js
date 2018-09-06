@@ -3,6 +3,7 @@
 const {spawn, exec} = require('child_process');
 const {isAbsolute, resolve} = require('path');
 const {existsSync} = require('fs');
+const {version} = require('../app/package');
 const pify = require('pify');
 const args = require('args');
 const chalk = require('chalk');
@@ -130,6 +131,12 @@ args.command(['d', 'docs', 'h', 'home'], 'Open the npm page of a plugin', (name,
   const pluginName = args_[0];
   assertPluginName(pluginName);
   opn(`http://ghub.io/${pluginName}`, {wait: false});
+  process.exit(0);
+});
+
+args.command(['version'], 'Show the version of hyper', () => {
+  checkConfig();
+  console.log(version);
   process.exit(0);
 });
 
