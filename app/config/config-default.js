@@ -57,6 +57,10 @@ module.exports = {
     // custom CSS to embed in the terminal window
     termCSS: '',
 
+    // Default startup directory, if not supplied on command line.
+    // Must be an absolute path.
+    workingDirectory: '',
+
     // if you're using a Linux setup which show native menus, set to false
     // default: `true` on Linux, `true` on Windows, ignored on macOS
     showHamburgerMenu: '',

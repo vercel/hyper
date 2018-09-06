@@ -55,6 +55,7 @@ const {resolve} = require('path');
 const {app, BrowserWindow, Menu} = require('electron');
 const {gitDescribe} = require('git-describe');
 const isDev = require('electron-is-dev');
+const {isAbsolute} = require('path');
 
 const config = require('./config');
 
@@ -155,7 +156,9 @@ app.on('ready', () =>
           [startX, startY] = config.windowDefaults.windowPosition;
         }
 
-        const hwin = new Window({width, height, x: startX, y: startY}, cfg, fn);
+        let workingDirectory = process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : null;
+
+        const hwin = new Window({width, height, x: startX, y: startY, workingDirectory: workingDirectory}, cfg, fn);
         windowSet.add(hwin);
         hwin.loadURL(url);
 

@@ -85,12 +85,20 @@ module.exports = class Window {
       }
     });
 
+    let cwd = cfgDir;
+    // Check if working directory is set in options or in config
+    if (winOpts.workingDirectory) {
+      cwd = winOpts.workingDirectory;
+    } else if (cfg.workingDirectory && isAbsolute(cfg.workingDirectory)) {
+      cwd = cfg.workingDirectory;
+    }
+
     rpc.on('new', options => {
       const sessionOpts = Object.assign(
         {
           rows: 40,
           cols: 100,
-          cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : cfgDir,
+          cwd: cwd,
           splitDirection: undefined,
           shell: cfg.shell,
           shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
