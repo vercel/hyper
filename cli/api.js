@@ -90,40 +90,32 @@ function getPackageName(plugin) {
 
 function install(plugin, locally) {
   const array = locally ? getLocalPlugins() : getPlugins();
-  return new Promise((resolve, reject) => {
-    existsOnNpm(plugin)
-      .then(() => {
-        if (isInstalled(plugin, locally)) {
-          return reject(`${plugin} is already installed`);
-        }
+  return existsOnNpm(plugin)
+    .catch(err => {
+      const {statusCode} = err;
+      if (statusCode && (statusCode === 404 || statusCode === 200)) {
+        return Promise.reject(`${plugin} not found on npm`);
+      }
+      return Promise.reject(`${err.message}\nPlugin check failed. Check your internet connection or retry later.`);
+    })
+    .then(() => {
+      if (isInstalled(plugin, locally)) {
+        return Promise.reject(`${plugin} is already installed`);
+      }
 
-        array.push(recast.types.builders.literal(plugin));
-        save()
-          .then(resolve)
-          .catch(err => reject(err));
-      })
-      .catch(err => {
-        const {statusCode} = err;
-        if (statusCode && (statusCode === 404 || statusCode === 200)) {
-          return reject(`${plugin} not found on npm`);
-        }
-        return reject(`${err.message}\nPlugin check failed. Check your internet connection or retry later.`);
-      });
-  });
+      array.push(recast.types.builders.literal(plugin));
+      return save();
+    });
 }
 
 function uninstall(plugin) {
-  return new Promise((resolve, reject) => {
-    if (!isInstalled(plugin)) {
-      return reject(`${plugin} is not installed`);
-    }
+  if (!isInstalled(plugin)) {
+    return Promise.reject(`${plugin} is not installed`);
+  }
 
-    const index = getPlugins().findIndex(entry => entry.value === plugin);
-    getPlugins().splice(index, 1);
-    save()
-      .then(resolve)
-      .catch(err => reject(err));
-  });
+  const index = getPlugins().findIndex(entry => entry.value === plugin);
+  getPlugins().splice(index, 1);
+  return save();
 }
 
 function list() {
