@@ -135,7 +135,6 @@ args.command(['d', 'docs', 'h', 'home'], 'Open the npm page of a plugin', (name,
 });
 
 args.command(['version'], 'Show the version of hyper', () => {
-  checkConfig();
   console.log(version);
   process.exit(0);
 });
