@@ -22,7 +22,7 @@ aurman -S hyper
 
 ### macOS
 
-Use [Homebrew Cask](https://caskroom.github.io/) to download the app by running these commands:
+Use [Homebrew Cask](https://brew.sh) to download the app by running these commands:
 
 ```bash
 brew update
@@ -37,7 +37,7 @@ Use [chocolatey](https://chocolatey.org/) to install the app by running the foll
 choco install hyper
 ```
 
-**Note:** The version available on [Homebrew Cask](https://caskroom.github.io/), [Chocolatey](https://chocolatey.org) or the [AUR](https://aur.archlinux.org) may not be the latest. Please consider downloading it from [here](https://hyper.is/#installation) if that's the case.
+**Note:** The version available on [Homebrew Cask](https://brew.sh), [Chocolatey](https://chocolatey.org) or the [AUR](https://aur.archlinux.org) may not be the latest. Please consider downloading it from [here](https://hyper.is/#installation) if that's the case.
 
 ## Contribute
 
