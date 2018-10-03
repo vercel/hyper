@@ -291,7 +291,7 @@ function requirePlugins() {
     } catch (err) {
       if (err.code === 'MODULE_NOT_FOUND') {
         //eslint-disable-next-line no-console
-        console.warn(`Plugin "${basename(path_)}" not found: ${path_}`);
+        console.warn(`Plugin error while loading "${basename(path_)}" (${path_}): ${err.message}`);
       } else {
         notify('Plugin error!', `Plugin "${basename(path_)}" failed to load (${err.message})`, {error: err});
       }

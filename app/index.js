@@ -220,7 +220,7 @@ app.on('ready', () =>
           app.setAsDefaultProtocolClient('ssh');
         } else if (!config.getConfig().defaultSSHApp && app.isDefaultProtocolClient('ssh')) {
           //eslint-disable-next-line no-console
-          console.log('Removing Hyper from default client for ssh:// protocl');
+          console.log('Removing Hyper from default client for ssh:// protocol');
           app.removeAsDefaultProtocolClient('ssh');
         }
         installCLI(false);
