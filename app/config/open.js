@@ -25,8 +25,8 @@ if (process.platform === 'win32') {
     });
 
     // Find UserChoice key
-    const userChoice = keys.filter(k => k.key.endsWith('UserChoice'));
-    return userChoice[0];
+    const userChoice = keys.find(k => k.key.endsWith('UserChoice'));
+    return userChoice;
   };
 
   const hasDefaultSet = async () => {
@@ -44,8 +44,8 @@ if (process.platform === 'win32') {
     });
 
     // Look for default program
-    const hasDefaultProgramConfigured = values.some(
-      value => value && typeof value === 'string' && value.endsWith('.exe') && !value.includes('WScript.exe')
+    const hasDefaultProgramConfigured = values.every(
+      value => value && typeof value === 'string' && !value.includes('WScript.exe') && !value.includes('JSFile')
     );
 
     return hasDefaultProgramConfigured;
