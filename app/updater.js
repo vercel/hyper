@@ -6,7 +6,6 @@ const retry = require('async-retry');
 
 // Utilities
 // eslint-disable-next-line no-unused-vars
-const notify = require('./notify');
 const {version} = require('./package');
 const {getDecoratedConfig} = require('./plugins');
 

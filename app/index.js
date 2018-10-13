@@ -93,7 +93,7 @@ if (isDev) {
   //eslint-disable-next-line no-console
   console.log('running in dev mode');
 
-  // Overide default appVersion which is set from package.json
+  // Override default appVersion which is set from package.json
   gitDescribe({customArguments: ['--tags']}, (error, gitInfo) => {
     if (!error) {
       app.setVersion(gitInfo.raw);

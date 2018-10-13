@@ -71,7 +71,7 @@ module.exports = class Window {
 
       // app.windowCallback is the createWindow callback
       // that can be set before the 'ready' app event
-      // and createWindow deifinition. It's executed in place of
+      // and createWindow definition. It's executed in place of
       // the callback passed as parameter, and deleted right after.
       (app.windowCallback || fn)(window);
       delete app.windowCallback;
