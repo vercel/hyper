@@ -39,6 +39,11 @@ choco install hyper
 
 **Note:** The version available on [Homebrew Cask](https://brew.sh), [Chocolatey](https://chocolatey.org) or the [AUR](https://aur.archlinux.org) may not be the latest. Please consider downloading it from [here](https://hyper.is/#installation) if that's the case.
 
+- #### Configurations path:
+  ```C:\Users\{User-Name}\.hyper.js```
+- #### Plugins path:
+  ```C:\Users\{User-Name}\.hyper_plugins```
+
 ## Contribute
 
 Regardless of the platform you are working on, you will need to have Yarn installed. If you have never installed Yarn before, you can find out how at: https://yarnpkg.com/en/docs/install.
