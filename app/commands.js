@@ -104,6 +104,9 @@ const commands = {
   'editor:search': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('session search');
   },
+  'editor:search-close': focusedWindow => {
+    focusedWindow && focusedWindow.rpc.emit('session search close');
+  },
   'cli:install': () => {
     installCLI(true);
   }
