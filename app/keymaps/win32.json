@@ -40,6 +40,7 @@
   "editor:paste": "ctrl+shift+v",
   "editor:selectAll": "ctrl+shift+a",
   "editor:search": "ctrl+shift+f",
+  "editor:search-close": "esc",
   "editor:movePreviousWord": "ctrl+left",
   "editor:moveNextWord": "ctrl+right",
   "editor:moveBeginningLine": "home",
