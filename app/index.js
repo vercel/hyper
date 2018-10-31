@@ -125,37 +125,27 @@ app.on('ready', () =>
         // Open the new window roughly the height of the header away from the
         // previous window. This also ensures in multi monitor setups that the
         // new terminal is on the correct screen.
+
         const focusedWindow = BrowserWindow.getFocusedWindow() || app.getLastFocusedWindow();
         // In case of options defaults position and size, we should ignore the focusedWindow.
         if (winPos !== undefined) {
           [startX, startY] = winPos;
-        } else if (focusedWindow) {
-          const points = focusedWindow.getPosition();
-          const currentScreen = screen.getDisplayNearestPoint({
-            x: points[0],
-            y: points[1]
-          });
-
-          const biggestX = points[0] + 100 + width - currentScreen.bounds.x;
-          const biggestY = points[1] + 100 + height - currentScreen.bounds.y;
-
-          if (biggestX > currentScreen.size.width) {
-            startX = 50;
-          } else {
-            startX = points[0] + 34;
-          }
-          if (biggestY > currentScreen.size.height) {
-            startY = 50;
-          } else {
-            startY = points[1] + 34;
-          }
         }
+          
+        //Please excuse this terrible code, but I am testing an idea
+        const points = screen.getCursorScreenPoint();
 
-        if (!windowUtils.positionIsValid([startX, startY])) {
-          [startX, startY] = config.windowDefaults.windowPosition;
-        }
+        var displays = screen.getAllDisplays();
+        var size = screen.getPrimaryDisplay().workAreaSize;
 
-        const hwin = new Window({width, height, x: startX, y: startY}, cfg, fn);
+        //This is crude, but I don't know electron too well yet
+        //Use cursor possition and screen size to determine with display the cursor on
+        //This this index to return the active screen
+        var selectedDisplay = displays[parseInt(points.x/size.width)];
+
+        //Curerntly I just center the window, but we could do better
+        const hwin = new Window({width, height, x: selectedDisplay.bounds.x - (size.width/2) + (width/2), y: (size.height/2)-(height/2)}, cfg, fn);
+
         windowSet.add(hwin);
         hwin.loadURL(url);
 
