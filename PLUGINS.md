@@ -37,7 +37,7 @@ After launching Hyper in dev mode, run `yarn run app`, it should log that your p
 When you put a `console.log()` in your plugin code, it will be displayed in the Electron dev-tools, but only if it is located in a renderer method, like component decorators. If it is located in the Electron main process method, like the `onApp` handler, it will be displayed in your terminal where you ran `yarn run app` or in your VSCode console.
 
 ## Recipes
-Almost all available API methods can be found on https://www.hyper.is.
+Almost all available API methods can be found [here](https://www.hyper.is).
 If there's any missing, let us know or submit a PR to document it!
 
 ### Components
@@ -89,7 +89,7 @@ exports.decorateKeymaps = keymaps => {
 }
 ```
 The command name can be whatever you want, but the following is better to respect the default naming convention: `<context>:<action>`.
-Hotkeys are composed by (Mousetrap supported keys)[https://craig.is/killing/mice#keys].
+Hotkeys are composed by [Mousetrap supported keys](https://craig.is/killing/mice#keys).
 
 **Bonus feature**: if your command ends with `:prefix`, it would mean that you want to use this command with an additional digit to the command. Then Hyper will create all your commands under the hood. For example, this keymap `'pane:hide:prefix': 'ctrl+shift'` will automatically generate the following:
 ```
@@ -129,7 +129,7 @@ rpc.on('command pane:snapshot', () => {
 
 ### Menu
 Your plugin can expose a `decorateMenu` function to modify the Hyper menu template.
-Check the (Electron documentation)[https://electronjs.org/docs/api/menu-item] for more details about the different menu item types/options available.
+Check the [Electron documentation](https://electronjs.org/docs/api/menu-item) for more details about the different menu item types/options available.
 
 Be careful, a click handler will be executed on the main process. If you need to trigger a handler in the render process you need to use an `rpc` message like this:
 ```js
