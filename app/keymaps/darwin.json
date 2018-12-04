@@ -1,7 +1,7 @@
 {
   "window:devtools": "command+alt+i",
-  "window:reload": "command+r",
-  "window:reloadFull": "command+shift+r",
+  "window:reload": "command+shift+r",
+  "window:reloadFull": "command+shift+f5",
   "window:preferences": "command+,",
   "zoom:reset": "command+0",
   "zoom:in": "command+plus",
