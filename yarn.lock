@@ -6693,9 +6693,10 @@ xtend@~2.1.1:
   dependencies:
     object-keys "~0.4.0"
 
-xterm@3.8.0:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/xterm/-/xterm-3.8.0.tgz#55d1de518bdc9c9793823f5e4e97d6898972938d"
+xterm@3.9.0:
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/xterm/-/xterm-3.9.0.tgz#593dd89df110e2e5bf79a6b2622359402f7e7714"
+  integrity sha512-5qUhFs3jaPy5qyZt/Hgcb8lwwv8XUpGkAdha2WnNjIM0iWEQE+bIBw8L25yqzzXVVtKfosyh/ynM2a9Npd4Phg==
 
 y18n@^3.2.1:
   version "3.2.1"
