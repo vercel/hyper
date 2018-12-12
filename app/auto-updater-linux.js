@@ -1,6 +1,6 @@
 'use strict';
 
-const fetch = require('electron-fetch');
+const fetch = require('electron-fetch').default;
 const {EventEmitter} = require('events');
 
 class AutoUpdater extends EventEmitter {
