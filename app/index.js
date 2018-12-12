@@ -1,3 +1,18 @@
+const {app} = require('electron');
+
+// Multiple instance check on windows
+if (process.platform === 'win32') {
+  const isSecondInstance = app.makeSingleInstance((commandLine, workingDirectory) => {
+    // When tried to run a second instance, load a preloaded window instead on the main instance
+    app.loadPreloadedWindow(workingDirectory);
+    app.createPreloadedWindow();
+  });
+
+  if (isSecondInstance) {
+    app.quit();
+  }
+}
+
 // Print diagnostic information for a few arguments instead of running Hyper.
 if (['--help', '-v', '--version'].includes(process.argv[1])) {
   const {version} = require('./package');
@@ -52,7 +67,7 @@ if (process.platform === 'win32') {
 const {resolve} = require('path');
 
 // Packages
-const {app, BrowserWindow, Menu} = require('electron');
+const {BrowserWindow, Menu, Tray} = require('electron');
 const {gitDescribe} = require('git-describe');
 const isDev = require('electron-is-dev');
 
@@ -108,7 +123,10 @@ const url = 'file://' + resolve(isDev ? __dirname : app.getAppPath(), 'index.htm
 //eslint-disable-next-line no-console
 console.log('electron will open', url);
 
-app.on('ready', () =>
+let tray = null;
+const {icon} = require('./config/paths');
+
+app.on('ready', () => {
   installDevExtensions(isDev)
     .then(() => {
       function createWindow(fn, options = {}) {
@@ -165,11 +183,16 @@ app.on('ready', () =>
           windowSet.delete(hwin);
         });
 
-        hwin.on('closed', () => {
-          if (process.platform !== 'darwin' && windowSet.size === 0) {
-            app.quit();
-          }
-        });
+        // On Windows, do not quit app when all Hyper windows are closed
+        if (process.platform === 'win32') {
+          hwin.attachRPC();
+        } else {
+          hwin.on('closed', () => {
+            if (process.platform !== 'darwin' && windowSet.size === 0) {
+              app.quit();
+            }
+          });
+        }
 
         return hwin;
       }
@@ -188,6 +211,82 @@ app.on('ready', () =>
           createWindow();
         }
       });
+
+      // Create a hidden window without rpc
+      // Reference to this preloaded window is stored in app.preloadedWindow
+      function createPreloadedWindow(fn, options = {}) {
+        const cfg = plugins.getDecoratedConfig();
+
+        const winSet = config.getWin();
+        let [startX, startY] = winSet.position;
+
+        const [width, height] = options.size ? options.size : cfg.windowSize || winSet.size;
+        const {screen} = require('electron');
+
+        const winPos = options.position;
+
+        // Open the new window roughly the height of the header away from the
+        // previous window. This also ensures in multi monitor setups that the
+        // new terminal is on the correct screen.
+        const focusedWindow = BrowserWindow.getFocusedWindow() || app.getLastFocusedWindow();
+        // In case of options defaults position and size, we should ignore the focusedWindow.
+        if (winPos !== undefined) {
+          [startX, startY] = winPos;
+        } else if (focusedWindow) {
+          const points = focusedWindow.getPosition();
+          const currentScreen = screen.getDisplayNearestPoint({
+            x: points[0],
+            y: points[1]
+          });
+
+          const biggestX = points[0] + 100 + width - currentScreen.bounds.x;
+          const biggestY = points[1] + 100 + height - currentScreen.bounds.y;
+
+          if (biggestX > currentScreen.size.width) {
+            startX = 50;
+          } else {
+            startX = points[0] + 34;
+          }
+          if (biggestY > currentScreen.size.height) {
+            startY = 50;
+          } else {
+            startY = points[1] + 34;
+          }
+        }
+
+        if (!windowUtils.positionIsValid([startX, startY])) {
+          [startX, startY] = config.windowDefaults.windowPosition;
+        }
+
+        const hwin = new Window({width, height, x: startX, y: startY, show: false}, cfg, fn);
+        windowSet.add(hwin);
+        hwin.loadURL(url);
+
+        // the window can be closed by the browser process itself
+        hwin.on('close', () => {
+          hwin.clean();
+          windowSet.delete(hwin);
+        });
+
+        app.preloadedWindow = hwin;
+      }
+
+      // Preloads a window on start up
+      app.createPreloadedWindow = createPreloadedWindow;
+      app.createPreloadedWindow();
+
+      // Loads a preloaded window (attach all rpc related functions)
+      function loadPreloadedWindow(workingDirectory) {
+        if (app.preloadedWindow) {
+          app.preloadedWindow.show();
+          app.preloadedWindow.attachRPC(workingDirectory);
+          app.preloadedWindow.webContents.emit('did-finish-load');
+        }
+
+        app.preloadedWindow = null;
+      }
+
+      app.loadPreloadedWindow = loadPreloadedWindow;
 
       const makeMenu = () => {
         const menu = plugins.decorateMenu(AppMenu.createMenu(createWindow, plugins.getLoadedPluginVersions));
@@ -225,12 +324,41 @@ app.on('ready', () =>
         }
         installCLI(false);
       }
+
+      // Creates a system tray icon on Windows
+      if (process.platform === 'win32') {
+        tray = new Tray(icon);
+
+        const contextMenu = Menu.buildFromTemplate([
+          {
+            label: 'New Window',
+            type: 'normal',
+            click: () => {
+              app.loadPreloadedWindow();
+              app.createPreloadedWindow();
+            }
+          },
+          {type: 'separator'},
+          {
+            label: 'Exit',
+            type: 'normal',
+            click: () => {
+              if (app.preloadedWindow) {
+                app.preloadedWindow.emit('close');
+              }
+              app.quit();
+            }
+          }
+        ]);
+        tray.setToolTip('Hyper');
+        tray.setContextMenu(contextMenu);
+      }
     })
     .catch(err => {
       //eslint-disable-next-line no-console
       console.error('Error while loading devtools extensions', err);
-    })
-);
+    });
+});
 
 app.on('open-file', (event, path) => {
   const lastWindow = app.getLastFocusedWindow();
