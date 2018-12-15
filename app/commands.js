@@ -53,6 +53,13 @@ const commands = {
       webContents.openDevTools({mode: 'detach'});
     }
   },
+  'editor:copy': focusedWindow => {
+    if (!focusedWindow) {
+      return;
+    }
+    const webContents = focusedWindow.webContents;
+    webContents.copy();
+  },
   'zoom:reset': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('reset fontSize req');
   },
