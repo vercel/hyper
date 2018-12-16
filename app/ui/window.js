@@ -99,7 +99,8 @@ module.exports = class Window {
       );
 
       const initSession = (opts, fn_) => {
-        fn_(uuid.v4(), new Session(opts));
+        const uid = uuid.v4();
+        fn_(uid, new Session(Object.assign({}, opts, { uid })));
       };
 
       initSession(sessionOpts, (uid, session) => {
@@ -114,7 +115,7 @@ module.exports = class Window {
         });
 
         session.on('data', data => {
-          rpc.emit('session data', uid + data);
+          rpc.emit('session data', data);
         });
 
         session.on('exit', () => {
