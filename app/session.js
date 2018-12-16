@@ -122,7 +122,7 @@ module.exports = class Session extends EventEmitter {
       this.batcher.write(chunk);
     });
 
-    this.batcher.on('flush', (data) => {
+    this.batcher.on('flush', data => {
       this.emit('data', data);
     });
 

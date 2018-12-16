@@ -100,7 +100,7 @@ module.exports = class Window {
 
       const initSession = (opts, fn_) => {
         const uid = uuid.v4();
-        fn_(uid, new Session(Object.assign({}, opts, { uid })));
+        fn_(uid, new Session(Object.assign({}, opts, {uid})));
       };
 
       initSession(sessionOpts, (uid, session) => {
