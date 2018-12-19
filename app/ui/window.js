@@ -91,16 +91,16 @@ module.exports = class Window {
         const uid = uuid.v4();
         const session = new Session(Object.assign({}, options, {uid}));
         sessions.set(uid, session);
-        return { uid, session };
+        return {uid, session};
       }
 
       // Optimistically create the initial session so that when the window sends
       // the first "new" IPC message, there's a session already warmed up.
       function createInitialSession() {
-        let { session, uid }= createSession({});
+        let {session, uid} = createSession({});
         const initialEvents = [];
         const handleData = data => initialEvents.push(['session data', uid + data]);
-        const handleExit = () => initialEvents.push(['session exit'])
+        const handleExit = () => initialEvents.push(['session exit']);
         session.on('data', handleData);
         session.on('exit', handleExit);
 
@@ -111,7 +111,7 @@ module.exports = class Window {
           session.removeListener('data', handleData);
           session.removeListener('exit', handleExit);
         }
-        return { session, uid, flushEvents };
+        return {session, uid, flushEvents};
       }
       let initialSession = createInitialSession();
 
@@ -136,7 +136,7 @@ module.exports = class Window {
           options
         );
 
-        const { uid, session } = initialSession || createSession();
+        const {uid, session} = initialSession || createSession();
 
         sessions.set(uid, session);
         rpc.emit('session add', {
