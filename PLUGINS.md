@@ -191,7 +191,7 @@ exports.decorateTerm = (Term, { React, notify }) => {
 ```
 
 ## Hyper v2 breaking changes
-Hyper v2 uses `xterm.js` instead of `hterm`. It means that PTY ouput renders now in a canvas element, not with a hackable DOM structure.
+Hyper v2 uses `xterm.js` instead of `hterm`. It means that PTY output renders now in a canvas element, not with a hackable DOM structure.
 For example, plugins can't use TermCSS in order to modify text or link styles anymore. It is now required to use available configuration params that are passed down to `xterm.js`.
 
 If your plugin was deeply linked with the `hterm` API (even public methods), it certainly doesn't work anymore.
