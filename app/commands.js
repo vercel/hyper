@@ -54,6 +54,9 @@ const commands = {
     }
   },
   'editor:copy': focusedWindow => {
+    // HACK: Had to add this because the "editor:copy" role is not firing with
+    // ctrl+shift+c after upgrading to electron 4
+    // Electron issue: https://github.com/electron/electron#16088
     if (!focusedWindow) {
       return;
     }
