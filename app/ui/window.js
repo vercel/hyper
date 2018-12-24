@@ -85,6 +85,34 @@ module.exports = class Window {
       }
     });
 
+    function createSession(options) {
+      const uid = uuid.v4();
+      const session = new Session(Object.assign({}, options, {uid}));
+      sessions.set(uid, session);
+      return {uid, session};
+    }
+
+    // Optimistically create the initial session so that when the window sends
+    // the first "new" IPC message, there's a session already warmed up.
+    function createInitialSession() {
+      let {session, uid} = createSession({});
+      const initialEvents = [];
+      const handleData = data => initialEvents.push(['session data', data]);
+      const handleExit = () => initialEvents.push(['session exit']);
+      session.on('data', handleData);
+      session.on('exit', handleExit);
+
+      function flushEvents() {
+        for (let args of initialEvents) {
+          rpc.emit(...args);
+        }
+        session.removeListener('data', handleData);
+        session.removeListener('exit', handleExit);
+      }
+      return {session, uid, flushEvents};
+    }
+    let initialSession = createInitialSession();
+
     rpc.on('new', options => {
       const sessionOpts = Object.assign(
         {
@@ -98,32 +126,35 @@ module.exports = class Window {
         options
       );
 
-      const initSession = (opts, fn_) => {
-        const uid = uuid.v4();
-        fn_(uid, new Session(Object.assign({}, opts, {uid})));
-      };
+      const {uid, session} = initialSession || createSession();
 
-      initSession(sessionOpts, (uid, session) => {
-        sessions.set(uid, session);
-        rpc.emit('session add', {
-          rows: sessionOpts.rows,
-          cols: sessionOpts.cols,
-          uid,
-          splitDirection: sessionOpts.splitDirection,
-          shell: session.shell,
-          pid: session.pty.pid
-        });
+      sessions.set(uid, session);
+      rpc.emit('session add', {
+        rows: sessionOpts.rows,
+        cols: sessionOpts.cols,
+        uid,
+        splitDirection: sessionOpts.splitDirection,
+        shell: session.shell,
+        pid: session.pty.pid
+      });
 
-        session.on('data', data => {
-          rpc.emit('session data', data);
-        });
+      // If this is the initial session, flush any events that might have
+      // occurred while the window was initializing
+      if (initialSession) {
+        initialSession.flushEvents();
+        initialSession = null;
+      }
 
-        session.on('exit', () => {
-          rpc.emit('session exit', {uid});
-          sessions.delete(uid);
-        });
+      session.on('data', data => {
+        rpc.emit('session data', data);
+      });
+
+      session.on('exit', () => {
+        rpc.emit('session exit', {uid});
+        sessions.delete(uid);
       });
     });
+
     rpc.on('exit', ({uid}) => {
       const session = sessions.get(uid);
       if (session) {
