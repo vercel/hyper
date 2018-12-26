@@ -144,6 +144,8 @@ module.exports = {
   // to load it and avoid it being `npm install`ed
   localPlugins: [],
 
+  webGLRenderer: true,
+
   keymaps: {
     // Example
     // 'window:devtools': 'cmd+alt+o',
