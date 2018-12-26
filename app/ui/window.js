@@ -85,17 +85,31 @@ module.exports = class Window {
       }
     });
 
-    function createSession(options) {
+    function createSession(extraOptions = {}) {
       const uid = uuid.v4();
-      const session = new Session(Object.assign({}, options, {uid}));
+
+      const options = Object.assign(
+        {
+          rows: 40,
+          cols: 100,
+          cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : cfgDir,
+          splitDirection: undefined,
+          shell: cfg.shell,
+          shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
+        },
+        extraOptions,
+        {uid}
+      );
+
+      const session = new Session(options);
       sessions.set(uid, session);
-      return {uid, session};
+      return {session, options};
     }
 
     // Optimistically create the initial session so that when the window sends
     // the first "new" IPC message, there's a session already warmed up.
     function createInitialSession() {
-      let {session, uid} = createSession({});
+      let {session, options} = createSession();
       const initialEvents = [];
       const handleData = data => initialEvents.push(['session data', data]);
       const handleExit = () => initialEvents.push(['session exit']);
@@ -109,31 +123,19 @@ module.exports = class Window {
         session.removeListener('data', handleData);
         session.removeListener('exit', handleExit);
       }
-      return {session, uid, flushEvents};
+      return {session, options, flushEvents};
     }
     let initialSession = createInitialSession();
 
-    rpc.on('new', options => {
-      const sessionOpts = Object.assign(
-        {
-          rows: 40,
-          cols: 100,
-          cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : cfgDir,
-          splitDirection: undefined,
-          shell: cfg.shell,
-          shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
-        },
-        options
-      );
+    rpc.on('new', extraOptions => {
+      const {session, options} = initialSession || createSession(extraOptions);
 
-      const {uid, session} = initialSession || createSession();
-
-      sessions.set(uid, session);
+      sessions.set(options.uid, session);
       rpc.emit('session add', {
-        rows: sessionOpts.rows,
-        cols: sessionOpts.cols,
-        uid,
-        splitDirection: sessionOpts.splitDirection,
+        rows: options.rows,
+        cols: options.cols,
+        uid: options.uid,
+        splitDirection: options.splitDirection,
         shell: session.shell,
         pid: session.pty.pid
       });
@@ -150,8 +152,8 @@ module.exports = class Window {
       });
 
       session.on('exit', () => {
-        rpc.emit('session exit', {uid});
-        sessions.delete(uid);
+        rpc.emit('session exit', {uid: options.uid});
+        sessions.delete(options.uid);
       });
     });
 
