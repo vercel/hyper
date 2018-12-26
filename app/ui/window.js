@@ -21,7 +21,7 @@ module.exports = class Window {
         minWidth: 370,
         minHeight: 190,
         backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
-        titleBarStyle: 'hidden-inset',
+        titleBarStyle: 'hiddenInset',
         title: 'Hyper.app',
         // we want to go frameless on Windows and Linux
         frame: process.platform === 'darwin',
@@ -201,7 +201,7 @@ module.exports = class Window {
       buildFromTemplate(contextMenuTemplate(createWindow, selection)).popup(window);
     });
     rpc.on('open hamburger menu', ({x, y}) => {
-      Menu.getApplicationMenu().popup(Math.ceil(x), Math.ceil(y));
+      Menu.getApplicationMenu().popup({x: Math.ceil(x), y: Math.ceil(y)});
     });
     // Same deal as above, grabbing the window titlebar when the window
     // is maximized on Windows results in unmaximize, without hitting any
