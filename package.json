@@ -237,6 +237,7 @@
     "webpack": "3.10.0"
   },
   "resolutions": {
-    "rc": "1.2.3"
+    "rc": "1.2.3",
+    "xterm": "@zeit/xterm@3.9.1"
   }
 }
