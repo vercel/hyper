@@ -7111,10 +7111,9 @@ xtend@~2.1.1:
   dependencies:
     object-keys "~0.4.0"
 
-xterm@3.9.1:
+"xterm@https://registry.npmjs.org/@zeit/xterm/-/xterm-3.9.1.tgz":
   version "3.9.1"
-  resolved "https://registry.yarnpkg.com/xterm/-/xterm-3.9.1.tgz#65756beb09bb6fb44aeb29032adcd6789aaaa5f4"
-  integrity sha512-5AZlhP0jvH/Sskx1UvvNFMqDRHVFqapl59rjV3RRpTJmveoharJplxPfzSThk85I4+AZo2xvD0X0nh0AAzkeZQ==
+  resolved "https://registry.npmjs.org/@zeit/xterm/-/xterm-3.9.1.tgz#576ba39c4159e8a31540b98a2bfebda4940e98ed"
 
 y18n@^3.2.1:
   version "3.2.1"
