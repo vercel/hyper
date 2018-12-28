@@ -111,7 +111,7 @@ module.exports = class Window {
     function createInitialSession() {
       let {session, options} = createSession();
       const initialEvents = [];
-      const handleData = data => initialEvents.push(['session data', options.uid + data]);
+      const handleData = data => initialEvents.push(['session data', data]);
       const handleExit = () => initialEvents.push(['session exit']);
       session.on('data', handleData);
       session.on('exit', handleExit);
@@ -148,7 +148,7 @@ module.exports = class Window {
       }
 
       session.on('data', data => {
-        rpc.emit('session data', options.uid + data);
+        rpc.emit('session data', data);
       });
 
       session.on('exit', () => {
