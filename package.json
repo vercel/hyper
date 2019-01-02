@@ -168,6 +168,9 @@
     "rpm": {
       "afterInstall": "./build/linux/after-install.tpl"
     },
+    "snap": {
+      "confinement": "classic"
+    },
     "protocols": {
       "name": "ssh URL",
       "schemes": ["ssh"]
