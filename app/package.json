@@ -28,7 +28,7 @@
     "parse-url": "3.0.2",
     "queue": "4.4.2",
     "react": "16.2.0",
-    "react-dom": "16.2.0",
+    "react-dom": "16.2.1",
     "semver": "5.5.0",
     "shell-env": "0.3.0",
     "uuid": "3.2.1",
