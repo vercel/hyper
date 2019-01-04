@@ -45,7 +45,6 @@
   "editor:deleteBeginningLine": "command+backspace",
   "editor:deleteEndLine": "command+delete",
   "editor:clearBuffer": "command+k",
-  "editor:emojis": "command+ctrl+space",
   "editor:break": "ctrl+c",
   "plugins:update": "command+shift+u"
 }
