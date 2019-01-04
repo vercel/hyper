@@ -198,7 +198,7 @@
     "pify": "3.0.0",
     "react": "16.2.0",
     "react-deep-force-update": "2.1.1",
-    "react-dom": "16.2.0",
+    "react-dom": "16.2.1",
     "react-redux": "5.0.7",
     "recast": "0.13.0",
     "redux": "3.7.2",
