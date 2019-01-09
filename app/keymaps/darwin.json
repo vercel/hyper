@@ -4,7 +4,10 @@
   "window:reloadFull": "command+shift+f5",
   "window:preferences": "command+,",
   "zoom:reset": "command+0",
-  "zoom:in": "command+plus",
+  "zoom:in": [
+    "command+plus",
+    "command+="
+  ],
   "zoom:out": "command+-",
   "window:new": "command+n",
   "window:minimize": "command+m",
