@@ -128,6 +128,10 @@ module.exports = {
     // URL to custom bell
     // bellSoundURL: 'http://example.com/bell.mp3',
 
+    // Whether to use the WebGL renderer. Set it to false to use canvas-based
+    // rendering (slower)
+    webGLRenderer: true,
+
     // for advanced config flags please refer to https://hyper.is/#cfg
   },
 
@@ -143,8 +147,6 @@ module.exports = {
   // `~/.hyper_plugins/local/` and include it here
   // to load it and avoid it being `npm install`ed
   localPlugins: [],
-
-  webGLRenderer: true,
 
   keymaps: {
     // Example
