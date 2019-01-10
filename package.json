@@ -11,10 +11,8 @@
     "test:unit": "ava test/unit",
     "test:unit:watch": "yarn run test:unit -- --watch",
     "prepush": "yarn test",
-    "postinstall":
-      "electron-builder install-app-deps && yarn run rebuild-node-pty",
-    "rebuild-node-pty":
-      "electron-rebuild -f -w app/node_modules/node-pty -m app",
+    "postinstall": "electron-builder install-app-deps && yarn run rebuild-node-pty",
+    "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
     "dist":
       "yarn run build && cross-env BABEL_ENV=production babel --out-file app/renderer/bundle.js --no-comments --minified app/renderer/bundle.js && build",
     "clean":
@@ -64,7 +62,7 @@
     },
     "overrides": [
       {
-        "files": "app/config/config-default.js",
+        "files": ["app/config/config-default.js", ".hyper.js"],
         "rules": {
           "prettier/prettier": [
             "error",
