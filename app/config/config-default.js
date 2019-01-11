@@ -129,7 +129,7 @@ module.exports = {
     // bellSoundURL: 'http://example.com/bell.mp3',
 
     // Whether to use the WebGL renderer. Set it to false to use canvas-based
-    // rendering (slower)
+    // rendering (slower, but supports transparent backgrounds)
     webGLRenderer: true,
 
     // for advanced config flags please refer to https://hyper.is/#cfg
