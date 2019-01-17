@@ -21,7 +21,7 @@ module.exports = class Window {
         minWidth: 370,
         minHeight: 190,
         backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
-        titleBarStyle: 'hiddenInset',
+        titleBarStyle: 'hidden-inset',
         title: 'Hyper.app',
         // we want to go frameless on Windows and Linux
         frame: process.platform === 'darwin',
