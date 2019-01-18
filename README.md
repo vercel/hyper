@@ -20,6 +20,14 @@ Hyper is available in the [AUR](https://aur.archlinux.org/packages/hyper/). Use 
 aurman -S hyper
 ```
 
+#### Ubuntu / Debian and derivatives
+
+Hyper is available in the Snapcraft store [here](https://snapcraft.io/hyper) and can be installed via [snap](https://docs.snapcraft.io/) using:
+
+```bash
+snap install hyper --classic
+```
+
 ### macOS
 
 Use [Homebrew Cask](https://brew.sh) to download the app by running these commands:
@@ -37,7 +45,7 @@ Use [chocolatey](https://chocolatey.org/) to install the app by running the foll
 choco install hyper
 ```
 
-**Note:** The version available on [Homebrew Cask](https://brew.sh), [Chocolatey](https://chocolatey.org) or the [AUR](https://aur.archlinux.org) may not be the latest. Please consider downloading it from [here](https://hyper.is/#installation) if that's the case.
+**Note:** The version available on [Homebrew Cask](https://brew.sh), [Chocolatey](https://chocolatey.org), [Snapcraft](https://snapcraft.io/store) or the [AUR](https://aur.archlinux.org) may not be the latest. Please consider downloading it from [here](https://hyper.is/#installation) if that's the case.
 
 ## Contribute
 
