@@ -53,16 +53,6 @@ const commands = {
       webContents.openDevTools({mode: 'detach'});
     }
   },
-  'editor:copy': focusedWindow => {
-    // HACK: Had to add this because the "editor:copy" role is not firing with
-    // ctrl+shift+c after upgrading to electron 4
-    // Electron issue: https://github.com/electron/electron#16088
-    if (!focusedWindow) {
-      return;
-    }
-    const webContents = focusedWindow.webContents;
-    webContents.copy();
-  },
   'zoom:reset': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('reset fontSize req');
   },
