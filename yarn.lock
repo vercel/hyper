@@ -2432,10 +2432,10 @@ electron-to-chromium@^1.2.7:
   version "1.3.33"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.33.tgz#bf00703d62a7c65238136578c352d6c5c042a545"
 
-electron@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-4.0.0.tgz#6ccb40cc8bf2d49954dcea73b97ae7ad12ee04b3"
-  integrity sha512-3XPG/3IXlvnT1oe1K6zEushoD0SKbP8xwdrL10EWGe6k2iOV4hSHqJ8vWnR8yZ7VbSXmBRfomEFDNAo/q/cwKw==
+electron@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-3.1.1.tgz#983492f0eb25740d1ba1da47712b16139ebc6d17"
+  integrity sha512-ZamfKY9xp8P6/prtBbhOoOsdCaqyArr7GOmgJuBgWY95ZW5nJVP5aA5lLTh8IeVSW1/IM1KyKYPTrTS/RGercQ==
   dependencies:
     "@types/node" "^8.0.24"
     electron-download "^4.1.0"
@@ -7112,9 +7112,9 @@ xtend@~2.1.1:
   dependencies:
     object-keys "~0.4.0"
 
-"xterm@https://registry.npmjs.org/@zeit/xterm/-/xterm-3.10.1-1.tgz":
-  version "3.10.1-1"
-  resolved "https://registry.npmjs.org/@zeit/xterm/-/xterm-3.10.1-1.tgz#8bddffff852a6d9c3a3096ec5dcd34b1a082b0cf"
+"xterm@https://registry.npmjs.org/@zeit/xterm/-/xterm-3.10.1-2.tgz":
+  version "3.10.1-2"
+  resolved "https://registry.npmjs.org/@zeit/xterm/-/xterm-3.10.1-2.tgz#02bf8c8c5d66835afbc1b8d152ceed5f2a29479f"
 
 y18n@^3.2.1:
   version "3.2.1"
