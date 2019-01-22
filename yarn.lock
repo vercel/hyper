@@ -7112,9 +7112,9 @@ xtend@~2.1.1:
   dependencies:
     object-keys "~0.4.0"
 
-"xterm@https://registry.npmjs.org/@zeit/xterm/-/xterm-3.10.1-2.tgz":
-  version "3.10.1-2"
-  resolved "https://registry.npmjs.org/@zeit/xterm/-/xterm-3.10.1-2.tgz#02bf8c8c5d66835afbc1b8d152ceed5f2a29479f"
+"xterm@https://registry.npmjs.org/@zeit/xterm/-/xterm-3.10.1-3.tgz":
+  version "3.10.1-3"
+  resolved "https://registry.npmjs.org/@zeit/xterm/-/xterm-3.10.1-3.tgz#f4abb4dcfb128b8b14669605cebc476b50493a10"
 
 y18n@^3.2.1:
   version "3.2.1"
