@@ -13,6 +13,7 @@ const fetchNotifications = require('../notifications');
 const Session = require('../session');
 const contextMenuTemplate = require('./contextmenu');
 const {execCommand} = require('../commands');
+const {setRendererType, unsetRendererType} = require('../utils/renderer-utils');
 
 module.exports = class Window {
   constructor(options_, cfg, fn) {
@@ -153,6 +154,7 @@ module.exports = class Window {
 
       session.on('exit', () => {
         rpc.emit('session exit', {uid: options.uid});
+        unsetRendererType(options.uid);
         sessions.delete(options.uid);
       });
     });
@@ -192,9 +194,9 @@ module.exports = class Window {
         }
       }
     });
-    rpc.on('info renderer', ({type}) => {
+    rpc.on('info renderer', ({uid, type}) => {
       // Used in the "About" dialog
-      global[Symbol.for('hyper.rendererType')] = type;
+      setRendererType(uid, type);
     });
     rpc.on('open external', ({url}) => {
       shell.openExternal(url);

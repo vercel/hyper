@@ -13,6 +13,7 @@ const helpMenu = require('./menus/help');
 const darwinMenu = require('./menus/darwin');
 const {getDecoratedKeymaps} = require('../plugins');
 const {execCommand} = require('../commands');
+const {getRendererTypes} = require('../utils/renderer-utils');
 
 const appName = app.getName();
 const appVersion = app.getVersion();
@@ -38,12 +39,19 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
     const loadedPlugins = getLoadedPluginVersions();
     const pluginList =
       loadedPlugins.length === 0 ? 'none' : loadedPlugins.map(plugin => `\n  ${plugin.name} (${plugin.version})`);
-    const renderer = global[Symbol.for('hyper.rendererType')];
+
+    const rendererCounts = Object.entries(getRendererTypes()).reduce((acc, [, type]) => {
+      acc[type] = acc[type] ? acc[type] + 1 : 1;
+      return acc;
+    }, {});
+    const renderers = Object.entries(rendererCounts)
+      .map(([type, count]) => type + (count > 1 ? ` (${count})` : ''))
+      .join(', ');
 
     dialog.showMessageBox({
       title: `About ${appName}`,
       message: `${appName} ${appVersion} (${updateChannel})`,
-      detail: `Renderer: ${renderer}\nPlugins: ${pluginList}\n\nCreated by Guillermo Rauch\nCopyright © 2018 ZEIT, Inc.`,
+      detail: `Renderers: ${renderers}\nPlugins: ${pluginList}\n\nCreated by Guillermo Rauch\nCopyright © 2018 ZEIT, Inc.`,
       buttons: [],
       icon
     });
