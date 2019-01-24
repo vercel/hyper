@@ -38,11 +38,12 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
     const loadedPlugins = getLoadedPluginVersions();
     const pluginList =
       loadedPlugins.length === 0 ? 'none' : loadedPlugins.map(plugin => `\n  ${plugin.name} (${plugin.version})`);
+    const renderer = global[Symbol.for('hyper.rendererType')];
 
     dialog.showMessageBox({
       title: `About ${appName}`,
       message: `${appName} ${appVersion} (${updateChannel})`,
-      detail: `Plugins: ${pluginList}\n\nCreated by Guillermo Rauch\nCopyright © 2018 ZEIT, Inc.`,
+      detail: `Renderer: ${renderer}\nPlugins: ${pluginList}\n\nCreated by Guillermo Rauch\nCopyright © 2018 ZEIT, Inc.`,
       buttons: [],
       icon
     });

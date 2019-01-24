@@ -192,6 +192,10 @@ module.exports = class Window {
         }
       }
     });
+    rpc.on('info renderer', ({type}) => {
+      // Used in the "About" dialog
+      global[Symbol.for('hyper.rendererType')] = type;
+    });
     rpc.on('open external', ({url}) => {
       shell.openExternal(url);
     });
