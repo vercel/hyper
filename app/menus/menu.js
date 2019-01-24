@@ -40,7 +40,7 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
     const pluginList =
       loadedPlugins.length === 0 ? 'none' : loadedPlugins.map(plugin => `\n  ${plugin.name} (${plugin.version})`);
 
-    const rendererCounts = Object.entries(getRendererTypes()).reduce((acc, [, type]) => {
+    const rendererCounts = Object.values(getRendererTypes()).reduce((acc, type) => {
       acc[type] = acc[type] ? acc[type] + 1 : 1;
       return acc;
     }, {});
