@@ -1,4 +1,4 @@
-const {app} = require('electron');
+const {app, Menu} = require('electron');
 const {openConfig} = require('./config');
 const {updatePlugins} = require('./plugins');
 const {installCLI} = require('./utils/cli-install');
@@ -103,6 +103,9 @@ const commands = {
   },
   'cli:install': () => {
     installCLI(true);
+  },
+  'window:hamburgerMenu': () => {
+    Menu.getApplicationMenu().popup({x: 15, y: 15});
   }
 };
 
