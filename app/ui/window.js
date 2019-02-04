@@ -226,6 +226,9 @@ module.exports = class Window {
       }
     });
 
+    // mitigate a security issue: https://electronjs.org/blog/window-open-fix
+    window.webContents.on('-add-new-contents', e => e.preventDefault());
+
     // expose internals to extension authors
     window.rpc = rpc;
     window.sessions = sessions;
