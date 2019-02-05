@@ -227,6 +227,7 @@ module.exports = class Window {
     });
 
     // mitigate a security issue: https://electronjs.org/blog/window-open-fix
+    // TODO: remove when merged into Hyper 3 (already has the fix via electron)
     window.webContents.on('-add-new-contents', e => e.preventDefault());
 
     // expose internals to extension authors
