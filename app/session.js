@@ -141,12 +141,12 @@ module.exports = class Session extends EventEmitter {
   }
 
   write(data) {
-    this.pty.write(data);
+    this.pty && this.pty.write(data);
   }
 
   resize({cols, rows}) {
     try {
-      this.pty.resize(cols, rows);
+      this.pty && this.pty.resize(cols, rows);
     } catch (err) {
       //eslint-disable-next-line no-console
       console.error(err.stack);
@@ -155,7 +155,7 @@ module.exports = class Session extends EventEmitter {
 
   destroy() {
     try {
-      this.pty.kill();
+      this.pty && this.pty.kill();
     } catch (err) {
       //eslint-disable-next-line no-console
       console.error('exit error', err.stack);

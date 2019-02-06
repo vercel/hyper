@@ -14,6 +14,7 @@ const Session = require('../session');
 const contextMenuTemplate = require('./contextmenu');
 const {execCommand} = require('../commands');
 const {setRendererType, unsetRendererType} = require('../utils/renderer-utils');
+const {decorateSessionOptions, decorateSessionClass} = require('../plugins');
 
 module.exports = class Window {
   constructor(options_, cfg, fn) {
@@ -89,7 +90,7 @@ module.exports = class Window {
     function createSession(extraOptions = {}) {
       const uid = uuid.v4();
 
-      const options = Object.assign(
+      const defaultOptions = Object.assign(
         {
           rows: 40,
           cols: 100,
@@ -101,8 +102,9 @@ module.exports = class Window {
         extraOptions,
         {uid}
       );
-
-      const session = new Session(options);
+      const options = decorateSessionOptions(defaultOptions);
+      const DecoratedSession = decorateSessionClass(Session);
+      const session = new DecoratedSession(options);
       sessions.set(uid, session);
       return {session, options};
     }

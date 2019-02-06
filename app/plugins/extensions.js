@@ -4,6 +4,8 @@ module.exports = {
     'onWindow',
     'onRendererWindow',
     'onUnload',
+    'decorateSessionClass',
+    'decorateSessionOptions',
     'middleware',
     'reduceUI',
     'reduceSessions',

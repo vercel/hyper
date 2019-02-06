@@ -332,9 +332,9 @@ exports.onWindow = win => {
   });
 };
 
-// decorates the base object by calling plugin[key]
+// decorates the base entity by calling plugin[key]
 // for all the available plugins
-function decorateObject(base, key) {
+function decorateEntity(base, key, type) {
   let decorated = base;
   modules.forEach(plugin => {
     if (plugin[key]) {
@@ -345,7 +345,7 @@ function decorateObject(base, key) {
         notify('Plugin error!', `"${plugin._name}" when decorating ${key}`, {error: e});
         return;
       }
-      if (res && typeof res === 'object') {
+      if (res && (!type || typeof res === type)) {
         decorated = res;
       } else {
         notify('Plugin error!', `"${plugin._name}": invalid return type for \`${key}\``);
@@ -354,6 +354,14 @@ function decorateObject(base, key) {
   });
 
   return decorated;
+}
+
+function decorateObject(base, key) {
+  return decorateEntity(base, key, 'object');
+}
+
+function decorateClass(base, key) {
+  return decorateEntity(base, key, 'function');
 }
 
 exports.getDeprecatedConfig = () => {
@@ -407,6 +415,14 @@ exports.getDecoratedKeymaps = () => {
 
 exports.getDecoratedBrowserOptions = defaults => {
   return decorateObject(defaults, 'decorateBrowserOptions');
+};
+
+exports.decorateSessionClass = Session => {
+  return decorateClass(Session, 'decorateSessionClass');
+};
+
+exports.decorateSessionOptions = defaults => {
+  return decorateObject(defaults, 'decorateSessionOptions');
 };
 
 exports._toDependencies = toDependencies;
