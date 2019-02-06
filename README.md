@@ -20,14 +20,6 @@ Hyper is available in the [AUR](https://aur.archlinux.org/packages/hyper/). Use 
 aurman -S hyper
 ```
 
-#### Ubuntu / Debian and derivatives
-
-Hyper is available in the Snapcraft store [here](https://snapcraft.io/hyper) and can be installed via [snap](https://docs.snapcraft.io/) using:
-
-```bash
-snap install hyper --classic
-```
-
 ### macOS
 
 Use [Homebrew Cask](https://brew.sh) to download the app by running these commands:
