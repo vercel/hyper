@@ -74,9 +74,17 @@ class DataBatcher extends EventEmitter {
 }
 
 module.exports = class Session extends EventEmitter {
-  constructor({uid, rows, cols: columns, cwd, shell, shellArgs}) {
-    const osLocale = require('os-locale');
+  constructor(options) {
     super();
+    this.pty = null;
+    this.batcher = null;
+    this.shell = null;
+    this.ended = false;
+    this.init(options);
+  }
+
+  init({uid, rows, cols: columns, cwd, shell, shellArgs}) {
+    const osLocale = require('os-locale');
     const baseEnv = Object.assign(
       {},
       process.env,

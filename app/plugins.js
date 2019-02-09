@@ -417,12 +417,12 @@ exports.getDecoratedBrowserOptions = defaults => {
   return decorateObject(defaults, 'decorateBrowserOptions');
 };
 
-exports.decorateSessionClass = Session => {
-  return decorateClass(Session, 'decorateSessionClass');
-};
-
 exports.decorateSessionOptions = defaults => {
   return decorateObject(defaults, 'decorateSessionOptions');
+};
+
+exports.decorateSessionClass = Session => {
+  return decorateClass(Session, 'decorateSessionClass');
 };
 
 exports._toDependencies = toDependencies;
