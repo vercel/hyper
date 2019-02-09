@@ -1,4 +1,4 @@
-![](https://assets.zeit.co/image/upload/v1537650716/repositories/hyper/hyper-repo-banner.png)
+![](https://assets.zeit.co/image/upload/v1549723846/repositories/hyper/hyper-3-repo-banner.png)
 
 [![macOS CI Status](https://circleci.com/gh/zeit/hyper.svg?style=shield)](https://circleci.com/gh/zeit/hyper)
 [![Windows CI status](https://ci.appveyor.com/api/projects/status/kqvb4oa772an58sc?svg=true)](https://ci.appveyor.com/project/zeit/hyper)
