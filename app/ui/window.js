@@ -216,7 +216,8 @@ module.exports = class Window {
       window.on(ev, () => rpc.emit('windowGeometry change'));
     }
     rpc.win.on('move', () => {
-      rpc.emit('move');
+      const position = window.getPosition();
+      rpc.emit('move', {position: {x: position[0], y: position[1]}});
     });
     rpc.on('close', () => {
       window.close();
