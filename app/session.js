@@ -74,9 +74,17 @@ class DataBatcher extends EventEmitter {
 }
 
 module.exports = class Session extends EventEmitter {
-  constructor({uid, rows, cols: columns, cwd, shell, shellArgs}) {
-    const osLocale = require('os-locale');
+  constructor(options) {
     super();
+    this.pty = null;
+    this.batcher = null;
+    this.shell = null;
+    this.ended = false;
+    this.init(options);
+  }
+
+  init({uid, rows, cols: columns, cwd, shell, shellArgs}) {
+    const osLocale = require('os-locale');
     const baseEnv = Object.assign(
       {},
       process.env,
@@ -141,24 +149,39 @@ module.exports = class Session extends EventEmitter {
   }
 
   write(data) {
-    this.pty.write(data);
+    if (this.pty) {
+      this.pty.write(data);
+    } else {
+      //eslint-disable-next-line no-console
+      console.warn('Warning: Attempted to write to a session with no pty');
+    }
   }
 
   resize({cols, rows}) {
-    try {
-      this.pty.resize(cols, rows);
-    } catch (err) {
+    if (this.pty) {
+      try {
+        this.pty.resize(cols, rows);
+      } catch (err) {
+        //eslint-disable-next-line no-console
+        console.error(err.stack);
+      }
+    } else {
       //eslint-disable-next-line no-console
-      console.error(err.stack);
+      console.warn('Warning: Attempted to resize a session with no pty');
     }
   }
 
   destroy() {
-    try {
-      this.pty.kill();
-    } catch (err) {
+    if (this.pty) {
+      try {
+        this.pty.kill();
+      } catch (err) {
+        //eslint-disable-next-line no-console
+        console.error('exit error', err.stack);
+      }
+    } else {
       //eslint-disable-next-line no-console
-      console.error('exit error', err.stack);
+      console.warn('Warning: Attempted to destroy a session with no pty');
     }
     this.emit('exit');
     this.ended = true;
