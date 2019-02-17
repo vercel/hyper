@@ -19,9 +19,10 @@ const {decorateSessionOptions, decorateSessionClass} = require('../plugins');
 module.exports = class Window {
   constructor(options_, cfg, fn) {
     const classOpts = Object.assign({uid: uuid.v4()});
-
-    app.plugins.onWindowClass(app.plugins.decorateWindowClass(classOpts));
+    app.plugins.decorateWindowClass(classOpts);
     this.uid = classOpts.uid;
+
+    app.plugins.onWindowClass(this);
 
     const winOpts = Object.assign(
       {
@@ -39,7 +40,9 @@ module.exports = class Window {
       },
       options_
     );
+
     const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(winOpts));
+    window.uid = classOpts.uid;
 
     const rpc = createRPC(window);
     const sessions = new Map();
