@@ -48,7 +48,7 @@ Regardless of the platform you are working on, you will need to have Yarn instal
     - Be sure to run  `yarn global add windows-build-tools` to install `windows-build-tools`.
   * macOS
     - Once you have installed Yarn, you can skip this section!
-  * Linux(You can see [here](https://en.wikipedia.org/wiki/List_of_Linux_distributions) what your Linux is based on.)
+  * Linux (You can see [here](https://en.wikipedia.org/wiki/List_of_Linux_distributions) what your Linux is based on.)
     - RPM-based
         + `GraphicsMagick`
         + `libicns-utils`
