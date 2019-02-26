@@ -217,8 +217,9 @@ module.exports = class Window {
     for (const ev of ['maximize', 'unmaximize', 'minimize', 'restore']) {
       window.on(ev, () => rpc.emit('windowGeometry change'));
     }
-    rpc.win.on('move', () => {
-      rpc.emit('move');
+    window.on('move', () => {
+      const position = window.getPosition();
+      rpc.emit('move', {bounds: {x: position[0], y: position[1]}});
     });
     rpc.on('close', () => {
       window.close();
