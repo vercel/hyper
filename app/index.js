@@ -19,7 +19,6 @@ const checkSquirrel = () => {
     squirrel = require('electron-squirrel-startup');
     //eslint-disable-next-line no-empty
   } catch (err) {}
-
   if (squirrel) {
     // eslint-disable-next-line unicorn/no-process-exit
     process.exit();

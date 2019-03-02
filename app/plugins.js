@@ -318,6 +318,20 @@ exports.onApp = app_ => {
   });
 };
 
+exports.onWindowClass = win => {
+  modules.forEach(plugin => {
+    if (plugin.onWindowClass) {
+      try {
+        plugin.onWindowClass(win);
+      } catch (e) {
+        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`, {
+          error: e
+        });
+      }
+    }
+  });
+};
+
 exports.onWindow = win => {
   modules.forEach(plugin => {
     if (plugin.onWindow) {
@@ -415,6 +429,10 @@ exports.getDecoratedKeymaps = () => {
 
 exports.getDecoratedBrowserOptions = defaults => {
   return decorateObject(defaults, 'decorateBrowserOptions');
+};
+
+exports.decorateWindowClass = defaults => {
+  return decorateObject(defaults, 'decorateWindowClass');
 };
 
 exports.decorateSessionOptions = defaults => {

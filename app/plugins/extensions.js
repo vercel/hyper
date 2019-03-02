@@ -1,6 +1,8 @@
 module.exports = {
   availableExtensions: new Set([
     'onApp',
+    'onWindowClass',
+    'decorateWindowClass',
     'onWindow',
     'onRendererWindow',
     'onUnload',
