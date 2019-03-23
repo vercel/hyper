@@ -14,3 +14,4 @@ yarn-error.log
 .hyper.js
 .hyper_plugins
 
+.DS_Store

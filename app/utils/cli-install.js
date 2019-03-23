@@ -117,6 +117,6 @@ exports.installCLI = withNotification => {
       });
   } else {
     withNotification &&
-      notify('Hyper CLI instalation', 'Command is added in PATH only at package installation. Please reinstall.');
+      notify('Hyper CLI installation', 'Command is added in PATH only at package installation. Please reinstall.');
   }
 };

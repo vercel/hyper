@@ -89,7 +89,7 @@ exports.decorateKeymaps = keymaps => {
 }
 ```
 The command name can be whatever you want, but the following is better to respect the default naming convention: `<context>:<action>`.
-Hotkeys are composed by (Mousetrap supported keys)[https://craig.is/killing/mice#keys].
+Hotkeys are composed by [Mousetrap supported keys](https://craig.is/killing/mice#keys).
 
 **Bonus feature**: if your command ends with `:prefix`, it would mean that you want to use this command with an additional digit to the command. Then Hyper will create all your commands under the hood. For example, this keymap `'pane:hide:prefix': 'ctrl+shift'` will automatically generate the following:
 ```
@@ -129,7 +129,7 @@ rpc.on('command pane:snapshot', () => {
 
 ### Menu
 Your plugin can expose a `decorateMenu` function to modify the Hyper menu template.
-Check the (Electron documentation)[https://electronjs.org/docs/api/menu-item] for more details about the different menu item types/options available.
+Check the [Electron documentation](https://electronjs.org/docs/api/menu-item) for more details about the different menu item types/options available.
 
 Be careful, a click handler will be executed on the main process. If you need to trigger a handler in the render process you need to use an `rpc` message like this:
 ```js
@@ -191,7 +191,7 @@ exports.decorateTerm = (Term, { React, notify }) => {
 ```
 
 ## Hyper v2 breaking changes
-Hyper v2 uses `xterm.js` instead of `hterm`. It means that PTY ouput renders now in a canvas element, not with a hackable DOM structure.
+Hyper v2 uses `xterm.js` instead of `hterm`. It means that PTY output renders now in a canvas element, not with a hackable DOM structure.
 For example, plugins can't use TermCSS in order to modify text or link styles anymore. It is now required to use available configuration params that are passed down to `xterm.js`.
 
 If your plugin was deeply linked with the `hterm` API (even public methods), it certainly doesn't work anymore.

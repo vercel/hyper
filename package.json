@@ -1,7 +1,8 @@
 {
   "repository": "zeit/hyper",
   "scripts": {
-    "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
+    "start":
+      "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
     "app": "electron app",
     "dev": "webpack -w",
     "build": "cross-env NODE_ENV=production webpack",
@@ -61,7 +62,7 @@
     },
     "overrides": [
       {
-        "files": "app/config/config-default.js",
+        "files": ["app/config/config-default.js", ".hyper.js"],
         "rules": {
           "prettier/prettier": [
             "error",
@@ -144,6 +145,10 @@
         {
           "target": "rpm",
           "arch": ["x64"]
+        },
+        {
+          "target": "snap",
+          "arch": ["x64"]
         }
       ]
     },
@@ -160,6 +165,9 @@
     },
     "rpm": {
       "afterInstall": "./build/linux/after-install.tpl"
+    },
+    "snap": {
+      "confinement": "classic"
     },
     "protocols": {
       "name": "ssh URL",
@@ -188,7 +196,7 @@
     "pify": "3.0.0",
     "react": "16.2.0",
     "react-deep-force-update": "2.1.1",
-    "react-dom": "16.2.0",
+    "react-dom": "16.2.1",
     "react-redux": "5.0.7",
     "recast": "0.13.0",
     "redux": "3.7.2",
@@ -200,7 +208,7 @@
     "styled-jsx": "2.2.6",
     "stylis": "3.5.0",
     "uuid": "3.1.0",
-    "xterm": "3.4.1"
+    "xterm": "https://registry.npmjs.org/@zeit/xterm/-/xterm-3.12.0-1.tgz"
   },
   "devDependencies": {
     "ava": "0.25.0",
@@ -211,11 +219,11 @@
     "babel-preset-react": "6.24.1",
     "copy-webpack-plugin": "4.3.1",
     "cross-env": "5.1.4",
-    "electron": "1.8.4",
-    "electron-builder": "20.5.1",
-    "electron-builder-squirrel-windows": "20.5.0",
-    "electron-devtools-installer": "2.2.3",
-    "electron-rebuild": "1.7.3",
+    "electron": "3.1.3",
+    "electron-builder": "20.38.2",
+    "electron-builder-squirrel-windows": "20.38.2",
+    "electron-devtools-installer": "2.2.4",
+    "electron-rebuild": "1.8.2",
     "eslint": "4.7.2",
     "eslint-config-prettier": "2.6.0",
     "eslint-plugin-prettier": "2.3.1",

@@ -6,22 +6,30 @@ const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 const updater = require('../updater');
 const toElectronBackgroundColor = require('../utils/to-electron-background-color');
-const {icon, cfgDir} = require('../config/paths');
+const {icon, homeDirectory} = require('../config/paths');
 const createRPC = require('../rpc');
 const notify = require('../notify');
 const fetchNotifications = require('../notifications');
 const Session = require('../session');
 const contextMenuTemplate = require('./contextmenu');
 const {execCommand} = require('../commands');
+const {setRendererType, unsetRendererType} = require('../utils/renderer-utils');
+const {decorateSessionOptions, decorateSessionClass} = require('../plugins');
 
 module.exports = class Window {
   constructor(options_, cfg, fn) {
+    const classOpts = Object.assign({uid: uuid.v4()});
+    app.plugins.decorateWindowClass(classOpts);
+    this.uid = classOpts.uid;
+
+    app.plugins.onWindowClass(this);
+
     const winOpts = Object.assign(
       {
         minWidth: 370,
         minHeight: 190,
         backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
-        titleBarStyle: 'hidden-inset',
+        titleBarStyle: 'hiddenInset',
         title: 'Hyper.app',
         // we want to go frameless on Windows and Linux
         frame: process.platform === 'darwin',
@@ -32,7 +40,10 @@ module.exports = class Window {
       },
       options_
     );
+
     const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(winOpts));
+    window.uid = classOpts.uid;
+
     const rpc = createRPC(window);
     const sessions = new Map();
 
@@ -71,7 +82,7 @@ module.exports = class Window {
 
       // app.windowCallback is the createWindow callback
       // that can be set before the 'ready' app event
-      // and createWindow deifinition. It's executed in place of
+      // and createWindow definition. It's executed in place of
       // the callback passed as parameter, and deleted right after.
       (app.windowCallback || fn)(window);
       delete app.windowCallback;
@@ -85,44 +96,80 @@ module.exports = class Window {
       }
     });
 
-    rpc.on('new', options => {
-      const sessionOpts = Object.assign(
+    function createSession(extraOptions = {}) {
+      const uid = uuid.v4();
+
+      const defaultOptions = Object.assign(
         {
           rows: 40,
           cols: 100,
-          cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : cfgDir,
+          cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homeDirectory,
           splitDirection: undefined,
           shell: cfg.shell,
           shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
         },
-        options
+        extraOptions,
+        {uid}
       );
+      const options = decorateSessionOptions(defaultOptions);
+      const DecoratedSession = decorateSessionClass(Session);
+      const session = new DecoratedSession(options);
+      sessions.set(uid, session);
+      return {session, options};
+    }
 
-      const initSession = (opts, fn_) => {
-        fn_(uuid.v4(), new Session(opts));
-      };
+    // Optimistically create the initial session so that when the window sends
+    // the first "new" IPC message, there's a session already warmed up.
+    function createInitialSession() {
+      let {session, options} = createSession();
+      const initialEvents = [];
+      const handleData = data => initialEvents.push(['session data', data]);
+      const handleExit = () => initialEvents.push(['session exit']);
+      session.on('data', handleData);
+      session.on('exit', handleExit);
 
-      initSession(sessionOpts, (uid, session) => {
-        sessions.set(uid, session);
-        rpc.emit('session add', {
-          rows: sessionOpts.rows,
-          cols: sessionOpts.cols,
-          uid,
-          splitDirection: sessionOpts.splitDirection,
-          shell: session.shell,
-          pid: session.pty.pid
-        });
+      function flushEvents() {
+        for (let args of initialEvents) {
+          rpc.emit(...args);
+        }
+        session.removeListener('data', handleData);
+        session.removeListener('exit', handleExit);
+      }
+      return {session, options, flushEvents};
+    }
+    let initialSession = createInitialSession();
 
-        session.on('data', data => {
-          rpc.emit('session data', uid + data);
-        });
+    rpc.on('new', extraOptions => {
+      const {session, options} = initialSession || createSession(extraOptions);
 
-        session.on('exit', () => {
-          rpc.emit('session exit', {uid});
-          sessions.delete(uid);
-        });
+      sessions.set(options.uid, session);
+      rpc.emit('session add', {
+        rows: options.rows,
+        cols: options.cols,
+        uid: options.uid,
+        splitDirection: options.splitDirection,
+        shell: session.shell,
+        pid: session.pty.pid
+      });
+
+      // If this is the initial session, flush any events that might have
+      // occurred while the window was initializing
+      if (initialSession) {
+        initialSession.flushEvents();
+        initialSession = null;
+      }
+
+      session.on('data', data => {
+        rpc.emit('session data', data);
+      });
+
+      session.on('exit', () => {
+        rpc.emit('session exit', {uid: options.uid});
+        unsetRendererType(options.uid);
+        sessions.delete(options.uid);
       });
     });
+
     rpc.on('exit', ({uid}) => {
       const session = sessions.get(uid);
       if (session) {
@@ -158,6 +205,10 @@ module.exports = class Window {
         }
       }
     });
+    rpc.on('info renderer', ({uid, type}) => {
+      // Used in the "About" dialog
+      setRendererType(uid, type);
+    });
     rpc.on('open external', ({url}) => {
       shell.openExternal(url);
     });
@@ -167,7 +218,7 @@ module.exports = class Window {
       buildFromTemplate(contextMenuTemplate(createWindow, selection)).popup(window);
     });
     rpc.on('open hamburger menu', ({x, y}) => {
-      Menu.getApplicationMenu().popup(Math.ceil(x), Math.ceil(y));
+      Menu.getApplicationMenu().popup({x: Math.ceil(x), y: Math.ceil(y)});
     });
     // Same deal as above, grabbing the window titlebar when the window
     // is maximized on Windows results in unmaximize, without hitting any
@@ -175,8 +226,9 @@ module.exports = class Window {
     for (const ev of ['maximize', 'unmaximize', 'minimize', 'restore']) {
       window.on(ev, () => rpc.emit('windowGeometry change'));
     }
-    rpc.win.on('move', () => {
-      rpc.emit('move');
+    window.on('move', () => {
+      const position = window.getPosition();
+      rpc.emit('move', {bounds: {x: position[0], y: position[1]}});
     });
     rpc.on('close', () => {
       window.close();
