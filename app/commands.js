@@ -1,5 +1,5 @@
-const {app} = require('electron');
-const {openConfig} = require('./config');
+const {app, Menu} = require('electron');
+const {openConfig, getConfig} = require('./config');
 const {updatePlugins} = require('./plugins');
 const {installCLI} = require('./utils/cli-install');
 
@@ -53,16 +53,6 @@ const commands = {
       webContents.openDevTools({mode: 'detach'});
     }
   },
-  'editor:copy': focusedWindow => {
-    // HACK: Had to add this because the "editor:copy" role is not firing with
-    // ctrl+shift+c after upgrading to electron 4
-    // Electron issue: https://github.com/electron/electron#16088
-    if (!focusedWindow) {
-      return;
-    }
-    const webContents = focusedWindow.webContents;
-    webContents.copy();
-  },
   'zoom:reset': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('reset fontSize req');
   },
@@ -113,6 +103,11 @@ const commands = {
   },
   'cli:install': () => {
     installCLI(true);
+  },
+  'window:hamburgerMenu': () => {
+    if (getConfig().showHamburgerMenu) {
+      Menu.getApplicationMenu().popup({x: 15, y: 15});
+    }
   }
 };
 

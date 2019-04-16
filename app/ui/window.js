@@ -6,16 +6,24 @@ const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 const updater = require('../updater');
 const toElectronBackgroundColor = require('../utils/to-electron-background-color');
-const {icon, cfgDir} = require('../config/paths');
+const {icon, homeDirectory} = require('../config/paths');
 const createRPC = require('../rpc');
 const notify = require('../notify');
 const fetchNotifications = require('../notifications');
 const Session = require('../session');
 const contextMenuTemplate = require('./contextmenu');
 const {execCommand} = require('../commands');
+const {setRendererType, unsetRendererType} = require('../utils/renderer-utils');
+const {decorateSessionOptions, decorateSessionClass} = require('../plugins');
 
 module.exports = class Window {
   constructor(options_, cfg, fn) {
+    const classOpts = Object.assign({uid: uuid.v4()});
+    app.plugins.decorateWindowClass(classOpts);
+    this.uid = classOpts.uid;
+
+    app.plugins.onWindowClass(this);
+
     const winOpts = Object.assign(
       {
         minWidth: 370,
@@ -32,7 +40,10 @@ module.exports = class Window {
       },
       options_
     );
+
     const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(winOpts));
+    window.uid = classOpts.uid;
+
     const rpc = createRPC(window);
     const sessions = new Map();
 
@@ -88,11 +99,11 @@ module.exports = class Window {
     function createSession(extraOptions = {}) {
       const uid = uuid.v4();
 
-      const options = Object.assign(
+      const defaultOptions = Object.assign(
         {
           rows: 40,
           cols: 100,
-          cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : cfgDir,
+          cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homeDirectory,
           splitDirection: undefined,
           shell: cfg.shell,
           shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
@@ -100,8 +111,9 @@ module.exports = class Window {
         extraOptions,
         {uid}
       );
-
-      const session = new Session(options);
+      const options = decorateSessionOptions(defaultOptions);
+      const DecoratedSession = decorateSessionClass(Session);
+      const session = new DecoratedSession(options);
       sessions.set(uid, session);
       return {session, options};
     }
@@ -153,6 +165,7 @@ module.exports = class Window {
 
       session.on('exit', () => {
         rpc.emit('session exit', {uid: options.uid});
+        unsetRendererType(options.uid);
         sessions.delete(options.uid);
       });
     });
@@ -192,6 +205,10 @@ module.exports = class Window {
         }
       }
     });
+    rpc.on('info renderer', ({uid, type}) => {
+      // Used in the "About" dialog
+      setRendererType(uid, type);
+    });
     rpc.on('open external', ({url}) => {
       shell.openExternal(url);
     });
@@ -209,8 +226,9 @@ module.exports = class Window {
     for (const ev of ['maximize', 'unmaximize', 'minimize', 'restore']) {
       window.on(ev, () => rpc.emit('windowGeometry change'));
     }
-    rpc.win.on('move', () => {
-      rpc.emit('move');
+    window.on('move', () => {
+      const position = window.getPosition();
+      rpc.emit('move', {bounds: {x: position[0], y: position[1]}});
     });
     rpc.on('close', () => {
       window.close();
