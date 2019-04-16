@@ -52,7 +52,6 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
       title: `About ${appName}`,
       message: `${appName} ${appVersion} (${updateChannel})`,
       detail: `Renderers: ${renderers}\nPlugins: ${pluginList}\n\nCreated by Guillermo Rauch\nCopyright © 2019 ZEIT, Inc.`,
-      canary,
       buttons: [],
       icon
     });
