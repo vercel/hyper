@@ -44,7 +44,17 @@ const getFileContents = memoize(() => {
 
 const getParsedFile = memoize(() => recast.parse(getFileContents()));
 
-const getProperties = memoize(() => getParsedFile().program.body[0].expression.right.properties);
+// From all items in the property file, find the first `module.exports` expression
+// Assumes that the `.hyper.js` file will never declare `module.exports` more than once
+const getProperties = memoize(
+  () =>
+    getParsedFile().program.body.find(
+      bodyItem =>
+        bodyItem.type === 'ExpressionStatement' &&
+        bodyItem.expression.left.object.name === 'module' &&
+        bodyItem.expression.left.property.name === 'exports'
+    ).expression.right.properties
+);
 
 const getPlugins = memoize(() => getProperties().find(property => property.key.name === 'plugins').value.elements);
 
