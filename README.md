@@ -1,10 +1,10 @@
-![](https://github.com/zeit/art/blob/525bd1bb39d97dd3b91c976106a6d5cc5766b678/hyper/repo-banner.png)
+![](https://assets.zeit.co/image/upload/v1549723846/repositories/hyper/hyper-3-repo-banner.png)
 
 [![macOS CI Status](https://circleci.com/gh/zeit/hyper.svg?style=shield)](https://circleci.com/gh/zeit/hyper)
 [![Windows CI status](https://ci.appveyor.com/api/projects/status/kqvb4oa772an58sc?svg=true)](https://ci.appveyor.com/project/zeit/hyper)
 [![Linux CI status](https://travis-ci.org/zeit/hyper.svg?branch=master)](https://travis-ci.org/zeit/hyper)
 [![Changelog #213](https://img.shields.io/badge/changelog-%23213-lightgrey.svg)](https://changelog.com/213)
-[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/hyper)
+[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/zeit/hyper)
 
 For more details, head to: https://hyper.is
 
@@ -22,7 +22,7 @@ aurman -S hyper
 
 ### macOS
 
-Use [Homebrew Cask](https://caskroom.github.io/) to download the app by running these commands:
+Use [Homebrew Cask](https://brew.sh) to download the app by running these commands:
 
 ```bash
 brew update
@@ -37,7 +37,7 @@ Use [chocolatey](https://chocolatey.org/) to install the app by running the foll
 choco install hyper
 ```
 
-**Note:** The version available on [Homebrew Cask](https://caskroom.github.io/), [Chocolatey](https://chocolatey.org) or the [AUR](https://aur.archlinux.org) may not be the latest. Please consider downloading it from [here](https://hyper.is/#installation) if that's the case.
+**Note:** The version available on [Homebrew Cask](https://brew.sh), [Chocolatey](https://chocolatey.org), [Snapcraft](https://snapcraft.io/store) or the [AUR](https://aur.archlinux.org) may not be the latest. Please consider downloading it from [here](https://hyper.is/#installation) if that's the case.
 
 ## Contribute
 
@@ -45,10 +45,10 @@ Regardless of the platform you are working on, you will need to have Yarn instal
 
 1. Install necessary packages:
   * Windows
-    - Be sure to run  `yarn global add windows-build-tools` to install `windows-build-tools`.
+    - Be sure to run  `yarn global add windows-build-tools` from an elevated prompt (as an administrator) to install `windows-build-tools`.
   * macOS
     - Once you have installed Yarn, you can skip this section!
-  * Linux(You can see [here](https://en.wikipedia.org/wiki/List_of_Linux_distributions) what your Linux is based on.)
+  * Linux (You can see [here](https://en.wikipedia.org/wiki/List_of_Linux_distributions) what your Linux is based on.)
     - RPM-based
         + `GraphicsMagick`
         + `libicns-utils`

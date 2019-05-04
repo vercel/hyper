@@ -1,9 +1,13 @@
 module.exports = {
   availableExtensions: new Set([
     'onApp',
+    'onWindowClass',
+    'decorateWindowClass',
     'onWindow',
     'onRendererWindow',
     'onUnload',
+    'decorateSessionClass',
+    'decorateSessionOptions',
     'middleware',
     'reduceUI',
     'reduceSessions',

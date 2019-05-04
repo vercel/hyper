@@ -21,7 +21,8 @@ module.exports = (commandKeys, execCommand) => {
     {
       role: 'copy',
       command: 'editor:copy',
-      accelerator: commandKeys['editor:copy']
+      accelerator: commandKeys['editor:copy'],
+      registerAccelerator: true
     },
     {
       role: 'paste',
