@@ -1,6 +1,7 @@
 const {writeFileSync, readFileSync} = require('fs');
+const {moveSync} = require('fs-extra-p');
 const {sync: mkdirpSync} = require('mkdirp');
-const {defaultCfg, cfgPath, plugs, defaultPlatformKeyPath} = require('./paths');
+const {defaultCfg, cfgPath, legacyCfgPath, plugs, defaultPlatformKeyPath} = require('./paths');
 const {_init, _extractDefault} = require('./init');
 
 let defaultConfig;
@@ -14,6 +15,26 @@ const _write = function(path, data) {
   };
   const format = process.platform === 'win32' ? crlfify(data.toString()) : data;
   writeFileSync(path, format, 'utf8');
+};
+
+// Saves a file as backup by appending '.backup' or '.backup2', '.backup3', etc.
+// so as to not override any existing files
+const saveAsBackup = src => {
+  let attempt = 1;
+  while (attempt < 100) {
+    try {
+      const backupPath = src + '.backup' + (attempt === 1 ? '' : attempt);
+      moveSync(src, backupPath);
+      return backupPath;
+    } catch (e) {
+      if (e.code === 'EEXIST') {
+        attempt++;
+      } else {
+        throw e;
+      }
+    }
+  }
+  throw new Error('Failed to create backup for config file. Too many backups');
 };
 
 const _importConf = function() {
@@ -33,14 +54,49 @@ const _importConf = function() {
       //eslint-disable-next-line no-console
       console.error(err);
     }
-    // Importing user config
-    try {
-      const _cfgPath = readFileSync(cfgPath, 'utf8');
-      return {userCfg: _cfgPath, defaultCfg: _defaultCfg};
-    } catch (err) {
-      _write(cfgPath, defaultCfgRaw);
-      return {userCfg: defaultCfgRaw, defaultCfg: _defaultCfg};
+
+    // Import old (Hyper2) config, if any
+    let legacyCfg;
+    if (legacyCfgPath !== cfgPath) {
+      try {
+        legacyCfg = readFileSync(legacyCfgPath, 'utf8');
+      } catch (err) {
+        // Do nothing
+      }
     }
+
+    // Import user config
+    let userCfg;
+    try {
+      userCfg = readFileSync(cfgPath, 'utf8');
+    } catch (err) {
+      // Do nothing
+    }
+
+    // If a legacy config was found, migrate it to the new location while
+    // keeping any old files with a '.backup' suffix
+    if (legacyCfg) {
+      //eslint-disable-next-line no-console
+      console.log('Legacy config found in:', legacyCfgPath);
+      if (userCfg) {
+        const backupPath = saveAsBackup(cfgPath);
+        //eslint-disable-next-line no-console
+        console.log('Backing up existing config as', backupPath);
+      }
+      const backupPath = saveAsBackup(legacyCfgPath);
+      //eslint-disable-next-line no-console
+      console.log('Backing up existing legacy config as', backupPath);
+
+      _write(cfgPath, legacyCfg);
+      userCfg = legacyCfg;
+    } else if (!userCfg) {
+      //eslint-disable-next-line no-console
+      console.log('No existing config found. Generating default at', cfgPath);
+      _write(cfgPath, defaultCfgRaw);
+      userCfg = defaultCfgRaw;
+    }
+
+    return {userCfg, defaultCfg: _defaultCfg};
   } catch (err) {
     //eslint-disable-next-line no-console
     console.log(err);
