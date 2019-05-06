@@ -1,5 +1,5 @@
 const {writeFileSync, readFileSync} = require('fs');
-const {moveSync} = require('fs-extra-p');
+const {moveSync} = require('fs-extra');
 const {sync: mkdirpSync} = require('mkdirp');
 const {defaultCfg, cfgPath, legacyCfgPath, plugs, defaultPlatformKeyPath} = require('./paths');
 const {_init, _extractDefault} = require('./init');
