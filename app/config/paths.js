@@ -9,7 +9,12 @@ const cfgFile = '.hyper.js';
 const defaultCfgFile = 'config-default.js';
 const homeDirectory = homedir();
 
-const applicationDirectory = app.getPath('userData');
+// If the user defines XDG_CONFIG_HOME they definitely want their config there,
+// otherwise use the home directory in linux/mac and userdata in windows
+const applicationDirectory =
+  process.env.XDG_CONFIG_HOME !== undefined
+    ? join(process.env.XDG_CONFIG_HOME, 'hyper')
+    : process.platform == 'win32' ? app.getPath('userData') : homedir();
 
 let cfgPath = join(applicationDirectory, cfgFile);
 let cfgDir = applicationDirectory;
