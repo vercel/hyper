@@ -55,10 +55,11 @@ const migrate = (old, _new) => {
 };
 
 const _importConf = function() {
-  if (migrate(plugs.legacyBase, plugs.base) || migrate(legacyCfgPath, cfgPath)) {
+  // Migrate Hyper2 config to Hyper3
+  if (migrate(legacyCfgPath, cfgPath)) {
     notify(
       'Hyper 3',
-      `Our settings location changed to ${cfgPath}. We've automatically migrated your existing config!`
+      `Settings location has changed to ${cfgPath}.\nWe've automatically migrated your existing config!\nPlease restart hyper`
     );
   }
 
