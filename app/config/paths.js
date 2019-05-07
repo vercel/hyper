@@ -39,6 +39,7 @@ if (isDev) {
 
 const plugins = resolve(cfgDir, '.hyper_plugins');
 const plugs = {
+  legacyBase: resolve(homeDirectory, '.hyper_plugins'),
   base: plugins,
   local: resolve(plugins, 'local'),
   cache: resolve(plugins, 'cache')

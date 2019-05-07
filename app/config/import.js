@@ -1,8 +1,8 @@
-const {writeFileSync, readFileSync} = require('fs');
-const {moveSync} = require('fs-extra');
+const {moveSync, copySync, existsSync, writeFileSync, readFileSync} = require('fs-extra');
 const {sync: mkdirpSync} = require('mkdirp');
 const {defaultCfg, cfgPath, legacyCfgPath, plugs, defaultPlatformKeyPath} = require('./paths');
 const {_init, _extractDefault} = require('./init');
+const notify = require('../notify');
 
 let defaultConfig;
 
@@ -37,7 +37,31 @@ const saveAsBackup = src => {
   throw new Error('Failed to create backup for config file. Too many backups');
 };
 
+const migrate = (old, _new) => {
+  if (old === _new) {
+    return;
+  }
+  if (existsSync(old)) {
+    //eslint-disable-next-line no-console
+    console.log('Found legacy config. Migrating ', old, '->', _new);
+    if (existsSync(_new)) {
+      saveAsBackup(_new);
+    }
+    const backupName = saveAsBackup(old);
+    copySync(backupName, _new);
+    return true;
+  }
+  return false;
+};
+
 const _importConf = function() {
+  if (migrate(plugs.legacyBase, plugs.base) || migrate(legacyCfgPath, cfgPath)) {
+    notify(
+      'Hyper 3',
+      `Our settings location changed to ${cfgPath}. We've automatically migrated your existing config!`
+    );
+  }
+
   // init plugin directories if not present
   mkdirpSync(plugs.base);
   mkdirpSync(plugs.local);
@@ -55,48 +79,14 @@ const _importConf = function() {
       console.error(err);
     }
 
-    // Import old (Hyper2) config, if any
-    let legacyCfg;
-    if (legacyCfgPath !== cfgPath) {
-      try {
-        legacyCfg = readFileSync(legacyCfgPath, 'utf8');
-      } catch (err) {
-        // Do nothing
-      }
-    }
-
     // Import user config
-    let userCfg;
     try {
-      userCfg = readFileSync(cfgPath, 'utf8');
+      const userCfg = readFileSync(cfgPath, 'utf8');
+      return {userCfg, defaultCfg: _defaultCfg};
     } catch (err) {
-      // Do nothing
-    }
-
-    // If a legacy config was found, migrate it to the new location while
-    // keeping any old files with a '.backup' suffix
-    if (legacyCfg) {
-      //eslint-disable-next-line no-console
-      console.log('Legacy config found in:', legacyCfgPath);
-      if (userCfg) {
-        const backupPath = saveAsBackup(cfgPath);
-        //eslint-disable-next-line no-console
-        console.log('Backing up existing config as', backupPath);
-      }
-      const backupPath = saveAsBackup(legacyCfgPath);
-      //eslint-disable-next-line no-console
-      console.log('Backing up existing legacy config as', backupPath);
-
-      _write(cfgPath, legacyCfg);
-      userCfg = legacyCfg;
-    } else if (!userCfg) {
-      //eslint-disable-next-line no-console
-      console.log('No existing config found. Generating default at', cfgPath);
       _write(cfgPath, defaultCfgRaw);
-      userCfg = defaultCfgRaw;
+      return {userCfg: defaultCfgRaw, defaultCfg: _defaultCfg};
     }
-
-    return {userCfg, defaultCfg: _defaultCfg};
   } catch (err) {
     //eslint-disable-next-line no-console
     console.log(err);
