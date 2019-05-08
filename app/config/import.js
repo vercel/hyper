@@ -37,7 +37,7 @@ const saveAsBackup = src => {
   throw new Error('Failed to create backup for config file. Too many backups');
 };
 
-const migrate = (old, _new) => {
+const migrate = (old, _new, oldBackupPath) => {
   if (old === _new) {
     return;
   }
@@ -47,24 +47,29 @@ const migrate = (old, _new) => {
     if (existsSync(_new)) {
       saveAsBackup(_new);
     }
-    const backupName = saveAsBackup(old);
-    copySync(backupName, _new);
+    copySync(old, _new);
+    saveAsBackup(oldBackupPath || old);
     return true;
   }
   return false;
 };
 
 const _importConf = function() {
+  // init plugin directories if not present
+  mkdirpSync(plugs.base);
+
   // Migrate Hyper2 config to Hyper3
-  if (migrate(legacyCfgPath, cfgPath)) {
+  const migratedConfig = migrate(legacyCfgPath, cfgPath);
+  const migratedPlugins = migrate(plugs.legacyLocal, plugs.local, plugs.legacyBase);
+  if (migratedConfig || migratedPlugins) {
     notify(
       'Hyper 3',
       `Settings location has changed to ${cfgPath}.\nWe've automatically migrated your existing config!\nPlease restart hyper`
     );
   }
 
-  // init plugin directories if not present
-  mkdirpSync(plugs.base);
+  // Run this after the migration so that we don't generate a ".backup" file for
+  // an empty local/ directory
   mkdirpSync(plugs.local);
 
   try {
