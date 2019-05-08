@@ -1,7 +1,8 @@
-const {writeFileSync, readFileSync} = require('fs');
+const {moveSync, copySync, existsSync, writeFileSync, readFileSync} = require('fs-extra');
 const {sync: mkdirpSync} = require('mkdirp');
-const {defaultCfg, cfgPath, plugs, defaultPlatformKeyPath} = require('./paths');
+const {defaultCfg, cfgPath, legacyCfgPath, plugs, defaultPlatformKeyPath} = require('./paths');
 const {_init, _extractDefault} = require('./init');
+const notify = require('../notify');
 
 let defaultConfig;
 
@@ -16,9 +17,59 @@ const _write = function(path, data) {
   writeFileSync(path, format, 'utf8');
 };
 
+// Saves a file as backup by appending '.backup' or '.backup2', '.backup3', etc.
+// so as to not override any existing files
+const saveAsBackup = src => {
+  let attempt = 1;
+  while (attempt < 100) {
+    try {
+      const backupPath = src + '.backup' + (attempt === 1 ? '' : attempt);
+      moveSync(src, backupPath);
+      return backupPath;
+    } catch (e) {
+      if (e.code === 'EEXIST') {
+        attempt++;
+      } else {
+        throw e;
+      }
+    }
+  }
+  throw new Error('Failed to create backup for config file. Too many backups');
+};
+
+const migrate = (old, _new, oldBackupPath) => {
+  if (old === _new) {
+    return;
+  }
+  if (existsSync(old)) {
+    //eslint-disable-next-line no-console
+    console.log('Found legacy config. Migrating ', old, '->', _new);
+    if (existsSync(_new)) {
+      saveAsBackup(_new);
+    }
+    copySync(old, _new);
+    saveAsBackup(oldBackupPath || old);
+    return true;
+  }
+  return false;
+};
+
 const _importConf = function() {
   // init plugin directories if not present
   mkdirpSync(plugs.base);
+
+  // Migrate Hyper2 config to Hyper3
+  const migratedConfig = migrate(legacyCfgPath, cfgPath);
+  const migratedPlugins = migrate(plugs.legacyLocal, plugs.local, plugs.legacyBase);
+  if (migratedConfig || migratedPlugins) {
+    notify(
+      'Hyper 3',
+      `Settings location has changed to ${cfgPath}.\nWe've automatically migrated your existing config!\nPlease restart hyper`
+    );
+  }
+
+  // Run this after the migration so that we don't generate a ".backup" file for
+  // an empty local/ directory
   mkdirpSync(plugs.local);
 
   try {
@@ -33,10 +84,11 @@ const _importConf = function() {
       //eslint-disable-next-line no-console
       console.error(err);
     }
-    // Importing user config
+
+    // Import user config
     try {
-      const _cfgPath = readFileSync(cfgPath, 'utf8');
-      return {userCfg: _cfgPath, defaultCfg: _defaultCfg};
+      const userCfg = readFileSync(cfgPath, 'utf8');
+      return {userCfg, defaultCfg: _defaultCfg};
     } catch (err) {
       _write(cfgPath, defaultCfgRaw);
       return {userCfg: defaultCfgRaw, defaultCfg: _defaultCfg};
