@@ -6,13 +6,19 @@ const pify = require('pify');
 const recast = require('recast');
 const path = require('path');
 
+// If the user defines XDG_CONFIG_HOME they definitely want their config there,
+// otherwise use the home directory in linux/mac and userdata in windows
+const applicationDirectory =
+  process.env.XDG_CONFIG_HOME !== undefined
+    ? path.join(process.env.XDG_CONFIG_HOME, 'hyper')
+    : process.platform == 'win32' ? path.join(process.env.APPDATA, 'Hyper') : os.homedir();
+
 const devConfigFileName = path.join(__dirname, `../.hyper.js`);
 
 let fileName =
   process.env.NODE_ENV !== 'production' && fs.existsSync(devConfigFileName)
     ? devConfigFileName
-    : `${os.homedir()}/.hyper.js`;
-
+    : path.join(applicationDirectory, '.hyper.js');
 /**
  * We need to make sure the file reading and parsing is lazy so that failure to
  * statically analyze the hyper configuration isn't fatal for all kinds of
