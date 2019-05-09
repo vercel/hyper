@@ -55,16 +55,20 @@ const migrateHyper2Config = () => {
     return;
   }
 
-  const hasNewConfigBeenTouched = existsNew && readFileSync(cfgPath, 'utf8') !== readFileSync(defaultCfg, 'utf8');
-  if (hasNewConfigBeenTouched) {
-    // Assume the user has migrated manually but rename old config to .backup so
-    // we don't keep trying to migrate on every launch
-    const backupPath = saveAsBackup(legacyCfgPath);
-    notify(
-      'Hyper 3',
-      `Settings location has changed to ${cfgPath}.\nWe've backed up your old Hyper config to ${backupPath}`
-    );
-    return;
+  if (existsNew) {
+    const cfg1 = readFileSync(defaultCfg, 'utf8').replace(/\r|\n/g, '');
+    const cfg2 = readFileSync(cfgPath, 'utf8').replace(/\r|\n/g, '');
+    const hasNewConfigBeenTouched = cfg1 !== cfg2;
+    if (hasNewConfigBeenTouched) {
+      // Assume the user has migrated manually but rename old config to .backup so
+      // we don't keep trying to migrate on every launch
+      const backupPath = saveAsBackup(legacyCfgPath);
+      notify(
+        'Hyper 3',
+        `Settings location has changed to ${cfgPath}.\nWe've backed up your old Hyper config to ${backupPath}`
+      );
+      return;
+    }
   }
 
   // Migrate
