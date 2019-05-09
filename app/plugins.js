@@ -183,8 +183,13 @@ if (cache.get('hyper.plugins') !== id || process.env.HYPER_FORCE_UPDATE) {
   }, 1000);
 }
 
-// otherwise update plugins every 5 hours
-setInterval(updatePlugins, ms('5h'));
+(() => {
+  const baseConfig = config.getConfig();
+  if (baseConfig['autoUpdatePlugins']) {
+    // otherwise update plugins every 5 hours
+    setInterval(updatePlugins, ms(baseConfig['autoUpdatePlugins'] === true ? '5h' : baseConfig['autoUpdatePlugins']));
+  }
+})();
 
 function syncPackageJSON() {
   const dependencies = toDependencies(plugins);
