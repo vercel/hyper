@@ -240,6 +240,13 @@ module.exports = class Window {
       const focusedWindow = BrowserWindow.getFocusedWindow();
       execCommand(command, focusedWindow);
     });
+    // pass on the full screen events from the window to react
+    rpc.win.on('enter-full-screen', () => {
+      rpc.emit('enter full screen');
+    });
+    rpc.win.on('leave-full-screen', () => {
+      rpc.emit('leave full screen');
+    });
     const deleteSessions = () => {
       sessions.forEach((session, key) => {
         session.removeAllListeners();
