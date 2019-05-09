@@ -1,4 +1,4 @@
-const {moveSync, copySync, existsSync, writeFileSync, readFileSync} = require('fs-extra');
+const {moveSync, copySync, existsSync, writeFileSync, readFileSync, lstatSync} = require('fs-extra');
 const {sync: mkdirpSync} = require('mkdirp');
 const {defaultCfg, cfgPath, legacyCfgPath, plugs, defaultPlatformKeyPath} = require('./paths');
 const {_init, _extractDefault} = require('./init');
@@ -58,14 +58,25 @@ const _importConf = function() {
   // init plugin directories if not present
   mkdirpSync(plugs.base);
 
-  // Migrate Hyper2 config to Hyper3
-  const migratedConfig = migrate(legacyCfgPath, cfgPath);
-  const migratedPlugins = migrate(plugs.legacyLocal, plugs.local, plugs.legacyBase);
-  if (migratedConfig || migratedPlugins) {
-    notify(
-      'Hyper 3',
-      `Settings location has changed to ${cfgPath}.\nWe've automatically migrated your existing config!\nPlease restart hyper`
-    );
+  try {
+    // Migrate Hyper2 config to Hyper3 but only if the user hasn't manually
+    // touched the new config and if the old config is not a symlink
+    const hasNewConfigBeingTouched =
+      existsSync(cfgPath) && readFileSync(cfgPath, 'utf8') !== readFileSync(defaultCfg, 'utf8');
+    const isOldConfigSymlink = existsSync(legacyCfgPath) && lstatSync(legacyCfgPath).isSymbolicLink();
+    if (!hasNewConfigBeingTouched && !isOldConfigSymlink) {
+      const migratedConfig = migrate(legacyCfgPath, cfgPath);
+      const migratedPlugins = migrate(plugs.legacyLocal, plugs.local, plugs.legacyBase);
+      if (migratedConfig || migratedPlugins) {
+        notify(
+          'Hyper 3',
+          `Settings location has changed to ${cfgPath}.\nWe've automatically migrated your existing config!\nPlease restart hyper`
+        );
+      }
+    }
+  } catch (e) {
+    //eslint-disable-next-line no-console
+    console.log(e);
   }
 
   // Run this after the migration so that we don't generate a ".backup" file for
