@@ -54,23 +54,23 @@ const getParsedFile = memoize(() => recast.parse(getFileContents()));
 const getProperties = memoize(() => getParsedFile().program.body.map(obj => obj));
 
 const getPlugins = memoize(() => {
-  let plugins
+  let plugins;
   getProperties().find(property => {
     return Object.values(property.expression.right.properties).filter(
-      plugin => plugin.key.name === 'plugins' ? plugins = plugin.value.elements : null
-    )
-  })
-  return plugins
+      plugin => (plugin.key.name === 'plugins' ? (plugins = plugin.value.elements) : null)
+    );
+  });
+  return plugins;
 });
 
 const getLocalPlugins = memoize(() => {
-  let localPlugins
+  let localPlugins;
   getProperties().find(property => {
     return Object.values(property.expression.right.properties).filter(
-      plugin => plugin.key.name === 'localPlugins' ? localPlugins = plugin.value.elements : null
-    )
-  })
-  return localPlugins
+      plugin => (plugin.key.name === 'localPlugins' ? (localPlugins = plugin.value.elements) : null)
+    );
+  });
+  return localPlugins;
 });
 
 function exists() {
@@ -91,14 +91,13 @@ function save() {
 
 function existsOnNpm(plugin) {
   const name = getPackageName(plugin);
-  return got.get(registryUrl + name.toLowerCase(), { timeout: 10000, json: true })
-    .then(res => {
-      if (!res.body.versions) {
-        return Promise.reject(res);
-      } else {
-        return res
-      }
-    });
+  return got.get(registryUrl + name.toLowerCase(), {timeout: 10000, json: true}).then(res => {
+    if (!res.body.versions) {
+      return Promise.reject(res);
+    } else {
+      return res;
+    }
+  });
 }
 
 function getPackageName(plugin) {
@@ -116,7 +115,7 @@ function install(plugin, locally) {
   const array = locally ? getLocalPlugins() : getPlugins();
   return existsOnNpm(plugin)
     .catch(err => {
-      const { statusCode } = err;
+      const {statusCode} = err;
       if (statusCode && (statusCode === 404 || statusCode === 200)) {
         return Promise.reject(`${plugin} not found on npm`);
       }
