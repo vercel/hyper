@@ -83,6 +83,10 @@ make sure its build process is working correctly by running `yarn run rebuild-no
 If you are on macOS, this typically is related to Xcode issues (like not having agreed
 to the Terms of Service by running `sudo xcodebuild` after a fresh Xcode installation).
 
+##### Error with `c++` on macOS when running `yarn`
+
+If you are getting compiler errors when running `yarn` add the environment variable `export CXX=clang++`
+
 ##### Error with `codesign` on macOS when running `yarn run dist`
 
 If you have issues in the `codesign` step when running `yarn run dist` on macOS, you can temporarily disable code signing locally by setting
