@@ -101,6 +101,9 @@ module.exports = {
     // Bash on Windows
     // - Example: `C:\\Windows\\System32\\bash.exe`
     //
+    // Git-bash on Windows
+    // - Example: `C:\\Program Files\\Git\\bin\\bash.exe`
+    //
     // PowerShell on Windows
     // - Example: `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
     shell: '',
