@@ -3,21 +3,16 @@ const fs = require('fs');
 const path = require('path');
 const Registry = require('winreg');
 
-const {cliScriptPath} = require('../config/paths');
+const notify = require('../notify');
 
-const lstat = pify(fs.lstat);
+const {cliScriptPath, cliLinkPath} = require('../config/paths');
+
 const readlink = pify(fs.readlink);
-const unlink = pify(fs.unlink);
 const symlink = pify(fs.symlink);
 
-const target = '/usr/local/bin/hyper';
-const source = cliScriptPath;
-
 const checkInstall = () => {
-  return lstat(target)
-    .then(stat => stat.isSymbolicLink())
-    .then(() => readlink(target))
-    .then(link => link === source)
+  return readlink(cliLinkPath)
+    .then(link => link === cliScriptPath)
     .catch(err => {
       if (err.code === 'ENOENT') {
         return false;
@@ -26,27 +21,20 @@ const checkInstall = () => {
     });
 };
 
-const createSymlink = () => {
-  return unlink(target)
-    .catch(err => {
-      if (err.code === 'ENOENT') {
-        return;
-      }
-      throw err;
-    })
-    .then(() => symlink(source, target));
-};
-
-exports.addSymlink = () => {
+const addSymlink = () => {
   return checkInstall().then(isInstalled => {
     if (isInstalled) {
+      //eslint-disable-next-line no-console
+      console.log('Hyper CLI already in PATH');
       return Promise.resolve();
     }
-    return createSymlink();
+    //eslint-disable-next-line no-console
+    console.log('Linking HyperCLI');
+    return symlink(cliScriptPath, cliLinkPath);
   });
 };
 
-exports.addBinToUserPath = () => {
+const addBinToUserPath = () => {
   // Can't use pify because of param order of Registry.values callback
   return new Promise((resolve, reject) => {
     const envKey = new Registry({hive: 'HKCU', key: '\\Environment'});
@@ -68,6 +56,8 @@ exports.addBinToUserPath = () => {
         const pathParts = pathItem.value.split(';');
         const existingPath = pathParts.find(pathPart => pathPart === binPath);
         if (existingPath) {
+          //eslint-disable-next-line no-console
+          console.log('Hyper CLI already in PATH');
           resolve();
           return;
         }
@@ -78,7 +68,8 @@ exports.addBinToUserPath = () => {
           .concat([binPath])
           .join(';');
       }
-
+      //eslint-disable-next-line no-console
+      console.log('Adding HyperCLI path (registry)');
       envKey.set(pathItemName, Registry.REG_SZ, newPathValue, error => {
         if (error) {
           reject(error);
@@ -88,4 +79,44 @@ exports.addBinToUserPath = () => {
       });
     });
   });
+};
+
+const logNotify = (withNotification, ...args) => {
+  //eslint-disable-next-line no-console
+  console.log(...args);
+  withNotification && notify(...args);
+};
+
+exports.installCLI = withNotification => {
+  if (process.platform === 'win32') {
+    addBinToUserPath()
+      .then(() =>
+        logNotify(
+          withNotification,
+          'Hyper CLI installed',
+          'You may need to restart your computer to complete this installation process.'
+        )
+      )
+      .catch(err =>
+        logNotify(withNotification, 'Hyper CLI installation failed', `Failed to add Hyper CLI path to user PATH ${err}`)
+      );
+  } else if (process.platform === 'darwin') {
+    addSymlink()
+      .then(() => logNotify(withNotification, 'Hyper CLI installed', `Symlink created at ${cliLinkPath}`))
+      .catch(err => {
+        // 'EINVAL' is returned by readlink,
+        // 'EEXIST' is returned by symlink
+        const error =
+          err.code === 'EEXIST' || err.code === 'EINVAL'
+            ? `File already exists: ${cliLinkPath}`
+            : `Symlink creation failed: ${err.code}`;
+
+        //eslint-disable-next-line no-console
+        console.error(err);
+        logNotify(withNotification, 'Hyper CLI installation failed', error);
+      });
+  } else {
+    withNotification &&
+      notify('Hyper CLI installation', 'Command is added in PATH only at package installation. Please reinstall.');
+  }
 };

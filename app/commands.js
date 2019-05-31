@@ -1,6 +1,7 @@
-const {app} = require('electron');
-const {openConfig} = require('./config');
+const {app, Menu} = require('electron');
+const {openConfig, getConfig} = require('./config');
 const {updatePlugins} = require('./plugins');
+const {installCLI} = require('./utils/cli-install');
 
 const commands = {
   'window:new': () => {
@@ -99,6 +100,14 @@ const commands = {
   },
   'editor:break': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('session break req');
+  },
+  'cli:install': () => {
+    installCLI(true);
+  },
+  'window:hamburgerMenu': () => {
+    if (getConfig().showHamburgerMenu) {
+      Menu.getApplicationMenu().popup({x: 15, y: 15});
+    }
   }
 };
 

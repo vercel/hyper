@@ -1,10 +1,13 @@
 {
   "window:devtools": "command+alt+i",
-  "window:reload": "command+r",
-  "window:reloadFull": "command+shift+r",
+  "window:reload": "command+shift+r",
+  "window:reloadFull": "command+shift+f5",
   "window:preferences": "command+,",
   "zoom:reset": "command+0",
-  "zoom:in": "command+plus",
+  "zoom:in": [
+    "command+plus",
+    "command+="
+  ],
   "zoom:out": "command+-",
   "window:new": "command+n",
   "window:minimize": "command+m",
@@ -45,7 +48,6 @@
   "editor:deleteBeginningLine": "command+backspace",
   "editor:deleteEndLine": "command+delete",
   "editor:clearBuffer": "command+k",
-  "editor:emojis": "command+ctrl+space",
   "editor:break": "ctrl+c",
   "plugins:update": "command+shift+u"
 }

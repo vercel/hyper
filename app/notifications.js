@@ -1,5 +1,5 @@
 const ms = require('ms');
-const fetch = require('node-fetch');
+const fetch = require('electron-fetch').default;
 
 const {version} = require('./package');
 

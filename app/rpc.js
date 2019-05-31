@@ -34,7 +34,11 @@ class Server extends EventEmitter {
   }
 
   emit(ch, data) {
-    this.wc.send(this.id, {ch, data});
+    // This check is needed because data-batching can cause extra data to be
+    // emitted after the window has already closed
+    if (!this.win.isDestroyed()) {
+      this.wc.send(this.id, {ch, data});
+    }
   }
 
   destroy() {

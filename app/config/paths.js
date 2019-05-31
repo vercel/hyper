@@ -1,15 +1,24 @@
 // This module exports paths, names, and other metadata that is referenced
 const {homedir} = require('os');
+const {app} = require('electron');
 const {statSync} = require('fs');
 const {resolve, join} = require('path');
 const isDev = require('electron-is-dev');
 
 const cfgFile = '.hyper.js';
 const defaultCfgFile = 'config-default.js';
-const homeDir = homedir();
+const homeDirectory = homedir();
 
-let cfgPath = join(homeDir, cfgFile);
-let cfgDir = homeDir;
+// If the user defines XDG_CONFIG_HOME they definitely want their config there,
+// otherwise use the home directory in linux/mac and userdata in windows
+const applicationDirectory =
+  process.env.XDG_CONFIG_HOME !== undefined
+    ? join(process.env.XDG_CONFIG_HOME, 'hyper')
+    : process.platform == 'win32' ? app.getPath('userData') : homedir();
+
+let cfgDir = applicationDirectory;
+let cfgPath = join(applicationDirectory, cfgFile);
+let legacyCfgPath = join(homeDirectory, cfgFile); // Hyper 2 config location
 
 const devDir = resolve(__dirname, '../..');
 const devCfg = join(devDir, cfgFile);
@@ -30,12 +39,15 @@ if (isDev) {
 
 const plugins = resolve(cfgDir, '.hyper_plugins');
 const plugs = {
+  legacyBase: resolve(homeDirectory, '.hyper_plugins'),
+  legacyLocal: resolve(homeDirectory, '.hyper_plugins', 'local'),
   base: plugins,
   local: resolve(plugins, 'local'),
   cache: resolve(plugins, 'cache')
 };
 const yarn = resolve(__dirname, '../../bin/yarn-standalone.js');
 const cliScriptPath = resolve(__dirname, '../../bin/hyper');
+const cliLinkPath = '/usr/local/bin/hyper';
 
 const icon = resolve(__dirname, '../static/icon96x96.png');
 
@@ -60,11 +72,14 @@ const defaultPlatformKeyPath = () => {
 module.exports = {
   cfgDir,
   cfgPath,
+  legacyCfgPath,
   cfgFile,
   defaultCfg,
   icon,
   defaultPlatformKeyPath,
   plugs,
   yarn,
-  cliScriptPath
+  cliScriptPath,
+  cliLinkPath,
+  homeDirectory
 };

@@ -3,6 +3,7 @@
 const {spawn, exec} = require('child_process');
 const {isAbsolute, resolve} = require('path');
 const {existsSync} = require('fs');
+const {version} = require('../app/package');
 const pify = require('pify');
 const args = require('args');
 const chalk = require('chalk');
@@ -16,11 +17,11 @@ const PLUGIN_PREFIX = 'hyper-';
 
 let commandPromise;
 
-const getPluginName = arg => {
-  if (arg.indexOf(PLUGIN_PREFIX) !== 0) {
-    return `${PLUGIN_PREFIX}${arg}`;
+const assertPluginName = pluginName => {
+  if (!pluginName) {
+    console.error(chalk.red('Plugin name is required'));
+    process.exit(1);
   }
-  return arg;
 };
 
 const checkConfig = () => {
@@ -35,19 +36,21 @@ const checkConfig = () => {
 
 args.command(['i', 'install'], 'Install a plugin', (name, args_) => {
   checkConfig();
-  const plugin = getPluginName(args_[0]);
+  const pluginName = args_[0];
+  assertPluginName(pluginName);
   commandPromise = api
-    .install(plugin)
-    .then(() => console.log(chalk.green(`${plugin} installed successfully!`)))
+    .install(pluginName)
+    .then(() => console.log(chalk.green(`${pluginName} installed successfully!`)))
     .catch(err => console.error(chalk.red(err)));
 });
 
 args.command(['u', 'uninstall', 'rm', 'remove'], 'Uninstall a plugin', (name, args_) => {
   checkConfig();
-  const plugin = getPluginName(args_[0]);
+  const pluginName = args_[0];
+  assertPluginName(pluginName);
   commandPromise = api
-    .uninstall(plugin)
-    .then(() => console.log(chalk.green(`${plugin} uninstalled successfully!`)))
+    .uninstall(pluginName)
+    .then(() => console.log(chalk.green(`${pluginName} uninstalled successfully!`)))
     .catch(err => console.log(chalk.red(err)));
 });
 
@@ -125,8 +128,14 @@ args.command(['lsr', 'list-remote', 'ls-remote'], 'List plugins available on npm
 });
 
 args.command(['d', 'docs', 'h', 'home'], 'Open the npm page of a plugin', (name, args_) => {
-  const plugin = getPluginName(args_[0]);
-  opn(`http://ghub.io/${plugin}`, {wait: false});
+  const pluginName = args_[0];
+  assertPluginName(pluginName);
+  opn(`http://ghub.io/${pluginName}`, {wait: false});
+  process.exit(0);
+});
+
+args.command(['version'], 'Show the version of hyper', () => {
+  console.log(version);
   process.exit(0);
 });
 

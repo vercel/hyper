@@ -4,6 +4,7 @@ const {_import, getDefaultConfig} = require('./config/import');
 const _openConfig = require('./config/open');
 const win = require('./config/windows');
 const {cfgPath, cfgDir} = require('./config/paths');
+const {getColorMap} = require('./utils/colors');
 
 const watchers = [];
 let cfg = {};
@@ -24,6 +25,7 @@ const _watch = function() {
     }, 100);
   };
 
+  // Windows
   if (process.platform === 'win32') {
     // watch for changes on config every 2s on Windows
     // https://github.com/zeit/hyper/pull/1772
@@ -35,8 +37,24 @@ const _watch = function() {
         onChange();
       }
     });
-  } else {
-    _watcher = fs.watch(cfgPath);
+    return;
+  }
+  // macOS/Linux
+  setWatcher();
+  function setWatcher() {
+    try {
+      _watcher = fs.watch(cfgPath, eventType => {
+        if (eventType === 'rename') {
+          _watcher.close();
+          // Ensure that new file has been written
+          setTimeout(() => setWatcher(), 500);
+        }
+      });
+    } catch (e) {
+      //eslint-disable-next-line no-console
+      console.error('Failed to watch config file:', cfgPath, e);
+      return;
+    }
     _watcher.on('change', onChange);
     _watcher.on('error', error => {
       //eslint-disable-next-line no-console
@@ -84,6 +102,7 @@ exports.setup = () => {
 
 exports.getWin = win.get;
 exports.winRecord = win.recordState;
+exports.windowDefaults = win.defaults;
 
 const getDeprecatedCSS = function(config) {
   const deprecated = [];
@@ -111,6 +130,7 @@ const checkDeprecatedConfig = function() {
 
 exports.fixConfigDefaults = decoratedConfig => {
   const defaultConfig = getDefaultConfig().config;
+  decoratedConfig.colors = getColorMap(decoratedConfig.colors) || {};
   // We must have default colors for xterm css.
   decoratedConfig.colors = Object.assign({}, defaultConfig.colors, decoratedConfig.colors);
   return decoratedConfig;
@@ -127,8 +147,8 @@ exports.htermConfigTranslate = config => {
   Object.keys(cssReplacements).forEach(pattern => {
     const searchvalue = new RegExp(pattern, 'g');
     const newvalue = cssReplacements[pattern];
-    config.css = config.css.replace(searchvalue, newvalue);
-    config.termCSS = config.termCSS.replace(searchvalue, newvalue);
+    config.css = config.css && config.css.replace(searchvalue, newvalue);
+    config.termCSS = config.termCSS && config.termCSS.replace(searchvalue, newvalue);
   });
   return config;
 };
