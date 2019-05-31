@@ -98,8 +98,8 @@ module.exports = {
     // - Make sure to use a full path if the binary name doesn't work
     // - Remove `--login` in shellArgs
     //
-    // Bash on Windows
-    // - Example: `C:\\Windows\\System32\\bash.exe`
+    // Windows Subsystem for Linux (WSL) - previously Bash on Windows
+    // - Example: `C:\\Windows\\System32\\wsl.exe`
     //
     // PowerShell on Windows
     // - Example: `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
