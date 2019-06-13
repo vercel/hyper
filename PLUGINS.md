@@ -41,7 +41,7 @@ Almost all available API methods can be found on https://hyper.is.
 If there's any missing, let us know or submit a PR to document it!
 
 ### Components
-You can decorate almost all Hyper components with a Higher-Order Component (HOC). To understand their architecture, the easiest way is to use React dev-tools to dig in to their hierachy.
+You can decorate almost all Hyper components with a Higher-Order Component (HOC). To understand their architecture, the easiest way is to use React dev-tools to dig in to their hierarchy.
 
 Multiple plugins can decorate the same Hyper component. Thus, `Component` passed as first argument to your decorator function could possibly not be an original Hyper component but a HOC of a previous plugin. If you need to retrieve a reference to a real Hyper component, you can pass down a `onDecorated` handler.
 ```js
