@@ -79,6 +79,30 @@ module.exports = (commandKeys, execCommand) => {
       {
         role: 'togglefullscreen',
         accelerator: commandKeys['window:toggleFullScreen']
+      },
+      {
+        label: 'Always On Top',
+        type: 'checkbox',
+        checked: false,
+        click: (item, focusedWindow) => {
+          focusedWindow.setAlwaysOnTop(item.checked);
+        }
+      },
+      {
+        label: 'Visible On All Workspaces',
+        type: 'checkbox',
+        checked: false,
+        click: (item, focusedWindow) => {
+          focusedWindow.setVisibleOnAllWorkspaces(item.checked);
+        }
+      },
+      {
+        label: 'Shadow',
+        type: 'checkbox',
+        checked: false,
+        click: (item, focusedWindow) => {
+          focusedWindow.setHasShadow(item.checked);
+        }
       }
     ]
   };
