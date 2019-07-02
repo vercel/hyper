@@ -34,6 +34,18 @@
         <use stroke="currentColor" stroke-width="2" mask="url(#maximize-window-b)" xlink:href="#maximize-window-a"/>
       </g>
     </symbol>
+    <symbol id="pin-window" viewBox="0 0 10 10">
+      <title>pin window</title>
+      <g fill="currentColor">
+        <ellipse stroke="currentColor" stroke-width="1" fill="none" cx="5" cy="5" rx="5" ry="5"/>
+      </g>
+    </symbol>
+    <symbol id="pinned-window" viewBox="0 0 10 10">
+      <title>pinned window</title>
+      <g fill="currentColor">
+        <ellipse stroke="currentColor" stroke-width="1" fill="currentColor" cx="5" cy="5" rx="5" ry="5"/>
+      </g>
+    </symbol>
     <symbol id="restore-window" viewBox="0 0 10.2 10.2">
       <title>restore window</title>
       <defs>

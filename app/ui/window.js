@@ -185,6 +185,10 @@ module.exports = class Window {
     rpc.on('minimize', () => {
       window.minimize();
     });
+    rpc.on('pin', () => {
+      window.setAlwaysOnTop(!window.isAlwaysOnTop());
+    });
+
     rpc.on('resize', ({uid, cols, rows}) => {
       const session = sessions.get(uid);
       if (session) {
