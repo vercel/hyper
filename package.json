@@ -158,7 +158,8 @@
     },
     "mac": {
       "category": "public.app-category.developer-tools",
-      "extendInfo": "build/Info.plist"
+      "extendInfo": "build/Info.plist",
+      "darkModeSupport": true
     },
     "deb": {
       "afterInstall": "./build/linux/after-install.tpl"

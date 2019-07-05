@@ -3,7 +3,7 @@
 
   Before you submit this; let's make sure of a few things.
   Please make sure the following boxes are ticked if they are correct.
-  If not, please try and fulfil these first.
+  If not, please try and fulfill these first.
 -->
 
 <!-- Checked checkbox should look like this: [x] -->
