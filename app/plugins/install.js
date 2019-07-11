@@ -2,6 +2,7 @@ const cp = require('child_process');
 const queue = require('queue');
 const ms = require('ms');
 const {yarn, plugs} = require('../config/paths');
+const {getConfig} = require('../config');
 
 module.exports = {
   install: fn => {
@@ -39,8 +40,18 @@ module.exports = {
 
       spawnQueue.start();
     }
+    yarnArgs = ['install', '--no-emoji', '--no-lockfile', '--cache-folder', plugs.cache]
+    config = getConfig()
+    
+    if(config.http_proxy) {
+      yarnArgs.push("--proxy", config.http_proxy)
+    }
 
-    yarnFn(['install', '--no-emoji', '--no-lockfile', '--cache-folder', plugs.cache], err => {
+    if(config.https_proxy) {
+      yarnArgs.push("--https-proxy", config.https_proxy)
+    }
+
+    yarnFn(yarnArgs, err => {
       if (err) {
         return fn(err);
       }
