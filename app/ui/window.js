@@ -58,7 +58,7 @@ module.exports = class Window {
       workingDirectory = process.argv[1];
     } else if (cfg.workingDirectory && isAbsolute(cfg.workingDirectory)) {
       workingDirectory = cfg.workingDirectory;
-    } 
+    }
 
     // config changes
     const cfgUnsubscribe = app.config.subscribe(() => {
