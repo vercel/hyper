@@ -36,7 +36,10 @@ module.exports = class Window {
         transparent: process.platform === 'darwin',
         icon,
         show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
-        acceptFirstMouse: true
+        acceptFirstMouse: true,
+        webPreferences: {
+          navigateOnDragDrop: true
+        }
       },
       options_
     );
