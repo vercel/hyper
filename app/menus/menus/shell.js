@@ -22,17 +22,17 @@ module.exports = (commandKeys, execCommand) => {
         type: 'separator'
       },
       {
-        label: 'Split Horizontally',
-        accelerator: commandKeys['pane:splitHorizontal'],
+        label: 'Split Down',
+        accelerator: commandKeys['pane:splitDown'],
         click(item, focusedWindow) {
-          execCommand('pane:splitHorizontal', focusedWindow);
+          execCommand('pane:splitDown', focusedWindow);
         }
       },
       {
-        label: 'Split Vertically',
-        accelerator: commandKeys['pane:splitVertical'],
+        label: 'Split Right',
+        accelerator: commandKeys['pane:splitRight'],
         click(item, focusedWindow) {
-          execCommand('pane:splitVertical', focusedWindow);
+          execCommand('pane:splitRight', focusedWindow);
         }
       },
       {
