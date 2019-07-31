@@ -377,10 +377,10 @@ ms@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
 
-nan@2.10.0:
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
-  integrity sha512-bAdJv7fBLhWC+/Bls0Oza+mvTaNQtP+1RyhhhvD95pgUJz6XM5IzgmxOkItJ9tkoCiplvAnXI1tNmmUD/eScyA==
+nan@2.12.1:
+  version "2.12.1"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.12.1.tgz#7b1aa193e9aa86057e3c7bbd0ac448e770925552"
+  integrity sha512-JY7V6lRkStKcKTvHO5NVSQRv+RV+FIL5pvDoLiAtSL9pKlC5x9PKQcZDsq7m4FO4d57mkhC6Z+QhAh3Jdk5JFw==
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -394,12 +394,12 @@ node-fetch@^1.0.1:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-pty@0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/node-pty/-/node-pty-0.8.0.tgz#08bccb633f49e2e3f7245eb56ea6b40f37ccd64f"
-  integrity sha512-g5ggk3gN4gLrDmAllee5ScFyX3YzpOC/U8VJafha4pE7do0TIE1voiIxEbHSRUOPD1xYqmY+uHhOKAd3avbxGQ==
+node-pty@0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/node-pty/-/node-pty-0.8.1.tgz#94b457bec013e7a09b8d9141f63b0787fa25c23f"
+  integrity sha512-j+/g0Q5dR+vkELclpJpz32HcS3O/3EdPSGPvDXJZVJQLCvgG0toEbfmymxAEyQyZEpaoKHAcoL+PvKM+4N9nlw==
   dependencies:
-    nan "2.10.0"
+    nan "2.12.1"
 
 normalize-url@^1.9.1:
   version "1.9.1"

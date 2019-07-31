@@ -127,7 +127,12 @@ module.exports = class Window {
       let {session, options} = createSession();
       const initialEvents = [];
       const handleData = data => initialEvents.push(['session data', data]);
-      const handleExit = () => initialEvents.push(['session exit']);
+      const handleExit = () => {
+        // the warmed up session exits when open hyper by cli.
+        session.removeListener('data', handleData);
+        session.removeListener('exit', handleExit);
+        initialSession = null;
+      };
       session.on('data', handleData);
       session.on('exit', handleExit);
 
