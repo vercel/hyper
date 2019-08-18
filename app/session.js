@@ -1,3 +1,4 @@
+const {execSync} = require('child_process');
 const {EventEmitter} = require('events');
 const {StringDecoder} = require('string_decoder');
 
@@ -174,7 +175,13 @@ module.exports = class Session extends EventEmitter {
   destroy() {
     if (this.pty) {
       try {
-        this.pty.kill();
+        if (process.platform === 'win32') {
+          // child_process.kill() does not kill child processes of child processes
+          // This workaround is suggested at https://github.com/nodejs/node/issues/3617
+          execSync('%SystemRoot%\\system32\\taskkill.exe /pid ' + this.pty.pid + ' /T /F');
+        } else {
+          this.pty.kill();
+        }
       } catch (err) {
         //eslint-disable-next-line no-console
         console.error('exit error', err.stack);
