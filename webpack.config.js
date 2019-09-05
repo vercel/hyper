@@ -8,6 +8,7 @@ const isProd = nodeEnv === 'production';
 
 module.exports = [
   {
+    mode: 'none',
     name: 'hyper',
     resolve: {
       extensions: ['.js', '.jsx']
@@ -51,9 +52,10 @@ module.exports = [
         }
       ])
     ],
-    target: 'electron'
+    target: 'electron-renderer'
   },
   {
+    mode: 'none',
     name: 'hyper-cli',
     resolve: {
       extensions: ['.js', '.jsx', '.json']
