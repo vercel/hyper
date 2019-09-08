@@ -2,6 +2,7 @@ const path = require('path');
 
 const webpack = require('webpack');
 const Copy = require('copy-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
@@ -11,7 +12,7 @@ module.exports = [
     mode: 'none',
     name: 'hyper',
     resolve: {
-      extensions: ['.js', '.jsx']
+      extensions: ['.js', '.jsx', '.ts', '.tsx']
     },
     devtool: isProd ? 'hidden-source-map' : 'cheap-module-source-map',
     entry: './lib/index.js',
@@ -22,7 +23,7 @@ module.exports = [
     module: {
       rules: [
         {
-          test: /\.(js|jsx)$/,
+          test: /\.(js|jsx|ts|tsx)$/,
           exclude: /node_modules/,
           loader: 'babel-loader'
         },
@@ -50,7 +51,8 @@ module.exports = [
           from: './assets',
           to: './assets'
         }
-      ])
+      ]),
+      new ForkTsCheckerWebpackPlugin()
     ],
     target: 'electron-renderer'
   },
