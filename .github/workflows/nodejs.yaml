@@ -28,6 +28,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '2.7'
+        architecture: 'x64'
     - name: node-gyp config (windows)
       run: |
         npm install --global --production windows-build-tools
