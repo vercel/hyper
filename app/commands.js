@@ -15,10 +15,10 @@ const commands = {
       setTimeout(app.createWindow, 0);
     }
   },
-  'pane:splitVertical': focusedWindow => {
+  'pane:splitRight': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('split request vertical');
   },
-  'pane:splitHorizontal': focusedWindow => {
+  'pane:splitDown': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('split request horizontal');
   },
   'pane:close': focusedWindow => {
