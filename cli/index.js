@@ -7,7 +7,7 @@ const {version} = require('../app/package');
 const pify = require('pify');
 const args = require('args');
 const chalk = require('chalk');
-const open = require('open');
+const opn = require('opn');
 const columnify = require('columnify');
 const got = require('got');
 const ora = require('ora');
@@ -130,7 +130,7 @@ args.command(['lsr', 'list-remote', 'ls-remote'], 'List plugins available on npm
 args.command(['d', 'docs', 'h', 'home'], 'Open the npm page of a plugin', (name, args_) => {
   const pluginName = args_[0];
   assertPluginName(pluginName);
-  open(`http://ghub.io/${pluginName}`, {wait: false});
+  opn(`http://ghub.io/${pluginName}`, {wait: false});
   process.exit(0);
 });
 
