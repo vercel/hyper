@@ -231,7 +231,6 @@
     "husky": "0.14.3",
     "inquirer": "5.1.0",
     "node-gyp": "5.0.3",
-    "node-pty": "0.9.0-beta26",
     "plist": "3.0.1",
     "prettier": "1.11.1",
     "proxyquire": "1.8.0",
