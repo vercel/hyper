@@ -47,7 +47,8 @@ module.exports = class Window {
     const window = new BrowserWindow({
       webPreferences: {
         nodeIntegration: true
-      }, ...app.plugins.getDecoratedBrowserOptions(winOpts)
+      },
+      ...app.plugins.getDecoratedBrowserOptions(winOpts)
     });
     window.uid = classOpts.uid;
 
