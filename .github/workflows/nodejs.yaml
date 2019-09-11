@@ -13,9 +13,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10
-    - name: yarn install, build, and test
+    - name: yarn config (windows)
       run: |
         yarn config set msvs_version 2015
+    - name: yarn install, build, and test
+      run: |
         yarn install
         yarn run build
         yarn test
