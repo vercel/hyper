@@ -1,0 +1,22 @@
+name: Node CI
+
+on: [push]
+jobs:
+  build:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 12
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: yarn install, build, and test
+      run: |
+        yarn install
+        yarn run build --if-present
+        yarn test
+      env:
+        CI: true
