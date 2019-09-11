@@ -9,10 +9,10 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
     - uses: actions/checkout@v1
-    - name: Use Node.js 12
+    - name: Use Node.js 10
       uses: actions/setup-node@v1
       with:
-        node-version: 12
+        node-version: 10
     - name: yarn install, build, and test
       run: |
         yarn install
