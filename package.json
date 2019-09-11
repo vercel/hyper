@@ -181,7 +181,6 @@
     "email": "team@zeit.co"
   },
   "dependencies": {
-    "@zeit/xterm": "https://registry.npmjs.org/@zeit/xterm/-/xterm-3.12.0-1.tgz",
     "args": "3.0.8",
     "chalk": "2.3.2",
     "color": "2.0.1",
@@ -209,7 +208,8 @@
     "shebang-loader": "0.0.1",
     "styled-jsx": "2.2.6",
     "stylis": "3.5.0",
-    "uuid": "3.1.0"
+    "uuid": "3.1.0",
+    "xterm": "https://registry.npmjs.org/@zeit/xterm/-/xterm-3.12.0-1.tgz"
   },
   "devDependencies": {
     "ava": "0.25.0",
@@ -225,7 +225,7 @@
     "electron-builder-squirrel-windows": "21.2.0",
     "electron-devtools-installer": "2.2.4",
     "electron-rebuild": "1.8.5",
-    "eslint": "4.7.2",
+    "eslint": "4.18.2",
     "eslint-config-prettier": "2.6.0",
     "eslint-plugin-prettier": "2.3.1",
     "eslint-plugin-react": "7.3.0",
