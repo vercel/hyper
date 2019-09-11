@@ -20,25 +20,3 @@ jobs:
         yarn test
       env:
         CI: true
-  build-windows:
-    runs-on: windows-2016
-    steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js 10
-      uses: actions/setup-node@v1
-      with:
-        node-version: 10
-    - uses: actions/setup-python@v1
-      with:
-        python-version: '2.7'
-        architecture: 'x64'
-    - name: yarn config
-      run: |
-        yarn config set msvs_version 2015
-    - name: yarn install, build, and test
-      run: |
-        yarn install
-        yarn run build
-        yarn test
-      env:
-        CI: true
