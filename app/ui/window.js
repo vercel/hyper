@@ -38,18 +38,14 @@ module.exports = class Window {
         show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
         acceptFirstMouse: true,
         webPreferences: {
+          nodeIntegration: true,
           navigateOnDragDrop: true
         }
       },
       options_
     );
 
-    const window = new BrowserWindow({
-      webPreferences: {
-        nodeIntegration: true
-      },
-      ...app.plugins.getDecoratedBrowserOptions(winOpts)
-    });
+    const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(winOpts));	
     window.uid = classOpts.uid;
 
     const rpc = createRPC(window);
