@@ -15,7 +15,7 @@ jobs:
         node-version: 10
     - name: yarn install, build, and test
       run: |
-        yarn config set msvs_version 2015 # we need this to build `pty.js`
+        yarn config set msvs_version 2015
         yarn install
         yarn run build
         yarn test
