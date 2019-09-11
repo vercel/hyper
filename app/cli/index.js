@@ -96,10 +96,8 @@ args.command(['s', 'search'], 'Search for plugins on npm', (name, args_) => {
   commandInvoked = true;
   const spinner = ora('Searching').start();
   const query = args_[0] ? args_[0].toLowerCase() : '';
-  console.log(1);
   lsRemote(query)
     .then(entries => {
-      console.log(2);
       if (entries.length === 0) {
         spinner.fail();
         console.error(chalk.red(`Your search '${query}' did not match any plugins`));
