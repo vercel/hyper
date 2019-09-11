@@ -45,7 +45,7 @@ module.exports = class Window {
       options_
     );
 
-    const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(winOpts));	
+    const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(winOpts));
     window.uid = classOpts.uid;
 
     const rpc = createRPC(window);
