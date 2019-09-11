@@ -32,9 +32,6 @@ jobs:
       with:
         python-version: '2.7'
         architecture: 'x64'
-    - name: node-gyp config (windows)
-      run: |
-        npm install --global --production windows-build-tools
     - name: yarn config
       run: |
         yarn config set msvs_version 2015
