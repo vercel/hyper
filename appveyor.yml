@@ -12,6 +12,7 @@ init:
 install:
   - ps: Install-Product node 12 x64
   - set CI=true
+  - yarn add --global --production windows-build-tools
   - yarn
 
 build: off
