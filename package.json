@@ -238,8 +238,5 @@
     "spectron": "3.8.0",
     "style-loader": "0.19.1",
     "webpack": "3.10.0"
-  },
-  "resolutions": {
-    "rc": "1.2.3"
   }
 }
