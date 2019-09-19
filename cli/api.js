@@ -19,6 +19,7 @@ let fileName =
   process.env.NODE_ENV !== 'production' && fs.existsSync(devConfigFileName)
     ? devConfigFileName
     : path.join(applicationDirectory, '.hyper.js');
+
 /**
  * We need to make sure the file reading and parsing is lazy so that failure to
  * statically analyze the hyper configuration isn't fatal for all kinds of
@@ -50,13 +51,27 @@ const getFileContents = memoize(() => {
 
 const getParsedFile = memoize(() => recast.parse(getFileContents()));
 
-const getProperties = memoize(() => getParsedFile().program.body[0].expression.right.properties);
+const getProperties = memoize(() => getParsedFile().program.body.map(obj => obj));
 
-const getPlugins = memoize(() => getProperties().find(property => property.key.name === 'plugins').value.elements);
+const getPlugins = memoize(() => {
+  let plugins;
+  getProperties().find(property => {
+    return Object.values(property.expression.right.properties).filter(
+      plugin => (plugin.key.name === 'plugins' ? (plugins = plugin.value.elements) : null)
+    );
+  });
+  return plugins;
+});
 
-const getLocalPlugins = memoize(
-  () => getProperties().find(property => property.key.name === 'localPlugins').value.elements
-);
+const getLocalPlugins = memoize(() => {
+  let localPlugins;
+  getProperties().find(property => {
+    return Object.values(property.expression.right.properties).filter(
+      plugin => (plugin.key.name === 'localPlugins' ? (localPlugins = plugin.value.elements) : null)
+    );
+  });
+  return localPlugins;
+});
 
 function exists() {
   return getFileContents() !== undefined;
@@ -79,6 +94,8 @@ function existsOnNpm(plugin) {
   return got.get(registryUrl + name.toLowerCase(), {timeout: 10000, json: true}).then(res => {
     if (!res.body.versions) {
       return Promise.reject(res);
+    } else {
+      return res;
     }
   });
 }
