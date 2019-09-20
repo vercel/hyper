@@ -297,6 +297,7 @@
     "inquirer": "5.1.0",
     "node-gyp": "3.6.2",
     "prettier": "1.18.2",
+    "null-loader": "3.0.0",
     "proxyquire": "1.8.0",
     "spectron": "3.8.0",
     "style-loader": "0.19.1",

@@ -15,3 +15,7 @@ yarn-error.log
 .hyper_plugins
 
 .DS_Store
+
+# ignore generated js and js.map files (files already tracked are not affected, to add a new tracked js file do git add -f
+app/**/*.js
+app/**/*.js.map
