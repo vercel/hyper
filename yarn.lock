@@ -3671,6 +3671,23 @@ fn-name@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/fn-name/-/fn-name-2.0.1.tgz#5214d7537a4d06a4a301c0cc262feb84188002e7"
 
+font-finder@^1.0.3, font-finder@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/font-finder/-/font-finder-1.0.4.tgz#2ca944954dd8d0e1b5bdc4c596cc08607761d89b"
+  integrity sha512-naF16RpjWUTFLqzhmdivYpBCrqySN6PI+a4GPtoEsCdvOpbKYTGeTjO7mxh3Wwjz4xKU+Oqx9kwOcteLDeMFQA==
+  dependencies:
+    get-system-fonts "^2.0.0"
+    promise-stream-reader "^1.0.1"
+
+font-ligatures@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/font-ligatures/-/font-ligatures-1.3.2.tgz#227eb5fc38fef34b5373aa19b555320b82842a71"
+  integrity sha512-h9t+gvKVr/c2GnQs4GhXHY39/qyLlXNaIxupU1cxj7YOXEFT8+sJfcchIrZ9UETZUUT7dNcI7RDOXN7gFtuw2g==
+  dependencies:
+    font-finder "^1.0.3"
+    lru-cache "^4.1.3"
+    opentype.js "^0.8.0"
+
 for-in@^1.0.1, for-in@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
@@ -3897,6 +3914,11 @@ get-stream@^4.0.0:
   integrity sha512-GMat4EJ5161kIy2HevLlr4luNjBgvmj413KaQA7jt4V8B4RDsfpHk7WQ9GVqfYyyx8OS/L66Kox+rJRNklLK7w==
   dependencies:
     pump "^3.0.0"
+
+get-system-fonts@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/get-system-fonts/-/get-system-fonts-2.0.1.tgz#0ec926d2d5fbc16a9f950a5737cd3b30819b0960"
+  integrity sha512-gcKzSGT5q5/eZGd6hNGEe2LZmMmdjAYcKHATw1KpUDFLNNeyyZVUZlv9TnbifxU4i0CgCFYrPYCaUcipym2Myw==
 
 get-value@^2.0.3, get-value@^2.0.6:
   version "2.0.6"
@@ -5273,6 +5295,14 @@ lru-cache@^4.0.1:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
+lru-cache@^4.1.3:
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.1.5.tgz#8bbe50ea85bed59bc9e33dcab8235ee9bcf443cd"
+  integrity sha512-sWZlbEP2OsHNkXrMl5GYk/jKk70MBng6UU4YI/qGDYbgf6YbP4EvmqISbXCoJiRKs+1bSpFHVgQxvJ17F2li5g==
+  dependencies:
+    pseudomap "^1.0.2"
+    yallist "^2.1.2"
+
 lru-cache@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-5.1.1.tgz#1da27e6710271947695daf6848e847f01d84b920"
@@ -5935,6 +5965,13 @@ onetime@^2.0.0:
   resolved "https://registry.yarnpkg.com/onetime/-/onetime-2.0.1.tgz#067428230fd67443b2794b22bba528b6867962d4"
   dependencies:
     mimic-fn "^1.0.0"
+
+opentype.js@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/opentype.js/-/opentype.js-0.8.0.tgz#acabcfa1642fbe894a3e4d759e43ba694e02bd35"
+  integrity sha1-rKvPoWQvvolKPk11nkO6aU4CvTU=
+  dependencies:
+    tiny-inflate "^1.0.2"
 
 opn@5.3.0:
   version "5.3.0"
@@ -6683,6 +6720,11 @@ progress@^2.0.0:
 promise-inflight@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
+
+promise-stream-reader@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/promise-stream-reader/-/promise-stream-reader-1.0.1.tgz#4e793a79c9d49a73ccd947c6da9c127f12923649"
+  integrity sha512-Tnxit5trUjBAqqZCGWwjyxhmgMN4hGrtpW3Oc/tRI4bpm/O2+ej72BB08l6JBnGQgVDGCLvHFGjGgQS6vzhwXg==
 
 promise@^7.1.1:
   version "7.3.1"
@@ -8079,6 +8121,11 @@ timers-browserify@^2.0.4:
   dependencies:
     setimmediate "^1.0.4"
 
+tiny-inflate@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/tiny-inflate/-/tiny-inflate-1.0.2.tgz#93d9decffc8805bd57eae4310f0b745e9b6fb3a7"
+  integrity sha1-k9nez/yIBb1X6uQxDwt0Xptvs6c=
+
 tmp@^0.0.33:
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"
@@ -8672,9 +8719,38 @@ xtend@~2.1.1:
   dependencies:
     object-keys "~0.4.0"
 
-"xterm@https://registry.npmjs.org/@zeit/xterm/-/xterm-3.12.0-1.tgz":
-  version "3.12.0-1"
-  resolved "https://registry.npmjs.org/@zeit/xterm/-/xterm-3.12.0-1.tgz#df7bb98fe53d621c0bfd559d0ae87be401c8f246"
+xterm-addon-fit@^0.2.0:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/xterm-addon-fit/-/xterm-addon-fit-0.2.1.tgz#353f43921eb78e3f9ad3f3afbb14e7ac183ca738"
+  integrity sha512-BlR57O3t1/bmVcnS81bn9ZnNf+GiGNbeXdNUKSBa9tKEwNUMcU3S+KFLIRv7rm1Ty0D5pMOu0vbz/RDorKRwKQ==
+
+xterm-addon-ligatures@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/xterm-addon-ligatures/-/xterm-addon-ligatures-0.2.0.tgz#8d65fea968ba5b4306b2ada6f53eed3e1984f69c"
+  integrity sha512-IcRgjq3QCcL6P8W5M86BCnXIGD1LcCVKk7w3S29Yn2+YksMM3c85JjW2OUgsL3VTW/Tb6uyxpSV2rJOsRElVrQ==
+  dependencies:
+    font-finder "^1.0.4"
+    font-ligatures "^1.3.2"
+
+xterm-addon-search@0.3.0-beta2:
+  version "0.3.0-beta2"
+  resolved "https://registry.yarnpkg.com/xterm-addon-search/-/xterm-addon-search-0.3.0-beta2.tgz#d674a9f3d34c3bf2706f82040180e7c0c61ab830"
+  integrity sha512-2MCa/Tr7sgX7DnKqOxIz5w2I12cgH+r5/meRwCbsUQFpJBLqjUSjptUl4UDW7pIn7/p8MIrTnMp76tCYKCiJzQ==
+
+xterm-addon-web-links@0.3.0-beta2:
+  version "0.3.0-beta2"
+  resolved "https://registry.yarnpkg.com/xterm-addon-web-links/-/xterm-addon-web-links-0.3.0-beta2.tgz#87fcf7638f1ee5d2b2e0d4ec06ac7f0d4165e8d6"
+  integrity sha512-Y9gyh8lNlglDMQgIIvD/P/vTzEatMWrr5Mxh3pLnTf+8o2vJPcxLrq58uKlQKI+PwTH1ClcIbX+GgS2jRkWDuw==
+
+xterm-addon-webgl@0.3.0-beta2:
+  version "0.3.0-beta2"
+  resolved "https://registry.yarnpkg.com/xterm-addon-webgl/-/xterm-addon-webgl-0.3.0-beta2.tgz#287aedeb30de9f0a2709a3351c09d769b4a8ebbd"
+  integrity sha512-o1ZLGJquh0/Eoq+DF6VN5EqZM9Lm7Xq+DE3mSiYxsWSW+2G8SlSmBnSE5qWdLpj9RGV1orH0NIUzpvGCoICvSA==
+
+xterm@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/xterm/-/xterm-4.0.1.tgz#6dc4cfa753d4fcd9387e292afc2717cf612da725"
+  integrity sha512-Rbq+VlttrK8scrK6lXXiQVi3rTIR6UUJC5uW1A20+0EsGukwzAgOZ9hQlGvbXSHcqJZ/FXWos2RVuFH418Vrjg==
 
 y18n@^3.2.1:
   version "3.2.1"

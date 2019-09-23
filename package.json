@@ -213,7 +213,12 @@
     "stylis": "3.5.0",
     "uuid": "3.1.0",
     "webpack-cli": "3.3.7",
-    "xterm": "https://registry.npmjs.org/@zeit/xterm/-/xterm-3.12.0-1.tgz"
+    "xterm": "4.0.1",
+    "xterm-addon-fit": "^0.2.0",
+    "xterm-addon-ligatures": "0.2.0",
+    "xterm-addon-search": "0.3.0-beta2",
+    "xterm-addon-webgl": "0.3.0-beta2",
+    "xterm-addon-web-links": "0.3.0-beta2"
   },
   "devDependencies": {
     "@babel/cli": "7.5.5",
