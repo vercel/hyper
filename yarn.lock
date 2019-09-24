@@ -8672,25 +8672,25 @@ xtend@~2.1.1:
   dependencies:
     object-keys "~0.4.0"
 
-xterm-addon-fit@^0.2.0:
+xterm-addon-fit@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/xterm-addon-fit/-/xterm-addon-fit-0.2.1.tgz#353f43921eb78e3f9ad3f3afbb14e7ac183ca738"
   integrity sha512-BlR57O3t1/bmVcnS81bn9ZnNf+GiGNbeXdNUKSBa9tKEwNUMcU3S+KFLIRv7rm1Ty0D5pMOu0vbz/RDorKRwKQ==
 
-xterm-addon-search@0.3.0-beta2:
-  version "0.3.0-beta2"
-  resolved "https://registry.yarnpkg.com/xterm-addon-search/-/xterm-addon-search-0.3.0-beta2.tgz#d674a9f3d34c3bf2706f82040180e7c0c61ab830"
-  integrity sha512-2MCa/Tr7sgX7DnKqOxIz5w2I12cgH+r5/meRwCbsUQFpJBLqjUSjptUl4UDW7pIn7/p8MIrTnMp76tCYKCiJzQ==
+xterm-addon-search@0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/xterm-addon-search/-/xterm-addon-search-0.2.1.tgz#f2c02fa92198d5115bde5cc518bff9d7998f2b9c"
+  integrity sha512-zT2TD0szNIgYYMJuCXMyjY2oF5YzhJ4QqKDO/KyPCm+d67x/7DvPxcg4DWkrPHhBc14jvo0iaTqpdPnSAUvhgg==
 
-xterm-addon-web-links@0.3.0-beta2:
-  version "0.3.0-beta2"
-  resolved "https://registry.yarnpkg.com/xterm-addon-web-links/-/xterm-addon-web-links-0.3.0-beta2.tgz#87fcf7638f1ee5d2b2e0d4ec06ac7f0d4165e8d6"
-  integrity sha512-Y9gyh8lNlglDMQgIIvD/P/vTzEatMWrr5Mxh3pLnTf+8o2vJPcxLrq58uKlQKI+PwTH1ClcIbX+GgS2jRkWDuw==
+xterm-addon-web-links@0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/xterm-addon-web-links/-/xterm-addon-web-links-0.2.1.tgz#6d1f2ce613e09870badf17615e7a1170a31542b2"
+  integrity sha512-2KnHtiq0IG7hfwv3jw2/jQeH1RBk2d5CH4zvgwQe00rLofSJqSfgnJ7gwowxxpGHrpbPr6Lv4AmH/joaNw2+HQ==
 
-xterm-addon-webgl@0.3.0-beta2:
-  version "0.3.0-beta2"
-  resolved "https://registry.yarnpkg.com/xterm-addon-webgl/-/xterm-addon-webgl-0.3.0-beta2.tgz#287aedeb30de9f0a2709a3351c09d769b4a8ebbd"
-  integrity sha512-o1ZLGJquh0/Eoq+DF6VN5EqZM9Lm7Xq+DE3mSiYxsWSW+2G8SlSmBnSE5qWdLpj9RGV1orH0NIUzpvGCoICvSA==
+xterm-addon-webgl@0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/xterm-addon-webgl/-/xterm-addon-webgl-0.2.1.tgz#86452460601dc29b7d907dbcd0b8a058bcbc6bcf"
+  integrity sha512-MZyh/KGbOBEEOqGpgilHuKHSj0OCXiZsBedTtLesHNerc79710shUHnfBlk31ggYU9G/WJ91qoNNux3ek5QBPA==
 
 xterm@4.0.2:
   version "4.0.2"
