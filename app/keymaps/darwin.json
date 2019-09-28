@@ -39,6 +39,8 @@
   "editor:copy": "command+c",
   "editor:paste": "command+v",
   "editor:selectAll": "command+a",
+  "editor:search": "command+f",
+  "editor:search-close": "esc",
   "editor:movePreviousWord": "alt+left",
   "editor:moveNextWord": "alt+right",
   "editor:moveBeginningLine": "command+left",
