@@ -1,4 +1,5 @@
 const path = require('path');
+const exec = require('child_process').exec;
 
 const webpack = require('webpack');
 const Copy = require('copy-webpack-plugin');
@@ -10,6 +11,68 @@ const isProd = nodeEnv === 'production';
 module.exports = [
   {
     mode: 'none',
+    name: 'hyper-app',
+    resolve: {
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
+    },
+    entry: './app/index.js',
+    output: {
+      path: path.join(__dirname, 'compiled_app'),
+      filename: 'ignore_this.js'
+    },
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx|ts|tsx)$/,
+          exclude: /node_modules/,
+          loader: 'null-loader'
+        }
+      ]
+    },
+    plugins: [
+      new Copy([
+        {
+          from: './app/*.html',
+          exclude: /node_modules/,
+          to: '.',
+          flatten: true
+        },
+        {
+          from: './app/*.json',
+          exclude: /node_modules/,
+          to: '.',
+          flatten: true
+        },
+        {
+          from: './app/keymaps/*.json',
+          exclude: /node_modules/,
+          to: './keymaps',
+          flatten: true
+        }
+        // {
+        //   from: './app/node_modules',     // gives really long output in webpack, used cp instead
+        //   to: './node_modules'
+        // }
+      ]),
+
+      {
+        apply: compiler => {
+          compiler.hooks.afterEmit.tap('AfterEmitPlugin', () => {
+            exec('cp -r ./app/node_modules ./compiled_app && tsc', (err, stdout, stderr) => {
+              if (stdout) process.stdout.write(stdout);
+              if (stderr) process.stderr.write(stderr);
+              process.stdout.write('\nCompiled\n\n');
+            });
+          });
+        }
+      },
+      new ForkTsCheckerWebpackPlugin()
+    ],
+    target: 'electron-main'
+  },
+
+  {
+    mode: 'none',
     name: 'hyper',
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx']
@@ -17,7 +80,7 @@ module.exports = [
     devtool: isProd ? 'hidden-source-map' : 'cheap-module-source-map',
     entry: './lib/index.js',
     output: {
-      path: path.join(__dirname, 'app', 'renderer'),
+      path: path.join(__dirname, 'compiled_app', 'renderer'),
       filename: 'bundle.js'
     },
     module: {
@@ -52,7 +115,9 @@ module.exports = [
           to: './assets'
         }
       ]),
-      new ForkTsCheckerWebpackPlugin()
+      new ForkTsCheckerWebpackPlugin({
+        tsconfig: './lib/tsconfig.json'
+      })
     ],
     target: 'electron-renderer'
   },

@@ -6,9 +6,9 @@
     "esModuleInterop": true,
     "jsx": "react",
     "lib": ["dom", "es2017"],
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
-    "outDir": "./compiled_app/",
+    "noEmit": true,
     "preserveConstEnums": true,
     "removeComments": false,
     "resolveJsonModule": true,
@@ -17,7 +17,6 @@
     "target": "es6"
   },
   "include": [
-    "./app/"
-  ],
-  "exclude": ["node_modules", "**/node_modules/*", "bin/*", "renderer/*"]
+    "./**/*"
+  ]
 }

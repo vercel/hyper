@@ -1,6 +1,7 @@
 # build output
 dist
 app/renderer
+compiled_app
 bin/cli.*
 
 # dependencies
