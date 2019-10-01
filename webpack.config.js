@@ -48,8 +48,7 @@ module.exports = [
           to: './keymaps',
           flatten: true
         }
-      ]),
-      new ForkTsCheckerWebpackPlugin()
+      ])
     ],
     target: 'electron-main'
   },
