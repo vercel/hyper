@@ -4,7 +4,7 @@
   "repository": "zeit/hyper",
   "scripts": {
     "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
-    "app": "electron compiled_app",
+    "app": "electron target",
     "dev": "webpack -w",
     "build": "cross-env NODE_ENV=production webpack",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
@@ -15,7 +15,7 @@
     "postinstall": "electron-builder install-app-deps && yarn run rebuild-node-pty",
     "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
     "dist":
-      "yarn run build && cross-env BABEL_ENV=production babel --out-file compiled_app/renderer/bundle.js --no-comments --minified compiled_app/renderer/bundle.js && build",
+      "yarn run build && cross-env BABEL_ENV=production babel --out-file target/renderer/bundle.js --no-comments --minified target/renderer/bundle.js && build",
     "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
   },
   "eslintConfig": {

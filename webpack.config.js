@@ -17,7 +17,7 @@ module.exports = [
     },
     entry: './app/index.js',
     output: {
-      path: path.join(__dirname, 'compiled_app'),
+      path: path.join(__dirname, 'target'),
       filename: 'ignore_this.js'
     },
     module: {
@@ -58,7 +58,7 @@ module.exports = [
       {
         apply: compiler => {
           compiler.hooks.afterEmit.tap('AfterEmitPlugin', () => {
-            exec('cp -r ./app/node_modules ./compiled_app && tsc', (err, stdout, stderr) => {
+            exec('cp -r ./app/node_modules ./target && tsc', (err, stdout, stderr) => {
               if (stdout) process.stdout.write(stdout);
               if (stderr) process.stderr.write(stderr);
               process.stdout.write('\nCompiled\n\n');
@@ -80,7 +80,7 @@ module.exports = [
     devtool: isProd ? 'hidden-source-map' : 'cheap-module-source-map',
     entry: './lib/index.js',
     output: {
-      path: path.join(__dirname, 'compiled_app', 'renderer'),
+      path: path.join(__dirname, 'target', 'renderer'),
       filename: 'bundle.js'
     },
     module: {

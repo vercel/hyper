@@ -8,7 +8,7 @@
     "lib": ["dom", "es2017"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "./compiled_app/",
+    "outDir": "./target/",
     "preserveConstEnums": true,
     "removeComments": false,
     "resolveJsonModule": true,
