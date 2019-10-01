@@ -58,10 +58,9 @@ module.exports = [
       {
         apply: compiler => {
           compiler.hooks.afterEmit.tap('AfterEmitPlugin', () => {
-            exec('cp -r ./app/node_modules ./target && tsc', (err, stdout, stderr) => {
+            exec('cp -r ./app/node_modules ./target', (err, stdout, stderr) => {
               if (stdout) process.stdout.write(stdout);
               if (stderr) process.stderr.write(stderr);
-              process.stdout.write('\nCompiled\n\n');
             });
           });
         }
