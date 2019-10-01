@@ -12,8 +12,8 @@
     "test:unit": "ava test/unit",
     "test:unit:watch": "yarn run test:unit -- --watch",
     "prepush": "yarn test",
-    "postinstall": "electron-builder install-app-deps && yarn run rebuild-node-pty",
-    "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
+    "postinstall": "webpack --config-name hyper-app && electron-builder install-app-deps && yarn run rebuild-node-pty && cp -r ./target/node_modules ./app/",
+    "rebuild-node-pty": "electron-rebuild -f -w target/node_modules/node-pty -m target",
     "dist":
       "yarn run build && cross-env BABEL_ENV=production babel --out-file target/renderer/bundle.js --no-comments --minified target/renderer/bundle.js && build",
     "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"

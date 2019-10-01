@@ -1,5 +1,4 @@
 const path = require('path');
-const exec = require('child_process').exec;
 
 const webpack = require('webpack');
 const Copy = require('copy-webpack-plugin');
@@ -49,22 +48,7 @@ module.exports = [
           to: './keymaps',
           flatten: true
         }
-        // {
-        //   from: './app/node_modules',     // gives really long output in webpack, used cp instead
-        //   to: './node_modules'
-        // }
       ]),
-
-      {
-        apply: compiler => {
-          compiler.hooks.afterEmit.tap('AfterEmitPlugin', () => {
-            exec('cp -r ./app/node_modules ./target', (err, stdout, stderr) => {
-              if (stdout) process.stdout.write(stdout);
-              if (stderr) process.stderr.write(stderr);
-            });
-          });
-        }
-      },
       new ForkTsCheckerWebpackPlugin()
     ],
     target: 'electron-main'
