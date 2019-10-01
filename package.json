@@ -5,8 +5,8 @@
   "scripts": {
     "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
     "app": "electron target",
-    "dev": "webpack -w",
-    "build": "cross-env NODE_ENV=production webpack",
+    "dev": "concurrently -n \"Webpack,TypeScript Compiler\" \"webpack -w\" \"tsc --pretty --watch --preserveWatchOutput\" -k",
+    "build": "cross-env NODE_ENV=production webpack && tsc",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "test": "yarn run lint && yarn run test:unit",
     "test:unit": "ava test/unit",
@@ -157,6 +157,9 @@
   },
   "build": {
     "appId": "co.zeit.hyper",
+    "directories": {
+      "app": "target"
+    },
     "extraResources": [
       "./bin/yarn-standalone.js",
       "./bin/cli.js",
@@ -282,6 +285,7 @@
     "ava": "0.25.0",
     "babel-loader": "8.0.6",
     "babel-preset-minify": "0.5.1",
+    "concurrently": "4.1.2",
     "copy-webpack-plugin": "5.0.4",
     "cross-env": "5.1.4",
     "electron": "3.1.3",
