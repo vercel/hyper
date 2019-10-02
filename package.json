@@ -83,14 +83,17 @@
     ]
   },
   "babel": {
-    "presets": ["react"],
+    "presets": ["@babel/react", "@babel/typescript"],
     "plugins": [
       [
         "styled-jsx/babel",
         {
           "vendorPrefixes": false
         }
-      ]
+      ],
+      "@babel/plugin-proposal-numeric-separator",
+      "@babel/proposal-class-properties",
+      "@babel/proposal-object-rest-spread"
     ],
     "env": {
       "production": {
@@ -158,7 +161,8 @@
     },
     "mac": {
       "category": "public.app-category.developer-tools",
-      "extendInfo": "build/Info.plist"
+      "extendInfo": "build/Info.plist",
+      "darkModeSupport": true
     },
     "deb": {
       "afterInstall": "./build/linux/after-install.tpl"
@@ -208,26 +212,36 @@
     "styled-jsx": "2.2.6",
     "stylis": "3.5.0",
     "uuid": "3.1.0",
+    "webpack-cli": "3.3.7",
     "xterm": "https://registry.npmjs.org/@zeit/xterm/-/xterm-3.12.0-1.tgz"
   },
   "devDependencies": {
+    "@babel/cli": "7.5.5",
+    "@babel/core": "7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.2.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
+    "@babel/preset-react": "7.0.0",
+    "@babel/preset-typescript": "7.3.3",
+    "@types/node": "12.7.4",
+    "@types/react": "16.9.2",
+    "@types/react-dom": "16.9.0",
+    "@types/react-redux": "7.1.2",
     "ava": "0.25.0",
-    "babel-cli": "6.26.0",
-    "babel-core": "6.26.0",
-    "babel-loader": "7.1.2",
-    "babel-preset-babili": "0.1.4",
-    "babel-preset-react": "6.24.1",
-    "copy-webpack-plugin": "4.3.1",
+    "babel-loader": "8.0.6",
+    "babel-preset-minify": "0.5.1",
+    "copy-webpack-plugin": "5.0.4",
     "cross-env": "5.1.4",
     "electron": "3.1.3",
     "electron-builder": "20.38.2",
     "electron-builder-squirrel-windows": "20.38.2",
     "electron-devtools-installer": "2.2.4",
     "electron-rebuild": "1.8.2",
-    "eslint": "4.7.2",
+    "eslint": "4.18.2",
     "eslint-config-prettier": "2.6.0",
     "eslint-plugin-prettier": "2.3.1",
     "eslint-plugin-react": "7.3.0",
+    "fork-ts-checker-webpack-plugin": "1.5.0",
     "husky": "0.14.3",
     "inquirer": "5.1.0",
     "node-gyp": "3.6.2",
@@ -235,7 +249,8 @@
     "proxyquire": "1.8.0",
     "spectron": "3.8.0",
     "style-loader": "0.19.1",
-    "webpack": "3.10.0"
+    "typescript": "3.6.2",
+    "webpack": "4.39.3"
   },
   "resolutions": {
     "rc": "1.2.3"

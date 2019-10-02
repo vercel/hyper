@@ -9,10 +9,16 @@ const cfgFile = '.hyper.js';
 const defaultCfgFile = 'config-default.js';
 const homeDirectory = homedir();
 
-const applicationDirectory = app.getPath('userData');
+// If the user defines XDG_CONFIG_HOME they definitely want their config there,
+// otherwise use the home directory in linux/mac and userdata in windows
+const applicationDirectory =
+  process.env.XDG_CONFIG_HOME !== undefined
+    ? join(process.env.XDG_CONFIG_HOME, 'hyper')
+    : process.platform == 'win32' ? app.getPath('userData') : homedir();
 
-let cfgPath = join(applicationDirectory, cfgFile);
 let cfgDir = applicationDirectory;
+let cfgPath = join(applicationDirectory, cfgFile);
+let legacyCfgPath = join(homeDirectory, cfgFile); // Hyper 2 config location
 
 const devDir = resolve(__dirname, '../..');
 const devCfg = join(devDir, cfgFile);
@@ -33,6 +39,8 @@ if (isDev) {
 
 const plugins = resolve(cfgDir, '.hyper_plugins');
 const plugs = {
+  legacyBase: resolve(homeDirectory, '.hyper_plugins'),
+  legacyLocal: resolve(homeDirectory, '.hyper_plugins', 'local'),
   base: plugins,
   local: resolve(plugins, 'local'),
   cache: resolve(plugins, 'cache')
@@ -64,6 +72,7 @@ const defaultPlatformKeyPath = () => {
 module.exports = {
   cfgDir,
   cfgPath,
+  legacyCfgPath,
   cfgFile,
   defaultCfg,
   icon,

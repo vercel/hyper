@@ -36,7 +36,10 @@ module.exports = class Window {
         transparent: process.platform === 'darwin',
         icon,
         show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
-        acceptFirstMouse: true
+        acceptFirstMouse: true,
+        webPreferences: {
+          navigateOnDragDrop: true
+        }
       },
       options_
     );
@@ -120,11 +123,17 @@ module.exports = class Window {
 
     // Optimistically create the initial session so that when the window sends
     // the first "new" IPC message, there's a session already warmed up.
+    let initialSession = null;
     function createInitialSession() {
       let {session, options} = createSession();
       const initialEvents = [];
       const handleData = data => initialEvents.push(['session data', data]);
-      const handleExit = () => initialEvents.push(['session exit']);
+      const handleExit = () => {
+        // the warmed up session should be cleaned if exit before add a new session.
+        session.removeListener('data', handleData);
+        session.removeListener('exit', handleExit);
+        initialSession = null;
+      };
       session.on('data', handleData);
       session.on('exit', handleExit);
 
@@ -137,7 +146,7 @@ module.exports = class Window {
       }
       return {session, options, flushEvents};
     }
-    let initialSession = createInitialSession();
+    initialSession = createInitialSession();
 
     rpc.on('new', extraOptions => {
       const {session, options} = initialSession || createSession(extraOptions);
@@ -236,6 +245,13 @@ module.exports = class Window {
     rpc.on('command', command => {
       const focusedWindow = BrowserWindow.getFocusedWindow();
       execCommand(command, focusedWindow);
+    });
+    // pass on the full screen events from the window to react
+    rpc.win.on('enter-full-screen', () => {
+      rpc.emit('enter full screen');
+    });
+    rpc.win.on('leave-full-screen', () => {
+      rpc.emit('leave full screen');
     });
     const deleteSessions = () => {
       sessions.forEach((session, key) => {

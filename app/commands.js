@@ -1,5 +1,5 @@
-const {app} = require('electron');
-const {openConfig} = require('./config');
+const {app, Menu} = require('electron');
+const {openConfig, getConfig} = require('./config');
 const {updatePlugins} = require('./plugins');
 const {installCLI} = require('./utils/cli-install');
 
@@ -15,10 +15,10 @@ const commands = {
       setTimeout(app.createWindow, 0);
     }
   },
-  'pane:splitVertical': focusedWindow => {
+  'pane:splitRight': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('split request vertical');
   },
-  'pane:splitHorizontal': focusedWindow => {
+  'pane:splitDown': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('split request horizontal');
   },
   'pane:close': focusedWindow => {
@@ -101,8 +101,19 @@ const commands = {
   'editor:break': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('session break req');
   },
+  'editor:search': focusedWindow => {
+    focusedWindow && focusedWindow.rpc.emit('session search');
+  },
+  'editor:search-close': focusedWindow => {
+    focusedWindow && focusedWindow.rpc.emit('session search close');
+  },
   'cli:install': () => {
     installCLI(true);
+  },
+  'window:hamburgerMenu': () => {
+    if (getConfig().showHamburgerMenu) {
+      Menu.getApplicationMenu().popup({x: 15, y: 15});
+    }
   }
 };
 

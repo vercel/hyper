@@ -9,9 +9,10 @@
  * Issue: https://github.com/kevva/executable/issues/9
  * PR: https://github.com/kevva/executable/pull/10
  */
-import fs from 'fs';
 
-export function isExecutable(fileStat) {
+import fs, { Stats } from "fs";
+
+export function isExecutable(fileStat: Stats): boolean {
   if (process.platform === 'win32') {
     return true;
   }
@@ -19,7 +20,7 @@ export function isExecutable(fileStat) {
   return Boolean(fileStat.mode & 0o0001 || fileStat.mode & 0o0010 || fileStat.mode & 0o0100);
 }
 
-export const getBase64FileData = filePath => {
+export function getBase64FileData(filePath: string): Promise<string|null> {
   return new Promise(resolve => {
     return fs.readFile(filePath, (err, data) => {
       if (err) {

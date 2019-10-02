@@ -98,11 +98,21 @@ module.exports = {
     // - Make sure to use a full path if the binary name doesn't work
     // - Remove `--login` in shellArgs
     //
-    // Bash on Windows
-    // - Example: `C:\\Windows\\System32\\bash.exe`
+    // Windows Subsystem for Linux (WSL) - previously Bash on Windows
+    // - Example: `C:\\Windows\\System32\\wsl.exe`
+    //
+    // Git-bash on Windows
+    // - Example: `C:\\Program Files\\Git\\bin\\bash.exe`
     //
     // PowerShell on Windows
     // - Example: `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
+    //
+    // Cygwin
+    // - Example: `C:\\cygwin64\\bin\\bash.exe`
+    //
+    // Git Bash
+    // - Example: `C:\\Program Files\\Git\\git-cmd.exe`
+    // Then Add `--command=usr/bin/bash.exe` to shellArgs
     shell: '',
 
     // for setting shell arguments (i.e. for using interactive shellArgs: `['-i']`)

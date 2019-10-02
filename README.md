@@ -45,7 +45,7 @@ Regardless of the platform you are working on, you will need to have Yarn instal
 
 1. Install necessary packages:
   * Windows
-    - Be sure to run  `yarn global add windows-build-tools` to install `windows-build-tools`.
+    - Be sure to run  `yarn global add windows-build-tools` from an elevated prompt (as an administrator) to install `windows-build-tools`.
   * macOS
     - Once you have installed Yarn, you can skip this section!
   * Linux (You can see [here](https://en.wikipedia.org/wiki/List_of_Linux_distributions) what your Linux is based on.)
@@ -82,6 +82,10 @@ make sure its build process is working correctly by running `yarn run rebuild-no
 
 If you are on macOS, this typically is related to Xcode issues (like not having agreed
 to the Terms of Service by running `sudo xcodebuild` after a fresh Xcode installation).
+
+##### Error with `c++` on macOS when running `yarn`
+
+If you are getting compiler errors when running `yarn` add the environment variable `export CXX=clang++`
 
 ##### Error with `codesign` on macOS when running `yarn run dist`
 

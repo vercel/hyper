@@ -20,6 +20,7 @@ try {
 }
 
 const envFromConfig = config.getConfig().env || {};
+const useConpty = config.getConfig().useConpty;
 
 // Max duration to batch session data before sending it to the renderer process.
 const BATCH_DURATION_MS = 16;
@@ -107,13 +108,20 @@ module.exports = class Session extends EventEmitter {
 
     const defaultShellArgs = ['--login'];
 
+    const options = {
+      cols: columns,
+      rows,
+      cwd,
+      env: getDecoratedEnv(baseEnv)
+    };
+
+    // if config do not set the useConpty, it will be judged by the node-pty
+    if (typeof useConpty === 'boolean') {
+      options.experimentalUseConpty = useConpty;
+    }
+
     try {
-      this.pty = spawn(shell || defaultShell, shellArgs || defaultShellArgs, {
-        cols: columns,
-        rows,
-        cwd,
-        env: getDecoratedEnv(baseEnv)
-      });
+      this.pty = spawn(shell || defaultShell, shellArgs || defaultShellArgs, options);
     } catch (err) {
       if (/is not a function/.test(err.message)) {
         throw createNodePtyError();
