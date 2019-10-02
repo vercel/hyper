@@ -1,12 +1,12 @@
 sudo: required
-dist: trusty
+dist: xenial
 
 language: node_js
 
 matrix:
   include:
     - os: linux
-      node_js: 10.2.0
+      node_js: 12.10.0
       env: CC=clang CXX=clang++ npm_config_clang=1
       compiler: clang
 
