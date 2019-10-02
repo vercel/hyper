@@ -23,5 +23,7 @@ module.exports = (createWindow, selection) => {
   const commandKeys = getCommandKeys(getDecoratedKeymaps());
   const _shell = shellMenu(commandKeys, execCommand).submenu;
   const _edit = editMenu(commandKeys, execCommand).submenu.filter(filterCutCopy.bind(null, selection));
-  return _edit.concat(separator, _shell).filter(menuItem => !menuItem.hasOwnProperty('enabled') || menuItem.enabled);
+  return _edit
+    .concat(separator, _shell)
+    .filter(menuItem => !Object.prototype.hasOwnProperty.call(menuItem, 'enabled') || menuItem.enabled);
 };

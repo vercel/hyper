@@ -14,7 +14,9 @@ const homeDirectory = homedir();
 const applicationDirectory =
   process.env.XDG_CONFIG_HOME !== undefined
     ? join(process.env.XDG_CONFIG_HOME, 'hyper')
-    : process.platform == 'win32' ? app.getPath('userData') : homedir();
+    : process.platform == 'win32'
+    ? app.getPath('userData')
+    : homedir();
 
 let cfgDir = applicationDirectory;
 let cfgPath = join(applicationDirectory, cfgFile);
