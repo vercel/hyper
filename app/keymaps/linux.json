@@ -3,6 +3,7 @@
   "window:reload": "ctrl+shift+r",
   "window:reloadFull": "ctrl+shift+f5",
   "window:preferences": "ctrl+,",
+  "window:hamburgerMenu": "alt",
   "zoom:reset": "ctrl+0",
   "zoom:in": "ctrl+=",
   "zoom:out": "ctrl+-",

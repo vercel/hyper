@@ -111,7 +111,7 @@ const commands = {
     installCLI(true);
   },
   'window:hamburgerMenu': () => {
-    if (getConfig().showHamburgerMenu) {
+    if (getConfig().showHamburgerMenu || getConfig().showHamburgerMenu === '') {
       Menu.getApplicationMenu().popup({x: 15, y: 15});
     }
   }
