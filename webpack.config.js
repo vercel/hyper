@@ -1,5 +1,5 @@
 const path = require('path');
-const exec = require('child_process').exec;
+
 const webpack = require('webpack');
 const Copy = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -8,42 +8,6 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
 
 module.exports = [
-  {
-    mode: 'none',
-    name: 'hyper-app',
-    resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
-    },
-    entry: './app/index.js',
-    output: {
-      path: path.join(__dirname, 'app'),
-      filename: 'ignore_this.js'
-    },
-    module: {
-      rules: [
-        {
-          test: /\.(js|jsx|ts|tsx)$/,
-          exclude: /node_modules/,
-          loader: 'null-loader'
-        }
-      ]
-    },
-    plugins: [
-      {
-        apply: compiler => {
-          compiler.hooks.afterEmit.tap('AfterEmitPlugin', () => {
-            exec('tsc', (err, stdout, stderr) => {
-              if (stdout) process.stdout.write(stdout);
-              if (stderr) process.stderr.write(stderr);
-              process.stdout.write('\nCompiled\n\n');
-            });
-          });
-        }
-      },
-      new ForkTsCheckerWebpackPlugin()
-    ],
-    target: 'electron-main'
-  },
   {
     mode: 'none',
     name: 'hyper',
