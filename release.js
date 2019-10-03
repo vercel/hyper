@@ -15,7 +15,6 @@ module.exports = async markdown => {
     //eslint-disable-next-line no-console
     console.error('Please specify a release summary!');
 
-    // eslint-disable-next-line unicorn/no-process-exit
     process.exit(1);
   }
 

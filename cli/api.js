@@ -11,7 +11,9 @@ const path = require('path');
 const applicationDirectory =
   process.env.XDG_CONFIG_HOME !== undefined
     ? path.join(process.env.XDG_CONFIG_HOME, 'hyper')
-    : process.platform == 'win32' ? path.join(process.env.APPDATA, 'Hyper') : os.homedir();
+    : process.platform == 'win32'
+    ? path.join(process.env.APPDATA, 'Hyper')
+    : os.homedir();
 
 const devConfigFileName = path.join(__dirname, `../.hyper.js`);
 
@@ -56,8 +58,8 @@ const getProperties = memoize(() => getParsedFile().program.body.map(obj => obj)
 const getPlugins = memoize(() => {
   let plugins;
   getProperties().find(property => {
-    return Object.values(property.expression.right.properties).filter(
-      plugin => (plugin.key.name === 'plugins' ? (plugins = plugin.value.elements) : null)
+    return Object.values(property.expression.right.properties).filter(plugin =>
+      plugin.key.name === 'plugins' ? (plugins = plugin.value.elements) : null
     );
   });
   return plugins;
@@ -66,8 +68,8 @@ const getPlugins = memoize(() => {
 const getLocalPlugins = memoize(() => {
   let localPlugins;
   getProperties().find(property => {
-    return Object.values(property.expression.right.properties).filter(
-      plugin => (plugin.key.name === 'localPlugins' ? (localPlugins = plugin.value.elements) : null)
+    return Object.values(property.expression.right.properties).filter(plugin =>
+      plugin.key.name === 'localPlugins' ? (localPlugins = plugin.value.elements) : null
     );
   });
   return localPlugins;

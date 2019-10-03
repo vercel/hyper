@@ -10,7 +10,7 @@
  * PR: https://github.com/kevva/executable/pull/10
  */
 
-import fs, { Stats } from "fs";
+import fs, {Stats} from "fs";
 
 export function isExecutable(fileStat: Stats): boolean {
   if (process.platform === 'win32') {

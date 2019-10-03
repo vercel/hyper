@@ -8,7 +8,6 @@ if (['--help', '-v', '--version'].includes(process.argv[1])) {
   console.log('Hyper does not accept any command line arguments. Please modify the config file instead.');
   //eslint-disable-next-line no-console
   console.log(`Hyper configuration file located at: ${configLocation}`);
-  // eslint-disable-next-line unicorn/no-process-exit
   process.exit();
 }
 
@@ -20,14 +19,12 @@ const checkSquirrel = () => {
     //eslint-disable-next-line no-empty
   } catch (err) {}
   if (squirrel) {
-    // eslint-disable-next-line unicorn/no-process-exit
     process.exit();
   }
 };
 
 // handle startup squirrel events
 if (process.platform === 'win32') {
-  // eslint-disable-next-line import/order
   const systemContextMenu = require('./system-context-menu');
 
   switch (process.argv[1]) {
@@ -263,7 +260,6 @@ function installDevExtensions(isDev_) {
   if (!isDev_) {
     return Promise.resolve();
   }
-  // eslint-disable-next-line import/no-extraneous-dependencies
   const installer = require('electron-devtools-installer');
 
   const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];

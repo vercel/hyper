@@ -142,7 +142,6 @@ function getPluginVersions() {
   return paths_.map(path_ => {
     let version = null;
     try {
-      //eslint-disable-next-line import/no-dynamic-require
       version = require(resolve(path_, 'package.json')).version;
       //eslint-disable-next-line no-empty
     } catch (err) {}
@@ -267,7 +266,6 @@ function requirePlugins() {
   const load = path_ => {
     let mod;
     try {
-      // eslint-disable-next-line import/no-dynamic-require
       mod = require(path_);
       const exposed = mod && Object.keys(mod).some(key => availableExtensions.has(key));
       if (!exposed) {
@@ -278,7 +276,6 @@ function requirePlugins() {
       // populate the name for internal errors here
       mod._name = basename(path_);
       try {
-        // eslint-disable-next-line import/no-dynamic-require
         mod._version = require(resolve(path_, 'package.json')).version;
       } catch (err) {
         //eslint-disable-next-line no-console
