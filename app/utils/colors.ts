@@ -20,7 +20,7 @@ const colorList = [
 ];
 
 export const getColorMap: {
-  <T>(colors: T): T extends (infer U)[] ? { [k: string]: U } : T
+  <T>(colors: T): T extends (infer U)[] ? {[k: string]: U} : T;
 } = colors => {
   if (!Array.isArray(colors)) {
     return colors;
