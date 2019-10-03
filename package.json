@@ -5,7 +5,7 @@
   "scripts": {
     "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
     "app": "electron target",
-    "dev": "concurrently -n \"Webpack,TypeScript Compiler\" \"webpack -w\" \"tsc --pretty --watch --preserveWatchOutput\" -k",
+    "dev": "concurrently -n \"Webpack,TypeScript Compiler\" -c \"cyan.bold,blue.bold\" \"webpack -w\" \"tsc --pretty --watch --preserveWatchOutput\" -k",
     "build": "cross-env NODE_ENV=production webpack && tsc",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "test": "yarn run lint && yarn run test:unit",
@@ -14,8 +14,7 @@
     "prepush": "yarn test",
     "postinstall": "webpack --config-name hyper-app && electron-builder install-app-deps && yarn run rebuild-node-pty && cp -r ./target/node_modules ./app/",
     "rebuild-node-pty": "electron-rebuild -f -w target/node_modules/node-pty -m target",
-    "dist":
-      "yarn run build && cross-env BABEL_ENV=production babel --out-file target/renderer/bundle.js --no-comments --minified target/renderer/bundle.js && build",
+    "dist": "yarn run build && cross-env BABEL_ENV=production babel --out-file target/renderer/bundle.js --no-comments --minified target/renderer/bundle.js && build",
     "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
   },
   "eslintConfig": {
