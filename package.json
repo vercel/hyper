@@ -278,11 +278,11 @@
     "babel-preset-minify": "0.5.1",
     "copy-webpack-plugin": "5.0.4",
     "cross-env": "5.1.4",
-    "electron": "6.0.9",
+    "electron": "6.0.11",
     "electron-builder": "21.2.0",
     "electron-builder-squirrel-windows": "21.2.0",
     "electron-devtools-installer": "2.2.4",
-    "electron-rebuild": "1.8.5",
+    "electron-rebuild": "1.8.6",
     "eslint-config-prettier": "6.3.0",
     "eslint-plugin-prettier": "3.1.1",
     "eslint-plugin-react": "7.15.0",
@@ -298,5 +298,5 @@
     "style-loader": "0.19.1",
     "typescript": "3.6.2",
     "webpack": "4.39.3"
-  }  
+  }
 }
