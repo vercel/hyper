@@ -1,4 +1,6 @@
 {
+  "name": "hyper",
+  "version": "3.0.1-canary.4",
   "repository": "zeit/hyper",
   "scripts": {
     "start":
