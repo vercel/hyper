@@ -295,7 +295,7 @@
     "fork-ts-checker-webpack-plugin": "1.5.0",
     "husky": "0.14.3",
     "inquirer": "5.1.0",
-    "node-gyp": "5.0.3",
+    "node-gyp": "6.0.0",
     "plist": "3.0.1",
     "prettier": "1.18.2",
     "proxyquire": "1.8.0",
