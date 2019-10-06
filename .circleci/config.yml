@@ -2,7 +2,7 @@ version: 2
 jobs:
   install:
     macos:
-      xcode: "9.2.0"
+      xcode: "10.3.0"
     working_directory: ~/repo
     steps:
       - checkout
@@ -25,7 +25,7 @@ jobs:
 
   test:
     macos:
-      xcode: "9.2.0"
+      xcode: "10.3.0"
     steps:
       - checkout
       - attach_workspace:
@@ -36,7 +36,7 @@ jobs:
 
   build:
     macos:
-      xcode: "9.2.0"
+      xcode: "10.3.0"
     steps:
       - checkout
       - attach_workspace:
@@ -53,7 +53,7 @@ jobs:
 
   release:
     macos:
-      xcode: "9.2.0"
+      xcode: "10.3.0"
     steps:
       - checkout
       - attach_workspace:
