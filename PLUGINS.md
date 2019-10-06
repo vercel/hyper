@@ -190,6 +190,17 @@ exports.decorateTerm = (Term, { React, notify }) => {
 }
 ```
 
+### Require Electron
+Hyper doesn't provide a reference to electron. However plugins can directly require electron.
+
+```js
+const electron = require('electron')
+// or
+const { dialog, Menu } = require('electron')
+```
+
+This is needed in order to allow show/hide to have proper return of focus.
+
 ## Hyper v2 breaking changes
 Hyper v2 uses `xterm.js` instead of `hterm`. It means that PTY output renders now in a canvas element, not with a hackable DOM structure.
 For example, plugins can't use TermCSS in order to modify text or link styles anymore. It is now required to use available configuration params that are passed down to `xterm.js`.

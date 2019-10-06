@@ -6,7 +6,7 @@ const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 const updater = require('../updater');
 const toElectronBackgroundColor = require('../utils/to-electron-background-color');
-const {icon, homeDirectory} = require('../config/paths');
+const {icon, cfgDir} = require('../config/paths');
 const createRPC = require('../rpc');
 const notify = require('../notify');
 const fetchNotifications = require('../notifications');
@@ -55,6 +55,14 @@ module.exports = class Window {
       const cfg_ = app.plugins.getDecoratedConfig();
       window.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
     };
+
+    // set working directory
+    let workingDirectory = cfgDir;
+    if (process.argv[1] && isAbsolute(process.argv[1])) {
+      workingDirectory = process.argv[1];
+    } else if (cfg.workingDirectory && isAbsolute(cfg.workingDirectory)) {
+      workingDirectory = cfg.workingDirectory;
+    }
 
     // config changes
     const cfgUnsubscribe = app.config.subscribe(() => {
@@ -107,7 +115,7 @@ module.exports = class Window {
         {
           rows: 40,
           cols: 100,
-          cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homeDirectory,
+          cwd: workingDirectory,
           splitDirection: undefined,
           shell: cfg.shell,
           shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
