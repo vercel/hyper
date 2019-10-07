@@ -14,7 +14,7 @@
     "color": "2.0.1",
     "convert-css-color-name-to-hex": "0.1.1",
     "default-shell": "1.0.1",
-    "electron-config": "2.0.0",
+    "electron-store": "5.0.0",
     "electron-fetch": "1.3.0",
     "electron-is-dev": "1.0.1",
     "electron-squirrel-startup": "1.0.0",
