@@ -57,6 +57,9 @@ module.exports = {
     // custom CSS to embed in the terminal window
     termCSS: '',
 
+    // set custom startup directory (must be an absolute path)
+    workingDirectory: '',
+
     // if you're using a Linux setup which show native menus, set to false
     // default: `true` on Linux, `true` on Windows, ignored on macOS
     showHamburgerMenu: '',
@@ -89,6 +92,8 @@ module.exports = {
       lightMagenta: '#FD7CFC',
       lightCyan: '#68FDFE',
       lightWhite: '#FFFFFF',
+      limeGreen: '#32CD32',
+      lightCoral: '#F08080',
     },
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)

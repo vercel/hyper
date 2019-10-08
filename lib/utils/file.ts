@@ -10,7 +10,7 @@
  * PR: https://github.com/kevva/executable/pull/10
  */
 
-import fs, { Stats } from "fs";
+import fs, {Stats} from 'fs';
 
 export function isExecutable(fileStat: Stats): boolean {
   if (process.platform === 'win32') {
@@ -20,7 +20,7 @@ export function isExecutable(fileStat: Stats): boolean {
   return Boolean(fileStat.mode & 0o0001 || fileStat.mode & 0o0010 || fileStat.mode & 0o0100);
 }
 
-export function getBase64FileData(filePath: string): Promise<string|null> {
+export function getBase64FileData(filePath: string): Promise<string | null> {
   return new Promise(resolve => {
     return fs.readFile(filePath, (err, data) => {
       if (err) {
@@ -34,4 +34,4 @@ export function getBase64FileData(filePath: string): Promise<string|null> {
       return resolve(base64Data);
     });
   });
-};
+}
