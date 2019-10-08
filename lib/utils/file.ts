@@ -21,7 +21,7 @@ export function isExecutable(fileStat: Stats): boolean {
 }
 
 export function getBase64FileData(filePath: string): Promise<string | null> {
-  return new Promise(resolve => {
+  return new Promise((resolve): void => {
     return fs.readFile(filePath, (err, data) => {
       if (err) {
         // Gracefully fail with a warning
