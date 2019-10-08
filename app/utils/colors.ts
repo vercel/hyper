@@ -19,7 +19,9 @@ const colorList = [
   'grayscale'
 ];
 
-exports.getColorMap = colors => {
+export const getColorMap: {
+  <T>(colors: T): T extends (infer U)[] ? {[k: string]: U} : T;
+} = colors => {
   if (!Array.isArray(colors)) {
     return colors;
   }
