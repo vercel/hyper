@@ -111,10 +111,9 @@ module.exports = class Window {
     function createSession(extraOptions = {}) {
       const uid = uuid.v4();
 
+      // remove the rows and cols, the wrong value of them will break layout when init create 
       const defaultOptions = Object.assign(
         {
-          rows: 40,
-          cols: 100,
           cwd: workingDirectory,
           splitDirection: undefined,
           shell: cfg.shell,
