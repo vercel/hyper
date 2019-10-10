@@ -154,6 +154,9 @@ module.exports = {
     // rendering (slower, but supports transparent backgrounds)
     webGLRenderer: true,
 
+    // if `true` (without backticks and without quotes), Hyper will ignore ligatures provided by some fonts
+    disableLigatures: false,
+
     // for advanced config flags please refer to https://hyper.is/#cfg
   },
 
