@@ -1,7 +1,7 @@
 const {app, dialog} = require('electron');
 const {resolve, basename} = require('path');
 const {writeFileSync} = require('fs');
-const Config = require('electron-config');
+const Config = require('electron-store');
 const ms = require('ms');
 
 const React = require('react');

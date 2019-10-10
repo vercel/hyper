@@ -47,6 +47,10 @@ module.exports = [
           exclude: /node_modules/,
           to: './keymaps',
           flatten: true
+        },
+        {
+          from: './app/static',
+          to: './static'
         }
       ])
     ],
