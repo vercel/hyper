@@ -7,7 +7,7 @@
  * as the result of an action being triggered.
  */
 
-export default () => next => action => {
+export default () => (next: (arg0: any) => any) => (action: {effect: () => void}) => {
   const ret = next(action);
   if (action.effect) {
     action.effect();

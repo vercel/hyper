@@ -1,7 +1,11 @@
+import {EventEmitter} from 'events';
+import {IpcRenderer, IpcRendererEvent} from 'electron';
+import electron from 'electron';
 export default class Client {
+  emitter: EventEmitter;
+  ipc: IpcRenderer;
+  id!: string;
   constructor() {
-    const electron = window.require('electron');
-    const EventEmitter = window.require('events');
     this.emitter = new EventEmitter();
     this.ipc = electron.ipcRenderer;
     this.ipcListener = this.ipcListener.bind(this);
@@ -12,7 +16,7 @@ export default class Client {
         this.emitter.emit('ready');
       }, 0);
     } else {
-      this.ipc.on('init', (ev, uid) => {
+      this.ipc.on('init', (ev: IpcRendererEvent, uid: string) => {
         // we cache so that if the object
         // gets re-instantiated we don't
         // wait for a `init` event
@@ -24,26 +28,26 @@ export default class Client {
     }
   }
 
-  ipcListener(event, {ch, data}) {
+  ipcListener(event: any, {ch, data}: {ch: string; data: any}) {
     this.emitter.emit(ch, data);
   }
 
-  on(ev, fn) {
+  on(ev: string, fn: (...args: any[]) => void) {
     this.emitter.on(ev, fn);
   }
 
-  once(ev, fn) {
+  once(ev: string, fn: (...args: any[]) => void) {
     this.emitter.once(ev, fn);
   }
 
-  emit(ev, data) {
+  emit(ev: string, data: any) {
     if (!this.id) {
       throw new Error('Not ready');
     }
     this.ipc.send(this.id, {ev, data});
   }
 
-  removeListener(ev, fn) {
+  removeListener(ev: string, fn: (...args: any[]) => void) {
     this.emitter.removeListener(ev, fn);
   }
 
@@ -53,6 +57,6 @@ export default class Client {
 
   destroy() {
     this.removeAllListeners();
-    this.ipc.removeAllListeners();
+    this.ipc.removeAllListeners(this.id);
   }
 }

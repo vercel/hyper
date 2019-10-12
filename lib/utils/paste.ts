@@ -1,12 +1,12 @@
 import {clipboard} from 'electron';
 import plist from 'plist';
 
-const getPath = platform => {
+const getPath = (platform: string) => {
   switch (platform) {
     case 'darwin': {
       if (clipboard.has('NSFilenamesPboardType')) {
         // Parse plist file containing the path list of copied files
-        const list = plist.parse(clipboard.read('NSFilenamesPboardType'));
+        const list = plist.parse(clipboard.read('NSFilenamesPboardType')) as plist.PlistArray;
         return "'" + list.join("' '") + "'";
       } else {
         return null;

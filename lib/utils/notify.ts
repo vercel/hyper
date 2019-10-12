@@ -1,5 +1,5 @@
 /* eslint no-new:0 */
-export default function notify(title, body, details = {}) {
+export default function notify(title: string, body: string, details: Record<string, any> = {}) {
   //eslint-disable-next-line no-console
   console.log(`[Notification] ${title}: ${body}`);
   if (details.error) {
