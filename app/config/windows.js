@@ -1,4 +1,4 @@
-const Config = require('electron-config');
+const Config = require('electron-store');
 
 const defaults = {
   windowPosition: [50, 50],

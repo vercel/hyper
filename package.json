@@ -1,26 +1,34 @@
 {
+  "name": "hyper",
+  "version": "3.1.0-canary.1",
   "repository": "zeit/hyper",
   "scripts": {
-    "start":
-      "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
-    "app": "electron app",
-    "dev": "webpack -w",
-    "build": "cross-env NODE_ENV=production webpack",
-    "lint": "eslint .",
+    "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
+    "app": "electron target",
+    "dev": "concurrently -n \"Webpack,TypeScript Compiler\" -c \"cyan.bold,blue.bold\" \"webpack -w\" \"tsc --pretty --watch --preserveWatchOutput\" -k",
+    "build": "cross-env NODE_ENV=production webpack && tsc",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "test": "yarn run lint && yarn run test:unit",
     "test:unit": "ava test/unit",
     "test:unit:watch": "yarn run test:unit -- --watch",
     "prepush": "yarn test",
-    "postinstall": "electron-builder install-app-deps && yarn run rebuild-node-pty",
-    "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
-    "dist":
-      "yarn run build && cross-env BABEL_ENV=production babel --out-file app/renderer/bundle.js --no-comments --minified app/renderer/bundle.js && build",
-    "clean":
-      "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
+    "postinstall": "webpack --config-name hyper-app && electron-builder install-app-deps && yarn run rebuild-node-pty && cpy --cwd=target --parents 'node_modules/**/*' '../app/'",
+    "rebuild-node-pty": "electron-rebuild -f -w target/node_modules/node-pty -m target",
+    "dist": "yarn run build && cross-env BABEL_ENV=production babel --out-file target/renderer/bundle.js --no-comments --minified target/renderer/bundle.js && electron-builder",
+    "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
   },
   "eslintConfig": {
-    "plugins": ["react", "prettier"],
-    "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
+    "plugins": [
+      "react",
+      "prettier",
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:prettier/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
       "ecmaVersion": 8,
       "sourceType": "module",
@@ -36,8 +44,16 @@
       "browser": true,
       "node": true
     },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
     "rules": {
-      "func-names": ["error", "as-needed"],
+      "func-names": [
+        "error",
+        "as-needed"
+      ],
       "no-shadow": "error",
       "no-extra-semi": 0,
       "react/prop-types": 0,
@@ -55,14 +71,16 @@
           "bracketSpacing": false,
           "semi": true,
           "useTabs": false,
-          "parser": "babylon",
           "jsxBracketSameLine": false
         }
       ]
     },
     "overrides": [
       {
-        "files": ["app/config/config-default.js", ".hyper.js"],
+        "files": [
+          "app/config/config-default.js",
+          ".hyper.js"
+        ],
         "rules": {
           "prettier/prettier": [
             "error",
@@ -74,23 +92,44 @@
               "bracketSpacing": false,
               "semi": true,
               "useTabs": false,
-              "parser": "babylon",
+              "parser": "babel",
               "jsxBracketSameLine": false
             }
           ]
+        }
+      },
+      {
+        "files": [
+          "**.ts",
+          "**.tsx"
+        ],
+        "extends": [
+          "plugin:@typescript-eslint/recommended",
+          "prettier/@typescript-eslint"
+        ],
+        "rules": {
+          "@typescript-eslint/explicit-function-return-type": "off",
+          "@typescript-eslint/no-explicit-any": "off",
+          "@typescript-eslint/no-non-null-assertion": "off"
         }
       }
     ]
   },
   "babel": {
-    "presets": ["react"],
+    "presets": [
+      "@babel/react",
+      "@babel/typescript"
+    ],
     "plugins": [
       [
         "styled-jsx/babel",
         {
           "vendorPrefixes": false
         }
-      ]
+      ],
+      "@babel/plugin-proposal-numeric-separator",
+      "@babel/proposal-class-properties",
+      "@babel/proposal-object-rest-spread"
     ],
     "env": {
       "production": {
@@ -122,13 +161,18 @@
   },
   "build": {
     "appId": "co.zeit.hyper",
+    "directories": {
+      "app": "target"
+    },
     "extraResources": [
       "./bin/yarn-standalone.js",
       "./bin/cli.js",
       {
         "from": "./build/${os}/",
         "to": "./bin/",
-        "filter": ["hyper*"]
+        "filter": [
+          "hyper*"
+        ]
       }
     ],
     "linux": {
@@ -136,24 +180,34 @@
       "target": [
         {
           "target": "deb",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         },
         {
           "target": "AppImage",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         },
         {
           "target": "rpm",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         },
         {
           "target": "snap",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         }
       ]
     },
     "win": {
-      "target": ["squirrel"],
+      "target": [
+        "squirrel"
+      ],
       "rfc3161TimeStampServer": "http://timestamp.comodoca.com"
     },
     "mac": {
@@ -172,7 +226,9 @@
     },
     "protocols": {
       "name": "ssh URL",
-      "schemes": ["ssh"]
+      "schemes": [
+        "ssh"
+      ]
     }
   },
   "license": "MIT",
@@ -182,63 +238,83 @@
   },
   "dependencies": {
     "args": "3.0.8",
-    "chalk": "2.3.2",
+    "chalk": "2.4.2",
     "color": "2.0.1",
     "columnify": "1.5.4",
-    "css-loader": "0.28.11",
+    "css-loader": "3.2.0",
     "got": "7.1.0",
     "json-loader": "0.5.7",
     "mousetrap": "chabou/mousetrap#useCapture",
-    "ms": "2.1.1",
+    "ms": "2.1.2",
     "opn": "5.3.0",
-    "ora": "1.3.0",
+    "ora": "4.0.2",
     "parse-url": "3.0.2",
     "php-escape-shell": "1.0.0",
-    "pify": "3.0.0",
-    "react": "16.2.0",
-    "react-deep-force-update": "2.1.1",
-    "react-dom": "16.2.1",
-    "react-redux": "5.0.7",
-    "recast": "0.13.0",
-    "redux": "3.7.2",
-    "redux-thunk": "2.2.0",
-    "reselect": "3.0.1",
-    "seamless-immutable": "7.1.3",
-    "semver": "5.5.0",
+    "react": "16.10.2",
+    "react-deep-force-update": "2.1.3",
+    "react-dom": "16.10.2",
+    "react-redux": "7.1.1",
+    "recast": "0.18.3",
+    "redux": "4.0.4",
+    "redux-thunk": "2.3.0",
+    "reselect": "4.0.0",
+    "seamless-immutable": "7.1.4",
+    "semver": "6.3.0",
     "shebang-loader": "0.0.1",
-    "styled-jsx": "2.2.6",
-    "stylis": "3.5.0",
-    "uuid": "3.1.0",
-    "xterm": "https://registry.npmjs.org/@zeit/xterm/-/xterm-3.12.0-1.tgz"
+    "styled-jsx": "3.2.2",
+    "stylis": "3.5.4",
+    "uuid": "3.3.3",
+    "webpack-cli": "3.3.9",
+    "xterm": "~4.1.0",
+    "xterm-addon-fit": "^0.2.1",
+    "xterm-addon-ligatures": "^0.2.0",
+    "xterm-addon-search": "^0.2.1",
+    "xterm-addon-web-links": "^0.2.1",
+    "xterm-addon-webgl": "^0.2.1"
   },
   "devDependencies": {
+    "@babel/cli": "7.6.3",
+    "@babel/core": "7.6.3",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-numeric-separator": "^7.2.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
+    "@babel/preset-react": "7.6.3",
+    "@babel/preset-typescript": "7.6.0",
+    "@types/node": "^12.7.12",
+    "@types/plist": "3.0.2",
+    "@types/react": "^16.9.5",
+    "@types/react-dom": "^16.9.1",
+    "@types/react-redux": "^7.1.4",
+    "@types/seamless-immutable": "7.1.11",
+    "@typescript-eslint/eslint-plugin": "2.3.3",
+    "@typescript-eslint/parser": "2.3.3",
     "ava": "0.25.0",
-    "babel-cli": "6.26.0",
-    "babel-core": "6.26.0",
-    "babel-loader": "7.1.2",
-    "babel-preset-babili": "0.1.4",
-    "babel-preset-react": "6.24.1",
-    "copy-webpack-plugin": "4.3.1",
-    "cross-env": "5.1.4",
-    "electron": "3.1.3",
-    "electron-builder": "20.38.2",
-    "electron-builder-squirrel-windows": "20.38.2",
+    "babel-loader": "8.0.6",
+    "babel-preset-minify": "0.5.1",
+    "concurrently": "5.0.0",
+    "copy-webpack-plugin": "5.0.4",
+    "cpy-cli": "^2.0.0",
+    "cross-env": "6.0.3",
+    "electron": "6.0.12",
+    "electron-builder": "21.2.0",
+    "electron-builder-squirrel-windows": "21.2.0",
     "electron-devtools-installer": "2.2.4",
-    "electron-rebuild": "1.8.2",
-    "eslint": "4.18.2",
-    "eslint-config-prettier": "2.6.0",
-    "eslint-plugin-prettier": "2.3.1",
-    "eslint-plugin-react": "7.3.0",
+    "electron-rebuild": "1.8.6",
+    "eslint": "6.5.1",
+    "eslint-config-prettier": "6.4.0",
+    "eslint-plugin-prettier": "3.1.1",
+    "eslint-plugin-react": "7.16.0",
+    "fork-ts-checker-webpack-plugin": "1.5.0",
     "husky": "0.14.3",
-    "inquirer": "5.1.0",
-    "node-gyp": "3.6.2",
-    "prettier": "1.11.1",
-    "proxyquire": "1.8.0",
-    "spectron": "3.8.0",
-    "style-loader": "0.19.1",
-    "webpack": "3.10.0"
-  },
-  "resolutions": {
-    "rc": "1.2.3"
+    "inquirer": "7.0.0",
+    "node-gyp": "6.0.0",
+    "null-loader": "3.0.0",
+    "plist": "3.0.1",
+    "prettier": "1.18.2",
+    "proxyquire": "2.1.3",
+    "spectron": "8.0.0",
+    "style-loader": "1.0.0",
+    "typescript": "3.6.3",
+    "webpack": "4.41.0"
   }
 }

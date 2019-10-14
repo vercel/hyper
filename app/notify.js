@@ -14,7 +14,10 @@ let buffer = [];
 
 app.on('ready', () => {
   const win_ = new BrowserWindow({
-    show: false
+    show: false,
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
   const url = 'file://' + resolve(isDev ? __dirname : app.getAppPath(), 'notify.html');
   win_.loadURL(url);

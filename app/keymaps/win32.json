@@ -16,18 +16,6 @@
     "alt+f4"
   ],
   "tab:new": "ctrl+shift+t",
-  "tab:next": [
-    "ctrl+shift+]",
-    "ctrl+shift+right",
-    "ctrl+alt+right",
-    "ctrl+tab"
-  ],
-  "tab:prev": [
-    "ctrl+shift+[",
-    "ctrl+shift+left",
-    "ctrl+alt+left",
-    "ctrl+shift+tab"
-  ],
   "tab:jump:prefix": "ctrl",
   "pane:next": "ctrl+pageup",
   "pane:prev": "ctrl+pagedown",
@@ -40,8 +28,10 @@
   "editor:copy": "ctrl+shift+c",
   "editor:paste": "ctrl+shift+v",
   "editor:selectAll": "ctrl+shift+a",
-  "editor:movePreviousWord": "ctrl+left",
-  "editor:moveNextWord": "ctrl+right",
+  "editor:search": "ctrl+shift+f",
+  "editor:search-close": "esc",
+  "editor:movePreviousWord": "",
+  "editor:moveNextWord": "",
   "editor:moveBeginningLine": "Home",
   "editor:moveEndLine": "End",
   "editor:deletePreviousWord": "ctrl+backspace",

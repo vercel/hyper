@@ -6,7 +6,7 @@ const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 const updater = require('../updater');
 const toElectronBackgroundColor = require('../utils/to-electron-background-color');
-const {icon, homeDirectory} = require('../config/paths');
+const {icon, cfgDir} = require('../config/paths');
 const createRPC = require('../rpc');
 const notify = require('../notify');
 const fetchNotifications = require('../notifications');
@@ -38,6 +38,7 @@ module.exports = class Window {
         show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
         acceptFirstMouse: true,
         webPreferences: {
+          nodeIntegration: true,
           navigateOnDragDrop: true
         }
       },
@@ -54,6 +55,14 @@ module.exports = class Window {
       const cfg_ = app.plugins.getDecoratedConfig();
       window.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
     };
+
+    // set working directory
+    let workingDirectory = cfgDir;
+    if (process.argv[1] && isAbsolute(process.argv[1])) {
+      workingDirectory = process.argv[1];
+    } else if (cfg.workingDirectory && isAbsolute(cfg.workingDirectory)) {
+      workingDirectory = cfg.workingDirectory;
+    }
 
     // config changes
     const cfgUnsubscribe = app.config.subscribe(() => {
@@ -102,11 +111,10 @@ module.exports = class Window {
     function createSession(extraOptions = {}) {
       const uid = uuid.v4();
 
+      // remove the rows and cols, the wrong value of them will break layout when init create
       const defaultOptions = Object.assign(
         {
-          rows: 40,
-          cols: 100,
-          cwd: process.argv[1] && isAbsolute(process.argv[1]) ? process.argv[1] : homeDirectory,
+          cwd: workingDirectory,
           splitDirection: undefined,
           shell: cfg.shell,
           shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
@@ -123,11 +131,17 @@ module.exports = class Window {
 
     // Optimistically create the initial session so that when the window sends
     // the first "new" IPC message, there's a session already warmed up.
+    let initialSession = null;
     function createInitialSession() {
       let {session, options} = createSession();
       const initialEvents = [];
       const handleData = data => initialEvents.push(['session data', data]);
-      const handleExit = () => initialEvents.push(['session exit']);
+      const handleExit = () => {
+        // the warmed up session should be cleaned if exit before add a new session.
+        session.removeListener('data', handleData);
+        session.removeListener('exit', handleExit);
+        initialSession = null;
+      };
       session.on('data', handleData);
       session.on('exit', handleExit);
 
@@ -140,7 +154,7 @@ module.exports = class Window {
       }
       return {session, options, flushEvents};
     }
-    let initialSession = createInitialSession();
+    initialSession = createInitialSession();
 
     rpc.on('new', extraOptions => {
       const {session, options} = initialSession || createSession(extraOptions);
