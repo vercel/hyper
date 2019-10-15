@@ -282,7 +282,7 @@
     "@babel/preset-typescript": "7.6.0",
     "@types/node": "^12.7.12",
     "@types/plist": "3.0.2",
-    "@types/react": "^16.9.5",
+    "@types/react": "^16.9.6",
     "@types/react-dom": "^16.9.1",
     "@types/react-redux": "^7.1.4",
     "@types/seamless-immutable": "7.1.11",
