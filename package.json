@@ -304,7 +304,7 @@
     "eslint-config-prettier": "6.4.0",
     "eslint-plugin-prettier": "3.1.1",
     "eslint-plugin-react": "7.16.0",
-    "fork-ts-checker-webpack-plugin": "1.5.0",
+    "fork-ts-checker-webpack-plugin": "1.5.1",
     "husky": "0.14.3",
     "inquirer": "7.0.0",
     "node-gyp": "6.0.0",
