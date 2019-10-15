@@ -246,7 +246,7 @@
     "json-loader": "0.5.7",
     "mousetrap": "chabou/mousetrap#useCapture",
     "ms": "2.1.2",
-    "opn": "5.3.0",
+    "opn": "6.0.0",
     "ora": "4.0.2",
     "parse-url": "5.0.1",
     "php-escape-shell": "1.0.0",
