@@ -10,16 +10,16 @@ const commands = {
   },
   'tab:new': focusedWindow => {
     if (focusedWindow) {
-      focusedWindow.rpc.emit('termgroup add req');
+      focusedWindow.rpc.emit('termgroup add req', {});
     } else {
       setTimeout(app.createWindow, 0);
     }
   },
   'pane:splitRight': focusedWindow => {
-    focusedWindow && focusedWindow.rpc.emit('split request vertical');
+    focusedWindow && focusedWindow.rpc.emit('split request vertical', {});
   },
   'pane:splitDown': focusedWindow => {
-    focusedWindow && focusedWindow.rpc.emit('split request horizontal');
+    focusedWindow && focusedWindow.rpc.emit('split request horizontal', {});
   },
   'pane:close': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('termgroup close req');
