@@ -239,7 +239,7 @@
   "dependencies": {
     "args": "3.0.8",
     "chalk": "2.4.2",
-    "color": "2.0.1",
+    "color": "3.1.2",
     "columnify": "1.5.4",
     "css-loader": "3.2.0",
     "got": "7.1.0",
