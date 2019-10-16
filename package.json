@@ -286,7 +286,7 @@
     "@types/react-dom": "^16.9.1",
     "@types/react-redux": "^7.1.4",
     "@types/seamless-immutable": "7.1.11",
-    "@typescript-eslint/eslint-plugin": "2.3.3",
+    "@typescript-eslint/eslint-plugin": "2.4.0",
     "@typescript-eslint/parser": "2.3.3",
     "ava": "0.25.0",
     "babel-loader": "8.0.6",
