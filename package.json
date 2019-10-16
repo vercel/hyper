@@ -315,6 +315,6 @@
     "spectron": "8.0.0",
     "style-loader": "1.0.0",
     "typescript": "3.6.3",
-    "webpack": "4.41.0"
+    "webpack": "4.41.2"
   }
 }
