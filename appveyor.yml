@@ -4,10 +4,7 @@ environment:
   matrix:
     - platform: x64
 
-image: Visual Studio 2017
-
-init:
-  - yarn config set msvs_version 2015 # we need this to build `pty.js`
+image: Visual Studio 2019
 
 install:
   - ps: Install-Product node 12 x64
