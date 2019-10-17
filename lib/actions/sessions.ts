@@ -16,9 +16,11 @@ import {
   SESSION_SEARCH,
   SESSION_SEARCH_CLOSE
 } from '../constants/sessions';
+import {HyperState, session} from '../hyper';
+import {Dispatch} from 'redux';
 
-export function addSession({uid, shell, pid, cols, rows, splitDirection, activeUid}) {
-  return (dispatch, getState) => {
+export function addSession({uid, shell, pid, cols, rows, splitDirection, activeUid}: session) {
+  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
     const {sessions} = getState();
     const now = Date.now();
     dispatch({
@@ -36,7 +38,7 @@ export function addSession({uid, shell, pid, cols, rows, splitDirection, activeU
 }
 
 export function requestSession() {
-  return (dispatch, getState) => {
+  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
     dispatch({
       type: SESSION_REQUEST,
       effect: () => {
@@ -49,8 +51,8 @@ export function requestSession() {
   };
 }
 
-export function addSessionData(uid, data) {
-  return dispatch => {
+export function addSessionData(uid: string, data: any) {
+  return (dispatch: Dispatch<any>) => {
     dispatch({
       type: SESSION_ADD_DATA,
       data,
@@ -67,8 +69,8 @@ export function addSessionData(uid, data) {
   };
 }
 
-function createExitAction(type) {
-  return uid => (dispatch, getState) => {
+function createExitAction(type: string) {
+  return (uid: string) => (dispatch: Dispatch<any>, getState: () => HyperState) => {
     return dispatch({
       type,
       uid,
@@ -91,8 +93,8 @@ function createExitAction(type) {
 export const userExitSession = createExitAction(SESSION_USER_EXIT);
 export const ptyExitSession = createExitAction(SESSION_PTY_EXIT);
 
-export function setActiveSession(uid) {
-  return dispatch => {
+export function setActiveSession(uid: string) {
+  return (dispatch: Dispatch<any>) => {
     dispatch({
       type: SESSION_SET_ACTIVE,
       uid
@@ -106,7 +108,7 @@ export function clearActiveSession() {
   };
 }
 
-export function setSessionXtermTitle(uid, title) {
+export function setSessionXtermTitle(uid: string, title: string) {
   return {
     type: SESSION_SET_XTERM_TITLE,
     uid,
@@ -114,10 +116,10 @@ export function setSessionXtermTitle(uid, title) {
   };
 }
 
-export function resizeSession(uid, cols, rows) {
-  return (dispatch, getState) => {
+export function resizeSession(uid: string, cols: number, rows: number) {
+  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
     const {termGroups} = getState();
-    const group = findBySession(termGroups, uid);
+    const group = findBySession(termGroups, uid)!;
     const isStandaloneTerm = !group.parentUid && !group.children.length;
     const now = Date.now();
     dispatch({
@@ -134,8 +136,8 @@ export function resizeSession(uid, cols, rows) {
   };
 }
 
-export function onSearch(uid) {
-  return (dispatch, getState) => {
+export function onSearch(uid: string) {
+  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
     const targetUid = uid || getState().sessions.activeUid;
     dispatch({
       type: SESSION_SEARCH,
@@ -144,8 +146,8 @@ export function onSearch(uid) {
   };
 }
 
-export function closeSearch(uid) {
-  return (dispatch, getState) => {
+export function closeSearch(uid: string) {
+  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
     const targetUid = uid || getState().sessions.activeUid;
     dispatch({
       type: SESSION_SEARCH_CLOSE,
@@ -154,8 +156,8 @@ export function closeSearch(uid) {
   };
 }
 
-export function sendSessionData(uid, data, escaped) {
-  return (dispatch, getState) => {
+export function sendSessionData(uid: string, data: any, escaped: any) {
+  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
     dispatch({
       type: SESSION_USER_DATA,
       data,
