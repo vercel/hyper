@@ -1,5 +1,5 @@
 import {remote} from 'electron';
-import Immutable from 'seamless-immutable';
+import Immutable, {Immutable as ImmutableType} from 'seamless-immutable';
 import {decorateUIReducer} from '../utils/plugins';
 import {CONFIG_LOAD, CONFIG_RELOAD} from '../constants/config';
 import {
@@ -22,6 +22,7 @@ import {
   SESSION_SET_CWD
 } from '../constants/sessions';
 import {UPDATE_AVAILABLE} from '../constants/updater';
+import {uiState} from '../hyper';
 
 const allowedCursorShapes = new Set(['BEAM', 'BLOCK', 'UNDERLINE']);
 const allowedCursorBlinkValues = new Set([true, false]);
@@ -30,7 +31,7 @@ const allowedHamburgerMenuValues = new Set([true, false]);
 const allowedWindowControlsValues = new Set([true, false, 'left']);
 
 // Populate `config-default.js` from this :)
-const initial = Immutable({
+const initial: ImmutableType<uiState> = Immutable({
   cols: null,
   rows: null,
   scrollback: 1000,
@@ -87,6 +88,9 @@ const initial = Immutable({
   maximized: false,
   updateVersion: null,
   updateNotes: null,
+  updateReleaseUrl: null,
+  updateCanInstall: null,
+  _lastUpdate: null,
   messageText: null,
   messageURL: null,
   messageDismissable: null,
@@ -108,7 +112,7 @@ const initial = Immutable({
 
 const currentWindow = remote.getCurrentWindow();
 
-const reducer = (state = initial, action) => {
+const reducer = (state = initial, action: any) => {
   let state_ = state;
   let isMax;
   //eslint-disable-next-line default-case
@@ -122,7 +126,7 @@ const reducer = (state = initial, action) => {
         // font size changed from the config
         .merge(
           (() => {
-            const ret = {};
+            const ret: Immutable.DeepPartial<uiState> = {};
 
             if (config.scrollback) {
               ret.scrollback = config.scrollback;
@@ -295,12 +299,12 @@ const reducer = (state = initial, action) => {
 
     case SESSION_PTY_EXIT:
       state_ = state
-        .updateIn(['openAt'], times => {
+        .updateIn(['openAt'], (times: ImmutableType<any>) => {
           const times_ = times.asMutable();
           delete times_[action.uid];
           return times_;
         })
-        .updateIn(['activityMarkers'], markers => {
+        .updateIn(['activityMarkers'], (markers: ImmutableType<any>) => {
           const markers_ = markers.asMutable();
           delete markers_[action.uid];
           return markers_;

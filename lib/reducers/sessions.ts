@@ -1,4 +1,4 @@
-import Immutable from 'seamless-immutable';
+import Immutable, {Immutable as ImmutableType} from 'seamless-immutable';
 import {decorateSessionsReducer} from '../utils/plugins';
 import {
   SESSION_ADD,
@@ -13,13 +13,14 @@ import {
   SESSION_SEARCH,
   SESSION_SEARCH_CLOSE
 } from '../constants/sessions';
+import {sessionState} from '../hyper';
 
-const initialState = Immutable({
+const initialState: ImmutableType<sessionState> = Immutable({
   sessions: {},
   activeUid: null
 });
 
-function Session(obj) {
+function Session(obj: Immutable.DeepPartial<sessionState['sessions']>) {
   return Immutable({
     uid: '',
     title: '',
@@ -33,7 +34,15 @@ function Session(obj) {
   }).merge(obj);
 }
 
-const reducer = (state = initialState, action) => {
+function deleteSession(state: ImmutableType<sessionState>, uid: string) {
+  return state.updateIn(['sessions'], (sessions: ImmutableType<any>) => {
+    const sessions_ = sessions.asMutable();
+    delete sessions_[uid];
+    return sessions_;
+  });
+}
+
+const reducer = (state: ImmutableType<sessionState> = initialState, action: any) => {
   switch (action.type) {
     case SESSION_ADD:
       return state.set('activeUid', action.uid).setIn(
@@ -60,7 +69,7 @@ const reducer = (state = initialState, action) => {
       return state.merge(
         {
           sessions: {
-            [state.activeUid]: {
+            [state.activeUid!]: {
               cleared: true
             }
           }
@@ -126,11 +135,3 @@ const reducer = (state = initialState, action) => {
 };
 
 export default decorateSessionsReducer(reducer);
-
-function deleteSession(state, uid) {
-  return state.updateIn(['sessions'], sessions => {
-    const sessions_ = sessions.asMutable();
-    delete sessions_[uid];
-    return sessions_;
-  });
-}
