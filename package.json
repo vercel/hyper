@@ -284,7 +284,7 @@
     "@types/plist": "3.0.2",
     "@types/react": "^16.9.9",
     "@types/react-dom": "^16.9.2",
-    "@types/react-redux": "^7.1.4",
+    "@types/react-redux": "^7.1.5",
     "@types/seamless-immutable": "7.1.11",
     "@types/uuid": "3.4.5",
     "@typescript-eslint/eslint-plugin": "2.4.0",
