@@ -9,10 +9,135 @@ import React, {PureComponent} from 'react';
 import ReactDOM from 'react-dom';
 import Notification from '../components/notification';
 import notify from './notify';
+import {hyperPlugin, IUiReducer, ISessionReducer, ITermGroupReducer} from '../hyper';
 
-const Module = require('module');
+// remote interface to `../plugins`
+const plugins = remote.require('./plugins') as typeof import('../../app/plugins');
+
+// `require`d modules
+let modules: any;
+
+// cache of decorated components
+let decorated: Record<string, any> = {};
+
+// various caches extracted of the plugin methods
+let connectors: {
+  Terms: {state: any[]; dispatch: any[]};
+  Header: {state: any[]; dispatch: any[]};
+  Hyper: {state: any[]; dispatch: any[]};
+  Notifications: {state: any[]; dispatch: any[]};
+};
+let middlewares: any[];
+let uiReducers: IUiReducer[];
+let sessionsReducers: ISessionReducer[];
+let termGroupsReducers: ITermGroupReducer[];
+let tabPropsDecorators: any[];
+let tabsPropsDecorators: any[];
+let termPropsDecorators: any[];
+let termGroupPropsDecorators: any[];
+let propsDecorators: {
+  getTermProps: any[];
+  getTabProps: any[];
+  getTabsProps: any[];
+  getTermGroupProps: any[];
+};
+let reducersDecorators: {
+  reduceUI: IUiReducer[];
+  reduceSessions: ISessionReducer[];
+  reduceTermGroups: ITermGroupReducer[];
+};
+
+// expose decorated component instance to the higher-order components
+function exposeDecorated(Component_: any) {
+  return class DecoratedComponent extends React.Component<any, any> {
+    constructor(props: any, context: any) {
+      super(props, context);
+      this.onRef = this.onRef.bind(this);
+    }
+    onRef(decorated_: any) {
+      if (this.props.onDecorated) {
+        try {
+          this.props.onDecorated(decorated_);
+        } catch (e) {
+          notify('Plugin error', `Error occurred. Check Developer Tools for details`, {error: e});
+        }
+      }
+    }
+    render() {
+      return React.createElement(Component_, Object.assign({}, this.props, {ref: this.onRef}));
+    }
+  };
+}
+
+function getDecorated(parent: any, name: string) {
+  if (!decorated[name]) {
+    let class_ = exposeDecorated(parent);
+    (class_ as any).displayName = `_exposeDecorated(${name})`;
+
+    modules.forEach((mod: any) => {
+      const method = 'decorate' + name;
+      const fn = mod[method];
+
+      if (fn) {
+        let class__;
+
+        try {
+          class__ = fn(class_, {React, PureComponent, Notification, notify});
+          class__.displayName = `${fn._pluginName}(${name})`;
+        } catch (err) {
+          notify(
+            'Plugin error',
+            `${fn._pluginName}: Error occurred in \`${method}\`. Check Developer Tools for details`,
+            {error: err}
+          );
+          return;
+        }
+
+        if (!class__ || typeof class__.prototype.render !== 'function') {
+          notify(
+            'Plugin error',
+            `${fn._pluginName}: Invalid return value of \`${method}\`. No \`render\` method found. Please return a \`React.Component\`.`
+          );
+          return;
+        }
+
+        class_ = class__;
+      }
+    });
+
+    decorated[name] = class_;
+  }
+
+  return decorated[name];
+}
+
+// for each component, we return a higher-order component
+// that wraps with the higher-order components
+// exposed by plugins
+export function decorate(Component_: any, name: string) {
+  return class DecoratedComponent extends React.Component<any, {hasError: boolean}> {
+    constructor(props: any) {
+      super(props);
+      this.state = {hasError: false};
+    }
+    componentDidCatch() {
+      this.setState({hasError: true});
+      // No need to detail this error because React print these information.
+      notify(
+        'Plugin error',
+        `Plugins decorating ${name} has been disabled because of a plugin crash. Check Developer Tools for details.`
+      );
+    }
+    render() {
+      const Sub = this.state.hasError ? Component_ : getDecorated(Component_, name);
+      return React.createElement(Sub, this.props);
+    }
+  };
+}
+
+const Module = require('module') as typeof import('module') & {_load: Function};
 const originalLoad = Module._load;
-Module._load = function _load(path) {
+Module._load = function _load(path: string) {
   // PLEASE NOTE: Code changes here, also need to be changed in
   // app/plugins.js
   switch (path) {
@@ -37,38 +162,17 @@ Module._load = function _load(path) {
     case 'hyper/decorate':
       return decorate;
     default:
+      // eslint-disable-next-line prefer-rest-params
       return originalLoad.apply(this, arguments);
   }
 };
-
-// remote interface to `../plugins`
-const plugins = remote.require('./plugins');
-
-// `require`d modules
-let modules;
-
-// cache of decorated components
-let decorated = {};
-
-// various caches extracted of the plugin methods
-let connectors;
-let middlewares;
-let uiReducers;
-let sessionsReducers;
-let termGroupsReducers;
-let tabPropsDecorators;
-let tabsPropsDecorators;
-let termPropsDecorators;
-let termGroupPropsDecorators;
-let propsDecorators;
-let reducersDecorators;
 
 const clearModulesCache = () => {
   // the fs locations where user plugins are stored
   const {path, localPath} = plugins.getBasePaths();
 
   // trigger unload hooks
-  modules.forEach(mod => {
+  modules.forEach((mod: any) => {
     if (mod.onRendererUnload) {
       mod.onRendererUnload(window);
     }
@@ -83,14 +187,14 @@ const clearModulesCache = () => {
   }
 };
 
-const pathModule = window.require('path');
+const pathModule = window.require('path') as typeof import('path');
 
-const getPluginName = path => pathModule.basename(path);
+const getPluginName = (path: string) => pathModule.basename(path);
 
-const getPluginVersion = path => {
+const getPluginVersion = (path: string): string | null => {
   let version = null;
   try {
-    version = window.require(pathModule.resolve(path, 'package.json')).version;
+    version = (window.require(pathModule.resolve(path, 'package.json')) as any).version as string;
   } catch (err) {
     //eslint-disable-next-line no-console
     console.warn(`No package.json found in ${path}`);
@@ -132,19 +236,19 @@ const loadModules = () => {
     reduceTermGroups: termGroupsReducers
   };
 
-  const loadedPlugins = plugins.getLoadedPluginVersions().map(plugin => plugin.name);
+  const loadedPlugins = plugins.getLoadedPluginVersions().map((plugin: any) => plugin.name);
   modules = paths.plugins
     .concat(paths.localPlugins)
-    .filter(plugin => loadedPlugins.indexOf(basename(plugin)) !== -1)
-    .map(path => {
-      let mod;
+    .filter((plugin: any) => loadedPlugins.indexOf(basename(plugin)) !== -1)
+    .map((path: any) => {
+      let mod: hyperPlugin;
       const pluginName = getPluginName(path);
       const pluginVersion = getPluginVersion(path);
 
       // window.require allows us to ensure this doesn't get
       // in the way of our build
       try {
-        mod = window.require(path);
+        mod = window.require(path) as any;
       } catch (err) {
         notify(
           'Plugin load error',
@@ -154,12 +258,12 @@ const loadModules = () => {
         return undefined;
       }
 
-      for (const i in mod) {
-        if ({}.hasOwnProperty.call(mod, i)) {
+      (Object.keys(mod) as (keyof typeof mod)[]).forEach(i => {
+        if (Object.hasOwnProperty.call(mod, i)) {
           mod[i]._pluginName = pluginName;
           mod[i]._pluginVersion = pluginVersion;
         }
-      }
+      });
 
       // mapHyperTermState mapping for backwards compatibility with hyperterm
       if (mod.mapHyperTermState) {
@@ -247,9 +351,9 @@ const loadModules = () => {
 
       return mod;
     })
-    .filter(mod => Boolean(mod));
+    .filter((mod: any) => Boolean(mod));
 
-  const deprecatedPlugins = plugins.getDeprecatedConfig();
+  const deprecatedPlugins: Record<string, any> = plugins.getDeprecatedConfig();
   Object.keys(deprecatedPlugins).forEach(name => {
     const {css} = deprecatedPlugins[name];
     if (css) {
@@ -270,9 +374,9 @@ export function reload() {
   decorated = {};
 }
 
-function getProps(name, props, ...fnArgs) {
+function getProps(name: keyof typeof propsDecorators, props: any, ...fnArgs: any[]) {
   const decorators = propsDecorators[name];
-  let props_;
+  let props_: typeof props;
 
   decorators.forEach(fn => {
     let ret_;
@@ -301,27 +405,27 @@ function getProps(name, props, ...fnArgs) {
   return props_ || props;
 }
 
-export function getTermGroupProps(uid, parentProps, props) {
+export function getTermGroupProps(uid: string, parentProps: any, props: any) {
   return getProps('getTermGroupProps', props, uid, parentProps);
 }
 
-export function getTermProps(uid, parentProps, props) {
+export function getTermProps(uid: string, parentProps: any, props: any) {
   return getProps('getTermProps', props, uid, parentProps);
 }
 
-export function getTabsProps(parentProps, props) {
+export function getTabsProps(parentProps: any, props: any) {
   return getProps('getTabsProps', props, parentProps);
 }
 
-export function getTabProps(tab, parentProps, props) {
+export function getTabProps(tab: any, parentProps: any, props: any) {
   return getProps('getTabProps', props, tab, parentProps);
 }
 
 // connects + decorates a class
 // plugins can override mapToState, dispatchToProps
 // and the class gets decorated (proxied)
-export function connect(stateFn, dispatchFn, c, d = {}) {
-  return (Class, name) => {
+export function connect(stateFn: Function, dispatchFn: Function, c: any, d = {}) {
+  return (Class: any, name: keyof typeof connectors) => {
     return reduxConnect(
       state => {
         let ret = stateFn(state);
@@ -382,12 +486,16 @@ export function connect(stateFn, dispatchFn, c, d = {}) {
   };
 }
 
-function decorateReducer(name, fn) {
+const decorateReducer: {
+  (name: 'reduceUI', fn: IUiReducer): IUiReducer;
+  (name: 'reduceSessions', fn: ISessionReducer): ISessionReducer;
+  (name: 'reduceTermGroups', fn: ITermGroupReducer): ITermGroupReducer;
+} = <T extends keyof typeof reducersDecorators>(name: T, fn: any) => {
   const reducers = reducersDecorators[name];
-  return (state, action) => {
+  return (state: any, action: any) => {
     let state_ = fn(state, action);
 
-    reducers.forEach(pluginReducer => {
+    reducers.forEach((pluginReducer: any) => {
       let state__;
 
       try {
@@ -409,111 +517,23 @@ function decorateReducer(name, fn) {
 
     return state_;
   };
-}
+};
 
-export function decorateTermGroupsReducer(fn) {
+export function decorateTermGroupsReducer(fn: ITermGroupReducer) {
   return decorateReducer('reduceTermGroups', fn);
 }
 
-export function decorateUIReducer(fn) {
+export function decorateUIReducer(fn: IUiReducer) {
   return decorateReducer('reduceUI', fn);
 }
 
-export function decorateSessionsReducer(fn) {
+export function decorateSessionsReducer(fn: ISessionReducer) {
   return decorateReducer('reduceSessions', fn);
 }
 
 // redux middleware generator
-export const middleware = store => next => action => {
-  const nextMiddleware = remaining => action_ =>
+export const middleware = (store: any) => (next: any) => (action: any) => {
+  const nextMiddleware = (remaining: any[]) => (action_: any) =>
     remaining.length ? remaining[0](store)(nextMiddleware(remaining.slice(1)))(action_) : next(action_);
   nextMiddleware(middlewares)(action);
 };
-
-// expose decorated component instance to the higher-order components
-function exposeDecorated(Component_) {
-  return class DecoratedComponent extends React.Component {
-    constructor(props, context) {
-      super(props, context);
-      this.onRef = this.onRef.bind(this);
-    }
-    onRef(decorated_) {
-      if (this.props.onDecorated) {
-        try {
-          this.props.onDecorated(decorated_);
-        } catch (e) {
-          notify('Plugin error', `Error occurred. Check Developer Tools for details`, {error: e});
-        }
-      }
-    }
-    render() {
-      return React.createElement(Component_, Object.assign({}, this.props, {ref: this.onRef}));
-    }
-  };
-}
-
-function getDecorated(parent, name) {
-  if (!decorated[name]) {
-    let class_ = exposeDecorated(parent);
-    class_.displayName = `_exposeDecorated(${name})`;
-
-    modules.forEach(mod => {
-      const method = 'decorate' + name;
-      const fn = mod[method];
-
-      if (fn) {
-        let class__;
-
-        try {
-          class__ = fn(class_, {React, PureComponent, Notification, notify});
-          class__.displayName = `${fn._pluginName}(${name})`;
-        } catch (err) {
-          notify(
-            'Plugin error',
-            `${fn._pluginName}: Error occurred in \`${method}\`. Check Developer Tools for details`,
-            {error: err}
-          );
-          return;
-        }
-
-        if (!class__ || typeof class__.prototype.render !== 'function') {
-          notify(
-            'Plugin error',
-            `${fn._pluginName}: Invalid return value of \`${method}\`. No \`render\` method found. Please return a \`React.Component\`.`
-          );
-          return;
-        }
-
-        class_ = class__;
-      }
-    });
-
-    decorated[name] = class_;
-  }
-
-  return decorated[name];
-}
-
-// for each component, we return a higher-order component
-// that wraps with the higher-order components
-// exposed by plugins
-export function decorate(Component_, name) {
-  return class DecoratedComponent extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {hasError: false};
-    }
-    componentDidCatch() {
-      this.setState({hasError: true});
-      // No need to detail this error because React print these information.
-      notify(
-        'Plugin error',
-        `Plugins decorating ${name} has been disabled because of a plugin crash. Check Developer Tools for details.`
-      );
-    }
-    render() {
-      const Sub = this.state.hasError ? Component_ : getDecorated(Component_, name);
-      return React.createElement(Sub, this.props);
-    }
-  };
-}

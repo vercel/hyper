@@ -28,11 +28,14 @@ import {
 
 import {setActiveGroup} from './term-groups';
 import parseUrl from 'parse-url';
+import {Dispatch} from 'redux';
+import {HyperState} from '../hyper';
+import {Stats} from 'fs';
 
 const {stat} = window.require('fs');
 
-export function openContextMenu(uid, selection) {
-  return (dispatch, getState) => {
+export function openContextMenu(uid: string, selection: any) {
+  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
     dispatch({
       type: UI_CONTEXTMENU_OPEN,
       uid,
@@ -48,7 +51,7 @@ export function openContextMenu(uid, selection) {
 }
 
 export function increaseFontSize() {
-  return (dispatch, getState) => {
+  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
     dispatch({
       type: UI_FONT_SIZE_INCR,
       effect() {
@@ -65,7 +68,7 @@ export function increaseFontSize() {
 }
 
 export function decreaseFontSize() {
-  return (dispatch, getState) => {
+  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
     dispatch({
       type: UI_FONT_SIZE_DECR,
       effect() {
@@ -89,7 +92,7 @@ export function resetFontSize() {
 }
 
 export function setFontSmoothing() {
-  return dispatch => {
+  return (dispatch: Dispatch<any>) => {
     setTimeout(() => {
       const devicePixelRatio = window.devicePixelRatio;
       const fontSmoothing = devicePixelRatio < 2 ? 'subpixel-antialiased' : 'antialiased';
@@ -110,18 +113,21 @@ export function windowGeometryUpdated() {
 
 // Find all sessions that are below the given
 // termGroup uid in the hierarchy:
-const findChildSessions = (termGroups, uid) => {
+const findChildSessions = (termGroups: any, uid: string): string[] => {
   const group = termGroups[uid];
   if (group.sessionUid) {
     return [uid];
   }
 
-  return group.children.reduce((total, childUid) => total.concat(findChildSessions(termGroups, childUid)), []);
+  return group.children.reduce(
+    (total: string[], childUid: string) => total.concat(findChildSessions(termGroups, childUid)),
+    []
+  );
 };
 
 // Get the index of the next or previous group,
 // depending on the movement direction:
-const getNeighborIndex = (groups, uid, type) => {
+const getNeighborIndex = (groups: string[], uid: string, type: string) => {
   if (type === UI_MOVE_NEXT_PANE) {
     return (groups.indexOf(uid) + 1) % groups.length;
   }
@@ -129,21 +135,21 @@ const getNeighborIndex = (groups, uid, type) => {
   return (groups.indexOf(uid) + groups.length - 1) % groups.length;
 };
 
-function moveToNeighborPane(type) {
-  return () => (dispatch, getState) => {
+function moveToNeighborPane(type: string) {
+  return () => (dispatch: Dispatch<any>, getState: () => HyperState) => {
     dispatch({
       type,
       effect() {
         const {sessions, termGroups} = getState();
-        const {uid} = findBySession(termGroups, sessions.activeUid);
-        const childGroups = findChildSessions(termGroups.termGroups, termGroups.activeRootGroup);
+        const {uid} = findBySession(termGroups, sessions.activeUid!)!;
+        const childGroups = findChildSessions(termGroups.termGroups, termGroups.activeRootGroup!);
         if (childGroups.length === 1) {
           //eslint-disable-next-line no-console
           console.log('ignoring move for single group');
         } else {
-          const index = getNeighborIndex(childGroups, uid, type);
+          const index = getNeighborIndex(childGroups, uid!, type);
           const {sessionUid} = termGroups.termGroups[childGroups[index]];
-          dispatch(setActiveSession(sessionUid));
+          dispatch(setActiveSession(sessionUid!));
         }
       }
     });
@@ -153,13 +159,13 @@ function moveToNeighborPane(type) {
 export const moveToNextPane = moveToNeighborPane(UI_MOVE_NEXT_PANE);
 export const moveToPreviousPane = moveToNeighborPane(UI_MOVE_PREV_PANE);
 
-const getGroupUids = state => {
+const getGroupUids = (state: HyperState) => {
   const rootGroups = getRootGroups(state);
   return rootGroups.map(({uid}) => uid);
 };
 
 export function moveLeft() {
-  return (dispatch, getState) => {
+  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
     dispatch({
       type: UI_MOVE_LEFT,
       effect() {
@@ -180,7 +186,7 @@ export function moveLeft() {
 }
 
 export function moveRight() {
-  return (dispatch, getState) => {
+  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
     dispatch({
       type: UI_MOVE_RIGHT,
       effect() {
@@ -200,8 +206,8 @@ export function moveRight() {
   };
 }
 
-export function moveTo(i) {
-  return (dispatch, getState) => {
+export function moveTo(i: number | 'last') {
+  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
     if (i === 'last') {
       // Finding last tab index
       const {termGroups} = getState().termGroups;
@@ -217,11 +223,11 @@ export function moveTo(i) {
         const state = getState();
         const groupUids = getGroupUids(state);
         const uid = state.termGroups.activeRootGroup;
-        if (uid === groupUids[i]) {
+        if (uid === groupUids[i as number]) {
           //eslint-disable-next-line no-console
           console.log('ignoring same uid');
-        } else if (groupUids[i]) {
-          dispatch(setActiveGroup(groupUids[i]));
+        } else if (groupUids[i as number]) {
+          dispatch(setActiveGroup(groupUids[i as number]));
         } else {
           //eslint-disable-next-line no-console
           console.log('ignoring inexistent index', i);
@@ -231,8 +237,8 @@ export function moveTo(i) {
   };
 }
 
-export function windowMove(window) {
-  return dispatch => {
+export function windowMove(window: any) {
+  return (dispatch: Dispatch<any>) => {
     dispatch({
       type: UI_WINDOW_MOVE,
       window,
@@ -244,7 +250,7 @@ export function windowMove(window) {
 }
 
 export function windowGeometryChange() {
-  return dispatch => {
+  return (dispatch: Dispatch<any>) => {
     dispatch({
       type: UI_WINDOW_MOVE,
       effect() {
@@ -254,12 +260,12 @@ export function windowGeometryChange() {
   };
 }
 
-export function openFile(path) {
-  return dispatch => {
+export function openFile(path: string) {
+  return (dispatch: Dispatch<any>) => {
     dispatch({
       type: UI_OPEN_FILE,
       effect() {
-        stat(path, (err, stats) => {
+        stat(path, (err: any, stats: Stats) => {
           if (err) {
             notify('Unable to open path', `"${path}" doesn't exist.`, {error: err});
           } else {
@@ -271,7 +277,7 @@ export function openFile(path) {
             }
             rpc.once('session add', ({uid}) => {
               rpc.once('session data', () => {
-                dispatch(sendSessionData(uid, command));
+                dispatch(sendSessionData(uid, command, null));
               });
             });
           }
@@ -294,12 +300,12 @@ export function leaveFullScreen() {
   };
 }
 
-export function openSSH(url) {
-  return dispatch => {
+export function openSSH(url: string) {
+  return (dispatch: Dispatch<any>) => {
     dispatch({
       type: UI_OPEN_SSH_URL,
       effect() {
-        let parsedUrl = parseUrl(url, true);
+        const parsedUrl = parseUrl(url, true);
         let command = parsedUrl.protocol + ' ' + (parsedUrl.user ? `${parsedUrl.user}@` : '') + parsedUrl.resource;
 
         if (parsedUrl.port) command += ' -p ' + parsedUrl.port;
@@ -308,7 +314,7 @@ export function openSSH(url) {
 
         rpc.once('session add', ({uid}) => {
           rpc.once('session data', () => {
-            dispatch(sendSessionData(uid, command));
+            dispatch(sendSessionData(uid, command, null));
           });
         });
 
@@ -318,8 +324,8 @@ export function openSSH(url) {
   };
 }
 
-export function execCommand(command, fn, e) {
-  return dispatch =>
+export function execCommand(command: any, fn: any, e: any) {
+  return (dispatch: Dispatch<any>) =>
     dispatch({
       type: UI_COMMAND_EXEC,
       command,
