@@ -1,2 +1,3 @@
 * text=auto
 *.js text eol=lf
+bin/* linguist-vendored
