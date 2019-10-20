@@ -8,7 +8,7 @@ declare global {
 }
 
 export type ITermGroup = {
-  uid: string | null;
+  uid: string;
   sessionUid: string | null;
   parentUid: string | null;
   direction: string | null;
@@ -108,20 +108,20 @@ export type uiState = {
 export type IUiReducer = Reducer<Immutable<uiState>>;
 export type session = {
   cleared: boolean;
-  cols: null;
-  pid: null;
-  resizeAt: number;
-  rows: null;
+  cols: number | null;
+  pid: number | null;
+  resizeAt?: number;
+  rows: number | null;
   search: boolean;
   shell: string;
   title: string;
   uid: string;
-  url: null;
-  splitDirection: string;
-  activeUid: string;
+  url: string | null;
+  splitDirection?: string;
+  activeUid?: string;
 };
 export type sessionState = {
-  sessions: Record<string, Partial<session>>;
+  sessions: Record<string, session>;
   activeUid: string | null;
 };
 
@@ -144,9 +144,9 @@ export type hyperPlugin = {
   mapTermsState: any;
   middleware: any;
   onRendererWindow: any;
-  reduceSessions: any;
-  reduceTermGroups: any;
-  reduceUI: any;
+  reduceSessions: ISessionReducer;
+  reduceTermGroups: ITermGroupReducer;
+  reduceUI: IUiReducer;
 };
 
 import rootReducer from './reducers/index';

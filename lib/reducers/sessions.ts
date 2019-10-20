@@ -13,15 +13,15 @@ import {
   SESSION_SEARCH,
   SESSION_SEARCH_CLOSE
 } from '../constants/sessions';
-import {sessionState} from '../hyper';
+import {sessionState, session} from '../hyper';
 
 const initialState: ImmutableType<sessionState> = Immutable({
   sessions: {},
   activeUid: null
 });
 
-function Session(obj: Immutable.DeepPartial<sessionState['sessions']>) {
-  return Immutable({
+function Session(obj: Immutable.DeepPartial<session>) {
+  const x: session = {
     uid: '',
     title: '',
     cols: null,
@@ -31,7 +31,8 @@ function Session(obj: Immutable.DeepPartial<sessionState['sessions']>) {
     search: false,
     shell: '',
     pid: null
-  }).merge(obj);
+  };
+  return Immutable(x).merge(obj);
 }
 
 function deleteSession(state: ImmutableType<sessionState>, uid: string) {
