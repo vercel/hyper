@@ -14,14 +14,15 @@ const initialState = Immutable<ITermState>({
 });
 
 function TermGroup(obj: Immutable.DeepPartial<ITermGroup>) {
-  return Immutable({
-    uid: null,
+  const x: ITermGroup = {
+    uid: '',
     sessionUid: null,
     parentUid: null,
     direction: null,
     sizes: null,
     children: []
-  } as ITermGroup).merge(obj);
+  };
+  return Immutable(x).merge(obj);
 }
 
 // Recurse upwards until we find a root term group (no parent).
@@ -40,8 +41,8 @@ const setActiveGroup = (state: ImmutableType<ITermState>, action: {uid: string})
   }
 
   const childGroup = findBySession(state, action.uid)!;
-  const rootGroup = findRootGroup(state.termGroups, childGroup.uid!);
-  return state.set('activeRootGroup', rootGroup.uid).setIn(['activeSessions', rootGroup.uid as string], action.uid);
+  const rootGroup = findRootGroup(state.termGroups, childGroup.uid);
+  return state.set('activeRootGroup', rootGroup.uid).setIn(['activeSessions', rootGroup.uid], action.uid);
 };
 
 // Reduce existing sizes to fit a new split:
@@ -65,7 +66,7 @@ const removalRebalance = (oldSizes: ImmutableType<number[]>, index: number) => {
   );
 };
 
-const splitGroup = (state: ImmutableType<ITermState>, action: {splitDirection: any; uid: any; activeUid: any}) => {
+const splitGroup = (state: ImmutableType<ITermState>, action: {splitDirection: any; uid: string; activeUid: any}) => {
   const {splitDirection, uid, activeUid} = action;
   const activeGroup = findBySession(state, activeUid)!;
   // If we're splitting in the same direction as the current active
@@ -90,7 +91,7 @@ const splitGroup = (state: ImmutableType<ITermState>, action: {splitDirection: a
     parentUid: parentGroup.uid
   });
 
-  state = state.setIn(['termGroups', newSession.uid as string], newSession);
+  state = state.setIn(['termGroups', newSession.uid], newSession);
   if (parentGroup.sessionUid) {
     const existingSession = TermGroup({
       uid: uuid.v4(),
@@ -98,22 +99,22 @@ const splitGroup = (state: ImmutableType<ITermState>, action: {splitDirection: a
       parentUid: parentGroup.uid
     });
 
-    return state.setIn(['termGroups', existingSession.uid as string], existingSession).setIn(
-      ['termGroups', parentGroup.uid!],
+    return state.setIn(['termGroups', existingSession.uid], existingSession).setIn(
+      ['termGroups', parentGroup.uid],
       parentGroup.merge({
         sessionUid: '',
         direction: splitDirection,
-        children: [existingSession.uid!, newSession.uid!]
+        children: [existingSession.uid, newSession.uid]
       })
     );
   }
 
   const {children} = parentGroup;
   // Insert the new child pane right after the active one:
-  const index = children.indexOf(activeGroup.uid!) + 1;
-  const newChildren = [...children.slice(0, index).asMutable(), newSession.uid!, ...children.slice(index).asMutable()];
+  const index = children.indexOf(activeGroup.uid) + 1;
+  const newChildren = [...children.slice(0, index).asMutable(), newSession.uid, ...children.slice(index).asMutable()];
   state = state.setIn(
-    ['termGroups', parentGroup.uid!],
+    ['termGroups', parentGroup.uid],
     parentGroup.merge({
       direction: splitDirection,
       children: newChildren
@@ -122,7 +123,7 @@ const splitGroup = (state: ImmutableType<ITermState>, action: {splitDirection: a
 
   if (parentGroup.sizes) {
     const newSizes = insertRebalance(parentGroup.sizes, index);
-    state = state.setIn(['termGroups', parentGroup.uid!, 'sizes'], newSizes);
+    state = state.setIn(['termGroups', parentGroup.uid, 'sizes'], newSizes);
   }
 
   return state;
@@ -131,19 +132,23 @@ const splitGroup = (state: ImmutableType<ITermState>, action: {splitDirection: a
 // Replace the parent by the given child in the tree,
 // used when we remove another child and we're left
 // with a one-to-one mapping between parent and child.
-const replaceParent = (state: ImmutableType<ITermState>, parent: ImmutableType<ITermGroup>, child: {uid: any}) => {
+const replaceParent = (
+  state: ImmutableType<ITermState>,
+  parent: ImmutableType<ITermGroup>,
+  child: ImmutableType<ITermGroup>
+) => {
   if (parent.parentUid) {
     const parentParent = state.termGroups[parent.parentUid];
     // If the parent we're replacing has a parent,
     // we need to change the uid in its children array
     // with `child`:
-    const newChildren = parentParent.children.map((uid: any) => (uid === parent.uid ? child.uid : uid));
+    const newChildren = parentParent.children.map((uid: string) => (uid === parent.uid ? child.uid : uid));
 
-    state = state.setIn(['termGroups', parentParent.uid!, 'children'], newChildren);
+    state = state.setIn(['termGroups', parentParent.uid, 'children'], newChildren);
   } else {
     // This means the given child will be
     // a root group, so we need to set it up as such:
-    const newSessions = state.activeSessions.without(parent.uid!).set(child.uid, state.activeSessions[parent.uid!]);
+    const newSessions = state.activeSessions.without(parent.uid).set(child.uid, state.activeSessions[parent.uid]);
 
     state = state
       .set('activeTermGroup', child.uid)
@@ -152,7 +157,7 @@ const replaceParent = (state: ImmutableType<ITermState>, parent: ImmutableType<I
   }
 
   return state
-    .set('termGroups', state.termGroups.without(parent.uid!))
+    .set('termGroups', state.termGroups.without(parent.uid))
     .setIn(['termGroups', child.uid, 'parentUid'], parent.parentUid);
 };
 
