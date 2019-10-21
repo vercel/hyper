@@ -288,7 +288,7 @@
     "@types/seamless-immutable": "7.1.11",
     "@types/uuid": "3.4.5",
     "@typescript-eslint/eslint-plugin": "2.4.0",
-    "@typescript-eslint/parser": "2.3.3",
+    "@typescript-eslint/parser": "2.4.0",
     "ava": "0.25.0",
     "babel-loader": "8.0.6",
     "babel-preset-minify": "0.5.1",
