@@ -131,7 +131,7 @@ module.exports = class Session extends EventEmitter {
     }
 
     this.batcher = new DataBatcher(uid);
-    this.pty.on('data', chunk => {
+    this.pty.onData(chunk => {
       if (this.ended) {
         return;
       }
@@ -142,7 +142,7 @@ module.exports = class Session extends EventEmitter {
       this.emit('data', data);
     });
 
-    this.pty.on('exit', () => {
+    this.pty.onExit(() => {
       if (!this.ended) {
         this.ended = true;
         this.emit('exit');
