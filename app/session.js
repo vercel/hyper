@@ -117,7 +117,7 @@ module.exports = class Session extends EventEmitter {
 
     // if config do not set the useConpty, it will be judged by the node-pty
     if (typeof useConpty === 'boolean') {
-      options.experimentalUseConpty = useConpty;
+      options.useConpty = useConpty;
     }
 
     try {
