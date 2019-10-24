@@ -19,7 +19,7 @@
     "electron-is-dev": "1.0.1",
     "electron-squirrel-startup": "1.0.0",
     "file-uri-to-path": "2.0.0",
-    "fs-extra": "7.0.1",
+    "fs-extra": "8.1.0",
     "git-describe": "4.0.4",
     "lodash": "4.17.15",
     "mkdirp": "0.5.1",
