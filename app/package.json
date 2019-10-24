@@ -10,7 +10,7 @@
   },
   "repository": "zeit/hyper",
   "dependencies": {
-    "async-retry": "1.1.4",
+    "async-retry": "1.2.3",
     "color": "3.1.2",
     "convert-css-color-name-to-hex": "0.1.1",
     "default-shell": "1.0.1",
