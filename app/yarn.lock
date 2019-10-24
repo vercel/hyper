@@ -229,13 +229,14 @@ get-stream@^4.0.0:
   dependencies:
     pump "^3.0.0"
 
-git-describe@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/git-describe/-/git-describe-4.0.2.tgz#9ecc5e6df4658450c89ea35d10183c9f5f40dc73"
+git-describe@4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/git-describe/-/git-describe-4.0.4.tgz#f3d55bce309becf6dc27fed535d380a621967e8c"
+  integrity sha512-L1X9OO1e4MusB4PzG9LXeXCQifRvyuoHTpuuZ521Qyxn/B0kWHWEOtsT4LsSfSNacZz0h4ZdYDsDG7f+SrA3hg==
   dependencies:
-    lodash "^4.16.6"
+    lodash "^4.17.11"
   optionalDependencies:
-    semver "^5.3.0"
+    semver "^5.6.0"
 
 graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.2.2"
@@ -331,7 +332,7 @@ locate-path@^3.0.0:
     p-locate "^3.0.0"
     path-exists "^3.0.0"
 
-lodash@4.17.15, lodash@^4.16.6:
+lodash@4.17.15, lodash@^4.17.11:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
 
@@ -401,9 +402,10 @@ nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
 
-node-pty@0.9.0-beta26:
-  version "0.9.0-beta26"
-  resolved "https://registry.yarnpkg.com/node-pty/-/node-pty-0.9.0-beta26.tgz#7be9381d7510a51e6030764e5a13105850fac8a2"
+node-pty@0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/node-pty/-/node-pty-0.9.0.tgz#8f9bcc0d1c5b970a3184ffd533d862c7eb6590a6"
+  integrity sha512-MBnCQl83FTYOu7B4xWw10AW77AAh7ThCE1VXEv+JeWj8mSpGo+0bwgsV+b23ljBFwEM9OmsOv3kM27iUPPm84g==
   dependencies:
     nan "^2.14.0"
 
@@ -614,7 +616,7 @@ semver@6.3.0, semver@^6.0.0, semver@^6.2.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.0.tgz#ee0a64c8af5e8ceea67687b133761e1becbd1d3d"
   integrity sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==
 
-semver@^5.3.0, semver@^5.5.0:
+semver@^5.5.0, semver@^5.6.0:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
 
