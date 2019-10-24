@@ -19,7 +19,7 @@
   },
   "ava": {
     "files": [
-      "test/**/*"
+      "test/unit/*"
     ],
     "helpers": [
       "**/testUtils/**/*"
