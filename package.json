@@ -245,7 +245,7 @@
     "email": "team@zeit.co"
   },
   "dependencies": {
-    "args": "3.0.8",
+    "args": "5.0.1",
     "chalk": "2.4.2",
     "color": "3.1.2",
     "columnify": "1.5.4",
