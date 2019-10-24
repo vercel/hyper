@@ -11,7 +11,7 @@
   "repository": "zeit/hyper",
   "dependencies": {
     "async-retry": "1.1.4",
-    "color": "2.0.1",
+    "color": "3.1.2",
     "convert-css-color-name-to-hex": "0.1.1",
     "default-shell": "1.0.1",
     "electron-store": "5.0.0",
