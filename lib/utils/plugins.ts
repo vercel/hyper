@@ -1,4 +1,6 @@
 import {remote} from 'electron';
+// TODO: Should be updates to new async API https://medium.com/@nornagon/electrons-remote-module-considered-harmful-70d69500f31
+
 import {connect as reduxConnect} from 'react-redux';
 import {basename} from 'path';
 
