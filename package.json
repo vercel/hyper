@@ -277,7 +277,7 @@
     "xterm-addon-ligatures": "^0.2.1",
     "xterm-addon-search": "^0.2.1",
     "xterm-addon-web-links": "^0.2.1",
-    "xterm-addon-webgl": "^0.2.1"
+    "xterm-addon-webgl": "^0.3.0"
   },
   "devDependencies": {
     "@babel/cli": "7.6.4",
