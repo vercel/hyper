@@ -25,7 +25,7 @@
     "mkdirp": "0.5.1",
     "ms": "2.1.2",
     "node-pty": "0.9.0",
-    "os-locale": "3.1.0",
+    "os-locale": "4.0.0",
     "parse-url": "5.0.1",
     "pify": "4.0.1",
     "queue": "6.0.1",
