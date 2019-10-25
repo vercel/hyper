@@ -2933,9 +2933,9 @@ dotenv-expand@^5.1.0:
   integrity sha512-YXQl1DSa4/PQyRfgrv6aoNjhasp/p4qs9FjJ4q4cQk+8m4r6k4ZSiEyytKG8f8W9gi8WsQtIObNmKd+tMzNTmA==
 
 dotenv@^8.0.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.1.0.tgz#d811e178652bfb8a1e593c6dd704ec7e90d85ea2"
-  integrity sha512-GUE3gqcDCaMltj2++g6bRQ5rBJWtkWTmqmD0fo1RnnMuUqHNCt2oTPeDnS9n6fKYvlhn7AeBkb38lymBtWBQdA==
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
+  integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
 
 duplexer3@^0.1.4:
   version "0.1.4"
@@ -3063,10 +3063,10 @@ electron-rebuild@1.8.6:
     spawn-rx "^3.0.0"
     yargs "^13.2.4"
 
-electron@6.0.12:
-  version "6.0.12"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-6.0.12.tgz#85bf0061e32f660256cfde95488f1cb75253bc94"
-  integrity sha512-70ODZa1RP6K0gE9IV9YLCXPSyhLjXksCuYSSPb3MljbfwfHo5uE6X0CGxzm+54YuPdE2e7EPnWZxOOsJYrS5iQ==
+electron@6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-6.1.1.tgz#28e6ce60c88f236adf7658173e55d802fc9ef693"
+  integrity sha512-OwFJSgPdKNyCnMl7mZvWkYpSh9gMb2jNSXoORX4NivxjL8ALhpMKFJ2YIIfLYXi3lGkmr05VAiTzuTBludSdjw==
   dependencies:
     "@types/node" "^10.12.18"
     electron-download "^4.1.0"
@@ -5647,9 +5647,9 @@ nice-try@^1.0.4:
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
 node-abi@^2.9.0:
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-2.11.0.tgz#b7dce18815057544a049be5ae75cd1fdc2e9ea59"
-  integrity sha512-kuy/aEg75u40v378WRllQ4ZexaXJiCvB68D2scDXclp/I4cRq6togpbOoKhmN07tns9Zldu51NNERo0wehfX9g==
+  version "2.12.0"
+  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-2.12.0.tgz#40e9cfabdda1837863fa825e7dfa0b15686adf6f"
+  integrity sha512-VhPBXCIcvmo/5K8HPmnWJyyhvgKxnHTUMXR/XwGHV68+wrgkzST4UmQrY/XszSWA5dtnXpNp528zkcyJ/pzVcw==
   dependencies:
     semver "^5.4.1"
 

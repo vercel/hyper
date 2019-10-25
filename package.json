@@ -304,7 +304,7 @@
     "copy-webpack-plugin": "5.0.4",
     "cpy-cli": "^2.0.0",
     "cross-env": "6.0.3",
-    "electron": "6.0.12",
+    "electron": "6.1.1",
     "electron-builder": "21.2.0",
     "electron-builder-squirrel-windows": "22.1.0",
     "electron-devtools-installer": "2.2.4",
