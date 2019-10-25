@@ -530,7 +530,7 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@types/debug@^4.1.4":
+"@types/debug@^4.1.4", "@types/debug@^4.1.5":
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.5.tgz#b14efa8852b7768d898906613c23f688713e02cd"
   integrity sha512-Q1y515GcOdTHgagaVFhHnIFQ38ygs/kmxdNpvpou+raI9UO3YZcHDngBSYKQklcKlvA7iuQlmIKbzvmxcOE9CQ==
@@ -973,6 +973,11 @@ app-builder-bin@3.4.3:
   resolved "https://registry.yarnpkg.com/app-builder-bin/-/app-builder-bin-3.4.3.tgz#58a74193eb882f029be6b7f0cd3f0c6805927a6b"
   integrity sha512-qMhayIwi3juerQEVJMQ76trObEbfQT0nhUdxZz9a26/3NLT3pE6awmQ8S1cEnrGugaaM5gYqR8OElcDezfmEsg==
 
+app-builder-bin@3.4.4:
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/app-builder-bin/-/app-builder-bin-3.4.4.tgz#6f244edb7bd5e482defc472ef0c15692b569f211"
+  integrity sha512-Xib+wgdK+8zZhbZr5pma3pNB23Y4JRY5Yt6h8peou6MTFSQzXdIkqalh/ezy9SMLuS43S4b0s7jTVAmUs8WVmA==
+
 app-builder-lib@21.2.0, app-builder-lib@~21.2.0:
   version "21.2.0"
   resolved "https://registry.yarnpkg.com/app-builder-lib/-/app-builder-lib-21.2.0.tgz#fa1d1604601431e2c3476857e9b9b61d33ad26cc"
@@ -1034,7 +1039,7 @@ archiver-utils@^2.1.0:
     normalize-path "^3.0.0"
     readable-stream "^2.0.0"
 
-archiver@^3.0.3:
+archiver@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/archiver/-/archiver-3.1.1.tgz#9db7819d4daf60aec10fe86b16cb9258ced66ea0"
   integrity sha512-5Hxxcig7gw5Jod/8Gq0OneVgLYET+oNHcxgWItq4TbhOzRLKNAFUb9edAftiMKXvXfCB0vbGrJdZDNq0dWMsxg==
@@ -1821,6 +1826,14 @@ builder-util-runtime@8.3.0:
     debug "^4.1.1"
     sax "^1.2.4"
 
+builder-util-runtime@8.4.0:
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/builder-util-runtime/-/builder-util-runtime-8.4.0.tgz#3163fffc078e6b8f3dd5b6eb12a8345573590682"
+  integrity sha512-CJB/eKfPf2vHrkmirF5eicVnbDCkMBbwd5tRYlTlgud16zFeqD7QmrVUAOEXdnsrcNkiLg9dbuUsQKtl/AwsYQ==
+  dependencies:
+    debug "^4.1.1"
+    sax "^1.2.4"
+
 builder-util@21.2.0, builder-util@~21.2.0:
   version "21.2.0"
   resolved "https://registry.yarnpkg.com/builder-util/-/builder-util-21.2.0.tgz#aba721190e4e841009d9fb4b88f1130ed616522f"
@@ -1831,6 +1844,25 @@ builder-util@21.2.0, builder-util@~21.2.0:
     app-builder-bin "3.4.3"
     bluebird-lst "^1.0.9"
     builder-util-runtime "8.3.0"
+    chalk "^2.4.2"
+    debug "^4.1.1"
+    fs-extra "^8.1.0"
+    is-ci "^2.0.0"
+    js-yaml "^3.13.1"
+    source-map-support "^0.5.13"
+    stat-mode "^0.3.0"
+    temp-file "^3.3.4"
+
+builder-util@~22.1.0:
+  version "22.1.0"
+  resolved "https://registry.yarnpkg.com/builder-util/-/builder-util-22.1.0.tgz#2b33145d053778e95389d5aee659256ebdb1c2ca"
+  integrity sha512-BPvpWvxQ5XOzm2WepIgmOAyo2IyaM/Bd1LJmeTYy5CtknNAtxgmAPQJfCHCikMKKQA4Obz/KYecXQiGpGJ2ThA==
+  dependencies:
+    "7zip-bin" "~5.0.3"
+    "@types/debug" "^4.1.5"
+    app-builder-bin "3.4.4"
+    bluebird-lst "^1.0.9"
+    builder-util-runtime "8.4.0"
     chalk "^2.4.2"
     debug "^4.1.1"
     fs-extra "^8.1.0"
@@ -2958,16 +2990,16 @@ ejs@~2.5.6:
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.5.9.tgz#7ba254582a560d267437109a68354112475b0ce5"
   integrity sha512-GJCAeDBKfREgkBtgrYSf9hQy9kTb3helv0zGdzqhM7iAkW8FA/ZF97VQDbwFiwIT8MQLLOe5VlPZOEvZAqtUAQ==
 
-electron-builder-squirrel-windows@21.2.0:
-  version "21.2.0"
-  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-21.2.0.tgz#e47038df55914312d84a3fcb9c9c4f9accdf70ab"
-  integrity sha512-y3ynky29vm/CmcHI6rLKU4S5pzeag/PHgl/9+rP35lZzgCIC7sMX5ugEtzpnhoJUVqojvo5cUD4erMw8JenILw==
+electron-builder-squirrel-windows@22.1.0:
+  version "22.1.0"
+  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-22.1.0.tgz#03fb176032a8d5a3aeead2d29f730b6c7e198702"
+  integrity sha512-E95RX792+KJs/qRzZfQJuWXlmRI5wv9qyiK4qklUdzDmfmwQYi8KfjJmexwgceTUj2N6EIU679UNAgtmucerTw==
   dependencies:
-    archiver "^3.0.3"
+    archiver "^3.1.1"
     bluebird-lst "^1.0.9"
-    builder-util "~21.2.0"
+    builder-util "~22.1.0"
     fs-extra "^8.1.0"
-    sanitize-filename "^1.6.2"
+    sanitize-filename "^1.6.3"
   optionalDependencies:
     "7zip-bin" "~4.0.2"
 
@@ -7216,7 +7248,7 @@ safe-regex@^1.1.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sanitize-filename@^1.6.2:
+sanitize-filename@^1.6.2, sanitize-filename@^1.6.3:
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/sanitize-filename/-/sanitize-filename-1.6.3.tgz#755ebd752045931977e30b2025d340d7c9090378"
   integrity sha512-y/52Mcy7aw3gRm7IrcGDFx/bCk4AhRh2eI9luHOQM86nZsqwiRkkq2GekHXBBD+SmPidc8i2PqtYZl+pWJ8Oeg==
