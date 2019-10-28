@@ -7790,10 +7790,10 @@ style-loader@1.0.0:
     loader-utils "^1.2.3"
     schema-utils "^2.0.1"
 
-styled-jsx@3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/styled-jsx/-/styled-jsx-3.2.2.tgz#03d02d26725195d17b6a979eb8d7c34761a16bf8"
-  integrity sha512-Xb9TPFY2REShznvHt/fw78wk+nxejTr8poepDeS5fRvkQ7lW49CDIWWGLzzALCLcKBIRFK/1Wi4PDZNetpig4w==
+styled-jsx@3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/styled-jsx/-/styled-jsx-3.2.3.tgz#c3b160a0622c892485103d0fef855347d78b9b67"
+  integrity sha512-TvEaDN4ArhFHJSZPzsKXmOiCTqWP434NW4eJD4iaTI5g3zph1BdpJPhAoE6I6wO1F6uYNgJZdT4AC2QlunTGcQ==
   dependencies:
     babel-plugin-syntax-jsx "6.18.0"
     babel-types "6.26.0"
