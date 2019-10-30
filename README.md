@@ -20,6 +20,13 @@ Hyper is available in the [AUR](https://aur.archlinux.org/packages/hyper/). Use 
 aurman -S hyper
 ```
 
+#### NixOS
+Hyper is available as [Nix package](https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/misc/hyper/default.nix), to install the app run this command:
+
+```sh
+nix-env -i hyper
+```
+
 ### macOS
 
 Use [Homebrew Cask](https://brew.sh) to download the app by running these commands:
