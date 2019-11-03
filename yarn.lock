@@ -965,7 +965,35 @@ app-builder-bin@3.4.4:
   resolved "https://registry.yarnpkg.com/app-builder-bin/-/app-builder-bin-3.4.4.tgz#6f244edb7bd5e482defc472ef0c15692b569f211"
   integrity sha512-Xib+wgdK+8zZhbZr5pma3pNB23Y4JRY5Yt6h8peou6MTFSQzXdIkqalh/ezy9SMLuS43S4b0s7jTVAmUs8WVmA==
 
-app-builder-lib@21.2.0, app-builder-lib@~21.2.0:
+app-builder-lib@22.1.0:
+  version "22.1.0"
+  resolved "https://registry.yarnpkg.com/app-builder-lib/-/app-builder-lib-22.1.0.tgz#6df869d882406f34b4b02cab4c3ddb7926e420ec"
+  integrity sha512-jDTfWsVS/MePO4FexqiSQcsWM9Yfr81ETIYbmVbKmW05o0dn9k1DvMOMoLb0kTLQpW+pWBVvGMAOPfk68HnBrg==
+  dependencies:
+    "7zip-bin" "~5.0.3"
+    "@develar/schema-utils" "~2.1.0"
+    async-exit-hook "^2.0.1"
+    bluebird-lst "^1.0.9"
+    builder-util "22.1.0"
+    builder-util-runtime "8.4.0"
+    chromium-pickle-js "^0.2.0"
+    debug "^4.1.1"
+    ejs "^2.7.1"
+    electron-publish "22.1.0"
+    fs-extra "^8.1.0"
+    hosted-git-info "^3.0.0"
+    is-ci "^2.0.0"
+    isbinaryfile "^4.0.2"
+    js-yaml "^3.13.1"
+    lazy-val "^1.0.4"
+    minimatch "^3.0.4"
+    normalize-package-data "^2.5.0"
+    read-config-file "5.0.0"
+    sanitize-filename "^1.6.3"
+    semver "^6.3.0"
+    temp-file "^3.3.4"
+
+app-builder-lib@~21.2.0:
   version "21.2.0"
   resolved "https://registry.yarnpkg.com/app-builder-lib/-/app-builder-lib-21.2.0.tgz#fa1d1604601431e2c3476857e9b9b61d33ad26cc"
   integrity sha512-aOX/nv77/Bti6NymJDg7p9T067xD8m1ipIEJR7B4Mm1GsJWpMm9PZdXtCRiMNRjHtQS5KIljT0g17781y6qn5A==
@@ -1840,7 +1868,7 @@ builder-util@21.2.0, builder-util@~21.2.0:
     stat-mode "^0.3.0"
     temp-file "^3.3.4"
 
-builder-util@~22.1.0:
+builder-util@22.1.0, builder-util@~22.1.0:
   version "22.1.0"
   resolved "https://registry.yarnpkg.com/builder-util/-/builder-util-22.1.0.tgz#2b33145d053778e95389d5aee659256ebdb1c2ca"
   integrity sha512-BPvpWvxQ5XOzm2WepIgmOAyo2IyaM/Bd1LJmeTYy5CtknNAtxgmAPQJfCHCikMKKQA4Obz/KYecXQiGpGJ2ThA==
@@ -2967,7 +2995,7 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
-ejs@^2.6.2:
+ejs@^2.6.2, ejs@^2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.7.1.tgz#5b5ab57f718b79d4aca9254457afecd36fa80228"
   integrity sha512-kS/gEPzZs3Y1rRsbGX4UOSjtP/CeJP0CxSNZHYxGfVM/VgLcv0ZqM7C45YyTj2DI2g7+P9Dd24C+IMIg6D0nYQ==
@@ -2990,24 +3018,24 @@ electron-builder-squirrel-windows@22.1.0:
   optionalDependencies:
     "7zip-bin" "~4.0.2"
 
-electron-builder@21.2.0:
-  version "21.2.0"
-  resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-21.2.0.tgz#b68ec4def713fc0b8602654ce842f972432f50c5"
-  integrity sha512-x8EXrqFbAb2L3N22YlGar3dGh8vwptbB3ovo3OF6K7NTpcsmM2zEoJv7GhFyX73rNzSG2HaWpXwGAtOp2JWiEw==
+electron-builder@22.1.0:
+  version "22.1.0"
+  resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-22.1.0.tgz#65b23411e3c39a83b52743ed18980b97f8314d50"
+  integrity sha512-uu2W9BLG38D0i2PG6dHupmOYc+q/TRL+Ztf8xitqK+2Quq33PFbeN0ipfySuVEDg4I6whDRBOgxBEWwnUYqZZQ==
   dependencies:
-    app-builder-lib "21.2.0"
+    app-builder-lib "22.1.0"
     bluebird-lst "^1.0.9"
-    builder-util "21.2.0"
-    builder-util-runtime "8.3.0"
+    builder-util "22.1.0"
+    builder-util-runtime "8.4.0"
     chalk "^2.4.2"
     dmg-builder "21.2.0"
     fs-extra "^8.1.0"
     is-ci "^2.0.0"
     lazy-val "^1.0.4"
     read-config-file "5.0.0"
-    sanitize-filename "^1.6.2"
+    sanitize-filename "^1.6.3"
     update-notifier "^3.0.1"
-    yargs "^13.3.0"
+    yargs "^14.0.0"
 
 electron-chromedriver@^7.0.0:
   version "7.0.0"
@@ -3050,6 +3078,19 @@ electron-publish@21.2.0:
     bluebird-lst "^1.0.9"
     builder-util "~21.2.0"
     builder-util-runtime "8.3.0"
+    chalk "^2.4.2"
+    fs-extra "^8.1.0"
+    lazy-val "^1.0.4"
+    mime "^2.4.4"
+
+electron-publish@22.1.0:
+  version "22.1.0"
+  resolved "https://registry.yarnpkg.com/electron-publish/-/electron-publish-22.1.0.tgz#730ee3801e47acdbb1c81ed7fc4ebc6b30d2a8aa"
+  integrity sha512-jHjMCaL2dFU+iOq8wW568F59+DW1jFJGT3vc2xqm9iXyZ8gWlQ+NVve4bq9HZG7m4iNqWbGw9StmZcOzmIBxMQ==
+  dependencies:
+    bluebird-lst "^1.0.9"
+    builder-util "~22.1.0"
+    builder-util-runtime "8.4.0"
     chalk "^2.4.2"
     fs-extra "^8.1.0"
     lazy-val "^1.0.4"
@@ -4226,6 +4267,13 @@ hosted-git-info@^2.1.4, hosted-git-info@^2.7.1:
   version "2.8.5"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.5.tgz#759cfcf2c4d156ade59b0b2dfabddc42a6b9c70c"
   integrity sha512-kssjab8CvdXfcXMXVcvsXum4Hwdq9XGtRD3TteMEvEbq0LXyiNQr6AprqKqfeaDXze7SxWvRxdpwE6ku7ikLkg==
+
+hosted-git-info@^3.0.0:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-3.0.2.tgz#8b7e3bd114b59b51786f8bade0f39ddc80275a97"
+  integrity sha512-ezZMWtHXm7Eb7Rq4Mwnx2vs79WUx2QmRg3+ZqeGroKzfDO+EprOcgRPYghsOP9JuYBfK18VojmRTGCg8Ma+ktw==
+  dependencies:
+    lru-cache "^5.1.1"
 
 http-cache-semantics@^4.0.0:
   version "4.0.3"
@@ -8712,6 +8760,14 @@ yargs-parser@^13.1.0, yargs-parser@^13.1.1:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
 
+yargs-parser@^15.0.0:
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-15.0.0.tgz#cdd7a97490ec836195f59f3f4dbe5ea9e8f75f08"
+  integrity sha512-xLTUnCMc4JhxrPEPUYD5IBR1mWCK/aT6+RJ/K29JY2y1vD+FhtgKK0AXRWvI262q3QSffAQuTouFIKUuHX89wQ==
+  dependencies:
+    camelcase "^5.0.0"
+    decamelize "^1.2.0"
+
 yargs@13.2.4:
   version "13.2.4"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-13.2.4.tgz#0b562b794016eb9651b98bd37acf364aa5d6dc83"
@@ -8747,7 +8803,7 @@ yargs@^12.0.5:
     y18n "^3.2.1 || ^4.0.0"
     yargs-parser "^11.1.1"
 
-yargs@^13.2.4, yargs@^13.3.0:
+yargs@^13.2.4:
   version "13.3.0"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-13.3.0.tgz#4c657a55e07e5f2cf947f8a366567c04a0dedc83"
   integrity sha512-2eehun/8ALW8TLoIl7MVaRUrg+yCnenu8B4kBlRxj3GJGDKU1Og7sMXPNm1BYyM1DOJmTZ4YeN/Nwxv+8XJsUA==
@@ -8762,6 +8818,23 @@ yargs@^13.2.4, yargs@^13.3.0:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^13.1.1"
+
+yargs@^14.0.0:
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-14.2.0.tgz#f116a9242c4ed8668790b40759b4906c276e76c3"
+  integrity sha512-/is78VKbKs70bVZH7w4YaZea6xcJWOAwkhbR0CFuZBmYtfTYF0xjGJF43AYd8g2Uii1yJwmS5GR2vBmrc32sbg==
+  dependencies:
+    cliui "^5.0.0"
+    decamelize "^1.2.0"
+    find-up "^3.0.0"
+    get-caller-file "^2.0.1"
+    require-directory "^2.1.1"
+    require-main-filename "^2.0.0"
+    set-blocking "^2.0.0"
+    string-width "^3.0.0"
+    which-module "^2.0.0"
+    y18n "^4.0.0"
+    yargs-parser "^15.0.0"
 
 yauzl@2.4.1:
   version "2.4.1"
