@@ -315,7 +315,7 @@
     "fork-ts-checker-webpack-plugin": "2.0.0",
     "husky": "3.0.9",
     "inquirer": "7.0.0",
-    "node-gyp": "6.0.0",
+    "node-gyp": "6.0.1",
     "null-loader": "3.0.0",
     "plist": "3.0.1",
     "prettier": "1.18.2",
