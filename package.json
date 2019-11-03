@@ -293,7 +293,7 @@
     "@types/react-dom": "^16.9.3",
     "@types/react-redux": "^7.1.5",
     "@types/seamless-immutable": "7.1.11",
-    "@types/uuid": "3.4.5",
+    "@types/uuid": "3.4.6",
     "@typescript-eslint/eslint-plugin": "2.5.0",
     "@typescript-eslint/parser": "2.5.0",
     "ava": "2.4.0",
