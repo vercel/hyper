@@ -11,22 +11,26 @@ import stylis from 'stylis';
 import HeaderContainer from './header';
 import TermsContainer from './terms';
 import NotificationsContainer from './notifications';
+import {HyperState} from '../hyper';
+import {Dispatch} from 'redux';
 
 const isMac = /Mac/.test(navigator.userAgent);
 
-class Hyper extends React.PureComponent {
-  constructor(props) {
+class Hyper extends React.PureComponent<any, any> {
+  mousetrap!: MousetrapInstance;
+  terms: any;
+  constructor(props: any) {
     super(props);
     this.handleFocusActive = this.handleFocusActive.bind(this);
     this.handleSelectAll = this.handleSelectAll.bind(this);
     this.onTermsRef = this.onTermsRef.bind(this);
-    this.mousetrap = null;
+
     this.state = {
       lastConfigUpdate: 0
     };
   }
   //TODO: Remove usage of legacy and soon deprecated lifecycle methods
-  UNSAFE_componentWillReceiveProps(next) {
+  UNSAFE_componentWillReceiveProps(next: any) {
     if (this.props.backgroundColor !== next.backgroundColor) {
       // this can be removed when `setBackgroundColor` in electron
       // starts working again
@@ -39,7 +43,7 @@ class Hyper extends React.PureComponent {
     }
   }
 
-  handleFocusActive(uid) {
+  handleFocusActive(uid: string) {
     const term = this.terms.getTermByUid(uid);
     if (term) {
       term.focus();
@@ -55,7 +59,7 @@ class Hyper extends React.PureComponent {
 
   attachKeyListeners() {
     if (!this.mousetrap) {
-      this.mousetrap = new Mousetrap(window, true);
+      this.mousetrap = new Mousetrap();
       this.mousetrap.stopCallback = () => {
         // All events should be intercepted even if focus is in an input/textarea
         return false;
@@ -64,11 +68,11 @@ class Hyper extends React.PureComponent {
       this.mousetrap.reset();
     }
 
-    const keys = getRegisteredKeys();
+    const keys: Record<string, any> = getRegisteredKeys();
     Object.keys(keys).forEach(commandKeys => {
       this.mousetrap.bind(
         commandKeys,
-        e => {
+        (e: any) => {
           const command = keys[commandKeys];
           // We should tell to xterm that it should ignore this event.
           e.catched = true;
@@ -85,12 +89,12 @@ class Hyper extends React.PureComponent {
     window.rpc.on('term selectAll', this.handleSelectAll);
   }
 
-  onTermsRef(terms) {
+  onTermsRef(terms: any) {
     this.terms = terms;
     window.focusActiveTerm = this.handleFocusActive;
   }
 
-  componentDidUpdate(prev) {
+  componentDidUpdate(prev: any) {
     if (prev.activeSession !== this.props.activeSession) {
       this.handleFocusActive(this.props.activeSession);
     }
@@ -104,7 +108,7 @@ class Hyper extends React.PureComponent {
   render() {
     const {isMac: isMac_, customCSS, uiFontFamily, borderColor, maximized, fullScreen} = this.props;
     const borderWidth = isMac_ ? '' : `${maximized ? '0' : '1'}px`;
-
+    stylis.set({prefix: false});
     return (
       <div id="hyper">
         <div
@@ -141,14 +145,14 @@ class Hyper extends React.PureComponent {
           Add custom CSS to Hyper.
           We add a scope to the customCSS so that it can get around the weighting applied by styled-jsx
         */}
-        <style dangerouslySetInnerHTML={{__html: stylis('#hyper', customCSS, {prefix: false})}} />
+        <style dangerouslySetInnerHTML={{__html: stylis('#hyper', customCSS)}} />
       </div>
     );
   }
 }
 
 const HyperContainer = connect(
-  state => {
+  (state: HyperState) => {
     return {
       isMac,
       customCSS: state.ui.css,
@@ -161,9 +165,9 @@ const HyperContainer = connect(
       lastConfigUpdate: state.ui._lastUpdate
     };
   },
-  dispatch => {
+  (dispatch: Dispatch<any>) => {
     return {
-      execCommand: (command, fn, e) => {
+      execCommand: (command: any, fn: any, e: any) => {
         dispatch(uiActions.execCommand(command, fn, e));
       }
     };

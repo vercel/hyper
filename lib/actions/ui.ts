@@ -170,7 +170,7 @@ export function moveLeft() {
       type: UI_MOVE_LEFT,
       effect() {
         const state = getState();
-        const uid = state.termGroups.activeRootGroup;
+        const uid = state.termGroups.activeRootGroup!;
         const groupUids = getGroupUids(state);
         const index = groupUids.indexOf(uid);
         const next = groupUids[index - 1] || groupUids[groupUids.length - 1];
@@ -192,7 +192,7 @@ export function moveRight() {
       effect() {
         const state = getState();
         const groupUids = getGroupUids(state);
-        const uid = state.termGroups.activeRootGroup;
+        const uid = state.termGroups.activeRootGroup!;
         const index = groupUids.indexOf(uid);
         const next = groupUids[index + 1] || groupUids[0];
         if (!next || uid === next) {

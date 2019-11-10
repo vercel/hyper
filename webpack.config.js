@@ -64,7 +64,7 @@ module.exports = [
       extensions: ['.js', '.jsx', '.ts', '.tsx']
     },
     devtool: isProd ? 'hidden-source-map' : 'cheap-module-source-map',
-    entry: './lib/index.js',
+    entry: './lib/index.tsx',
     output: {
       path: path.join(__dirname, 'target', 'renderer'),
       filename: 'bundle.js'

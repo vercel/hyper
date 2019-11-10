@@ -136,7 +136,7 @@ export function resizeSession(uid: string, cols: number, rows: number) {
   };
 }
 
-export function onSearch(uid: string) {
+export function onSearch(uid?: string) {
   return (dispatch: Dispatch<any>, getState: () => HyperState) => {
     const targetUid = uid || getState().sessions.activeUid;
     dispatch({
@@ -146,7 +146,7 @@ export function onSearch(uid: string) {
   };
 }
 
-export function closeSearch(uid: string) {
+export function closeSearch(uid?: string) {
   return (dispatch: Dispatch<any>, getState: () => HyperState) => {
     const targetUid = uid || getState().sessions.activeUid;
     dispatch({
@@ -156,7 +156,7 @@ export function closeSearch(uid: string) {
   };
 }
 
-export function sendSessionData(uid: string, data: any, escaped: any) {
+export function sendSessionData(uid: string | null, data: any, escaped?: any) {
   return (dispatch: Dispatch<any>, getState: () => HyperState) => {
     dispatch({
       type: SESSION_USER_DATA,

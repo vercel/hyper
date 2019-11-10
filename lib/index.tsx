@@ -31,7 +31,7 @@ Object.defineProperty(window, 'rpc', {get: () => rpc});
 Object.defineProperty(window, 'config', {get: () => config});
 Object.defineProperty(window, 'plugins', {get: () => plugins});
 
-const fetchFileData = configData => {
+const fetchFileData = (configData: any) => {
   const configInfo = Object.assign({}, configData, {bellSound: null});
   if (!configInfo.bell || configInfo.bell.toUpperCase() !== 'SOUND' || !configInfo.bellSoundURL) {
     store_.dispatch(reloadConfig(configInfo));

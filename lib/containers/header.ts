@@ -5,13 +5,15 @@ import Header from '../components/header';
 import {closeTab, changeTab, maximize, openHamburgerMenu, unmaximize, minimize, close} from '../actions/header';
 import {connect} from '../utils/plugins';
 import getRootGroups from '../selectors';
+import {HyperState} from '../hyper';
+import {Dispatch} from 'redux';
 
 const isMac = /Mac/.test(navigator.userAgent);
 
-const getSessions = ({sessions}) => sessions.sessions;
-const getActiveRootGroup = ({termGroups}) => termGroups.activeRootGroup;
-const getActiveSessions = ({termGroups}) => termGroups.activeSessions;
-const getActivityMarkers = ({ui}) => ui.activityMarkers;
+const getSessions = ({sessions}: HyperState) => sessions.sessions;
+const getActiveRootGroup = ({termGroups}: HyperState) => termGroups.activeRootGroup;
+const getActiveSessions = ({termGroups}: HyperState) => termGroups.activeSessions;
+const getActivityMarkers = ({ui}: HyperState) => ui.activityMarkers;
 const getTabs = createSelector(
   [getSessions, getRootGroups, getActiveSessions, getActiveRootGroup, getActivityMarkers],
   (sessions, rootGroups, activeSessions, activeRootGroup, activityMarkers) =>
@@ -28,7 +30,7 @@ const getTabs = createSelector(
 );
 
 const HeaderContainer = connect(
-  state => {
+  (state: HyperState) => {
     return {
       // active is an index
       isMac,
@@ -42,13 +44,13 @@ const HeaderContainer = connect(
       showWindowControls: state.ui.showWindowControls
     };
   },
-  dispatch => {
+  (dispatch: Dispatch<any>) => {
     return {
-      onCloseTab: i => {
+      onCloseTab: (i: string) => {
         dispatch(closeTab(i));
       },
 
-      onChangeTab: i => {
+      onChangeTab: (i: string) => {
         dispatch(changeTab(i));
       },
 
@@ -60,7 +62,7 @@ const HeaderContainer = connect(
         dispatch(unmaximize());
       },
 
-      openHamburgerMenu: coordinates => {
+      openHamburgerMenu: (coordinates: {x: number; y: number}) => {
         dispatch(openHamburgerMenu(coordinates));
       },
 
@@ -72,7 +74,8 @@ const HeaderContainer = connect(
         dispatch(close());
       }
     };
-  }
+  },
+  null
 )(Header, 'Header');
 
 export default HeaderContainer;

@@ -1,6 +1,7 @@
 import {createSelector} from 'reselect';
+import {HyperState} from './hyper';
 
-const getTermGroups = ({termGroups}) => termGroups.termGroups;
+const getTermGroups = ({termGroups}: Pick<HyperState, 'termGroups'>) => termGroups.termGroups;
 const getRootGroups = createSelector(
   getTermGroups,
   termGroups =>

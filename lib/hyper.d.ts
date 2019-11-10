@@ -4,6 +4,8 @@ import {Immutable} from 'seamless-immutable';
 declare global {
   interface Window {
     __rpcId: string;
+    rpc: any;
+    focusActiveTerm: any;
   }
 }
 
@@ -29,7 +31,7 @@ export type ITermGroupReducer = Reducer<Immutable<ITermState>, any>;
 export type uiState = {
   _lastUpdate: null;
   activeUid: string | null;
-  activityMarkers: {};
+  activityMarkers: Record<string, boolean>;
   backgroundColor: string;
   bell: string;
   bellSoundURL: string | null;
@@ -99,9 +101,9 @@ export type uiState = {
   termCSS: string;
   uiFontFamily: string;
   updateCanInstall: null | boolean;
-  updateNotes: null;
-  updateReleaseUrl: null;
-  updateVersion: null;
+  updateNotes: string | null;
+  updateReleaseUrl: string | null;
+  updateVersion: string | null;
   webGLRenderer: boolean;
 };
 
@@ -123,6 +125,7 @@ export type session = {
 export type sessionState = {
   sessions: Record<string, session>;
   activeUid: string | null;
+  write?: any;
 };
 
 export type ISessionReducer = Reducer<Immutable<sessionState>>;
@@ -151,3 +154,47 @@ export type hyperPlugin = {
 
 import rootReducer from './reducers/index';
 export type HyperState = ReturnType<typeof rootReducer>;
+
+type immutableRecord<T> = {[k in keyof T]: Immutable<T[k]>};
+
+export type TermsProps = {
+  activeRootGroup: string | null;
+  activeSession: string | null;
+  customCSS: string;
+  fontSmoothing: string;
+  termGroups: Immutable<ITermGroup>[];
+} & immutableRecord<
+  Pick<
+    uiState,
+    | 'backgroundColor'
+    | 'bell'
+    | 'bellSound'
+    | 'bellSoundURL'
+    | 'borderColor'
+    | 'colors'
+    | 'cols'
+    | 'copyOnSelect'
+    | 'cursorAccentColor'
+    | 'cursorBlink'
+    | 'cursorColor'
+    | 'cursorShape'
+    | 'disableLigatures'
+    | 'fontFamily'
+    | 'fontSize'
+    | 'fontWeight'
+    | 'fontWeightBold'
+    | 'foregroundColor'
+    | 'letterSpacing'
+    | 'lineHeight'
+    | 'macOptionSelectionMode'
+    | 'modifierKeys'
+    | 'padding'
+    | 'quickEdit'
+    | 'rows'
+    | 'scrollback'
+    | 'selectionColor'
+    | 'uiFontFamily'
+    | 'webGLRenderer'
+  >
+> &
+  immutableRecord<Pick<sessionState, 'sessions' | 'write'>>;
