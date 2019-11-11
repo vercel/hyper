@@ -245,7 +245,7 @@
   },
   "dependencies": {
     "args": "5.0.1",
-    "chalk": "2.4.2",
+    "chalk": "3.0.0",
     "color": "3.1.2",
     "columnify": "1.5.4",
     "css-loader": "3.2.0",
