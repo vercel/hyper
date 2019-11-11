@@ -2,9 +2,11 @@ import Notifications from '../components/notifications';
 import {installUpdate} from '../actions/updater';
 import {connect} from '../utils/plugins';
 import {dismissNotification} from '../actions/notifications';
+import {HyperState} from '../hyper';
+import {Dispatch} from 'redux';
 
 const NotificationsContainer = connect(
-  state => {
+  (state: HyperState) => {
     const {ui} = state;
     const {notifications} = ui;
     const state_ = {};
@@ -34,7 +36,7 @@ const NotificationsContainer = connect(
       Object.assign(state_, {
         updateShowing: true,
         updateVersion: ui.updateVersion,
-        updateNote: ui.updateNotes.split('\n')[0],
+        updateNote: ui.updateNotes!.split('\n')[0],
         updateReleaseUrl: ui.updateReleaseUrl,
         updateCanInstall: ui.updateCanInstall
       });
@@ -49,7 +51,7 @@ const NotificationsContainer = connect(
 
     return state_;
   },
-  dispatch => {
+  (dispatch: Dispatch<any>) => {
     return {
       onDismissFont: () => {
         dispatch(dismissNotification('font'));
@@ -67,7 +69,8 @@ const NotificationsContainer = connect(
         dispatch(installUpdate());
       }
     };
-  }
+  },
+  null
 )(Notifications, 'Notifications');
 
 export default NotificationsContainer;

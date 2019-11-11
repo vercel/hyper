@@ -1,7 +1,7 @@
 import {remote} from 'electron';
 // TODO: Should be updates to new async API https://medium.com/@nornagon/electrons-remote-module-considered-harmful-70d69500f31
 
-import {connect as reduxConnect} from 'react-redux';
+import {connect as reduxConnect, Options} from 'react-redux';
 import {basename} from 'path';
 
 // patching Module._load
@@ -11,7 +11,8 @@ import React, {PureComponent} from 'react';
 import ReactDOM from 'react-dom';
 import Notification from '../components/notification';
 import notify from './notify';
-import {hyperPlugin, IUiReducer, ISessionReducer, ITermGroupReducer} from '../hyper';
+import {hyperPlugin, IUiReducer, ISessionReducer, ITermGroupReducer, HyperState} from '../hyper';
+import {Dispatch} from 'redux';
 
 // remote interface to `../plugins`
 const plugins = remote.require('./plugins') as typeof import('../../app/plugins');
@@ -426,9 +427,14 @@ export function getTabProps(tab: any, parentProps: any, props: any) {
 // connects + decorates a class
 // plugins can override mapToState, dispatchToProps
 // and the class gets decorated (proxied)
-export function connect(stateFn: Function, dispatchFn: Function, c: any, d = {}) {
+export function connect<stateProps, dispatchProps>(
+  stateFn: (state: HyperState) => stateProps,
+  dispatchFn: (dispatch: Dispatch<any>) => dispatchProps,
+  c: any,
+  d: Options = {}
+) {
   return (Class: any, name: keyof typeof connectors) => {
-    return reduxConnect(
+    return reduxConnect<stateProps, dispatchProps, any, HyperState>(
       state => {
         let ret = stateFn(state);
         connectors[name].state.forEach(fn => {

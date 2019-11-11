@@ -3,21 +3,21 @@ import {remote} from 'electron';
 
 const {getDecoratedKeymaps} = remote.require('./plugins');
 
-let commands = {};
+let commands: Record<string, any> = {};
 
 export const getRegisteredKeys = () => {
   const keymaps = getDecoratedKeymaps();
 
-  return Object.keys(keymaps).reduce((result, actionName) => {
+  return Object.keys(keymaps).reduce((result: Record<string, string>, actionName) => {
     const commandKeys = keymaps[actionName];
-    commandKeys.forEach(shortcut => {
+    commandKeys.forEach((shortcut: string) => {
       result[shortcut] = actionName;
     });
     return result;
   }, {});
 };
 
-export const registerCommandHandlers = cmds => {
+export const registerCommandHandlers = (cmds: typeof commands) => {
   if (!cmds) {
     return;
   }
@@ -25,7 +25,7 @@ export const registerCommandHandlers = cmds => {
   commands = Object.assign(commands, cmds);
 };
 
-export const getCommandHandler = command => {
+export const getCommandHandler = (command: string) => {
   return commands[command];
 };
 
@@ -44,4 +44,4 @@ const roleCommands = [
   'window:toggleFullScreen'
 ];
 
-export const shouldPreventDefault = command => !roleCommands.includes(command);
+export const shouldPreventDefault = (command: string) => !roleCommands.includes(command);

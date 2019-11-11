@@ -4,9 +4,11 @@ import {resizeSession, sendSessionData, setSessionXtermTitle, setActiveSession, 
 
 import {openContextMenu} from '../actions/ui';
 import getRootGroups from '../selectors';
+import {HyperState, TermsProps} from '../hyper';
+import {Dispatch} from 'redux';
 
 const TermsContainer = connect(
-  state => {
+  (state: HyperState): TermsProps => {
     const {sessions} = state.sessions;
     return {
       sessions,
@@ -47,28 +49,28 @@ const TermsContainer = connect(
       disableLigatures: state.ui.disableLigatures
     };
   },
-  dispatch => {
+  (dispatch: Dispatch<any>) => {
     return {
-      onData(uid, data) {
+      onData(uid: string, data: any) {
         dispatch(sendSessionData(uid, data));
       },
 
-      onTitle(uid, title) {
+      onTitle(uid: string, title: string) {
         dispatch(setSessionXtermTitle(uid, title));
       },
 
-      onResize(uid, cols, rows) {
+      onResize(uid: string, cols: number, rows: number) {
         dispatch(resizeSession(uid, cols, rows));
       },
 
-      onActive(uid) {
+      onActive(uid: string) {
         dispatch(setActiveSession(uid));
       },
-      toggleSearch(uid) {
+      toggleSearch(uid: string) {
         dispatch(onSearch(uid));
       },
 
-      onContextMenu(uid, selection) {
+      onContextMenu(uid: string, selection: any) {
         dispatch(setActiveSession(uid));
         dispatch(openContextMenu(uid, selection));
       }
