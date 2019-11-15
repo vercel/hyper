@@ -90,7 +90,7 @@ module.exports = class Session extends EventEmitter {
       {},
       process.env,
       {
-        LANG: osLocale.sync() + '.UTF-8',
+        LANG: osLocale.sync().replace(/-/, '_') + '.UTF-8',
         TERM: 'xterm-256color',
         COLORTERM: 'truecolor',
         TERM_PROGRAM: productName,
