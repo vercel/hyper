@@ -257,7 +257,7 @@
     "ora": "4.0.3",
     "parse-url": "5.0.1",
     "php-escape-shell": "1.0.0",
-    "react": "16.11.0",
+    "react": "16.12.0",
     "react-deep-force-update": "2.1.3",
     "react-dom": "16.11.0",
     "react-redux": "7.1.3",
