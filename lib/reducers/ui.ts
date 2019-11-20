@@ -432,7 +432,8 @@ const reducer = (state = initial, action: any) => {
   if (
     typeof state.cols !== 'undefined' &&
     state.cols !== null &&
-    (typeof state.rows !== 'undefined' && state.rows !== null) &&
+    typeof state.rows !== 'undefined' &&
+    state.rows !== null &&
     (state.rows !== state_.rows || state.cols !== state_.cols)
   ) {
     state_ = state_.merge({notifications: {resize: true}}, {deep: true});
