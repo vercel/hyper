@@ -55,9 +55,8 @@ function exposeDecorated(Component_: any) {
   return class DecoratedComponent extends React.Component<any, any> {
     constructor(props: any, context: any) {
       super(props, context);
-      this.onRef = this.onRef.bind(this);
     }
-    onRef(decorated_: any) {
+    onRef = (decorated_: any) => {
       if (this.props.onDecorated) {
         try {
           this.props.onDecorated(decorated_);
@@ -65,7 +64,7 @@ function exposeDecorated(Component_: any) {
           notify('Plugin error', `Error occurred. Check Developer Tools for details`, {error: e});
         }
       }
-    }
+    };
     render() {
       return React.createElement(Component_, Object.assign({}, this.props, {ref: this.onRef}));
     }

@@ -21,10 +21,6 @@ class Hyper extends React.PureComponent<any, any> {
   terms: any;
   constructor(props: any) {
     super(props);
-    this.handleFocusActive = this.handleFocusActive.bind(this);
-    this.handleSelectAll = this.handleSelectAll.bind(this);
-    this.onTermsRef = this.onTermsRef.bind(this);
-
     this.state = {
       lastConfigUpdate: 0
     };
@@ -43,19 +39,19 @@ class Hyper extends React.PureComponent<any, any> {
     }
   }
 
-  handleFocusActive(uid: string) {
+  handleFocusActive = (uid: string) => {
     const term = this.terms.getTermByUid(uid);
     if (term) {
       term.focus();
     }
-  }
+  };
 
-  handleSelectAll() {
+  handleSelectAll = () => {
     const term = this.terms.getActiveTerm();
     if (term) {
       term.selectAll();
     }
-  }
+  };
 
   attachKeyListeners() {
     if (!this.mousetrap) {
@@ -89,10 +85,10 @@ class Hyper extends React.PureComponent<any, any> {
     window.rpc.on('term selectAll', this.handleSelectAll);
   }
 
-  onTermsRef(terms: any) {
+  onTermsRef = (terms: any) => {
     this.terms = terms;
     window.focusActiveTerm = this.handleFocusActive;
-  }
+  };
 
   componentDidUpdate(prev: any) {
     if (prev.activeSession !== this.props.activeSession) {
