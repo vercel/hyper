@@ -8,7 +8,6 @@ export default class Client {
   constructor() {
     this.emitter = new EventEmitter();
     this.ipc = electron.ipcRenderer;
-    this.ipcListener = this.ipcListener.bind(this);
     if (window.__rpcId) {
       setTimeout(() => {
         this.id = window.__rpcId;
@@ -28,9 +27,9 @@ export default class Client {
     }
   }
 
-  ipcListener(event: any, {ch, data}: {ch: string; data: any}) {
+  ipcListener = (event: any, {ch, data}: {ch: string; data: any}) => {
     this.emitter.emit(ch, data);
-  }
+  };
 
   on(ev: string, fn: (...args: any[]) => void) {
     this.emitter.on(ev, fn);
