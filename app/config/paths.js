@@ -1,9 +1,9 @@
 // This module exports paths, names, and other metadata that is referenced
-const {homedir} = require('os');
-const {app} = require('electron');
-const {statSync} = require('fs');
-const {resolve, join} = require('path');
-const isDev = require('electron-is-dev');
+import {homedir} from 'os';
+import {app} from 'electron';
+import {statSync} from 'fs';
+import {resolve, join} from 'path';
+import isDev from 'electron-is-dev';
 
 const cfgFile = '.hyper.js';
 const defaultCfgFile = 'config-default.js';
@@ -71,7 +71,7 @@ const defaultPlatformKeyPath = () => {
   }
 };
 
-module.exports = {
+export {
   cfgDir,
   cfgPath,
   legacyCfgPath,

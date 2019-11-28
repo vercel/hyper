@@ -1,11 +1,10 @@
-const {release} = require('os');
-const {app, shell} = require('electron');
-
-const {getConfig, getPlugins} = require('../../config');
+import {release} from 'os';
+import {app, shell} from 'electron';
+import {getConfig, getPlugins} from '../../config';
 const {arch, env, platform, versions} = process;
-const {version} = require('../../package.json');
+import {version} from '../../package.json';
 
-module.exports = (commands, showAbout) => {
+export default (commands, showAbout) => {
   const submenu = [
     {
       label: `${app.getName()} Website`,

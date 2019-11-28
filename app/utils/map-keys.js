@@ -11,7 +11,7 @@ const generatePrefixedCommand = (command, shortcuts) => {
   return result;
 };
 
-module.exports = config => {
+export default config => {
   return Object.keys(config).reduce((keymap, command) => {
     if (!command) {
       return;

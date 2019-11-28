@@ -1,4 +1,4 @@
-const Config = require('electron-store');
+import Config from 'electron-store';
 
 const defaults = {
   windowPosition: [50, 50],
@@ -8,7 +8,7 @@ const defaults = {
 // local storage
 const cfg = new Config({defaults});
 
-module.exports = {
+export default {
   defaults,
   get() {
     const position = cfg.get('windowPosition');

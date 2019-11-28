@@ -1,7 +1,6 @@
-const {resolve} = require('path');
-
-const {app, BrowserWindow} = require('electron');
-const isDev = require('electron-is-dev');
+import {resolve} from 'path';
+import {app, BrowserWindow} from 'electron';
+import isDev from 'electron-is-dev';
 
 let win;
 
@@ -19,7 +18,7 @@ app.on('ready', () => {
       nodeIntegration: true
     }
   });
-  const url = 'file://' + resolve(isDev ? __dirname : app.getAppPath(), 'notify.html');
+  const url = `file://${resolve(isDev ? __dirname : app.getAppPath(), 'notify.html')}`;
   win_.loadURL(url);
   win_.webContents.on('dom-ready', () => {
     win = win_;
@@ -44,4 +43,4 @@ function notify(title, body, details = {}) {
   }
 }
 
-module.exports = notify;
+export default notify;

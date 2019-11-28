@@ -1,4 +1,4 @@
-const Registry = require('winreg');
+import Registry from 'winreg';
 
 const appPath = `"${process.execPath}"`;
 const regKey = `\\Software\\Classes\\Directory\\background\\shell\\Hyper`;
@@ -30,7 +30,7 @@ function addValues(hyperKey, commandKey, callback) {
   });
 }
 
-exports.add = callback => {
+export const add = callback => {
   const hyperKey = new Registry({hive: 'HKCU', key: regKey});
   const commandKey = new Registry({
     hive: 'HKCU',
@@ -78,7 +78,7 @@ exports.add = callback => {
   });
 };
 
-exports.remove = callback => {
+export const remove = callback => {
   new Registry({hive: 'HKCU', key: regKey}).destroy(err => {
     if (err) {
       //eslint-disable-next-line no-console

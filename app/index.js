@@ -1,7 +1,7 @@
 // Print diagnostic information for a few arguments instead of running Hyper.
 if (['--help', '-v', '--version'].includes(process.argv[1])) {
   const {version} = require('./package');
-  const configLocation = process.platform === 'win32' ? process.env.userprofile + '\\.hyper.js' : '~/.hyper.js';
+  const configLocation = process.platform === 'win32' ? `${process.env.userprofile}\\.hyper.js` : '~/.hyper.js';
   //eslint-disable-next-line no-console
   console.log(`Hyper version ${version}`);
   //eslint-disable-next-line no-console
@@ -45,23 +45,22 @@ if (process.platform === 'win32') {
 }
 
 // Native
-const {resolve} = require('path');
+import {resolve} from 'path';
 
 // Packages
-const {app, BrowserWindow, Menu} = require('electron');
-const {gitDescribe} = require('git-describe');
-const isDev = require('electron-is-dev');
-
-const config = require('./config');
+import {app, BrowserWindow, Menu} from 'electron';
+import {gitDescribe} from 'git-describe';
+import isDev from 'electron-is-dev';
+import * as config from './config';
 
 // set up config
 config.setup();
 
-const plugins = require('./plugins');
-const {installCLI} = require('./utils/cli-install');
-const AppMenu = require('./menus/menu');
-const Window = require('./ui/window');
-const windowUtils = require('./utils/window-utils');
+import * as plugins from './plugins';
+import {installCLI} from './utils/cli-install';
+import * as AppMenu from './menus/menu';
+import Window from './ui/window';
+import * as windowUtils from './utils/window-utils';
 
 const windowSet = new Set([]);
 
@@ -100,7 +99,7 @@ if (isDev) {
   console.log('running in prod mode');
 }
 
-const url = 'file://' + resolve(isDev ? __dirname : app.getAppPath(), 'index.html');
+const url = `file://${resolve(isDev ? __dirname : app.getAppPath(), 'index.html')}`;
 //eslint-disable-next-line no-console
 console.log('electron will open', url);
 

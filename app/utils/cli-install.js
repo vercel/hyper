@@ -1,11 +1,9 @@
-const pify = require('pify');
-const fs = require('fs');
-const path = require('path');
-const Registry = require('winreg');
-
-const notify = require('../notify');
-
-const {cliScriptPath, cliLinkPath} = require('../config/paths');
+import pify from 'pify';
+import fs from 'fs';
+import path from 'path';
+import Registry from 'winreg';
+import notify from '../notify';
+import {cliScriptPath, cliLinkPath} from '../config/paths';
 
 const readlink = pify(fs.readlink);
 const symlink = pify(fs.symlink);
@@ -87,7 +85,7 @@ const logNotify = (withNotification, ...args) => {
   withNotification && notify(...args);
 };
 
-exports.installCLI = withNotification => {
+export const installCLI = withNotification => {
   if (process.platform === 'win32') {
     addBinToUserPath()
       .then(() =>

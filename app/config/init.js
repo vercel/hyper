@@ -1,8 +1,8 @@
-const vm = require('vm');
-const notify = require('../notify');
-const mapKeys = require('../utils/map-keys');
+import vm from 'vm';
+import notify from '../notify';
+import mapKeys from '../utils/map-keys';
 
-const _extract = function(script) {
+const _extract = script => {
   const module = {};
   script.runInNewContext({module});
   if (!module.exports) {
@@ -11,7 +11,7 @@ const _extract = function(script) {
   return module.exports;
 };
 
-const _syntaxValidation = function(cfg) {
+const _syntaxValidation = cfg => {
   try {
     return new vm.Script(cfg, {filename: '.hyper.js', displayErrors: true});
   } catch (err) {
@@ -19,12 +19,12 @@ const _syntaxValidation = function(cfg) {
   }
 };
 
-const _extractDefault = function(cfg) {
+const _extractDefault = cfg => {
   return _extract(_syntaxValidation(cfg));
 };
 
 // init config
-const _init = function(cfg) {
+const _init = cfg => {
   const script = _syntaxValidation(cfg.userCfg);
   if (script) {
     const _cfg = _extract(script);
@@ -42,7 +42,4 @@ const _init = function(cfg) {
   return cfg.defaultCfg;
 };
 
-module.exports = {
-  _init,
-  _extractDefault
-};
+export {_init, _extractDefault};

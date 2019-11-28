@@ -1,4 +1,4 @@
-module.exports = (commandKeys, execCommand) => {
+export default (commandKeys, execCommand) => {
   const submenu = [
     {
       label: 'Undo',

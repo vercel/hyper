@@ -1,7 +1,7 @@
-const editMenu = require('../menus/menus/edit');
-const shellMenu = require('../menus/menus/shell');
-const {execCommand} = require('../commands');
-const {getDecoratedKeymaps} = require('../plugins');
+import editMenu from '../menus/menus/edit';
+import shellMenu from '../menus/menus/shell';
+import {execCommand} from '../commands';
+import {getDecoratedKeymaps} from '../plugins';
 const separator = {type: 'separator'};
 
 const getCommandKeys = keymaps =>
@@ -19,7 +19,7 @@ const filterCutCopy = (selection, menuItem) => {
   return menuItem;
 };
 
-module.exports = (createWindow, selection) => {
+export default (createWindow, selection) => {
   const commandKeys = getCommandKeys(getDecoratedKeymaps());
   const _shell = shellMenu(commandKeys, execCommand).submenu;
   const _edit = editMenu(commandKeys, execCommand).submenu.filter(filterCutCopy.bind(null, selection));

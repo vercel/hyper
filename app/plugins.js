@@ -1,18 +1,16 @@
-const {app, dialog} = require('electron');
-const {resolve, basename} = require('path');
-const {writeFileSync} = require('fs');
-const Config = require('electron-store');
-const ms = require('ms');
-
-const React = require('react');
-const ReactDom = require('react-dom');
-
-const config = require('./config');
-const notify = require('./notify');
-const {availableExtensions} = require('./plugins/extensions');
-const {install} = require('./plugins/install');
-const {plugs} = require('./config/paths');
-const mapKeys = require('./utils/map-keys');
+import {app, dialog} from 'electron';
+import {resolve, basename} from 'path';
+import {writeFileSync} from 'fs';
+import Config from 'electron-store';
+import ms from 'ms';
+import React from 'react';
+import ReactDom from 'react-dom';
+import * as config from './config';
+import notify from './notify';
+import {availableExtensions} from './plugins/extensions';
+import {install} from './plugins/install';
+import {plugs} from './config/paths';
+import mapKeys from './utils/map-keys';
 
 // local storage
 const cache = new Config();
@@ -165,9 +163,9 @@ function clearCache() {
   }
 }
 
-exports.updatePlugins = updatePlugins;
+export {updatePlugins};
 
-exports.getLoadedPluginVersions = () => {
+export const getLoadedPluginVersions = () => {
   return modules.map(mod => ({name: mod._name, version: mod._version}));
 };
 
@@ -239,7 +237,7 @@ function toDependencies(plugins_) {
   return obj;
 }
 
-exports.subscribe = fn => {
+export const subscribe = fn => {
   watchers.push(fn);
   return () => {
     watchers.splice(watchers.indexOf(fn), 1);
@@ -258,10 +256,10 @@ function getPaths() {
 }
 
 // expose to renderer
-exports.getPaths = getPaths;
+export {getPaths};
 
 // get paths from renderer
-exports.getBasePaths = () => {
+export const getBasePaths = () => {
   return {path, localPath};
 };
 
@@ -274,7 +272,7 @@ function requirePlugins() {
       mod = require(path_);
       const exposed = mod && Object.keys(mod).some(key => availableExtensions.has(key));
       if (!exposed) {
-        notify('Plugin error!', `Plugin "${basename(path_)}" does not expose any ` + 'Hyper extension API methods');
+        notify('Plugin error!', `${`Plugin "${basename(path_)}" does not expose any `}Hyper extension API methods`);
         return;
       }
 
@@ -306,7 +304,7 @@ function requirePlugins() {
     .filter(v => Boolean(v));
 }
 
-exports.onApp = app_ => {
+export const onApp = app_ => {
   modules.forEach(plugin => {
     if (plugin.onApp) {
       try {
@@ -320,7 +318,7 @@ exports.onApp = app_ => {
   });
 };
 
-exports.onWindowClass = win => {
+export const onWindowClass = win => {
   modules.forEach(plugin => {
     if (plugin.onWindowClass) {
       try {
@@ -334,7 +332,7 @@ exports.onWindowClass = win => {
   });
 };
 
-exports.onWindow = win => {
+export const onWindow = win => {
   modules.forEach(plugin => {
     if (plugin.onWindow) {
       try {
@@ -380,7 +378,7 @@ function decorateClass(base, key) {
   return decorateEntity(base, key, 'function');
 }
 
-exports.getDeprecatedConfig = () => {
+export const getDeprecatedConfig = () => {
   const deprecated = {};
   const baseConfig = config.getConfig();
   modules.forEach(plugin => {
@@ -406,15 +404,15 @@ exports.getDeprecatedConfig = () => {
   return deprecated;
 };
 
-exports.decorateMenu = tpl => {
+export const decorateMenu = tpl => {
   return decorateObject(tpl, 'decorateMenu');
 };
 
-exports.getDecoratedEnv = baseEnv => {
+export const getDecoratedEnv = baseEnv => {
   return decorateObject(baseEnv, 'decorateEnv');
 };
 
-exports.getDecoratedConfig = () => {
+export const getDecoratedConfig = () => {
   const baseConfig = config.getConfig();
   const decoratedConfig = decorateObject(baseConfig, 'decorateConfig');
   const fixedConfig = config.fixConfigDefaults(decoratedConfig);
@@ -422,27 +420,27 @@ exports.getDecoratedConfig = () => {
   return translatedConfig;
 };
 
-exports.getDecoratedKeymaps = () => {
+export const getDecoratedKeymaps = () => {
   const baseKeymaps = config.getKeymaps();
   // Ensure that all keys are in an array and don't use deprecated key combination`
   const decoratedKeymaps = mapKeys(decorateObject(baseKeymaps, 'decorateKeymaps'));
   return decoratedKeymaps;
 };
 
-exports.getDecoratedBrowserOptions = defaults => {
+export const getDecoratedBrowserOptions = defaults => {
   return decorateObject(defaults, 'decorateBrowserOptions');
 };
 
-exports.decorateWindowClass = defaults => {
+export const decorateWindowClass = defaults => {
   return decorateObject(defaults, 'decorateWindowClass');
 };
 
-exports.decorateSessionOptions = defaults => {
+export const decorateSessionOptions = defaults => {
   return decorateObject(defaults, 'decorateSessionOptions');
 };
 
-exports.decorateSessionClass = Session => {
+export const decorateSessionClass = Session => {
   return decorateClass(Session, 'decorateSessionClass');
 };
 
-exports._toDependencies = toDependencies;
+export {toDependencies as _toDependencies};

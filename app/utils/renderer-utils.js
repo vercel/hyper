@@ -12,8 +12,4 @@ function unsetRendererType(uid) {
   delete rendererTypes[uid];
 }
 
-module.exports = {
-  getRendererTypes,
-  setRendererType,
-  unsetRendererType
-};
+export {getRendererTypes, setRendererType, unsetRendererType};
