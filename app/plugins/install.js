@@ -1,9 +1,9 @@
-const cp = require('child_process');
-const queue = require('queue');
-const ms = require('ms');
-const {yarn, plugs} = require('../config/paths');
+import cp from 'child_process';
+import queue from 'queue';
+import ms from 'ms';
+import {yarn, plugs} from '../config/paths';
 
-module.exports = {
+export default {
   install: fn => {
     const spawnQueue = queue({concurrency: 1});
     function yarnFn(args, cb) {

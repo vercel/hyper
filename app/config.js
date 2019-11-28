@@ -1,16 +1,16 @@
-const fs = require('fs');
-const notify = require('./notify');
-const {_import, getDefaultConfig} = require('./config/import');
-const _openConfig = require('./config/open');
-const win = require('./config/windows');
-const {cfgPath, cfgDir} = require('./config/paths');
-const {getColorMap} = require('./utils/colors');
+import fs from 'fs';
+import notify from './notify';
+import {_import, getDefaultConfig} from './config/import';
+import _openConfig from './config/open';
+import win from './config/windows';
+import {cfgPath, cfgDir} from './config/paths';
+import {getColorMap} from './utils/colors';
 
 const watchers = [];
 let cfg = {};
 let _watcher;
 
-const _watch = function() {
+const _watch = () => {
   if (_watcher) {
     return _watcher;
   }
@@ -63,60 +63,60 @@ const _watch = function() {
   }
 };
 
-exports.subscribe = fn => {
+export const subscribe = fn => {
   watchers.push(fn);
   return () => {
     watchers.splice(watchers.indexOf(fn), 1);
   };
 };
 
-exports.getConfigDir = () => {
+export const getConfigDir = () => {
   // expose config directory to load plugin from the right place
   return cfgDir;
 };
 
-exports.getConfig = () => {
+export const getConfig = () => {
   return cfg.config;
 };
 
-exports.openConfig = () => {
+export const openConfig = () => {
   return _openConfig();
 };
 
-exports.getPlugins = () => {
+export const getPlugins = () => {
   return {
     plugins: cfg.plugins,
     localPlugins: cfg.localPlugins
   };
 };
 
-exports.getKeymaps = () => {
+export const getKeymaps = () => {
   return cfg.keymaps;
 };
 
-exports.setup = () => {
+export const setup = () => {
   cfg = _import();
   _watch();
   checkDeprecatedConfig();
 };
 
-exports.getWin = win.get;
-exports.winRecord = win.recordState;
-exports.windowDefaults = win.defaults;
+export const getWin = win.get;
+export const winRecord = win.recordState;
+export const windowDefaults = win.defaults;
 
-const getDeprecatedCSS = function(config) {
+const getDeprecatedCSS = config => {
   const deprecated = [];
   const deprecatedCSS = ['x-screen', 'x-row', 'cursor-node', '::selection'];
   deprecatedCSS.forEach(css => {
-    if ((config.css && config.css.indexOf(css) !== -1) || (config.termCSS && config.termCSS.indexOf(css) !== -1)) {
+    if ((config.css && config.css.includes(css)) || (config.termCSS && config.termCSS.includes(css))) {
       deprecated.push(css);
     }
   });
   return deprecated;
 };
-exports.getDeprecatedCSS = getDeprecatedCSS;
+export {getDeprecatedCSS};
 
-const checkDeprecatedConfig = function() {
+const checkDeprecatedConfig = () => {
   if (!cfg.config) {
     return;
   }
@@ -128,7 +128,7 @@ const checkDeprecatedConfig = function() {
   notify('Configuration warning', `Your configuration uses some deprecated CSS classes (${deprecatedStr})`);
 };
 
-exports.fixConfigDefaults = decoratedConfig => {
+export const fixConfigDefaults = decoratedConfig => {
   const defaultConfig = getDefaultConfig().config;
   decoratedConfig.colors = getColorMap(decoratedConfig.colors) || {};
   // We must have default colors for xterm css.
@@ -136,7 +136,7 @@ exports.fixConfigDefaults = decoratedConfig => {
   return decoratedConfig;
 };
 
-exports.htermConfigTranslate = config => {
+export const htermConfigTranslate = config => {
   const cssReplacements = {
     'x-screen x-row([ {.[])': '.xterm-rows > div$1',
     '.cursor-node([ {.[])': '.terminal-cursor$1',

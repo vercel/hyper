@@ -1,26 +1,26 @@
 // Packages
-const {app, dialog, Menu} = require('electron');
+import {app, dialog, Menu} from 'electron';
 
 // Utilities
-const {getConfig} = require('../config');
-const {icon} = require('../config/paths');
-const viewMenu = require('./menus/view');
-const shellMenu = require('./menus/shell');
-const editMenu = require('./menus/edit');
-const pluginsMenu = require('./menus/plugins');
-const windowMenu = require('./menus/window');
-const helpMenu = require('./menus/help');
-const darwinMenu = require('./menus/darwin');
-const {getDecoratedKeymaps} = require('../plugins');
-const {execCommand} = require('../commands');
-const {getRendererTypes} = require('../utils/renderer-utils');
+import {getConfig} from '../config';
+import {icon} from '../config/paths';
+import viewMenu from './menus/view';
+import shellMenu from './menus/shell';
+import editMenu from './menus/edit';
+import pluginsMenu from './menus/plugins';
+import windowMenu from './menus/window';
+import helpMenu from './menus/help';
+import darwinMenu from './menus/darwin';
+import {getDecoratedKeymaps} from '../plugins';
+import {execCommand} from '../commands';
+import {getRendererTypes} from '../utils/renderer-utils';
 
 const appName = app.getName();
 const appVersion = app.getVersion();
 
 let menu_ = [];
 
-exports.createMenu = (createWindow, getLoadedPluginVersions) => {
+export const createMenu = (createWindow, getLoadedPluginVersions) => {
   const config = getConfig();
   // We take only first shortcut in array for each command
   const allCommandKeys = getDecoratedKeymaps();
@@ -69,7 +69,7 @@ exports.createMenu = (createWindow, getLoadedPluginVersions) => {
   return menu;
 };
 
-exports.buildMenu = template => {
+export const buildMenu = template => {
   menu_ = Menu.buildFromTemplate(template);
   return menu_;
 };

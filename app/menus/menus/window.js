@@ -1,11 +1,11 @@
-module.exports = (commandKeys, execCommand) => {
+export default (commandKeys, execCommand) => {
   // Generating tab:jump array
   const tabJump = [];
   for (let i = 1; i <= 9; i++) {
     // 9 is a special number because it means 'last'
     const label = i === 9 ? 'Last' : `${i}`;
     tabJump.push({
-      label: label,
+      label,
       accelerator: commandKeys[`tab:jump:${label.toLowerCase()}`]
     });
   }

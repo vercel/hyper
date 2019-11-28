@@ -1,7 +1,6 @@
-const {shell} = require('electron');
-const {cfgPath} = require('./paths');
-
-module.exports = () => Promise.resolve(shell.openItem(cfgPath));
+import {shell} from 'electron';
+import {cfgPath} from './paths';
+export default () => Promise.resolve(shell.openItem(cfgPath));
 
 // Windows opens .js files with  WScript.exe by default
 // If the user hasn't set up an editor for .js files, we fallback to notepad.

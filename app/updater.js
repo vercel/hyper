@@ -1,13 +1,13 @@
 // Packages
-const electron = require('electron');
+import electron from 'electron';
 const {app} = electron;
-const ms = require('ms');
-const retry = require('async-retry');
+import ms from 'ms';
+import retry from 'async-retry';
 
 // Utilities
 // eslint-disable-next-line no-unused-vars
-const {version} = require('./package');
-const {getDecoratedConfig} = require('./plugins');
+import {version} from './package';
+import {getDecoratedConfig} from './plugins';
 
 const {platform} = process;
 const isLinux = platform === 'linux';
@@ -28,7 +28,7 @@ const isCanary = updateChannel => updateChannel === 'canary';
 async function init() {
   autoUpdater.on('error', (err, msg) => {
     //eslint-disable-next-line no-console
-    console.error('Error fetching updates', msg + ' (' + err.stack + ')');
+    console.error('Error fetching updates', `${msg} (${err.stack})`);
   });
 
   const config = await retry(async () => {
@@ -61,7 +61,7 @@ async function init() {
   isInit = true;
 }
 
-module.exports = win => {
+export default win => {
   if (!isInit) {
     init();
   }

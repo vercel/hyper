@@ -1,7 +1,7 @@
-const {app, Menu} = require('electron');
-const {openConfig, getConfig} = require('./config');
-const {updatePlugins} = require('./plugins');
-const {installCLI} = require('./utils/cli-install');
+import {app, Menu} from 'electron';
+import {openConfig, getConfig} from './config';
+import {updatePlugins} from './plugins';
+import {installCLI} from './utils/cli-install';
 
 const commands = {
   'window:new': () => {
@@ -125,7 +125,7 @@ const commands = {
   };
 });
 
-exports.execCommand = (command, focusedWindow) => {
+export const execCommand = (command, focusedWindow) => {
   const fn = commands[command];
   if (fn) {
     fn(focusedWindow);

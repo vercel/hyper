@@ -1,4 +1,4 @@
-module.exports = (commands, execCommand) => {
+export default (commands, execCommand) => {
   return {
     label: 'Plugins',
     submenu: [

@@ -1,22 +1,22 @@
-const {app, BrowserWindow, shell, Menu} = require('electron');
-const {isAbsolute} = require('path');
-const {parse: parseUrl} = require('url');
-const uuid = require('uuid');
-const fileUriToPath = require('file-uri-to-path');
-const isDev = require('electron-is-dev');
-const updater = require('../updater');
-const toElectronBackgroundColor = require('../utils/to-electron-background-color');
-const {icon, cfgDir} = require('../config/paths');
-const createRPC = require('../rpc');
-const notify = require('../notify');
-const fetchNotifications = require('../notifications');
-const Session = require('../session');
-const contextMenuTemplate = require('./contextmenu');
-const {execCommand} = require('../commands');
-const {setRendererType, unsetRendererType} = require('../utils/renderer-utils');
-const {decorateSessionOptions, decorateSessionClass} = require('../plugins');
+import {app, BrowserWindow, shell, Menu} from 'electron';
+import {isAbsolute} from 'path';
+import {parse as parseUrl} from 'url';
+import uuid from 'uuid';
+import fileUriToPath from 'file-uri-to-path';
+import isDev from 'electron-is-dev';
+import updater from '../updater';
+import toElectronBackgroundColor from '../utils/to-electron-background-color';
+import {icon, cfgDir} from '../config/paths';
+import createRPC from '../rpc';
+import notify from '../notify';
+import fetchNotifications from '../notifications';
+import Session from '../session';
+import contextMenuTemplate from './contextmenu';
+import {execCommand} from '../commands';
+import {setRendererType, unsetRendererType} from '../utils/renderer-utils';
+import {decorateSessionOptions, decorateSessionClass} from '../plugins';
 
-module.exports = class Window {
+export default class Window {
   constructor(options_, cfg, fn) {
     const classOpts = Object.assign({uid: uuid.v4()});
     app.plugins.decorateWindowClass(classOpts);
@@ -313,4 +313,4 @@ module.exports = class Window {
 
     return window;
   }
-};
+}

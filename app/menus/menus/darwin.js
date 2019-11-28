@@ -1,8 +1,8 @@
 // This menu label is overrided by OSX to be the appName
 // The label is set to appName here so it matches actual behavior
-const {app} = require('electron');
+import {app} from 'electron';
 
-module.exports = (commandKeys, execCommand, showAbout) => {
+export default (commandKeys, execCommand, showAbout) => {
   return {
     label: `${app.getName()}`,
     submenu: [

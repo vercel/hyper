@@ -1,16 +1,16 @@
-const {moveSync, copySync, existsSync, writeFileSync, readFileSync, lstatSync} = require('fs-extra');
-const {sync: mkdirpSync} = require('mkdirp');
-const {defaultCfg, cfgPath, legacyCfgPath, plugs, defaultPlatformKeyPath} = require('./paths');
-const {_init, _extractDefault} = require('./init');
-const notify = require('../notify');
+import {moveSync, copySync, existsSync, writeFileSync, readFileSync, lstatSync} from 'fs-extra';
+import {sync as mkdirpSync} from 'mkdirp';
+import {defaultCfg, cfgPath, legacyCfgPath, plugs, defaultPlatformKeyPath} from './paths';
+import {_init, _extractDefault} from './init';
+import notify from '../notify';
 
 let defaultConfig;
 
-const _write = function(path, data) {
+const _write = (path, data) => {
   // This method will take text formatted as Unix line endings and transform it
   // to text formatted with DOS line endings. We do this because the default
   // text editor on Windows (notepad) doesn't Deal with LF files. Still. In 2017.
-  const crlfify = function(str) {
+  const crlfify = str => {
     return str.replace(/\r?\n/g, '\r\n');
   };
   const format = process.platform === 'win32' ? crlfify(data.toString()) : data;
@@ -23,7 +23,7 @@ const saveAsBackup = src => {
   let attempt = 1;
   while (attempt < 100) {
     try {
-      const backupPath = src + '.backup' + (attempt === 1 ? '' : attempt);
+      const backupPath = `${src}.backup${attempt === 1 ? '' : attempt}`;
       moveSync(src, backupPath);
       return backupPath;
     } catch (e) {
@@ -81,7 +81,7 @@ const migrateHyper2Config = () => {
   );
 };
 
-const _importConf = function() {
+const _importConf = () => {
   // init plugin directories if not present
   mkdirpSync(plugs.base);
   mkdirpSync(plugs.local);
@@ -120,14 +120,14 @@ const _importConf = function() {
   }
 };
 
-exports._import = () => {
+export const _import = () => {
   const imported = _importConf();
   defaultConfig = imported.defaultCfg;
   const result = _init(imported);
   return result;
 };
 
-exports.getDefaultConfig = () => {
+export const getDefaultConfig = () => {
   if (!defaultConfig) {
     defaultConfig = _extractDefault(_importConf().defaultCfg);
   }

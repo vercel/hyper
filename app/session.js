@@ -1,11 +1,9 @@
-const {EventEmitter} = require('events');
-const {StringDecoder} = require('string_decoder');
-
-const defaultShell = require('default-shell');
-
-const {getDecoratedEnv} = require('./plugins');
-const {productName, version} = require('./package');
-const config = require('./config');
+import {EventEmitter} from 'events';
+import {StringDecoder} from 'string_decoder';
+import defaultShell from 'default-shell';
+import {getDecoratedEnv} from './plugins';
+import {productName, version} from './package';
+import * as config from './config';
 
 const createNodePtyError = () =>
   new Error(
@@ -74,7 +72,7 @@ class DataBatcher extends EventEmitter {
   }
 }
 
-module.exports = class Session extends EventEmitter {
+export default class Session extends EventEmitter {
   constructor(options) {
     super();
     this.pty = null;
@@ -90,7 +88,7 @@ module.exports = class Session extends EventEmitter {
       {},
       process.env,
       {
-        LANG: osLocale.sync().replace(/-/, '_') + '.UTF-8',
+        LANG: `${osLocale.sync().replace(/-/, '_')}.UTF-8`,
         TERM: 'xterm-256color',
         COLORTERM: 'truecolor',
         TERM_PROGRAM: productName,
@@ -194,4 +192,4 @@ module.exports = class Session extends EventEmitter {
     this.emit('exit');
     this.ended = true;
   }
-};
+}

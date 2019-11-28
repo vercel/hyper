@@ -1,11 +1,10 @@
-const ms = require('ms');
-const fetch = require('electron-fetch').default;
-
-const {version} = require('./package');
+import ms from 'ms';
+import fetch from 'electron-fetch';
+import {version} from './package';
 
 const NEWS_URL = 'https://hyper-news.now.sh';
 
-module.exports = function fetchNotifications(win) {
+export default function fetchNotifications(win) {
   const {rpc} = win;
   const retry = err => {
     setTimeout(() => fetchNotifications(win), ms('30m'));
@@ -38,4 +37,4 @@ module.exports = function fetchNotifications(win) {
       retry();
     })
     .catch(retry);
-};
+}

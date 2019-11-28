@@ -1,7 +1,5 @@
-'use strict';
-
-const fetch = require('electron-fetch').default;
-const {EventEmitter} = require('events');
+import fetch from 'electron-fetch';
+import {EventEmitter} from 'events';
 
 class AutoUpdater extends EventEmitter {
   quitAndInstall() {
@@ -47,4 +45,4 @@ class AutoUpdater extends EventEmitter {
   }
 }
 
-module.exports = new AutoUpdater();
+export default new AutoUpdater();
