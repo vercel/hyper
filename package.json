@@ -286,7 +286,7 @@
     "@babel/plugin-proposal-numeric-separator": "^7.7.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.7.4",
     "@babel/preset-react": "7.7.4",
-    "@babel/preset-typescript": "7.7.2",
+    "@babel/preset-typescript": "7.7.4",
     "@types/color": "3.0.0",
     "@types/mousetrap": "^1.6.3",
     "@types/node": "^12.12.12",
