@@ -3,7 +3,7 @@ import {connect} from '../utils/plugins';
 import {resizeSession, sendSessionData, setSessionXtermTitle, setActiveSession, onSearch} from '../actions/sessions';
 
 import {openContextMenu} from '../actions/ui';
-import getRootGroups from '../selectors';
+import {getRootGroups} from '../selectors';
 import {HyperState, TermsProps} from '../hyper';
 import {Dispatch} from 'redux';
 

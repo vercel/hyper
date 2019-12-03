@@ -1,6 +1,6 @@
 import {php_escapeshellcmd as escapeShellCmd} from 'php-escape-shell';
 import {isExecutable} from '../utils/file';
-import getRootGroups from '../selectors';
+import {getRootGroups} from '../selectors';
 import findBySession from '../utils/term-groups';
 import notify from '../utils/notify';
 import rpc from '../rpc';
