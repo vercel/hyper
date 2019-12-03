@@ -8,7 +8,7 @@ import {
 } from '../constants/term-groups';
 import {SESSION_REQUEST} from '../constants/sessions';
 import findBySession from '../utils/term-groups';
-import getRootGroups from '../selectors';
+import {getRootGroups} from '../selectors';
 import {setActiveSession, ptyExitSession, userExitSession} from './sessions';
 import {Dispatch} from 'redux';
 import {ITermState, ITermGroup, HyperState} from '../hyper';

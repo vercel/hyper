@@ -8,7 +8,7 @@ import * as uiActions from '../actions/ui';
 import {getRegisteredKeys, getCommandHandler, shouldPreventDefault} from '../command-registry';
 import stylis from 'stylis';
 
-import HeaderContainer from './header';
+import {HeaderContainer} from './header';
 import TermsContainer from './terms';
 import NotificationsContainer from './notifications';
 import {HyperState} from '../hyper';

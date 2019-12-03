@@ -4,7 +4,7 @@ import {createSelector} from 'reselect';
 import Header from '../components/header';
 import {closeTab, changeTab, maximize, openHamburgerMenu, unmaximize, minimize, close} from '../actions/header';
 import {connect} from '../utils/plugins';
-import getRootGroups from '../selectors';
+import {getRootGroups} from '../selectors';
 import {HyperState} from '../hyper';
 import {Dispatch} from 'redux';
 
@@ -29,7 +29,7 @@ const getTabs = createSelector(
     })
 );
 
-const HeaderContainer = connect(
+export const HeaderContainer = connect(
   (state: HyperState) => {
     return {
       // active is an index
@@ -77,5 +77,3 @@ const HeaderContainer = connect(
   },
   null
 )(Header, 'Header');
-
-export default HeaderContainer;
