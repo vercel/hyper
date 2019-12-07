@@ -56,23 +56,29 @@ const getParsedFile = memoize(() => recast.parse(getFileContents()));
 const getProperties = memoize(() => getParsedFile().program.body.map(obj => obj));
 
 const getPlugins = memoize(() => {
-  let plugins;
-  getProperties().find(property => {
-    return Object.values(property.expression.right.properties).filter(plugin =>
-      plugin.key.name === 'plugins' ? (plugins = plugin.value.elements) : null
-    );
-  });
-  return plugins;
+  const properties = getProperties();
+  for (let i = 0; i < properties.length; i++) {
+    const rightProperties = Object.values(properties[i].expression.right.properties);
+    for (let j = 0; j < rightProperties.length; j++) {
+      const plugin = rightProperties[j];
+      if (plugin.key.name === 'plugins') {
+        return plugin.value.elements;
+      }
+    }
+  }
 });
 
 const getLocalPlugins = memoize(() => {
-  let localPlugins;
-  getProperties().find(property => {
-    return Object.values(property.expression.right.properties).filter(plugin =>
-      plugin.key.name === 'localPlugins' ? (localPlugins = plugin.value.elements) : null
-    );
-  });
-  return localPlugins;
+  const properties = getProperties();
+  for (let i = 0; i < properties.length; i++) {
+    const rightProperties = Object.values(properties[i].expression.right.properties);
+    for (let j = 0; j < rightProperties.length; j++) {
+      const plugin = rightProperties[j];
+      if (plugin.key.name === 'localPlugins') {
+        return plugin.value.elements;
+      }
+    }
+  }
 });
 
 function exists() {
@@ -80,9 +86,9 @@ function exists() {
 }
 
 function isInstalled(plugin, locally) {
-  const array = locally ? getLocalPlugins() : getPlugins();
+  const array = (locally ? getLocalPlugins() : getPlugins()) || [];
   if (array && Array.isArray(array)) {
-    return array.find(entry => entry.value === plugin) !== undefined;
+    return array.some(entry => entry.value === plugin);
   }
   return false;
 }
@@ -114,7 +120,7 @@ function getPackageName(plugin) {
 }
 
 function install(plugin, locally) {
-  const array = locally ? getLocalPlugins() : getPlugins();
+  const array = (locally ? getLocalPlugins() : getPlugins()) || [];
   return existsOnNpm(plugin)
     .catch(err => {
       const {statusCode} = err;
