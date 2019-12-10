@@ -15,6 +15,7 @@ const contextMenuTemplate = require('./contextmenu');
 const {execCommand} = require('../commands');
 const {setRendererType, unsetRendererType} = require('../utils/renderer-utils');
 const {decorateSessionOptions, decorateSessionClass} = require('../plugins');
+const {clipboard} = require('electron');
 
 module.exports = class Window {
   constructor(options_, cfg, fn) {
@@ -49,6 +50,26 @@ module.exports = class Window {
 
     const rpc = createRPC(window);
     const sessions = new Map();
+
+    // this code enables ctrl + c key combination to work as copy when there is selected code.
+    window.webContents.on('before-input-event', (event, input) => {
+      if (input.key == 'Control') {
+        window.webContents.on('before-input-event', (e, i) => {
+          if (i.key == 'c') {
+            let str = clipboard.readText('selection');
+            if (str.length != 0) {
+              setTimeout(() => {
+                clipboard.clear('selection');
+              }, 500); // to prevent multiple input, it waits a user response
+            } else {
+              setTimeout(() => {
+                rpc.emit('session break req');
+              }, 1000); // to prevent multiple input, it waits a user response
+            }
+          }
+        });
+      }
+    });
 
     const updateBackgroundColor = () => {
       const cfg_ = app.plugins.getDecoratedConfig();
@@ -346,4 +367,5 @@ module.exports = class Window {
 
     return window;
   }
+
 };

@@ -173,5 +173,6 @@ module.exports = {
   keymaps: {
     // Example
     // 'window:devtools': 'cmd+alt+o',
+    'editor:copy': 'ctrl+shift+c',
   },
 };
