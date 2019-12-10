@@ -367,5 +367,4 @@ module.exports = class Window {
 
     return window;
   }
-
 };
