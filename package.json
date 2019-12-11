@@ -5,8 +5,8 @@
   "scripts": {
     "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
     "app": "electron target",
-    "dev": "concurrently -n \"Webpack,TypeScript Compiler\" -c \"cyan.bold,blue.bold\" \"webpack -w\" \"tsc --pretty --watch --preserveWatchOutput\" -k",
-    "build": "cross-env NODE_ENV=production webpack && tsc",
+    "dev": "concurrently -n \"Webpack,TypeScript\" -c \"cyan.bold,blue.bold\" \"webpack -w\" \"tsc --build -v --pretty --watch --preserveWatchOutput\" -k",
+    "build": "cross-env NODE_ENV=production webpack && tsc -b -v",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "test": "yarn run lint && yarn run test:unit",
     "test:unit": "ava",
@@ -315,7 +315,6 @@
     "eslint-config-prettier": "6.7.0",
     "eslint-plugin-prettier": "3.1.1",
     "eslint-plugin-react": "7.17.0",
-    "fork-ts-checker-webpack-plugin": "3.1.1",
     "husky": "3.1.0",
     "inquirer": "7.0.0",
     "node-gyp": "6.0.1",

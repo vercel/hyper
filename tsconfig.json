@@ -1,23 +1,15 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "allowJs": true,
-    "checkJs": false,
-    "downlevelIteration": true,
-    "esModuleInterop": true,
-    "jsx": "react",
-    "lib": ["dom", "es2017"],
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "outDir": "./target/",
-    "preserveConstEnums": true,
-    "removeComments": false,
-    "resolveJsonModule": true,
-    "sourceMap": true,
-    "strict": true,
-    "target": "es6"
+    "outDir": "./dist/tmp/root/"
   },
   "include": [
-    "./app/"
+    "./app/",
+    "./lib/"
   ],
-  "exclude": ["node_modules", "**/node_modules/*", "bin/*", "renderer/*"]
+  "references": [
+    {
+      "path": "./app/tsconfig.json"
+    }
+  ]
 }

@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "declarationDir": "../dist/tmp/appdts/",
+    "outDir": "../target/"
+  },
+  "include": [
+    "./**/*",
+    "./package.json"
+  ]
+}
