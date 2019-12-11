@@ -2,7 +2,6 @@ const path = require('path');
 
 const webpack = require('webpack');
 const Copy = require('copy-webpack-plugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
@@ -100,10 +99,7 @@ module.exports = [
           from: './assets',
           to: './assets'
         }
-      ]),
-      new ForkTsCheckerWebpackPlugin({
-        tsconfig: './lib/tsconfig.json'
-      })
+      ])
     ],
     target: 'electron-renderer'
   },
