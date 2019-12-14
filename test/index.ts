@@ -5,7 +5,7 @@ import path from 'path';
 import test from 'ava';
 import {Application} from 'spectron';
 
-let app;
+let app: Application;
 
 test.before(async () => {
   let pathToBinary;
@@ -40,5 +40,5 @@ test.after(async () => {
 
 test('see if dev tools are open', async t => {
   await app.client.waitUntilWindowLoaded();
-  t.false(await app.browserWindow.isDevToolsOpened());
+  t.false(await app.webContents.isDevToolsOpened());
 });
