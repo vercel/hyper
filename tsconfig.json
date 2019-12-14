@@ -5,7 +5,8 @@
   },
   "include": [
     "./app/",
-    "./lib/"
+    "./lib/",
+    "./test/"
   ],
   "references": [
     {
