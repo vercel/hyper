@@ -1,23 +1,23 @@
 // This is a CLI tool, using console is OK
 /* eslint no-console: 0 */
-const {spawn, exec} = require('child_process');
-const {isAbsolute, resolve} = require('path');
-const {existsSync} = require('fs');
-const {version} = require('../app/package');
-const pify = require('pify');
-const args = require('args');
-const chalk = require('chalk');
-const open = require('open');
-const columnify = require('columnify');
-const got = require('got');
-const ora = require('ora');
-const api = require('./api');
+import {spawn, exec} from 'child_process';
+import {isAbsolute, resolve} from 'path';
+import {existsSync} from 'fs';
+import {version} from '../app/package.json';
+import pify from 'pify';
+import args from 'args';
+import chalk from 'chalk';
+import open from 'open';
+import columnify from 'columnify';
+import got from 'got';
+import ora from 'ora';
+import * as api from './api';
 
 const PLUGIN_PREFIX = 'hyper-';
 
-let commandPromise;
+let commandPromise: Promise<void>;
 
-const assertPluginName = pluginName => {
+const assertPluginName = (pluginName: string) => {
   if (!pluginName) {
     console.error(chalk.red('Plugin name is required'));
     process.exit(1);
@@ -34,43 +34,58 @@ const checkConfig = () => {
   process.exit(1);
 };
 
-args.command(['i', 'install'], 'Install a plugin', (name, args_) => {
-  checkConfig();
-  const pluginName = args_[0];
-  assertPluginName(pluginName);
-  commandPromise = api
-    .install(pluginName)
-    .then(() => console.log(chalk.green(`${pluginName} installed successfully!`)))
-    .catch(err => console.error(chalk.red(err)));
-});
+args.command(
+  'install',
+  'Install a plugin',
+  (name, args_) => {
+    checkConfig();
+    const pluginName = args_[0];
+    assertPluginName(pluginName);
+    commandPromise = api
+      .install(pluginName)
+      .then(() => console.log(chalk.green(`${pluginName} installed successfully!`)))
+      .catch((err: any) => console.error(chalk.red(err)));
+  },
+  ['i', 'install']
+);
 
-args.command(['u', 'uninstall', 'rm', 'remove'], 'Uninstall a plugin', (name, args_) => {
-  checkConfig();
-  const pluginName = args_[0];
-  assertPluginName(pluginName);
-  commandPromise = api
-    .uninstall(pluginName)
-    .then(() => console.log(chalk.green(`${pluginName} uninstalled successfully!`)))
-    .catch(err => console.log(chalk.red(err)));
-});
+args.command(
+  'uninstall',
+  'Uninstall a plugin',
+  (name, args_) => {
+    checkConfig();
+    const pluginName = args_[0];
+    assertPluginName(pluginName);
+    commandPromise = api
+      .uninstall(pluginName)
+      .then(() => console.log(chalk.green(`${pluginName} uninstalled successfully!`)))
+      .catch(err => console.log(chalk.red(err)));
+  },
+  ['u', 'uninstall', 'rm', 'remove']
+);
 
-args.command(['ls', 'list'], 'List installed plugins', () => {
-  checkConfig();
-  let plugins = api.list();
+args.command(
+  'list',
+  'List installed plugins',
+  () => {
+    checkConfig();
+    const plugins = api.list();
 
-  if (plugins) {
-    console.log(plugins);
-  } else {
-    console.log(chalk.red(`No plugins installed yet.`));
-  }
-  process.exit(0);
-});
+    if (plugins) {
+      console.log(plugins);
+    } else {
+      console.log(chalk.red(`No plugins installed yet.`));
+    }
+    process.exit(0);
+  },
+  ['ls', 'list']
+);
 
-const lsRemote = pattern => {
+const lsRemote = (pattern?: string) => {
   // note that no errors are catched by this function
   const URL = `https://api.npms.io/v2/search?q=${(pattern && `${pattern}+`) || ''}keywords:hyper-plugin,hyper-theme`;
   return got(URL)
-    .then(response => JSON.parse(response.body).results)
+    .then(response => JSON.parse(response.body).results as any[])
     .then(entries => entries.map(entry => entry.package))
     .then(entries => entries.filter(entry => entry.name.indexOf(PLUGIN_PREFIX) === 0))
     .then(entries =>
@@ -86,71 +101,91 @@ const lsRemote = pattern => {
     );
 };
 
-args.command(['s', 'search'], 'Search for plugins on npm', (name, args_) => {
-  const spinner = ora('Searching').start();
-  const query = args_[0] ? args_[0].toLowerCase() : '';
+args.command(
+  'search',
+  'Search for plugins on npm',
+  (name, args_) => {
+    const spinner = ora('Searching').start();
+    const query = args_[0] ? args_[0].toLowerCase() : '';
 
-  commandPromise = lsRemote(query)
-    .then(entries => {
-      if (entries.length === 0) {
+    commandPromise = lsRemote(query)
+      .then(entries => {
+        if (entries.length === 0) {
+          spinner.fail();
+          console.error(chalk.red(`Your search '${query}' did not match any plugins`));
+          console.error(`${chalk.red('Try')} ${chalk.green('hyper ls-remote')}`);
+          process.exit(1);
+        } else {
+          let msg = columnify(entries);
+          spinner.succeed();
+          msg = msg.substring(msg.indexOf('\n') + 1); // remove header
+          console.log(msg);
+        }
+      })
+      .catch(err => {
         spinner.fail();
-        console.error(chalk.red(`Your search '${query}' did not match any plugins`));
-        console.error(`${chalk.red('Try')} ${chalk.green('hyper ls-remote')}`);
-        process.exit(1);
-      } else {
+        console.error(chalk.red(err)); // TODO
+      });
+  },
+  ['s', 'search']
+);
+
+args.command(
+  'list-remote',
+  'List plugins available on npm',
+  () => {
+    const spinner = ora('Searching').start();
+
+    commandPromise = lsRemote()
+      .then(entries => {
         let msg = columnify(entries);
+
         spinner.succeed();
         msg = msg.substring(msg.indexOf('\n') + 1); // remove header
         console.log(msg);
-      }
-    })
-    .catch(err => {
-      spinner.fail();
-      console.error(chalk.red(err)); // TODO
-    });
-});
+      })
+      .catch(err => {
+        spinner.fail();
+        console.error(chalk.red(err)); // TODO
+      });
+  },
+  ['lsr', 'list-remote', 'ls-remote']
+);
 
-args.command(['lsr', 'list-remote', 'ls-remote'], 'List plugins available on npm', () => {
-  const spinner = ora('Searching').start();
+args.command(
+  'docs',
+  'Open the npm page of a plugin',
+  (name, args_) => {
+    const pluginName = args_[0];
+    assertPluginName(pluginName);
+    open(`http://ghub.io/${pluginName}`, {wait: false, url: true});
+    process.exit(0);
+  },
+  ['d', 'docs', 'h', 'home']
+);
 
-  commandPromise = lsRemote()
-    .then(entries => {
-      let msg = columnify(entries);
+args.command(
+  'version',
+  'Show the version of hyper',
+  () => {
+    console.log(version);
+    process.exit(0);
+  },
+  ['version']
+);
 
-      spinner.succeed();
-      msg = msg.substring(msg.indexOf('\n') + 1); // remove header
-      console.log(msg);
-    })
-    .catch(err => {
-      spinner.fail();
-      console.error(chalk.red(err)); // TODO
-    });
-});
-
-args.command(['d', 'docs', 'h', 'home'], 'Open the npm page of a plugin', (name, args_) => {
-  const pluginName = args_[0];
-  assertPluginName(pluginName);
-  open(`http://ghub.io/${pluginName}`, {wait: false, url: true});
-  process.exit(0);
-});
-
-args.command(['version'], 'Show the version of hyper', () => {
-  console.log(version);
-  process.exit(0);
-});
-
-args.command(['<default>'], 'Launch Hyper');
+args.command('<default>', 'Launch Hyper');
 
 args.option(['v', 'verbose'], 'Verbose mode', false);
 
-const main = argv => {
+const main = (argv: string[]) => {
   const flags = args.parse(argv, {
     name: 'hyper',
     version: false,
     mri: {
       boolean: ['v', 'verbose']
     }
-  });
+  } as any);
 
   if (commandPromise) {
     return commandPromise;
@@ -168,7 +203,7 @@ const main = argv => {
     env['ELECTRON_ENABLE_LOGGING'] = '1';
   }
 
-  const options = {
+  const options: any = {
     detached: true,
     env
   };
@@ -207,13 +242,13 @@ const main = argv => {
   return Promise.resolve();
 };
 
-function eventuallyExit(code) {
+function eventuallyExit(code: number) {
   setTimeout(() => process.exit(code), 100);
 }
 
 main(process.argv)
   .then(() => eventuallyExit(0))
-  .catch(err => {
+  .catch((err: any) => {
     console.error(err.stack ? err.stack : err);
     eventuallyExit(1);
   });

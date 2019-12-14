@@ -107,10 +107,10 @@ module.exports = [
     mode: 'none',
     name: 'hyper-cli',
     resolve: {
-      extensions: ['.js', '.jsx', '.json']
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
     },
     devtool: isProd ? 'none' : 'cheap-module-source-map',
-    entry: './cli/index.js',
+    entry: './cli/index.ts',
     output: {
       path: path.join(__dirname, 'bin'),
       filename: 'cli.js'
@@ -118,7 +118,7 @@ module.exports = [
     module: {
       rules: [
         {
-          test: /\.(js|jsx)$/,
+          test: /\.(js|jsx|ts|tsx)$/,
           exclude: /node_modules/,
           loader: 'babel-loader'
         },
