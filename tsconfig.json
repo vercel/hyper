@@ -6,7 +6,8 @@
   "include": [
     "./app/",
     "./lib/",
-    "./test/"
+    "./test/",
+    "./cli/"
   ],
   "references": [
     {

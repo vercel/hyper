@@ -576,6 +576,11 @@
   dependencies:
     defer-to-connect "^1.1.1"
 
+"@types/args@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/args/-/args-3.0.0.tgz#2fd21cfbdaf5e1ed110bd239de42a82330d6ecf6"
+  integrity sha512-2A817ZtVj1/nD44MV0/U/R6xe3GM2n1WDdni4ioCuLjay6dE0bLJd5RafHC/ddqwXL1xa2RQUdJhsGZKyr3vpA==
+
 "@types/cacheable-request@^6.0.1":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/@types/cacheable-request/-/cacheable-request-6.0.1.tgz#5d22f3dded1fd3a84c0bbeb5039a7419c2c91976"
@@ -604,6 +609,11 @@
   integrity sha512-5qqtNia+m2I0/85+pd2YzAXaTyKO8j+svirO5aN+XaQJ5+eZ8nx0jPtEWZLxCi50xwYsX10xUHetFzfb1WEs4Q==
   dependencies:
     "@types/color-convert" "*"
+
+"@types/columnify@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@types/columnify/-/columnify-1.5.0.tgz#94bb31f14c66bab6d968caa455ff13af1f0e7632"
+  integrity sha512-f39gUbf4NuSTVG9XEUJzYQ8L9e3l91jwywbJdU0fJixCRHKzQnyWxa9KfRPEuC3PhH5TIAi79kX2sAkXXSTB9Q==
 
 "@types/debug@^4.1.4", "@types/debug@^4.1.5":
   version "4.1.5"
@@ -673,6 +683,11 @@
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
+
+"@types/pify@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@types/pify/-/pify-3.0.2.tgz#1bc75dac43e31dba981c37e0a08edddc1b49cd39"
+  integrity sha512-a5AKF1/9pCU3HGMkesgY6LsBdXHUY3WU+I2qgpU0J+I8XuJA1aFr59eS84/HP0+dxsyBSNbt+4yGI2adUpHwSg==
 
 "@types/plist@3.0.2":
   version "3.0.2"
@@ -4247,10 +4262,10 @@ globule@^1.0.0:
     lodash "~4.17.10"
     minimatch "~3.0.2"
 
-got@10.0.2:
-  version "10.0.2"
-  resolved "https://registry.yarnpkg.com/got/-/got-10.0.2.tgz#f03040d966e0ff8da516d92e8689a3f9def44a3c"
-  integrity sha512-ojjUBCvrhkbEiQRAI8OIcSsCpM+EiVEX5xaoUAS6wFGlnoNa3KnDTiavRfAWXO9x29rA7sl2igh3E7z8glq9Gg==
+got@10.0.4:
+  version "10.0.4"
+  resolved "https://registry.yarnpkg.com/got/-/got-10.0.4.tgz#d3a5a6cafd2f6c342d562513cc2d2d7b6afdcbb4"
+  integrity sha512-yMaRLGZJ7iINsDcZ8hso+v44IXVOejz7xrqEabSvUewdHS3zOf57IqU3sWIBYwHlekSrk+CC2PCeLzabOBxnVA==
   dependencies:
     "@sindresorhus/is" "^1.0.0"
     "@szmarczak/http-timer" "^3.1.1"

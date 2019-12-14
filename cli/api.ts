@@ -1,10 +1,11 @@
-const fs = require('fs');
-const os = require('os');
-const got = require('got');
-const registryUrl = require('registry-url')();
-const pify = require('pify');
-const recast = require('recast');
-const path = require('path');
+import fs from 'fs';
+import os from 'os';
+import got from 'got';
+import registryUrlModule from 'registry-url';
+const registryUrl = registryUrlModule();
+import pify from 'pify';
+import * as recast from 'recast';
+import path from 'path';
 
 // If the user defines XDG_CONFIG_HOME they definitely want their config there,
 // otherwise use the home directory in linux/mac and userdata in windows
@@ -12,12 +13,12 @@ const applicationDirectory =
   process.env.XDG_CONFIG_HOME !== undefined
     ? path.join(process.env.XDG_CONFIG_HOME, 'hyper')
     : process.platform == 'win32'
-    ? path.join(process.env.APPDATA, 'Hyper')
+    ? path.join(process.env.APPDATA!, 'Hyper')
     : os.homedir();
 
 const devConfigFileName = path.join(__dirname, `../.hyper.js`);
 
-let fileName =
+const fileName =
   process.env.NODE_ENV !== 'production' && fs.existsSync(devConfigFileName)
     ? devConfigFileName
     : path.join(applicationDirectory, '.hyper.js');
@@ -27,16 +28,16 @@ let fileName =
  * statically analyze the hyper configuration isn't fatal for all kinds of
  * subcommands. We can use memoization to make reading and parsing lazy.
  */
-function memoize(fn) {
+function memoize<T extends (...args: any[]) => any>(fn: T): T {
   let hasResult = false;
-  let result;
-  return (...args) => {
+  let result: any;
+  return ((...args: any[]) => {
     if (!hasResult) {
       result = fn(...args);
       hasResult = true;
     }
     return result;
-  };
+  }) as T;
 }
 
 const getFileContents = memoize(() => {
@@ -51,18 +52,18 @@ const getFileContents = memoize(() => {
   return null;
 });
 
-const getParsedFile = memoize(() => recast.parse(getFileContents()));
+const getParsedFile = memoize(() => recast.parse(getFileContents()!));
 
-const getProperties = memoize(() => getParsedFile().program.body.map(obj => obj));
+const getProperties = memoize(() => (getParsedFile().program.body as any[]).map(obj => obj));
 
 const getPlugins = memoize(() => {
   const properties = getProperties();
   for (let i = 0; i < properties.length; i++) {
-    const rightProperties = Object.values(properties[i].expression.right.properties);
+    const rightProperties = Object.values<any>(properties[i].expression.right.properties);
     for (let j = 0; j < rightProperties.length; j++) {
       const plugin = rightProperties[j];
       if (plugin.key.name === 'plugins') {
-        return plugin.value.elements;
+        return plugin.value.elements as any[];
       }
     }
   }
@@ -71,11 +72,11 @@ const getPlugins = memoize(() => {
 const getLocalPlugins = memoize(() => {
   const properties = getProperties();
   for (let i = 0; i < properties.length; i++) {
-    const rightProperties = Object.values(properties[i].expression.right.properties);
+    const rightProperties = Object.values<any>(properties[i].expression.right.properties);
     for (let j = 0; j < rightProperties.length; j++) {
       const plugin = rightProperties[j];
       if (plugin.key.name === 'localPlugins') {
-        return plugin.value.elements;
+        return plugin.value.elements as any[];
       }
     }
   }
@@ -85,7 +86,7 @@ function exists() {
   return getFileContents() !== undefined;
 }
 
-function isInstalled(plugin, locally) {
+function isInstalled(plugin: string, locally?: boolean) {
   const array = (locally ? getLocalPlugins() : getPlugins()) || [];
   if (array && Array.isArray(array)) {
     return array.some(entry => entry.value === plugin);
@@ -97,32 +98,34 @@ function save() {
   return pify(fs.writeFile)(fileName, recast.print(getParsedFile()).code, 'utf8');
 }
 
-function existsOnNpm(plugin) {
-  const name = getPackageName(plugin);
-  return got.get(registryUrl + name.toLowerCase(), {timeout: 10000, json: true}).then(res => {
-    if (!res.body.versions) {
-      return Promise.reject(res);
-    } else {
-      return res;
-    }
-  });
-}
-
-function getPackageName(plugin) {
+function getPackageName(plugin: string) {
   const isScoped = plugin[0] === '@';
   const nameWithoutVersion = plugin.split('#')[0];
 
   if (isScoped) {
-    return '@' + nameWithoutVersion.split('@')[1].replace('/', '%2f');
+    return `@${nameWithoutVersion.split('@')[1].replace('/', '%2f')}`;
   }
 
   return nameWithoutVersion.split('@')[0];
 }
 
-function install(plugin, locally) {
+function existsOnNpm(plugin: string) {
+  const name = getPackageName(plugin);
+  return got
+    .get<any>(registryUrl + name.toLowerCase(), {timeout: 10000, responseType: 'json'})
+    .then(res => {
+      if (!res.body.versions) {
+        return Promise.reject(res);
+      } else {
+        return res;
+      }
+    });
+}
+
+function install(plugin: string, locally?: boolean) {
   const array = (locally ? getLocalPlugins() : getPlugins()) || [];
   return existsOnNpm(plugin)
-    .catch(err => {
+    .catch((err: any) => {
       const {statusCode} = err;
       if (statusCode && (statusCode === 404 || statusCode === 200)) {
         return Promise.reject(`${plugin} not found on npm`);
@@ -139,29 +142,24 @@ function install(plugin, locally) {
     });
 }
 
-function uninstall(plugin) {
+function uninstall(plugin: string) {
   if (!isInstalled(plugin)) {
     return Promise.reject(`${plugin} is not installed`);
   }
 
-  const index = getPlugins().findIndex(entry => entry.value === plugin);
-  getPlugins().splice(index, 1);
+  const index = getPlugins()!.findIndex(entry => entry.value === plugin);
+  getPlugins()!.splice(index, 1);
   return save();
 }
 
 function list() {
   if (Array.isArray(getPlugins())) {
-    return getPlugins()
+    return getPlugins()!
       .map(plugin => plugin.value)
       .join('\n');
   }
   return false;
 }
 
-module.exports.configPath = fileName;
-module.exports.exists = exists;
-module.exports.existsOnNpm = existsOnNpm;
-module.exports.isInstalled = isInstalled;
-module.exports.install = install;
-module.exports.uninstall = uninstall;
-module.exports.list = list;
+export const configPath = fileName;
+export {exists, existsOnNpm, isInstalled, install, uninstall, list};
