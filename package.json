@@ -287,7 +287,7 @@
     "xterm-addon-webgl": "^0.4.1"
   },
   "devDependencies": {
-    "@babel/cli": "7.7.0",
+    "@babel/cli": "7.7.5",
     "@babel/core": "7.7.5",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/plugin-proposal-numeric-separator": "^7.7.4",
