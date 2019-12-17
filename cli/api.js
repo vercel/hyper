@@ -50,7 +50,8 @@ const getFileContents = memoize(() => {
 
 const getParsedFile = memoize(() => recast.parse(getFileContents()));
 
-const getProperties = memoize(() => getParsedFile().program.body[0].expression.right.properties);
+const whichBodyIndex = getParsedFile().program.body[0].expression.right ? 0 : 1;
+const getProperties = memoize(() => getParsedFile().program.body[whichBodyIndex].expression.right.properties);
 
 const getPlugins = memoize(() => getProperties().find(property => property.key.name === 'plugins').value.elements);
 
