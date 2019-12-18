@@ -1,5 +1,5 @@
 // Packages
-import {app, dialog, Menu} from 'electron';
+import {app, dialog, Menu, BrowserWindow} from 'electron';
 
 // Utilities
 import {getConfig} from '../config';
@@ -18,13 +18,16 @@ import {getRendererTypes} from '../utils/renderer-utils';
 const appName = app.getName();
 const appVersion = app.getVersion();
 
-let menu_ = [];
+let menu_: Menu;
 
-export const createMenu = (createWindow, getLoadedPluginVersions) => {
+export const createMenu = (
+  createWindow: (fn?: (win: BrowserWindow) => void, options?: Record<string, any>) => BrowserWindow,
+  getLoadedPluginVersions: () => {name: string; version: string}[]
+) => {
   const config = getConfig();
   // We take only first shortcut in array for each command
   const allCommandKeys = getDecoratedKeymaps();
-  const commandKeys = Object.keys(allCommandKeys).reduce((result, command) => {
+  const commandKeys = Object.keys(allCommandKeys).reduce((result: Record<string, string>, command) => {
     result[command] = allCommandKeys[command][0];
     return result;
   }, {});
@@ -40,7 +43,7 @@ export const createMenu = (createWindow, getLoadedPluginVersions) => {
     const pluginList =
       loadedPlugins.length === 0 ? 'none' : loadedPlugins.map(plugin => `\n  ${plugin.name} (${plugin.version})`);
 
-    const rendererCounts = Object.values(getRendererTypes()).reduce((acc, type) => {
+    const rendererCounts = Object.values(getRendererTypes()).reduce((acc: Record<string, number>, type) => {
       acc[type] = acc[type] ? acc[type] + 1 : 1;
       return acc;
     }, {});
@@ -53,7 +56,7 @@ export const createMenu = (createWindow, getLoadedPluginVersions) => {
       message: `${appName} ${appVersion} (${updateChannel})`,
       detail: `Renderers: ${renderers}\nPlugins: ${pluginList}\n\nCreated by Guillermo Rauch\nCopyright © 2019 ZEIT, Inc.`,
       buttons: [],
-      icon
+      icon: icon as any
     });
   };
   const menu = [
@@ -69,7 +72,7 @@ export const createMenu = (createWindow, getLoadedPluginVersions) => {
   return menu;
 };
 
-export const buildMenu = template => {
+export const buildMenu = (template: Electron.MenuItemConstructorOptions[]): Electron.Menu => {
   menu_ = Menu.buildFromTemplate(template);
   return menu_;
 };

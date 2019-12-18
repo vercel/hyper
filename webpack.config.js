@@ -13,7 +13,7 @@ module.exports = [
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
     },
-    entry: './app/index.js',
+    entry: './app/index.ts',
     output: {
       path: path.join(__dirname, 'target'),
       filename: 'ignore_this.js'

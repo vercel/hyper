@@ -1,9 +1,12 @@
 import {EventEmitter} from 'events';
-import {ipcMain} from 'electron';
+import {ipcMain, BrowserWindow} from 'electron';
 import uuid from 'uuid';
 
-class Server extends EventEmitter {
-  constructor(win) {
+export class Server extends EventEmitter {
+  destroyed = false;
+  win: BrowserWindow;
+  id!: string;
+  constructor(win: BrowserWindow) {
     super();
     this.win = win;
     this.ipcListener = this.ipcListener.bind(this);
@@ -29,11 +32,11 @@ class Server extends EventEmitter {
     return this.win.webContents;
   }
 
-  ipcListener(event, {ev, data}) {
+  ipcListener(event: any, {ev, data}: {ev: string; data: any}) {
     super.emit(ev, data);
   }
 
-  emit(ch, data) {
+  emit(ch: string, data: any): any {
     // This check is needed because data-batching can cause extra data to be
     // emitted after the window has already closed
     if (!this.win.isDestroyed()) {
@@ -53,6 +56,6 @@ class Server extends EventEmitter {
   }
 }
 
-export default win => {
+export default (win: BrowserWindow) => {
   return new Server(win);
 };
