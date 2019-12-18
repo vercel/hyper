@@ -1,5 +1,6 @@
 // Print diagnostic information for a few arguments instead of running Hyper.
 if (['--help', '-v', '--version'].includes(process.argv[1])) {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const {version} = require('./package');
   const configLocation = process.platform === 'win32' ? `${process.env.userprofile}\\.hyper.js` : '~/.hyper.js';
   //eslint-disable-next-line no-console
@@ -25,6 +26,7 @@ const checkSquirrel = () => {
 
 // handle startup squirrel events
 if (process.platform === 'win32') {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const systemContextMenu = require('./system-context-menu');
 
   switch (process.argv[1]) {
@@ -53,16 +55,38 @@ import {gitDescribe} from 'git-describe';
 import isDev from 'electron-is-dev';
 import * as config from './config';
 
+// Hack - this declararion doesn't work when put into ./ext-modules.d.ts for some reason so it's in this file for the time being
+declare module 'electron' {
+  interface App {
+    config: typeof import('./config');
+    plugins: typeof import('./plugins');
+    getWindows: () => Set<BrowserWindow>;
+    getLastFocusedWindow: () => BrowserWindow | null;
+    windowCallback: (win: BrowserWindow) => void;
+    createWindow: (fn?: (win: BrowserWindow) => void, options?: Record<string, any>) => BrowserWindow;
+    setVersion: (version: string) => void;
+  }
+
+  type Server = import('./rpc').Server;
+  interface BrowserWindow {
+    uid: string;
+    sessions: Map<any, any>;
+    focusTime: number;
+    clean: () => void;
+    rpc: Server;
+  }
+}
+
 // set up config
 config.setup();
 
 import * as plugins from './plugins';
 import {installCLI} from './utils/cli-install';
 import * as AppMenu from './menus/menu';
-import Window from './ui/window';
+import {newWindow} from './ui/window';
 import * as windowUtils from './utils/window-utils';
 
-const windowSet = new Set([]);
+const windowSet = new Set<BrowserWindow>([]);
 
 // expose to plugins
 app.config = config;
@@ -89,7 +113,7 @@ if (isDev) {
   console.log('running in dev mode');
 
   // Override default appVersion which is set from package.json
-  gitDescribe({customArguments: ['--tags']}, (error, gitInfo) => {
+  gitDescribe({customArguments: ['--tags']}, (error: any, gitInfo: any) => {
     if (!error) {
       app.setVersion(gitInfo.raw);
     }
@@ -103,16 +127,30 @@ const url = `file://${resolve(isDev ? __dirname : app.getAppPath(), 'index.html'
 //eslint-disable-next-line no-console
 console.log('electron will open', url);
 
+function installDevExtensions(isDev_: boolean) {
+  if (!isDev_) {
+    return Promise.resolve([]);
+  }
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const installer = require('electron-devtools-installer') as typeof import('electron-devtools-installer');
+
+  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'] as const;
+  const forceDownload = Boolean(process.env.UPGRADE_EXTENSIONS);
+
+  return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload)));
+}
+
 app.on('ready', () =>
   installDevExtensions(isDev)
     .then(() => {
-      function createWindow(fn, options = {}) {
+      function createWindow(fn?: (win: BrowserWindow) => void, options: Record<string, any> = {}) {
         const cfg = plugins.getDecoratedConfig();
 
         const winSet = config.getWin();
         let [startX, startY] = winSet.position;
 
         const [width, height] = options.size ? options.size : cfg.windowSize || winSet.size;
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const {screen} = require('electron');
 
         const winPos = options.position;
@@ -150,7 +188,7 @@ app.on('ready', () =>
           [startX, startY] = config.windowDefaults.windowPosition;
         }
 
-        const hwin = new Window({width, height, x: startX, y: startY}, cfg, fn);
+        const hwin = newWindow({width, height, x: startX, y: startY}, cfg, fn);
         windowSet.add(hwin);
         hwin.loadURL(url);
 
@@ -229,7 +267,7 @@ app.on('ready', () =>
 
 app.on('open-file', (event, path) => {
   const lastWindow = app.getLastFocusedWindow();
-  const callback = win => win.rpc.emit('open file', {path});
+  const callback = (win: BrowserWindow) => win.rpc.emit('open file', {path});
   if (lastWindow) {
     callback(lastWindow);
   } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
@@ -243,7 +281,7 @@ app.on('open-file', (event, path) => {
 
 app.on('open-url', (event, sshUrl) => {
   const lastWindow = app.getLastFocusedWindow();
-  const callback = win => win.rpc.emit('open ssh', sshUrl);
+  const callback = (win: BrowserWindow) => win.rpc.emit('open ssh', sshUrl);
   if (lastWindow) {
     callback(lastWindow);
   } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
@@ -254,15 +292,3 @@ app.on('open-url', (event, sshUrl) => {
     app.windowCallback = callback;
   }
 });
-
-function installDevExtensions(isDev_) {
-  if (!isDev_) {
-    return Promise.resolve();
-  }
-  const installer = require('electron-devtools-installer');
-
-  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
-  const forceDownload = Boolean(process.env.UPGRADE_EXTENSIONS);
-
-  return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload)));
-}
