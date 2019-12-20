@@ -1,4 +1,9 @@
-export default (commands, execCommand) => {
+import {BrowserWindow, MenuItemConstructorOptions} from 'electron';
+
+export default (
+  commands: Record<string, string>,
+  execCommand: (command: string, focusedWindow?: BrowserWindow) => void
+): MenuItemConstructorOptions => {
   return {
     label: 'Plugins',
     submenu: [

@@ -1,4 +1,9 @@
-export default (commandKeys, execCommand) => {
+import {BrowserWindow, MenuItemConstructorOptions} from 'electron';
+
+export default (
+  commandKeys: Record<string, string>,
+  execCommand: (command: string, focusedWindow?: BrowserWindow) => void
+): MenuItemConstructorOptions => {
   // Generating tab:jump array
   const tabJump = [];
   for (let i = 1; i <= 9; i++) {

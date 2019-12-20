@@ -1,11 +1,11 @@
 import {release} from 'os';
-import {app, shell} from 'electron';
+import {app, shell, MenuItemConstructorOptions} from 'electron';
 import {getConfig, getPlugins} from '../../config';
 const {arch, env, platform, versions} = process;
 import {version} from '../../package.json';
 
-export default (commands, showAbout) => {
-  const submenu = [
+export default (commands: Record<string, string>, showAbout: () => void): MenuItemConstructorOptions => {
+  const submenu: MenuItemConstructorOptions[] = [
     {
       label: `${app.getName()} Website`,
       click() {
