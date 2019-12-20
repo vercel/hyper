@@ -54,32 +54,27 @@ const getFileContents = memoize(() => {
 
 const getParsedFile = memoize(() => recast.parse(getFileContents()!));
 
-const getProperties = memoize(() => (getParsedFile().program.body as any[]).map(obj => obj));
+const getProperties = memoize(() => ((getParsedFile()?.program?.body as any[]) || []).map(obj => obj));
 
-const getPlugins = memoize(() => {
+const getPluginsByKey = (key: string) => {
   const properties = getProperties();
   for (let i = 0; i < properties.length; i++) {
-    const rightProperties = Object.values<any>(properties[i].expression.right.properties);
+    const rightProperties = Object.values<any>(properties[i]?.expression?.right?.properties || {});
     for (let j = 0; j < rightProperties.length; j++) {
       const plugin = rightProperties[j];
-      if (plugin.key.name === 'plugins') {
-        return plugin.value.elements as any[];
+      if (plugin?.key?.name === key) {
+        return (plugin?.value?.elements as any[]) || [];
       }
     }
   }
+};
+
+const getPlugins = memoize(() => {
+  return getPluginsByKey('plugins');
 });
 
 const getLocalPlugins = memoize(() => {
-  const properties = getProperties();
-  for (let i = 0; i < properties.length; i++) {
-    const rightProperties = Object.values<any>(properties[i].expression.right.properties);
-    for (let j = 0; j < rightProperties.length; j++) {
-      const plugin = rightProperties[j];
-      if (plugin.key.name === 'localPlugins') {
-        return plugin.value.elements as any[];
-      }
-    }
-  }
+  return getPluginsByKey('localPlugins');
 });
 
 function exists() {
