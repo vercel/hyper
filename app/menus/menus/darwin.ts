@@ -1,8 +1,12 @@
 // This menu label is overrided by OSX to be the appName
 // The label is set to appName here so it matches actual behavior
-import {app} from 'electron';
+import {app, BrowserWindow, MenuItemConstructorOptions} from 'electron';
 
-export default (commandKeys, execCommand, showAbout) => {
+export default (
+  commandKeys: Record<string, string>,
+  execCommand: (command: string, focusedWindow?: BrowserWindow) => void,
+  showAbout: () => void
+): MenuItemConstructorOptions => {
   return {
     label: `${app.getName()}`,
     submenu: [
@@ -36,7 +40,7 @@ export default (commandKeys, execCommand, showAbout) => {
         role: 'hide'
       },
       {
-        role: 'hideothers'
+        role: 'hideOthers'
       },
       {
         role: 'unhide'

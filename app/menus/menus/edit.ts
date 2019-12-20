@@ -1,5 +1,10 @@
-export default (commandKeys, execCommand) => {
-  const submenu = [
+import {BrowserWindow, MenuItemConstructorOptions} from 'electron';
+
+export default (
+  commandKeys: Record<string, string>,
+  execCommand: (command: string, focusedWindow?: BrowserWindow) => void
+) => {
+  const submenu: MenuItemConstructorOptions[] = [
     {
       label: 'Undo',
       accelerator: commandKeys['editor:undo'],
@@ -23,7 +28,7 @@ export default (commandKeys, execCommand) => {
       command: 'editor:copy',
       accelerator: commandKeys['editor:copy'],
       registerAccelerator: true
-    },
+    } as any,
     {
       role: 'paste',
       accelerator: commandKeys['editor:paste']
