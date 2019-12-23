@@ -22,6 +22,7 @@ jobs:
           root: .
           paths:
             - node_modules
+            - app/node_modules
 
   test:
     macos:
