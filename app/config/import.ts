@@ -4,13 +4,13 @@ import {defaultCfg, cfgPath, legacyCfgPath, plugs, defaultPlatformKeyPath} from 
 import {_init, _extractDefault} from './init';
 import notify from '../notify';
 
-let defaultConfig;
+let defaultConfig: Record<string, any> | undefined;
 
-const _write = (path, data) => {
+const _write = (path: string, data: any) => {
   // This method will take text formatted as Unix line endings and transform it
   // to text formatted with DOS line endings. We do this because the default
   // text editor on Windows (notepad) doesn't Deal with LF files. Still. In 2017.
-  const crlfify = str => {
+  const crlfify = (str: string) => {
     return str.replace(/\r?\n/g, '\r\n');
   };
   const format = process.platform === 'win32' ? crlfify(data.toString()) : data;
@@ -19,7 +19,7 @@ const _write = (path, data) => {
 
 // Saves a file as backup by appending '.backup' or '.backup2', '.backup3', etc.
 // so as to not override any existing files
-const saveAsBackup = src => {
+const saveAsBackup = (src: string) => {
   let attempt = 1;
   while (attempt < 100) {
     try {
@@ -99,7 +99,7 @@ const _importConf = () => {
     // Importing platform specific keymap
     try {
       const content = readFileSync(defaultPlatformKeyPath(), 'utf8');
-      const mapping = JSON.parse(content);
+      const mapping = JSON.parse(content) as Record<string, string | string[]>;
       _defaultCfg.keymaps = mapping;
     } catch (err) {
       //eslint-disable-next-line no-console
@@ -122,14 +122,14 @@ const _importConf = () => {
 
 export const _import = () => {
   const imported = _importConf();
-  defaultConfig = imported.defaultCfg;
-  const result = _init(imported);
+  defaultConfig = imported?.defaultCfg;
+  const result = _init(imported!);
   return result;
 };
 
 export const getDefaultConfig = () => {
   if (!defaultConfig) {
-    defaultConfig = _extractDefault(_importConf().defaultCfg);
+    defaultConfig = _importConf()?.defaultCfg;
   }
   return defaultConfig;
 };

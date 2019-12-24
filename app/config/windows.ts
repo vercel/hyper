@@ -1,4 +1,5 @@
 import Config from 'electron-store';
+import {BrowserWindow} from 'electron';
 
 const defaults = {
   windowPosition: [50, 50],
@@ -15,7 +16,7 @@ export default {
     const size = cfg.get('windowSize');
     return {position, size};
   },
-  recordState(win) {
+  recordState(win: BrowserWindow) {
     cfg.set('windowPosition', win.getPosition());
     cfg.set('windowSize', win.getSize());
   }

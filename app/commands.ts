@@ -1,9 +1,9 @@
-import {app, Menu} from 'electron';
+import {app, Menu, BrowserWindow} from 'electron';
 import {openConfig, getConfig} from './config';
 import {updatePlugins} from './plugins';
 import {installCLI} from './utils/cli-install';
 
-const commands = {
+const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
   'window:new': () => {
     // If window is created on the same tick, it will consume event too
     setTimeout(app.createWindow, 0);
@@ -31,7 +31,7 @@ const commands = {
     focusedWindow && focusedWindow.rpc.emit('session clear req');
   },
   'editor:selectAll': focusedWindow => {
-    focusedWindow.rpc.emit('term selectAll');
+    focusedWindow && focusedWindow.rpc.emit('term selectAll');
   },
   'plugins:update': () => {
     updatePlugins();
@@ -112,20 +112,20 @@ const commands = {
   },
   'window:hamburgerMenu': () => {
     if (getConfig().showHamburgerMenu) {
-      Menu.getApplicationMenu().popup({x: 15, y: 15});
+      Menu.getApplicationMenu()!.popup({x: 15, y: 15});
     }
   }
 };
 
 //Special numeric command
-[1, 2, 3, 4, 5, 6, 7, 8, 'last'].forEach(cmdIndex => {
+([1, 2, 3, 4, 5, 6, 7, 8, 'last'] as const).forEach(cmdIndex => {
   const index = cmdIndex === 'last' ? cmdIndex : cmdIndex - 1;
   commands[`tab:jump:${cmdIndex}`] = focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('move jump req', index);
   };
 });
 
-export const execCommand = (command, focusedWindow) => {
+export const execCommand = (command: string, focusedWindow?: BrowserWindow) => {
   const fn = commands[command];
   if (fn) {
     fn(focusedWindow);

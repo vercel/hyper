@@ -5,12 +5,12 @@ export default () => Promise.resolve(shell.openItem(cfgPath));
 // Windows opens .js files with  WScript.exe by default
 // If the user hasn't set up an editor for .js files, we fallback to notepad.
 if (process.platform === 'win32') {
-  const Registry = require('winreg');
-  const {exec} = require('child_process');
+  const Registry = require('winreg') as typeof import('winreg');
+  const {exec} = require('child_process') as typeof import('child_process');
 
   const getUserChoiceKey = async () => {
     // Load FileExts keys for .js files
-    const keys = await new Promise((resolve, reject) => {
+    const keys: Winreg.Registry[] = await new Promise((resolve, reject) => {
       new Registry({
         hive: Registry.HKCU,
         key: '\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.js'
@@ -29,11 +29,11 @@ if (process.platform === 'win32') {
   };
 
   const hasDefaultSet = async () => {
-    let userChoice = await getUserChoiceKey();
+    const userChoice = await getUserChoiceKey();
     if (!userChoice) return false;
 
     // Load key values
-    let values = await new Promise((resolve, reject) => {
+    const values: string[] = await new Promise((resolve, reject) => {
       userChoice.values((error, items) => {
         if (error) {
           reject(error);
@@ -51,7 +51,7 @@ if (process.platform === 'win32') {
   };
 
   // This mimics shell.openItem, true if it worked, false if not.
-  const openNotepad = file =>
+  const openNotepad = (file: string) =>
     new Promise(resolve => {
       exec(`start notepad.exe ${file}`, error => {
         resolve(!error);
