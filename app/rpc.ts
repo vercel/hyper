@@ -36,7 +36,7 @@ export class Server extends EventEmitter {
     super.emit(ev, data);
   }
 
-  emit(ch: string, data: any): any {
+  emit(ch: string, data: any = {}): any {
     // This check is needed because data-batching can cause extra data to be
     // emitted after the window has already closed
     if (!this.win.isDestroyed()) {

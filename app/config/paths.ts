@@ -20,7 +20,7 @@ const applicationDirectory =
 
 let cfgDir = applicationDirectory;
 let cfgPath = join(applicationDirectory, cfgFile);
-let legacyCfgPath = join(homeDirectory, cfgFile); // Hyper 2 config location
+const legacyCfgPath = join(homeDirectory, cfgFile); // Hyper 2 config location
 
 const devDir = resolve(__dirname, '../..');
 const devCfg = join(devDir, cfgFile);
