@@ -79,13 +79,12 @@ const addBinToUserPath = () => {
   });
 };
 
-const logNotify = (withNotification, ...args) => {
-  //eslint-disable-next-line no-console
-  console.log(...args);
-  withNotification && notify(...args);
+const logNotify = (withNotification: boolean, title: string, body: string, details?: any) => {
+  console.log(title, body, details);
+  withNotification && notify(title, body, details);
 };
 
-export const installCLI = withNotification => {
+export const installCLI = (withNotification: boolean) => {
   if (process.platform === 'win32') {
     addBinToUserPath()
       .then(() =>

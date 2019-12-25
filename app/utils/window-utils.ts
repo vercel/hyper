@@ -1,6 +1,6 @@
-const electron = require('electron');
+import electron from 'electron';
 
-function positionIsValid(position) {
+export function positionIsValid(position: [number, number]) {
   const displays = electron.screen.getAllDisplays();
   const [x, y] = position;
 
@@ -8,7 +8,3 @@ function positionIsValid(position) {
     return x >= workArea.x && x <= workArea.x + workArea.width && y >= workArea.y && y <= workArea.y + workArea.height;
   });
 }
-
-module.exports = {
-  positionIsValid
-};
