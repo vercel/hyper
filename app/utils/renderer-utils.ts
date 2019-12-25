@@ -1,14 +1,14 @@
-const rendererTypes = {};
+const rendererTypes: Record<string, string> = {};
 
 function getRendererTypes() {
   return rendererTypes;
 }
 
-function setRendererType(uid, type) {
+function setRendererType(uid: string, type: string) {
   rendererTypes[uid] = type;
 }
 
-function unsetRendererType(uid) {
+function unsetRendererType(uid: string) {
   delete rendererTypes[uid];
 }
 

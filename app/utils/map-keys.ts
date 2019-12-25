@@ -1,5 +1,5 @@
-const generatePrefixedCommand = (command, shortcuts) => {
-  const result = {};
+const generatePrefixedCommand = (command: string, shortcuts: string[]) => {
+  const result: Record<string, string[]> = {};
   const baseCmd = command.replace(/:prefix$/, '');
   for (let i = 1; i <= 9; i++) {
     // 9 is a special number because it means 'last'
@@ -11,14 +11,15 @@ const generatePrefixedCommand = (command, shortcuts) => {
   return result;
 };
 
-export default config => {
-  return Object.keys(config).reduce((keymap, command) => {
+export default (config: Record<string, string[] | string>) => {
+  return Object.keys(config).reduce((keymap: Record<string, string[]>, command: string) => {
     if (!command) {
-      return;
+      return keymap;
     }
     // We can have different keys for a same command.
-    const shortcuts = Array.isArray(config[command]) ? config[command] : [config[command]];
-    const fixedShortcuts = [];
+    const _shortcuts = config[command];
+    const shortcuts = Array.isArray(_shortcuts) ? _shortcuts : [_shortcuts];
+    const fixedShortcuts: string[] = [];
     shortcuts.forEach(shortcut => {
       let newShortcut = shortcut;
       if (newShortcut.indexOf('cmd') !== -1) {

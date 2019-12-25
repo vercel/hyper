@@ -3,9 +3,9 @@ import queue from 'queue';
 import ms from 'ms';
 import {yarn, plugs} from '../config/paths';
 
-export const install = fn => {
+export const install = (fn: Function) => {
   const spawnQueue = queue({concurrency: 1});
-  function yarnFn(args, cb) {
+  function yarnFn(args: string[], cb: Function) {
     const env = {
       NODE_ENV: 'production',
       ELECTRON_RUN_AS_NODE: 'true'
@@ -30,7 +30,7 @@ export const install = fn => {
           } else {
             cb(null);
           }
-          end();
+          end?.();
           spawnQueue.start();
         }
       );
@@ -39,7 +39,7 @@ export const install = fn => {
     spawnQueue.start();
   }
 
-  yarnFn(['install', '--no-emoji', '--no-lockfile', '--cache-folder', plugs.cache], err => {
+  yarnFn(['install', '--no-emoji', '--no-lockfile', '--cache-folder', plugs.cache], (err: any) => {
     if (err) {
       return fn(err);
     }
