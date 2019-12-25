@@ -7,7 +7,7 @@
     "app": "electron target",
     "dev": "concurrently -n \"Webpack,TypeScript\" -c \"cyan.bold,blue.bold\" \"webpack -w\" \"tsc --build -v --pretty --watch --preserveWatchOutput\" -k",
     "build": "cross-env NODE_ENV=production webpack && tsc -b -v",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --no-babelrc",
     "test": "yarn run lint && yarn run test:unit",
     "test:unit": "ava",
     "test:unit:watch": "yarn run test:unit -- --watch",
