@@ -303,7 +303,7 @@
     "@types/fs-extra": "8.0.1",
     "@types/mkdirp": "0.5.2",
     "@types/mousetrap": "^1.6.3",
-    "@types/node": "^12.12.21",
+    "@types/node": "^13.1.0",
     "@types/pify": "3.0.2",
     "@types/plist": "3.0.2",
     "@types/react": "^16.9.16",
