@@ -7,13 +7,13 @@
     "app": "electron target",
     "dev": "concurrently -n \"Webpack,TypeScript\" -c \"cyan.bold,blue.bold\" \"webpack -w\" \"tsc --build -v --pretty --watch --preserveWatchOutput\" -k",
     "build": "cross-env NODE_ENV=production webpack && tsc -b -v",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --no-babelrc",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "test": "yarn run lint && yarn run test:unit",
     "test:unit": "ava",
     "test:unit:watch": "yarn run test:unit -- --watch",
     "postinstall": "webpack --config-name hyper-app && electron-builder install-app-deps && yarn run rebuild-node-pty && cpy --cwd=target --parents \"node_modules/**/*\" \"../app/\"",
     "rebuild-node-pty": "electron-rebuild -f -w target/node_modules/node-pty -m target",
-    "dist": "yarn run build && cross-env BABEL_ENV=production babel --out-file target/renderer/bundle.js --no-comments --minified target/renderer/bundle.js && electron-builder",
+    "dist": "yarn run build && cross-env BABEL_ENV=production babel target/renderer/bundle.js --out-file target/renderer/bundle.js --no-comments --minified && electron-builder",
     "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer"
   },
   "ava": {
