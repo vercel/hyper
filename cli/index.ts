@@ -46,7 +46,7 @@ args.command(
       .then(() => console.log(chalk.green(`${pluginName} installed successfully!`)))
       .catch((err: any) => console.error(chalk.red(err)));
   },
-  ['i', 'install']
+  ['i']
 );
 
 args.command(
@@ -61,7 +61,7 @@ args.command(
       .then(() => console.log(chalk.green(`${pluginName} uninstalled successfully!`)))
       .catch(err => console.log(chalk.red(err)));
   },
-  ['u', 'uninstall', 'rm', 'remove']
+  ['u', 'rm', 'remove']
 );
 
 args.command(
@@ -78,7 +78,7 @@ args.command(
     }
     process.exit(0);
   },
-  ['ls', 'list']
+  ['ls']
 );
 
 const lsRemote = (pattern?: string) => {
@@ -127,7 +127,7 @@ args.command(
         console.error(chalk.red(err)); // TODO
       });
   },
-  ['s', 'search']
+  ['s']
 );
 
 args.command(
@@ -149,7 +149,7 @@ args.command(
         console.error(chalk.red(err)); // TODO
       });
   },
-  ['lsr', 'list-remote', 'ls-remote']
+  ['lsr', 'ls-remote']
 );
 
 args.command(
@@ -161,7 +161,7 @@ args.command(
     open(`http://ghub.io/${pluginName}`, {wait: false, url: true});
     process.exit(0);
   },
-  ['d', 'docs', 'h', 'home']
+  ['d', 'h', 'home']
 );
 
 args.command(
@@ -171,7 +171,7 @@ args.command(
     console.log(version);
     process.exit(0);
   },
-  ['version']
+  []
 );
 
 args.command('<default>', 'Launch Hyper');
