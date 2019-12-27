@@ -1,7 +1,8 @@
 import fetch from 'electron-fetch';
 import {EventEmitter} from 'events';
 
-class AutoUpdater extends EventEmitter {
+class AutoUpdater extends EventEmitter implements Electron.AutoUpdater {
+  updateURL!: string;
   quitAndInstall() {
     this.emitError('QuitAndInstall unimplemented');
   }
@@ -9,8 +10,8 @@ class AutoUpdater extends EventEmitter {
     return this.updateURL;
   }
 
-  setFeedURL(updateURL) {
-    this.updateURL = updateURL;
+  setFeedURL(options: Electron.FeedURLOptions) {
+    this.updateURL = options.url;
   }
 
   checkForUpdates() {
@@ -20,16 +21,18 @@ class AutoUpdater extends EventEmitter {
     this.emit('checking-for-update');
 
     fetch(this.updateURL)
-      .then(res => {
+      .then((res): any => {
         if (res.status === 204) {
           return this.emit('update-not-available');
         }
+        // eslint-disable-next-line @typescript-eslint/camelcase
         return res.json().then(({name, notes, pub_date}) => {
           // Only name is mandatory, needed to construct release URL.
           if (!name) {
             throw new Error('Malformed server response: release name is missing.');
           }
           // If `null` is passed to Date constructor, current time will be used. This doesn't work with `undefined`
+          // eslint-disable-next-line @typescript-eslint/camelcase
           const date = new Date(pub_date || null);
           this.emit('update-available', {}, notes, name, date);
         });
@@ -37,11 +40,11 @@ class AutoUpdater extends EventEmitter {
       .catch(this.emitError.bind(this));
   }
 
-  emitError(error) {
+  emitError(error: any) {
     if (typeof error === 'string') {
       error = new Error(error);
     }
-    this.emit('error', error, error.message);
+    this.emit('error', error);
   }
 }
 
