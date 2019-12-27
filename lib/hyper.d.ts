@@ -155,6 +155,26 @@ export type hyperPlugin = {
 import rootReducer from './reducers/index';
 export type HyperState = ReturnType<typeof rootReducer>;
 
+import {UIActions} from './constants/ui';
+import {ConfigActions} from './constants/config';
+import {SessionActions} from './constants/sessions';
+import {NotificationActions} from './constants/notifications';
+import {UpdateActions} from './constants/updater';
+import {TermGroupActions} from './constants/term-groups';
+import {InitActions} from './constants';
+import {TabActions} from './constants/tabs';
+
+export type HyperActions = (
+  | UIActions
+  | ConfigActions
+  | SessionActions
+  | NotificationActions
+  | UpdateActions
+  | TermGroupActions
+  | InitActions
+  | TabActions
+) & {effect?: () => void};
+
 type immutableRecord<T> = {[k in keyof T]: Immutable<T[k]>};
 
 export type TermsProps = {

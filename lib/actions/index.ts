@@ -1,5 +1,5 @@
 import rpc from '../rpc';
-import INIT from '../constants';
+import {INIT} from '../constants';
 import {Dispatch} from 'redux';
 
 export default function init() {

@@ -1,3 +1,7 @@
-const INIT = 'INIT';
+export const INIT = 'INIT';
 
-export default INIT;
+export interface InitAction {
+  type: typeof INIT;
+}
+
+export type InitActions = InitAction;
