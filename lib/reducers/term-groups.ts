@@ -1,10 +1,10 @@
 import uuid from 'uuid';
 import Immutable, {Immutable as ImmutableType} from 'seamless-immutable';
 import {TERM_GROUP_EXIT, TERM_GROUP_RESIZE} from '../constants/term-groups';
-import {SESSION_ADD, SESSION_SET_ACTIVE} from '../constants/sessions';
+import {SESSION_ADD, SESSION_SET_ACTIVE, SessionAddAction} from '../constants/sessions';
 import findBySession from '../utils/term-groups';
 import {decorateTermGroupsReducer} from '../utils/plugins';
-import {ITermGroup, ITermState, ITermGroups} from '../hyper';
+import {ITermGroup, ITermState, ITermGroups, HyperActions} from '../hyper';
 
 const MIN_SIZE = 0.05;
 const initialState = Immutable<ITermState>({
@@ -66,9 +66,9 @@ const removalRebalance = (oldSizes: ImmutableType<number[]>, index: number) => {
   );
 };
 
-const splitGroup = (state: ImmutableType<ITermState>, action: {splitDirection: any; uid: string; activeUid: any}) => {
+const splitGroup = (state: ImmutableType<ITermState>, action: SessionAddAction) => {
   const {splitDirection, uid, activeUid} = action;
-  const activeGroup = findBySession(state, activeUid)!;
+  const activeGroup = findBySession(state, activeUid!)!;
   // If we're splitting in the same direction as the current active
   // group's parent - or if it's the first split for that group -
   // we want the parent to get another child:
@@ -197,16 +197,7 @@ const resizeGroup = (state: ImmutableType<ITermState>, uid: any, sizes: number[]
   return state.setIn(['termGroups', uid, 'sizes'], sizes);
 };
 
-const reducer = (
-  state = initialState,
-  action: {
-    splitDirection: any;
-    uid: any;
-    activeUid: any;
-    type: any;
-    sizes: any;
-  }
-) => {
+const reducer = (state = initialState, action: HyperActions) => {
   switch (action.type) {
     case SESSION_ADD: {
       if (action.splitDirection) {
@@ -235,5 +226,7 @@ const reducer = (
       return state;
   }
 };
+
+export type ITermGroupReducer = typeof reducer;
 
 export default decorateTermGroupsReducer(reducer);
