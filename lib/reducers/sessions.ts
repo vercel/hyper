@@ -13,7 +13,7 @@ import {
   SESSION_SEARCH,
   SESSION_SEARCH_CLOSE
 } from '../constants/sessions';
-import {sessionState, session} from '../hyper';
+import {sessionState, session, HyperActions} from '../hyper';
 
 const initialState: ImmutableType<sessionState> = Immutable({
   sessions: {},
@@ -36,14 +36,14 @@ function Session(obj: Immutable.DeepPartial<session>) {
 }
 
 function deleteSession(state: ImmutableType<sessionState>, uid: string) {
-  return state.updateIn(['sessions'], (sessions: ImmutableType<any>) => {
+  return state.updateIn(['sessions'], (sessions: typeof state['sessions']) => {
     const sessions_ = sessions.asMutable();
     delete sessions_[uid];
     return sessions_;
   });
 }
 
-const reducer = (state: ImmutableType<sessionState> = initialState, action: any) => {
+const reducer = (state: ImmutableType<sessionState> = initialState, action: HyperActions) => {
   switch (action.type) {
     case SESSION_ADD:
       return state.set('activeUid', action.uid).setIn(
@@ -134,5 +134,7 @@ const reducer = (state: ImmutableType<sessionState> = initialState, action: any)
       return state;
   }
 };
+
+export type ISessionReducer = typeof reducer;
 
 export default decorateSessionsReducer(reducer);

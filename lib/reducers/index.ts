@@ -1,9 +1,17 @@
 import {combineReducers} from 'redux';
-import ui from './ui';
-import sessions from './sessions';
-import termGroups from './term-groups';
+import ui, {IUiReducer} from './ui';
+import sessions, {ISessionReducer} from './sessions';
+import termGroups, {ITermGroupReducer} from './term-groups';
+import {HyperActions} from '../hyper';
 
-export default combineReducers({
+export default combineReducers<
+  {
+    ui: ReturnType<IUiReducer>;
+    sessions: ReturnType<ISessionReducer>;
+    termGroups: ReturnType<ITermGroupReducer>;
+  },
+  HyperActions
+>({
   ui,
   sessions,
   termGroups

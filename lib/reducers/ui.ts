@@ -24,7 +24,7 @@ import {
   SESSION_SET_CWD
 } from '../constants/sessions';
 import {UPDATE_AVAILABLE} from '../constants/updater';
-import {uiState} from '../hyper';
+import {uiState, HyperActions} from '../hyper';
 
 const allowedCursorShapes = new Set(['BEAM', 'BLOCK', 'UNDERLINE']);
 const allowedCursorBlinkValues = new Set([true, false]);
@@ -114,7 +114,7 @@ const initial: ImmutableType<uiState> = Immutable({
 
 const currentWindow = remote.getCurrentWindow();
 
-const reducer = (state = initial, action: any) => {
+const reducer = (state = initial, action: HyperActions) => {
   let state_ = state;
   let isMax;
   //eslint-disable-next-line default-case
@@ -449,5 +449,7 @@ const reducer = (state = initial, action: any) => {
 
   return state_;
 };
+
+export type IUiReducer = typeof reducer;
 
 export default decorateUIReducer(reducer);
