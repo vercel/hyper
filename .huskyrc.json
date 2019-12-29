@@ -1,0 +1,6 @@
+{
+  "$schema": "http://json.schemastore.org/huskyrc",
+  "hooks": {
+    "pre-push": "yarn test"
+  }
+}

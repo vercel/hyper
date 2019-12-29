@@ -1,0 +1,98 @@
+{
+  "plugins": [
+    "react",
+    "prettier",
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "impliedStrict": true,
+      "experimentalObjectRestSpread": true
+    },
+    "allowImportExportEverywhere": true
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "rules": {
+    "func-names": [
+      "error",
+      "as-needed"
+    ],
+    "no-shadow": "error",
+    "no-extra-semi": 0,
+    "react/prop-types": 0,
+    "react/react-in-jsx-scope": 0,
+    "react/no-unescaped-entities": 0,
+    "react/jsx-no-target-blank": 0,
+    "react/no-string-refs": 0,
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 120,
+        "tabWidth": 2,
+        "singleQuote": true,
+        "trailingComma": "none",
+        "bracketSpacing": false,
+        "semi": true,
+        "useTabs": false,
+        "jsxBracketSameLine": false
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "app/config/config-default.js",
+        ".hyper.js"
+      ],
+      "rules": {
+        "prettier/prettier": [
+          "error",
+          {
+            "printWidth": 120,
+            "tabWidth": 2,
+            "singleQuote": true,
+            "trailingComma": "es5",
+            "bracketSpacing": false,
+            "semi": true,
+            "useTabs": false,
+            "parser": "babel",
+            "jsxBracketSameLine": false
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "**.ts",
+        "**.tsx"
+      ],
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint"
+      ],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-non-null-assertion": "off"
+      }
+    }
+  ]
+}

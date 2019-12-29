@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json.schemastore.org/electron-builder",
+  "appId": "co.zeit.hyper",
+  "directories": {
+    "app": "target"
+  },
+  "extraResources": [
+    "./bin/yarn-standalone.js",
+    "./bin/cli.js",
+    {
+      "from": "./build/${os}/",
+      "to": "./bin/",
+      "filter": [
+        "hyper*"
+      ]
+    }
+  ],
+  "linux": {
+    "category": "TerminalEmulator",
+    "target": [
+      {
+        "target": "deb",
+        "arch": [
+          "x64"
+        ]
+      },
+      {
+        "target": "AppImage",
+        "arch": [
+          "x64"
+        ]
+      },
+      {
+        "target": "rpm",
+        "arch": [
+          "x64"
+        ]
+      },
+      {
+        "target": "snap",
+        "arch": [
+          "x64"
+        ]
+      }
+    ]
+  },
+  "win": {
+    "target": [
+      "squirrel"
+    ],
+    "rfc3161TimeStampServer": "http://timestamp.comodoca.com"
+  },
+  "mac": {
+    "category": "public.app-category.developer-tools",
+    "extendInfo": "build/Info.plist",
+    "darkModeSupport": true
+  },
+  "deb": {
+    "afterInstall": "./build/linux/after-install.tpl"
+  },
+  "rpm": {
+    "afterInstall": "./build/linux/after-install.tpl"
+  },
+  "snap": {
+    "confinement": "classic"
+  },
+  "protocols": {
+    "name": "ssh URL",
+    "schemes": [
+      "ssh"
+    ]
+  }
+}
