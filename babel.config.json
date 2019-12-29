@@ -1,0 +1,45 @@
+{
+  "presets": [
+    "@babel/react",
+    "@babel/typescript"
+  ],
+  "plugins": [
+    [
+      "styled-jsx/babel",
+      {
+        "vendorPrefixes": false
+      }
+    ],
+    "@babel/plugin-proposal-numeric-separator",
+    "@babel/proposal-class-properties",
+    "@babel/proposal-object-rest-spread",
+    "@babel/plugin-proposal-optional-chaining"
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        "minify-constant-folding",
+        "minify-dead-code-elimination",
+        "minify-flip-comparisons",
+        "minify-guarded-expressions",
+        "minify-infinity",
+        [
+          "minify-mangle-names",
+          {
+            "keepClassName": true,
+            "keepFnName": true
+          }
+        ],
+        "minify-replace",
+        "minify-simplify",
+        "minify-type-constructors",
+        "transform-member-expression-literals",
+        "transform-merge-sibling-variables",
+        "transform-minify-booleans",
+        "transform-property-literals",
+        "transform-simplify-comparison-operators",
+        "transform-undefined-to-void"
+      ]
+    }
+  }
+}
