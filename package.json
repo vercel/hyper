@@ -321,7 +321,7 @@
     "babel-loader": "8.0.6",
     "babel-preset-minify": "0.5.1",
     "concurrently": "5.0.2",
-    "copy-webpack-plugin": "5.0.5",
+    "copy-webpack-plugin": "5.1.1",
     "cpy-cli": "^2.0.0",
     "cross-env": "6.0.3",
     "electron": "^7.1.7",
