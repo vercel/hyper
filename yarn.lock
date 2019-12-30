@@ -4285,10 +4285,10 @@ globule@^1.0.0:
     lodash "~4.17.10"
     minimatch "~3.0.2"
 
-got@10.0.4:
-  version "10.0.4"
-  resolved "https://registry.yarnpkg.com/got/-/got-10.0.4.tgz#d3a5a6cafd2f6c342d562513cc2d2d7b6afdcbb4"
-  integrity sha512-yMaRLGZJ7iINsDcZ8hso+v44IXVOejz7xrqEabSvUewdHS3zOf57IqU3sWIBYwHlekSrk+CC2PCeLzabOBxnVA==
+got@10.2.0:
+  version "10.2.0"
+  resolved "https://registry.yarnpkg.com/got/-/got-10.2.0.tgz#c7d54e5b41881e5c64952a4013986af12dbab47f"
+  integrity sha512-X14b2uo+20s+HrJz9qyUmGNdIyYbRUZNE05fUz0aS4eXp1l82oUvsvFcMjwY3D25zgWwittqEQWEia0XqSlzzw==
   dependencies:
     "@sindresorhus/is" "^1.0.0"
     "@szmarczak/http-timer" "^3.1.1"
