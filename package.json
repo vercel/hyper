@@ -270,7 +270,7 @@
     "react-dom": "16.12.0",
     "react-redux": "7.1.3",
     "recast": "0.18.5",
-    "redux": "4.0.4",
+    "redux": "4.0.5",
     "redux-thunk": "2.3.0",
     "reselect": "4.0.0",
     "seamless-immutable": "7.1.4",
