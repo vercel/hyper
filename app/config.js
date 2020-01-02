@@ -30,10 +30,10 @@ const _watch = () => {
     // watch for changes on config every 2s on Windows
     // https://github.com/zeit/hyper/pull/1772
     _watcher = fs.watchFile(cfgPath, {interval: 2000}, (curr, prev) => {
-      if (curr.mtime === 0) {
+      if (!curr.mtime || curr.mtime.getTime() === 0) {
         //eslint-disable-next-line no-console
         console.error('error watching config');
-      } else if (curr.mtime !== prev.mtime) {
+      } else if (curr.mtime.getTime() !== prev.mtime.getTime()) {
         onChange();
       }
     });
