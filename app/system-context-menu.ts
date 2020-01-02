@@ -8,7 +8,7 @@ const regParts = [
   {name: 'Icon', value: `${appPath}`}
 ];
 
-function addValues(hyperKey, commandKey, callback) {
+function addValues(hyperKey: Registry.Registry, commandKey: Registry.Registry, callback: Function) {
   hyperKey.set(regParts[1].name, Registry.REG_SZ, regParts[1].value, error => {
     if (error) {
       //eslint-disable-next-line no-console
@@ -30,7 +30,7 @@ function addValues(hyperKey, commandKey, callback) {
   });
 }
 
-export const add = callback => {
+export const add = (callback: Function) => {
   const hyperKey = new Registry({hive: 'HKCU', key: regKey});
   const commandKey = new Registry({
     hive: 'HKCU',
@@ -78,7 +78,7 @@ export const add = callback => {
   });
 };
 
-export const remove = callback => {
+export const remove = (callback: Function) => {
   new Registry({hive: 'HKCU', key: regKey}).destroy(err => {
     if (err) {
       //eslint-disable-next-line no-console
