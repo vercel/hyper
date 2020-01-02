@@ -1,9 +1,9 @@
 import rpc from '../rpc';
 import {INIT} from '../constants';
-import {Dispatch} from 'redux';
+import {HyperDispatch} from '../hyper';
 
 export default function init() {
-  return (dispatch: Dispatch<any>) => {
+  return (dispatch: HyperDispatch) => {
     dispatch({
       type: INIT,
       effect: () => {

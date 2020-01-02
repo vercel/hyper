@@ -4,7 +4,7 @@ import {getRootGroups} from '../selectors';
 import findBySession from '../utils/term-groups';
 import notify from '../utils/notify';
 import rpc from '../rpc';
-import {requestSession, sendSessionData, setActiveSession} from '../actions/sessions';
+import {requestSession, sendSessionData, setActiveSession} from './sessions';
 import {
   UI_FONT_SIZE_SET,
   UI_FONT_SIZE_INCR,
@@ -28,14 +28,13 @@ import {
 
 import {setActiveGroup} from './term-groups';
 import parseUrl from 'parse-url';
-import {Dispatch} from 'redux';
-import {HyperState} from '../hyper';
+import {HyperState, HyperDispatch, HyperActions} from '../hyper';
 import {Stats} from 'fs';
 
 const {stat} = window.require('fs');
 
 export function openContextMenu(uid: string, selection: any) {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
     dispatch({
       type: UI_CONTEXTMENU_OPEN,
       uid,
@@ -51,7 +50,7 @@ export function openContextMenu(uid: string, selection: any) {
 }
 
 export function increaseFontSize() {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
     dispatch({
       type: UI_FONT_SIZE_INCR,
       effect() {
@@ -68,7 +67,7 @@ export function increaseFontSize() {
 }
 
 export function decreaseFontSize() {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
     dispatch({
       type: UI_FONT_SIZE_DECR,
       effect() {
@@ -85,14 +84,14 @@ export function decreaseFontSize() {
   };
 }
 
-export function resetFontSize() {
+export function resetFontSize(): HyperActions {
   return {
     type: UI_FONT_SIZE_RESET
   };
 }
 
 export function setFontSmoothing() {
-  return (dispatch: Dispatch<any>) => {
+  return (dispatch: HyperDispatch) => {
     setTimeout(() => {
       const devicePixelRatio = window.devicePixelRatio;
       const fontSmoothing = devicePixelRatio < 2 ? 'subpixel-antialiased' : 'antialiased';
@@ -105,7 +104,7 @@ export function setFontSmoothing() {
   };
 }
 
-export function windowGeometryUpdated() {
+export function windowGeometryUpdated(): HyperActions {
   return {
     type: UI_WINDOW_GEOMETRY_CHANGED
   };
@@ -135,8 +134,8 @@ const getNeighborIndex = (groups: string[], uid: string, type: string) => {
   return (groups.indexOf(uid) + groups.length - 1) % groups.length;
 };
 
-function moveToNeighborPane(type: string) {
-  return () => (dispatch: Dispatch<any>, getState: () => HyperState) => {
+function moveToNeighborPane(type: typeof UI_MOVE_NEXT_PANE | typeof UI_MOVE_PREV_PANE) {
+  return () => (dispatch: HyperDispatch, getState: () => HyperState) => {
     dispatch({
       type,
       effect() {
@@ -152,7 +151,7 @@ function moveToNeighborPane(type: string) {
           dispatch(setActiveSession(sessionUid!));
         }
       }
-    });
+    } as HyperActions);
   };
 }
 
@@ -165,7 +164,7 @@ const getGroupUids = (state: HyperState) => {
 };
 
 export function moveLeft() {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
     dispatch({
       type: UI_MOVE_LEFT,
       effect() {
@@ -186,7 +185,7 @@ export function moveLeft() {
 }
 
 export function moveRight() {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
     dispatch({
       type: UI_MOVE_RIGHT,
       effect() {
@@ -207,7 +206,7 @@ export function moveRight() {
 }
 
 export function moveTo(i: number | 'last') {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
     if (i === 'last') {
       // Finding last tab index
       const {termGroups} = getState().termGroups;
@@ -238,7 +237,7 @@ export function moveTo(i: number | 'last') {
 }
 
 export function windowMove(window: any) {
-  return (dispatch: Dispatch<any>) => {
+  return (dispatch: HyperDispatch) => {
     dispatch({
       type: UI_WINDOW_MOVE,
       window,
@@ -250,7 +249,7 @@ export function windowMove(window: any) {
 }
 
 export function windowGeometryChange() {
-  return (dispatch: Dispatch<any>) => {
+  return (dispatch: HyperDispatch) => {
     dispatch({
       type: UI_WINDOW_MOVE,
       effect() {
@@ -261,7 +260,7 @@ export function windowGeometryChange() {
 }
 
 export function openFile(path: string) {
-  return (dispatch: Dispatch<any>) => {
+  return (dispatch: HyperDispatch) => {
     dispatch({
       type: UI_OPEN_FILE,
       effect() {
@@ -288,20 +287,20 @@ export function openFile(path: string) {
   };
 }
 
-export function enterFullScreen() {
+export function enterFullScreen(): HyperActions {
   return {
     type: UI_ENTER_FULLSCREEN
   };
 }
 
-export function leaveFullScreen() {
+export function leaveFullScreen(): HyperActions {
   return {
     type: UI_LEAVE_FULLSCREEN
   };
 }
 
 export function openSSH(url: string) {
-  return (dispatch: Dispatch<any>) => {
+  return (dispatch: HyperDispatch) => {
     dispatch({
       type: UI_OPEN_SSH_URL,
       effect() {
@@ -325,7 +324,7 @@ export function openSSH(url: string) {
 }
 
 export function execCommand(command: any, fn: any, e: any) {
-  return (dispatch: Dispatch<any>) =>
+  return (dispatch: HyperDispatch) =>
     dispatch({
       type: UI_COMMAND_EXEC,
       command,
