@@ -110,6 +110,7 @@
     "plist": "3.0.1",
     "prettier": "1.19.1",
     "proxyquire": "2.1.3",
+    "redux-devtools-extension": "2.13.8",
     "spectron": "9.0.0",
     "style-loader": "1.1.2",
     "ts-node": "8.5.4",

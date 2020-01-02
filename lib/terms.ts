@@ -1,3 +1,5 @@
+import Term from './components/term';
+
 // react Term components add themselves
 // to this object upon mounting / unmounting
 // this is to allow imperative access to the
@@ -5,5 +7,5 @@
 // optimization for the most common action
 // within the system
 
-const terms = {};
+const terms: Record<string, Term> = {};
 export default terms;

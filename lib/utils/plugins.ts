@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
 import Notification from '../components/notification';
 import notify from './notify';
 import {hyperPlugin, IUiReducer, ISessionReducer, ITermGroupReducer, HyperState} from '../hyper';
-import {Dispatch} from 'redux';
+import {Dispatch, Middleware} from 'redux';
 
 // remote interface to `../plugins`
 const plugins = remote.require('./plugins') as typeof import('../../app/plugins');
@@ -539,8 +539,8 @@ export function decorateSessionsReducer(fn: ISessionReducer) {
 }
 
 // redux middleware generator
-export const middleware = (store: any) => (next: any) => (action: any) => {
-  const nextMiddleware = (remaining: any[]) => (action_: any) =>
+export const middleware: Middleware = store => next => action => {
+  const nextMiddleware = (remaining: Middleware[]) => (action_: any) =>
     remaining.length ? remaining[0](store)(nextMiddleware(remaining.slice(1)))(action_) : next(action_);
   nextMiddleware(middlewares)(action);
 };
