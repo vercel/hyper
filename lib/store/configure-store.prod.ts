@@ -4,6 +4,10 @@ import rootReducer from '../reducers/index';
 import effects from '../utils/effects';
 import * as plugins from '../utils/plugins';
 import writeMiddleware from './write-middleware';
+import {HyperState, HyperThunkDispatch} from '../hyper';
 
 export default () =>
-  createStore(rootReducer, applyMiddleware(thunk, plugins.middleware, thunk, writeMiddleware, effects));
+  createStore(
+    rootReducer,
+    applyMiddleware<HyperThunkDispatch, HyperState>(thunk, plugins.middleware, thunk, writeMiddleware, effects)
+  );

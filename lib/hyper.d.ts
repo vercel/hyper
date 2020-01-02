@@ -180,6 +180,11 @@ export type HyperActions = (
 
 type immutableRecord<T> = {[k in keyof T]: Immutable<T[k]>};
 
+import {ThunkDispatch} from 'redux-thunk';
+import configureStore from './store/configure-store';
+export type HyperThunkDispatch = ThunkDispatch<HyperState, undefined, HyperActions>;
+export type HyperDispatch = ReturnType<typeof configureStore>['dispatch'];
+
 export type TermsProps = {
   activeRootGroup: string | null;
   activeSession: string | null;

@@ -6,8 +6,8 @@
  * defer or add to existing side effects at will
  * as the result of an action being triggered.
  */
-
-export default () => (next: (arg0: any) => any) => (action: {effect: () => void}) => {
+import {Middleware} from 'redux';
+const effectsMiddleware: Middleware = () => next => action => {
   const ret = next(action);
   if (action.effect) {
     action.effect();
@@ -15,3 +15,4 @@ export default () => (next: (arg0: any) => any) => (action: {effect: () => void}
   }
   return ret;
 };
+export default effectsMiddleware;
