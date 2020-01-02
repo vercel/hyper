@@ -111,7 +111,7 @@ export function newWindow(
     }
   });
 
-  function createSession(extraOptions = {}) {
+  function createSession(extraOptions: any = {}) {
     const uid = uuid.v4();
 
     // remove the rows and cols, the wrong value of them will break layout when init create

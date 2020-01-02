@@ -1,4 +1,5 @@
-import {app, dialog} from 'electron';
+/* eslint-disable @typescript-eslint/no-use-before-define */
+import {app, dialog, BrowserWindow, App} from 'electron';
 import {resolve, basename} from 'path';
 import {writeFileSync} from 'fs';
 import Config from 'electron-store';
@@ -26,11 +27,11 @@ let paths = getPaths();
 let id = getId(plugins);
 let modules = requirePlugins();
 
-function getId(plugins_) {
+function getId(plugins_: any) {
   return JSON.stringify(plugins_);
 }
 
-const watchers = [];
+const watchers: Function[] = [];
 
 // we listen on configuration updates to trigger
 // plugin installation
@@ -50,9 +51,10 @@ config.subscribe(() => {
 // so plugins can `require` them without needing their own version
 // https://github.com/zeit/hyper/issues/619
 function patchModuleLoad() {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const Module = require('module');
   const originalLoad = Module._load;
-  Module._load = function _load(modulePath) {
+  Module._load = function _load(modulePath: string) {
     // PLEASE NOTE: Code changes here, also need to be changed in
     // lib/utils/plugins.js
     switch (modulePath) {
@@ -72,6 +74,7 @@ function patchModuleLoad() {
       case 'hyper/decorate':
         return Object;
       default:
+        // eslint-disable-next-line prefer-rest-params
         return originalLoad.apply(this, arguments);
     }
   };
@@ -95,7 +98,7 @@ function updatePlugins({force = false} = {}) {
   updating = true;
   syncPackageJSON();
   const id_ = id;
-  install(err => {
+  install((err: any) => {
     updating = false;
 
     if (err) {
@@ -185,7 +188,10 @@ if (cache.get('hyper.plugins') !== id || process.env.HYPER_FORCE_UPDATE) {
   const baseConfig = config.getConfig();
   if (baseConfig['autoUpdatePlugins']) {
     // otherwise update plugins every 5 hours
-    setInterval(updatePlugins, ms(baseConfig['autoUpdatePlugins'] === true ? '5h' : baseConfig['autoUpdatePlugins']));
+    setInterval(
+      updatePlugins,
+      ms(baseConfig['autoUpdatePlugins'] === true ? '5h' : (baseConfig['autoUpdatePlugins'] as string))
+    );
   }
 })();
 
@@ -210,15 +216,15 @@ function syncPackageJSON() {
   }
 }
 
-function alert(message) {
+function alert(message: string) {
   dialog.showMessageBox({
     message,
     buttons: ['Ok']
   });
 }
 
-function toDependencies(plugins_) {
-  const obj = {};
+function toDependencies(plugins_: {plugins: string[]}) {
+  const obj: Record<string, string> = {};
   plugins_.plugins.forEach(plugin => {
     const regex = /.(@|#)/;
     const match = regex.exec(plugin);
@@ -237,7 +243,7 @@ function toDependencies(plugins_) {
   return obj;
 }
 
-export const subscribe = fn => {
+export const subscribe = (fn: Function) => {
   watchers.push(fn);
   return () => {
     watchers.splice(watchers.indexOf(fn), 1);
@@ -263,11 +269,11 @@ export const getBasePaths = () => {
   return {path, localPath};
 };
 
-function requirePlugins() {
+function requirePlugins(): any[] {
   const {plugins: plugins_, localPlugins} = paths;
 
-  const load = path_ => {
-    let mod;
+  const load = (path_: string) => {
+    let mod: any;
     try {
       mod = require(path_);
       const exposed = mod && Object.keys(mod).some(key => availableExtensions.has(key));
@@ -304,7 +310,7 @@ function requirePlugins() {
     .filter(v => Boolean(v));
 }
 
-export const onApp = app_ => {
+export const onApp = (app_: App) => {
   modules.forEach(plugin => {
     if (plugin.onApp) {
       try {
@@ -318,7 +324,7 @@ export const onApp = app_ => {
   });
 };
 
-export const onWindowClass = win => {
+export const onWindowClass = (win: BrowserWindow) => {
   modules.forEach(plugin => {
     if (plugin.onWindowClass) {
       try {
@@ -332,7 +338,7 @@ export const onWindowClass = win => {
   });
 };
 
-export const onWindow = win => {
+export const onWindow = (win: BrowserWindow) => {
   modules.forEach(plugin => {
     if (plugin.onWindow) {
       try {
@@ -348,7 +354,7 @@ export const onWindow = win => {
 
 // decorates the base entity by calling plugin[key]
 // for all the available plugins
-function decorateEntity(base, key, type) {
+function decorateEntity(base: any, key: string, type: 'object' | 'function') {
   let decorated = base;
   modules.forEach(plugin => {
     if (plugin[key]) {
@@ -370,16 +376,16 @@ function decorateEntity(base, key, type) {
   return decorated;
 }
 
-function decorateObject(base, key) {
+function decorateObject(base: any, key: string) {
   return decorateEntity(base, key, 'object');
 }
 
-function decorateClass(base, key) {
+function decorateClass(base: any, key: string) {
   return decorateEntity(base, key, 'function');
 }
 
 export const getDeprecatedConfig = () => {
-  const deprecated = {};
+  const deprecated: Record<string, any> = {};
   const baseConfig = config.getConfig();
   modules.forEach(plugin => {
     if (!plugin.decorateConfig) {
@@ -404,11 +410,11 @@ export const getDeprecatedConfig = () => {
   return deprecated;
 };
 
-export const decorateMenu = tpl => {
+export const decorateMenu = (tpl: any) => {
   return decorateObject(tpl, 'decorateMenu');
 };
 
-export const getDecoratedEnv = baseEnv => {
+export const getDecoratedEnv = (baseEnv: Record<string, string>) => {
   return decorateObject(baseEnv, 'decorateEnv');
 };
 
@@ -427,19 +433,19 @@ export const getDecoratedKeymaps = () => {
   return decoratedKeymaps;
 };
 
-export const getDecoratedBrowserOptions = defaults => {
+export const getDecoratedBrowserOptions = <T>(defaults: T): T => {
   return decorateObject(defaults, 'decorateBrowserOptions');
 };
 
-export const decorateWindowClass = defaults => {
+export const decorateWindowClass = <T>(defaults: T): T => {
   return decorateObject(defaults, 'decorateWindowClass');
 };
 
-export const decorateSessionOptions = defaults => {
+export const decorateSessionOptions = <T>(defaults: T): T => {
   return decorateObject(defaults, 'decorateSessionOptions');
 };
 
-export const decorateSessionClass = Session => {
+export const decorateSessionClass = <T>(Session: T): T => {
   return decorateClass(Session, 'decorateSessionClass');
 };
 

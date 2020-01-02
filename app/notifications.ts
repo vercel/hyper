@@ -1,12 +1,13 @@
 import ms from 'ms';
 import fetch from 'electron-fetch';
-import {version} from './package';
+import {version} from './package.json';
+import {BrowserWindow} from 'electron';
 
 const NEWS_URL = 'https://hyper-news.now.sh';
 
-export default function fetchNotifications(win) {
+export default function fetchNotifications(win: BrowserWindow) {
   const {rpc} = win;
-  const retry = err => {
+  const retry = (err?: any) => {
     setTimeout(() => fetchNotifications(win), ms('30m'));
     if (err) {
       //eslint-disable-next-line no-console

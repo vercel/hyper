@@ -6,9 +6,32 @@ import win from './config/windows';
 import {cfgPath, cfgDir} from './config/paths';
 import {getColorMap} from './utils/colors';
 
-const watchers = [];
-let cfg = {};
-let _watcher;
+const watchers: any[] = [];
+let cfg: Record<string, any> = {};
+let _watcher: fs.FSWatcher;
+
+export const getDeprecatedCSS = (config: Record<string, any>) => {
+  const deprecated: string[] = [];
+  const deprecatedCSS = ['x-screen', 'x-row', 'cursor-node', '::selection'];
+  deprecatedCSS.forEach(css => {
+    if ((config.css && config.css.includes(css)) || (config.termCSS && config.termCSS.includes(css))) {
+      deprecated.push(css);
+    }
+  });
+  return deprecated;
+};
+
+const checkDeprecatedConfig = () => {
+  if (!cfg.config) {
+    return;
+  }
+  const deprecated = getDeprecatedCSS(cfg.config);
+  if (deprecated.length === 0) {
+    return;
+  }
+  const deprecatedStr = deprecated.join(', ');
+  notify('Configuration warning', `Your configuration uses some deprecated CSS classes (${deprecatedStr})`);
+};
 
 const _watch = () => {
   if (_watcher) {
@@ -36,11 +59,10 @@ const _watch = () => {
       } else if (curr.mtime.getTime() !== prev.mtime.getTime()) {
         onChange();
       }
-    });
+    }) as any;
     return;
   }
   // macOS/Linux
-  setWatcher();
   function setWatcher() {
     try {
       _watcher = fs.watch(cfgPath, eventType => {
@@ -61,9 +83,10 @@ const _watch = () => {
       console.error('error watching config', error);
     });
   }
+  setWatcher();
 };
 
-export const subscribe = fn => {
+export const subscribe = (fn: Function) => {
   watchers.push(fn);
   return () => {
     watchers.splice(watchers.indexOf(fn), 1);
@@ -83,7 +106,7 @@ export const openConfig = () => {
   return _openConfig();
 };
 
-export const getPlugins = () => {
+export const getPlugins = (): {plugins: string[]; localPlugins: string[]} => {
   return {
     plugins: cfg.plugins,
     localPlugins: cfg.localPlugins
@@ -104,40 +127,16 @@ export const getWin = win.get;
 export const winRecord = win.recordState;
 export const windowDefaults = win.defaults;
 
-const getDeprecatedCSS = config => {
-  const deprecated = [];
-  const deprecatedCSS = ['x-screen', 'x-row', 'cursor-node', '::selection'];
-  deprecatedCSS.forEach(css => {
-    if ((config.css && config.css.includes(css)) || (config.termCSS && config.termCSS.includes(css))) {
-      deprecated.push(css);
-    }
-  });
-  return deprecated;
-};
-export {getDeprecatedCSS};
-
-const checkDeprecatedConfig = () => {
-  if (!cfg.config) {
-    return;
-  }
-  const deprecated = getDeprecatedCSS(cfg.config);
-  if (deprecated.length === 0) {
-    return;
-  }
-  const deprecatedStr = deprecated.join(', ');
-  notify('Configuration warning', `Your configuration uses some deprecated CSS classes (${deprecatedStr})`);
-};
-
-export const fixConfigDefaults = decoratedConfig => {
-  const defaultConfig = getDefaultConfig().config;
+export const fixConfigDefaults = (decoratedConfig: any) => {
+  const defaultConfig = getDefaultConfig()?.config;
   decoratedConfig.colors = getColorMap(decoratedConfig.colors) || {};
   // We must have default colors for xterm css.
   decoratedConfig.colors = Object.assign({}, defaultConfig.colors, decoratedConfig.colors);
   return decoratedConfig;
 };
 
-export const htermConfigTranslate = config => {
-  const cssReplacements = {
+export const htermConfigTranslate = (config: Record<string, any>) => {
+  const cssReplacements: Record<string, string> = {
     'x-screen x-row([ {.[])': '.xterm-rows > div$1',
     '.cursor-node([ {.[])': '.terminal-cursor$1',
     '::selection([ {.[])': '.terminal .xterm-selection div$1',

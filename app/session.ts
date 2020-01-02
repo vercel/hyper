@@ -2,15 +2,16 @@ import {EventEmitter} from 'events';
 import {StringDecoder} from 'string_decoder';
 import defaultShell from 'default-shell';
 import {getDecoratedEnv} from './plugins';
-import {productName, version} from './package';
+import {productName, version} from './package.json';
 import * as config from './config';
+import {IPty, IWindowsPtyForkOptions, spawn as npSpawn} from 'node-pty';
 
 const createNodePtyError = () =>
   new Error(
     '`node-pty` failed to load. Typically this means that it was built incorrectly. Please check the `readme.md` to more info.'
   );
 
-let spawn;
+let spawn: typeof npSpawn;
 try {
   spawn = require('node-pty').spawn;
 } catch (err) {
@@ -33,7 +34,11 @@ const BATCH_MAX_SIZE = 200 * 1024;
 // with the window ID which is then stripped on the renderer process and this
 // overhead is reduced with batching.
 class DataBatcher extends EventEmitter {
-  constructor(uid) {
+  uid: string;
+  decoder: StringDecoder;
+  data!: string;
+  timeout!: NodeJS.Timeout | null;
+  constructor(uid: string) {
     super();
     this.uid = uid;
     this.decoder = new StringDecoder('utf8');
@@ -46,7 +51,7 @@ class DataBatcher extends EventEmitter {
     this.timeout = null;
   }
 
-  write(chunk) {
+  write(chunk: Buffer) {
     if (this.data.length + chunk.length >= BATCH_MAX_SIZE) {
       // We've reached the max batch size. Flush it and start another one
       if (this.timeout) {
@@ -72,8 +77,20 @@ class DataBatcher extends EventEmitter {
   }
 }
 
+interface SessionOptions {
+  uid: string;
+  rows: number;
+  cols: number;
+  cwd: string;
+  shell: string;
+  shellArgs: string[];
+}
 export default class Session extends EventEmitter {
-  constructor(options) {
+  pty: IPty | null;
+  batcher: DataBatcher | null;
+  shell: string | null;
+  ended: boolean;
+  constructor(options: SessionOptions) {
     super();
     this.pty = null;
     this.batcher = null;
@@ -82,8 +99,9 @@ export default class Session extends EventEmitter {
     this.init(options);
   }
 
-  init({uid, rows, cols: columns, cwd, shell, shellArgs}) {
-    const osLocale = require('os-locale');
+  init({uid, rows, cols: columns, cwd, shell, shellArgs}: SessionOptions) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const osLocale = require('os-locale') as typeof import('os-locale');
     const baseEnv = Object.assign(
       {},
       process.env,
@@ -106,7 +124,7 @@ export default class Session extends EventEmitter {
 
     const defaultShellArgs = ['--login'];
 
-    const options = {
+    const options: IWindowsPtyForkOptions = {
       cols: columns,
       rows,
       cwd,
@@ -133,7 +151,7 @@ export default class Session extends EventEmitter {
       if (this.ended) {
         return;
       }
-      this.batcher.write(chunk);
+      this.batcher?.write(chunk as any);
     });
 
     this.batcher.on('flush', data => {
@@ -154,7 +172,7 @@ export default class Session extends EventEmitter {
     this.destroy();
   }
 
-  write(data) {
+  write(data: string) {
     if (this.pty) {
       this.pty.write(data);
     } else {
@@ -163,7 +181,7 @@ export default class Session extends EventEmitter {
     }
   }
 
-  resize({cols, rows}) {
+  resize({cols, rows}: {cols: number; rows: number}) {
     if (this.pty) {
       try {
         this.pty.resize(cols, rows);
