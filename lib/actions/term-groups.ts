@@ -10,12 +10,11 @@ import {SESSION_REQUEST} from '../constants/sessions';
 import findBySession from '../utils/term-groups';
 import {getRootGroups} from '../selectors';
 import {setActiveSession, ptyExitSession, userExitSession} from './sessions';
-import {Dispatch} from 'redux';
-import {ITermState, ITermGroup, HyperState} from '../hyper';
+import {ITermState, ITermGroup, HyperState, HyperDispatch} from '../hyper';
 import {Immutable} from 'seamless-immutable';
 
 function requestSplit(direction: string) {
-  return (activeUid: string) => (dispatch: Dispatch<any>, getState: () => HyperState): void => {
+  return (activeUid: string) => (dispatch: HyperDispatch, getState: () => HyperState): void => {
     dispatch({
       type: SESSION_REQUEST,
       effect: () => {
@@ -42,7 +41,7 @@ export function resizeTermGroup(uid: string, sizes: number[]) {
 }
 
 export function requestTermGroup(activeUid: string) {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
     dispatch({
       type: TERM_GROUP_REQUEST,
       effect: () => {
@@ -59,7 +58,7 @@ export function requestTermGroup(activeUid: string) {
 }
 
 export function setActiveGroup(uid: string) {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
     const {termGroups} = getState();
     dispatch(setActiveSession(termGroups.activeSessions[uid]));
   };
@@ -106,7 +105,7 @@ const findNextSessionUid = (state: Immutable<ITermState>, group: Immutable<ITerm
 };
 
 export function ptyExitTermGroup(sessionUid: string) {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
     const {termGroups} = getState();
     const group = findBySession(termGroups, sessionUid);
     // This might have already been closed:
@@ -131,7 +130,7 @@ export function ptyExitTermGroup(sessionUid: string) {
 }
 
 export function userExitTermGroup(uid: string) {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
     const {termGroups} = getState();
     dispatch({
       type: TERM_GROUP_EXIT,
@@ -163,7 +162,7 @@ export function userExitTermGroup(uid: string) {
 }
 
 export function exitActiveTermGroup() {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
     dispatch({
       type: TERM_GROUP_EXIT_ACTIVE,
       effect() {

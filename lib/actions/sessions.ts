@@ -16,11 +16,10 @@ import {
   SESSION_SEARCH,
   SESSION_SEARCH_CLOSE
 } from '../constants/sessions';
-import {HyperState, session} from '../hyper';
-import {Dispatch} from 'redux';
+import {HyperState, session, HyperDispatch, HyperActions} from '../hyper';
 
 export function addSession({uid, shell, pid, cols, rows, splitDirection, activeUid}: session) {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
     const {sessions} = getState();
     const now = Date.now();
     dispatch({
@@ -38,7 +37,7 @@ export function addSession({uid, shell, pid, cols, rows, splitDirection, activeU
 }
 
 export function requestSession() {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
     dispatch({
       type: SESSION_REQUEST,
       effect: () => {
@@ -52,7 +51,7 @@ export function requestSession() {
 }
 
 export function addSessionData(uid: string, data: any) {
-  return (dispatch: Dispatch<any>) => {
+  return (dispatch: HyperDispatch) => {
     dispatch({
       type: SESSION_ADD_DATA,
       data,
@@ -69,8 +68,8 @@ export function addSessionData(uid: string, data: any) {
   };
 }
 
-function createExitAction(type: string) {
-  return (uid: string) => (dispatch: Dispatch<any>, getState: () => HyperState) => {
+function createExitAction(type: typeof SESSION_USER_EXIT | typeof SESSION_PTY_EXIT) {
+  return (uid: string) => (dispatch: HyperDispatch, getState: () => HyperState) => {
     return dispatch({
       type,
       uid,
@@ -84,7 +83,7 @@ function createExitAction(type: string) {
           window.close();
         }
       }
-    });
+    } as HyperActions);
   };
 }
 
@@ -94,7 +93,7 @@ export const userExitSession = createExitAction(SESSION_USER_EXIT);
 export const ptyExitSession = createExitAction(SESSION_PTY_EXIT);
 
 export function setActiveSession(uid: string) {
-  return (dispatch: Dispatch<any>) => {
+  return (dispatch: HyperDispatch) => {
     dispatch({
       type: SESSION_SET_ACTIVE,
       uid
@@ -102,13 +101,13 @@ export function setActiveSession(uid: string) {
   };
 }
 
-export function clearActiveSession() {
+export function clearActiveSession(): HyperActions {
   return {
     type: SESSION_CLEAR_ACTIVE
   };
 }
 
-export function setSessionXtermTitle(uid: string, title: string) {
+export function setSessionXtermTitle(uid: string, title: string): HyperActions {
   return {
     type: SESSION_SET_XTERM_TITLE,
     uid,
@@ -117,7 +116,7 @@ export function setSessionXtermTitle(uid: string, title: string) {
 }
 
 export function resizeSession(uid: string, cols: number, rows: number) {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
     const {termGroups} = getState();
     const group = findBySession(termGroups, uid)!;
     const isStandaloneTerm = !group.parentUid && !group.children.length;
@@ -137,8 +136,8 @@ export function resizeSession(uid: string, cols: number, rows: number) {
 }
 
 export function onSearch(uid?: string) {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
-    const targetUid = uid || getState().sessions.activeUid;
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
+    const targetUid = uid || getState().sessions.activeUid!;
     dispatch({
       type: SESSION_SEARCH,
       uid: targetUid
@@ -147,8 +146,8 @@ export function onSearch(uid?: string) {
 }
 
 export function closeSearch(uid?: string) {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
-    const targetUid = uid || getState().sessions.activeUid;
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
+    const targetUid = uid || getState().sessions.activeUid!;
     dispatch({
       type: SESSION_SEARCH_CLOSE,
       uid: targetUid
@@ -157,7 +156,7 @@ export function closeSearch(uid?: string) {
 }
 
 export function sendSessionData(uid: string | null, data: any, escaped?: any) {
-  return (dispatch: Dispatch<any>, getState: () => HyperState) => {
+  return (dispatch: HyperDispatch, getState: () => HyperState) => {
     dispatch({
       type: SESSION_USER_DATA,
       data,
