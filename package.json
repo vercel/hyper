@@ -68,7 +68,7 @@
     "@babel/preset-typescript": "7.7.7",
     "@types/args": "3.0.0",
     "@types/async-retry": "1.4.1",
-    "@types/color": "3.0.0",
+    "@types/color": "3.0.1",
     "@types/columnify": "^1.5.0",
     "@types/electron-devtools-installer": "2.2.0",
     "@types/fs-extra": "8.0.1",
