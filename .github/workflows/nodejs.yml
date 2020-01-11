@@ -1,0 +1,118 @@
+name: Node CI
+on: [push, pull_request]
+jobs:
+  ci_macos:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install
+        run: yarn install
+      - name: Test
+        run: yarn run test
+      - name: Build
+        run: yarn run dist --publish=never
+        env:
+          CI: true
+      - name: Get macOS Artifact Names
+        id: getmacosfilename
+        run: |
+          echo "::set-output name=dmgName::$(ls dist/*.dmg | cut -d'/' -f2)"
+          echo "::set-output name=dmgPath::$(ls dist/*.dmg)"
+      - name: Archive macOS Build Artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{ steps.getmacosfilename.outputs.dmgName }}
+          path: ${{ steps.getmacosfilename.outputs.dmgPath }}
+  ci_linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install
+        run: yarn install
+      - name: Test
+        run: yarn run test
+      - name: Build
+        run: yarn run dist --publish=never
+        env:
+          CI: true
+      - name: Get Linux Artifact Names
+        id: getlinuxfilename
+        run: |
+          echo "::set-output name=snapName::$(ls dist/*.snap | cut -d'/' -f2)"
+          echo "::set-output name=snapPath::$(ls dist/*.snap)"
+          echo "::set-output name=AppImageName::$(ls dist/*.AppImage | cut -d'/' -f2)"
+          echo "::set-output name=AppImagePath::$(ls dist/*.AppImage)"
+          echo "::set-output name=debName::$(ls dist/*.deb | cut -d'/' -f2)"
+          echo "::set-output name=debPath::$(ls dist/*.deb)"
+          echo "::set-output name=rpmName::$(ls dist/*.rpm | cut -d'/' -f2)"
+          echo "::set-output name=rpmPath::$(ls dist/*.rpm)"
+      - name: Archive Linux Build Artifacts (Snap)
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{ steps.getlinuxfilename.outputs.snapName }}
+          path: ${{ steps.getlinuxfilename.outputs.snapPath }}
+      - name: Archive Linux Build Artifacts (AppImage)
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{ steps.getlinuxfilename.outputs.AppImageName }}
+          path: ${{ steps.getlinuxfilename.outputs.AppImagePath }}
+      - name: Archive Linux Build Artifacts (Deb)
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{ steps.getlinuxfilename.outputs.debName }}
+          path: ${{ steps.getlinuxfilename.outputs.debPath }}
+      - name: Archive Linux Build Artifacts (RPM)
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{ steps.getlinuxfilename.outputs.rpmName }}
+          path: ${{ steps.getlinuxfilename.outputs.rpmPath }}
+  ci_windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install
+        run: yarn install
+      - name: Test
+        run: yarn run test
+      - name: Build
+        run: yarn run dist --publish=never
+        env:
+          CI: true
+      - name: Get Windows Artifact Names
+        id: getwindowsfilename
+        run: |
+          Write-Host "::set-output name=exeName::$(Get-ChildItem -Name .\dist\squirrel-windows\ | Select-String exe)"
+          Write-Host "::set-output name=exePath::dist/squirrel-windows/$(Get-ChildItem -Name .\dist\squirrel-windows\ | Select-String exe)"
+          Write-Host "::set-output name=nupkgName::$(Get-ChildItem -Name .\dist\squirrel-windows\ | Select-String nupkg)"
+          Write-Host "::set-output name=nupkgPath::dist/squirrel-windows/$(Get-ChildItem -Name .\dist\squirrel-windows\ | Select-String nupkg)"
+      - name: Archive Windows Build Artifacts (exe)
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{ steps.getwindowsfilename.outputs.exeName }}
+          path: ${{ steps.getwindowsfilename.outputs.exePath }}
+      - name: Archive Windows Build Artifacts (nupkg)
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{ steps.getwindowsfilename.outputs.nupkgName }}
+          path: ${{ steps.getwindowsfilename.outputs.nupkgPath }}
