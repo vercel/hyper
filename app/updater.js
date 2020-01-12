@@ -12,7 +12,7 @@ import {getDecoratedConfig} from './plugins';
 const {platform} = process;
 const isLinux = platform === 'linux';
 
-const autoUpdater = isLinux ? require('./auto-updater-linux') : electron.autoUpdater;
+const autoUpdater = isLinux ? require('./auto-updater-linux').default : electron.autoUpdater;
 
 let isInit = false;
 // Default to the "stable" update channel
