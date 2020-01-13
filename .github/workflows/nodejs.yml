@@ -1,5 +1,10 @@
 name: Node CI
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+      - canary
+  pull_request:
 jobs:
   ci_macos:
     runs-on: macos-latest
@@ -16,6 +21,11 @@ jobs:
         run: yarn install
       - name: Test
         run: yarn run test
+      - name: Getting Build Icon
+        if: github.ref == 'refs/heads/canary' || github.base_ref == 'canary'
+        run: |
+          cp build/canary.ico build/icon.ico
+          cp build/canary.icns build/icon.icns
       - name: Build
         run: yarn run dist --publish=never
         env:
@@ -45,6 +55,11 @@ jobs:
         run: yarn install
       - name: Test
         run: yarn run test
+      - name: Getting Build Icon
+        if: github.ref == 'refs/heads/canary' || github.base_ref == 'canary'
+        run: |
+          cp build/canary.ico build/icon.ico
+          cp build/canary.icns build/icon.icns
       - name: Build
         run: yarn run dist --publish=never
         env:
@@ -95,6 +110,11 @@ jobs:
         run: yarn install
       - name: Test
         run: yarn run test
+      - name: Getting Build Icon
+        if: github.ref == 'refs/heads/canary' || github.base_ref == 'canary'
+        run: |
+          Copy-Item .\build\canary.ico .\build\icon.ico
+          Copy-Item .\build\canary.icns .\build\icon.icns
       - name: Build
         run: yarn run dist --publish=never
         env:
