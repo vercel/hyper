@@ -86,7 +86,7 @@
     "@types/uuid": "3.4.6",
     "@types/webdriverio": "^4.8.0",
     "@types/winreg": "1.2.30",
-    "@typescript-eslint/eslint-plugin": "2.14.0",
+    "@typescript-eslint/eslint-plugin": "2.15.0",
     "@typescript-eslint/parser": "2.15.0",
     "ava": "2.4.0",
     "babel-loader": "8.0.6",
