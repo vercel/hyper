@@ -55,7 +55,7 @@ class Hyper extends React.PureComponent<any, any> {
 
   attachKeyListeners() {
     if (!this.mousetrap) {
-      this.mousetrap = new Mousetrap();
+      this.mousetrap = new (Mousetrap as any)(window, true);
       this.mousetrap.stopCallback = () => {
         // All events should be intercepted even if focus is in an input/textarea
         return false;
