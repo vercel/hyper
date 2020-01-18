@@ -132,7 +132,7 @@ export default class Term extends React.PureComponent<TermProps> {
 
     if (!props.term) {
       const needTransparency = Color(props.backgroundColor).alpha() < 1;
-      const useWebGL = false;
+      let useWebGL = false;
       if (props.webGLRenderer) {
         if (needTransparency) {
           console.warn(
@@ -144,7 +144,7 @@ export default class Term extends React.PureComponent<TermProps> {
         } else {
           // Experimental WebGL renderer needs some more glue-code to make it work on Hyper.
           // If you're working on enabling back WebGL, you will also need to look into `xterm-addon-ligatures` support for that renderer.
-          // useWebGL = true;
+          useWebGL = true;
         }
       }
       Term.reportRenderer(props.uid, useWebGL ? 'WebGL' : 'Canvas');
