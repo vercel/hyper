@@ -114,7 +114,7 @@
     "redux-devtools-extension": "2.13.8",
     "spectron": "9.0.0",
     "style-loader": "1.1.2",
-    "ts-node": "8.6.1",
+    "ts-node": "8.6.2",
     "typescript": "3.7.5",
     "webpack": "4.41.5"
   }
