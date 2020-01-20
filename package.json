@@ -88,7 +88,7 @@
     "@types/winreg": "1.2.30",
     "@typescript-eslint/eslint-plugin": "2.15.0",
     "@typescript-eslint/parser": "2.15.0",
-    "ava": "2.4.0",
+    "ava": "3.0.0",
     "babel-loader": "8.0.6",
     "babel-preset-minify": "0.5.1",
     "concurrently": "5.0.2",
