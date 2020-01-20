@@ -6,7 +6,7 @@ language: node_js
 matrix:
   include:
     - os: linux
-      node_js: 12.10.0
+      node_js: 12
       env: CC=clang CXX=clang++ npm_config_clang=1
       compiler: clang
 
