@@ -2,6 +2,7 @@ const path = require('path');
 
 const webpack = require('webpack');
 const Copy = require('copy-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
@@ -53,6 +54,10 @@ module.exports = [
         }
       ])
     ],
+    optimization: {
+      minimize: true,
+      minimizer: [new TerserPlugin()]
+    },
     target: 'electron-main'
   },
 
@@ -101,6 +106,10 @@ module.exports = [
         }
       ])
     ],
+    optimization: {
+      minimize: true,
+      minimizer: [new TerserPlugin()]
+    },
     target: 'electron-renderer'
   },
   {
@@ -136,6 +145,10 @@ module.exports = [
         'process.env.NODE_ENV': JSON.stringify(nodeEnv)
       })
     ],
+    optimization: {
+      minimize: true,
+      minimizer: [new TerserPlugin()]
+    },
     target: 'node'
   }
 ];
