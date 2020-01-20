@@ -1,7 +1,9 @@
 export default {
   files: ['test/unit/*'],
-  helpers: ['**/testUtils/**/*'],
-  compileEnhancements: false,
+  babel: {
+    compileEnhancements: false,
+    compileAsTests: ['**/testUtils/**/*']
+  },
   extensions: ['ts'],
   require: ['ts-node/register/transpile-only']
 };
