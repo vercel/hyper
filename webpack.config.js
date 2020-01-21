@@ -54,10 +54,6 @@ module.exports = [
         }
       ])
     ],
-    optimization: {
-      minimize: true,
-      minimizer: [new TerserPlugin()]
-    },
     target: 'electron-main'
   },
 
@@ -107,7 +103,7 @@ module.exports = [
       ])
     ],
     optimization: {
-      minimize: true,
+      minimize: isProd ? true : false,
       minimizer: [new TerserPlugin()]
     },
     target: 'electron-renderer'
@@ -146,7 +142,7 @@ module.exports = [
       })
     ],
     optimization: {
-      minimize: true,
+      minimize: isProd ? true : false,
       minimizer: [new TerserPlugin()]
     },
     target: 'node'
