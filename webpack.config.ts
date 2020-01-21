@@ -1,8 +1,7 @@
-const path = require('path');
-
-const webpack = require('webpack');
-const Copy = require('copy-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+import Copy from 'copy-webpack-plugin';
+import path from 'path';
+import TerserPlugin from 'terser-webpack-plugin';
+import webpack from 'webpack';
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
@@ -32,19 +31,19 @@ module.exports = [
       new Copy([
         {
           from: './app/*.html',
-          exclude: /node_modules/,
+          ignore: ['/node_modules/'],
           to: '.',
           flatten: true
         },
         {
           from: './app/*.json',
-          exclude: /node_modules/,
+          ignore: ['/node_modules/'],
           to: '.',
           flatten: true
         },
         {
           from: './app/keymaps/*.json',
-          exclude: /node_modules/,
+          ignore: ['/node_modules/'],
           to: './keymaps',
           flatten: true
         },
