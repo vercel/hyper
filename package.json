@@ -1,6 +1,6 @@
 {
   "name": "hyper",
-  "version": "3.1.0-canary.1",
+  "version": "3.1.0-canary.2",
   "repository": "zeit/hyper",
   "scripts": {
     "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
