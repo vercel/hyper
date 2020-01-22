@@ -6,7 +6,7 @@ import webpack from 'webpack';
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
 
-module.exports = [
+const config: webpack.Configuration[] = [
   {
     mode: 'none',
     name: 'hyper-app',
@@ -113,7 +113,7 @@ module.exports = [
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
     },
-    devtool: isProd ? 'none' : 'cheap-module-source-map',
+    devtool: isProd ? false : 'cheap-module-source-map',
     entry: './cli/index.ts',
     output: {
       path: path.join(__dirname, 'bin'),
@@ -147,3 +147,5 @@ module.exports = [
     target: 'node'
   }
 ];
+
+export default config;
