@@ -6,7 +6,7 @@ import fileUriToPath from 'file-uri-to-path';
 import isDev from 'electron-is-dev';
 import updater from '../updater';
 import toElectronBackgroundColor from '../utils/to-electron-background-color';
-import {icon, cfgDir} from '../config/paths';
+import {icon, homeDirectory} from '../config/paths';
 import createRPC from '../rpc';
 import notify from '../notify';
 import fetchNotifications from '../notifications';
@@ -60,7 +60,7 @@ export function newWindow(
   };
 
   // set working directory
-  let workingDirectory = cfgDir;
+  let workingDirectory = homeDirectory;
   if (process.argv[1] && isAbsolute(process.argv[1])) {
     workingDirectory = process.argv[1];
   } else if (cfg.workingDirectory && isAbsolute(cfg.workingDirectory)) {
