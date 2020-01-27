@@ -100,7 +100,7 @@
     "cross-env": "6.0.3",
     "electron": "^7.1.9",
     "electron-builder": "22.2.0",
-    "electron-builder-squirrel-windows": "22.3.0",
+    "electron-builder-squirrel-windows": "22.3.3",
     "electron-devtools-installer": "2.2.4",
     "electron-rebuild": "1.8.8",
     "eslint": "6.8.0",
