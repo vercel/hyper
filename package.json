@@ -108,7 +108,7 @@
     "eslint-plugin-prettier": "3.1.2",
     "eslint-plugin-react": "7.18.0",
     "husky": "4.0.10",
-    "inquirer": "7.0.3",
+    "inquirer": "7.0.4",
     "node-gyp": "6.1.0",
     "null-loader": "3.0.0",
     "plist": "3.0.1",
