@@ -92,7 +92,7 @@
     "@types/winreg": "1.2.30",
     "@typescript-eslint/eslint-plugin": "2.17.0",
     "@typescript-eslint/parser": "2.17.0",
-    "ava": "3.1.0",
+    "ava": "3.2.0",
     "babel-loader": "8.0.6",
     "concurrently": "5.1.0",
     "copy-webpack-plugin": "5.1.1",
