@@ -90,7 +90,7 @@
     "@types/webdriverio": "^4.8.0",
     "@types/webpack": "4.41.3",
     "@types/winreg": "1.2.30",
-    "@typescript-eslint/eslint-plugin": "2.17.0",
+    "@typescript-eslint/eslint-plugin": "2.19.0",
     "@typescript-eslint/parser": "2.19.0",
     "ava": "3.2.0",
     "babel-loader": "8.0.6",
