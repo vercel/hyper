@@ -102,7 +102,7 @@
     "electron-builder": "22.3.2",
     "electron-builder-squirrel-windows": "22.3.3",
     "electron-devtools-installer": "2.2.4",
-    "electron-rebuild": "1.8.8",
+    "electron-rebuild": "1.10.0",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.10.0",
     "eslint-plugin-prettier": "3.1.2",
