@@ -86,7 +86,7 @@
     "@types/seamless-immutable": "7.1.11",
     "@types/styled-jsx": "2.2.8",
     "@types/terser-webpack-plugin": "2.2.0",
-    "@types/uuid": "3.4.6",
+    "@types/uuid": "3.4.7",
     "@types/webdriverio": "^4.8.0",
     "@types/webpack": "4.41.3",
     "@types/winreg": "1.2.30",
