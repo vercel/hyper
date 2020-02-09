@@ -30,7 +30,7 @@ module.exports = {
 ```
 
 ### Running your plugin
-To load, your plugin should expose at least one API method. All possible methods are listed [here](https://github.com/zeit/hyper/blob/canary/app/plugins/extensions.js).
+To load, your plugin should expose at least one API method. All possible methods are listed [here](https://github.com/zeit/hyper/blob/canary/app/plugins/extensions.ts).
 
 After launching Hyper in dev mode, run `yarn run app`, it should log that your plugin has been correcty loaded: `Plugin hyper-awesome-plugin (0.1.0) loaded.`. Name and version printed are the ones in your plugins `package.json` file.
 
