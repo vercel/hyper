@@ -1,9 +1,16 @@
 import pify from 'pify';
 import fs from 'fs';
 import path from 'path';
-import Registry from 'winreg';
 import notify from '../notify';
 import {cliScriptPath, cliLinkPath} from '../config/paths';
+
+import * as regTypes from '../typings/native-reg';
+try {
+  // eslint-disable-next-line no-var, @typescript-eslint/no-var-requires
+  var Registry: typeof regTypes = require('native-reg');
+} catch (err) {
+  console.log(err);
+}
 
 const readlink = pify(fs.readlink);
 const symlink = pify(fs.symlink);
@@ -33,26 +40,30 @@ const addSymlink = () => {
 };
 
 const addBinToUserPath = () => {
-  // Can't use pify because of param order of Registry.values callback
   return new Promise((resolve, reject) => {
-    const envKey = new Registry({hive: 'HKCU', key: '\\Environment'});
-    envKey.values((err, items) => {
-      if (err) {
-        reject(err);
-        return;
-      }
+    try {
+      const envKey = Registry.openKey(Registry.HKCU, 'Environment', Registry.Access.ALL_ACCESS)!;
+
       // C:\Users\<user>\AppData\Local\hyper\app-<version>\resources\bin
       const binPath = path.dirname(cliScriptPath);
       // C:\Users\<user>\AppData\Local\hyper
       const basePath = path.resolve(binPath, '../../..');
 
-      const pathItem = items.find(item => item.name.toUpperCase() === 'PATH');
+      const items = Registry.enumValueNames(envKey);
+      const pathItem = items.find(item => item.toUpperCase() === 'PATH');
+      const pathItemName = pathItem || 'PATH';
 
       let newPathValue = binPath;
-      const pathItemName = pathItem ? pathItem.name : 'PATH';
+      let type: regTypes.ValueType = Registry.ValueType.SZ;
       if (pathItem) {
-        const pathParts = pathItem.value.split(';');
-        const existingPath = pathParts.find(pathPart => pathPart === binPath);
+        type = Registry.queryValueRaw(envKey, pathItem)!.type;
+        if (type !== Registry.ValueType.SZ && type !== Registry.ValueType.EXPAND_SZ) {
+          reject(`Registry key type is ${type}`);
+          return;
+        }
+        const value = Registry.queryValue(envKey, pathItem) as string;
+        const pathParts = value.split(';');
+        const existingPath = pathParts.includes(binPath);
         if (existingPath) {
           //eslint-disable-next-line no-console
           console.log('Hyper CLI already in PATH');
@@ -68,14 +79,12 @@ const addBinToUserPath = () => {
       }
       //eslint-disable-next-line no-console
       console.log('Adding HyperCLI path (registry)');
-      envKey.set(pathItemName, Registry.REG_SZ, newPathValue, error => {
-        if (error) {
-          reject(error);
-          return;
-        }
-        resolve();
-      });
-    });
+      Registry.setValueRaw(envKey, pathItemName, type, Registry.formatString(newPathValue));
+      Registry.closeKey(envKey);
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
   });
 };
 

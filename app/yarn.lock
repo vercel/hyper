@@ -369,9 +369,21 @@ nan@^2.14.0:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
 
+native-reg@0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/native-reg/-/native-reg-0.3.3.tgz#820bcd6246029ab49cb10c9258b6ba3cb6d22ebe"
+  integrity sha512-zt7A29wK2yvPcSsRfx7snWjo2AUTWRVIE3QMuNfKqtwNhwSpo3V3FDQekja7amH0/rjDe8u2MKOkFSV8+I4i/A==
+  dependencies:
+    node-gyp-build "^4.2.0"
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
+
+node-gyp-build@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.2.0.tgz#2c2b05f461f4178641a6ce2d7159f04094e9376d"
+  integrity sha512-4oiumOLhCDU9Rronz8PZ5S4IvT39H5+JEv/hps9V8s7RSLhsac0TCP78ulnHXOo8X1wdpPiTayGlM1jr4IbnaQ==
 
 node-pty@0.9.0:
   version "0.9.0"

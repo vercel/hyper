@@ -4,6 +4,7 @@ app/static
 app/bin
 app/dist
 app/node_modules
+app/typings
 assets
 website
 bin

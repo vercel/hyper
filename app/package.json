@@ -35,5 +35,8 @@
     "shell-env": "3.0.0",
     "uuid": "3.4.0",
     "winreg": "1.2.4"
+  },
+  "optionalDependencies": {
+    "native-reg": "0.3.3"
   }
 }
