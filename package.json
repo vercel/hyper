@@ -121,6 +121,6 @@
     "terser-webpack-plugin": "2.3.4",
     "ts-node": "8.6.2",
     "typescript": "3.7.5",
-    "webpack": "4.41.5"
+    "webpack": "4.41.6"
   }
 }
