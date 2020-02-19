@@ -11,12 +11,11 @@ import stylis from 'stylis';
 import {HeaderContainer} from './header';
 import TermsContainer from './terms';
 import NotificationsContainer from './notifications';
-import {HyperState} from '../hyper';
-import {Dispatch} from 'redux';
+import {HyperState, HyperProps, HyperDispatch} from '../hyper';
 
 const isMac = /Mac/.test(navigator.userAgent);
 
-class Hyper extends React.PureComponent<any, any> {
+class Hyper extends React.PureComponent<HyperProps, {lastConfigUpdate: number}> {
   mousetrap!: MousetrapInstance;
   terms: any;
   constructor(props: any) {
@@ -26,7 +25,7 @@ class Hyper extends React.PureComponent<any, any> {
     };
   }
   //TODO: Remove usage of legacy and soon deprecated lifecycle methods
-  UNSAFE_componentWillReceiveProps(next: any) {
+  UNSAFE_componentWillReceiveProps(next: HyperProps) {
     if (this.props.backgroundColor !== next.backgroundColor) {
       // this can be removed when `setBackgroundColor` in electron
       // starts working again
@@ -90,9 +89,9 @@ class Hyper extends React.PureComponent<any, any> {
     window.focusActiveTerm = this.handleFocusActive;
   };
 
-  componentDidUpdate(prev: any) {
+  componentDidUpdate(prev: HyperProps) {
     if (prev.activeSession !== this.props.activeSession) {
-      this.handleFocusActive(this.props.activeSession);
+      this.handleFocusActive(this.props.activeSession!);
     }
   }
 
@@ -147,29 +146,30 @@ class Hyper extends React.PureComponent<any, any> {
   }
 }
 
-const HyperContainer = connect(
-  (state: HyperState) => {
-    return {
-      isMac,
-      customCSS: state.ui.css,
-      uiFontFamily: state.ui.uiFontFamily,
-      borderColor: state.ui.borderColor,
-      activeSession: state.sessions.activeUid,
-      backgroundColor: state.ui.backgroundColor,
-      maximized: state.ui.maximized,
-      fullScreen: state.ui.fullScreen,
-      lastConfigUpdate: state.ui._lastUpdate
-    };
-  },
-  (dispatch: Dispatch<any>) => {
-    return {
-      execCommand: (command: any, fn: any, e: any) => {
-        dispatch(uiActions.execCommand(command, fn, e));
-      }
-    };
-  },
-  null,
-  {forwardRef: true}
-)(Hyper, 'Hyper');
+const mapStateToProps = (state: HyperState) => {
+  return {
+    isMac,
+    customCSS: state.ui.css,
+    uiFontFamily: state.ui.uiFontFamily,
+    borderColor: state.ui.borderColor,
+    activeSession: state.sessions.activeUid,
+    backgroundColor: state.ui.backgroundColor,
+    maximized: state.ui.maximized,
+    fullScreen: state.ui.fullScreen,
+    lastConfigUpdate: state.ui._lastUpdate
+  };
+};
+
+const mapDispatchToProps = (dispatch: HyperDispatch) => {
+  return {
+    execCommand: (command: any, fn: any, e: any) => {
+      dispatch(uiActions.execCommand(command, fn, e));
+    }
+  };
+};
+
+const HyperContainer = connect(mapStateToProps, mapDispatchToProps, null, {forwardRef: true})(Hyper, 'Hyper');
 
 export default HyperContainer;
+
+export type HyperConnectedProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;

@@ -185,44 +185,21 @@ import configureStore from './store/configure-store';
 export type HyperThunkDispatch = ThunkDispatch<HyperState, undefined, HyperActions>;
 export type HyperDispatch = ReturnType<typeof configureStore>['dispatch'];
 
-export type TermsProps = {
-  activeRootGroup: string | null;
-  activeSession: string | null;
+type extensionProps = Partial<{
+  customChildren: any;
+  customChildrenBefore: any;
   customCSS: string;
-  fontSmoothing: string;
-  termGroups: Immutable<ITermGroup>[];
-} & immutableRecord<
-  Pick<
-    uiState,
-    | 'backgroundColor'
-    | 'bell'
-    | 'bellSound'
-    | 'bellSoundURL'
-    | 'borderColor'
-    | 'colors'
-    | 'cols'
-    | 'copyOnSelect'
-    | 'cursorAccentColor'
-    | 'cursorBlink'
-    | 'cursorColor'
-    | 'cursorShape'
-    | 'disableLigatures'
-    | 'fontFamily'
-    | 'fontSize'
-    | 'fontWeight'
-    | 'fontWeightBold'
-    | 'foregroundColor'
-    | 'letterSpacing'
-    | 'lineHeight'
-    | 'macOptionSelectionMode'
-    | 'modifierKeys'
-    | 'padding'
-    | 'quickEdit'
-    | 'rows'
-    | 'scrollback'
-    | 'selectionColor'
-    | 'uiFontFamily'
-    | 'webGLRenderer'
-  >
-> &
-  immutableRecord<Pick<sessionState, 'sessions' | 'write'>>;
+  customInnerChildren: any;
+}>;
+
+import {HeaderConnectedProps} from './containers/header';
+export type HeaderProps = HeaderConnectedProps & extensionProps;
+
+import {HyperConnectedProps} from './containers/hyper';
+export type HyperProps = HyperConnectedProps & extensionProps;
+
+import {NotificationsConnectedProps} from './containers/notifications';
+export type NotificationsProps = NotificationsConnectedProps & extensionProps;
+
+import {TermsConnectedProps} from './containers/terms';
+export type TermsProps = TermsConnectedProps & extensionProps & {ref_: any};
