@@ -808,11 +808,6 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@types/winreg@1.2.30":
-  version "1.2.30"
-  resolved "https://registry.yarnpkg.com/@types/winreg/-/winreg-1.2.30.tgz#91d6710e536d345b9c9b017c574cf6a8da64c518"
-  integrity sha1-kdZxDlNtNFucmwF8V0z2qNpkxRg=
-
 "@typescript-eslint/eslint-plugin@2.21.0":
   version "2.21.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-2.21.0.tgz#a34de84a0791cae0357c4dda805c5b4e8203b6c6"

@@ -397,10 +397,10 @@ nan@^2.14.0:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
   integrity sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
 
-native-reg@0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/native-reg/-/native-reg-0.3.3.tgz#820bcd6246029ab49cb10c9258b6ba3cb6d22ebe"
-  integrity sha512-zt7A29wK2yvPcSsRfx7snWjo2AUTWRVIE3QMuNfKqtwNhwSpo3V3FDQekja7amH0/rjDe8u2MKOkFSV8+I4i/A==
+native-reg@0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/native-reg/-/native-reg-0.3.4.tgz#764c75e96ef99dc134024c91be0a9c693d71658b"
+  integrity sha512-5U728JozXdfs4PGxxWpki4LBC6wi9itLYvi6BR/5wLKBmFC2fDbqMOct/CRk2vlMEWtI8MINnIDiEIEREV8DdQ==
   dependencies:
     node-gyp-build "^4.2.0"
 
@@ -706,11 +706,6 @@ which@^1.2.9:
   integrity sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==
   dependencies:
     isexe "^2.0.0"
-
-winreg@1.2.4:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/winreg/-/winreg-1.2.4.tgz#ba065629b7a925130e15779108cf540990e98d1b"
-  integrity sha1-ugZWKbepJRMOFXeRCM9UCZDpjRs=
 
 wrappy@1:
   version "1.0.2"

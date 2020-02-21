@@ -5,11 +5,13 @@ import notify from '../notify';
 import {cliScriptPath, cliLinkPath} from '../config/paths';
 
 import * as regTypes from '../typings/native-reg';
-try {
-  // eslint-disable-next-line no-var, @typescript-eslint/no-var-requires
-  var Registry: typeof regTypes = require('native-reg');
-} catch (err) {
-  console.log(err);
+if (process.platform === 'win32') {
+  try {
+    // eslint-disable-next-line no-var, @typescript-eslint/no-var-requires
+    var Registry: typeof regTypes = require('native-reg');
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 const readlink = pify(fs.readlink);
