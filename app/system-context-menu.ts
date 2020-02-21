@@ -1,80 +1,61 @@
-import Registry from 'winreg';
+import * as regTypes from './typings/native-reg';
+if (process.platform === 'win32') {
+  try {
+    // eslint-disable-next-line no-var, @typescript-eslint/no-var-requires
+    var Registry: typeof regTypes = require('native-reg');
+  } catch (err) {
+    console.error(err);
+  }
+}
 
 const appPath = `"${process.execPath}"`;
-const regKey = `\\Software\\Classes\\Directory\\background\\shell\\Hyper`;
+const regKey = `Software\\Classes\\Directory\\background\\shell\\Hyper`;
 const regParts = [
   {key: 'command', name: '', value: `${appPath} "%V"`},
   {name: '', value: 'Open Hyper here'},
   {name: 'Icon', value: `${appPath}`}
 ];
 
-function addValues(hyperKey: Registry.Registry, commandKey: Registry.Registry, callback: Function) {
-  hyperKey.set(regParts[1].name, Registry.REG_SZ, regParts[1].value, error => {
-    if (error) {
-      console.error(error.message);
-    }
-    hyperKey.set(regParts[2].name, Registry.REG_SZ, regParts[2].value, err => {
-      if (err) {
-        console.error(err.message);
-      }
-      commandKey.set(regParts[0].name, Registry.REG_SZ, regParts[0].value, err_ => {
-        if (err_) {
-          console.error(err_.message);
-        }
-        callback();
-      });
-    });
-  });
+function addValues(hyperKey: regTypes.HKEY, commandKey: regTypes.HKEY, callback: Function) {
+  try {
+    Registry.setValueSZ(hyperKey, regParts[1].name, regParts[1].value);
+  } catch (error) {
+    console.error(error);
+  }
+  try {
+    Registry.setValueSZ(hyperKey, regParts[2].name, regParts[2].value);
+  } catch (err) {
+    console.error(err);
+  }
+  try {
+    Registry.setValueSZ(commandKey, regParts[0].name, regParts[0].value);
+  } catch (err_) {
+    console.error(err_);
+  }
+  callback();
 }
 
 export const add = (callback: Function) => {
-  const hyperKey = new Registry({hive: 'HKCU', key: regKey});
-  const commandKey = new Registry({
-    hive: 'HKCU',
-    key: `${regKey}\\${regParts[0].key}`
-  });
-
-  hyperKey.keyExists((error, exists) => {
-    if (error) {
-      console.error(error.message);
-    }
-    if (exists) {
-      commandKey.keyExists((err_, exists_) => {
-        if (err_) {
-          console.error(err_.message);
-        }
-        if (exists_) {
-          addValues(hyperKey, commandKey, callback);
-        } else {
-          commandKey.create(err => {
-            if (err) {
-              console.error(err.message);
-            }
-            addValues(hyperKey, commandKey, callback);
-          });
-        }
-      });
-    } else {
-      hyperKey.create(err => {
-        if (err) {
-          console.error(err.message);
-        }
-        commandKey.create(err_ => {
-          if (err_) {
-            console.error(err_.message);
-          }
-          addValues(hyperKey, commandKey, callback);
-        });
-      });
-    }
-  });
+  try {
+    const hyperKey =
+      Registry.openKey(Registry.HKCU, regKey, Registry.Access.ALL_ACCESS) ||
+      Registry.createKey(Registry.HKCU, regKey, Registry.Access.ALL_ACCESS);
+    const commandKey =
+      Registry.openKey(Registry.HKCU, `${regKey}\\${regParts[0].key}`, Registry.Access.ALL_ACCESS) ||
+      Registry.createKey(Registry.HKCU, `${regKey}\\${regParts[0].key}`, Registry.Access.ALL_ACCESS);
+    addValues(hyperKey, commandKey, callback);
+    Registry.closeKey(hyperKey);
+    Registry.closeKey(commandKey);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const remove = (callback: Function) => {
-  new Registry({hive: 'HKCU', key: regKey}).destroy(err => {
-    if (err) {
-      console.error(err.message);
-    }
-    callback();
-  });
+  try {
+    Registry.deleteTree(Registry.HKCU, regKey);
+  } catch (err) {
+    console.error(err);
+  }
+  callback();
 };
