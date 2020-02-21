@@ -57,7 +57,7 @@ const initial: ImmutableType<uiState> = Immutable({
   letterSpacing: 0,
   css: '',
   termCSS: '',
-  openAt: {},
+  openAt: {} as Record<string, number>,
   resizeAt: 0,
   colors: {
     black: '#000000',
@@ -77,7 +77,7 @@ const initial: ImmutableType<uiState> = Immutable({
     lightCyan: '#68FDFE',
     lightWhite: '#FFFFFF'
   },
-  activityMarkers: {},
+  activityMarkers: {} as Record<string, boolean>,
   notifications: {
     font: false,
     resize: false,

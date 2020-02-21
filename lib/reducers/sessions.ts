@@ -16,7 +16,7 @@ import {
 import {sessionState, session, HyperActions} from '../hyper';
 
 const initialState: ImmutableType<sessionState> = Immutable({
-  sessions: {},
+  sessions: {} as Record<string, session>,
   activeUid: null
 });
 
