@@ -143,7 +143,6 @@ function moveToNeighborPane(type: typeof UI_MOVE_NEXT_PANE | typeof UI_MOVE_PREV
         const {uid} = findBySession(termGroups, sessions.activeUid!)!;
         const childGroups = findChildSessions(termGroups.termGroups, termGroups.activeRootGroup!);
         if (childGroups.length === 1) {
-          //eslint-disable-next-line no-console
           console.log('ignoring move for single group');
         } else {
           const index = getNeighborIndex(childGroups, uid!, type);
@@ -174,7 +173,6 @@ export function moveLeft() {
         const index = groupUids.indexOf(uid);
         const next = groupUids[index - 1] || groupUids[groupUids.length - 1];
         if (!next || uid === next) {
-          //eslint-disable-next-line no-console
           console.log('ignoring left move action');
         } else {
           dispatch(setActiveGroup(next));
@@ -195,7 +193,6 @@ export function moveRight() {
         const index = groupUids.indexOf(uid);
         const next = groupUids[index + 1] || groupUids[0];
         if (!next || uid === next) {
-          //eslint-disable-next-line no-console
           console.log('ignoring right move action');
         } else {
           dispatch(setActiveGroup(next));
@@ -223,12 +220,10 @@ export function moveTo(i: number | 'last') {
         const groupUids = getGroupUids(state);
         const uid = state.termGroups.activeRootGroup;
         if (uid === groupUids[i as number]) {
-          //eslint-disable-next-line no-console
           console.log('ignoring same uid');
         } else if (groupUids[i as number]) {
           dispatch(setActiveGroup(groupUids[i as number]));
         } else {
-          //eslint-disable-next-line no-console
           console.log('ignoring inexistent index', i);
         }
       }

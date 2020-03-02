@@ -54,7 +54,6 @@ const _watch = () => {
     // https://github.com/zeit/hyper/pull/1772
     _watcher = fs.watchFile(cfgPath, {interval: 2000}, (curr, prev) => {
       if (!curr.mtime || curr.mtime.getTime() === 0) {
-        //eslint-disable-next-line no-console
         console.error('error watching config');
       } else if (curr.mtime.getTime() !== prev.mtime.getTime()) {
         onChange();
@@ -73,13 +72,11 @@ const _watch = () => {
         }
       });
     } catch (e) {
-      //eslint-disable-next-line no-console
       console.error('Failed to watch config file:', cfgPath, e);
       return;
     }
     _watcher.on('change', onChange);
     _watcher.on('error', error => {
-      //eslint-disable-next-line no-console
       console.error('error watching config', error);
     });
   }

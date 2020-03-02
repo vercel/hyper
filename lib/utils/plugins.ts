@@ -144,15 +144,12 @@ Module._load = function _load(path: string) {
   // app/plugins.js
   switch (path) {
     case 'react':
-      //eslint-disable-next-line no-console
       console.warn('DEPRECATED: If your plugin requires `react`, it must bundle it as a dependency');
       return React;
     case 'react-dom':
-      //eslint-disable-next-line no-console
       console.warn('DEPRECATED: If your plugin requires `react-dom`, it must bundle it as a dependency');
       return ReactDOM;
     case 'hyper/component':
-      //eslint-disable-next-line no-console
       console.warn(
         'DEPRECATED: If your plugin requires `hyper/component`, it must requires `react.PureComponent` instead and bundle `react` as a dependency'
       );
@@ -198,14 +195,12 @@ const getPluginVersion = (path: string): string | null => {
   try {
     version = (window.require(pathModule.resolve(path, 'package.json')) as any).version as string;
   } catch (err) {
-    //eslint-disable-next-line no-console
     console.warn(`No package.json found in ${path}`);
   }
   return version;
 };
 
 const loadModules = () => {
-  //eslint-disable-next-line no-console
   console.log('(re)loading renderer plugins');
   const paths = plugins.getPaths();
 
@@ -270,14 +265,12 @@ const loadModules = () => {
       // mapHyperTermState mapping for backwards compatibility with hyperterm
       if (mod.mapHyperTermState) {
         mod.mapHyperState = mod.mapHyperTermState;
-        //eslint-disable-next-line no-console
         console.error('mapHyperTermState is deprecated. Use mapHyperState instead.');
       }
 
       // mapHyperTermDispatch mapping for backwards compatibility with hyperterm
       if (mod.mapHyperTermDispatch) {
         mod.mapHyperDispatch = mod.mapHyperTermDispatch;
-        //eslint-disable-next-line no-console
         console.error('mapHyperTermDispatch is deprecated. Use mapHyperDispatch instead.');
       }
 
@@ -348,7 +341,6 @@ const loadModules = () => {
       if (mod.onRendererWindow) {
         mod.onRendererWindow(window);
       }
-      //eslint-disable-next-line no-console
       console.log(`Plugin ${pluginName} (${pluginVersion}) loaded.`);
 
       return mod;
@@ -359,7 +351,6 @@ const loadModules = () => {
   Object.keys(deprecatedPlugins).forEach(name => {
     const {css} = deprecatedPlugins[name];
     if (css) {
-      //eslint-disable-next-line no-console
       console.warn(`Warning: "${name}" plugin uses some deprecated CSS classes (${css.join(', ')}).`);
     }
   });

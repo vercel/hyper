@@ -10,11 +10,9 @@ export default function fetchNotifications(win: BrowserWindow) {
   const retry = (err?: any) => {
     setTimeout(() => fetchNotifications(win), ms('30m'));
     if (err) {
-      //eslint-disable-next-line no-console
       console.error('Notification messages fetch error', err.stack);
     }
   };
-  //eslint-disable-next-line no-console
   console.log('Checking for notification messages');
   fetch(NEWS_URL, {
     headers: {
@@ -29,7 +27,6 @@ export default function fetchNotifications(win: BrowserWindow) {
         throw new Error('Bad response');
       }
       if (message === '') {
-        //eslint-disable-next-line no-console
         console.log('No matching notification messages');
       } else {
         rpc.emit('add notification', message);

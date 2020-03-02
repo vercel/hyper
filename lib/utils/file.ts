@@ -25,7 +25,6 @@ export function getBase64FileData(filePath: string): Promise<string | null> {
     return fs.readFile(filePath, (err, data) => {
       if (err) {
         // Gracefully fail with a warning
-        //eslint-disable-next-line no-console
         console.warn('There was an error reading the file at the local location:', err);
         return resolve(null);
       }

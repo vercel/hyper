@@ -29,11 +29,9 @@ const checkInstall = () => {
 const addSymlink = () => {
   return checkInstall().then(isInstalled => {
     if (isInstalled) {
-      //eslint-disable-next-line no-console
       console.log('Hyper CLI already in PATH');
       return Promise.resolve();
     }
-    //eslint-disable-next-line no-console
     console.log('Linking HyperCLI');
     return symlink(cliScriptPath, cliLinkPath);
   });
@@ -65,7 +63,6 @@ const addBinToUserPath = () => {
         const pathParts = value.split(';');
         const existingPath = pathParts.includes(binPath);
         if (existingPath) {
-          //eslint-disable-next-line no-console
           console.log('Hyper CLI already in PATH');
           resolve();
           return;
@@ -77,7 +74,6 @@ const addBinToUserPath = () => {
           .concat([binPath])
           .join(';');
       }
-      //eslint-disable-next-line no-console
       console.log('Adding HyperCLI path (registry)');
       Registry.setValueRaw(envKey, pathItemName, type, Registry.formatString(newPathValue));
       Registry.closeKey(envKey);
@@ -117,7 +113,6 @@ export const installCLI = (withNotification: boolean) => {
             ? `File already exists: ${cliLinkPath}`
             : `Symlink creation failed: ${err.code}`;
 
-        //eslint-disable-next-line no-console
         console.error(err);
         logNotify(withNotification, 'Hyper CLI installation failed', error);
       });

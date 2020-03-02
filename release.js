@@ -12,7 +12,6 @@ module.exports = async markdown => {
   const {intro} = answers;
 
   if (intro === '') {
-    //eslint-disable-next-line no-console
     console.error('Please specify a release summary!');
 
     process.exit(1);

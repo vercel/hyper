@@ -99,7 +99,6 @@ const reducer = (state: ImmutableType<sessionState> = initialState, action: Hype
       if (state.sessions[action.uid]) {
         return deleteSession(state, action.uid);
       }
-      // eslint-disable-next-line no-console
       console.log('ignore pty exit: session removed by user');
       return state;
 

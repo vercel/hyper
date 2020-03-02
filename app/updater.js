@@ -5,7 +5,6 @@ import ms from 'ms';
 import retry from 'async-retry';
 
 // Utilities
-// eslint-disable-next-line no-unused-vars
 import {version} from './package';
 import {getDecoratedConfig} from './plugins';
 
@@ -27,7 +26,6 @@ const isCanary = updateChannel => updateChannel === 'canary';
 
 async function init() {
   autoUpdater.on('error', (err, msg) => {
-    //eslint-disable-next-line no-console
     console.error('Error fetching updates', `${msg} (${err.stack})`);
   });
 

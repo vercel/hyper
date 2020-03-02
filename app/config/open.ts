@@ -64,12 +64,10 @@ if (process.platform === 'win32') {
         if (yes) {
           return shell.openItem(cfgPath);
         }
-        //eslint-disable-next-line no-console
         console.warn('No default app set for .js files, using notepad.exe fallback');
         return openNotepad(cfgPath);
       })
       .catch(err => {
-        //eslint-disable-next-line no-console
         console.error('Open config with default app error:', err);
         return openNotepad(cfgPath);
       });
