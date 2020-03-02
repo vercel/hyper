@@ -2,12 +2,14 @@
   "plugins": [
     "react",
     "prettier",
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "eslint-comments"
   ],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:eslint-comments/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -54,7 +56,8 @@
         "useTabs": false,
         "jsxBracketSameLine": false
       }
-    ]
+    ],
+    "eslint-comments/no-unused-disable": "error"
   },
   "overrides": [
     {
