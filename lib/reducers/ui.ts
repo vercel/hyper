@@ -117,10 +117,8 @@ const currentWindow = remote.getCurrentWindow();
 const reducer = (state = initial, action: HyperActions) => {
   let state_ = state;
   let isMax;
-  //eslint-disable-next-line default-case
   switch (action.type) {
     case CONFIG_LOAD:
-    // eslint-disable-next-line no-case-declarations, no-fallthrough
     case CONFIG_RELOAD: {
       const {config, now} = action;
       state_ = state
@@ -325,7 +323,6 @@ const reducer = (state = initial, action: HyperActions) => {
       );
       break;
 
-    // eslint-disable-next-line no-case-declarations
     case SESSION_PTY_DATA:
       // ignore activity markers for current tab
       if (action.uid === state.activeUid) {

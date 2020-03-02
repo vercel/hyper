@@ -106,7 +106,6 @@ export function newWindow(
     if (!isDev) {
       updater(window);
     } else {
-      //eslint-disable-next-line no-console
       console.log('ignoring auto updates during dev');
     }
   });

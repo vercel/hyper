@@ -32,7 +32,6 @@ if (isDev) {
     statSync(devCfg);
     cfgPath = devCfg;
     cfgDir = devDir;
-    //eslint-disable-next-line no-console
     console.log('using config file:', cfgPath);
   } catch (err) {
     // ignore

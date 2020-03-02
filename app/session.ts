@@ -100,7 +100,6 @@ export default class Session extends EventEmitter {
   }
 
   init({uid, rows, cols: columns, cwd, shell, shellArgs}: SessionOptions) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const osLocale = require('os-locale') as typeof import('os-locale');
     const baseEnv = Object.assign(
       {},
@@ -176,7 +175,6 @@ export default class Session extends EventEmitter {
     if (this.pty) {
       this.pty.write(data);
     } else {
-      //eslint-disable-next-line no-console
       console.warn('Warning: Attempted to write to a session with no pty');
     }
   }
@@ -186,11 +184,9 @@ export default class Session extends EventEmitter {
       try {
         this.pty.resize(cols, rows);
       } catch (err) {
-        //eslint-disable-next-line no-console
         console.error(err.stack);
       }
     } else {
-      //eslint-disable-next-line no-console
       console.warn('Warning: Attempted to resize a session with no pty');
     }
   }
@@ -200,11 +196,9 @@ export default class Session extends EventEmitter {
       try {
         this.pty.kill();
       } catch (err) {
-        //eslint-disable-next-line no-console
         console.error('exit error', err.stack);
       }
     } else {
-      //eslint-disable-next-line no-console
       console.warn('Warning: Attempted to destroy a session with no pty');
     }
     this.emit('exit');

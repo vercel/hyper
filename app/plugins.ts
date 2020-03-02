@@ -1,3 +1,4 @@
+// eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import {app, dialog, BrowserWindow, App} from 'electron';
 import {resolve, basename} from 'path';
@@ -102,7 +103,6 @@ function updatePlugins({force = false} = {}) {
     updating = false;
 
     if (err) {
-      //eslint-disable-next-line no-console
       notify('Error updating plugins.', err, {error: err});
     } else {
       // flag successful plugin update
@@ -177,7 +177,6 @@ export const getLoadedPluginVersions = () => {
 // to prevent slowness
 if (cache.get('hyper.plugins') !== id || process.env.HYPER_FORCE_UPDATE) {
   // install immediately if the user changed plugins
-  //eslint-disable-next-line no-console
   console.log('plugins have changed / not init, scheduling plugins installation');
   setTimeout(() => {
     updatePlugins();
@@ -287,16 +286,13 @@ function requirePlugins(): any[] {
       try {
         mod._version = require(resolve(path_, 'package.json')).version;
       } catch (err) {
-        //eslint-disable-next-line no-console
         console.warn(`No package.json found in ${path_}`);
       }
-      //eslint-disable-next-line no-console
       console.log(`Plugin ${mod._name} (${mod._version}) loaded.`);
 
       return mod;
     } catch (err) {
       if (err.code === 'MODULE_NOT_FOUND') {
-        //eslint-disable-next-line no-console
         console.warn(`Plugin error while loading "${basename(path_)}" (${path_}): ${err.message}`);
       } else {
         notify('Plugin error!', `Plugin "${basename(path_)}" failed to load (${err.message})`, {error: err});

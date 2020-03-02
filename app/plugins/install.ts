@@ -12,7 +12,6 @@ export const install = (fn: Function) => {
     };
     spawnQueue.push(end => {
       const cmd = [process.execPath, yarn].concat(args).join(' ');
-      //eslint-disable-next-line no-console
       console.log('Launching yarn:', cmd);
 
       cp.execFile(

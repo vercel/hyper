@@ -3,11 +3,8 @@ if (['--help', '-v', '--version'].includes(process.argv[1])) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const {version} = require('./package');
   const configLocation = process.platform === 'win32' ? `${process.env.userprofile}\\.hyper.js` : '~/.hyper.js';
-  //eslint-disable-next-line no-console
   console.log(`Hyper version ${version}`);
-  //eslint-disable-next-line no-console
   console.log('Hyper does not accept any command line arguments. Please modify the config file instead.');
-  //eslint-disable-next-line no-console
   console.log(`Hyper configuration file located at: ${configLocation}`);
   process.exit();
 }
@@ -104,12 +101,10 @@ app.getLastFocusedWindow = () => {
   });
 };
 
-//eslint-disable-next-line no-console
 console.log('Disabling Chromium GPU blacklist');
 app.commandLine.appendSwitch('ignore-gpu-blacklist');
 
 if (isDev) {
-  //eslint-disable-next-line no-console
   console.log('running in dev mode');
 
   // Override default appVersion which is set from package.json
@@ -119,19 +114,16 @@ if (isDev) {
     }
   });
 } else {
-  //eslint-disable-next-line no-console
   console.log('running in prod mode');
 }
 
 const url = `file://${resolve(isDev ? __dirname : app.getAppPath(), 'index.html')}`;
-//eslint-disable-next-line no-console
 console.log('electron will open', url);
 
 function installDevExtensions(isDev_: boolean) {
   if (!isDev_) {
     return Promise.resolve([]);
   }
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const installer = require('electron-devtools-installer') as typeof import('electron-devtools-installer');
 
   const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'] as const;
@@ -248,11 +240,9 @@ app.on('ready', () =>
       if (!isDev) {
         // check if should be set/removed as default ssh protocol client
         if (config.getConfig().defaultSSHApp && !app.isDefaultProtocolClient('ssh')) {
-          //eslint-disable-next-line no-console
           console.log('Setting Hyper as default client for ssh:// protocol');
           app.setAsDefaultProtocolClient('ssh');
         } else if (!config.getConfig().defaultSSHApp && app.isDefaultProtocolClient('ssh')) {
-          //eslint-disable-next-line no-console
           console.log('Removing Hyper from default client for ssh:// protocol');
           app.removeAsDefaultProtocolClient('ssh');
         }
@@ -260,7 +250,6 @@ app.on('ready', () =>
       }
     })
     .catch(err => {
-      //eslint-disable-next-line no-console
       console.error('Error while loading devtools extensions', err);
     })
 );

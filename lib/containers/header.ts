@@ -1,4 +1,3 @@
-/* eslint-disable max-params */
 import {createSelector} from 'reselect';
 
 import Header from '../components/header';

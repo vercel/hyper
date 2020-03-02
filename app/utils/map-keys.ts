@@ -24,7 +24,6 @@ export default (config: Record<string, string[] | string>) => {
       let newShortcut = shortcut;
       if (newShortcut.indexOf('cmd') !== -1) {
         // Mousetrap use `command` and not `cmd`
-        //eslint-disable-next-line no-console
         console.warn('Your config use deprecated `cmd` in key combination. Please use `command` instead.');
         newShortcut = newShortcut.replace('cmd', 'command');
       }

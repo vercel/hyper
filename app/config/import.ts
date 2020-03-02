@@ -89,7 +89,6 @@ const _importConf = () => {
   try {
     migrateHyper2Config();
   } catch (err) {
-    //eslint-disable-next-line no-console
     console.error(err);
   }
 
@@ -102,7 +101,6 @@ const _importConf = () => {
       const mapping = JSON.parse(content) as Record<string, string | string[]>;
       _defaultCfg.keymaps = mapping;
     } catch (err) {
-      //eslint-disable-next-line no-console
       console.error(err);
     }
 
@@ -115,7 +113,6 @@ const _importConf = () => {
       return {userCfg: defaultCfgRaw, defaultCfg: _defaultCfg};
     }
   } catch (err) {
-    //eslint-disable-next-line no-console
     console.log(err);
   }
 };
