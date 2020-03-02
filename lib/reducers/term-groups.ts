@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import Immutable, {Immutable as ImmutableType} from 'seamless-immutable';
 import {TERM_GROUP_EXIT, TERM_GROUP_RESIZE} from '../constants/term-groups';
 import {SESSION_ADD, SESSION_SET_ACTIVE, SessionAddAction} from '../constants/sessions';
@@ -86,7 +86,7 @@ const splitGroup = (state: ImmutableType<ITermState>, action: SessionAddAction) 
   //      P      ->         /   \
   //                       G     G
   const newSession = TermGroup({
-    uid: uuid.v4(),
+    uid: uuidv4(),
     sessionUid: uid,
     parentUid: parentGroup.uid
   });
@@ -94,7 +94,7 @@ const splitGroup = (state: ImmutableType<ITermState>, action: SessionAddAction) 
   state = state.setIn(['termGroups', newSession.uid], newSession);
   if (parentGroup.sessionUid) {
     const existingSession = TermGroup({
-      uid: uuid.v4(),
+      uid: uuidv4(),
       sessionUid: parentGroup.sessionUid,
       parentUid: parentGroup.uid
     });
@@ -205,7 +205,7 @@ const reducer = (state = initialState, action: HyperActions) => {
         return setActiveGroup(state, action);
       }
 
-      const uid = uuid.v4();
+      const uid = uuidv4();
       const termGroup = TermGroup({
         uid,
         sessionUid: action.uid

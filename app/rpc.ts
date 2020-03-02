@@ -1,6 +1,6 @@
 import {EventEmitter} from 'events';
 import {ipcMain, BrowserWindow} from 'electron';
-import uuid from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 export class Server extends EventEmitter {
   destroyed = false;
@@ -15,7 +15,7 @@ export class Server extends EventEmitter {
       return;
     }
 
-    const uid = uuid.v4();
+    const uid = uuidv4();
     this.id = uid;
 
     ipcMain.on(uid, this.ipcListener);

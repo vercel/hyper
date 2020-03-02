@@ -1,7 +1,7 @@
 import {app, BrowserWindow, shell, Menu, BrowserWindowConstructorOptions} from 'electron';
 import {isAbsolute} from 'path';
 import {parse as parseUrl} from 'url';
-import uuid from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import fileUriToPath from 'file-uri-to-path';
 import isDev from 'electron-is-dev';
 import updater from '../updater';
@@ -21,7 +21,7 @@ export function newWindow(
   cfg: any,
   fn?: (win: BrowserWindow) => void
 ): BrowserWindow {
-  const classOpts = Object.assign({uid: uuid.v4()});
+  const classOpts = Object.assign({uid: uuidv4()});
   app.plugins.decorateWindowClass(classOpts);
 
   const winOpts = Object.assign(
@@ -112,7 +112,7 @@ export function newWindow(
   });
 
   function createSession(extraOptions: any = {}) {
-    const uid = uuid.v4();
+    const uid = uuidv4();
 
     // remove the rows and cols, the wrong value of them will break layout when init create
     const defaultOptions = Object.assign(
