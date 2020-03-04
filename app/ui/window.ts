@@ -112,6 +112,10 @@ export function newWindow(
 
   function createSession(extraOptions: any = {}) {
     const uid = uuidv4();
+    const extraOptionsFiltered: any = {};
+    Object.keys(extraOptions).forEach(key => {
+      if (extraOptions[key] !== undefined) extraOptionsFiltered[key] = extraOptions[key];
+    });
 
     // remove the rows and cols, the wrong value of them will break layout when init create
     const defaultOptions = Object.assign(
@@ -121,7 +125,7 @@ export function newWindow(
         shell: cfg.shell,
         shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
       },
-      extraOptions,
+      extraOptionsFiltered,
       {uid}
     );
     const options = decorateSessionOptions(defaultOptions);
