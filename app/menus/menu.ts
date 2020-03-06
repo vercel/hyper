@@ -15,7 +15,7 @@ import {getDecoratedKeymaps} from '../plugins';
 import {execCommand} from '../commands';
 import {getRendererTypes} from '../utils/renderer-utils';
 
-const appName = app.getName();
+const appName = app.name;
 const appVersion = app.getVersion();
 
 let menu_: Menu;
