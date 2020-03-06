@@ -8,7 +8,7 @@ export default (
   showAbout: () => void
 ): MenuItemConstructorOptions => {
   return {
-    label: `${app.getName()}`,
+    label: `${app.name}`,
     submenu: [
       {
         label: 'About Hyper',

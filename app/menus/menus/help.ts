@@ -7,7 +7,7 @@ import {version} from '../../package.json';
 export default (commands: Record<string, string>, showAbout: () => void): MenuItemConstructorOptions => {
   const submenu: MenuItemConstructorOptions[] = [
     {
-      label: `${app.getName()} Website`,
+      label: `${app.name} Website`,
       click() {
         shell.openExternal('https://hyper.is');
       }
@@ -42,7 +42,7 @@ export default (commands: Record<string, string>, showAbout: () => void): MenuIt
 
 
 <!-- ~/.hyper.js config -->
- - **${app.getName()} version**: ${env.TERM_PROGRAM_VERSION} "${app.getVersion()}"
+ - **${app.name} version**: ${env.TERM_PROGRAM_VERSION} "${app.getVersion()}"
 
  - **OS ARCH VERSION:** ${platform} ${arch} ${release()}
  - **Electron:** ${versions.electron}  **LANG:** ${env.LANG}
