@@ -5,7 +5,7 @@ export const TERM_GROUP_EXIT_ACTIVE = 'TERM_GROUP_EXIT_ACTIVE';
 export const DIRECTION = {
   HORIZONTAL: 'HORIZONTAL',
   VERTICAL: 'VERTICAL'
-};
+} as const;
 
 export interface TermGroupRequestAction {
   type: typeof TERM_GROUP_REQUEST;

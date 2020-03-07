@@ -12,7 +12,7 @@ export type ITermGroup = {
   uid: string;
   sessionUid: string | null;
   parentUid: string | null;
-  direction: string | null;
+  direction: 'HORIZONTAL' | 'VERTICAL' | null;
   sizes: number[] | null;
   children: string[];
 };
@@ -24,6 +24,9 @@ export type ITermState = {
   activeSessions: Record<string, string>;
   activeRootGroup: string | null;
 };
+
+export type cursorShapes = 'BEAM' | 'UNDERLINE' | 'BLOCK';
+import {FontWeight} from 'xterm';
 
 export type uiState = {
   _lastUpdate: number | null;
@@ -58,15 +61,15 @@ export type uiState = {
   cursorAccentColor: string;
   cursorBlink: boolean;
   cursorColor: string;
-  cursorShape: string;
+  cursorShape: cursorShapes;
   cwd?: string;
   disableLigatures: boolean;
   fontFamily: string;
   fontSize: number;
   fontSizeOverride: null | number;
   fontSmoothingOverride: string;
-  fontWeight: string;
-  fontWeightBold: string;
+  fontWeight: FontWeight;
+  fontWeightBold: FontWeight;
   foregroundColor: string;
   fullScreen: boolean;
   letterSpacing: number;
@@ -115,7 +118,7 @@ export type session = {
   title: string;
   uid: string;
   url: string | null;
-  splitDirection?: string;
+  splitDirection?: 'HORIZONTAL' | 'VERTICAL';
   activeUid?: string;
 };
 export type sessionState = {
@@ -133,6 +136,7 @@ import {IUiReducer} from './reducers/ui';
 export {ISessionReducer} from './reducers/sessions';
 import {ISessionReducer} from './reducers/sessions';
 
+import {Middleware} from 'redux';
 export type hyperPlugin = {
   getTabProps: any;
   getTabsProps: any;
@@ -148,7 +152,7 @@ export type hyperPlugin = {
   mapHyperTermState: any;
   mapNotificationsState: any;
   mapTermsState: any;
-  middleware: any;
+  middleware: Middleware;
   onRendererWindow: any;
   reduceSessions: ISessionReducer;
   reduceTermGroups: ITermGroupReducer;

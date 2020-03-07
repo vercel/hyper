@@ -16,7 +16,7 @@ const isMac = /Mac/.test(navigator.userAgent);
 class Hyper extends React.PureComponent<HyperProps, {lastConfigUpdate: number}> {
   mousetrap!: MousetrapInstance;
   terms: any;
-  constructor(props: any) {
+  constructor(props: HyperProps) {
     super(props);
     this.state = {
       lastConfigUpdate: 0
@@ -61,7 +61,7 @@ class Hyper extends React.PureComponent<HyperProps, {lastConfigUpdate: number}> 
       this.mousetrap.reset();
     }
 
-    const keys: Record<string, any> = getRegisteredKeys();
+    const keys = getRegisteredKeys();
     Object.keys(keys).forEach(commandKeys => {
       this.mousetrap.bind(
         commandKeys,
@@ -160,7 +160,7 @@ const mapStateToProps = (state: HyperState) => {
 
 const mapDispatchToProps = (dispatch: HyperDispatch) => {
   return {
-    execCommand: (command: any, fn: any, e: any) => {
+    execCommand: (command: string, fn: (...args: any[]) => void, e: any) => {
       dispatch(uiActions.execCommand(command, fn, e));
     }
   };

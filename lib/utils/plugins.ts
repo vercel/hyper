@@ -11,8 +11,9 @@ import React, {PureComponent} from 'react';
 import ReactDOM from 'react-dom';
 import Notification from '../components/notification';
 import notify from './notify';
-import {hyperPlugin, IUiReducer, ISessionReducer, ITermGroupReducer, HyperState} from '../hyper';
-import {Dispatch, Middleware} from 'redux';
+import {hyperPlugin, IUiReducer, ISessionReducer, ITermGroupReducer, HyperState, HyperDispatch} from '../hyper';
+import {Middleware} from 'redux';
+import {ObjectTypedKeys} from './object';
 
 // remote interface to `../plugins`
 const plugins = remote.require('./plugins') as typeof import('../../app/plugins');
@@ -21,7 +22,7 @@ const plugins = remote.require('./plugins') as typeof import('../../app/plugins'
 let modules: any;
 
 // cache of decorated components
-let decorated: Record<string, any> = {};
+let decorated: Record<string, React.ComponentClass<any>> = {};
 
 // various caches extracted of the plugin methods
 let connectors: {
@@ -30,7 +31,7 @@ let connectors: {
   Hyper: {state: any[]; dispatch: any[]};
   Notifications: {state: any[]; dispatch: any[]};
 };
-let middlewares: any[];
+let middlewares: Middleware[];
 let uiReducers: IUiReducer[];
 let sessionsReducers: ISessionReducer[];
 let termGroupsReducers: ITermGroupReducer[];
@@ -51,9 +52,9 @@ let reducersDecorators: {
 };
 
 // expose decorated component instance to the higher-order components
-function exposeDecorated(Component_: any) {
-  return class DecoratedComponent extends React.Component<any, any> {
-    constructor(props: any, context: any) {
+function exposeDecorated<P extends any>(Component_: React.ComponentClass<P>): React.ComponentClass<P, {}> {
+  return class DecoratedComponent extends React.Component<P> {
+    constructor(props: P, context: any) {
       super(props, context);
     }
     onRef = (decorated_: any) => {
@@ -71,7 +72,7 @@ function exposeDecorated(Component_: any) {
   };
 }
 
-function getDecorated(parent: any, name: string) {
+function getDecorated<P>(parent: React.ComponentClass<P>, name: string): React.ComponentClass<P> {
   if (!decorated[name]) {
     let class_ = exposeDecorated(parent);
     (class_ as any).displayName = `_exposeDecorated(${name})`;
@@ -116,9 +117,12 @@ function getDecorated(parent: any, name: string) {
 // for each component, we return a higher-order component
 // that wraps with the higher-order components
 // exposed by plugins
-export function decorate(Component_: any, name: string) {
-  return class DecoratedComponent extends React.Component<any, {hasError: boolean}> {
-    constructor(props: any) {
+export function decorate<P>(
+  Component_: React.ComponentClass<P>,
+  name: string
+): React.ComponentClass<P, {hasError: boolean}> {
+  return class DecoratedComponent extends React.Component<P, {hasError: boolean}> {
+    constructor(props: P) {
       super(props);
       this.state = {hasError: false};
     }
@@ -255,7 +259,7 @@ const loadModules = () => {
         return undefined;
       }
 
-      (Object.keys(mod) as (keyof typeof mod)[]).forEach(i => {
+      ObjectTypedKeys(mod).forEach(i => {
         if (Object.hasOwnProperty.call(mod, i)) {
           mod[i]._pluginName = pluginName;
           mod[i]._pluginVersion = pluginVersion;
@@ -419,7 +423,7 @@ export function getTabProps(tab: any, parentProps: any, props: any) {
 // and the class gets decorated (proxied)
 export function connect<stateProps, dispatchProps>(
   stateFn: (state: HyperState) => stateProps,
-  dispatchFn: (dispatch: Dispatch<any>) => dispatchProps,
+  dispatchFn: (dispatch: HyperDispatch) => dispatchProps,
   c: any,
   d: Options = {}
 ) {

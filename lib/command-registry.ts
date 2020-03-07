@@ -3,7 +3,7 @@ import {remote} from 'electron';
 
 const {getDecoratedKeymaps} = remote.require('./plugins');
 
-let commands: Record<string, any> = {};
+let commands: Record<string, (...args: any[]) => void> = {};
 
 export const getRegisteredKeys = () => {
   const keymaps = getDecoratedKeymaps();

@@ -96,6 +96,7 @@ export interface UIContextmenuOpenAction {
 }
 export interface UICommandExecAction {
   type: typeof UI_COMMAND_EXEC;
+  command: string;
 }
 
 export type UIActions =
