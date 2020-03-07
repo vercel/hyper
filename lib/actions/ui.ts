@@ -318,7 +318,7 @@ export function openSSH(url: string) {
   };
 }
 
-export function execCommand(command: any, fn: any, e: any) {
+export function execCommand(command: string, fn: (...args: any[]) => void, e: any) {
   return (dispatch: HyperDispatch) =>
     dispatch({
       type: UI_COMMAND_EXEC,

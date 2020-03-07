@@ -10,10 +10,10 @@ import {SESSION_REQUEST} from '../constants/sessions';
 import findBySession from '../utils/term-groups';
 import {getRootGroups} from '../selectors';
 import {setActiveSession, ptyExitSession, userExitSession} from './sessions';
-import {ITermState, ITermGroup, HyperState, HyperDispatch} from '../hyper';
+import {ITermState, ITermGroup, HyperState, HyperDispatch, HyperActions} from '../hyper';
 import {Immutable} from 'seamless-immutable';
 
-function requestSplit(direction: string) {
+function requestSplit(direction: 'VERTICAL' | 'HORIZONTAL') {
   return (activeUid: string) => (dispatch: HyperDispatch, getState: () => HyperState): void => {
     dispatch({
       type: SESSION_REQUEST,
@@ -32,7 +32,7 @@ function requestSplit(direction: string) {
 export const requestVerticalSplit = requestSplit(DIRECTION.VERTICAL);
 export const requestHorizontalSplit = requestSplit(DIRECTION.HORIZONTAL);
 
-export function resizeTermGroup(uid: string, sizes: number[]) {
+export function resizeTermGroup(uid: string, sizes: number[]): HyperActions {
   return {
     uid,
     type: TERM_GROUP_RESIZE,

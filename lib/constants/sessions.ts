@@ -22,7 +22,7 @@ export interface SessionAddAction {
   pid: number | null;
   cols: number | null;
   rows: number | null;
-  splitDirection?: string;
+  splitDirection?: 'HORIZONTAL' | 'VERTICAL';
   activeUid: string | null;
   now: number;
 }
