@@ -48,7 +48,7 @@
     "shebang-loader": "0.0.1",
     "styled-jsx": "3.2.4",
     "stylis": "3.5.4",
-    "uuid": "7.0.1",
+    "uuid": "7.0.2",
     "webpack-cli": "3.3.11",
     "xterm": "^4.4.0",
     "xterm-addon-fit": "^0.3.0",
