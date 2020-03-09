@@ -105,7 +105,7 @@
     "eslint-config-prettier": "6.10.0",
     "eslint-plugin-eslint-comments": "^3.1.2",
     "eslint-plugin-prettier": "3.1.2",
-    "eslint-plugin-react": "7.18.3",
+    "eslint-plugin-react": "7.19.0",
     "husky": "4.2.3",
     "inquirer": "7.0.6",
     "node-addon-api": "2.0.0",
