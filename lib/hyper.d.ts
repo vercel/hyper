@@ -207,3 +207,37 @@ export type NotificationsProps = NotificationsConnectedProps & extensionProps;
 
 import {TermsConnectedProps} from './containers/terms';
 export type TermsProps = TermsConnectedProps & extensionProps & {ref_: any};
+
+export type StyleSheetProps = {
+  backgroundColor: string;
+  borderColor: string;
+  fontFamily: string;
+  foregroundColor: string;
+} & extensionProps;
+
+export type TabProps = {
+  borderColor: string;
+  hasActivity: boolean;
+  isActive: boolean;
+  isFirst: boolean;
+  isLast: boolean;
+  onClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onClose: () => void;
+  onSelect: () => void;
+  text: string;
+} & extensionProps;
+
+export type ITab = {
+  uid: string;
+  title: string;
+  isActive: boolean;
+  hasActivity: boolean;
+};
+
+export type TabsProps = {
+  tabs: ITab[];
+  borderColor: string;
+  onChange: () => void;
+  onClose: () => void;
+  fullScreen: boolean;
+} & extensionProps;

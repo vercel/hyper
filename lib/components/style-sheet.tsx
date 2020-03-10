@@ -1,6 +1,7 @@
 import React from 'react';
+import {StyleSheetProps} from '../hyper';
 
-export default class StyleSheet extends React.PureComponent {
+export default class StyleSheet extends React.PureComponent<StyleSheetProps> {
   render() {
     const {backgroundColor, fontFamily, foregroundColor, borderColor} = this.props;
 
