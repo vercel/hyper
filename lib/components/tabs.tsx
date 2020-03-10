@@ -3,11 +3,12 @@ import React from 'react';
 import {decorate, getTabProps} from '../utils/plugins';
 
 import Tab_ from './tab';
+import {TabsProps} from '../hyper';
 
 const Tab = decorate(Tab_, 'Tab');
 const isMac = /Mac/.test(navigator.userAgent);
 
-export default class Tabs extends React.PureComponent {
+export default class Tabs extends React.PureComponent<TabsProps> {
   render() {
     const {tabs = [], borderColor, onChange, onClose, fullScreen} = this.props;
 

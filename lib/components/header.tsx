@@ -3,11 +3,15 @@ import React from 'react';
 import {decorate, getTabsProps} from '../utils/plugins';
 
 import Tabs_ from './tabs';
+import {HeaderProps} from '../hyper';
 
 const Tabs = decorate(Tabs_, 'Tabs');
 
-export default class Header extends React.PureComponent {
-  onChangeIntent = active => {
+export default class Header extends React.PureComponent<HeaderProps> {
+  headerMouseDownWindowX!: number;
+  headerMouseDownWindowY!: number;
+
+  onChangeIntent = (active: string) => {
     // we ignore clicks if they're a byproduct of a drag
     // motion to move the window
     if (window.screenX !== this.headerMouseDownWindowX || window.screenY !== this.headerMouseDownWindowY) {
@@ -30,7 +34,7 @@ export default class Header extends React.PureComponent {
     this.headerMouseDownWindowY = window.screenY;
   };
 
-  handleHamburgerMenuClick = event => {
+  handleHamburgerMenuClick = (event: React.MouseEvent) => {
     let {right: x, bottom: y} = event.currentTarget.getBoundingClientRect();
     x -= 15; // to compensate padding
     y -= 12; // ^ same

@@ -1,8 +1,9 @@
 import React from 'react';
+import {TabProps} from '../hyper';
 
-export default class Tab extends React.PureComponent {
-  constructor() {
-    super();
+export default class Tab extends React.PureComponent<TabProps, {hovered: boolean}> {
+  constructor(props: TabProps) {
+    super(props);
 
     this.state = {
       hovered: false
@@ -21,7 +22,7 @@ export default class Tab extends React.PureComponent {
     });
   };
 
-  handleClick = event => {
+  handleClick = (event: React.MouseEvent) => {
     const isLeftClick = event.nativeEvent.which === 1;
 
     if (isLeftClick && !this.props.isActive) {
@@ -29,7 +30,7 @@ export default class Tab extends React.PureComponent {
     }
   };
 
-  handleMouseUp = event => {
+  handleMouseUp = (event: React.MouseEvent) => {
     const isMiddleClick = event.nativeEvent.which === 2;
 
     if (isMiddleClick) {

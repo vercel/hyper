@@ -4,7 +4,7 @@ import Header from '../components/header';
 import {closeTab, changeTab, maximize, openHamburgerMenu, unmaximize, minimize, close} from '../actions/header';
 import {connect} from '../utils/plugins';
 import {getRootGroups} from '../selectors';
-import {HyperState, HyperDispatch} from '../hyper';
+import {HyperState, HyperDispatch, ITab} from '../hyper';
 
 const isMac = /Mac/.test(navigator.userAgent);
 
@@ -15,16 +15,18 @@ const getActivityMarkers = ({ui}: HyperState) => ui.activityMarkers;
 const getTabs = createSelector(
   [getSessions, getRootGroups, getActiveSessions, getActiveRootGroup, getActivityMarkers],
   (sessions, rootGroups, activeSessions, activeRootGroup, activityMarkers) =>
-    rootGroups.map(t => {
-      const activeSessionUid = activeSessions[t.uid];
-      const session = sessions[activeSessionUid];
-      return {
-        uid: t.uid,
-        title: session.title,
-        isActive: t.uid === activeRootGroup,
-        hasActivity: activityMarkers[session.uid]
-      };
-    })
+    rootGroups.map(
+      (t): ITab => {
+        const activeSessionUid = activeSessions[t.uid];
+        const session = sessions[activeSessionUid];
+        return {
+          uid: t.uid,
+          title: session.title,
+          isActive: t.uid === activeRootGroup,
+          hasActivity: activityMarkers[session.uid]
+        };
+      }
+    )
 );
 
 const mapStateToProps = (state: HyperState) => {
