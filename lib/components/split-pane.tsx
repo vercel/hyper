@@ -1,26 +1,36 @@
 import React from 'react';
 import _ from 'lodash';
+import {SplitPaneProps} from '../hyper';
 
-export default class SplitPane extends React.PureComponent {
-  constructor(props) {
+export default class SplitPane extends React.PureComponent<SplitPaneProps, {dragging: boolean}> {
+  dragPanePosition!: number;
+  dragTarget!: Element;
+  panes!: Element[];
+  paneIndex!: number;
+  d1!: 'height' | 'width';
+  d2!: 'top' | 'left';
+  d3!: 'clientX' | 'clientY';
+  panesSize!: number;
+  dragging!: boolean;
+  constructor(props: SplitPaneProps) {
     super(props);
     this.state = {dragging: false};
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: SplitPaneProps) {
     if (this.state.dragging && prevProps.sizes !== this.props.sizes) {
       // recompute positions for ongoing dragging
       this.dragPanePosition = this.dragTarget.getBoundingClientRect()[this.d2];
     }
   }
 
-  setupPanes(ev) {
+  setupPanes(ev: any) {
     this.panes = Array.from(ev.target.parentNode.childNodes);
     this.paneIndex = this.panes.indexOf(ev.target);
     this.paneIndex -= Math.ceil(this.paneIndex / 2);
   }
 
-  handleAutoResize = ev => {
+  handleAutoResize = (ev: React.MouseEvent) => {
     ev.preventDefault();
 
     this.setupPanes(ev);
@@ -36,7 +46,7 @@ export default class SplitPane extends React.PureComponent {
     this.props.onResize(sizes_);
   };
 
-  handleDragStart = ev => {
+  handleDragStart = (ev: any) => {
     ev.preventDefault();
     this.setState({dragging: true});
     window.addEventListener('mousemove', this.onDrag);
@@ -61,20 +71,20 @@ export default class SplitPane extends React.PureComponent {
 
   getSizes() {
     const {sizes} = this.props;
-    let sizes_;
+    let sizes_: number[];
 
     if (sizes) {
-      sizes_ = [].concat(sizes);
+      sizes_ = [...sizes.asMutable()];
     } else {
-      const total = this.props.children.length;
-      const count = new Array(total).fill(1 / total);
+      const total = (this.props.children as React.ReactNodeArray).length;
+      const count = new Array<number>(total).fill(1 / total);
 
       sizes_ = count;
     }
     return sizes_;
   }
 
-  onDrag = ev => {
+  onDrag = (ev: MouseEvent) => {
     const sizes_ = this.getSizes();
 
     const i = this.paneIndex;
@@ -99,16 +109,13 @@ export default class SplitPane extends React.PureComponent {
   };
 
   render() {
-    const children = this.props.children;
+    const children = this.props.children as React.ReactNodeArray;
     const {direction, borderColor} = this.props;
     const sizeProperty = direction === 'horizontal' ? 'height' : 'width';
-    let {sizes} = this.props;
-    if (!sizes) {
-      // workaround for the fact that if we don't specify
-      // sizes, sometimes flex fails to calculate the
-      // right height for the horizontal panes
-      sizes = new Array(children.length).fill(1 / children.length);
-    }
+    // workaround for the fact that if we don't specify
+    // sizes, sometimes flex fails to calculate the
+    // right height for the horizontal panes
+    const sizes = this.props.sizes || new Array<number>(children.length).fill(1 / children.length);
     return (
       <div className={`splitpane_panes splitpane_panes_${direction}`}>
         {React.Children.map(children, (child, i) => {

@@ -241,3 +241,20 @@ export type TabsProps = {
   onClose: () => void;
   fullScreen: boolean;
 } & extensionProps;
+
+export type NotificationProps = {
+  backgroundColor: string;
+  color?: string;
+  dismissAfter?: number;
+  onDismiss: Function;
+  text?: string | null;
+  userDismissable?: boolean | null;
+  userDismissColor?: string;
+} & extensionProps;
+
+export type SplitPaneProps = {
+  borderColor: string;
+  direction: 'horizontal' | 'vertical';
+  onResize: Function;
+  sizes?: Immutable<number[]> | null;
+};
