@@ -252,6 +252,10 @@ export type NotificationProps = {
   userDismissColor?: string;
 } & extensionProps;
 
+export type NotificationState = {
+  dismissing: boolean;
+};
+
 export type SplitPaneProps = {
   borderColor: string;
   direction: 'horizontal' | 'vertical';

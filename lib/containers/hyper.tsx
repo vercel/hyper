@@ -13,26 +13,25 @@ import {HyperState, HyperProps, HyperDispatch} from '../hyper';
 
 const isMac = /Mac/.test(navigator.userAgent);
 
-class Hyper extends React.PureComponent<HyperProps, {lastConfigUpdate: number}> {
+class Hyper extends React.PureComponent<HyperProps> {
   mousetrap!: MousetrapInstance;
   terms: any;
   constructor(props: HyperProps) {
     super(props);
-    this.state = {
-      lastConfigUpdate: 0
-    };
   }
-  //TODO: Remove usage of legacy and soon deprecated lifecycle methods
-  UNSAFE_componentWillReceiveProps(next: HyperProps) {
-    if (this.props.backgroundColor !== next.backgroundColor) {
+
+  componentDidUpdate(prev: HyperProps) {
+    if (this.props.backgroundColor !== prev.backgroundColor) {
       // this can be removed when `setBackgroundColor` in electron
       // starts working again
-      document.body.style.backgroundColor = next.backgroundColor;
+      document.body.style.backgroundColor = this.props.backgroundColor;
     }
-    const {lastConfigUpdate} = next;
-    if (lastConfigUpdate && lastConfigUpdate !== this.state.lastConfigUpdate) {
-      this.setState({lastConfigUpdate});
+    const {lastConfigUpdate} = this.props;
+    if (lastConfigUpdate && lastConfigUpdate !== prev.lastConfigUpdate) {
       this.attachKeyListeners();
+    }
+    if (prev.activeSession !== this.props.activeSession) {
+      this.handleFocusActive(this.props.activeSession!);
     }
   }
 
@@ -86,12 +85,6 @@ class Hyper extends React.PureComponent<HyperProps, {lastConfigUpdate: number}> 
     this.terms = terms;
     window.focusActiveTerm = this.handleFocusActive;
   };
-
-  componentDidUpdate(prev: HyperProps) {
-    if (prev.activeSession !== this.props.activeSession) {
-      this.handleFocusActive(this.props.activeSession!);
-    }
-  }
 
   componentWillUnmount() {
     document.body.style.backgroundColor = 'inherit';
