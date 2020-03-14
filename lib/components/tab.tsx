@@ -1,26 +1,10 @@
 import React from 'react';
 import {TabProps} from '../hyper';
 
-export default class Tab extends React.PureComponent<TabProps, {hovered: boolean}> {
+export default class Tab extends React.PureComponent<TabProps> {
   constructor(props: TabProps) {
     super(props);
-
-    this.state = {
-      hovered: false
-    };
   }
-
-  handleHover = () => {
-    this.setState({
-      hovered: true
-    });
-  };
-
-  handleBlur = () => {
-    this.setState({
-      hovered: false
-    });
-  };
 
   handleClick = (event: React.MouseEvent) => {
     const isLeftClick = event.nativeEvent.which === 1;
@@ -40,13 +24,10 @@ export default class Tab extends React.PureComponent<TabProps, {hovered: boolean
 
   render() {
     const {isActive, isFirst, isLast, borderColor, hasActivity} = this.props;
-    const {hovered} = this.state;
 
     return (
       <React.Fragment>
         <li
-          onMouseEnter={this.handleHover}
-          onMouseLeave={this.handleBlur}
           onClick={this.props.onClick}
           style={{borderColor}}
           className={`tab_tab ${isFirst ? 'tab_first' : ''} ${isActive ? 'tab_active' : ''} ${
@@ -63,7 +44,7 @@ export default class Tab extends React.PureComponent<TabProps, {hovered: boolean
               {this.props.text}
             </span>
           </span>
-          <i className={`tab_icon ${hovered ? 'tab_iconHovered' : ''}`} onClick={this.props.onClose}>
+          <i className="tab_icon" onClick={this.props.onClose}>
             <svg className="tab_shape">
               <use xlinkHref="./renderer/assets/icons.svg#close-tab" />
             </svg>
@@ -86,6 +67,12 @@ export default class Tab extends React.PureComponent<TabProps, {hovered: boolean
 
           .tab_tab:hover {
             color: #ccc;
+          }
+
+          .tab_tab:hover .tab_icon {
+            opacity: 1;
+            transform: none;
+            pointer-events: all;
           }
 
           .tab_first {
@@ -158,12 +145,6 @@ export default class Tab extends React.PureComponent<TabProps, {hovered: boolean
           .tab_icon:active {
             background-color: rgba(255, 255, 255, 0.1);
             color: #909090;
-          }
-
-          .tab_iconHovered {
-            opacity: 1;
-            transform: none;
-            pointer-events: all;
           }
 
           .tab_shape {
