@@ -69,12 +69,6 @@ export default class Tab extends React.PureComponent<TabProps> {
             color: #ccc;
           }
 
-          .tab_tab:hover .tab_icon {
-            opacity: 1;
-            transform: none;
-            pointer-events: all;
-          }
-
           .tab_first {
             border-left-width: 0;
             padding-left: 1px;
@@ -145,6 +139,12 @@ export default class Tab extends React.PureComponent<TabProps> {
           .tab_icon:active {
             background-color: rgba(255, 255, 255, 0.1);
             color: #909090;
+          }
+
+          .tab_tab:hover .tab_icon {
+            opacity: 1;
+            transform: none;
+            pointer-events: all;
           }
 
           .tab_shape {
