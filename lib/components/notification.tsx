@@ -1,7 +1,7 @@
 import React from 'react';
-import {NotificationProps} from '../hyper';
+import {NotificationProps, NotificationState} from '../hyper';
 
-export default class Notification extends React.PureComponent<NotificationProps, {dismissing: boolean}> {
+export default class Notification extends React.PureComponent<NotificationProps, NotificationState> {
   dismissTimer!: NodeJS.Timeout;
   constructor(props: NotificationProps) {
     super(props);
@@ -15,15 +15,15 @@ export default class Notification extends React.PureComponent<NotificationProps,
       this.setDismissTimer();
     }
   }
-  //TODO: Remove usage of legacy and soon deprecated lifecycle methods
-  UNSAFE_componentWillReceiveProps(next: NotificationProps) {
+
+  componentDidUpdate(prevProps: NotificationProps, prevState: NotificationState) {
     // if we have a timer going and the notification text
     // changed we reset the timer
-    if (next.text !== this.props.text) {
-      if (this.props.dismissAfter) {
+    if (this.props.text !== prevProps.text) {
+      if (prevProps.dismissAfter) {
         this.resetDismissTimer();
       }
-      if (this.state.dismissing) {
+      if (prevState.dismissing) {
         this.setState({dismissing: false});
       }
     }
