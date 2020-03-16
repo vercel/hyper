@@ -262,3 +262,53 @@ export type SplitPaneProps = {
   onResize: Function;
   sizes?: Immutable<number[]> | null;
 };
+
+import Term from './components/term';
+
+export type TermGroupOwnProps = {
+  cursorAccentColor?: string;
+  fontSmoothing?: string;
+  parentProps: TermsProps;
+  ref_: (uid: string, term: Term) => void;
+  termGroup: Immutable<ITermGroup>;
+  terms: Record<string, Term | null>;
+} & Pick<
+  TermsProps,
+  | 'activeSession'
+  | 'backgroundColor'
+  | 'bell'
+  | 'bellSound'
+  | 'bellSoundURL'
+  | 'borderColor'
+  | 'colors'
+  | 'copyOnSelect'
+  | 'cursorBlink'
+  | 'cursorColor'
+  | 'cursorShape'
+  | 'disableLigatures'
+  | 'fontFamily'
+  | 'fontSize'
+  | 'fontWeight'
+  | 'fontWeightBold'
+  | 'foregroundColor'
+  | 'letterSpacing'
+  | 'lineHeight'
+  | 'macOptionSelectionMode'
+  | 'modifierKeys'
+  | 'onActive'
+  | 'onContextMenu'
+  | 'onData'
+  | 'onResize'
+  | 'onTitle'
+  | 'padding'
+  | 'quickEdit'
+  | 'scrollback'
+  | 'selectionColor'
+  | 'sessions'
+  | 'toggleSearch'
+  | 'uiFontFamily'
+  | 'webGLRenderer'
+>;
+
+import {TermGroupConnectedProps} from './components/term-group';
+export type TermGroupProps = TermGroupConnectedProps & TermGroupOwnProps;

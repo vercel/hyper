@@ -52,7 +52,7 @@ let reducersDecorators: {
 };
 
 // expose decorated component instance to the higher-order components
-function exposeDecorated<P extends any>(Component_: React.ComponentClass<P>): React.ComponentClass<P, {}> {
+function exposeDecorated<P extends any>(Component_: React.ComponentType<P>): React.ComponentClass<P, {}> {
   return class DecoratedComponent extends React.Component<P> {
     constructor(props: P, context: any) {
       super(props, context);
@@ -72,7 +72,7 @@ function exposeDecorated<P extends any>(Component_: React.ComponentClass<P>): Re
   };
 }
 
-function getDecorated<P>(parent: React.ComponentClass<P>, name: string): React.ComponentClass<P> {
+function getDecorated<P>(parent: React.ComponentType<P>, name: string): React.ComponentClass<P> {
   if (!decorated[name]) {
     let class_ = exposeDecorated(parent);
     (class_ as any).displayName = `_exposeDecorated(${name})`;
@@ -118,7 +118,7 @@ function getDecorated<P>(parent: React.ComponentClass<P>, name: string): React.C
 // that wraps with the higher-order components
 // exposed by plugins
 export function decorate<P>(
-  Component_: React.ComponentClass<P>,
+  Component_: React.ComponentType<P>,
   name: string
 ): React.ComponentClass<P, {hasError: boolean}> {
   return class DecoratedComponent extends React.Component<P, {hasError: boolean}> {

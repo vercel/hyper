@@ -4,35 +4,42 @@ import {decorate, getTermProps, getTermGroupProps} from '../utils/plugins';
 import {resizeTermGroup} from '../actions/term-groups';
 import Term_ from './term';
 import SplitPane_ from './split-pane';
+import {HyperState, HyperDispatch, TermGroupProps, TermGroupOwnProps} from '../hyper';
 
 const Term = decorate(Term_, 'Term');
 const SplitPane = decorate(SplitPane_, 'SplitPane');
 
-class TermGroup_ extends React.PureComponent {
-  constructor(props, context) {
+// eslint-disable-next-line @typescript-eslint/class-name-casing
+class TermGroup_ extends React.PureComponent<TermGroupProps> {
+  bound: WeakMap<(uid: string, ...args: any[]) => any, Record<string, (...args: any[]) => any>>;
+  term?: Term_;
+  constructor(props: TermGroupProps, context: any) {
     super(props, context);
     this.bound = new WeakMap();
-    this.termRefs = {};
   }
 
-  bind(fn, thisObj, uid) {
+  bind<T extends (uid: string, ...args: any) => any>(
+    fn: T,
+    thisObj: any,
+    uid: string
+  ): (...args: T extends (uid: string, ...args: infer I) => any ? I : never) => ReturnType<T> {
     if (!this.bound.has(fn)) {
       this.bound.set(fn, {});
     }
-    const map = this.bound.get(fn);
+    const map = this.bound.get(fn)!;
     if (!map[uid]) {
       map[uid] = fn.bind(thisObj, uid);
     }
     return map[uid];
   }
 
-  renderSplit(groups) {
+  renderSplit(groups: JSX.Element[]) {
     const [first, ...rest] = groups;
     if (rest.length === 0) {
       return first;
     }
 
-    const direction = this.props.termGroup.direction.toLowerCase();
+    const direction = this.props.termGroup.direction!.toLowerCase() as 'horizontal' | 'vertical';
     return (
       <SplitPane
         direction={direction}
@@ -45,12 +52,12 @@ class TermGroup_ extends React.PureComponent {
     );
   }
 
-  onTermRef = (uid, term) => {
+  onTermRef = (uid: string, term: Term_) => {
     this.term = term;
     this.props.ref_(uid, term);
   };
 
-  renderTerm(uid) {
+  renderTerm(uid: string) {
     const session = this.props.sessions[uid];
     const termRef = this.props.terms[uid];
     const props = getTermProps(uid, this.props, {
@@ -112,7 +119,7 @@ class TermGroup_ extends React.PureComponent {
       return this.renderTerm(termGroup.sessionUid);
     }
 
-    const groups = childGroups.map(child => {
+    const groups = childGroups.asMutable().map(child => {
       const props = getTermGroupProps(
         child.uid,
         this.props.parentProps,
@@ -126,19 +133,20 @@ class TermGroup_ extends React.PureComponent {
   }
 }
 
-const TermGroup = connect(
-  (state, ownProps) => ({
-    childGroups: ownProps.termGroup.children.map(uid => state.termGroups.termGroups[uid])
-  }),
-  (dispatch, ownProps) => ({
-    onTermGroupResize(splitSizes) {
-      dispatch(resizeTermGroup(ownProps.termGroup.uid, splitSizes));
-    }
-  }),
-  null,
-  {forwardRef: true}
-)(TermGroup_);
+const mapStateToProps = (state: HyperState, ownProps: TermGroupOwnProps) => ({
+  childGroups: ownProps.termGroup.children.map(uid => state.termGroups.termGroups[uid])
+});
+
+const mapDispatchToProps = (dispatch: HyperDispatch, ownProps: TermGroupOwnProps) => ({
+  onTermGroupResize(splitSizes: number[]) {
+    dispatch(resizeTermGroup(ownProps.termGroup.uid, splitSizes));
+  }
+});
+
+const TermGroup = connect(mapStateToProps, mapDispatchToProps, null, {forwardRef: true})(TermGroup_);
 
 const DecoratedTermGroup = decorate(TermGroup, 'TermGroup');
 
 export default TermGroup;
+
+export type TermGroupConnectedProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
