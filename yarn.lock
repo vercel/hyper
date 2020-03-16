@@ -8740,10 +8740,10 @@ xterm-addon-web-links@^0.2.1:
   resolved "https://registry.yarnpkg.com/xterm-addon-web-links/-/xterm-addon-web-links-0.2.1.tgz#6d1f2ce613e09870badf17615e7a1170a31542b2"
   integrity sha512-2KnHtiq0IG7hfwv3jw2/jQeH1RBk2d5CH4zvgwQe00rLofSJqSfgnJ7gwowxxpGHrpbPr6Lv4AmH/joaNw2+HQ==
 
-xterm-addon-webgl@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/xterm-addon-webgl/-/xterm-addon-webgl-0.5.0.tgz#c1031dc7599cce3509824643ab5f15361c928e3e"
-  integrity sha512-hQrvabKCnwXFaEZ+YtoJM9Pm0CIBXL5KSwoU+RiGStU3KYTAcqYP2GsH3dWdvKX6kTWhWLS81dtDsGkfbOciuA==
+xterm-addon-webgl@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/xterm-addon-webgl/-/xterm-addon-webgl-0.5.1.tgz#89ad8f0b56f7e92d7597cd58395f59ae720ee277"
+  integrity sha512-werBZWVRN1hv6qGj5a+aGiyYX/2ywN6tjJwEI+W3LFkXjB+sZXKwT37lsmQ68/WN5O6H29/VSzq17mnEc9thXw==
 
 xterm@^4.4.0:
   version "4.4.0"
