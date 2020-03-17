@@ -3,10 +3,11 @@ import React from 'react';
 import {decorate} from '../utils/plugins';
 
 import Notification_ from './notification';
+import {NotificationsProps} from '../hyper';
 
 const Notification = decorate(Notification_, 'Notification');
 
-export default class Notifications extends React.PureComponent {
+export default class Notifications extends React.PureComponent<NotificationsProps> {
   render() {
     return (
       <div className="notifications_view">
@@ -50,7 +51,7 @@ export default class Notifications extends React.PureComponent {
                     key="link"
                     style={{color: '#fff'}}
                     onClick={ev => {
-                      window.require('electron').shell.openExternal(ev.target.href);
+                      window.require('electron').shell.openExternal(ev.currentTarget.href);
                       ev.preventDefault();
                     }}
                     href={this.props.messageURL}
@@ -77,7 +78,7 @@ export default class Notifications extends React.PureComponent {
             <a
               style={{color: '#000'}}
               onClick={ev => {
-                window.require('electron').shell.openExternal(ev.target.href);
+                window.require('electron').shell.openExternal(ev.currentTarget.href);
                 ev.preventDefault();
               }}
               href={`https://github.com/zeit/hyper/releases/tag/${this.props.updateVersion}`}
@@ -105,10 +106,10 @@ export default class Notifications extends React.PureComponent {
                   fontWeight: 'bold'
                 }}
                 onClick={ev => {
-                  window.require('electron').shell.openExternal(ev.target.href);
+                  window.require('electron').shell.openExternal(ev.currentTarget.href);
                   ev.preventDefault();
                 }}
-                href={this.props.updateReleaseUrl}
+                href={this.props.updateReleaseUrl!}
               >
                 Download
               </a>
