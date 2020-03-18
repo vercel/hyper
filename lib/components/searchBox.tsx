@@ -1,6 +1,7 @@
 import React from 'react';
+import {SearchBoxProps} from '../hyper';
 
-const searchBoxStyling = {
+const searchBoxStyling: React.CSSProperties = {
   float: 'right',
   height: '28px',
   backgroundColor: 'white',
@@ -8,21 +9,22 @@ const searchBoxStyling = {
   right: '10px',
   top: '25px',
   width: '224px',
-  zIndex: '9999'
+  zIndex: 9999
 };
 
 const enterKey = 13;
 
-export default class SearchBox extends React.PureComponent {
-  constructor(props) {
+export default class SearchBox extends React.PureComponent<SearchBoxProps> {
+  searchTerm: string;
+  constructor(props: SearchBoxProps) {
     super(props);
     this.searchTerm = '';
   }
 
-  handleChange = event => {
-    this.searchTerm = event.target.value;
+  handleChange = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    this.searchTerm = event.currentTarget.value;
     if (event.keyCode === enterKey) {
-      this.props.search(event.target.value);
+      this.props.search(event.currentTarget.value);
     }
   };
 

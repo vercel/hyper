@@ -3,62 +3,53 @@ import {decorate, getTermGroupProps} from '../utils/plugins';
 import {registerCommandHandlers} from '../command-registry';
 import TermGroup_ from './term-group';
 import StyleSheet_ from './style-sheet';
+import {TermsProps} from '../hyper';
+import Term from './term';
+import {ObjectTypedKeys} from '../utils/object';
 
 const TermGroup = decorate(TermGroup_, 'TermGroup');
 const StyleSheet = decorate(StyleSheet_, 'StyleSheet');
 
 const isMac = /Mac/.test(navigator.userAgent);
 
-export default class Terms extends React.Component {
-  constructor(props, context) {
+export default class Terms extends React.Component<TermsProps> {
+  terms: Record<string, Term>;
+  registerCommands: (cmds: Record<string, (...args: any[]) => void>) => void;
+  constructor(props: TermsProps, context: any) {
     super(props, context);
     this.terms = {};
-    this.bound = new WeakMap();
     this.registerCommands = registerCommandHandlers;
     props.ref_(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    for (const i in nextProps) {
-      if (i === 'write') {
-        continue;
-      }
-      if (this.props[i] !== nextProps[i]) {
-        return true;
-      }
-    }
-    for (const i in this.props) {
-      if (i === 'write') {
-        continue;
-      }
-      if (this.props[i] !== nextProps[i]) {
-        return true;
-      }
-    }
-    return false;
+  shouldComponentUpdate(nextProps: TermsProps & {children: any}) {
+    return (
+      ObjectTypedKeys(nextProps).some(i => i !== 'write' && this.props[i] !== nextProps[i]) ||
+      ObjectTypedKeys(this.props).some(i => i !== 'write' && this.props[i] !== nextProps[i])
+    );
   }
 
-  onRef = (uid, term) => {
+  onRef = (uid: string, term: Term) => {
     if (term) {
       this.terms[uid] = term;
     }
   };
 
-  getTermByUid(uid) {
+  getTermByUid(uid: string) {
     return this.terms[uid];
   }
 
   getActiveTerm() {
-    return this.getTermByUid(this.props.activeSession);
+    return this.getTermByUid(this.props.activeSession!);
   }
 
-  onTerminal(uid, term) {
+  onTerminal(uid: string, term: Term) {
     this.terms[uid] = term;
   }
 
   componentDidMount() {
     window.addEventListener('contextmenu', () => {
-      const selection = window.getSelection().toString();
+      const selection = window.getSelection()!.toString();
       const {
         props: {uid}
       } = this.getActiveTerm();
@@ -66,8 +57,8 @@ export default class Terms extends React.Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
-    for (let uid in prevProps.sessions) {
+  componentDidUpdate(prevProps: TermsProps) {
+    for (const uid in prevProps.sessions) {
       if (!this.props.sessions[uid]) {
         this.terms[uid].term.dispose();
         delete this.terms[uid];

@@ -26,7 +26,7 @@ export type ITermState = {
 };
 
 export type cursorShapes = 'BEAM' | 'UNDERLINE' | 'BLOCK';
-import {FontWeight} from 'xterm';
+import {FontWeight, Terminal} from 'xterm';
 
 export type uiState = {
   _lastUpdate: number | null;
@@ -221,7 +221,7 @@ export type TabProps = {
   isActive: boolean;
   isFirst: boolean;
   isLast: boolean;
-  onClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   onClose: () => void;
   onSelect: () => void;
   text: string;
@@ -237,8 +237,8 @@ export type ITab = {
 export type TabsProps = {
   tabs: ITab[];
   borderColor: string;
-  onChange: () => void;
-  onClose: () => void;
+  onChange: (uid: string) => void;
+  onClose: (uid: string) => void;
   fullScreen: boolean;
 } & extensionProps;
 
@@ -312,3 +312,62 @@ export type TermGroupOwnProps = {
 
 import {TermGroupConnectedProps} from './components/term-group';
 export type TermGroupProps = TermGroupConnectedProps & TermGroupOwnProps;
+
+export type SearchBoxProps = {
+  search: (searchTerm: string) => void;
+  next: (searchTerm: string) => void;
+  prev: (searchTerm: string) => void;
+  close: () => void;
+};
+
+import {FitAddon} from 'xterm-addon-fit';
+import {SearchAddon} from 'xterm-addon-search';
+export type TermProps = {
+  backgroundColor: string;
+  bell: string;
+  bellSound: string | null;
+  bellSoundURL: string | null;
+  borderColor: string;
+  cleared: boolean;
+  colors: uiState['colors'];
+  cols: number | null;
+  copyOnSelect: boolean;
+  cursorAccentColor?: string;
+  cursorBlink: boolean;
+  cursorColor: string;
+  cursorShape: cursorShapes;
+  disableLigatures: boolean;
+  fitAddon: FitAddon | null;
+  fontFamily: string;
+  fontSize: number;
+  fontSmoothing?: string;
+  fontWeight: FontWeight;
+  fontWeightBold: FontWeight;
+  foregroundColor: string;
+  isTermActive: boolean;
+  letterSpacing: number;
+  lineHeight: number;
+  macOptionSelectionMode: string;
+  modifierKeys: Immutable<{altIsMeta: boolean; cmdIsMeta: boolean}>;
+  onActive: () => void;
+  onContextMenu: (selection: any) => void;
+  onCursorMove?: (cursorFrame: {x: number; y: number; width: number; height: number; col: number; row: number}) => void;
+  onData: (data: any) => void;
+  onResize: (cols: number, rows: number) => void;
+  onTitle: (title: string) => void;
+  padding: string;
+  quickEdit: boolean;
+  rows: number | null;
+  scrollback: number;
+  search: boolean;
+  searchAddon: SearchAddon | null;
+  selectionColor: string;
+  term: Terminal | null;
+  toggleSearch: () => void;
+  uid: string;
+  uiFontFamily: string;
+  url: string | null;
+  webGLRenderer: boolean;
+} & extensionProps & {ref_?: any};
+
+export type Assignable<T, U> = {[k in keyof U]: k extends keyof T ? T[k] : U[k]} & Partial<T>;

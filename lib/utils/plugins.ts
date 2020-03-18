@@ -11,7 +11,19 @@ import React, {PureComponent} from 'react';
 import ReactDOM from 'react-dom';
 import Notification from '../components/notification';
 import notify from './notify';
-import {hyperPlugin, IUiReducer, ISessionReducer, ITermGroupReducer, HyperState, HyperDispatch} from '../hyper';
+import {
+  hyperPlugin,
+  IUiReducer,
+  ISessionReducer,
+  ITermGroupReducer,
+  HyperState,
+  HyperDispatch,
+  TabProps,
+  TabsProps,
+  TermGroupOwnProps,
+  TermProps,
+  Assignable
+} from '../hyper';
 import {Middleware} from 'redux';
 import {ObjectTypedKeys} from './object';
 
@@ -402,19 +414,23 @@ function getProps(name: keyof typeof propsDecorators, props: any, ...fnArgs: any
   return props_ || props;
 }
 
-export function getTermGroupProps(uid: string, parentProps: any, props: any) {
+export function getTermGroupProps<T extends Assignable<TermGroupOwnProps, T>>(
+  uid: string,
+  parentProps: any,
+  props: T
+): T {
   return getProps('getTermGroupProps', props, uid, parentProps);
 }
 
-export function getTermProps(uid: string, parentProps: any, props: any) {
+export function getTermProps<T extends Assignable<TermProps, T>>(uid: string, parentProps: any, props: T): T {
   return getProps('getTermProps', props, uid, parentProps);
 }
 
-export function getTabsProps(parentProps: any, props: any) {
+export function getTabsProps<T extends Assignable<TabsProps, T>>(parentProps: any, props: T): T {
   return getProps('getTabsProps', props, parentProps);
 }
 
-export function getTabProps(tab: any, parentProps: any, props: any) {
+export function getTabProps<T extends Assignable<TabProps, T>>(tab: any, parentProps: any, props: T): T {
   return getProps('getTabProps', props, tab, parentProps);
 }
 
