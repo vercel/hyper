@@ -1,15 +1,18 @@
 import React from 'react';
-import {Terminal} from 'xterm';
+import {Terminal, ITerminalOptions, IDisposable} from 'xterm';
 import {FitAddon} from 'xterm-addon-fit';
 import {WebLinksAddon} from 'xterm-addon-web-links';
 import {SearchAddon} from 'xterm-addon-search';
 import {WebglAddon} from 'xterm-addon-webgl';
 import {LigaturesAddon} from 'xterm-addon-ligatures';
 import {clipboard} from 'electron';
-import * as Color from 'color';
+import Color from 'color';
 import terms from '../terms';
 import processClipboard from '../utils/paste';
 import SearchBox from './searchBox';
+import ResizeObserver from 'resize-observer-polyfill';
+import {TermProps} from '../hyper';
+import {ObjectTypedKeys} from '../utils/object';
 
 const isWindows = ['Windows', 'Win16', 'Win32', 'WinCE'].includes(navigator.platform);
 
@@ -18,7 +21,7 @@ const CURSOR_STYLES = {
   BEAM: 'bar',
   UNDERLINE: 'underline',
   BLOCK: 'block'
-};
+} as const;
 
 const isWebgl2Supported = (() => {
   let isSupported = window.WebGL2RenderingContext ? undefined : false;
@@ -32,7 +35,7 @@ const isWebgl2Supported = (() => {
   };
 })();
 
-const getTermOptions = props => {
+const getTermOptions = (props: TermProps): ITerminalOptions => {
   // Set a background color only if it is opaque
   const needTransparency = Color(props.backgroundColor).alpha() < 1;
   const backgroundColor = needTransparency ? 'transparent' : props.backgroundColor;
@@ -78,13 +81,23 @@ const getTermOptions = props => {
   };
 };
 
-export default class Term extends React.PureComponent {
-  constructor(props) {
+export default class Term extends React.PureComponent<TermProps> {
+  termRef: HTMLElement | null;
+  termWrapperRef: HTMLElement | null;
+  termOptions: ITerminalOptions;
+  disposableListeners: IDisposable[];
+  termDefaultBellSound: string | null;
+  fitAddon: FitAddon;
+  searchAddon: SearchAddon;
+  static rendererTypes: Record<string, string>;
+  term!: Terminal;
+  resizeObserver!: ResizeObserver;
+  resizeTimeout!: NodeJS.Timeout;
+  constructor(props: TermProps) {
     super(props);
     props.ref_(props.uid, this);
     this.termRef = null;
     this.termWrapperRef = null;
-    this.termRect = null;
     this.termOptions = {};
     this.disposableListeners = [];
     this.termDefaultBellSound = null;
@@ -93,7 +106,7 @@ export default class Term extends React.PureComponent {
   }
 
   // The main process shows this in the About dialog
-  static reportRenderer(uid, type) {
+  static reportRenderer(uid: string, type: string) {
     const rendererTypes = Term.rendererTypes || {};
     if (rendererTypes[uid] !== type) {
       rendererTypes[uid] = type;
@@ -111,14 +124,14 @@ export default class Term extends React.PureComponent {
 
     // The parent element for the terminal is attached and removed manually so
     // that we can preserve it across mounts and unmounts of the component
-    this.termRef = props.term ? props.term.element.parentElement : document.createElement('div');
+    this.termRef = props.term ? props.term.element!.parentElement! : document.createElement('div');
     this.termRef.className = 'term_fit term_term';
 
-    this.termWrapperRef.appendChild(this.termRef);
+    this.termWrapperRef?.appendChild(this.termRef);
 
     if (!props.term) {
-      let needTransparency = Color(props.backgroundColor).alpha() < 1;
-      let useWebGL = false;
+      const needTransparency = Color(props.backgroundColor).alpha() < 1;
+      const useWebGL = false;
       if (props.webGLRenderer) {
         if (needTransparency) {
           console.warn(
@@ -148,8 +161,8 @@ export default class Term extends React.PureComponent {
       }
     } else {
       // get the cached plugins
-      this.fitAddon = props.fitAddon;
-      this.searchAddon = props.searchAddon;
+      this.fitAddon = props.fitAddon!;
+      this.searchAddon = props.searchAddon!;
     }
 
     this.fitAddon.fit();
@@ -163,9 +176,9 @@ export default class Term extends React.PureComponent {
     }
 
     if (props.onActive) {
-      this.term.textarea.addEventListener('focus', props.onActive);
+      this.term.textarea?.addEventListener('focus', props.onActive);
       this.disposableListeners.push({
-        dispose: () => this.term.textarea.removeEventListener('focus', this.props.onActive)
+        dispose: () => this.term.textarea?.removeEventListener('focus', this.props.onActive)
       });
     }
 
@@ -188,14 +201,14 @@ export default class Term extends React.PureComponent {
       this.disposableListeners.push(
         this.term.onCursorMove(() => {
           const cursorFrame = {
-            x: this.term.buffer.cursorX * this.term._core._renderService.dimensions.actualCellWidth,
-            y: this.term.buffer.cursorY * this.term._core._renderService.dimensions.actualCellHeight,
-            width: this.term._core._renderService.dimensions.actualCellWidth,
-            height: this.term._core._renderService.dimensions.actualCellHeight,
+            x: this.term.buffer.cursorX * (this.term as any)._core._renderService.dimensions.actualCellWidth,
+            y: this.term.buffer.cursorY * (this.term as any)._core._renderService.dimensions.actualCellHeight,
+            width: (this.term as any)._core._renderService.dimensions.actualCellWidth,
+            height: (this.term as any)._core._renderService.dimensions.actualCellHeight,
             col: this.term.buffer.cursorX,
             row: this.term.buffer.cursorY
           };
-          props.onCursorMove(cursorFrame);
+          props.onCursorMove?.(cursorFrame);
         })
       );
     }
@@ -220,18 +233,18 @@ export default class Term extends React.PureComponent {
 
   // intercepting paste event for any necessary processing of
   // clipboard data, if result is falsy, paste event continues
-  onWindowPaste = e => {
+  onWindowPaste = (e: any) => {
     if (!this.props.isTermActive) return;
 
     const processed = processClipboard();
     if (processed) {
       e.preventDefault();
       e.stopPropagation();
-      this.term._core.handler(processed);
+      (this.term as any)._core.handler(processed);
     }
   };
 
-  onMouseUp = e => {
+  onMouseUp = (e: React.MouseEvent) => {
     if (this.props.quickEdit && e.button === 2) {
       if (this.term.hasSelection()) {
         clipboard.writeText(this.term.getSelection());
@@ -244,7 +257,7 @@ export default class Term extends React.PureComponent {
     }
   };
 
-  write(data) {
+  write(data: string | Uint8Array) {
     this.term.write(data);
   }
 
@@ -260,15 +273,15 @@ export default class Term extends React.PureComponent {
     this.term.reset();
   }
 
-  search = searchTerm => {
+  search = (searchTerm = '') => {
     this.searchAddon.findNext(searchTerm);
   };
 
-  searchNext = searchTerm => {
+  searchNext = (searchTerm: string) => {
     this.searchAddon.findNext(searchTerm);
   };
 
-  searchPrevious = searchTerm => {
+  searchPrevious = (searchTerm: string) => {
     this.searchAddon.findPrevious(searchTerm);
   };
 
@@ -276,7 +289,7 @@ export default class Term extends React.PureComponent {
     this.props.toggleSearch();
   };
 
-  resize(cols, rows) {
+  resize(cols: number, rows: number) {
     this.term.resize(cols, rows);
   }
 
@@ -291,12 +304,12 @@ export default class Term extends React.PureComponent {
     this.fitAddon.fit();
   }
 
-  keyboardHandler(e) {
+  keyboardHandler(e: any) {
     // Has Mousetrap flagged this event as a command?
     return !e.catched;
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: TermProps) {
     if (!prevProps.cleared && this.props.cleared) {
       this.clear();
     }
@@ -305,14 +318,14 @@ export default class Term extends React.PureComponent {
 
     // Use bellSound in nextProps if it exists
     // otherwise use the default sound found in xterm.
-    nextTermOptions.bellSound = this.props.bellSound || this.termDefaultBellSound;
+    nextTermOptions.bellSound = this.props.bellSound || this.termDefaultBellSound!;
 
     if (!prevProps.search && this.props.search) {
       this.search();
     }
 
     // Update only options that have changed.
-    Object.keys(nextTermOptions)
+    ObjectTypedKeys(nextTermOptions)
       .filter(option => option !== 'theme' && nextTermOptions[option] !== this.termOptions[option])
       .forEach(option => {
         try {
@@ -330,8 +343,8 @@ export default class Term extends React.PureComponent {
     const shouldUpdateTheme =
       !this.termOptions.theme ||
       nextTermOptions.rendererType !== this.termOptions.rendererType ||
-      Object.keys(nextTermOptions.theme).some(
-        option => nextTermOptions.theme[option] !== this.termOptions.theme[option]
+      ObjectTypedKeys(nextTermOptions.theme!).some(
+        option => nextTermOptions.theme![option] !== this.termOptions.theme![option]
       );
     if (shouldUpdateTheme) {
       this.term.setOption('theme', nextTermOptions.theme);
@@ -350,11 +363,11 @@ export default class Term extends React.PureComponent {
     }
 
     if (prevProps.rows !== this.props.rows || prevProps.cols !== this.props.cols) {
-      this.resize(this.props.cols, this.props.rows);
+      this.resize(this.props.cols!, this.props.rows!);
     }
   }
 
-  onTermWrapperRef = component => {
+  onTermWrapperRef = (component: HTMLElement | null) => {
     this.termWrapperRef = component;
 
     if (component) {
@@ -372,7 +385,7 @@ export default class Term extends React.PureComponent {
 
   componentWillUnmount() {
     terms[this.props.uid] = null;
-    this.termWrapperRef.removeChild(this.termRef);
+    this.termWrapperRef?.removeChild(this.termRef!);
     this.props.ref_(this.props.uid, null);
 
     // to clean up the terminal, we remove the listeners

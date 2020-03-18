@@ -7,5 +7,5 @@ import Term from './components/term';
 // optimization for the most common action
 // within the system
 
-const terms: Record<string, Term> = {};
+const terms: Record<string, Term | null> = {};
 export default terms;
