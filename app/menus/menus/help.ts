@@ -15,22 +15,20 @@ export default (commands: Record<string, string>, showAbout: () => void): MenuIt
     {
       label: 'Report Issue',
       click() {
-        const body = `
-<!--
+        const body = `<!--
   Hi there! Thank you for discovering and submitting an issue.
   Before you submit this; let's make sure of a few things.
   Please make sure the following boxes are ✅ if they are correct.
   If not, please try and fulfil these first.
 -->
 <!-- 👉 Checked checkbox should look like this: [x] -->
-  - [ ] Your Hyper.app version is **${version}**. Please verify your using the [latest](https://github.com/zeit/hyper/releases/latest) Hyper.app version
-  - [ ] I have searched the [issues](https://github.com/zeit/hyper/issues) of this repo and believe that this is not a duplicate
-
-  ---
-  - **Any relevant information from devtools?** _(CMD+ALT+I on macOS, CTRL+SHIFT+I elsewhere)_:
+- [ ] Your Hyper.app version is **${version}**. Please verify your using the [latest](https://github.com/zeit/hyper/releases/latest) Hyper.app version
+- [ ] I have searched the [issues](https://github.com/zeit/hyper/issues) of this repo and believe that this is not a duplicate
+---
+- **Any relevant information from devtools?** _(CMD+OPTION+I on macOS, CTRL+SHIFT+I elsewhere)_:
 <!-- 👉 Replace with info if applicable, or N/A -->
 
-  - **Is the issue reproducible in vanilla Hyper.app?**
+- **Is the issue reproducible in vanilla Hyper.app?**
 <!-- 👉 Replace with info if applicable, or Is Vanilla. (Vanilla means Hyper.app without any add-ons or extras. Straight out of the box.) -->
 
 ## Issue
@@ -40,24 +38,24 @@ export default (commands: Record<string, string>, showAbout: () => void): MenuIt
 
 
 
-
+---
 <!-- ~/.hyper.js config -->
- - **${app.name} version**: ${env.TERM_PROGRAM_VERSION} "${app.getVersion()}"
+- **${app.name} version**: ${env.TERM_PROGRAM_VERSION} "${app.getVersion()}"
+- **OS ARCH VERSION:** ${platform} ${arch} ${release()}
+- **Electron:** ${versions.electron}  **LANG:** ${env.LANG}
+- **SHELL:** ${env.SHELL}   **TERM:** ${env.TERM}
+<details><summary><strong>.hyper.js contents</strong></summary>
 
- - **OS ARCH VERSION:** ${platform} ${arch} ${release()}
- - **Electron:** ${versions.electron}  **LANG:** ${env.LANG}
- - **SHELL:** ${env.SHELL}   **TERM:** ${env.TERM}
+\`\`\`json
+${JSON.stringify(getConfig(), null, 2)}
+\`\`\`
+</details>
+<details><summary><strong>plugins</strong></summary>
 
-  <details>
-    <summary><strong> ~/.hyper.js contents</strong></summary>
-      <pre>
-        <code>
-          ${JSON.stringify(getConfig(), null, 2)}
-
-          ${JSON.stringify(getPlugins(), null, 2)}
-        </code>
-      </pre>
-  </details>`;
+\`\`\`json
+${JSON.stringify(getPlugins(), null, 2)}
+\`\`\`
+</details>`;
 
         shell.openExternal(`https://github.com/zeit/hyper/issues/new?body=${encodeURIComponent(body)}`);
       }
