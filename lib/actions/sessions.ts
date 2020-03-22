@@ -145,13 +145,19 @@ export function onSearch(uid?: string) {
   };
 }
 
-export function closeSearch(uid?: string) {
+export function closeSearch(uid?: string, keyEvent?: any) {
   return (dispatch: HyperDispatch, getState: () => HyperState) => {
     const targetUid = uid || getState().sessions.activeUid!;
-    dispatch({
-      type: SESSION_SEARCH_CLOSE,
-      uid: targetUid
-    });
+    if (getState().sessions.sessions[targetUid]?.search) {
+      dispatch({
+        type: SESSION_SEARCH_CLOSE,
+        uid: targetUid
+      });
+    } else {
+      if (keyEvent) {
+        keyEvent.catched = false;
+      }
+    }
   };
 }
 

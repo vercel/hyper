@@ -325,7 +325,7 @@ export function execCommand(command: string, fn: (...args: any[]) => void, e: an
       command,
       effect() {
         if (fn) {
-          fn(e);
+          fn(e, dispatch);
         } else {
           rpc.emit('command', command);
         }

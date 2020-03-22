@@ -1,9 +1,15 @@
 import {remote} from 'electron';
+import {HyperDispatch} from './hyper';
+import {closeSearch} from './actions/sessions';
 // TODO: Should be updates to new async API https://medium.com/@nornagon/electrons-remote-module-considered-harmful-70d69500f31
 
 const {getDecoratedKeymaps} = remote.require('./plugins');
 
-let commands: Record<string, (...args: any[]) => void> = {};
+let commands: Record<string, (event: any, dispatch: HyperDispatch) => void> = {
+  'editor:search-close': (e, dispatch) => {
+    dispatch(closeSearch(undefined, e));
+  }
+};
 
 export const getRegisteredKeys = () => {
   const keymaps = getDecoratedKeymaps();
