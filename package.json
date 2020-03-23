@@ -88,7 +88,7 @@
     "@types/styled-jsx": "2.2.8",
     "@types/terser-webpack-plugin": "2.2.0",
     "@types/uuid": "7.0.0",
-    "@types/webpack": "4.41.7",
+    "@types/webpack": "4.41.8",
     "@typescript-eslint/eslint-plugin": "2.23.0",
     "@typescript-eslint/parser": "2.24.0",
     "ava": "3.5.0",
