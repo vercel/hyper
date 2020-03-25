@@ -209,7 +209,7 @@ export function moveTo(i: number | 'last') {
       const {termGroups} = getState().termGroups;
       i =
         Object.keys(termGroups)
-          .map(uid => termGroups[uid])
+          .map((uid) => termGroups[uid])
           .filter(({parentUid}) => !parentUid).length - 1;
     }
     dispatch({

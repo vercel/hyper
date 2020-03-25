@@ -146,14 +146,14 @@ export default class Session extends EventEmitter {
     }
 
     this.batcher = new DataBatcher(uid);
-    this.pty.onData(chunk => {
+    this.pty.onData((chunk) => {
       if (this.ended) {
         return;
       }
       this.batcher?.write(chunk as any);
     });
 
-    this.batcher.on('flush', data => {
+    this.batcher.on('flush', (data) => {
       this.emit('data', data);
     });
 

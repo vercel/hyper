@@ -50,7 +50,7 @@ export default class Notifications extends React.PureComponent<NotificationsProp
                   <a
                     key="link"
                     style={{color: '#fff'}}
-                    onClick={ev => {
+                    onClick={(ev) => {
                       window.require('electron').shell.openExternal(ev.currentTarget.href);
                       ev.preventDefault();
                     }}
@@ -77,7 +77,7 @@ export default class Notifications extends React.PureComponent<NotificationsProp
             {this.props.updateNote && ` ${this.props.updateNote.trim().replace(/\.$/, '')}`} (
             <a
               style={{color: '#000'}}
-              onClick={ev => {
+              onClick={(ev) => {
                 window.require('electron').shell.openExternal(ev.currentTarget.href);
                 ev.preventDefault();
               }}
@@ -105,7 +105,7 @@ export default class Notifications extends React.PureComponent<NotificationsProp
                   textDecoration: 'underline',
                   fontWeight: 'bold'
                 }}
-                onClick={ev => {
+                onClick={(ev) => {
                   window.require('electron').shell.openExternal(ev.currentTarget.href);
                   ev.preventDefault();
                 }}

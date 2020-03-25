@@ -41,7 +41,7 @@ export const createMenu = (
   const showAbout = () => {
     const loadedPlugins = getLoadedPluginVersions();
     const pluginList =
-      loadedPlugins.length === 0 ? 'none' : loadedPlugins.map(plugin => `\n  ${plugin.name} (${plugin.version})`);
+      loadedPlugins.length === 0 ? 'none' : loadedPlugins.map((plugin) => `\n  ${plugin.name} (${plugin.version})`);
 
     const rendererCounts = Object.values(getRendererTypes()).reduce((acc: Record<string, number>, type) => {
       acc[type] = acc[type] ? acc[type] + 1 : 1;
