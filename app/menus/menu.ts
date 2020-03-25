@@ -34,7 +34,7 @@ export const createMenu = (
 
   let updateChannel = 'stable';
 
-  if (config && config.updateChannel && config.updateChannel === 'canary') {
+  if (config?.updateChannel && config.updateChannel === 'canary') {
     updateChannel = 'canary';
   }
 
