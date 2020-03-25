@@ -19,8 +19,8 @@ const symlink = pify(fs.symlink);
 
 const checkInstall = () => {
   return readlink(cliLinkPath)
-    .then(link => link === cliScriptPath)
-    .catch(err => {
+    .then((link) => link === cliScriptPath)
+    .catch((err) => {
       if (err.code === 'ENOENT') {
         return false;
       }
@@ -29,7 +29,7 @@ const checkInstall = () => {
 };
 
 const addSymlink = () => {
-  return checkInstall().then(isInstalled => {
+  return checkInstall().then((isInstalled) => {
     if (isInstalled) {
       console.log('Hyper CLI already in PATH');
       return Promise.resolve();
@@ -50,7 +50,7 @@ const addBinToUserPath = () => {
       const basePath = path.resolve(binPath, '../../..');
 
       const items = Registry.enumValueNames(envKey);
-      const pathItem = items.find(item => item.toUpperCase() === 'PATH');
+      const pathItem = items.find((item) => item.toUpperCase() === 'PATH');
       const pathItemName = pathItem || 'PATH';
 
       let newPathValue = binPath;
@@ -72,7 +72,7 @@ const addBinToUserPath = () => {
 
         // Because version is in path we need to remove old path if present and add current path
         newPathValue = pathParts
-          .filter(pathPart => !pathPart.startsWith(basePath))
+          .filter((pathPart) => !pathPart.startsWith(basePath))
           .concat([binPath])
           .join(';');
       }
@@ -101,13 +101,13 @@ export const installCLI = (withNotification: boolean) => {
           'You may need to restart your computer to complete this installation process.'
         )
       )
-      .catch(err =>
+      .catch((err) =>
         logNotify(withNotification, 'Hyper CLI installation failed', `Failed to add Hyper CLI path to user PATH ${err}`)
       );
   } else if (process.platform === 'darwin') {
     addSymlink()
       .then(() => logNotify(withNotification, 'Hyper CLI installed', `Symlink created at ${cliLinkPath}`))
-      .catch(err => {
+      .catch((err) => {
         // 'EINVAL' is returned by readlink,
         // 'EEXIST' is returned by symlink
         const error =

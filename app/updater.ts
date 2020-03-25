@@ -25,7 +25,7 @@ const buildFeedUrl = (canary: boolean, currentVersion: string) => {
 const isCanary = (updateChannel: string) => updateChannel === 'canary';
 
 async function init() {
-  autoUpdater.on('error', err => {
+  autoUpdater.on('error', (err) => {
     console.error('Error fetching updates', `${err.message} (${err.stack})`);
   });
 

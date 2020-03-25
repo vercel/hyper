@@ -1,7 +1,7 @@
 // Packages
 const {prompt} = require('inquirer');
 
-module.exports = async markdown => {
+module.exports = async (markdown) => {
   const answers = await prompt([
     {
       name: 'intro',

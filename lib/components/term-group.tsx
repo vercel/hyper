@@ -119,7 +119,7 @@ class TermGroup_ extends React.PureComponent<TermGroupProps> {
       return this.renderTerm(termGroup.sessionUid);
     }
 
-    const groups = childGroups.asMutable().map(child => {
+    const groups = childGroups.asMutable().map((child) => {
       const props = getTermGroupProps(
         child.uid,
         this.props.parentProps,
@@ -134,7 +134,7 @@ class TermGroup_ extends React.PureComponent<TermGroupProps> {
 }
 
 const mapStateToProps = (state: HyperState, ownProps: TermGroupOwnProps) => ({
-  childGroups: ownProps.termGroup.children.map(uid => state.termGroups.termGroups[uid])
+  childGroups: ownProps.termGroup.children.map((uid) => state.termGroups.termGroups[uid])
 });
 
 const mapDispatchToProps = (dispatch: HyperDispatch, ownProps: TermGroupOwnProps) => ({

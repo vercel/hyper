@@ -326,8 +326,8 @@ export default class Term extends React.PureComponent<TermProps> {
 
     // Update only options that have changed.
     ObjectTypedKeys(nextTermOptions)
-      .filter(option => option !== 'theme' && nextTermOptions[option] !== this.termOptions[option])
-      .forEach(option => {
+      .filter((option) => option !== 'theme' && nextTermOptions[option] !== this.termOptions[option])
+      .forEach((option) => {
         try {
           this.term.setOption(option, nextTermOptions[option]);
         } catch (e) {
@@ -344,7 +344,7 @@ export default class Term extends React.PureComponent<TermProps> {
       !this.termOptions.theme ||
       nextTermOptions.rendererType !== this.termOptions.rendererType ||
       ObjectTypedKeys(nextTermOptions.theme!).some(
-        option => nextTermOptions.theme![option] !== this.termOptions.theme![option]
+        (option) => nextTermOptions.theme![option] !== this.termOptions.theme![option]
       );
     if (shouldUpdateTheme) {
       this.term.setOption('theme', nextTermOptions.theme);
@@ -392,7 +392,7 @@ export default class Term extends React.PureComponent<TermProps> {
     // instead of invoking `destroy`, since it will make the
     // term insta un-attachable in the future (which we need
     // to do in case of splitting, see `componentDidMount`
-    this.disposableListeners.forEach(handler => handler.dispose());
+    this.disposableListeners.forEach((handler) => handler.dispose());
     this.disposableListeners = [];
 
     window.removeEventListener('paste', this.onWindowPaste, {

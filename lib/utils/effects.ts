@@ -7,7 +7,7 @@
  * as the result of an action being triggered.
  */
 import {Middleware} from 'redux';
-const effectsMiddleware: Middleware = () => next => action => {
+const effectsMiddleware: Middleware = () => (next) => (action) => {
   const ret = next(action);
   if (action.effect) {
     action.effect();

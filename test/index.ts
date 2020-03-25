@@ -38,7 +38,7 @@ test.after(async () => {
   await app.stop();
 });
 
-test('see if dev tools are open', async t => {
+test('see if dev tools are open', async (t) => {
   await app.client.waitUntilWindowLoaded();
   t.false(await app.webContents.isDevToolsOpened());
 });

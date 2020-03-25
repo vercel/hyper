@@ -13,7 +13,7 @@ let _watcher: fs.FSWatcher;
 export const getDeprecatedCSS = (config: Record<string, any>) => {
   const deprecated: string[] = [];
   const deprecatedCSS = ['x-screen', 'x-row', 'cursor-node', '::selection'];
-  deprecatedCSS.forEach(css => {
+  deprecatedCSS.forEach((css) => {
     if ((config.css && config.css.includes(css)) || (config.termCSS && config.termCSS.includes(css))) {
       deprecated.push(css);
     }
@@ -43,7 +43,7 @@ const _watch = () => {
     setTimeout(() => {
       cfg = _import();
       notify('Configuration updated', 'Hyper configuration reloaded!');
-      watchers.forEach(fn => fn());
+      watchers.forEach((fn) => fn());
       checkDeprecatedConfig();
     }, 100);
   };
@@ -64,7 +64,7 @@ const _watch = () => {
   // macOS/Linux
   function setWatcher() {
     try {
-      _watcher = fs.watch(cfgPath, eventType => {
+      _watcher = fs.watch(cfgPath, (eventType) => {
         if (eventType === 'rename') {
           _watcher.close();
           // Ensure that new file has been written
@@ -76,7 +76,7 @@ const _watch = () => {
       return;
     }
     _watcher.on('change', onChange);
-    _watcher.on('error', error => {
+    _watcher.on('error', (error) => {
       console.error('error watching config', error);
     });
   }
@@ -140,7 +140,7 @@ export const htermConfigTranslate = (config: Record<string, any>) => {
     'x-screen a([ {.[])': '.terminal a$1',
     'x-row a([ {.[])': '.terminal a$1'
   };
-  Object.keys(cssReplacements).forEach(pattern => {
+  Object.keys(cssReplacements).forEach((pattern) => {
     const searchvalue = new RegExp(pattern, 'g');
     const newvalue = cssReplacements[pattern];
     config.css = config.css && config.css.replace(searchvalue, newvalue);

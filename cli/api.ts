@@ -54,7 +54,7 @@ const getFileContents = memoize(() => {
 
 const getParsedFile = memoize(() => recast.parse(getFileContents()!));
 
-const getProperties = memoize(() => ((getParsedFile()?.program?.body as any[]) || []).map(obj => obj));
+const getProperties = memoize(() => ((getParsedFile()?.program?.body as any[]) || []).map((obj) => obj));
 
 const getPluginsByKey = (key: string) => {
   const properties = getProperties();
@@ -84,7 +84,7 @@ function exists() {
 function isInstalled(plugin: string, locally?: boolean) {
   const array = (locally ? getLocalPlugins() : getPlugins()) || [];
   if (array && Array.isArray(array)) {
-    return array.some(entry => entry.value === plugin);
+    return array.some((entry) => entry.value === plugin);
   }
   return false;
 }
@@ -108,7 +108,7 @@ function existsOnNpm(plugin: string) {
   const name = getPackageName(plugin);
   return got
     .get<any>(registryUrl + name.toLowerCase(), {timeout: 10000, responseType: 'json'})
-    .then(res => {
+    .then((res) => {
       if (!res.body.versions) {
         return Promise.reject(res);
       } else {
@@ -142,7 +142,7 @@ function uninstall(plugin: string) {
     return Promise.reject(`${plugin} is not installed`);
   }
 
-  const index = getPlugins()!.findIndex(entry => entry.value === plugin);
+  const index = getPlugins()!.findIndex((entry) => entry.value === plugin);
   getPlugins()!.splice(index, 1);
   return save();
 }
@@ -150,7 +150,7 @@ function uninstall(plugin: string) {
 function list() {
   if (Array.isArray(getPlugins())) {
     return getPlugins()!
-      .map(plugin => plugin.value)
+      .map((plugin) => plugin.value)
       .join('\n');
   }
   return false;

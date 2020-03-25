@@ -24,8 +24,8 @@ export default class Terms extends React.Component<TermsProps> {
 
   shouldComponentUpdate(nextProps: TermsProps & {children: any}) {
     return (
-      ObjectTypedKeys(nextProps).some(i => i !== 'write' && this.props[i] !== nextProps[i]) ||
-      ObjectTypedKeys(this.props).some(i => i !== 'write' && this.props[i] !== nextProps[i])
+      ObjectTypedKeys(nextProps).some((i) => i !== 'write' && this.props[i] !== nextProps[i]) ||
+      ObjectTypedKeys(this.props).some((i) => i !== 'write' && this.props[i] !== nextProps[i])
     );
   }
 
@@ -75,7 +75,7 @@ export default class Terms extends React.Component<TermsProps> {
     return (
       <div className={`terms_terms ${shift ? 'terms_termsShifted' : 'terms_termsNotShifted'}`}>
         {this.props.customChildrenBefore}
-        {this.props.termGroups.map(termGroup => {
+        {this.props.termGroups.map((termGroup) => {
           const {uid} = termGroup;
           const isActive = uid === this.props.activeRootGroup;
           const props = getTermGroupProps(uid, this.props, {

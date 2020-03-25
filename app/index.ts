@@ -129,7 +129,7 @@ function installDevExtensions(isDev_: boolean) {
   const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'] as const;
   const forceDownload = Boolean(process.env.UPGRADE_EXTENSIONS);
 
-  return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload)));
+  return Promise.all(extensions.map((name) => installer.default(installer[name], forceDownload)));
 }
 
 app.on('ready', () =>
@@ -249,7 +249,7 @@ app.on('ready', () =>
         installCLI(false);
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.error('Error while loading devtools extensions', err);
     })
 );

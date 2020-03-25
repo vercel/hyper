@@ -61,7 +61,7 @@ class Hyper extends React.PureComponent<HyperProps> {
     }
 
     const keys = getRegisteredKeys();
-    Object.keys(keys).forEach(commandKeys => {
+    Object.keys(keys).forEach((commandKeys) => {
       this.mousetrap.bind(
         commandKeys,
         (e: any) => {

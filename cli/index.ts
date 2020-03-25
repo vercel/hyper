@@ -59,7 +59,7 @@ args.command(
     commandPromise = api
       .uninstall(pluginName)
       .then(() => console.log(chalk.green(`${pluginName} uninstalled successfully!`)))
-      .catch(err => console.log(chalk.red(err)));
+      .catch((err) => console.log(chalk.red(err)));
   },
   ['u', 'rm', 'remove']
 );
@@ -85,16 +85,16 @@ const lsRemote = (pattern?: string) => {
   // note that no errors are catched by this function
   const URL = `https://api.npms.io/v2/search?q=${(pattern && `${pattern}+`) || ''}keywords:hyper-plugin,hyper-theme`;
   return got(URL)
-    .then(response => JSON.parse(response.body).results as any[])
-    .then(entries => entries.map(entry => entry.package))
-    .then(entries => entries.filter(entry => entry.name.indexOf(PLUGIN_PREFIX) === 0))
-    .then(entries =>
+    .then((response) => JSON.parse(response.body).results as any[])
+    .then((entries) => entries.map((entry) => entry.package))
+    .then((entries) => entries.filter((entry) => entry.name.indexOf(PLUGIN_PREFIX) === 0))
+    .then((entries) =>
       entries.map(({name, description}) => {
         return {name, description};
       })
     )
-    .then(entries =>
-      entries.map(entry => {
+    .then((entries) =>
+      entries.map((entry) => {
         entry.name = chalk.green(entry.name);
         return entry;
       })
@@ -109,7 +109,7 @@ args.command(
     const query = args_[0] ? args_[0].toLowerCase() : '';
 
     commandPromise = lsRemote(query)
-      .then(entries => {
+      .then((entries) => {
         if (entries.length === 0) {
           spinner.fail();
           console.error(chalk.red(`Your search '${query}' did not match any plugins`));
@@ -122,7 +122,7 @@ args.command(
           console.log(msg);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         spinner.fail();
         console.error(chalk.red(err)); // TODO
       });
@@ -137,14 +137,14 @@ args.command(
     const spinner = ora('Searching').start();
 
     commandPromise = lsRemote()
-      .then(entries => {
+      .then((entries) => {
         let msg = columnify(entries);
 
         spinner.succeed();
         msg = msg.substring(msg.indexOf('\n') + 1); // remove header
         console.log(msg);
       })
-      .catch(err => {
+      .catch((err) => {
         spinner.fail();
         console.error(chalk.red(err)); // TODO
       });
@@ -208,7 +208,7 @@ const main = (argv: string[]) => {
     env
   };
 
-  const args_ = args.sub.map(arg => {
+  const args_ = args.sub.map((arg) => {
     const cwd = isAbsolute(arg) ? arg : resolve(process.cwd(), arg);
     if (!existsSync(cwd)) {
       console.error(chalk.red(`Error! Directory or file does not exist: ${cwd}`));
@@ -232,11 +232,11 @@ const main = (argv: string[]) => {
   const child = spawn(process.execPath, args_, options);
 
   if (flags.verbose) {
-    child.stdout.on('data', data => console.log(data.toString('utf8')));
-    child.stderr.on('data', data => console.error(data.toString('utf8')));
+    child.stdout.on('data', (data) => console.log(data.toString('utf8')));
+    child.stderr.on('data', (data) => console.error(data.toString('utf8')));
   }
   if (flags.verbose) {
-    return new Promise(c => child.once('exit', () => c(null)));
+    return new Promise((c) => child.once('exit', () => c(null)));
   }
   child.unref();
   return Promise.resolve();

@@ -113,7 +113,7 @@ export function newWindow(
   function createSession(extraOptions: any = {}) {
     const uid = uuidv4();
     const extraOptionsFiltered: any = {};
-    Object.keys(extraOptions).forEach(key => {
+    Object.keys(extraOptions).forEach((key) => {
       if (extraOptions[key] !== undefined) extraOptionsFiltered[key] = extraOptions[key];
     });
 
@@ -135,7 +135,7 @@ export function newWindow(
     return {session, options};
   }
 
-  rpc.on('new', extraOptions => {
+  rpc.on('new', (extraOptions) => {
     const {session, options} = createSession(extraOptions);
 
     sessions.set(options.uid, session);
@@ -202,7 +202,7 @@ export function newWindow(
   rpc.on('open external', ({url}) => {
     shell.openExternal(url);
   });
-  rpc.on('open context menu', selection => {
+  rpc.on('open context menu', (selection) => {
     const {createWindow} = app;
     const {buildFromTemplate} = Menu;
     buildFromTemplate(contextMenuTemplate(createWindow, selection)).popup({window});
@@ -223,7 +223,7 @@ export function newWindow(
   rpc.on('close', () => {
     window.close();
   });
-  rpc.on('command', command => {
+  rpc.on('command', (command) => {
     const focusedWindow = BrowserWindow.getFocusedWindow();
     execCommand(command, focusedWindow!);
   });

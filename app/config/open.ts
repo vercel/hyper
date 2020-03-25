@@ -26,7 +26,7 @@ export default () => {
         Registry.closeKey(fileExtsKeys);
 
         // Find UserChoice key
-        const userChoice = keys.find(k => k.endsWith('UserChoice'));
+        const userChoice = keys.find((k) => k.endsWith('UserChoice'));
         return userChoice
           ? `Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.js\\${userChoice}`
           : userChoice;
@@ -44,13 +44,13 @@ export default () => {
         // Load key values
         const userChoiceKey = Registry.openKey(Registry.HKCU, userChoice, Registry.Access.READ)!;
         const values: string[] = Registry.enumValueNames(userChoiceKey).map(
-          x => (Registry.queryValue(userChoiceKey, x) as string) || ''
+          (x) => (Registry.queryValue(userChoiceKey, x) as string) || ''
         );
         Registry.closeKey(userChoiceKey);
 
         // Look for default program
         const hasDefaultProgramConfigured = values.every(
-          value => value && typeof value === 'string' && !value.includes('WScript.exe') && !value.includes('JSFile')
+          (value) => value && typeof value === 'string' && !value.includes('WScript.exe') && !value.includes('JSFile')
         );
 
         return hasDefaultProgramConfigured;
@@ -62,21 +62,21 @@ export default () => {
 
     // This mimics shell.openItem, true if it worked, false if not.
     const openNotepad = (file: string) =>
-      new Promise<boolean>(resolve => {
-        exec(`start notepad.exe ${file}`, error => {
+      new Promise<boolean>((resolve) => {
+        exec(`start notepad.exe ${file}`, (error) => {
           resolve(!error);
         });
       });
 
     return hasDefaultSet()
-      .then(yes => {
+      .then((yes) => {
         if (yes) {
           return shell.openItem(cfgPath);
         }
         console.warn('No default app set for .js files, using notepad.exe fallback');
         return openNotepad(cfgPath);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('Open config with default app error:', err);
         return openNotepad(cfgPath);
       });
