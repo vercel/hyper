@@ -38,7 +38,7 @@ const fetchFileData = (configData: any) => {
     return;
   }
 
-  getBase64FileData(configInfo.bellSoundURL).then(base64FileData => {
+  getBase64FileData(configInfo.bellSoundURL).then((base64FileData) => {
     // prepend "base64," to the result of this method in order for this to work properly within xterm.js
     const bellSound = !base64FileData ? null : 'base64,' + base64FileData;
     configInfo.bellSound = bellSound;
@@ -71,11 +71,11 @@ rpc.on('ready', () => {
   store_.dispatch(uiActions.setFontSmoothing());
 });
 
-rpc.on('session add', data => {
+rpc.on('session add', (data) => {
   store_.dispatch(sessionActions.addSession(data));
 });
 
-rpc.on('session data', d => {
+rpc.on('session data', (d) => {
   // the uid is a uuid v4 so it's 36 chars long
   const uid = d.slice(0, 36);
   const data = d.slice(36);
@@ -174,7 +174,7 @@ rpc.on('move right req', () => {
   store_.dispatch(uiActions.moveRight());
 });
 
-rpc.on('move jump req', index => {
+rpc.on('move jump req', (index) => {
   store_.dispatch(uiActions.moveTo(index));
 });
 
@@ -190,7 +190,7 @@ rpc.on('open file', ({path}) => {
   store_.dispatch(uiActions.openFile(path));
 });
 
-rpc.on('open ssh', url => {
+rpc.on('open ssh', (url) => {
   store_.dispatch(uiActions.openSSH(url));
 });
 
@@ -198,7 +198,7 @@ rpc.on('update available', ({releaseName, releaseNotes, releaseUrl, canInstall})
   store_.dispatch(updaterActions.updateAvailable(releaseName, releaseNotes, releaseUrl, canInstall));
 });
 
-rpc.on('move', window => {
+rpc.on('move', (window) => {
   store_.dispatch(uiActions.windowMove(window));
 });
 

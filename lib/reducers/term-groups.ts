@@ -50,7 +50,7 @@ const insertRebalance = (oldSizes: ImmutableType<number[]>, index: any) => {
   const newSize = 1 / (oldSizes.length + 1);
   // We spread out how much each pane should be reduced
   // with based on their existing size:
-  const balanced = oldSizes.map(size => size - newSize * size);
+  const balanced = oldSizes.map((size) => size - newSize * size);
   return [...balanced.slice(0, index).asMutable(), newSize, ...balanced.slice(index).asMutable()];
 };
 
@@ -190,7 +190,7 @@ const removeGroup = (state: ImmutableType<ITermState>, uid: string) => {
 
 const resizeGroup = (state: ImmutableType<ITermState>, uid: any, sizes: number[]) => {
   // Make sure none of the sizes fall below MIN_SIZE:
-  if (sizes.find(size => size < MIN_SIZE)) {
+  if (sizes.find((size) => size < MIN_SIZE)) {
     return state;
   }
 

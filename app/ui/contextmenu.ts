@@ -29,5 +29,5 @@ export default (
   const _edit = editMenu(commandKeys, execCommand).submenu.filter(filterCutCopy.bind(null, selection));
   return _edit
     .concat(separator, _shell)
-    .filter(menuItem => !Object.prototype.hasOwnProperty.call(menuItem, 'enabled') || menuItem.enabled);
+    .filter((menuItem) => !Object.prototype.hasOwnProperty.call(menuItem, 'enabled') || menuItem.enabled);
 };

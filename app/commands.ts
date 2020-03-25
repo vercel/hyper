@@ -8,41 +8,41 @@ const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
     // If window is created on the same tick, it will consume event too
     setTimeout(app.createWindow, 0);
   },
-  'tab:new': focusedWindow => {
+  'tab:new': (focusedWindow) => {
     if (focusedWindow) {
       focusedWindow.rpc.emit('termgroup add req', {});
     } else {
       setTimeout(app.createWindow, 0);
     }
   },
-  'pane:splitRight': focusedWindow => {
+  'pane:splitRight': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('split request vertical', {});
   },
-  'pane:splitDown': focusedWindow => {
+  'pane:splitDown': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('split request horizontal', {});
   },
-  'pane:close': focusedWindow => {
+  'pane:close': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('termgroup close req');
   },
   'window:preferences': () => {
     openConfig();
   },
-  'editor:clearBuffer': focusedWindow => {
+  'editor:clearBuffer': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('session clear req');
   },
-  'editor:selectAll': focusedWindow => {
+  'editor:selectAll': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('term selectAll');
   },
   'plugins:update': () => {
     updatePlugins();
   },
-  'window:reload': focusedWindow => {
+  'window:reload': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('reload');
   },
-  'window:reloadFull': focusedWindow => {
+  'window:reloadFull': (focusedWindow) => {
     focusedWindow && focusedWindow.reload();
   },
-  'window:devtools': focusedWindow => {
+  'window:devtools': (focusedWindow) => {
     if (!focusedWindow) {
       return;
     }
@@ -53,58 +53,58 @@ const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
       webContents.openDevTools({mode: 'detach'});
     }
   },
-  'zoom:reset': focusedWindow => {
+  'zoom:reset': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('reset fontSize req');
   },
-  'zoom:in': focusedWindow => {
+  'zoom:in': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('increase fontSize req');
   },
-  'zoom:out': focusedWindow => {
+  'zoom:out': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('decrease fontSize req');
   },
-  'tab:prev': focusedWindow => {
+  'tab:prev': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('move left req');
   },
-  'tab:next': focusedWindow => {
+  'tab:next': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('move right req');
   },
-  'pane:prev': focusedWindow => {
+  'pane:prev': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('prev pane req');
   },
-  'pane:next': focusedWindow => {
+  'pane:next': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('next pane req');
   },
-  'editor:movePreviousWord': focusedWindow => {
+  'editor:movePreviousWord': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('session move word left req');
   },
-  'editor:moveNextWord': focusedWindow => {
+  'editor:moveNextWord': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('session move word right req');
   },
-  'editor:moveBeginningLine': focusedWindow => {
+  'editor:moveBeginningLine': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('session move line beginning req');
   },
-  'editor:moveEndLine': focusedWindow => {
+  'editor:moveEndLine': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('session move line end req');
   },
-  'editor:deletePreviousWord': focusedWindow => {
+  'editor:deletePreviousWord': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('session del word left req');
   },
-  'editor:deleteNextWord': focusedWindow => {
+  'editor:deleteNextWord': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('session del word right req');
   },
-  'editor:deleteBeginningLine': focusedWindow => {
+  'editor:deleteBeginningLine': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('session del line beginning req');
   },
-  'editor:deleteEndLine': focusedWindow => {
+  'editor:deleteEndLine': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('session del line end req');
   },
-  'editor:break': focusedWindow => {
+  'editor:break': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('session break req');
   },
-  'editor:search': focusedWindow => {
+  'editor:search': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('session search');
   },
-  'editor:search-close': focusedWindow => {
+  'editor:search-close': (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('session search close');
   },
   'cli:install': () => {
@@ -118,9 +118,9 @@ const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
 };
 
 //Special numeric command
-([1, 2, 3, 4, 5, 6, 7, 8, 'last'] as const).forEach(cmdIndex => {
+([1, 2, 3, 4, 5, 6, 7, 8, 'last'] as const).forEach((cmdIndex) => {
   const index = cmdIndex === 'last' ? cmdIndex : cmdIndex - 1;
-  commands[`tab:jump:${cmdIndex}`] = focusedWindow => {
+  commands[`tab:jump:${cmdIndex}`] = (focusedWindow) => {
     focusedWindow && focusedWindow.rpc.emit('move jump req', index);
   };
 });

@@ -20,8 +20,8 @@ export default function fetchNotifications(win: BrowserWindow) {
       'X-Hyper-Platform': process.platform
     }
   })
-    .then(res => res.json())
-    .then(data => {
+    .then((res) => res.json())
+    .then((data) => {
       const {message} = data || {};
       if (typeof message !== 'object' && message !== '') {
         throw new Error('Bad response');

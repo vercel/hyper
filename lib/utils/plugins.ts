@@ -271,7 +271,7 @@ const loadModules = () => {
         return undefined;
       }
 
-      ObjectTypedKeys(mod).forEach(i => {
+      ObjectTypedKeys(mod).forEach((i) => {
         if (Object.hasOwnProperty.call(mod, i)) {
           mod[i]._pluginName = pluginName;
           mod[i]._pluginVersion = pluginVersion;
@@ -364,7 +364,7 @@ const loadModules = () => {
     .filter((mod: any) => Boolean(mod));
 
   const deprecatedPlugins: Record<string, any> = plugins.getDeprecatedConfig();
-  Object.keys(deprecatedPlugins).forEach(name => {
+  Object.keys(deprecatedPlugins).forEach((name) => {
     const {css} = deprecatedPlugins[name];
     if (css) {
       console.warn(`Warning: "${name}" plugin uses some deprecated CSS classes (${css.join(', ')}).`);
@@ -387,7 +387,7 @@ function getProps(name: keyof typeof propsDecorators, props: any, ...fnArgs: any
   const decorators = propsDecorators[name];
   let props_: typeof props;
 
-  decorators.forEach(fn => {
+  decorators.forEach((fn) => {
     let ret_;
 
     if (!props_) {
@@ -445,9 +445,9 @@ export function connect<stateProps, dispatchProps>(
 ) {
   return (Class: any, name: keyof typeof connectors) => {
     return reduxConnect<stateProps, dispatchProps, any, HyperState>(
-      state => {
+      (state) => {
         let ret = stateFn(state);
-        connectors[name].state.forEach(fn => {
+        connectors[name].state.forEach((fn) => {
           let ret_;
 
           try {
@@ -470,9 +470,9 @@ export function connect<stateProps, dispatchProps>(
         });
         return ret;
       },
-      dispatch => {
+      (dispatch) => {
         let ret = dispatchFn(dispatch);
-        connectors[name].dispatch.forEach(fn => {
+        connectors[name].dispatch.forEach((fn) => {
           let ret_;
 
           try {
@@ -550,7 +550,7 @@ export function decorateSessionsReducer(fn: ISessionReducer) {
 }
 
 // redux middleware generator
-export const middleware: Middleware = store => next => action => {
+export const middleware: Middleware = (store) => (next) => (action) => {
   const nextMiddleware = (remaining: Middleware[]) => (action_: any) =>
     remaining.length ? remaining[0](store)(nextMiddleware(remaining.slice(1)))(action_) : next(action_);
   nextMiddleware(middlewares)(action);

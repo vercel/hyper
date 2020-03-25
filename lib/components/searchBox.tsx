@@ -31,7 +31,7 @@ export default class SearchBox extends React.PureComponent<SearchBoxProps> {
   render() {
     return (
       <div style={searchBoxStyling}>
-        <input type="text" className="search-box" onKeyUp={this.handleChange} ref={input => input && input.focus()} />
+        <input type="text" className="search-box" onKeyUp={this.handleChange} ref={(input) => input && input.focus()} />
         <span className="search-button" onClick={() => this.props.prev(this.searchTerm)}>
           {' '}
           &#x2190;{' '}

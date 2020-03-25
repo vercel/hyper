@@ -152,7 +152,7 @@ export function userExitTermGroup(uid: string) {
         if (group.sessionUid) {
           dispatch(userExitSession(group.sessionUid));
         } else {
-          group.children.forEach(childUid => {
+          group.children.forEach((childUid) => {
             dispatch(userExitTermGroup(childUid));
           });
         }
