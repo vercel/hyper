@@ -1483,10 +1483,10 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-ava@3.5.1:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/ava/-/ava-3.5.1.tgz#6dde079621606824495957c78f95c8485639bc14"
-  integrity sha512-gde/nh438C6cj6/pKntjoPmGg1VSsZlRjyuYTjp0ixsNDj+1YNVeASrlzI+NgvcUmbx17G8uOgByt7lDu8ddXA==
+ava@3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/ava/-/ava-3.5.2.tgz#9a37305c03840c4b63eb53edae29741d8414633e"
+  integrity sha512-4MYpx0D7VQwzvqCOQsbnPK2Dmg7lipWe2k/n75i0cuFwuosq9MYIWc9MnmCZ1GIlPQ70qOP1DgQcD0ScH/W79Q==
   dependencies:
     "@concordance/react" "^2.0.0"
     ansi-styles "^4.2.1"
