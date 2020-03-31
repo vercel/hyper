@@ -862,10 +862,10 @@
     "@types/source-list-map" "*"
     source-map "^0.6.1"
 
-"@types/webpack@*", "@types/webpack@4.41.9":
-  version "4.41.9"
-  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.41.9.tgz#f0ed8d46d69efe11573441f8eb112d934fc4efe9"
-  integrity sha512-R68AotLGtaVL6HGfZRvEyYKsWcMv0CBFfSr4gxoYzhMn3LnjLV/ksP4dNi9de8dVG+Dn/GuDr1NwB/sDApB3pA==
+"@types/webpack@*", "@types/webpack@4.41.10":
+  version "4.41.10"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.41.10.tgz#2e1f6b3508a249854efe3dcc7690905ac5ee10be"
+  integrity sha512-vIy0qaq8AjOjZLuFPqpo7nAJzcoVXMdw3mvpNN07Uvdy0p1IpJeLNBe3obdRP7FX2jIusDE7z1pZa0A6qYUgnA==
   dependencies:
     "@types/anymatch" "*"
     "@types/node" "*"
