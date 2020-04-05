@@ -91,7 +91,7 @@
     "@types/webpack": "4.41.10",
     "@typescript-eslint/eslint-plugin": "2.25.0",
     "@typescript-eslint/parser": "2.26.0",
-    "ava": "3.5.2",
+    "ava": "3.6.0",
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
     "copy-webpack-plugin": "5.1.1",
