@@ -22,7 +22,7 @@
     "fs-extra": "9.0.0",
     "git-describe": "4.0.4",
     "lodash": "4.17.15",
-    "mkdirp": "1.0.3",
+    "mkdirp": "1.0.4",
     "ms": "2.1.2",
     "node-pty": "0.9.0",
     "os-locale": "5.0.0",
