@@ -81,7 +81,7 @@
     "@types/node": "^12.12.34",
     "@types/pify": "3.0.2",
     "@types/plist": "3.0.2",
-    "@types/react": "^16.9.32",
+    "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
     "@types/react-redux": "^7.1.7",
     "@types/seamless-immutable": "7.1.11",
