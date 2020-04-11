@@ -50,7 +50,7 @@
     "stylis": "3.5.4",
     "uuid": "7.0.3",
     "webpack-cli": "3.3.11",
-    "xterm": "^4.4.0",
+    "xterm": "^4.5.0",
     "xterm-addon-fit": "^0.3.0",
     "xterm-addon-ligatures": "^0.2.1",
     "xterm-addon-search": "^0.5.0",
