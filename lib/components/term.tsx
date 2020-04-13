@@ -201,12 +201,12 @@ export default class Term extends React.PureComponent<TermProps> {
       this.disposableListeners.push(
         this.term.onCursorMove(() => {
           const cursorFrame = {
-            x: this.term.buffer.cursorX * (this.term as any)._core._renderService.dimensions.actualCellWidth,
-            y: this.term.buffer.cursorY * (this.term as any)._core._renderService.dimensions.actualCellHeight,
+            x: this.term.buffer.active.cursorX * (this.term as any)._core._renderService.dimensions.actualCellWidth,
+            y: this.term.buffer.active.cursorY * (this.term as any)._core._renderService.dimensions.actualCellHeight,
             width: (this.term as any)._core._renderService.dimensions.actualCellWidth,
             height: (this.term as any)._core._renderService.dimensions.actualCellHeight,
-            col: this.term.buffer.cursorX,
-            row: this.term.buffer.cursorY
+            col: this.term.buffer.active.cursorX,
+            row: this.term.buffer.active.cursorY
           };
           props.onCursorMove?.(cursorFrame);
         })
