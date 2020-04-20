@@ -111,7 +111,7 @@
     "inquirer": "7.1.0",
     "node-addon-api": "2.0.0",
     "node-gyp": "6.1.0",
-    "null-loader": "3.0.0",
+    "null-loader": "4.0.0",
     "plist": "3.0.1",
     "prettier": "2.0.4",
     "proxyquire": "2.1.3",
