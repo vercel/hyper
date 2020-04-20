@@ -1517,10 +1517,10 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-ava@3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/ava/-/ava-3.7.0.tgz#86869f831628de31e817fe00d46b350849295092"
-  integrity sha512-SV1oqRpZ00qevETsNzcqTqaTnspJZZ1wBGOjyQzcLOMChnUF+17/RS4YiieClaV0eCFULLU/roICpJoQlNLHZw==
+ava@3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/ava/-/ava-3.7.1.tgz#7baba69820242e0efcbfb4ab2060b500ec745421"
+  integrity sha512-UX7RSenUgFPhxe866doqOJy6tQZAXAVAU4yufYeBAcnEjnS/plIcG6lE2yGIqgjk5cIMpSi+sP4f6EsornlsuA==
   dependencies:
     "@concordance/react" "^2.0.0"
     ansi-styles "^4.2.1"
