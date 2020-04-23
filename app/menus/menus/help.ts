@@ -1,5 +1,5 @@
 import {release} from 'os';
-import {app, shell, MenuItemConstructorOptions} from 'electron';
+import {app, shell, MenuItemConstructorOptions, dialog, clipboard} from 'electron';
 import {getConfig, getPlugins} from '../../config';
 const {arch, env, platform, versions} = process;
 import {version} from '../../package.json';
@@ -14,7 +14,7 @@ export default (commands: Record<string, string>, showAbout: () => void): MenuIt
     },
     {
       label: 'Report Issue',
-      click() {
+      click(menuItem, focusedWindow) {
         const body = `<!--
   Hi there! Thank you for discovering and submitting an issue.
   Before you submit this; let's make sure of a few things.
@@ -57,7 +57,30 @@ ${JSON.stringify(getPlugins(), null, 2)}
 \`\`\`
 </details>`;
 
-        shell.openExternal(`https://github.com/zeit/hyper/issues/new?body=${encodeURIComponent(body)}`);
+        const issueURL = `https://github.com/zeit/hyper/issues/new?body=${encodeURIComponent(body)}`;
+        if (issueURL.length > 6144) {
+          dialog
+            .showMessageBox(focusedWindow, {
+              message:
+                'There is too much data to send to GitHub directly. The data will be copied to the clipboard, ' +
+                'please paste it into the GitHub issue page that will open.',
+              type: 'warning',
+              buttons: ['OK', 'Cancel']
+            })
+            .then((result) => {
+              if (result.response === 0) {
+                clipboard.writeText(body);
+                shell.openExternal(
+                  `https://github.com/zeit/hyper/issues/new?body=${encodeURIComponent(
+                    '<!-- We have written the needed data into your clipboard because it was too large to send. ' +
+                      'Please paste. -->\n'
+                  )}`
+                );
+              }
+            });
+        } else {
+          shell.openExternal(issueURL);
+        }
       }
     }
   ];
