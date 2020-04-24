@@ -423,9 +423,26 @@ export default class Term extends React.PureComponent<TermProps> {
 
         <style jsx global>{`
           .term_fit {
+            position: relative;
             display: block;
             width: 100%;
             height: 100%;
+          }
+
+          .splitpane_pane > .term_fit::after {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: #fff;
+            opacity: 0.2;
+            content: '';
+            pointer-events: none;
+          }
+
+          .term_fit.term_active::after {
+            opacity: 0;
           }
 
           .term_wrapper {
