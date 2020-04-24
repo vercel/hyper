@@ -1,5 +1,6 @@
 ![](https://assets.zeit.co/image/upload/v1549723846/repositories/hyper/hyper-3-repo-banner.png)
 
+[![Node CI](https://github.com/zeit/hyper/workflows/Node%20CI/badge.svg?event=push)](https://github.com/zeit/hyper/actions?query=workflow%3A%22Node+CI%22+branch%3Acanary+event%3Apush)
 [![macOS CI Status](https://circleci.com/gh/zeit/hyper.svg?style=shield)](https://circleci.com/gh/zeit/hyper)
 [![Windows CI status](https://ci.appveyor.com/api/projects/status/kqvb4oa772an58sc?svg=true)](https://ci.appveyor.com/project/zeit/hyper)
 [![Linux CI status](https://travis-ci.org/zeit/hyper.svg?branch=master)](https://travis-ci.org/zeit/hyper)
