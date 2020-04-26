@@ -5,7 +5,7 @@ import {WebLinksAddon} from 'xterm-addon-web-links';
 import {SearchAddon} from 'xterm-addon-search';
 import {WebglAddon} from 'xterm-addon-webgl';
 import {LigaturesAddon} from 'xterm-addon-ligatures';
-import {clipboard} from 'electron';
+import {clipboard, shell} from 'electron';
 import Color from 'color';
 import terms from '../terms';
 import processClipboard from '../utils/paste';
@@ -151,7 +151,11 @@ export default class Term extends React.PureComponent<TermProps> {
       this.term.attachCustomKeyEventHandler(this.keyboardHandler);
       this.term.loadAddon(this.fitAddon);
       this.term.loadAddon(this.searchAddon);
-      this.term.loadAddon(new WebLinksAddon());
+      this.term.loadAddon(
+        new WebLinksAddon((event, uri) => {
+          shell.openExternal(uri);
+        })
+      );
       this.term.open(this.termRef);
       if (useWebGL) {
         this.term.loadAddon(new WebglAddon());
