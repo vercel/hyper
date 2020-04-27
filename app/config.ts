@@ -5,12 +5,13 @@ import _openConfig from './config/open';
 import win from './config/windows';
 import {cfgPath, cfgDir} from './config/paths';
 import {getColorMap} from './utils/colors';
+import {parsedConfig, configOptions} from '../lib/config';
 
 const watchers: any[] = [];
-let cfg: Record<string, any> = {};
+let cfg: parsedConfig = {} as any;
 let _watcher: fs.FSWatcher;
 
-export const getDeprecatedCSS = (config: Record<string, any>) => {
+export const getDeprecatedCSS = (config: configOptions) => {
   const deprecated: string[] = [];
   const deprecatedCSS = ['x-screen', 'x-row', 'cursor-node', '::selection'];
   deprecatedCSS.forEach((css) => {
@@ -124,15 +125,15 @@ export const getWin = win.get;
 export const winRecord = win.recordState;
 export const windowDefaults = win.defaults;
 
-export const fixConfigDefaults = (decoratedConfig: any) => {
-  const defaultConfig = getDefaultConfig()?.config;
+export const fixConfigDefaults = (decoratedConfig: configOptions) => {
+  const defaultConfig = getDefaultConfig().config!;
   decoratedConfig.colors = getColorMap(decoratedConfig.colors) || {};
   // We must have default colors for xterm css.
-  decoratedConfig.colors = Object.assign({}, defaultConfig.colors, decoratedConfig.colors);
+  decoratedConfig.colors = {...defaultConfig.colors, ...decoratedConfig.colors};
   return decoratedConfig;
 };
 
-export const htermConfigTranslate = (config: Record<string, any>) => {
+export const htermConfigTranslate = (config: configOptions) => {
   const cssReplacements: Record<string, string> = {
     'x-screen x-row([ {.[])': '.xterm-rows > div$1',
     '.cursor-node([ {.[])': '.terminal-cursor$1',

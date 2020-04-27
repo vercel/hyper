@@ -96,7 +96,7 @@ export type uiState = {
   rows: number | null;
   scrollback: number;
   selectionColor: string;
-  showHamburgerMenu: string;
+  showHamburgerMenu: boolean | '';
   showWindowControls: string;
   termCSS: string;
   uiFontFamily: string;

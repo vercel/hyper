@@ -17,6 +17,7 @@ import {addNotificationMessage} from './actions/notifications';
 import {loadConfig, reloadConfig} from './actions/config';
 import HyperContainer from './containers/hyper';
 import configureStore from './store/configure-store';
+import {configOptions} from './config';
 
 // On Linux, the default zoom was somehow changed with Electron 3 (or maybe 2).
 // Setting zoom factor to 1.2 brings back the normal default size
@@ -31,8 +32,8 @@ Object.defineProperty(window, 'rpc', {get: () => rpc});
 Object.defineProperty(window, 'config', {get: () => config});
 Object.defineProperty(window, 'plugins', {get: () => plugins});
 
-const fetchFileData = (configData: any) => {
-  const configInfo = Object.assign({}, configData, {bellSound: null});
+const fetchFileData = (configData: configOptions) => {
+  const configInfo: configOptions = {...configData, bellSound: null};
   if (!configInfo.bell || configInfo.bell.toUpperCase() !== 'SOUND' || !configInfo.bellSoundURL) {
     store_.dispatch(reloadConfig(configInfo));
     return;

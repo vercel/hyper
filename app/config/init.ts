@@ -1,6 +1,7 @@
 import vm from 'vm';
 import notify from '../notify';
 import mapKeys from '../utils/map-keys';
+import {parsedConfig, rawConfig, configOptions} from '../../lib/config';
 
 const _extract = (script?: vm.Script): Record<string, any> => {
   const module: Record<string, any> = {};
@@ -24,22 +25,24 @@ const _extractDefault = (cfg: string) => {
 };
 
 // init config
-const _init = (cfg: {userCfg: string; defaultCfg: Record<string, any>}) => {
+const _init = (cfg: {userCfg: string; defaultCfg: rawConfig}): parsedConfig => {
   const script = _syntaxValidation(cfg.userCfg);
-  if (script) {
-    const _cfg = _extract(script);
-    if (!_cfg.config) {
-      notify('Error reading configuration: `config` key is missing');
-      return cfg.defaultCfg;
-    }
+  const _cfg = script && (_extract(script) as rawConfig);
+  return {
+    config: (() => {
+      if (_cfg?.config) {
+        return _cfg.config;
+      } else {
+        notify('Error reading configuration: `config` key is missing');
+        return cfg.defaultCfg.config || ({} as configOptions);
+      }
+    })(),
     // Merging platform specific keymaps with user defined keymaps
-    _cfg.keymaps = mapKeys(Object.assign({}, cfg.defaultCfg.keymaps, _cfg.keymaps));
+    keymaps: mapKeys({...cfg.defaultCfg.keymaps, ..._cfg?.keymaps}),
     // Ignore undefined values in plugin and localPlugins array Issue #1862
-    _cfg.plugins = (_cfg.plugins && _cfg.plugins.filter(Boolean)) || [];
-    _cfg.localPlugins = (_cfg.localPlugins && _cfg.localPlugins.filter(Boolean)) || [];
-    return _cfg;
-  }
-  return cfg.defaultCfg;
+    plugins: (_cfg?.plugins && _cfg.plugins.filter(Boolean)) || [],
+    localPlugins: (_cfg?.localPlugins && _cfg.localPlugins.filter(Boolean)) || []
+  };
 };
 
 export {_init, _extractDefault};
