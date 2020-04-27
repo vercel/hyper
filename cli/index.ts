@@ -13,8 +13,6 @@ import got from 'got';
 import ora from 'ora';
 import * as api from './api';
 
-const PLUGIN_PREFIX = 'hyper-';
-
 let commandPromise: Promise<void>;
 
 const assertPluginName = (pluginName: string) => {
@@ -83,11 +81,12 @@ args.command(
 
 const lsRemote = (pattern?: string) => {
   // note that no errors are catched by this function
-  const URL = `https://api.npms.io/v2/search?q=${(pattern && `${pattern}+`) || ''}keywords:hyper-plugin,hyper-theme`;
+  const URL = `https://api.npms.io/v2/search?q=${
+    (pattern && `${pattern}+`) || ''
+  }keywords:hyper-plugin,hyper-theme&size=250`;
   return got(URL)
     .then((response) => JSON.parse(response.body).results as any[])
     .then((entries) => entries.map((entry) => entry.package))
-    .then((entries) => entries.filter((entry) => entry.name.indexOf(PLUGIN_PREFIX) === 0))
     .then((entries) =>
       entries.map(({name, description}) => {
         return {name, description};
