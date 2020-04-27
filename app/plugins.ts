@@ -13,6 +13,7 @@ import {availableExtensions} from './plugins/extensions';
 import {install} from './plugins/install';
 import {plugs} from './config/paths';
 import mapKeys from './utils/map-keys';
+import {configOptions} from '../lib/config';
 
 // local storage
 const cache = new Config();
@@ -187,10 +188,7 @@ if (cache.get('hyper.plugins') !== id || process.env.HYPER_FORCE_UPDATE) {
   const baseConfig = config.getConfig();
   if (baseConfig['autoUpdatePlugins']) {
     // otherwise update plugins every 5 hours
-    setInterval(
-      updatePlugins,
-      ms(baseConfig['autoUpdatePlugins'] === true ? '5h' : (baseConfig['autoUpdatePlugins'] as string))
-    );
+    setInterval(updatePlugins, ms(baseConfig['autoUpdatePlugins'] === true ? '5h' : baseConfig['autoUpdatePlugins']));
   }
 })();
 
@@ -372,7 +370,7 @@ function decorateEntity(base: any, key: string, type: 'object' | 'function') {
   return decorated;
 }
 
-function decorateObject(base: any, key: string) {
+function decorateObject<T>(base: T, key: string): T {
   return decorateEntity(base, key, 'object');
 }
 
@@ -381,14 +379,14 @@ function decorateClass(base: any, key: string) {
 }
 
 export const getDeprecatedConfig = () => {
-  const deprecated: Record<string, any> = {};
+  const deprecated: Record<string, {css: string[]}> = {};
   const baseConfig = config.getConfig();
   modules.forEach((plugin) => {
     if (!plugin.decorateConfig) {
       return;
     }
     // We need to clone config in case of plugin modifies config directly.
-    let configTmp;
+    let configTmp: configOptions;
     try {
       configTmp = plugin.decorateConfig(JSON.parse(JSON.stringify(baseConfig)));
     } catch (e) {

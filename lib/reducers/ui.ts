@@ -238,7 +238,7 @@ const reducer = (state = initial, action: HyperActions) => {
               ret.modifierKeys = config.modifierKeys;
             }
 
-            if (allowedHamburgerMenuValues.has(config.showHamburgerMenu)) {
+            if (allowedHamburgerMenuValues.has(config.showHamburgerMenu as any)) {
               ret.showHamburgerMenu = config.showHamburgerMenu;
             }
 

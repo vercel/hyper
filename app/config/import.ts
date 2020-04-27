@@ -3,8 +3,9 @@ import {sync as mkdirpSync} from 'mkdirp';
 import {defaultCfg, cfgPath, legacyCfgPath, plugs, defaultPlatformKeyPath} from './paths';
 import {_init, _extractDefault} from './init';
 import notify from '../notify';
+import {rawConfig} from '../../lib/config';
 
-let defaultConfig: Record<string, any> | undefined;
+let defaultConfig: rawConfig;
 
 const _write = (path: string, data: any) => {
   // This method will take text formatted as Unix line endings and transform it
@@ -92,41 +93,46 @@ const _importConf = () => {
     console.error(err);
   }
 
+  let defaultCfgRaw = '';
   try {
-    const defaultCfgRaw = readFileSync(defaultCfg, 'utf8');
-    const _defaultCfg = _extractDefault(defaultCfgRaw);
-    // Importing platform specific keymap
-    try {
-      const content = readFileSync(defaultPlatformKeyPath(), 'utf8');
-      const mapping = JSON.parse(content) as Record<string, string | string[]>;
-      _defaultCfg.keymaps = mapping;
-    } catch (err) {
-      console.error(err);
-    }
-
-    // Import user config
-    try {
-      const userCfg = readFileSync(cfgPath, 'utf8');
-      return {userCfg, defaultCfg: _defaultCfg};
-    } catch (err) {
-      _write(cfgPath, defaultCfgRaw);
-      return {userCfg: defaultCfgRaw, defaultCfg: _defaultCfg};
-    }
+    defaultCfgRaw = readFileSync(defaultCfg, 'utf8');
   } catch (err) {
     console.log(err);
   }
+  const _defaultCfg = _extractDefault(defaultCfgRaw) as rawConfig;
+
+  // Importing platform specific keymap
+  let content = '{}';
+  try {
+    content = readFileSync(defaultPlatformKeyPath(), 'utf8');
+  } catch (err) {
+    console.error(err);
+  }
+  const mapping = JSON.parse(content) as Record<string, string | string[]>;
+  _defaultCfg.keymaps = mapping;
+
+  // Import user config
+  let userCfg: string;
+  try {
+    userCfg = readFileSync(cfgPath, 'utf8');
+  } catch (err) {
+    _write(cfgPath, defaultCfgRaw);
+    userCfg = defaultCfgRaw;
+  }
+
+  return {userCfg, defaultCfg: _defaultCfg};
 };
 
 export const _import = () => {
   const imported = _importConf();
-  defaultConfig = imported?.defaultCfg;
+  defaultConfig = imported.defaultCfg;
   const result = _init(imported!);
   return result;
 };
 
 export const getDefaultConfig = () => {
   if (!defaultConfig) {
-    defaultConfig = _importConf()?.defaultCfg;
+    defaultConfig = _importConf().defaultCfg;
   }
   return defaultConfig;
 };

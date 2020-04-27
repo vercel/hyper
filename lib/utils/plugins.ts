@@ -363,10 +363,10 @@ const loadModules = () => {
     })
     .filter((mod: any) => Boolean(mod));
 
-  const deprecatedPlugins: Record<string, any> = plugins.getDeprecatedConfig();
+  const deprecatedPlugins = plugins.getDeprecatedConfig();
   Object.keys(deprecatedPlugins).forEach((name) => {
     const {css} = deprecatedPlugins[name];
-    if (css) {
+    if (css.length > 0) {
       console.warn(`Warning: "${name}" plugin uses some deprecated CSS classes (${css.join(', ')}).`);
     }
   });
