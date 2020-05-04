@@ -782,10 +782,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-redux@^7.1.7":
-  version "7.1.7"
-  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.7.tgz#12a0c529aba660696947384a059c5c6e08185c7a"
-  integrity sha512-U+WrzeFfI83+evZE2dkZ/oF/1vjIYgqrb5dGgedkqVV8HEfDFujNgWCwHL89TDuWKb47U0nTBT6PLGq4IIogWg==
+"@types/react-redux@^7.1.8":
+  version "7.1.8"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.8.tgz#3631feb559f7858d6ad9eea1d6ef41fa64fe7205"
+  integrity sha512-kpplH7Wg2SYU00sZVT98WBN0ou6QKrYcShRaW+5Vpe5l7bluKWJbWmAL+ieiso07OQzpcP5i1PeY3690640ZWg==
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.0"
     "@types/react" "*"
