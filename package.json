@@ -109,7 +109,7 @@
     "eslint-plugin-react": "7.19.0",
     "husky": "4.2.5",
     "inquirer": "7.1.0",
-    "node-addon-api": "2.0.0",
+    "node-addon-api": "3.0.0",
     "node-gyp": "6.1.0",
     "null-loader": "4.0.0",
     "plist": "3.0.1",
