@@ -120,7 +120,7 @@
     "spectron": "10.0.1",
     "style-loader": "1.2.1",
     "terser": "4.6.13",
-    "terser-webpack-plugin": "2.3.5",
+    "terser-webpack-plugin": "3.0.0",
     "ts-node": "8.8.2",
     "typescript": "3.8.3",
     "webpack": "4.43.0"
