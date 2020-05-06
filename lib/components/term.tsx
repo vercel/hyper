@@ -148,13 +148,27 @@ export default class Term extends React.PureComponent<TermProps> {
       }
       Term.reportRenderer(props.uid, useWebGL ? 'WebGL' : 'Canvas');
 
+      const shallActivateWebLink = (event: Record<string, any> | undefined) => {
+        return event && (!props.webLinksActivationKey || event[`${props.webLinksActivationKey}Key`]);
+      };
+
       this.term.attachCustomKeyEventHandler(this.keyboardHandler);
       this.term.loadAddon(this.fitAddon);
       this.term.loadAddon(this.searchAddon);
       this.term.loadAddon(
-        new WebLinksAddon((event, uri) => {
-          shell.openExternal(uri);
-        })
+        new WebLinksAddon(
+          (event: MouseEvent | undefined, uri: string) => {
+            if (shallActivateWebLink(event)) shell.openExternal(uri);
+          },
+          {
+            // prevent default electron link handling to allow selection, e.g. via double-click
+            willLinkActivate: (event: MouseEvent | undefined) => {
+              event?.preventDefault();
+              return shallActivateWebLink(event);
+            },
+            priority: Date.now()
+          }
+        )
       );
       this.term.open(this.termRef);
       if (useWebGL) {
