@@ -113,6 +113,7 @@ export default class Terms extends React.Component<TermsProps> {
             onContextMenu: this.props.onContextMenu,
             quickEdit: this.props.quickEdit,
             webGLRenderer: this.props.webGLRenderer,
+            webLinksActivationKey: this.props.webLinksActivationKey,
             macOptionSelectionMode: this.props.macOptionSelectionMode,
             disableLigatures: this.props.disableLigatures,
             parentProps: this.props

@@ -43,6 +43,7 @@ const mapStateToProps = (state: HyperState) => {
     modifierKeys: state.ui.modifierKeys,
     quickEdit: state.ui.quickEdit,
     webGLRenderer: state.ui.webGLRenderer,
+    webLinksActivationKey: state.ui.webLinksActivationKey,
     macOptionSelectionMode: state.ui.macOptionSelectionMode,
     disableLigatures: state.ui.disableLigatures
   };

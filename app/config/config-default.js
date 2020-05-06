@@ -154,6 +154,10 @@ module.exports = {
     // rendering (slower, but supports transparent backgrounds)
     webGLRenderer: true,
 
+    // keypress required for weblink activation: [ctrl|alt|meta|shift]
+    // todo: does not pick up config changes automatically, need to restart terminal :/
+    webLinksActivationKey: '',
+
     // if `true` (without backticks and without quotes), Hyper will ignore ligatures provided by some fonts
     disableLigatures: false,
 

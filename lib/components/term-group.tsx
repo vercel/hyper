@@ -102,6 +102,7 @@ class TermGroup_ extends React.PureComponent<TermGroupProps> {
       selectionColor: this.props.selectionColor,
       quickEdit: this.props.quickEdit,
       webGLRenderer: this.props.webGLRenderer,
+      webLinksActivationKey: this.props.webLinksActivationKey,
       macOptionSelectionMode: this.props.macOptionSelectionMode,
       disableLigatures: this.props.disableLigatures,
       uid

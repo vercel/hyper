@@ -105,6 +105,7 @@ export type uiState = {
   updateReleaseUrl: string | null;
   updateVersion: string | null;
   webGLRenderer: boolean;
+  webLinksActivationKey: string;
 };
 
 export type session = {
@@ -308,6 +309,7 @@ export type TermGroupOwnProps = {
   | 'toggleSearch'
   | 'uiFontFamily'
   | 'webGLRenderer'
+  | 'webLinksActivationKey'
 >;
 
 import {TermGroupConnectedProps} from './components/term-group';
@@ -368,6 +370,7 @@ export type TermProps = {
   uiFontFamily: string;
   url: string | null;
   webGLRenderer: boolean;
+  webLinksActivationKey: string;
 } & extensionProps & {ref_?: any};
 
 export type Assignable<T, U> = {[k in keyof U]: k extends keyof T ? T[k] : U[k]} & Partial<T>;
