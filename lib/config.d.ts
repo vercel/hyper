@@ -59,6 +59,7 @@ export type configOptions = {
   updateChannel: 'stable' | 'canary';
   useConpty: boolean;
   webGLRenderer: boolean;
+  webLinksActivationKey: 'ctrl' | 'alt' | 'meta' | 'shift';
   windowSize: [number, number];
 };
 
