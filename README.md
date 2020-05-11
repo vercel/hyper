@@ -1,5 +1,11 @@
 ![](https://assets.zeit.co/image/upload/v1549723846/repositories/hyper/hyper-3-repo-banner.png)
 
+<p align="center">
+  <a aria-label="Vercel logo" href="https://vercel.com">
+    <img src="https://img.shields.io/badge/MADE%20BY%20Vercel-000000.svg?style=for-the-badge&logo=ZEIT&labelColor=000000&logoWidth=20">
+  </a>
+ </p>
+  
 [![Node CI](https://github.com/zeit/hyper/workflows/Node%20CI/badge.svg?event=push)](https://github.com/zeit/hyper/actions?query=workflow%3A%22Node+CI%22+branch%3Acanary+event%3Apush)
 [![macOS CI Status](https://circleci.com/gh/zeit/hyper.svg?style=shield)](https://circleci.com/gh/zeit/hyper)
 [![Windows CI status](https://ci.appveyor.com/api/projects/status/kqvb4oa772an58sc?svg=true)](https://ci.appveyor.com/project/zeit/hyper)
