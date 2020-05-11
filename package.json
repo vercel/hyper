@@ -98,7 +98,7 @@
     "cpy-cli": "^3.1.1",
     "cross-env": "7.0.2",
     "electron": "^8.2.3",
-    "electron-builder": "22.5.1",
+    "electron-builder": "22.6.0",
     "electron-builder-squirrel-windows": "22.6.0",
     "electron-devtools-installer": "3.0.0",
     "electron-rebuild": "1.10.1",
