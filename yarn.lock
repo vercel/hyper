@@ -599,10 +599,10 @@
   resolved "https://registry.yarnpkg.com/@types/args/-/args-3.0.0.tgz#2fd21cfbdaf5e1ed110bd239de42a82330d6ecf6"
   integrity sha512-2A817ZtVj1/nD44MV0/U/R6xe3GM2n1WDdni4ioCuLjay6dE0bLJd5RafHC/ddqwXL1xa2RQUdJhsGZKyr3vpA==
 
-"@types/async-retry@1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@types/async-retry/-/async-retry-1.4.1.tgz#3b136a707b7a850f4947a727eb0f7b473b601992"
-  integrity sha512-hDI5Ttk9SUmDLcD/Yl2VuWQRGYZjJ7aaJFeRlomUOz/iTKSE7yA55SwY87QwjiZgwhMlVAKoT1rl08UyQoheag==
+"@types/async-retry@1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@types/async-retry/-/async-retry-1.4.2.tgz#7f910188cd3893b51e32df51765ee8d5646053e3"
+  integrity sha512-GUDuJURF0YiJZ+CBjNQA0+vbP/VHlJbB0sFqkzsV7EcOPRfurVonXpXKAt3w8qIjM1TEzpz6hc6POocPvHOS3w==
   dependencies:
     "@types/retry" "*"
 
