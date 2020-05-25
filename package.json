@@ -90,7 +90,7 @@
     "@types/uuid": "7.0.3",
     "@types/webpack": "4.41.12",
     "@typescript-eslint/eslint-plugin": "2.34.0",
-    "@typescript-eslint/parser": "2.32.0",
+    "@typescript-eslint/parser": "2.34.0",
     "ava": "3.8.2",
     "babel-loader": "8.1.0",
     "concurrently": "5.2.0",
