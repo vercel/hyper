@@ -94,7 +94,7 @@
     "ava": "3.8.2",
     "babel-loader": "8.1.0",
     "concurrently": "5.2.0",
-    "copy-webpack-plugin": "5.1.1",
+    "copy-webpack-plugin": "6.0.1",
     "cpy-cli": "^3.1.1",
     "cross-env": "7.0.2",
     "electron": "^8.2.3",
