@@ -84,7 +84,7 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.8",
-    "@types/seamless-immutable": "7.1.12",
+    "@types/seamless-immutable": "7.1.13",
     "@types/styled-jsx": "2.2.8",
     "@types/terser-webpack-plugin": "2.2.0",
     "@types/uuid": "7.0.3",
