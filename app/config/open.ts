@@ -71,7 +71,7 @@ export default () => {
     return hasDefaultSet()
       .then((yes) => {
         if (yes) {
-          return shell.openItem(cfgPath);
+          return shell.openPath(cfgPath).then((error) => error === '');
         }
         console.warn('No default app set for .js files, using notepad.exe fallback');
         return openNotepad(cfgPath);
@@ -81,6 +81,6 @@ export default () => {
         return openNotepad(cfgPath);
       });
   } else {
-    return Promise.resolve(shell.openItem(cfgPath));
+    return Promise.resolve(shell.openPath(cfgPath).then((error) => error === ''));
   }
 };
