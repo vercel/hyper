@@ -64,7 +64,9 @@ let reducersDecorators: {
 };
 
 // expose decorated component instance to the higher-order components
-function exposeDecorated<P extends any>(Component_: React.ComponentType<P>): React.ComponentClass<P, {}> {
+function exposeDecorated<P extends Record<string, any>>(
+  Component_: React.ComponentType<P>
+): React.ComponentClass<P, {}> {
   return class DecoratedComponent extends React.Component<P> {
     constructor(props: P, context: any) {
       super(props, context);
