@@ -28,30 +28,32 @@ const config: webpack.Configuration[] = [
       ]
     },
     plugins: [
-      new Copy([
-        {
-          from: './app/*.html',
-          ignore: ['/node_modules/'],
-          to: '.',
-          flatten: true
-        },
-        {
-          from: './app/*.json',
-          ignore: ['/node_modules/'],
-          to: '.',
-          flatten: true
-        },
-        {
-          from: './app/keymaps/*.json',
-          ignore: ['/node_modules/'],
-          to: './keymaps',
-          flatten: true
-        },
-        {
-          from: './app/static',
-          to: './static'
-        }
-      ])
+      new Copy({
+        patterns: [
+          {
+            from: './app/*.html',
+            globOptions: {ignore: ['**/node_modules/**']},
+            to: '.',
+            flatten: true
+          },
+          {
+            from: './app/*.json',
+            globOptions: {ignore: ['**/node_modules/**']},
+            to: '.',
+            flatten: true
+          },
+          {
+            from: './app/keymaps/*.json',
+            globOptions: {ignore: ['**/node_modules/**']},
+            to: './keymaps',
+            flatten: true
+          },
+          {
+            from: './app/static',
+            to: './static'
+          }
+        ]
+      })
     ],
     target: 'electron-main'
   },
@@ -94,12 +96,14 @@ const config: webpack.Configuration[] = [
           NODE_ENV: JSON.stringify(nodeEnv)
         }
       }),
-      new Copy([
-        {
-          from: './assets',
-          to: './assets'
-        }
-      ])
+      new Copy({
+        patterns: [
+          {
+            from: './assets',
+            to: './assets'
+          }
+        ]
+      })
     ],
     optimization: {
       minimize: isProd ? true : false,
