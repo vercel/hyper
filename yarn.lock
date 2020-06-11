@@ -8025,6 +8025,11 @@ stylis@3.5.4:
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.5.4.tgz#f665f25f5e299cf3d64654ab949a57c768b73fbe"
   integrity sha512-8/3pSmthWM7lsPBKv7NXkzn2Uc9W7NotcwGNpJaa3k7WMM1XDCA4MgT5k/8BIexd5ydZdboXtU90XH9Ec4Bv/Q==
 
+stylis@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/stylis/-/stylis-4.0.1.tgz#c2c586b630dbf5db48ed3aeb5469a10473c99007"
+  integrity sha512-Q6D+uXxhrf5MfJHUmS58U2mmvflwqYOeg5PXYIIFFlCfuA/Wl/0ej2G0ObT9K3WDGKAYBkqKonmyFSxkoMdHPw==
+
 sumchecker@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/sumchecker/-/sumchecker-3.0.1.tgz#6377e996795abb0b6d348e9b3e1dfb24345a8e42"
