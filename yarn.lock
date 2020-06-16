@@ -514,22 +514,7 @@
     ajv "^6.12.0"
     ajv-keywords "^3.4.1"
 
-"@electron/get@^1.0.1":
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/@electron/get/-/get-1.7.6.tgz#f1c8e87cbef0bce78644159b72340821d52066b3"
-  integrity sha512-zlNikt6ziVLNcm4lly1L4y62fJd/eYpEBjF5DiV/VAQq2vdPjH4sbUphXt9upmHz86lAhAj8g9lTnWrxJ/KBZw==
-  dependencies:
-    debug "^4.1.1"
-    env-paths "^2.2.0"
-    fs-extra "^8.1.0"
-    got "^9.6.0"
-    sanitize-filename "^1.6.2"
-    sumchecker "^3.0.1"
-  optionalDependencies:
-    global-agent "^2.0.2"
-    global-tunnel-ng "^2.7.1"
-
-"@electron/get@^1.12.2":
+"@electron/get@^1.0.1", "@electron/get@^1.12.2":
   version "1.12.2"
   resolved "https://registry.yarnpkg.com/@electron/get/-/get-1.12.2.tgz#6442066afb99be08cefb9a281e4b4692b33764f3"
   integrity sha512-vAuHUbfvBQpYTJ5wB7uVIDq5c/Ry0fiTBMs7lnEYAo/qXXppIVcWdfBr57u6eRnKdVso7KSiH6p/LbQAG6Izrg==
@@ -3179,10 +3164,10 @@ electron-rebuild@1.11.0:
     spawn-rx "^3.0.0"
     yargs "^14.2.0"
 
-electron@^9.0.3:
-  version "9.0.3"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-9.0.3.tgz#72a7ea08abadd494794735d90666d1b95fc90d28"
-  integrity sha512-rY59wy50z0oWp/q69zq0UIzvtcM5j2BJbLAwEoLfVNS3DLt9wDZqRqSIBvLEBl+xWbafCnRA9haEqi7ssM94GA==
+electron@^9.0.4:
+  version "9.0.4"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-9.0.4.tgz#5aa72c1576c82c19f6e087311ffe1d7b74358d25"
+  integrity sha512-QzkeZNAiNB7KxcdoQKSoaiVT/GQdB4Vt0/ZZOuU8tIKABAsni2I7ztiAbUzxcsnQsqEBSfChuPuDQ5A4VbbzPg==
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"
