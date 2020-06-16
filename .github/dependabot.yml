@@ -1,0 +1,23 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: weekly
+    time: '11:00'
+  open-pull-requests-limit: 10
+  target-branch: canary
+  ignore:
+  - dependency-name: "@types/node"
+    versions:
+    - ">= 13.a, < 14"
+  - dependency-name: "@types/node"
+    versions:
+    - ">= 14.a, < 15"
+- package-ecosystem: npm
+  directory: "/app"
+  schedule:
+    interval: weekly
+    time: '11:00'
+  open-pull-requests-limit: 10
+  target-branch: canary
