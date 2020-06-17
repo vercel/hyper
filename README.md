@@ -6,10 +6,10 @@
   </a>
  </p>
   
-[![Node CI](https://github.com/zeit/hyper/workflows/Node%20CI/badge.svg?event=push)](https://github.com/zeit/hyper/actions?query=workflow%3A%22Node+CI%22+branch%3Acanary+event%3Apush)
-[![macOS CI Status](https://circleci.com/gh/zeit/hyper.svg?style=shield)](https://circleci.com/gh/zeit/hyper)
+[![Node CI](https://github.com/vercel/hyper/workflows/Node%20CI/badge.svg?event=push)](https://github.com/vercel/hyper/actions?query=workflow%3A%22Node+CI%22+branch%3Acanary+event%3Apush)
+[![macOS CI Status](https://circleci.com/gh/vercel/hyper.svg?style=shield)](https://circleci.com/gh/vercel/hyper)
 [![Windows CI status](https://ci.appveyor.com/api/projects/status/kqvb4oa772an58sc?svg=true)](https://ci.appveyor.com/project/zeit/hyper)
-[![Linux CI status](https://travis-ci.org/zeit/hyper.svg?branch=master)](https://travis-ci.org/zeit/hyper)
+[![Linux CI status](https://travis-ci.org/vercel/hyper.svg?branch=master)](https://travis-ci.org/vercel/hyper)
 [![Changelog #213](https://img.shields.io/badge/changelog-%23213-lightgrey.svg)](https://changelog.com/213)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/zeit/hyper)
 
@@ -108,8 +108,8 @@ If you have issues in the `codesign` step when running `yarn run dist` on macOS,
 
 ## Related Repositories
 
-- [Art](https://github.com/zeit/art/tree/master/hyper)
-- [Website](https://github.com/zeit/hyper-site)
-- [Sample Extension](https://github.com/zeit/hyperpower)
-- [Sample Theme](https://github.com/zeit/hyperyellow)
+- [Art](https://github.com/vercel/art/tree/master/hyper)
+- [Website](https://github.com/vercel/hyper-site)
+- [Sample Extension](https://github.com/vercel/hyperpower)
+- [Sample Theme](https://github.com/vercel/hyperyellow)
 - [Awesome Hyper](https://github.com/bnb/awesome-hyper)
