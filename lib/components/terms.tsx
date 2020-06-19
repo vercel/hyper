@@ -3,7 +3,7 @@ import {decorate, getTermGroupProps} from '../utils/plugins';
 import {registerCommandHandlers} from '../command-registry';
 import TermGroup_ from './term-group';
 import StyleSheet_ from './style-sheet';
-import {TermsProps} from '../hyper';
+import {TermsProps, HyperDispatch} from '../hyper';
 import Term from './term';
 import {ObjectTypedKeys} from '../utils/object';
 
@@ -14,7 +14,7 @@ const isMac = /Mac/.test(navigator.userAgent);
 
 export default class Terms extends React.Component<TermsProps> {
   terms: Record<string, Term>;
-  registerCommands: (cmds: Record<string, (...args: any[]) => void>) => void;
+  registerCommands: (cmds: Record<string, (e: any, dispatch: HyperDispatch) => void>) => void;
   constructor(props: TermsProps, context: any) {
     super(props, context);
     this.terms = {};
@@ -29,7 +29,7 @@ export default class Terms extends React.Component<TermsProps> {
     );
   }
 
-  onRef = (uid: string, term: Term) => {
+  onRef = (uid: string, term: Term | null) => {
     if (term) {
       this.terms[uid] = term;
     }

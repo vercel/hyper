@@ -149,7 +149,7 @@ export function newWindow(
       activeUid: options.activeUid
     });
 
-    session.on('data', (data: any) => {
+    session.on('data', (data: string) => {
       rpc.emit('session data', data);
     });
 

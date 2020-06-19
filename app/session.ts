@@ -153,7 +153,7 @@ export default class Session extends EventEmitter {
       this.batcher?.write(chunk as any);
     });
 
-    this.batcher.on('flush', (data) => {
+    this.batcher.on('flush', (data: string) => {
       this.emit('data', data);
     });
 

@@ -1,10 +1,11 @@
 import {Immutable} from 'seamless-immutable';
+import Client from './utils/rpc';
 
 declare global {
   interface Window {
     __rpcId: string;
-    rpc: any;
-    focusActiveTerm: any;
+    rpc: Client;
+    focusActiveTerm: (uid?: string) => void;
   }
 }
 
@@ -154,6 +155,7 @@ export type hyperPlugin = {
   mapNotificationsState: any;
   mapTermsState: any;
   middleware: Middleware;
+  onRendererUnload: any;
   onRendererWindow: any;
   reduceSessions: ISessionReducer;
   reduceTermGroups: ITermGroupReducer;
@@ -190,11 +192,12 @@ import configureStore from './store/configure-store';
 export type HyperThunkDispatch = ThunkDispatch<HyperState, undefined, HyperActions>;
 export type HyperDispatch = ReturnType<typeof configureStore>['dispatch'];
 
+import {ReactChild} from 'react';
 type extensionProps = Partial<{
-  customChildren: any;
-  customChildrenBefore: any;
+  customChildren: ReactChild | ReactChild[];
+  customChildrenBefore: ReactChild | ReactChild[];
   customCSS: string;
-  customInnerChildren: any;
+  customInnerChildren: ReactChild | ReactChild[];
 }>;
 
 import {HeaderConnectedProps} from './containers/header';
@@ -206,8 +209,9 @@ export type HyperProps = HyperConnectedProps & extensionProps;
 import {NotificationsConnectedProps} from './containers/notifications';
 export type NotificationsProps = NotificationsConnectedProps & extensionProps;
 
+import Terms from './components/terms';
 import {TermsConnectedProps} from './containers/terms';
-export type TermsProps = TermsConnectedProps & extensionProps & {ref_: any};
+export type TermsProps = TermsConnectedProps & extensionProps & {ref_: (terms: Terms | null) => void};
 
 export type StyleSheetProps = {
   backgroundColor: string;
@@ -270,7 +274,7 @@ export type TermGroupOwnProps = {
   cursorAccentColor?: string;
   fontSmoothing?: string;
   parentProps: TermsProps;
-  ref_: (uid: string, term: Term) => void;
+  ref_: (uid: string, term: Term | null) => void;
   termGroup: Immutable<ITermGroup>;
   terms: Record<string, Term | null>;
 } & Pick<
@@ -354,7 +358,7 @@ export type TermProps = {
   onActive: () => void;
   onContextMenu: (selection: any) => void;
   onCursorMove?: (cursorFrame: {x: number; y: number; width: number; height: number; col: number; row: number}) => void;
-  onData: (data: any) => void;
+  onData: (data: string) => void;
   onResize: (cols: number, rows: number) => void;
   onTitle: (title: string) => void;
   padding: string;
@@ -371,6 +375,7 @@ export type TermProps = {
   url: string | null;
   webGLRenderer: boolean;
   webLinksActivationKey: string;
-} & extensionProps & {ref_?: any};
+  ref_: (uid: string, term: Term | null) => void;
+} & extensionProps;
 
 export type Assignable<T, U> = {[k in keyof U]: k extends keyof T ? T[k] : U[k]} & Partial<T>;
