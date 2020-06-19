@@ -1,6 +1,6 @@
 // This is a CLI tool, using console is OK
 /* eslint no-console: 0 */
-import {spawn, exec} from 'child_process';
+import {spawn, exec, SpawnOptions} from 'child_process';
 import {isAbsolute, resolve} from 'path';
 import {existsSync} from 'fs';
 import {version} from '../app/package.json';
@@ -42,7 +42,7 @@ args.command(
     commandPromise = api
       .install(pluginName)
       .then(() => console.log(chalk.green(`${pluginName} installed successfully!`)))
-      .catch((err: any) => console.error(chalk.red(err)));
+      .catch((err) => console.error(chalk.red(err)));
   },
   ['i']
 );
@@ -202,7 +202,7 @@ const main = (argv: string[]) => {
     env['ELECTRON_ENABLE_LOGGING'] = '1';
   }
 
-  const options: any = {
+  const options: SpawnOptions = {
     detached: true,
     env
   };
@@ -231,8 +231,8 @@ const main = (argv: string[]) => {
   const child = spawn(process.execPath, args_, options);
 
   if (flags.verbose) {
-    child.stdout.on('data', (data) => console.log(data.toString('utf8')));
-    child.stderr.on('data', (data) => console.error(data.toString('utf8')));
+    child.stdout?.on('data', (data) => console.log(data.toString('utf8')));
+    child.stderr?.on('data', (data) => console.error(data.toString('utf8')));
   }
   if (flags.verbose) {
     return new Promise((c) => child.once('exit', () => c(null)));
@@ -247,7 +247,7 @@ function eventuallyExit(code: number) {
 
 main(process.argv)
   .then(() => eventuallyExit(0))
-  .catch((err: any) => {
+  .catch((err) => {
     console.error(err.stack ? err.stack : err);
     eventuallyExit(1);
   });

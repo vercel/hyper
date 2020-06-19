@@ -50,7 +50,7 @@ export function requestSession() {
   };
 }
 
-export function addSessionData(uid: string, data: any) {
+export function addSessionData(uid: string, data: string) {
   return (dispatch: HyperDispatch) => {
     dispatch({
       type: SESSION_ADD_DATA,
@@ -161,7 +161,7 @@ export function closeSearch(uid?: string, keyEvent?: any) {
   };
 }
 
-export function sendSessionData(uid: string | null, data: any, escaped?: any) {
+export function sendSessionData(uid: string | null, data: any, escaped?: boolean | null) {
   return (dispatch: HyperDispatch, getState: () => HyperState) => {
     dispatch({
       type: SESSION_USER_DATA,

@@ -10,12 +10,13 @@ import {HeaderContainer} from './header';
 import TermsContainer from './terms';
 import NotificationsContainer from './notifications';
 import {HyperState, HyperProps, HyperDispatch} from '../hyper';
+import Terms from '../components/terms';
 
 const isMac = /Mac/.test(navigator.userAgent);
 
 class Hyper extends React.PureComponent<HyperProps> {
   mousetrap!: MousetrapInstance;
-  terms: any;
+  terms!: Terms;
   constructor(props: HyperProps) {
     super(props);
   }
@@ -35,8 +36,8 @@ class Hyper extends React.PureComponent<HyperProps> {
     }
   }
 
-  handleFocusActive = (uid: string) => {
-    const term = this.terms.getTermByUid(uid);
+  handleFocusActive = (uid?: string) => {
+    const term = uid && this.terms.getTermByUid(uid);
     if (term) {
       term.focus();
     }
@@ -81,7 +82,7 @@ class Hyper extends React.PureComponent<HyperProps> {
     window.rpc.on('term selectAll', this.handleSelectAll);
   }
 
-  onTermsRef = (terms: any) => {
+  onTermsRef = (terms: Terms) => {
     this.terms = terms;
     window.focusActiveTerm = this.handleFocusActive;
   };
@@ -153,7 +154,7 @@ const mapStateToProps = (state: HyperState) => {
 
 const mapDispatchToProps = (dispatch: HyperDispatch) => {
   return {
-    execCommand: (command: string, fn: (...args: any[]) => void, e: any) => {
+    execCommand: (command: string, fn: (e: any, dispatch: HyperDispatch) => void, e: any) => {
       dispatch(uiActions.execCommand(command, fn, e));
     }
   };

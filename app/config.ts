@@ -7,7 +7,7 @@ import {cfgPath, cfgDir} from './config/paths';
 import {getColorMap} from './utils/colors';
 import {parsedConfig, configOptions} from '../lib/config';
 
-const watchers: any[] = [];
+const watchers: Function[] = [];
 let cfg: parsedConfig = {} as any;
 let _watcher: fs.FSWatcher;
 

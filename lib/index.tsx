@@ -76,7 +76,7 @@ rpc.on('session add', (data) => {
   store_.dispatch(sessionActions.addSession(data));
 });
 
-rpc.on('session data', (d) => {
+rpc.on('session data', (d: string) => {
   // the uid is a uuid v4 so it's 36 chars long
   const uid = d.slice(0, 36);
   const data = d.slice(36);

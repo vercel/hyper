@@ -7,7 +7,7 @@ const NEWS_URL = 'https://hyper-news.now.sh';
 
 export default function fetchNotifications(win: BrowserWindow) {
   const {rpc} = win;
-  const retry = (err?: any) => {
+  const retry = (err?: Error) => {
     setTimeout(() => fetchNotifications(win), ms('30m'));
     if (err) {
       console.error('Notification messages fetch error', err.stack);

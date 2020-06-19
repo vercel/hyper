@@ -12,13 +12,13 @@ const SplitPane = decorate(SplitPane_, 'SplitPane');
 // eslint-disable-next-line @typescript-eslint/class-name-casing
 class TermGroup_ extends React.PureComponent<TermGroupProps> {
   bound: WeakMap<(uid: string, ...args: any[]) => any, Record<string, (...args: any[]) => any>>;
-  term?: Term_;
+  term?: Term_ | null;
   constructor(props: TermGroupProps, context: any) {
     super(props, context);
     this.bound = new WeakMap();
   }
 
-  bind<T extends (uid: string, ...args: any) => any>(
+  bind<T extends (uid: string, ...args: any[]) => any>(
     fn: T,
     thisObj: any,
     uid: string
@@ -52,7 +52,7 @@ class TermGroup_ extends React.PureComponent<TermGroupProps> {
     );
   }
 
-  onTermRef = (uid: string, term: Term_) => {
+  onTermRef = (uid: string, term: Term_ | null) => {
     this.term = term;
     this.props.ref_(uid, term);
   };
