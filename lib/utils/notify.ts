@@ -1,5 +1,5 @@
 /* eslint no-new:0 */
-export default function notify(title: string, body: string, details: Record<string, any> = {}) {
+export default function notify(title: string, body: string, details: {error?: any} = {}) {
   console.log(`[Notification] ${title}: ${body}`);
   if (details.error) {
     console.error(details.error);

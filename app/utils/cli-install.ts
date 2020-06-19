@@ -86,7 +86,7 @@ const addBinToUserPath = () => {
   });
 };
 
-const logNotify = (withNotification: boolean, title: string, body: string, details?: any) => {
+const logNotify = (withNotification: boolean, title: string, body: string, details?: {error?: any}) => {
   console.log(title, body, details);
   withNotification && notify(title, body, details);
 };

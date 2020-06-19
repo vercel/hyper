@@ -112,16 +112,15 @@ export function windowGeometryUpdated(): HyperActions {
 
 // Find all sessions that are below the given
 // termGroup uid in the hierarchy:
-const findChildSessions = (termGroups: any, uid: string): string[] => {
+const findChildSessions = (termGroups: HyperState['termGroups']['termGroups'], uid: string): string[] => {
   const group = termGroups[uid];
   if (group.sessionUid) {
     return [uid];
   }
 
-  return group.children.reduce(
-    (total: string[], childUid: string) => total.concat(findChildSessions(termGroups, childUid)),
-    []
-  );
+  return group.children
+    .asMutable()
+    .reduce((total: string[], childUid: string) => total.concat(findChildSessions(termGroups, childUid)), []);
 };
 
 // Get the index of the next or previous group,
@@ -318,7 +317,7 @@ export function openSSH(url: string) {
   };
 }
 
-export function execCommand(command: string, fn: (...args: any[]) => void, e: any) {
+export function execCommand(command: string, fn: (e: any, dispatch: HyperDispatch) => void, e: any) {
   return (dispatch: HyperDispatch) =>
     dispatch({
       type: UI_COMMAND_EXEC,
