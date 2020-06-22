@@ -119,7 +119,7 @@
     "resize-observer-polyfill": "1.5.1",
     "spectron": "11.0.0",
     "style-loader": "1.2.1",
-    "terser": "4.7.0",
+    "terser": "4.8.0",
     "terser-webpack-plugin": "3.0.6",
     "ts-node": "8.10.2",
     "typescript": "3.9.5",
