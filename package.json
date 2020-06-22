@@ -47,7 +47,7 @@
     "semver": "7.3.2",
     "shebang-loader": "0.0.1",
     "styled-jsx": "3.3.0",
-    "stylis": "3.5.4",
+    "stylis": "4.0.1",
     "uuid": "8.1.0",
     "webpack-cli": "3.3.12",
     "xterm": "^4.7.0",
