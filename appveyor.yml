@@ -4,6 +4,11 @@ environment:
   matrix:
     - platform: x64
 
+branches:
+  only:
+    - master
+    - canary
+
 image: Visual Studio 2019
 
 install:
