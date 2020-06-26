@@ -111,8 +111,8 @@ const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
     installCLI(true);
   },
   'window:hamburgerMenu': () => {
-    if (getConfig().showHamburgerMenu) {
-      Menu.getApplicationMenu()!.popup({x: 15, y: 15});
+    if (process.platform !== 'darwin' && ['', true].includes(getConfig().showHamburgerMenu)) {
+      Menu.getApplicationMenu()!.popup({x: 25, y: 22});
     }
   }
 };
