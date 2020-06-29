@@ -75,7 +75,7 @@
     "@types/copy-webpack-plugin": "^6.0.0",
     "@types/electron-devtools-installer": "2.2.0",
     "@types/fs-extra": "9.0.1",
-    "@types/lodash": "^4.14.156",
+    "@types/lodash": "^4.14.157",
     "@types/mkdirp": "1.0.1",
     "@types/mousetrap": "^1.6.3",
     "@types/ms": "0.7.31",
