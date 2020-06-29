@@ -7880,6 +7880,11 @@ stylis@3.5.4:
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.5.4.tgz#f665f25f5e299cf3d64654ab949a57c768b73fbe"
   integrity sha512-8/3pSmthWM7lsPBKv7NXkzn2Uc9W7NotcwGNpJaa3k7WMM1XDCA4MgT5k/8BIexd5ydZdboXtU90XH9Ec4Bv/Q==
 
+stylis@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/stylis/-/stylis-4.0.2.tgz#84247b15c20688604b7a77db02b7fc071a127194"
+  integrity sha512-2RR3o86K1CSrJjigElyNC9dSR7KyINLP68gauaBQn6j2zfJ/7gb0nD6FGXSCsklVM0V6fsoYA8qEXhhZGjkdww==
+
 sumchecker@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/sumchecker/-/sumchecker-3.0.1.tgz#6377e996795abb0b6d348e9b3e1dfb24345a8e42"
