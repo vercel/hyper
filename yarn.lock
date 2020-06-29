@@ -3134,10 +3134,10 @@ electron-chromedriver@^9.0.0:
     "@electron/get" "^1.12.2"
     extract-zip "^2.0.0"
 
-electron-devtools-installer@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/electron-devtools-installer/-/electron-devtools-installer-3.0.0.tgz#b5c439708746ed36f7b0220e18657567bca275d8"
-  integrity sha512-zll3w/8PvnPiGmL5tBtgSSoSjWnUljsOjJYsYYU12PKLljzWyfD6S75LKTZFn21VYxVbae2OwmjM5uFStLp6nQ==
+electron-devtools-installer@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/electron-devtools-installer/-/electron-devtools-installer-3.1.0.tgz#c7800d36ab8438b51d2e03345860f817ecb5797f"
+  integrity sha512-qZd1Aoya8YOK6QauNX92V5qyKGtb4lbs238bP+qtMBkXts24xJ/1PtOVBPvdg5w3Ts9L5o6I9sDErKuzHeJFDA==
   dependencies:
     rimraf "^3.0.2"
     semver "^7.2.1"
