@@ -58,7 +58,18 @@ ${JSON.stringify(getPlugins(), null, 2)}
 </details>`;
 
         const issueURL = `https://github.com/zeit/hyper/issues/new?body=${encodeURIComponent(body)}`;
-        if (issueURL.length > 6144) {
+        const copyAndSend = () => {
+          clipboard.writeText(body);
+          shell.openExternal(
+            `https://github.com/zeit/hyper/issues/new?body=${encodeURIComponent(
+              '<!-- We have written the needed data into your clipboard because it was too large to send. ' +
+                'Please paste. -->\n'
+            )}`
+          );
+        };
+        if (!focusedWindow) {
+          copyAndSend();
+        } else if (issueURL.length > 6144) {
           dialog
             .showMessageBox(focusedWindow, {
               message:
@@ -69,13 +80,7 @@ ${JSON.stringify(getPlugins(), null, 2)}
             })
             .then((result) => {
               if (result.response === 0) {
-                clipboard.writeText(body);
-                shell.openExternal(
-                  `https://github.com/zeit/hyper/issues/new?body=${encodeURIComponent(
-                    '<!-- We have written the needed data into your clipboard because it was too large to send. ' +
-                      'Please paste. -->\n'
-                  )}`
-                );
+                copyAndSend();
               }
             });
         } else {
