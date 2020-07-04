@@ -54,20 +54,20 @@ const getFileContents = memoize(() => {
 
 const getParsedFile = memoize(() => recast.parse(getFileContents()!));
 
-const getProperties = memoize(() => ((getParsedFile()?.program?.body as any[]) || []).map((obj) => obj));
+const getProperties = memoize(
+  (): any[] =>
+    ((getParsedFile()?.program?.body as any[]) || []).find(
+      (bodyItem) =>
+        bodyItem.type === 'ExpressionStatement' &&
+        bodyItem.expression.type === 'AssignmentExpression' &&
+        bodyItem.expression.left.object.name === 'module' &&
+        bodyItem.expression.left.property.name === 'exports' &&
+        bodyItem.expression.right.type === 'ObjectExpression'
+    )?.expression?.right?.properties || []
+);
 
-const getPluginsByKey = (key: string) => {
-  const properties = getProperties();
-  for (let i = 0; i < properties.length; i++) {
-    const rightProperties = Object.values<any>(properties[i]?.expression?.right?.properties || {});
-    for (let j = 0; j < rightProperties.length; j++) {
-      const plugin = rightProperties[j];
-      if (plugin?.key?.name === key) {
-        return (plugin?.value?.elements as any[]) || [];
-      }
-    }
-  }
-};
+const getPluginsByKey = (key: string): any[] =>
+  getProperties().find((property) => property?.key?.name === key)?.value?.elements || [];
 
 const getPlugins = memoize(() => {
   return getPluginsByKey('plugins');
@@ -82,7 +82,7 @@ function exists() {
 }
 
 function isInstalled(plugin: string, locally?: boolean) {
-  const array = (locally ? getLocalPlugins() : getPlugins()) || [];
+  const array = locally ? getLocalPlugins() : getPlugins();
   if (array && Array.isArray(array)) {
     return array.some((entry) => entry.value === plugin);
   }
@@ -118,7 +118,7 @@ function existsOnNpm(plugin: string) {
 }
 
 function install(plugin: string, locally?: boolean) {
-  const array = (locally ? getLocalPlugins() : getPlugins()) || [];
+  const array = locally ? getLocalPlugins() : getPlugins();
   return existsOnNpm(plugin)
     .catch((err: any) => {
       const {statusCode} = err;
@@ -142,14 +142,14 @@ function uninstall(plugin: string) {
     return Promise.reject(`${plugin} is not installed`);
   }
 
-  const index = getPlugins()!.findIndex((entry) => entry.value === plugin);
-  getPlugins()!.splice(index, 1);
+  const index = getPlugins().findIndex((entry) => entry.value === plugin);
+  getPlugins().splice(index, 1);
   return save();
 }
 
 function list() {
-  if (Array.isArray(getPlugins())) {
-    return getPlugins()!
+  if (getPlugins().length > 0) {
+    return getPlugins()
       .map((plugin) => plugin.value)
       .join('\n');
   }
