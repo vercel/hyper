@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@ava/babel": "1.0.1",
-    "@babel/cli": "7.10.3",
+    "@babel/cli": "7.10.4",
     "@babel/core": "7.10.4",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/plugin-proposal-numeric-separator": "^7.10.4",
