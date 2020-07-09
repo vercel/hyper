@@ -9,14 +9,18 @@ if (process.platform === 'win32') {
 }
 
 const appPath = `"${process.execPath}"`;
-const regKey = `Software\\Classes\\Directory\\background\\shell\\Hyper`;
+const regKeys = [
+  `Software\\Classes\\Directory\\Background\\shell\\Hyper`,
+  `Software\\Classes\\Directory\\shell\\Hyper`,
+  `Software\\Classes\\Drive\\shell\\Hyper`
+];
 const regParts = [
   {key: 'command', name: '', value: `${appPath} "%V"`},
   {name: '', value: 'Open Hyper here'},
   {name: 'Icon', value: `${appPath}`}
 ];
 
-function addValues(hyperKey: regTypes.HKEY, commandKey: regTypes.HKEY, callback: Function) {
+function addValues(hyperKey: regTypes.HKEY, commandKey: regTypes.HKEY) {
   try {
     Registry.setValueSZ(hyperKey, regParts[1].name, regParts[1].value);
   } catch (error) {
@@ -32,30 +36,32 @@ function addValues(hyperKey: regTypes.HKEY, commandKey: regTypes.HKEY, callback:
   } catch (err_) {
     console.error(err_);
   }
-  callback();
 }
 
-export const add = (callback: Function) => {
-  try {
-    const hyperKey =
-      Registry.openKey(Registry.HKCU, regKey, Registry.Access.ALL_ACCESS) ||
-      Registry.createKey(Registry.HKCU, regKey, Registry.Access.ALL_ACCESS);
-    const commandKey =
-      Registry.openKey(Registry.HKCU, `${regKey}\\${regParts[0].key}`, Registry.Access.ALL_ACCESS) ||
-      Registry.createKey(Registry.HKCU, `${regKey}\\${regParts[0].key}`, Registry.Access.ALL_ACCESS);
-    addValues(hyperKey, commandKey, callback);
-    Registry.closeKey(hyperKey);
-    Registry.closeKey(commandKey);
-  } catch (error) {
-    console.error(error);
-  }
+export const add = () => {
+  regKeys.forEach((regKey) => {
+    try {
+      const hyperKey =
+        Registry.openKey(Registry.HKCU, regKey, Registry.Access.ALL_ACCESS) ||
+        Registry.createKey(Registry.HKCU, regKey, Registry.Access.ALL_ACCESS);
+      const commandKey =
+        Registry.openKey(Registry.HKCU, `${regKey}\\${regParts[0].key}`, Registry.Access.ALL_ACCESS) ||
+        Registry.createKey(Registry.HKCU, `${regKey}\\${regParts[0].key}`, Registry.Access.ALL_ACCESS);
+      addValues(hyperKey, commandKey);
+      Registry.closeKey(hyperKey);
+      Registry.closeKey(commandKey);
+    } catch (error) {
+      console.error(error);
+    }
+  });
 };
 
-export const remove = (callback: Function) => {
-  try {
-    Registry.deleteTree(Registry.HKCU, regKey);
-  } catch (err) {
-    console.error(err);
-  }
-  callback();
+export const remove = () => {
+  regKeys.forEach((regKey) => {
+    try {
+      Registry.deleteTree(Registry.HKCU, regKey);
+    } catch (err) {
+      console.error(err);
+    }
+  });
 };
