@@ -29,18 +29,13 @@ if (process.platform === 'win32') {
   switch (process.argv[1]) {
     case '--squirrel-install':
     case '--squirrel-updated':
-      systemContextMenu.add(() => {
-        checkSquirrel();
-      });
+      systemContextMenu.add();
       break;
     case '--squirrel-uninstall':
-      systemContextMenu.remove(() => {
-        checkSquirrel();
-      });
+      systemContextMenu.remove();
       break;
-    default:
-      checkSquirrel();
   }
+  checkSquirrel();
 }
 
 // Native

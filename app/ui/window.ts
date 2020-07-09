@@ -1,5 +1,5 @@
 import {app, BrowserWindow, shell, Menu, BrowserWindowConstructorOptions} from 'electron';
-import {isAbsolute} from 'path';
+import {isAbsolute, normalize, sep} from 'path';
 import {parse as parseUrl} from 'url';
 import {v4 as uuidv4} from 'uuid';
 import fileUriToPath from 'file-uri-to-path';
@@ -60,9 +60,16 @@ export function newWindow(
   };
 
   // set working directory
+  let argPath = process.argv[1];
+  if (argPath && process.platform === 'win32') {
+    if (/[a-zA-Z]:"/.test(argPath)) {
+      argPath = argPath.replace('"', sep);
+    }
+    argPath = normalize(argPath + sep);
+  }
   let workingDirectory = homeDirectory;
-  if (process.argv[1] && isAbsolute(process.argv[1])) {
-    workingDirectory = process.argv[1];
+  if (argPath && isAbsolute(argPath)) {
+    workingDirectory = argPath;
   } else if (cfg.workingDirectory && isAbsolute(cfg.workingDirectory)) {
     workingDirectory = cfg.workingDirectory;
   }
