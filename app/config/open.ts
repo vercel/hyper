@@ -12,6 +12,7 @@ export default () => {
     } catch (err) {
       console.error(err);
     }
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const {exec} = require('child_process') as typeof import('child_process');
 
     const getUserChoiceKey = async () => {

@@ -6,7 +6,7 @@ import {basename} from 'path';
 
 // patching Module._load
 // so plugins can `require` them without needing their own version
-// https://github.com/zeit/hyper/issues/619
+// https://github.com/vercel/hyper/issues/619
 import React, {PureComponent} from 'react';
 import ReactDOM from 'react-dom';
 import Notification from '../components/notification';
@@ -66,7 +66,7 @@ let reducersDecorators: {
 // expose decorated component instance to the higher-order components
 function exposeDecorated<P extends Record<string, any>>(
   Component_: React.ComponentType<P>
-): React.ComponentClass<P, {}> {
+): React.ComponentClass<P, unknown> {
   return class DecoratedComponent extends React.Component<P> {
     constructor(props: P, context: any) {
       super(props, context);
@@ -155,6 +155,7 @@ export function decorate<P>(
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const Module = require('module') as typeof import('module') & {_load: Function};
 const originalLoad = Module._load;
 Module._load = function _load(path: string) {

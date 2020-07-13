@@ -1,4 +1,5 @@
 import test from 'ava';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const proxyquire = require('proxyquire').noCallThru();
 
 test('existsOnNpm() builds the url for non-scoped packages', (t) => {

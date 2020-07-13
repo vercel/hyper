@@ -81,7 +81,7 @@ const reducer = (state: ImmutableType<sessionState> = initialState, action: Hype
     case SESSION_PTY_DATA:
       // we avoid a direct merge for perf reasons
       // as this is the most common action
-      if (state.sessions[action.uid] && state.sessions[action.uid].cleared) {
+      if (state.sessions[action.uid]?.cleared) {
         return state.merge(
           {
             sessions: {

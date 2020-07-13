@@ -74,7 +74,7 @@ export default (win: BrowserWindow) => {
     updateUrl: string,
     onQuitAndInstall: any
   ) => {
-    const releaseUrl = updateUrl || `https://github.com/zeit/hyper/releases/tag/${releaseName}`;
+    const releaseUrl = updateUrl || `https://github.com/vercel/hyper/releases/tag/${releaseName}`;
     rpc.emit('update available', {releaseNotes, releaseName, releaseUrl, canInstall: !!onQuitAndInstall});
   };
 

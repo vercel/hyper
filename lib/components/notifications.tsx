@@ -81,7 +81,7 @@ export default class Notifications extends React.PureComponent<NotificationsProp
                 window.require('electron').shell.openExternal(ev.currentTarget.href);
                 ev.preventDefault();
               }}
-              href={`https://github.com/zeit/hyper/releases/tag/${this.props.updateVersion}`}
+              href={`https://github.com/vercel/hyper/releases/tag/${this.props.updateVersion}`}
             >
               notes
             </a>

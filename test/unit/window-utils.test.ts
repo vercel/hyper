@@ -1,4 +1,5 @@
 import test from 'ava';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const proxyquire = require('proxyquire').noCallThru();
 
 test('positionIsValid() returns true when window is on only screen', (t) => {

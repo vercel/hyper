@@ -119,6 +119,7 @@ function installDevExtensions(isDev_: boolean) {
   if (!isDev_) {
     return Promise.resolve([]);
   }
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const installer = require('electron-devtools-installer') as typeof import('electron-devtools-installer');
 
   const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'] as const;

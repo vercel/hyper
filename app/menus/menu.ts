@@ -54,7 +54,7 @@ export const createMenu = (
     dialog.showMessageBox({
       title: `About ${appName}`,
       message: `${appName} ${appVersion} (${updateChannel})`,
-      detail: `Renderers: ${renderers}\nPlugins: ${pluginList}\n\nCreated by Guillermo Rauch\nCopyright © 2020 ZEIT, Inc.`,
+      detail: `Renderers: ${renderers}\nPlugins: ${pluginList}\n\nCreated by Guillermo Rauch\nCopyright © 2020 Vercel, Inc.`,
       buttons: [],
       icon: icon as any
     });

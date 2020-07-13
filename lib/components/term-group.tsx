@@ -9,7 +9,6 @@ import {HyperState, HyperDispatch, TermGroupProps, TermGroupOwnProps} from '../h
 const Term = decorate(Term_, 'Term');
 const SplitPane = decorate(SplitPane_, 'SplitPane');
 
-// eslint-disable-next-line @typescript-eslint/class-name-casing
 class TermGroup_ extends React.PureComponent<TermGroupProps> {
   bound: WeakMap<(uid: string, ...args: any[]) => any, Record<string, (...args: any[]) => any>>;
   term?: Term_ | null;

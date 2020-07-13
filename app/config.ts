@@ -15,7 +15,7 @@ export const getDeprecatedCSS = (config: configOptions) => {
   const deprecated: string[] = [];
   const deprecatedCSS = ['x-screen', 'x-row', 'cursor-node', '::selection'];
   deprecatedCSS.forEach((css) => {
-    if ((config.css && config.css.includes(css)) || (config.termCSS && config.termCSS.includes(css))) {
+    if (config.css?.includes(css) || config.termCSS?.includes(css)) {
       deprecated.push(css);
     }
   });
@@ -52,7 +52,7 @@ const _watch = () => {
   // Windows
   if (process.platform === 'win32') {
     // watch for changes on config every 2s on Windows
-    // https://github.com/zeit/hyper/pull/1772
+    // https://github.com/vercel/hyper/pull/1772
     _watcher = fs.watchFile(cfgPath, {interval: 2000}, (curr, prev) => {
       if (!curr.mtime || curr.mtime.getTime() === 0) {
         console.error('error watching config');
@@ -144,8 +144,8 @@ export const htermConfigTranslate = (config: configOptions) => {
   Object.keys(cssReplacements).forEach((pattern) => {
     const searchvalue = new RegExp(pattern, 'g');
     const newvalue = cssReplacements[pattern];
-    config.css = config.css && config.css.replace(searchvalue, newvalue);
-    config.termCSS = config.termCSS && config.termCSS.replace(searchvalue, newvalue);
+    config.css = config.css?.replace(searchvalue, newvalue);
+    config.termCSS = config.termCSS?.replace(searchvalue, newvalue);
   });
   return config;
 };
