@@ -1,5 +1,3 @@
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import {app, dialog, BrowserWindow, App} from 'electron';
 import {resolve, basename} from 'path';
 import {writeFileSync} from 'fs';
@@ -51,7 +49,7 @@ config.subscribe(() => {
 
 // patching Module._load
 // so plugins can `require` them without needing their own version
-// https://github.com/zeit/hyper/issues/619
+// https://github.com/vercel/hyper/issues/619
 function patchModuleLoad() {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const Module = require('module');
@@ -144,6 +142,7 @@ function getPluginVersions() {
   return paths_.map((path_) => {
     let version = null;
     try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       version = require(resolve(path_, 'package.json')).version;
       //eslint-disable-next-line no-empty
     } catch (err) {}
@@ -199,7 +198,7 @@ function syncPackageJSON() {
     description: 'Auto-generated from `~/.hyper.js`!',
     private: true,
     version: '0.0.1',
-    repository: 'zeit/hyper',
+    repository: 'vercel/hyper',
     license: 'MIT',
     homepage: 'https://hyper.is',
     dependencies
@@ -282,6 +281,7 @@ function requirePlugins(): any[] {
       // populate the name for internal errors here
       mod._name = basename(path_);
       try {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         mod._version = require(resolve(path_, 'package.json')).version;
       } catch (err) {
         console.warn(`No package.json found in ${path_}`);

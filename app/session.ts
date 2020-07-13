@@ -13,6 +13,7 @@ const createNodePtyError = () =>
 
 let spawn: typeof npSpawn;
 try {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   spawn = require('node-pty').spawn;
 } catch (err) {
   throw createNodePtyError();
@@ -100,6 +101,7 @@ export default class Session extends EventEmitter {
   }
 
   init({uid, rows, cols: columns, cwd, shell, shellArgs}: SessionOptions) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const osLocale = require('os-locale') as typeof import('os-locale');
     const baseEnv = Object.assign(
       {},
@@ -116,7 +118,7 @@ export default class Session extends EventEmitter {
 
     // Electron has a default value for process.env.GOOGLE_API_KEY
     // We don't want to leak this to the shell
-    // See https://github.com/zeit/hyper/issues/696
+    // See https://github.com/vercel/hyper/issues/696
     if (baseEnv.GOOGLE_API_KEY && process.env.GOOGLE_API_KEY === baseEnv.GOOGLE_API_KEY) {
       delete baseEnv.GOOGLE_API_KEY;
     }

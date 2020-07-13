@@ -3,11 +3,11 @@
 ## Workflow
 
 ### Run Hyper in dev mode
-Hyper can be run in dev mode by cloning this repository and following the ["Contributing" section of our README](https://github.com/zeit/hyper#contribute).
+Hyper can be run in dev mode by cloning this repository and following the ["Contributing" section of our README](https://github.com/vercel/hyper#contribute).
 
 In dev mode you'll get more ouput and access to React/Redux dev-tools in Electron.
 
-Prerequisites and steps are described in the ["Contributing" section of our README](https://github.com/zeit/hyper#contribute).
+Prerequisites and steps are described in the ["Contributing" section of our README](https://github.com/vercel/hyper#contribute).
 Be sure to use the `canary` branch.
 
 ### Create a dev config file
@@ -30,7 +30,7 @@ module.exports = {
 ```
 
 ### Running your plugin
-To load, your plugin should expose at least one API method. All possible methods are listed [here](https://github.com/zeit/hyper/blob/canary/app/plugins/extensions.ts).
+To load, your plugin should expose at least one API method. All possible methods are listed [here](https://github.com/vercel/hyper/blob/canary/app/plugins/extensions.ts).
 
 After launching Hyper in dev mode, run `yarn run app`, it should log that your plugin has been correcty loaded: `Plugin hyper-awesome-plugin (0.1.0) loaded.`. Name and version printed are the ones in your plugins `package.json` file.
 
@@ -70,7 +70,7 @@ exports.decorateTerms = (Terms, {React}) => {
       // <Terms onDecorated={this.onDecorated} />
     }
   }
-``` 
+```
 :warning: Note that you have to execute `this.props.onDecorated` to not break the handler chain. Without this, you could break other plugins that decorate the same component.
 
 ### Keymaps

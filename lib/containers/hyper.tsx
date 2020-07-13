@@ -89,7 +89,7 @@ class Hyper extends React.PureComponent<HyperProps> {
 
   componentWillUnmount() {
     document.body.style.backgroundColor = 'inherit';
-    this.mousetrap && this.mousetrap.reset();
+    this.mousetrap?.reset();
   }
 
   render() {
