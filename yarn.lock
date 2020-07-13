@@ -1526,10 +1526,10 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-ava@3.10.0:
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/ava/-/ava-3.10.0.tgz#ed1a53986435fc1cd8c15978cd8ff81217c34831"
-  integrity sha512-CxcYQYeE39pcLWrN2/TASMpnqH/SoaX+W61+4m3saETU041PIDcoP9LLNWPAE/yJZXjp0M1RWTohSkmGqJZKww==
+ava@3.10.1:
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/ava/-/ava-3.10.1.tgz#a4e68b1a2bb248fa0d96529d23dd83f57082e944"
+  integrity sha512-+w86ZHyFHIGCABi7NUrn/WJMyC+fDj0BSIlFNVS45WDKAD5vxbIiDWeclctxOOc2KDPfQD7tFOURSBz0FBLD0A==
   dependencies:
     "@concordance/react" "^2.0.0"
     acorn "^7.3.1"
