@@ -24,27 +24,25 @@ export function newWindow(
   const classOpts = Object.assign({uid: uuidv4()});
   app.plugins.decorateWindowClass(classOpts);
 
-  const winOpts = Object.assign(
-    {
-      minWidth: 370,
-      minHeight: 190,
-      backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
-      titleBarStyle: 'hiddenInset',
-      title: 'Hyper.app',
-      // we want to go frameless on Windows and Linux
-      frame: process.platform === 'darwin',
-      transparent: process.platform === 'darwin',
-      icon,
-      show: process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev,
-      acceptFirstMouse: true,
-      webPreferences: {
-        nodeIntegration: true,
-        navigateOnDragDrop: true
-      }
+  const winOpts: BrowserWindowConstructorOptions = {
+    minWidth: 370,
+    minHeight: 190,
+    backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
+    titleBarStyle: 'hiddenInset',
+    title: 'Hyper.app',
+    // we want to go frameless on Windows and Linux
+    frame: process.platform === 'darwin',
+    transparent: process.platform === 'darwin',
+    icon,
+    show: Boolean(process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev),
+    acceptFirstMouse: true,
+    webPreferences: {
+      nodeIntegration: true,
+      navigateOnDragDrop: true,
+      enableRemoteModule: true
     },
-    options_
-  );
-
+    ...options_
+  };
   const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(winOpts));
   window.uid = classOpts.uid;
 
