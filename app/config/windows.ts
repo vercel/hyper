@@ -12,8 +12,8 @@ const cfg = new Config({defaults});
 export default {
   defaults,
   get() {
-    const position = cfg.get('windowPosition');
-    const size = cfg.get('windowSize');
+    const position = cfg.get('windowPosition', defaults.windowPosition);
+    const size = cfg.get('windowSize', defaults.windowSize);
     return {position, size};
   },
   recordState(win: BrowserWindow) {
