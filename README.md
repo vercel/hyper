@@ -112,7 +112,8 @@ If you are getting compiler errors when running `yarn` add the environment varia
 If you have issues in the `codesign` step when running `yarn run dist` on macOS, you can temporarily disable code signing locally by setting
 `export CSC_IDENTITY_AUTO_DISCOVERY=false` for the current terminal session.
 
-## Related Repositories
+## Related Repositories 
+
 
 - [Art](https://github.com/vercel/art/tree/master/hyper)
 - [Website](https://github.com/vercel/hyper-site)
