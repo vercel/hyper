@@ -123,7 +123,7 @@
     "terser": "4.8.0",
     "terser-webpack-plugin": "3.0.6",
     "ts-node": "8.10.2",
-    "typescript": "3.9.6",
+    "typescript": "3.9.7",
     "webpack": "4.43.0"
   }
 }
