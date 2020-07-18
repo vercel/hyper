@@ -121,7 +121,7 @@
     "spectron": "11.0.0",
     "style-loader": "1.2.1",
     "terser": "4.8.0",
-    "terser-webpack-plugin": "3.0.6",
+    "terser-webpack-plugin": "3.0.7",
     "ts-node": "8.10.2",
     "typescript": "3.9.7",
     "webpack": "4.43.0"
