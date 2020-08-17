@@ -22,7 +22,7 @@
     "file-uri-to-path": "2.0.0",
     "fs-extra": "9.0.1",
     "git-describe": "4.0.4",
-    "lodash": "4.17.19",
+    "lodash": "4.17.20",
     "mkdirp": "1.0.4",
     "ms": "2.1.2",
     "node-pty": "0.9.0",
