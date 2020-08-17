@@ -87,7 +87,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/seamless-immutable": "7.1.13",
     "@types/styled-jsx": "2.2.8",
-    "@types/terser-webpack-plugin": "3.0.0",
+    "@types/terser-webpack-plugin": "4.1.0",
     "@types/uuid": "8.0.0",
     "@types/webpack": "4.41.21",
     "@typescript-eslint/eslint-plugin": "3.7.1",
