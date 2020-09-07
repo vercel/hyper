@@ -33,7 +33,7 @@
     "ms": "2.1.2",
     "open": "7.1.0",
     "ora": "4.0.5",
-    "parse-url": "5.0.1",
+    "parse-url": "5.0.2",
     "php-escape-shell": "1.0.0",
     "react": "16.13.1",
     "react-deep-force-update": "2.1.3",
