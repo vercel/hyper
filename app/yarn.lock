@@ -182,10 +182,10 @@ dot-prop@^5.2.0:
   dependencies:
     is-obj "^2.0.0"
 
-electron-fetch@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/electron-fetch/-/electron-fetch-1.6.0.tgz#39f92cb077d8fa3b5d95f8e0711100e1c9b7c0b1"
-  integrity sha512-8qpUtmwISThQr3smP8O61zj1fZTr9VI2VybJeDrg3NBJspgnq/HsyZDQwlag7FIk3KqO22wdtODCF/qb3Bm+sg==
+electron-fetch@1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/electron-fetch/-/electron-fetch-1.7.1.tgz#2e777c42557652e28a67ae6ca29e825d280a195e"
+  integrity sha512-Vmzb6Lx/jghH5ZNI1ParfqQPKePMncI+Sg5oA92HBVa2TGUcEQJ/noU/zdf4gpugk/imh0qu3xcNY5C/5R8nlg==
   dependencies:
     encoding "^0.1.13"
 
