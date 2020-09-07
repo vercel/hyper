@@ -31,7 +31,7 @@
     "json-loader": "0.5.7",
     "mousetrap": "chabou/mousetrap#useCapture",
     "ms": "2.1.2",
-    "open": "7.1.0",
+    "open": "7.2.1",
     "ora": "4.0.5",
     "parse-url": "5.0.1",
     "php-escape-shell": "1.0.0",
