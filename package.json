@@ -32,7 +32,7 @@
     "mousetrap": "chabou/mousetrap#useCapture",
     "ms": "2.1.2",
     "open": "7.2.1",
-    "ora": "4.0.5",
+    "ora": "5.1.0",
     "parse-url": "5.0.2",
     "php-escape-shell": "1.0.0",
     "react": "16.13.1",
