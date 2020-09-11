@@ -69,19 +69,12 @@ jobs:
       - name: Get Linux Artifact Names
         id: getlinuxfilename
         run: |
-          echo "::set-output name=snapName::$(ls dist/*.snap | cut -d'/' -f2)"
-          echo "::set-output name=snapPath::$(ls dist/*.snap)"
           echo "::set-output name=AppImageName::$(ls dist/*.AppImage | cut -d'/' -f2)"
           echo "::set-output name=AppImagePath::$(ls dist/*.AppImage)"
           echo "::set-output name=debName::$(ls dist/*.deb | cut -d'/' -f2)"
           echo "::set-output name=debPath::$(ls dist/*.deb)"
           echo "::set-output name=rpmName::$(ls dist/*.rpm | cut -d'/' -f2)"
           echo "::set-output name=rpmPath::$(ls dist/*.rpm)"
-      - name: Archive Linux Build Artifacts (Snap)
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ steps.getlinuxfilename.outputs.snapName }}
-          path: ${{ steps.getlinuxfilename.outputs.snapPath }}
       - name: Archive Linux Build Artifacts (AppImage)
         uses: actions/upload-artifact@v2
         with:

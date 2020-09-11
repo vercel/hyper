@@ -19,28 +19,13 @@
     "category": "TerminalEmulator",
     "target": [
       {
-        "target": "deb",
-        "arch": [
-          "x64"
-        ]
+        "target": "deb"
       },
       {
-        "target": "AppImage",
-        "arch": [
-          "x64"
-        ]
+        "target": "AppImage"
       },
       {
-        "target": "rpm",
-        "arch": [
-          "x64"
-        ]
-      },
-      {
-        "target": "snap",
-        "arch": [
-          "x64"
-        ]
+        "target": "rpm"
       }
     ]
   },
@@ -100,9 +85,6 @@
   },
   "rpm": {
     "afterInstall": "./build/linux/after-install.tpl"
-  },
-  "snap": {
-    "confinement": "classic"
   },
   "protocols": {
     "name": "ssh URL",
