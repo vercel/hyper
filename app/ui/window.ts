@@ -105,7 +105,7 @@ export function newWindow(
     // and createWindow definition. It's executed in place of
     // the callback passed as parameter, and deleted right after.
     (app.windowCallback || fn)(window);
-    delete app.windowCallback;
+    app.windowCallback = undefined;
     fetchNotifications(window);
     // auto updates
     if (!isDev) {
