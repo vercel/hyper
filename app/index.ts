@@ -47,28 +47,6 @@ import {gitDescribe} from 'git-describe';
 import isDev from 'electron-is-dev';
 import * as config from './config';
 
-// Hack - this declararion doesn't work when put into ./ext-modules.d.ts for some reason so it's in this file for the time being
-declare module 'electron' {
-  interface App {
-    config: typeof import('./config');
-    plugins: typeof import('./plugins');
-    getWindows: () => Set<BrowserWindow>;
-    getLastFocusedWindow: () => BrowserWindow | null;
-    windowCallback: (win: BrowserWindow) => void;
-    createWindow: (fn?: (win: BrowserWindow) => void, options?: Record<string, any>) => BrowserWindow;
-    setVersion: (version: string) => void;
-  }
-
-  type Server = import('./rpc').Server;
-  interface BrowserWindow {
-    uid: string;
-    sessions: Map<any, any>;
-    focusTime: number;
-    clean: () => void;
-    rpc: Server;
-  }
-}
-
 // set up config
 config.setup();
 
