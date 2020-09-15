@@ -6,7 +6,7 @@ declare module 'electron' {
     plugins: typeof import('./plugins');
     getWindows: () => Set<BrowserWindow>;
     getLastFocusedWindow: () => BrowserWindow | null;
-    windowCallback: (win: BrowserWindow) => void;
+    windowCallback?: (win: BrowserWindow) => void;
     createWindow: (fn?: (win: BrowserWindow) => void, options?: Record<string, any>) => BrowserWindow;
     setVersion: (version: string) => void;
   }
