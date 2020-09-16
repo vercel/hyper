@@ -97,7 +97,9 @@
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/prefer-optional-chain": "error",
-        "@typescript-eslint/ban-types": "off"
+        "@typescript-eslint/ban-types": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"]
       }
     }
   ]

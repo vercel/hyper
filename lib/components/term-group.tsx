@@ -21,7 +21,7 @@ class TermGroup_ extends React.PureComponent<TermGroupProps> {
     fn: T,
     thisObj: any,
     uid: string
-  ): (...args: T extends (uid: string, ...args: infer I) => any ? I : never) => ReturnType<T> {
+  ): (...args: T extends (uid: string, ..._args: infer I) => any ? I : never) => ReturnType<T> {
     if (!this.bound.has(fn)) {
       this.bound.set(fn, {});
     }
