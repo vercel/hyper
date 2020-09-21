@@ -1322,21 +1322,21 @@ app-builder-lib@22.8.0:
     semver "^7.3.2"
     temp-file "^3.3.7"
 
-app-builder-lib@22.8.1:
-  version "22.8.1"
-  resolved "https://registry.yarnpkg.com/app-builder-lib/-/app-builder-lib-22.8.1.tgz#02cd14c0a83d3a758675d28c327731832b2c0bc1"
-  integrity sha512-D/ac1+vuGIAAwEeTtXl8b+qWl7Gz/IQatFyzYl2ocag/7N8LqUjKzZFJJISQPWt6PFDPDH0oCj8/GMh63aV0yw==
+app-builder-lib@22.9.0:
+  version "22.9.0"
+  resolved "https://registry.yarnpkg.com/app-builder-lib/-/app-builder-lib-22.9.0.tgz#2366ff1a692b6c7f85f6fd8b1bb41227c9ea7a31"
+  integrity sha512-MKgWGUMPYJFn7GG/ta5Qw79zNvtRCWodH2xICK9l2NpPtWmr+9LoTcRk90rI4m0RjKR5GoSoOytEAok91YrFyw==
   dependencies:
     "7zip-bin" "~5.0.3"
     "@develar/schema-utils" "~2.6.5"
     async-exit-hook "^2.0.1"
     bluebird-lst "^1.0.9"
-    builder-util "22.8.1"
+    builder-util "22.9.0"
     builder-util-runtime "8.7.2"
     chromium-pickle-js "^0.2.0"
     debug "^4.2.0"
-    ejs "^3.1.3"
-    electron-publish "22.8.1"
+    ejs "^3.1.5"
+    electron-publish "22.9.0"
     fs-extra "^9.0.1"
     hosted-git-info "^3.0.5"
     is-ci "^2.0.0"
@@ -1371,17 +1371,17 @@ archiver-utils@^2.1.0:
     normalize-path "^3.0.0"
     readable-stream "^2.0.0"
 
-archiver@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/archiver/-/archiver-5.0.0.tgz#b1e7dc075a4e18e0aa59afdd7c3e5f3d3321cbeb"
-  integrity sha512-AEWhJz6Yi6hWtN1Sqy/H4sZo/lLMJ/NftXxGaDy/TnOMmmjsRaZc/Ts+U4BsPoBQkuunTN6t8hk7iU9A+HBxLw==
+archiver@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/archiver/-/archiver-5.0.2.tgz#b2c435823499b1f46eb07aa18e7bcb332f6ca3fc"
+  integrity sha512-Tq3yV/T4wxBsD2Wign8W9VQKhaUxzzRmjEiSoOK0SLqPgDP/N1TKdYyBeIEu56T4I9iO4fKTTR0mN9NWkBA0sg==
   dependencies:
     archiver-utils "^2.1.0"
     async "^3.2.0"
     buffer-crc32 "^0.2.1"
     readable-stream "^3.6.0"
     readdir-glob "^1.0.0"
-    tar-stream "^2.1.2"
+    tar-stream "^2.1.4"
     zip-stream "^4.0.0"
 
 are-we-there-yet@~1.1.2:
@@ -1734,7 +1734,7 @@ bindings@^1.5.0:
   dependencies:
     file-uri-to-path "1.0.0"
 
-bl@^4.0.1:
+bl@^4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/bl/-/bl-4.0.3.tgz#12d6287adc29080e22a705e5764b2a9522cdc489"
   integrity sha512-fs4G6/Hu4/EE+F75J8DuN/0IpQqNjAdC7aEQv7Qt8MHGUH7Ckv2MwTEEeN9QehD0pfIDkMI1bkHYkKy7xHyKIg==
@@ -1939,10 +1939,10 @@ builder-util@22.8.0:
     stat-mode "^1.0.0"
     temp-file "^3.3.7"
 
-builder-util@22.8.1:
-  version "22.8.1"
-  resolved "https://registry.yarnpkg.com/builder-util/-/builder-util-22.8.1.tgz#efdfb327dbc22c59aa1e2f55adbe0e771086e839"
-  integrity sha512-LZG+E1xszMdut5hL5h7RkJQ7yOsQqdhJYgn1wvOP7MmF3MoUPRNDiRodLpYiWlaqZmgYhcfaipR/Mb8F/RqK8w==
+builder-util@22.9.0:
+  version "22.9.0"
+  resolved "https://registry.yarnpkg.com/builder-util/-/builder-util-22.9.0.tgz#f709dcf1a2fa2f8f7355346c67599891ecc2bf4a"
+  integrity sha512-ySOKJ8E/Jrhe5VdfzTny0imXhRd5ql5fUDlt/AuPZeSZiZFkutEPwjV2akEDGaQXgMxWeGcb4AtuL4DrdOgBhw==
   dependencies:
     "7zip-bin" "~5.0.3"
     "@types/debug" "^4.1.5"
@@ -3053,15 +3053,22 @@ ejs@^3.1.3:
   dependencies:
     jake "^10.6.1"
 
-electron-builder-squirrel-windows@22.8.1:
-  version "22.8.1"
-  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-22.8.1.tgz#03d36c468225b0961ec1313e41562379abc19ee1"
-  integrity sha512-iNUny04kHMUVJ3JW+I3k9sS4MtnunftQN1rGTU2EsqQhTZ9Dl4VxSQKp8riQHF3hNCHqN43VGbtE2IB/bqXnpA==
+ejs@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/ejs/-/ejs-3.1.5.tgz#aed723844dc20acb4b170cd9ab1017e476a0d93b"
+  integrity sha512-dldq3ZfFtgVTJMLjOe+/3sROTzALlL9E34V4/sDtUd/KlBSS0s6U1/+WPE1B4sj9CXHJpL1M6rhNJnc9Wbal9w==
   dependencies:
-    app-builder-lib "22.8.1"
-    archiver "^5.0.0"
+    jake "^10.6.1"
+
+electron-builder-squirrel-windows@22.9.0:
+  version "22.9.0"
+  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-22.9.0.tgz#bc32156a2a45d8bbce9150ad13b70cd55ee2f3e9"
+  integrity sha512-+LO8FTrWUyPOVcGpcgs3Ko+Qe7aj9Iv6oBPhwgUq6GDqd/VHHUBqLshkmnAoZXCPbUXdcJ7eFg1N+fg0oIQ1+A==
+  dependencies:
+    app-builder-lib "22.9.0"
+    archiver "^5.0.2"
     bluebird-lst "^1.0.9"
-    builder-util "22.8.1"
+    builder-util "22.9.0"
     fs-extra "^9.0.1"
     sanitize-filename "^1.6.3"
   optionalDependencies:
@@ -3110,14 +3117,14 @@ electron-publish@22.8.0:
     lazy-val "^1.0.4"
     mime "^2.4.6"
 
-electron-publish@22.8.1:
-  version "22.8.1"
-  resolved "https://registry.yarnpkg.com/electron-publish/-/electron-publish-22.8.1.tgz#747e0d7f921cd1808f999713d29f599dbb390c4f"
-  integrity sha512-zqI66vl7j1CJZJ60J+1ez1tQNQeuqVspW44JvYDa5kZbM5wSFDAJFMK9RWHOqRF1Ezd4LDeiBa4aeTOwOt9syA==
+electron-publish@22.9.0:
+  version "22.9.0"
+  resolved "https://registry.yarnpkg.com/electron-publish/-/electron-publish-22.9.0.tgz#bf508ed9a23902eb3b9807a4573a65c0d9bdc777"
+  integrity sha512-CItOeTNtezLHuGWDL+7y3ZzRIWd/fcMzJLaoXQfSGv7dCdZPkPmq0AS2BAs+2hcsrx+755SBFbEqqXKhv7dSUw==
   dependencies:
     "@types/fs-extra" "^9.0.1"
     bluebird-lst "^1.0.9"
-    builder-util "22.8.1"
+    builder-util "22.9.0"
     builder-util-runtime "8.7.2"
     chalk "^4.1.0"
     fs-extra "^9.0.1"
@@ -7682,12 +7689,12 @@ tapable@^1.0.0, tapable@^1.1.3:
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-1.1.3.tgz#a1fccc06b58db61fd7a45da2da44f5f3a3e67ba2"
   integrity sha512-4WK/bYZmj8xLr+HUCODHGF1ZFzsYffasLUgEiMBY4fgtltdO6B4WJtlSbPaDTLpYTcGVwM2qLnFTICEcNxs3kA==
 
-tar-stream@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/tar-stream/-/tar-stream-2.1.2.tgz#6d5ef1a7e5783a95ff70b69b97455a5968dc1325"
-  integrity sha512-UaF6FoJ32WqALZGOIAApXx+OdxhekNMChu6axLJR85zMMjXKWFGjbIRe+J6P4UnRGg9rAwWvbTT0oI7hD/Un7Q==
+tar-stream@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/tar-stream/-/tar-stream-2.1.4.tgz#c4fb1a11eb0da29b893a5b25476397ba2d053bfa"
+  integrity sha512-o3pS2zlG4gxr67GmFYBLlq+dM8gyRGUOvsrHclSkvtVtQbjV0s/+ZE8OpICbaj8clrX3tjeHngYGP7rweaBnuw==
   dependencies:
-    bl "^4.0.1"
+    bl "^4.0.3"
     end-of-stream "^1.4.1"
     fs-constants "^1.0.0"
     inherits "^2.0.3"
