@@ -79,7 +79,7 @@
     "@types/mkdirp": "1.0.1",
     "@types/mousetrap": "^1.6.3",
     "@types/ms": "0.7.31",
-    "@types/node": "^12.12.58",
+    "@types/node": "^12.12.62",
     "@types/pify": "3.0.2",
     "@types/plist": "3.0.2",
     "@types/react": "^16.9.49",
