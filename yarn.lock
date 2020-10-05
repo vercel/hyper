@@ -2541,10 +2541,10 @@ copy-descriptor@^0.1.0:
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
-copy-webpack-plugin@6.1.1:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/copy-webpack-plugin/-/copy-webpack-plugin-6.1.1.tgz#737a3ba21c16cc6ddca972f5cf8de25568ca0616"
-  integrity sha512-4TlkHFYkrZ3WppLA5XkPmBLI5lnEpFsXvpeqxCf5PzkratZiVklNXsvoQkLhUU43q7ZL3AOXtaHAd9jLNJoU0w==
+copy-webpack-plugin@6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/copy-webpack-plugin/-/copy-webpack-plugin-6.2.0.tgz#dacd3f9b6e51e82132a12fa37410af35ecef0c9e"
+  integrity sha512-1s/VbhIX73FBFBYF4D0KdeBLkjEnAlCQn0Ufo2a/IyJ41jHpQ9ZzM4JAfbE7yTOhbmwRFkARErJ/XIiLceja6Q==
   dependencies:
     cacache "^15.0.5"
     fast-glob "^3.2.4"
