@@ -1347,21 +1347,21 @@ app-builder-lib@22.8.1:
     semver "^7.3.2"
     temp-file "^3.3.7"
 
-app-builder-lib@22.9.0:
-  version "22.9.0"
-  resolved "https://registry.yarnpkg.com/app-builder-lib/-/app-builder-lib-22.9.0.tgz#2366ff1a692b6c7f85f6fd8b1bb41227c9ea7a31"
-  integrity sha512-MKgWGUMPYJFn7GG/ta5Qw79zNvtRCWodH2xICK9l2NpPtWmr+9LoTcRk90rI4m0RjKR5GoSoOytEAok91YrFyw==
+app-builder-lib@22.9.1:
+  version "22.9.1"
+  resolved "https://registry.yarnpkg.com/app-builder-lib/-/app-builder-lib-22.9.1.tgz#ccb8f1a02b628514a5dfab9401fa2a976689415c"
+  integrity sha512-KfXim/fiNwFW2SKffsjEMdAU7RbbEXn62x5YyXle1b4j9X/wEHW9iwox8De6y0hJdR+/kCC/49lI+VgNwLhV7A==
   dependencies:
     "7zip-bin" "~5.0.3"
     "@develar/schema-utils" "~2.6.5"
     async-exit-hook "^2.0.1"
     bluebird-lst "^1.0.9"
-    builder-util "22.9.0"
+    builder-util "22.9.1"
     builder-util-runtime "8.7.2"
     chromium-pickle-js "^0.2.0"
-    debug "^4.2.0"
+    debug "^4.3.0"
     ejs "^3.1.5"
-    electron-publish "22.9.0"
+    electron-publish "22.9.1"
     fs-extra "^9.0.1"
     hosted-git-info "^3.0.5"
     is-ci "^2.0.0"
@@ -1965,10 +1965,10 @@ builder-util@22.8.1:
     stat-mode "^1.0.0"
     temp-file "^3.3.7"
 
-builder-util@22.9.0:
-  version "22.9.0"
-  resolved "https://registry.yarnpkg.com/builder-util/-/builder-util-22.9.0.tgz#f709dcf1a2fa2f8f7355346c67599891ecc2bf4a"
-  integrity sha512-ySOKJ8E/Jrhe5VdfzTny0imXhRd5ql5fUDlt/AuPZeSZiZFkutEPwjV2akEDGaQXgMxWeGcb4AtuL4DrdOgBhw==
+builder-util@22.9.1:
+  version "22.9.1"
+  resolved "https://registry.yarnpkg.com/builder-util/-/builder-util-22.9.1.tgz#b7087a5cde477f90d718ca5d7fafb6ae261b16af"
+  integrity sha512-5hN/XOaYu4ZQUS6F+5CXE6jTo+NAnVqAxDuKGSaHWb9bejfv/rluChTLoY3/nJh7RFjkoyVjvFJv7zQDB1QmHw==
   dependencies:
     "7zip-bin" "~5.0.3"
     "@types/debug" "^4.1.5"
@@ -1977,7 +1977,7 @@ builder-util@22.9.0:
     bluebird-lst "^1.0.9"
     builder-util-runtime "8.7.2"
     chalk "^4.1.0"
-    debug "^4.2.0"
+    debug "^4.3.0"
     fs-extra "^9.0.1"
     is-ci "^2.0.0"
     js-yaml "^3.14.0"
@@ -2833,6 +2833,13 @@ debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.2.0:
   dependencies:
     ms "2.1.2"
 
+debug@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.0.tgz#efa41cbf14fc9448075367fdaaddf82376da211e"
+  integrity sha512-jjO6JD2rKfiZQnBoRzhRTbXjHLGLfH+UtGkWLc/UXAh/rzZMyjbgn0NcfFpqT8nd1kTtFnDiJcrIFkq4UKeJVg==
+  dependencies:
+    ms "2.1.2"
+
 decamelize-keys@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/decamelize-keys/-/decamelize-keys-1.1.0.tgz#d171a87933252807eb3cb61dc1c1445d078df2d9"
@@ -3093,15 +3100,15 @@ ejs@^3.1.5:
   dependencies:
     jake "^10.6.1"
 
-electron-builder-squirrel-windows@22.9.0:
-  version "22.9.0"
-  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-22.9.0.tgz#bc32156a2a45d8bbce9150ad13b70cd55ee2f3e9"
-  integrity sha512-+LO8FTrWUyPOVcGpcgs3Ko+Qe7aj9Iv6oBPhwgUq6GDqd/VHHUBqLshkmnAoZXCPbUXdcJ7eFg1N+fg0oIQ1+A==
+electron-builder-squirrel-windows@22.9.1:
+  version "22.9.1"
+  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-22.9.1.tgz#d9ad65a8f5abd1011ac1dbd01492623fb5466a32"
+  integrity sha512-ZfL9Bhx/WkugQ/fuDGKqfb8hQSB1PoYLQDpcoB1Lsng7SooMIs76eYtLaHQOMRQokhQG0VytJ2NbnOSg8kcSlA==
   dependencies:
-    app-builder-lib "22.9.0"
+    app-builder-lib "22.9.1"
     archiver "^5.0.2"
     bluebird-lst "^1.0.9"
-    builder-util "22.9.0"
+    builder-util "22.9.1"
     fs-extra "^9.0.1"
     sanitize-filename "^1.6.3"
   optionalDependencies:
@@ -3150,14 +3157,14 @@ electron-publish@22.8.1:
     lazy-val "^1.0.4"
     mime "^2.4.6"
 
-electron-publish@22.9.0:
-  version "22.9.0"
-  resolved "https://registry.yarnpkg.com/electron-publish/-/electron-publish-22.9.0.tgz#bf508ed9a23902eb3b9807a4573a65c0d9bdc777"
-  integrity sha512-CItOeTNtezLHuGWDL+7y3ZzRIWd/fcMzJLaoXQfSGv7dCdZPkPmq0AS2BAs+2hcsrx+755SBFbEqqXKhv7dSUw==
+electron-publish@22.9.1:
+  version "22.9.1"
+  resolved "https://registry.yarnpkg.com/electron-publish/-/electron-publish-22.9.1.tgz#7cc76ac4cc53efd29ee31c1e5facb9724329068e"
+  integrity sha512-ducLjRJLEeU87FaTCWaUyDjCoLXHkawkltP2zqS/n2PyGke54ZIql0tBuUheht4EpR8AhFbVJ11spSn1gy8r6w==
   dependencies:
     "@types/fs-extra" "^9.0.1"
     bluebird-lst "^1.0.9"
-    builder-util "22.9.0"
+    builder-util "22.9.1"
     builder-util-runtime "8.7.2"
     chalk "^4.1.0"
     fs-extra "^9.0.1"
