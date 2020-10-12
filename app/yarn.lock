@@ -102,10 +102,10 @@ color@3.1.2:
     color-convert "^1.9.1"
     color-string "^1.5.2"
 
-conf@^7.1.1:
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/conf/-/conf-7.1.1.tgz#327698d294a5c76fac17f970e47f87bcf1f0dc5b"
-  integrity sha512-njOu3so+7zcR1oQzXKP0mpPMKRf+riaaWmxBUhgP/c9k32PuDX/SQ+N6cO6ZylY6NOZGPwgzicGxdlRGXUOkSQ==
+conf@^7.1.2:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/conf/-/conf-7.1.2.tgz#d9678a9d8f04de8bf5cd475105da8fdae49c2ec4"
+  integrity sha512-r8/HEoWPFn4CztjhMJaWNAe5n+gPUCSaJ0oufbqDLFKsA1V8JjAG7G+p0pgoDFAws9Bpk2VtVLLXqOBA7WxLeg==
   dependencies:
     ajv "^6.12.2"
     atomically "^1.3.1"
@@ -201,12 +201,12 @@ electron-squirrel-startup@1.0.0:
   dependencies:
     debug "^2.2.0"
 
-electron-store@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/electron-store/-/electron-store-6.0.0.tgz#92a5f8295a326f074281ae0d6a307454e6f68243"
-  integrity sha512-ujb0a/6gxMxb9vOQ2BjOehK9VCyq5OKvttekd9v/tohA9oBHnAdV+Vxu4eoRh+/F9ShPFhcvDZkMdqO5i+TXUw==
+electron-store@6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/electron-store/-/electron-store-6.0.1.tgz#2178b9dc37aeb749d99cf9d1d1bc090890b922dc"
+  integrity sha512-8rdM0XEmDGsLuZM2oRABzsLX+XmD5x3rwxPMEPv0MrN9/BWanyy3ilb2v+tCrKtIZVF3MxUiZ9Bfqe8e0popKQ==
   dependencies:
-    conf "^7.1.1"
+    conf "^7.1.2"
     type-fest "^0.16.0"
 
 encoding@^0.1.13:
