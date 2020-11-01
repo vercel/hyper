@@ -10,7 +10,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [14.x]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -29,8 +29,6 @@ jobs:
           cp build/canary.icns build/icon.icns
       - name: Build
         run: yarn run dist --publish=never
-        env:
-          CI: true
       - name: Get macOS Artifact Names
         id: getmacosfilename
         run: |
@@ -45,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [14.x]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -63,9 +61,7 @@ jobs:
           cp build/canary.ico build/icon.ico
           cp build/canary.icns build/icon.icns
       - name: Build
-        run: yarn run dist --publish=never
-        env:
-          CI: true
+        run: yarn run dist --publish=never 
       - name: Get Linux Artifact Names
         id: getlinuxfilename
         run: |
@@ -101,7 +97,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [14.x]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -120,8 +116,6 @@ jobs:
           Copy-Item .\build\canary.icns .\build\icon.icns
       - name: Build
         run: yarn run dist --publish=never
-        env:
-          CI: true
       - name: Get Windows Artifact Names
         id: getwindowsfilename
         run: |
