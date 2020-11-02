@@ -904,10 +904,10 @@
   resolved "https://registry.yarnpkg.com/@types/retry/-/retry-0.12.0.tgz#2b35eccfcee7d38cd72ad99232fbd58bffb3c84d"
   integrity sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==
 
-"@types/seamless-immutable@7.1.13":
-  version "7.1.13"
-  resolved "https://registry.yarnpkg.com/@types/seamless-immutable/-/seamless-immutable-7.1.13.tgz#dc8d645914086300e49410c72f6e5fae902fdbc5"
-  integrity sha512-kvgsr2sI8NBtxgR+YZNgSk0S+isAtS77TKtITUCGcNHlwYERrvgv6DbLER4TbvUK4/Qclm8C9jXzHqegpV2Ikg==
+"@types/seamless-immutable@7.1.14":
+  version "7.1.14"
+  resolved "https://registry.yarnpkg.com/@types/seamless-immutable/-/seamless-immutable-7.1.14.tgz#d05c9c85450aa884e67ab2b0461b8f73f3636a07"
+  integrity sha512-mTi9Uv7KLgTF/VXU3qSuBzl+4qQJScaihM5OfFXWnVFAfbMJ6Fqk/sd2iT8yP1s2UbhybwOyrP8LQFuM6xngPQ==
 
 "@types/source-list-map@*":
   version "0.1.2"
