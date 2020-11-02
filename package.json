@@ -111,7 +111,7 @@
     "husky": "4.3.0",
     "inquirer": "7.3.3",
     "node-addon-api": "3.0.2",
-    "node-gyp": "7.1.0",
+    "node-gyp": "7.1.2",
     "null-loader": "4.0.1",
     "plist": "3.0.1",
     "prettier": "2.1.2",
