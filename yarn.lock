@@ -3213,10 +3213,10 @@ electron-publish@22.9.1:
     lazy-val "^1.0.4"
     mime "^2.4.6"
 
-electron-rebuild@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/electron-rebuild/-/electron-rebuild-2.2.0.tgz#c7e8ab2da2d5a6d263b03bf032ff480b7341cfab"
-  integrity sha512-qbrCoBSmbL/f6OwfRXg5cihAJ0TwbgRKmyK7helR6XNlaoPO42ny/+4yCTXJrYa0ZhkvcdY+gZE/wu2p19gFHg==
+electron-rebuild@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/electron-rebuild/-/electron-rebuild-2.3.2.tgz#42da553a1e4e844ae4d3c3b97e42be836b2924b3"
+  integrity sha512-VLd3iIn65PmYWmvL+nx0oKspbohkDUhCAz8I2EWbMJcOFzWKW1UXJZ+ZG53iEDJFldm9PahE4q2Bx3ns4bdzeQ==
   dependencies:
     "@malept/cross-spawn-promise" "^1.1.0"
     colors "^1.3.3"
