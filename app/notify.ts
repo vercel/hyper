@@ -1,4 +1,4 @@
-import {Notification} from 'electron';
+import {app, Notification} from 'electron';
 import {icon} from './config/paths';
 
 export default function notify(title: string, body = '', details: {error?: any} = {}) {
@@ -6,5 +6,15 @@ export default function notify(title: string, body = '', details: {error?: any} 
   if (details.error) {
     console.error(details.error);
   }
-  new Notification({title, body, ...(process.platform === 'linux' && {icon})}).show();
+  if (app.isReady()) {
+    _createNotification(title, body);
+  } else {
+    app.on('ready', () => {
+      _createNotification(title, body);
+    });
+  }
 }
+
+const _createNotification = (title: string, body: string) => {
+  new Notification({title, body, ...(process.platform === 'linux' && {icon})}).show();
+};
