@@ -680,10 +680,10 @@
   resolved "https://registry.yarnpkg.com/@types/columnify/-/columnify-1.5.0.tgz#94bb31f14c66bab6d968caa455ff13af1f0e7632"
   integrity sha512-f39gUbf4NuSTVG9XEUJzYQ8L9e3l91jwywbJdU0fJixCRHKzQnyWxa9KfRPEuC3PhH5TIAi79kX2sAkXXSTB9Q==
 
-"@types/copy-webpack-plugin@^6.2.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@types/copy-webpack-plugin/-/copy-webpack-plugin-6.2.0.tgz#801f99b6e8378cfc8ea086cf7cd09988a29e6fe6"
-  integrity sha512-b4dGTj36/FiiBI8nzPWBACX85n6pIjlwXgEPvf12C5rOEDFyFxMCbRJ8g1l1ZM5NFH/hafw2/5QM1HmReE4AKA==
+"@types/copy-webpack-plugin@^6.3.0":
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/@types/copy-webpack-plugin/-/copy-webpack-plugin-6.3.0.tgz#bb7fe72fccf75d9096fda2610ec01e9e8b19336f"
+  integrity sha512-b5FXqKbP3e3tKtC6520w9q7nkxBw+5TxQotiFx0M+VMpLlJNfgWINjHPPJSZEhMzb/iIGrkTDBhqotmzV9f5uQ==
   dependencies:
     "@types/webpack" "*"
 
