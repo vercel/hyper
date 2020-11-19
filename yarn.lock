@@ -791,10 +791,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/mousetrap@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@types/mousetrap/-/mousetrap-1.6.3.tgz#3159a01a2b21c9155a3d8f85588885d725dc987d"
-  integrity sha512-13gmo3M2qVvjQrWNseqM3+cR6S2Ss3grbR2NZltgMq94wOwqJYQdgn8qzwDshzgXqMlSUtyPZjysImmktu22ew==
+"@types/mousetrap@^1.6.4":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@types/mousetrap/-/mousetrap-1.6.4.tgz#32503197fca4168b10bf251c1d677a9b5b1c2415"
+  integrity sha512-+Y900DGhe+f+4lRwHm9krsKfsiXcbdOhzTsLbytU4MiG8wE9xOw7CFKtgYKfqEAcUdWEGZRyuTxoyFl2Gx6Rdg==
 
 "@types/ms@0.7.31":
   version "0.7.31"
