@@ -12,7 +12,7 @@ branches:
 image: Visual Studio 2019
 
 install:
-  - ps: Install-Product node 12 x64
+  - ps: Install-Product node 14 x64
   - set CI=true
   - yarn
 
