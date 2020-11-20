@@ -119,7 +119,7 @@
     "redux-devtools-extension": "2.13.8",
     "resize-observer-polyfill": "1.5.1",
     "style-loader": "1.3.0",
-    "terser": "5.3.8",
+    "terser": "5.5.0",
     "terser-webpack-plugin": "4.2.3",
     "ts-node": "9.0.0",
     "typescript": "4.0.5",
