@@ -40,7 +40,7 @@ const addSymlink = () => {
 };
 
 const addBinToUserPath = () => {
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     try {
       const envKey = Registry.openKey(Registry.HKCU, 'Environment', Registry.Access.ALL_ACCESS)!;
 
