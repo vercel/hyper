@@ -79,6 +79,7 @@ export type uiState = Immutable<{
   quickEdit: boolean;
   resizeAt: number;
   rows: number | null;
+  screenReaderMode: boolean;
   scrollback: number;
   selectionColor: string;
   showHamburgerMenu: boolean | '';
@@ -287,6 +288,7 @@ export type TermGroupOwnProps = {
   | 'onTitle'
   | 'padding'
   | 'quickEdit'
+  | 'screenReaderMode'
   | 'scrollback'
   | 'selectionColor'
   | 'sessions'
@@ -344,6 +346,7 @@ export type TermProps = {
   padding: string;
   quickEdit: boolean;
   rows: number | null;
+  screenReaderMode: boolean;
   scrollback: number;
   search: boolean;
   searchAddon: SearchAddon | null;
