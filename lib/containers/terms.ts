@@ -45,7 +45,8 @@ const mapStateToProps = (state: HyperState) => {
     webGLRenderer: state.ui.webGLRenderer,
     webLinksActivationKey: state.ui.webLinksActivationKey,
     macOptionSelectionMode: state.ui.macOptionSelectionMode,
-    disableLigatures: state.ui.disableLigatures
+    disableLigatures: state.ui.disableLigatures,
+    screenReaderMode: state.ui.screenReaderMode
   };
 };
 

@@ -116,6 +116,7 @@ export default class Terms extends React.Component<TermsProps> {
             webLinksActivationKey: this.props.webLinksActivationKey,
             macOptionSelectionMode: this.props.macOptionSelectionMode,
             disableLigatures: this.props.disableLigatures,
+            screenReaderMode: this.props.screenReaderMode,
             parentProps: this.props
           });
 

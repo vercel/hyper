@@ -104,6 +104,7 @@ class TermGroup_ extends React.PureComponent<TermGroupProps> {
       webLinksActivationKey: this.props.webLinksActivationKey,
       macOptionSelectionMode: this.props.macOptionSelectionMode,
       disableLigatures: this.props.disableLigatures,
+      screenReaderMode: this.props.screenReaderMode,
       uid
     });
 

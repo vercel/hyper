@@ -77,7 +77,8 @@ const getTermOptions = (props: TermProps): ITerminalOptions => {
       brightMagenta: props.colors.lightMagenta,
       brightCyan: props.colors.lightCyan,
       brightWhite: props.colors.lightWhite
-    }
+    },
+    screenReaderMode: props.screenReaderMode
   };
 };
 
