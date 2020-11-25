@@ -119,13 +119,15 @@ jobs:
         run: |
           Copy-Item .\build\canary.ico .\build\icon.ico
           Copy-Item .\build\canary.icns .\build\icon.icns
-      - name: Get Certificate for signing
-        if: github.event_name == 'push'
-        run: |
-          Write-Host "::set-env name=CSC_LINK::${{ secrets.WIN_CERT_P12_BASE64 }}"
-          Write-Host "::set-env name=CSC_KEY_PASSWORD::${{ secrets.WIN_CERT_P12_PASSWORD }}"
-      - name: Build
+      - name: Build (pr)
+        if: github.event_name == 'pull_request'
         run: yarn run dist --publish=never
+      - name: Build (push)
+        if: github.event_name == 'push'
+        run: yarn run dist --publish=never
+        env:
+          CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
+          CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
       - name: Get Windows Artifact Names
         id: getwindowsfilename
         run: |
