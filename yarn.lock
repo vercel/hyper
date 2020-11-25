@@ -39,10 +39,10 @@
   resolved "https://registry.npmjs.org/@ava/require-precompiled/-/require-precompiled-1.0.0.tgz#6f4a48b75904a753eadff020bbfca81d3bbc0357"
   integrity sha512-N7w4g+P/SUL8SF+HC4Z4e/ctV6nQ5AERC90K90r4xZQ8WVrJux9albvfyYAzygyU47CSqMWh6yJwFs8DYaeWmg==
 
-"@babel/cli@7.12.7":
-  version "7.12.7"
-  resolved "https://registry.npmjs.org/@babel/cli/-/cli-7.12.7.tgz#63a3c38bddff02a1c633c70f2fd03019af6bf977"
-  integrity sha512-vE1fidQsaWnQVs4SItkuCdi3+uXqjbhw4cIKp8aawKxOnTnlvxYMzXSeMAqo6alldQRFQYb198YQfW0Sp1jl5Q==
+"@babel/cli@7.12.8":
+  version "7.12.8"
+  resolved "https://registry.npmjs.org/@babel/cli/-/cli-7.12.8.tgz#3b24ed2fd5da353ee6f19e8935ff8c93b5fe8430"
+  integrity sha512-/6nQj11oaGhLmZiuRUfxsujiPDc9BBReemiXgIbxc+M5W+MIiFKYwvNDJvBfnGKNsJTKbUfEheKc9cwoPHAVQA==
   dependencies:
     commander "^4.0.1"
     convert-source-map "^1.1.0"
@@ -107,7 +107,7 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
-"@babel/generator@^7.0.0", "@babel/generator@^7.12.5", "@babel/generator@^7.8.4":
+"@babel/generator@^7.0.0", "@babel/generator@^7.12.1", "@babel/generator@^7.12.5", "@babel/generator@^7.8.4":
   version "7.12.5"
   resolved "https://registry.npmjs.org/@babel/generator/-/generator-7.12.5.tgz#a2c50de5c8b6d708ab95be5e6053936c1884a4de"
   integrity sha512-m16TQQJ8hPt7E+OS/XVQg/7U184MLXtvuGbCdA7na61vha+ImkyyNM/9DDA0unYCVZn3ZOhng+qz48/KBOT96A==
@@ -249,7 +249,7 @@
   resolved "https://registry.npmjs.org/@babel/helper-validator-option/-/helper-validator-option-7.12.1.tgz#175567380c3e77d60ff98a54bb015fe78f2178d9"
   integrity sha512-YpJabsXlJVWP0USHjnC/AQDTLlZERbON577YUVO/wLpqyj6HAtVYnWaQaN0iUN+1/tWn3c+uKKXjRut5115Y2A==
 
-"@babel/helpers@^7.12.5":
+"@babel/helpers@^7.12.1", "@babel/helpers@^7.12.5":
   version "7.12.5"
   resolved "https://registry.npmjs.org/@babel/helpers/-/helpers-7.12.5.tgz#1a1ba4a768d9b58310eda516c449913fe647116e"
   integrity sha512-lgKGMQlKqA8meJqKsW6rUnc4MdUk35Ln0ATDqdM1a/UpARODdI4j5Y5lVfUScnSNkJcdCRAaWkspykNoFg9sJA==
@@ -267,7 +267,7 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.0.0", "@babel/parser@^7.12.7":
+"@babel/parser@^7.0.0", "@babel/parser@^7.12.3", "@babel/parser@^7.12.5", "@babel/parser@^7.12.7":
   version "7.12.7"
   resolved "https://registry.npmjs.org/@babel/parser/-/parser-7.12.7.tgz#fee7b39fe809d0e73e5b25eecaf5780ef3d73056"
   integrity sha512-oWR02Ubp4xTLCAqPRiNIuMVgNO5Aif/xpXtabhzW2HWUD47XJsAB4Zd/Rg30+XeQA3juXigV7hlquOTmwqLiwg==
