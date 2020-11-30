@@ -7688,6 +7688,11 @@ stylis@3.5.4:
   resolved "https://registry.npmjs.org/stylis/-/stylis-3.5.4.tgz#f665f25f5e299cf3d64654ab949a57c768b73fbe"
   integrity sha512-8/3pSmthWM7lsPBKv7NXkzn2Uc9W7NotcwGNpJaa3k7WMM1XDCA4MgT5k/8BIexd5ydZdboXtU90XH9Ec4Bv/Q==
 
+stylis@4.0.3:
+  version "4.0.3"
+  resolved "https://registry.npmjs.org/stylis/-/stylis-4.0.3.tgz#0d714765f3f694a685550f0c45411ebf90a9bded"
+  integrity sha512-iAxdFyR9cHKp4H5M2dJlDnvcb/3TvPprzlKjvYVbH7Sh+y8hjY/mUu/ssdcvVz6Z4lKI3vsoS0jAkMYmX7ozfA==
+
 sumchecker@^3.0.1:
   version "3.0.1"
   resolved "https://registry.npmjs.org/sumchecker/-/sumchecker-3.0.1.tgz#6377e996795abb0b6d348e9b3e1dfb24345a8e42"
