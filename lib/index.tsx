@@ -1,20 +1,20 @@
-import { webFrame } from 'electron';
+import {webFrame} from 'electron';
 import forceUpdate from 'react-deep-force-update';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import React from 'react';
-import { render } from 'react-dom';
+import {render} from 'react-dom';
 
 import rpc from './rpc';
 import init from './actions/index';
 import * as config from './utils/config';
 import * as plugins from './utils/plugins';
-import { getBase64FileData } from './utils/file';
+import {getBase64FileData} from './utils/file';
 import * as uiActions from './actions/ui';
 import * as updaterActions from './actions/updater';
 import * as sessionActions from './actions/sessions';
 import * as termGroupActions from './actions/term-groups';
-import { addNotificationMessage } from './actions/notifications';
-import { loadConfig, reloadConfig } from './actions/config';
+import {addNotificationMessage} from './actions/notifications';
+import {loadConfig, reloadConfig} from './actions/config';
 import HyperContainer from './containers/hyper';
 import configureStore from './store/configure-store';
 
@@ -26,13 +26,13 @@ if (process.platform === 'linux') {
 
 const store_ = configureStore();
 
-Object.defineProperty(window, 'store', { get: () => store_ });
-Object.defineProperty(window, 'rpc', { get: () => rpc });
-Object.defineProperty(window, 'config', { get: () => config });
-Object.defineProperty(window, 'plugins', { get: () => plugins });
+Object.defineProperty(window, 'store', {get: () => store_});
+Object.defineProperty(window, 'rpc', {get: () => rpc});
+Object.defineProperty(window, 'config', {get: () => config});
+Object.defineProperty(window, 'plugins', {get: () => plugins});
 
 const fetchFileData = (configData: any) => {
-  const configInfo = Object.assign({}, configData, { bellSound: null });
+  const configInfo = Object.assign({}, configData, {bellSound: null});
   if (!configInfo.bell || configInfo.bell.toUpperCase() !== 'SOUND' || !configInfo.bellSoundURL) {
     store_.dispatch(reloadConfig(configInfo));
     return;
@@ -82,11 +82,11 @@ rpc.on('session data', d => {
   store_.dispatch(sessionActions.addSessionData(uid, data));
 });
 
-rpc.on('session data send', ({ uid, data, escaped }) => {
+rpc.on('session data send', ({uid, data, escaped}) => {
   store_.dispatch(sessionActions.sendSessionData(uid, data, escaped));
 });
 
-rpc.on('session exit', ({ uid }) => {
+rpc.on('session exit', ({uid}) => {
   store_.dispatch(termGroupActions.ptyExitTermGroup(uid));
 });
 
@@ -150,15 +150,15 @@ rpc.on('session search close', () => {
   store_.dispatch(sessionActions.closeSearch());
 });
 
-rpc.on('termgroup add req', ({ activeUid }) => {
+rpc.on('termgroup add req', ({activeUid}) => {
   store_.dispatch(termGroupActions.requestTermGroup(activeUid));
 });
 
-rpc.on('split request horizontal', ({ activeUid }) => {
+rpc.on('split request horizontal', ({activeUid}) => {
   store_.dispatch(termGroupActions.requestHorizontalSplit(activeUid));
 });
 
-rpc.on('split request vertical', ({ activeUid }) => {
+rpc.on('split request vertical', ({activeUid}) => {
   store_.dispatch(termGroupActions.requestVerticalSplit(activeUid));
 });
 
@@ -194,7 +194,7 @@ rpc.on('prev pane req', () => {
   store_.dispatch(uiActions.moveToPreviousPane());
 });
 
-rpc.on('open file', ({ path }) => {
+rpc.on('open file', ({path}) => {
   store_.dispatch(uiActions.openFile(path));
 });
 
@@ -202,7 +202,7 @@ rpc.on('open ssh', url => {
   store_.dispatch(uiActions.openSSH(url));
 });
 
-rpc.on('update available', ({ releaseName, releaseNotes, releaseUrl, canInstall }) => {
+rpc.on('update available', ({releaseName, releaseNotes, releaseUrl, canInstall}) => {
   store_.dispatch(updaterActions.updateAvailable(releaseName, releaseNotes, releaseUrl, canInstall));
 });
 
@@ -214,7 +214,7 @@ rpc.on('windowGeometry change', () => {
   store_.dispatch(uiActions.windowGeometryUpdated());
 });
 
-rpc.on('add notification', ({ text, url, dismissable }) => {
+rpc.on('add notification', ({text, url, dismissable}) => {
   store_.dispatch(addNotificationMessage(text, url, dismissable));
 });
 
