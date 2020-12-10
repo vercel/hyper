@@ -1,7 +1,7 @@
-import {app, Menu, BrowserWindow} from 'electron';
-import {openConfig, getConfig} from './config';
-import {updatePlugins} from './plugins';
-import {installCLI} from './utils/cli-install';
+import { app, Menu, BrowserWindow } from 'electron';
+import { openConfig, getConfig } from './config';
+import { updatePlugins } from './plugins';
+import { installCLI } from './utils/cli-install';
 
 const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
   'window:new': () => {
@@ -50,7 +50,7 @@ const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
     if (webContents.isDevToolsOpened()) {
       webContents.closeDevTools();
     } else {
-      webContents.openDevTools({mode: 'detach'});
+      webContents.openDevTools({ mode: 'detach' });
     }
   },
   'zoom:reset': focusedWindow => {
@@ -101,6 +101,12 @@ const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
   'editor:break': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('session break req');
   },
+  'editor:stop': focusedWindow => {
+    focusedWindow && focusedWindow.rpc.emit('session stop req');
+  },
+  'editor:quit': focusedWindow => {
+    focusedWindow && focusedWindow.rpc.emit('session quit req');
+  },
   'editor:search': focusedWindow => {
     focusedWindow && focusedWindow.rpc.emit('session search');
   },
@@ -112,7 +118,7 @@ const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
   },
   'window:hamburgerMenu': () => {
     if (getConfig().showHamburgerMenu) {
-      Menu.getApplicationMenu()!.popup({x: 15, y: 15});
+      Menu.getApplicationMenu()!.popup({ x: 15, y: 15 });
     }
   }
 };
