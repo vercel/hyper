@@ -101,6 +101,15 @@ const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
   'editor:break': (focusedWindow) => {
     focusedWindow?.rpc.emit('session break req');
   },
+  'editor:stop': (focusedWindow) => {
+    focusedWindow?.rpc.emit('session stop req');
+  },
+  'editor:quit': (focusedWindow) => {
+    focusedWindow?.rpc.emit('session quit req');
+  },
+  'editor:tmux': (focusedWindow) => {
+    focusedWindow?.rpc.emit('session tmux req');
+  },
   'editor:search': (focusedWindow) => {
     focusedWindow?.rpc.emit('session search');
   },
