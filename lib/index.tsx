@@ -135,6 +135,18 @@ rpc.on('session break req', () => {
   store_.dispatch(sessionActions.sendSessionData(null, '\x03'));
 });
 
+rpc.on('session stop req', () => {
+  store_.dispatch(sessionActions.sendSessionData(null, '\x1a'));
+});
+
+rpc.on('session quit req', () => {
+  store_.dispatch(sessionActions.sendSessionData(null, '\x1c'));
+});
+
+rpc.on('session tmux req', () => {
+  store_.dispatch(sessionActions.sendSessionData(null, '\x02'));
+});
+
 rpc.on('session search', () => {
   store_.dispatch(sessionActions.onSearch());
 });
