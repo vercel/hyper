@@ -51,6 +51,13 @@
     "rfc3161TimeStampServer": "http://timestamp.comodoca.com"
   },
   "mac": {
+    "target": {
+      "target": "default",
+      "arch": [
+        "x64",
+        "arm64"
+      ]
+    },
     "category": "public.app-category.developer-tools",
     "extendInfo": {
       "CFBundleDocumentTypes": [
