@@ -34,7 +34,7 @@
     "react-dom": "17.0.1",
     "semver": "7.3.4",
     "shell-env": "3.0.0",
-    "uuid": "8.3.1"
+    "uuid": "8.3.2"
   },
   "optionalDependencies": {
     "native-reg": "0.3.4"
