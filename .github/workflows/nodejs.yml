@@ -126,8 +126,8 @@ jobs:
         if: github.event_name == 'push'
         run: yarn run dist --publish=never
         env:
-          CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
-          CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
+          #CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
+          #CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
       - name: Get Windows Artifact Names
         id: getwindowsfilename
         run: |
