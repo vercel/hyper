@@ -45,7 +45,7 @@ Use [Homebrew Cask](https://brew.sh) to download the app by running these comman
 
 ```bash
 brew update
-brew cask install hyper
+brew install --cask hyper
 ```
 
 ### Windows
