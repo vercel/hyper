@@ -39,11 +39,18 @@ jobs:
         run: |
           echo "::set-output name=dmgName::$(ls dist/*.dmg | cut -d'/' -f2)"
           echo "::set-output name=dmgPath::$(ls dist/*.dmg)"
+          echo "::set-output name=armDmgName::$(ls dist/*arm64.dmg | cut -d'/' -f2)"
+          echo "::set-output name=armDmgPath::$(ls dist/*arm64.dmg)"
       - name: Archive macOS Build Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: ${{ steps.getmacosfilename.outputs.dmgName }}
           path: ${{ steps.getmacosfilename.outputs.dmgPath }}
+      - name: Archive macOS arm64 Build Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.getmacosfilename.outputs.armDmgName }}
+          path: ${{ steps.getmacosfilename.outputs.armDmgPath }}
   ci_linux:
     runs-on: ubuntu-latest
     strategy:
