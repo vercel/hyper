@@ -1353,43 +1353,10 @@ anymatch@~3.1.1:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-app-builder-bin@3.5.10:
-  version "3.5.10"
-  resolved "https://registry.npmjs.org/app-builder-bin/-/app-builder-bin-3.5.10.tgz#4a7f9999fccc0c435b6284ae1366bc76a17c4a7d"
-  integrity sha512-Jd+GW68lR0NeetgZDo47PdWBEPdnD+p0jEa7XaxjRC8u6Oo/wgJsfKUkORRgr2NpkD19IFKN50P6JYy04XHFLQ==
-
 app-builder-bin@3.5.12:
   version "3.5.12"
   resolved "https://registry.npmjs.org/app-builder-bin/-/app-builder-bin-3.5.12.tgz#bbe174972cc1f481f73d6d92ad47a8b4c7eb4530"
   integrity sha512-lQARM2AielmFoBeIo6LZigAe+58Wwe07ZWkt+wVeDxzyieNmeWjlvz/V5dKzinydwdHd+CNswN86sww46yijjA==
-
-app-builder-lib@22.10.3:
-  version "22.10.3"
-  resolved "https://registry.npmjs.org/app-builder-lib/-/app-builder-lib-22.10.3.tgz#cc3fa3139296b6a7ee0177b2a0f7e497ecf8d4a2"
-  integrity sha512-PBHTTGxV1uLVHWKQfw92plrfMo/utH0FVe8v2dFmT/CYKw9u7XuOC0xE8YslUxXmaiG6TuOJaQrII4fXN5VBpQ==
-  dependencies:
-    "7zip-bin" "~5.0.3"
-    "@develar/schema-utils" "~2.6.5"
-    async-exit-hook "^2.0.1"
-    bluebird-lst "^1.0.9"
-    builder-util "22.10.3"
-    builder-util-runtime "8.7.3"
-    chromium-pickle-js "^0.2.0"
-    debug "^4.3.2"
-    ejs "^3.1.5"
-    electron-publish "22.10.3"
-    fs-extra "^9.0.1"
-    hosted-git-info "^3.0.7"
-    is-ci "^2.0.0"
-    isbinaryfile "^4.0.6"
-    js-yaml "^3.14.1"
-    lazy-val "^1.0.4"
-    minimatch "^3.0.4"
-    normalize-package-data "^3.0.0"
-    read-config-file "6.0.0"
-    sanitize-filename "^1.6.3"
-    semver "^7.3.4"
-    temp-file "^3.3.7"
 
 app-builder-lib@22.10.4:
   version "22.10.4"
@@ -2020,26 +1987,6 @@ builder-util-runtime@8.7.3:
   dependencies:
     debug "^4.3.2"
     sax "^1.2.4"
-
-builder-util@22.10.3:
-  version "22.10.3"
-  resolved "https://registry.npmjs.org/builder-util/-/builder-util-22.10.3.tgz#3c65e20eb23a1f923fd761049bbb7fdf4ce2bb32"
-  integrity sha512-I9mh78wZaggIF4QkBzMPKhfgGDameyx9TN6Zikl8SKQHiKQNCUzMPUcRXCyCot6iTT8B8blwOM3GhhuU06yv1g==
-  dependencies:
-    "7zip-bin" "~5.0.3"
-    "@types/debug" "^4.1.5"
-    "@types/fs-extra" "^9.0.5"
-    app-builder-bin "3.5.10"
-    bluebird-lst "^1.0.9"
-    builder-util-runtime "8.7.3"
-    chalk "^4.1.0"
-    debug "^4.3.2"
-    fs-extra "^9.0.1"
-    is-ci "^2.0.0"
-    js-yaml "^3.14.1"
-    source-map-support "^0.5.19"
-    stat-mode "^1.0.0"
-    temp-file "^3.3.7"
 
 builder-util@22.10.4:
   version "22.10.4"
@@ -3227,15 +3174,15 @@ ejs@^3.1.5:
   dependencies:
     jake "^10.6.1"
 
-electron-builder-squirrel-windows@^22.10.3:
-  version "22.10.3"
-  resolved "https://registry.npmjs.org/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-22.10.3.tgz#e2e783c8d36abb8a6e190e0906d8fdb021289d09"
-  integrity sha512-1xN9NENq3jqiuqEqxdCAzpsYNHjXegQ/ZcyUa0nDNq8xtiY6X/2bJuypbDZ+AN9Louy+84PRGKiuINZPRI1MaA==
+electron-builder-squirrel-windows@^22.10.4:
+  version "22.10.4"
+  resolved "https://registry.npmjs.org/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-22.10.4.tgz#fd23d7124dbed62fe2431933f05e23feaaef50b6"
+  integrity sha512-Kv6FO7OPdlhG02i+7fbOAWc7JCwtGJOzg9gbJySAE4cNhA49bQF4/GyQhFJYhJgg/AapfuV+SLOxlgrD+33UHg==
   dependencies:
-    app-builder-lib "22.10.3"
+    app-builder-lib "22.10.4"
     archiver "^5.1.0"
     bluebird-lst "^1.0.9"
-    builder-util "22.10.3"
+    builder-util "22.10.4"
     fs-extra "^9.0.1"
     sanitize-filename "^1.6.3"
   optionalDependencies:
@@ -3269,20 +3216,6 @@ electron-devtools-installer@3.1.1:
     rimraf "^3.0.2"
     semver "^7.2.1"
     unzip-crx-3 "^0.2.0"
-
-electron-publish@22.10.3:
-  version "22.10.3"
-  resolved "https://registry.npmjs.org/electron-publish/-/electron-publish-22.10.3.tgz#a4afbdedbc108315774cda7e53704599c8fdb54d"
-  integrity sha512-NGcgDp0xT92NPB5lGckroz2n5h8Ud53SShmwZoVtCp1W+VOSWn5CVPnXDquzf7pMcZRfo8qoMZrlvUeOlY4oIg==
-  dependencies:
-    "@types/fs-extra" "^9.0.5"
-    bluebird-lst "^1.0.9"
-    builder-util "22.10.3"
-    builder-util-runtime "8.7.3"
-    chalk "^4.1.0"
-    fs-extra "^9.0.1"
-    lazy-val "^1.0.4"
-    mime "^2.4.6"
 
 electron-publish@22.10.4:
   version "22.10.4"
@@ -5638,11 +5571,6 @@ mime-types@^2.1.12, mime-types@^2.1.27, mime-types@~2.1.19:
   integrity sha512-JIhqnCasI9yD+SsmkquHBxTSEuZdQX5BuQnS2Vc7puQQQ+8yiP5AY5uWhpdv4YL4VM5c6iliiYWPgJ/nJQLp7w==
   dependencies:
     mime-db "1.44.0"
-
-mime@^2.4.6:
-  version "2.4.6"
-  resolved "https://registry.npmjs.org/mime/-/mime-2.4.6.tgz#e5b407c90db442f2beb5b162373d07b69affa4d1"
-  integrity sha512-RZKhC3EmpBchfTGBVb8fb+RL2cWyw/32lshnsETttkBAyAUXSGHxbEJWWRXc751DrIxG1q04b8QwMbAwkRPpUA==
 
 mime@^2.4.7:
   version "2.4.7"
