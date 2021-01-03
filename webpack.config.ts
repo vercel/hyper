@@ -89,7 +89,7 @@ const config: webpack.Configuration[] = [
       ]
     },
     plugins: [
-      new webpack.IgnorePlugin(/.*\.js.map$/i),
+      new webpack.IgnorePlugin({resourceRegExp: /.*\.js.map$/i}),
 
       new webpack.DefinePlugin({
         'process.env': {
@@ -139,7 +139,7 @@ const config: webpack.Configuration[] = [
     },
     plugins: [
       // spawn-sync is required by execa if node <= 0.10
-      new webpack.IgnorePlugin(/(.*\.js.map|spawn-sync)$/i),
+      new webpack.IgnorePlugin({resourceRegExp: /(.*\.js.map|spawn-sync)$/i}),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(nodeEnv)
       })
