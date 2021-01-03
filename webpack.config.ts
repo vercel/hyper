@@ -33,20 +33,17 @@ const config: webpack.Configuration[] = [
           {
             from: './app/*.html',
             globOptions: {ignore: ['**/node_modules/**']},
-            to: '.',
-            flatten: true
+            to: '.'
           },
           {
             from: './app/*.json',
             globOptions: {ignore: ['**/node_modules/**']},
-            to: '.',
-            flatten: true
+            to: '.'
           },
           {
             from: './app/keymaps/*.json',
             globOptions: {ignore: ['**/node_modules/**']},
-            to: './keymaps',
-            flatten: true
+            to: './keymaps'
           },
           {
             from: './app/static',
