@@ -84,7 +84,7 @@ const config: webpack.Configuration[] = [
         // for xterm.js
         {
           test: /\.css$/,
-          loader: 'style-loader!css-loader'
+          use: ['style-loader', 'css-loader']
         }
       ]
     },
