@@ -1,4 +1,5 @@
-import Copy from 'copy-webpack-plugin';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Copy = require('copy-webpack-plugin');
 import path from 'path';
 import TerserPlugin from 'terser-webpack-plugin';
 import webpack from 'webpack';
