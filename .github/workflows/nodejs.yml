@@ -37,10 +37,10 @@ jobs:
       - name: Get macOS Artifact Names
         id: getmacosfilename
         run: |
-          echo "::set-output name=dmgName::$(ls dist/*.dmg | cut -d'/' -f2)"
-          echo "::set-output name=dmgPath::$(ls dist/*.dmg)"
-          echo "::set-output name=armDmgName::$(ls dist/*arm64.dmg | cut -d'/' -f2)"
-          echo "::set-output name=armDmgPath::$(ls dist/*arm64.dmg)"
+          echo "::set-output name=dmgName::$(ls dist/*-mac.dmg | cut -d'/' -f2)"
+          echo "::set-output name=dmgPath::$(ls dist/*-mac.dmg)"
+          echo "::set-output name=armDmgName::$(ls dist/*-mac-arm64.dmg | cut -d'/' -f2)"
+          echo "::set-output name=armDmgPath::$(ls dist/*-mac-arm64.dmg)"
       - name: Archive macOS Build Artifacts
         uses: actions/upload-artifact@v2
         with:

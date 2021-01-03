@@ -58,6 +58,7 @@
         "arm64"
       ]
     },
+    "artifactName": "${productName}-${version}-${channel}-${os}-${arch}.${ext}",
     "category": "public.app-category.developer-tools",
     "extendInfo": {
       "CFBundleDocumentTypes": [
