@@ -655,13 +655,6 @@
   resolved "https://registry.npmjs.org/@types/columnify/-/columnify-1.5.0.tgz#94bb31f14c66bab6d968caa455ff13af1f0e7632"
   integrity sha512-f39gUbf4NuSTVG9XEUJzYQ8L9e3l91jwywbJdU0fJixCRHKzQnyWxa9KfRPEuC3PhH5TIAi79kX2sAkXXSTB9Q==
 
-"@types/copy-webpack-plugin@^6.4.0":
-  version "6.4.0"
-  resolved "https://registry.npmjs.org/@types/copy-webpack-plugin/-/copy-webpack-plugin-6.4.0.tgz#225f86bc60a62052df39a110f7cbf7bc5156a0c1"
-  integrity sha512-f5mQG5c7xH3zLGrEmKgzLLFSGNB7Y4+4a+a1X4DvjgfbTEWEZUNNXUqGs5tBVCtb5qKPzm2z+6ixX3xirWmOCg==
-  dependencies:
-    "@types/webpack" "*"
-
 "@types/debug@^4.1.5":
   version "4.1.5"
   resolved "https://registry.npmjs.org/@types/debug/-/debug-4.1.5.tgz#b14efa8852b7768d898906613c23f688713e02cd"
@@ -895,18 +888,6 @@
     "@types/node" "*"
     "@types/source-list-map" "*"
     source-map "^0.7.3"
-
-"@types/webpack@*":
-  version "4.41.25"
-  resolved "https://registry.npmjs.org/@types/webpack/-/webpack-4.41.25.tgz#4d3b5aecc4e44117b376280fbfd2dc36697968c4"
-  integrity sha512-cr6kZ+4m9lp86ytQc1jPOJXgINQyz3kLLunZ57jznW+WIAL0JqZbGubQk4GlD42MuQL5JGOABrxdpqqWeovlVQ==
-  dependencies:
-    "@types/anymatch" "*"
-    "@types/node" "*"
-    "@types/tapable" "*"
-    "@types/uglify-js" "*"
-    "@types/webpack-sources" "*"
-    source-map "^0.6.0"
 
 "@types/yargs-parser@*":
   version "20.2.0"
