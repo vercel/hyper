@@ -164,12 +164,6 @@ app.on('ready', () =>
           windowSet.delete(hwin);
         });
 
-        hwin.on('closed', () => {
-          if (process.platform !== 'darwin' && windowSet.size === 0) {
-            app.quit();
-          }
-        });
-
         return hwin;
       }
 
@@ -185,6 +179,12 @@ app.on('ready', () =>
       app.on('activate', () => {
         if (!windowSet.size) {
           createWindow();
+        }
+      });
+
+      app.on('window-all-closed', () => {
+        if (process.platform !== 'darwin') {
+          app.quit();
         }
       });
 
