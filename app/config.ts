@@ -6,6 +6,7 @@ import win from './config/windows';
 import {cfgPath, cfgDir} from './config/paths';
 import {getColorMap} from './utils/colors';
 import {parsedConfig, configOptions} from '../lib/config';
+import {app} from 'electron';
 
 const watchers: Function[] = [];
 let cfg: parsedConfig = {} as any;
@@ -53,6 +54,15 @@ const _watch = () => {
   _watcher.on('change', onChange);
   _watcher.on('error', (error) => {
     console.error('error watching config', error);
+  });
+
+  app.on('before-quit', (e) => {
+    if (Object.keys(_watcher.getWatched()).length > 0) {
+      e.preventDefault();
+      _watcher.close().then(() => {
+        app.quit();
+      });
+    }
   });
 };
 
