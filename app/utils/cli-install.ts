@@ -3,16 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import notify from '../notify';
 import {cliScriptPath, cliLinkPath} from '../config/paths';
-
-import * as regTypes from '../typings/native-reg';
-if (process.platform === 'win32') {
-  try {
-    // eslint-disable-next-line no-var, @typescript-eslint/no-var-requires
-    var Registry: typeof regTypes = require('native-reg');
-  } catch (err) {
-    console.error(err);
-  }
-}
+import {Registry, loadRegistry} from './registry';
+import type {ValueType} from 'native-reg';
 
 const readlink = pify(fs.readlink);
 const symlink = pify(fs.symlink);
@@ -41,6 +33,10 @@ const addSymlink = () => {
 
 const addBinToUserPath = () => {
   return new Promise<void>((resolve, reject) => {
+    if (!loadRegistry()) {
+      reject('Failed to load Registry Module');
+      return;
+    }
     try {
       const envKey = Registry.openKey(Registry.HKCU, 'Environment', Registry.Access.ALL_ACCESS)!;
 
@@ -54,7 +50,7 @@ const addBinToUserPath = () => {
       const pathItemName = pathItem || 'PATH';
 
       let newPathValue = binPath;
-      let type: regTypes.ValueType = Registry.ValueType.SZ;
+      let type: ValueType = Registry.ValueType.SZ;
       if (pathItem) {
         type = Registry.queryValueRaw(envKey, pathItem)!.type;
         if (type !== Registry.ValueType.SZ && type !== Registry.ValueType.EXPAND_SZ) {

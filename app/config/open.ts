@@ -1,21 +1,16 @@
 import {shell} from 'electron';
 import {cfgPath} from './paths';
-import * as regTypes from '../typings/native-reg';
+import {Registry, loadRegistry} from '../utils/registry';
 
 export default () => {
   // Windows opens .js files with  WScript.exe by default
   // If the user hasn't set up an editor for .js files, we fallback to notepad.
   if (process.platform === 'win32') {
-    try {
-      // eslint-disable-next-line no-var, @typescript-eslint/no-var-requires
-      var Registry: typeof regTypes = require('native-reg');
-    } catch (err) {
-      console.error(err);
-    }
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const {exec} = require('child_process') as typeof import('child_process');
 
     const getUserChoiceKey = async () => {
+      if (!loadRegistry()) return;
       try {
         // Load FileExts keys for .js files
         const fileExtsKeys = Registry.openKey(
@@ -38,6 +33,7 @@ export default () => {
     };
 
     const hasDefaultSet = async () => {
+      if (!loadRegistry()) return false;
       const userChoice = await getUserChoiceKey();
       if (!userChoice) return false;
 
