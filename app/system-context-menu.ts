@@ -1,12 +1,5 @@
-import * as regTypes from './typings/native-reg';
-if (process.platform === 'win32') {
-  try {
-    // eslint-disable-next-line no-var, @typescript-eslint/no-var-requires
-    var Registry: typeof regTypes = require('native-reg');
-  } catch (err) {
-    console.error(err);
-  }
-}
+import {Registry, loadRegistry} from './utils/registry';
+import type {HKEY} from 'native-reg';
 
 const appPath = `"${process.execPath}"`;
 const regKeys = [
@@ -20,7 +13,8 @@ const regParts = [
   {name: 'Icon', value: `${appPath}`}
 ];
 
-function addValues(hyperKey: regTypes.HKEY, commandKey: regTypes.HKEY) {
+function addValues(hyperKey: HKEY, commandKey: HKEY) {
+  if (!loadRegistry()) return;
   try {
     Registry.setValueSZ(hyperKey, regParts[1].name, regParts[1].value);
   } catch (error) {
@@ -39,6 +33,7 @@ function addValues(hyperKey: regTypes.HKEY, commandKey: regTypes.HKEY) {
 }
 
 export const add = () => {
+  if (!loadRegistry()) return;
   regKeys.forEach((regKey) => {
     try {
       const hyperKey =
@@ -57,6 +52,7 @@ export const add = () => {
 };
 
 export const remove = () => {
+  if (!loadRegistry()) return;
   regKeys.forEach((regKey) => {
     try {
       Registry.deleteTree(Registry.HKCU, regKey);
