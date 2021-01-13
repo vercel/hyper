@@ -34,6 +34,13 @@ jobs:
       #     echo "::set-env name=CSC_KEY_PASSWORD::${{ secrets.MAC_CERT_P12_PASSWORD }}"
       - name: Build
         run: yarn run dist --publish=never
+      - name: Test Spectron
+        run: yarn run test:spectron
+      - name: Archive Spectron test screenshot
+        uses: actions/upload-artifact@v2
+        with:
+          name: spectron
+          path: dist/tmp/darwin_test.png
       - name: Get macOS Artifact Names
         id: getmacosfilename
         run: |
@@ -135,6 +142,13 @@ jobs:
         # env:
           #CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
           #CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
+      - name: Test Spectron
+        run: yarn run test:spectron
+      - name: Archive Spectron test screenshot
+        uses: actions/upload-artifact@v2
+        with:
+          name: spectron
+          path: dist/tmp/win32_test.png
       - name: Get Windows Artifact Names
         id: getwindowsfilename
         run: |
