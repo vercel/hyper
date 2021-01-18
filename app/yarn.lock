@@ -182,10 +182,10 @@ dot-prop@^5.2.0:
   dependencies:
     is-obj "^2.0.0"
 
-electron-fetch@1.7.2:
-  version "1.7.2"
-  resolved "https://registry.npmjs.org/electron-fetch/-/electron-fetch-1.7.2.tgz#7ecc63629715a5de286957a8aceb35272c5d0b02"
-  integrity sha512-J7D136rhxIhPwYJsnHPpKgbyd4NUCGnKM1CuXLhmVWZdc8f6+LBiJqUOTngtSacj+xvGWgaDWOAuCXnhqiMTCw==
+electron-fetch@1.7.3:
+  version "1.7.3"
+  resolved "https://registry.npmjs.org/electron-fetch/-/electron-fetch-1.7.3.tgz#06cf363d7f64073ec00a37e9949ec9d29ce6b08a"
+  integrity sha512-1AVMaxrHXTTMqd7EK0MGWusdqNr07Rpj8Th6bG4at0oNgIi/1LBwa9CjT/0Zy+M0k/tSJPS04nFxHj0SXDVgVw==
   dependencies:
     encoding "^0.1.13"
 
