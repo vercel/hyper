@@ -1,3 +1,12 @@
+---
+name: Bug report
+about: Create a report to help Hyper improve
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 <!--
   Hi there! Thank you for discovering and submitting an issue.
 
