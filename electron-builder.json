@@ -46,7 +46,7 @@
   },
   "win": {
     "target": [
-      "squirrel"
+      "nsis"
     ],
     "rfc3161TimeStampServer": "http://timestamp.comodoca.com"
   },
