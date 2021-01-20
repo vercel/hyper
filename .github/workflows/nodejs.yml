@@ -152,17 +152,10 @@ jobs:
       - name: Get Windows Artifact Names
         id: getwindowsfilename
         run: |
-          Write-Host "::set-output name=exeName::$(Get-ChildItem -Name .\dist\squirrel-windows\ | Select-String exe)"
-          Write-Host "::set-output name=exePath::dist/squirrel-windows/$(Get-ChildItem -Name .\dist\squirrel-windows\ | Select-String exe)"
-          Write-Host "::set-output name=nupkgName::$(Get-ChildItem -Name .\dist\squirrel-windows\ | Select-String nupkg)"
-          Write-Host "::set-output name=nupkgPath::dist/squirrel-windows/$(Get-ChildItem -Name .\dist\squirrel-windows\ | Select-String nupkg)"
+          Write-Host "::set-output name=exeName::$(Get-ChildItem -Name .\dist\ | Select-String exe$)"
+          Write-Host "::set-output name=exePath::dist/$(Get-ChildItem -Name .\dist\ | Select-String exe$)"
       - name: Archive Windows Build Artifacts (exe)
         uses: actions/upload-artifact@v2
         with:
           name: ${{ steps.getwindowsfilename.outputs.exeName }}
           path: ${{ steps.getwindowsfilename.outputs.exePath }}
-      - name: Archive Windows Build Artifacts (nupkg)
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ steps.getwindowsfilename.outputs.nupkgName }}
-          path: ${{ steps.getwindowsfilename.outputs.nupkgPath }}
