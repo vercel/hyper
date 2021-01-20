@@ -40,10 +40,10 @@ const addBinToUserPath = () => {
     try {
       const envKey = Registry.openKey(Registry.HKCU, 'Environment', Registry.Access.ALL_ACCESS)!;
 
-      // C:\Users\<user>\AppData\Local\hyper\app-<version>\resources\bin
+      // C:\Users\<user>\AppData\Local\Programs\hyper\resources\bin
       const binPath = path.dirname(cliScriptPath);
       // C:\Users\<user>\AppData\Local\hyper
-      const basePath = path.resolve(binPath, '../../..');
+      const oldPath = path.resolve(process.env.LOCALAPPDATA!, 'hyper');
 
       const items = Registry.enumValueNames(envKey);
       const pathItem = items.find((item) => item.toUpperCase() === 'PATH');
@@ -58,19 +58,21 @@ const addBinToUserPath = () => {
           return;
         }
         const value = Registry.queryValue(envKey, pathItem) as string;
-        const pathParts = value.split(';');
+        let pathParts = value.split(';');
         const existingPath = pathParts.includes(binPath);
-        if (existingPath) {
+        const existingOldPath = pathParts.some((pathPart) => pathPart.startsWith(oldPath));
+        if (existingPath && !existingOldPath) {
           console.log('Hyper CLI already in PATH');
+          Registry.closeKey(envKey);
           resolve();
           return;
         }
 
-        // Because version is in path we need to remove old path if present and add current path
-        newPathValue = pathParts
-          .filter((pathPart) => !pathPart.startsWith(basePath))
-          .concat([binPath])
-          .join(';');
+        // Because nsis install path is different from squirrel we need to remove old path if present
+        // and add current path if absent
+        if (existingOldPath) pathParts = pathParts.filter((pathPart) => !pathPart.startsWith(oldPath));
+        if (!pathParts.includes(binPath)) pathParts.push(binPath);
+        newPathValue = pathParts.join(';');
       }
       console.log('Adding HyperCLI path (registry)');
       Registry.setValueRaw(envKey, pathItemName, type, Registry.formatString(newPathValue));
