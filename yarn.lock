@@ -1348,19 +1348,6 @@ archiver@^5.0.0:
     tar-stream "^2.1.4"
     zip-stream "^4.0.4"
 
-archiver@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.npmjs.org/archiver/-/archiver-5.1.0.tgz#05b0f6f7836f3e6356a0532763d2bb91017a7e37"
-  integrity sha512-iKuQUP1nuKzBC2PFlGet5twENzCfyODmvkxwDV0cEFXavwcLrIW5ssTuHi9dyTPvpWr6Faweo2eQaQiLIwyXTA==
-  dependencies:
-    archiver-utils "^2.1.0"
-    async "^3.2.0"
-    buffer-crc32 "^0.2.1"
-    readable-stream "^3.6.0"
-    readdir-glob "^1.0.0"
-    tar-stream "^2.1.4"
-    zip-stream "^4.0.4"
-
 are-we-there-yet@~1.1.2:
   version "1.1.5"
   resolved "https://registry.npmjs.org/are-we-there-yet/-/are-we-there-yet-1.1.5.tgz#4b35c2944f062a8bfcda66410760350fe9ddfc21"
@@ -2871,20 +2858,6 @@ ejs@^3.1.5:
   integrity sha512-dldq3ZfFtgVTJMLjOe+/3sROTzALlL9E34V4/sDtUd/KlBSS0s6U1/+WPE1B4sj9CXHJpL1M6rhNJnc9Wbal9w==
   dependencies:
     jake "^10.6.1"
-
-electron-builder-squirrel-windows@^22.10.4:
-  version "22.10.4"
-  resolved "https://registry.npmjs.org/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-22.10.4.tgz#fd23d7124dbed62fe2431933f05e23feaaef50b6"
-  integrity sha512-Kv6FO7OPdlhG02i+7fbOAWc7JCwtGJOzg9gbJySAE4cNhA49bQF4/GyQhFJYhJgg/AapfuV+SLOxlgrD+33UHg==
-  dependencies:
-    app-builder-lib "22.10.4"
-    archiver "^5.1.0"
-    bluebird-lst "^1.0.9"
-    builder-util "22.10.4"
-    fs-extra "^9.0.1"
-    sanitize-filename "^1.6.3"
-  optionalDependencies:
-    "7zip-bin" "~5.0.3"
 
 electron-builder@^22.10.4:
   version "22.10.4"
