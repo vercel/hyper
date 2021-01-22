@@ -7,7 +7,7 @@ import {icon} from '../config/paths';
 import viewMenu from './menus/view';
 import shellMenu from './menus/shell';
 import editMenu from './menus/edit';
-import pluginsMenu from './menus/plugins';
+import toolsMenu from './menus/tools';
 import windowMenu from './menus/window';
 import helpMenu from './menus/help';
 import darwinMenu from './menus/darwin';
@@ -64,7 +64,7 @@ export const createMenu = (
     shellMenu(commandKeys, execCommand),
     editMenu(commandKeys, execCommand),
     viewMenu(commandKeys, execCommand),
-    pluginsMenu(commandKeys, execCommand),
+    toolsMenu(commandKeys, execCommand),
     windowMenu(commandKeys, execCommand),
     helpMenu(commandKeys, showAbout)
   ];

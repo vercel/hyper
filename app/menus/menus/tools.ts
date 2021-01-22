@@ -5,10 +5,10 @@ export default (
   execCommand: (command: string, focusedWindow?: BrowserWindow) => void
 ): MenuItemConstructorOptions => {
   return {
-    label: 'Plugins',
+    label: 'Tools',
     submenu: [
       {
-        label: 'Update',
+        label: 'Update plugins',
         accelerator: commands['plugins:update'],
         click() {
           execCommand('plugins:update');
