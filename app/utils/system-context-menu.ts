@@ -1,4 +1,4 @@
-import {Registry, loadRegistry} from './utils/registry';
+import {Registry, loadRegistry} from './registry';
 import type {HKEY} from 'native-reg';
 
 const appPath = `"${process.execPath}"`;
