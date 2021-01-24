@@ -5,12 +5,17 @@ on:
       - master
       - canary
   pull_request:
+defaults:
+  run:
+    shell: bash
 jobs:
-  ci_macos:
-    runs-on: macos-11.0
+  build:
+    runs-on: ${{matrix.os}}
     strategy:
       matrix:
         node-version: [15.x]
+        os: [macos-11.0, ubuntu-latest, windows-latest]
+      fail-fast: false
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -27,63 +32,33 @@ jobs:
         run: |
           cp build/canary.ico build/icon.ico
           cp build/canary.icns build/icon.icns
-      # - name: Get Certificate for signing
-      #   if: github.event_name == 'push'
-      #   run: |
-      #     echo "::set-env name=CSC_LINK::${{ secrets.MAC_CERT_P12_BASE64 }}"
-      #     echo "::set-env name=CSC_KEY_PASSWORD::${{ secrets.MAC_CERT_P12_PASSWORD }}"
-      - name: Build
+      - name: Build (pr)
+        if: github.event_name == 'pull_request'
         run: yarn run dist --publish=never
+      - name: Build (push)
+        if: github.event_name == 'push'
+        run: yarn run dist --publish=never
+        # env:
+        #   CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
+        #   CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
+        #   WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
+        #   WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
       - name: Test Spectron
+        if: runner.os != 'Linux'
         run: yarn run test:spectron
       - name: Archive Spectron test screenshot
+        if: runner.os != 'Linux'
         uses: actions/upload-artifact@v2
         with:
           name: spectron
-          path: dist/tmp/darwin_test.png
-      - name: Get macOS Artifact Names
-        id: getmacosfilename
+          path: dist/tmp/*.png
+      - name: Get Artifact Names
+        id: getFileNames
         run: |
           echo "::set-output name=dmgName::$(ls dist/*-mac.dmg | cut -d'/' -f2)"
           echo "::set-output name=dmgPath::$(ls dist/*-mac.dmg)"
           echo "::set-output name=armDmgName::$(ls dist/*-mac-arm64.dmg | cut -d'/' -f2)"
           echo "::set-output name=armDmgPath::$(ls dist/*-mac-arm64.dmg)"
-      - name: Archive macOS Build Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ steps.getmacosfilename.outputs.dmgName }}
-          path: ${{ steps.getmacosfilename.outputs.dmgPath }}
-      - name: Archive macOS arm64 Build Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ steps.getmacosfilename.outputs.armDmgName }}
-          path: ${{ steps.getmacosfilename.outputs.armDmgPath }}
-  ci_linux:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [15.x]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install
-        run: yarn install
-      - name: Test
-        run: yarn run test
-      - name: Getting Build Icon
-        if: github.ref == 'refs/heads/canary' || github.base_ref == 'canary'
-        run: |
-          cp build/canary.ico build/icon.ico
-          cp build/canary.icns build/icon.icns
-      - name: Build
-        run: yarn run dist --publish=never
-      - name: Get Linux Artifact Names
-        id: getlinuxfilename
-        run: |
           echo "::set-output name=snapName::$(ls dist/*.snap | cut -d'/' -f2)"
           echo "::set-output name=snapPath::$(ls dist/*.snap)"
           echo "::set-output name=AppImageName::$(ls dist/*.AppImage | cut -d'/' -f2)"
@@ -92,70 +67,47 @@ jobs:
           echo "::set-output name=debPath::$(ls dist/*.deb)"
           echo "::set-output name=rpmName::$(ls dist/*.rpm | cut -d'/' -f2)"
           echo "::set-output name=rpmPath::$(ls dist/*.rpm)"
+          echo "::set-output name=exeName::$(ls dist/*.exe | cut -d'/' -f2)"
+          echo "::set-output name=exePath::$(ls dist/*.exe)"
+      - name: Archive macOS Build Artifacts
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.getFileNames.outputs.dmgName }}
+          path: ${{ steps.getFileNames.outputs.dmgPath }}
+      - name: Archive macOS arm64 Build Artifacts
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.getFileNames.outputs.armDmgName }}
+          path: ${{ steps.getFileNames.outputs.armDmgPath }}
       - name: Archive Linux Build Artifacts (Snap)
+        if: runner.os == 'Linux'
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ steps.getlinuxfilename.outputs.snapName }}
-          path: ${{ steps.getlinuxfilename.outputs.snapPath }}
+          name: ${{ steps.getFileNames.outputs.snapName }}
+          path: ${{ steps.getFileNames.outputs.snapPath }}
       - name: Archive Linux Build Artifacts (AppImage)
+        if: runner.os == 'Linux'
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ steps.getlinuxfilename.outputs.AppImageName }}
-          path: ${{ steps.getlinuxfilename.outputs.AppImagePath }}
+          name: ${{ steps.getFileNames.outputs.AppImageName }}
+          path: ${{ steps.getFileNames.outputs.AppImagePath }}
       - name: Archive Linux Build Artifacts (Deb)
+        if: runner.os == 'Linux'
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ steps.getlinuxfilename.outputs.debName }}
-          path: ${{ steps.getlinuxfilename.outputs.debPath }}
+          name: ${{ steps.getFileNames.outputs.debName }}
+          path: ${{ steps.getFileNames.outputs.debPath }}
       - name: Archive Linux Build Artifacts (RPM)
+        if: runner.os == 'Linux'
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ steps.getlinuxfilename.outputs.rpmName }}
-          path: ${{ steps.getlinuxfilename.outputs.rpmPath }}
-  ci_windows:
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        node-version: [15.x]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install
-        run: yarn install
-      - name: Test
-        run: yarn run test
-      - name: Getting Build Icon
-        if: github.ref == 'refs/heads/canary' || github.base_ref == 'canary'
-        run: |
-          Copy-Item .\build\canary.ico .\build\icon.ico
-          Copy-Item .\build\canary.icns .\build\icon.icns
-      - name: Build (pr)
-        if: github.event_name == 'pull_request'
-        run: yarn run dist --publish=never
-      - name: Build (push)
-        if: github.event_name == 'push'
-        run: yarn run dist --publish=never
-        # env:
-          #CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
-          #CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
-      - name: Test Spectron
-        run: yarn run test:spectron
-      - name: Archive Spectron test screenshot
-        uses: actions/upload-artifact@v2
-        with:
-          name: spectron
-          path: dist/tmp/win32_test.png
-      - name: Get Windows Artifact Names
-        id: getwindowsfilename
-        run: |
-          Write-Host "::set-output name=exeName::$(Get-ChildItem -Name .\dist\ | Select-String exe$)"
-          Write-Host "::set-output name=exePath::dist/$(Get-ChildItem -Name .\dist\ | Select-String exe$)"
+          name: ${{ steps.getFileNames.outputs.rpmName }}
+          path: ${{ steps.getFileNames.outputs.rpmPath }}
       - name: Archive Windows Build Artifacts (exe)
+        if: runner.os == 'Windows'
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ steps.getwindowsfilename.outputs.exeName }}
-          path: ${{ steps.getwindowsfilename.outputs.exePath }}
+          name: ${{ steps.getFileNames.outputs.exeName }}
+          path: ${{ steps.getFileNames.outputs.exePath }}
