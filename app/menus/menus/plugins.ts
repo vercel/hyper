@@ -22,7 +22,26 @@ export default (
       },
       {
         type: 'separator'
-      }
+      },
+      ...(process.platform === 'win32'
+        ? <MenuItemConstructorOptions[]>[
+            {
+              label: 'Add Hyper to system context menu',
+              click() {
+                execCommand('systemContextMenu:add');
+              }
+            },
+            {
+              label: 'Remove Hyper from system context menu',
+              click() {
+                execCommand('systemContextMenu:remove');
+              }
+            },
+            {
+              type: 'separator'
+            }
+          ]
+        : [])
     ]
   };
 };
