@@ -534,10 +534,10 @@ node-gyp-build@^4.2.0:
   resolved "https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.2.3.tgz#ce6277f853835f718829efb47db20f3e4d9c4739"
   integrity sha512-MN6ZpzmfNCRM+3t57PTJHgHyw/h4OWnZ6mR8P5j/uZtqQr46RRuDE/P+g3n0YR/AiYXeWixZZzaip77gdICfRg==
 
-node-pty@0.10.0-beta19:
-  version "0.10.0-beta19"
-  resolved "https://registry.npmjs.org/node-pty/-/node-pty-0.10.0-beta19.tgz#b7cbfba53f7b2a816efe8c9302dd083cc5874458"
-  integrity sha512-4UIOGMvpofUbe+ZniBUtY8zc/psMURSzbMonQgIhK7JlMQsUwcbkDIrKzStVLJX0FkeZpUNlsVtK7qqzHvrUZA==
+node-pty@0.10.0-beta20:
+  version "0.10.0-beta20"
+  resolved "https://registry.npmjs.org/node-pty/-/node-pty-0.10.0-beta20.tgz#e458c87dcd0b861ad521fb45cdeed785c26b04dd"
+  integrity sha512-Jh0jHc3MoJkeRp/NVOKYoGgrUoGz4Qe0IHkwxivB6woIFzu2sR1XqWpStq66cULnbUBRCmnhu3rWRgpJejxnaw==
   dependencies:
     nan "^2.14.0"
 
