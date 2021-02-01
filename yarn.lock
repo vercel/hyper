@@ -7922,10 +7922,10 @@ xterm-addon-webgl@^0.9.0:
   resolved "https://registry.npmjs.org/xterm-addon-webgl/-/xterm-addon-webgl-0.9.0.tgz#947ca94f9fd72462155c300dfb82bc471402d60a"
   integrity sha512-JSRoe/MgPEKCpr7LbiC+sQUq0c9l/ZhsBXYugKx5BJsJEPsY+5EFcqAexuhsJVe/qV+CP3hsbYDe/411rw3ASA==
 
-xterm@^4.9.0:
-  version "4.9.0"
-  resolved "https://registry.npmjs.org/xterm/-/xterm-4.9.0.tgz#7a4c097a433d565339b5533b468bbc60c6c87969"
-  integrity sha512-wGfqufmioctKr8VkbRuZbVDfjlXWGZZ1PWHy1yqqpGT3Nm6yaJx8lxDbSEBANtgaiVPTcKSp97sxOy5IlpqYfw==
+xterm@^4.10.0:
+  version "4.10.0"
+  resolved "https://registry.npmjs.org/xterm/-/xterm-4.10.0.tgz#fc4f554e3e718aff9b83622e858e64b0953067bb"
+  integrity sha512-Wn66I8YpSVkgP3R95GjABC6Eb21pFfnCSnyIqKIIoUI13ohvwd0KGVzUDfyEFfSAzKbPJfrT2+vt7SfUXBZQKQ==
 
 y18n@^4.0.0:
   version "4.0.1"
