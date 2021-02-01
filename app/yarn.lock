@@ -187,10 +187,10 @@ electron-is-dev@1.2.0:
   resolved "https://registry.npmjs.org/electron-is-dev/-/electron-is-dev-1.2.0.tgz#2e5cea0a1b3ccf1c86f577cee77363ef55deb05e"
   integrity sha512-R1oD5gMBPS7PVU8gJwH6CtT0e6VSoD0+SzSnYpNm+dBkcijgA+K7VAMHDfnRq/lkKPZArpzplTW6jfiMYosdzw==
 
-electron-store@7.0.0:
-  version "7.0.0"
-  resolved "https://registry.npmjs.org/electron-store/-/electron-store-7.0.0.tgz#34fee526dc4ca03933e6321667e63d9d27e874e1"
-  integrity sha512-ktoziul0TNETBxjZ1QLCPT9OGIQfDNb1AgvY29sqzca9c6H/ccV2NV+2d9epdlfo6dNZYI16BlHDVtFp9t3rvw==
+electron-store@7.0.1:
+  version "7.0.1"
+  resolved "https://registry.npmjs.org/electron-store/-/electron-store-7.0.1.tgz#4179fc4d2408b607c7d2ddc0ac966590f65cd92d"
+  integrity sha512-/LkvbwFAMLKTj6f11gZry9KDtvM7z3/idg7FheeSz0/WATa9Vfj53LpqAugF1Q5TyhV4ZggsZMISdTrC/A8qqQ==
   dependencies:
     conf "^9.0.0"
     type-fest "^0.20.2"
