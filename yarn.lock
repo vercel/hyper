@@ -3560,7 +3560,7 @@ flatted@^3.1.0:
   resolved "https://registry.npmjs.org/flatted/-/flatted-3.1.0.tgz#a5d06b4a8b01e3a63771daa5cb7a1903e2e57067"
   integrity sha512-tW+UkmtNg/jv9CSofAKvgVcO7c2URjhTdW1ZTkcAritblu8tajiYy7YisnIflEwtKssCtOxpnBRoCB7iap0/TA==
 
-font-finder@^1.0.3, font-finder@^1.0.4:
+font-finder@^1.0.3, font-finder@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/font-finder/-/font-finder-1.1.0.tgz#2bff2b2762acba720239c8bec898a96daae90858"
   integrity sha512-wpCL2uIbi6GurJbU7ZlQ3nGd61Ho+dSU6U83/xJT5UPFfN35EeCW/rOtS+5k+IuEZu2SYmHzDIPL9eA5tSYRAw==
@@ -3568,7 +3568,7 @@ font-finder@^1.0.3, font-finder@^1.0.4:
     get-system-fonts "^2.0.0"
     promise-stream-reader "^1.0.1"
 
-font-ligatures@^1.3.2:
+font-ligatures@^1.3.3:
   version "1.3.3"
   resolved "https://registry.npmjs.org/font-ligatures/-/font-ligatures-1.3.3.tgz#63fff18dc8adb3a11fe5eec1f4e8d7edfa8075b9"
   integrity sha512-NSGpHgVNX81M7AWS1XylK1UZbN3QllfUIDAAuPv6TUcl5O2b781JcKS5L2RopAU0AqlTyX3ZuX/04eaMpbVrHA==
@@ -7894,13 +7894,13 @@ xterm-addon-fit@^0.4.0:
   resolved "https://registry.npmjs.org/xterm-addon-fit/-/xterm-addon-fit-0.4.0.tgz#06e0c5d0a6aaacfb009ef565efa1c81e93d90193"
   integrity sha512-p4BESuV/g2L6pZzFHpeNLLnep9mp/DkF3qrPglMiucSFtD8iJxtMufEoEJbN8LZwB4i+8PFpFvVuFrGOSpW05w==
 
-xterm-addon-ligatures@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.npmjs.org/xterm-addon-ligatures/-/xterm-addon-ligatures-0.3.0.tgz#c7e67bf7ac669b0b6a06ad99fff0003890efe0a3"
-  integrity sha512-fNq+qYF1jiTUqzYAEqR7RruOfDwWMiLCJxlT/U8L6ttCvNRhbMQpHVcXEM5YCcxsB+Nj+GDv4Vap4KrfWEUmfA==
+xterm-addon-ligatures@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.npmjs.org/xterm-addon-ligatures/-/xterm-addon-ligatures-0.4.0.tgz#23235d831988c5780ca1e28002b750ec0b1a78ca"
+  integrity sha512-on+2TgzioEL5Mz60WchsTiuR2SvYzG3xVro39HIpYFM641lpMuPM83Pdm3W/ogkaGrpGm29Ysq2S2LCl/h7rhw==
   dependencies:
-    font-finder "^1.0.4"
-    font-ligatures "^1.3.2"
+    font-finder "^1.1.0"
+    font-ligatures "^1.3.3"
 
 xterm-addon-search@^0.8.0:
   version "0.8.0"
