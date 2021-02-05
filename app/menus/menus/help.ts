@@ -94,7 +94,7 @@ ${JSON.stringify(getPlugins(), null, 2)}
     submenu.push(
       {type: 'separator'},
       {
-        role: 'about',
+        label: 'About Hyper',
         click() {
           showAbout();
         }
