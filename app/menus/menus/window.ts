@@ -82,6 +82,12 @@ export default (
         role: 'front'
       },
       {
+        label: 'Toggle Always on Top',
+        click: (item, focusedWindow) => {
+          execCommand('window:toggleKeepOnTop', focusedWindow);
+        }
+      },
+      {
         role: 'togglefullscreen',
         accelerator: commandKeys['window:toggleFullScreen']
       }

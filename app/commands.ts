@@ -130,6 +130,9 @@ const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
   },
   'systemContextMenu:remove': () => {
     systemContextMenu.remove();
+  },
+  'window:toggleKeepOnTop': (focusedWindow) => {
+    focusedWindow?.setAlwaysOnTop(!focusedWindow.isAlwaysOnTop());
   }
 };
 
