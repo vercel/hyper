@@ -24,7 +24,7 @@
     "lodash": "4.17.20",
     "mkdirp": "1.0.4",
     "ms": "2.1.3",
-    "node-pty": "0.10.0-beta20",
+    "node-pty": "0.10.0",
     "os-locale": "5.0.0",
     "parse-url": "5.0.2",
     "pify": "5.0.0",
