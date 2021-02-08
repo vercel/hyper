@@ -91,16 +91,18 @@ export default class Session extends EventEmitter {
   batcher: DataBatcher | null;
   shell: string | null;
   ended: boolean;
+  initTimestamp: number;
   constructor(options: SessionOptions) {
     super();
     this.pty = null;
     this.batcher = null;
     this.shell = null;
     this.ended = false;
+    this.initTimestamp = new Date().getTime();
     this.init(options);
   }
 
-  init({uid, rows, cols: columns, cwd, shell, shellArgs}: SessionOptions) {
+  init({uid, rows, cols: columns, cwd, shell: _shell, shellArgs: _shellArgs}: SessionOptions) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const osLocale = require('os-locale') as typeof import('os-locale');
     const baseEnv = Object.assign(
@@ -137,8 +139,11 @@ export default class Session extends EventEmitter {
       options.useConpty = useConpty;
     }
 
+    const shell = _shell || defaultShell;
+    const shellArgs = _shellArgs || defaultShellArgs;
+
     try {
-      this.pty = spawn(shell || defaultShell, shellArgs || defaultShellArgs, options);
+      this.pty = spawn(shell, shellArgs, options);
     } catch (err) {
       if (/is not a function/.test(err.message)) {
         throw createNodePtyError();
@@ -159,14 +164,29 @@ export default class Session extends EventEmitter {
       this.emit('data', data);
     });
 
-    this.pty.onExit(() => {
+    this.pty.onExit((e) => {
       if (!this.ended) {
-        this.ended = true;
-        this.emit('exit');
+        // fall back to default shell config if the shell exits within 1 sec with non zero exit code
+        // this will inform users in case there are errors in the config instead of instant exit
+        const runDuration = new Date().getTime() - this.initTimestamp;
+        if (e.exitCode > 0 && runDuration < 1000) {
+          const defaultShellConfig = {shell: defaultShell, shellArgs: defaultShellArgs};
+          const msg = `
+shell exited in ${runDuration} ms with exit code ${e.exitCode}
+please check the shell config: ${JSON.stringify({shell, shellArgs}, undefined, 2)}
+fallback to default shell config: ${JSON.stringify(defaultShellConfig, undefined, 2)}
+`;
+          console.warn(msg);
+          this.batcher?.write(msg.replaceAll('\n', '\r\n') as any);
+          this.init({uid, rows, cols: columns, cwd, ...defaultShellConfig});
+        } else {
+          this.ended = true;
+          this.emit('exit');
+        }
       }
     });
 
-    this.shell = shell || defaultShell;
+    this.shell = shell;
   }
 
   exit() {
