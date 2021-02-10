@@ -17,3 +17,7 @@
   DeleteRegKey HKCU "Software\Classes\Directory\shell\Hyper"
   DeleteRegKey HKCU "Software\Classes\Drive\shell\Hyper"
 !macroend
+
+!macro customInstallMode
+  StrCpy $isForceCurrentInstall "1"
+!macroend

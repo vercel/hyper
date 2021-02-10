@@ -54,7 +54,10 @@
     "rfc3161TimeStampServer": "http://timestamp.comodoca.com"
   },
   "nsis": {
-    "include": "build/win/installer.nsh"
+    "include": "build/win/installer.nsh",
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true
   },
   "mac": {
     "target": {
