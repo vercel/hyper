@@ -124,7 +124,6 @@ const config: webpack.Configuration[] = [
       'xterm-addon-fit': 'require("./node_modules/xterm-addon-fit/lib/xterm-addon-fit.js")',
       'xterm-addon-image': 'require("./node_modules/xterm-addon-image/lib/xterm-addon-image.js")',
       'xterm-addon-search': 'require("./node_modules/xterm-addon-search/lib/xterm-addon-search.js")',
-      'xterm-addon-web-links': 'require("./node_modules/xterm-addon-web-links/lib/xterm-addon-web-links.js")',
       'xterm-addon-webgl': 'require("./node_modules/xterm-addon-webgl/lib/xterm-addon-webgl.js")',
       'xterm-addon-canvas': 'require("./node_modules/xterm-addon-canvas/lib/xterm-addon-canvas.js")',
       xterm: 'require("./node_modules/xterm/lib/xterm.js")'
