@@ -5,5 +5,6 @@ export default {
     compileAsTests: ['**/testUtils/**/*']
   },
   extensions: ['ts'],
-  require: ['ts-node/register/transpile-only']
+  require: ['ts-node/register/transpile-only'],
+  timeout: '30s'
 };
