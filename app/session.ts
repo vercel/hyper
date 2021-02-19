@@ -5,6 +5,8 @@ import {getDecoratedEnv} from './plugins';
 import {productName, version} from './package.json';
 import * as config from './config';
 import {IPty, IWindowsPtyForkOptions, spawn as npSpawn} from 'node-pty';
+import {cliScriptPath} from './config/paths';
+import {dirname} from 'path';
 
 const createNodePtyError = () =>
   new Error(
@@ -117,6 +119,14 @@ export default class Session extends EventEmitter {
       },
       envFromConfig
     );
+
+    // path to AppImage mount point is added to PATH environment variable automatically
+    // which conflicts with the cli
+    if (baseEnv['APPIMAGE'] && baseEnv['APPDIR']) {
+      baseEnv['PATH'] = [dirname(cliScriptPath)]
+        .concat((baseEnv['PATH'] || '').split(':').filter((val) => !val.startsWith(baseEnv['APPDIR'])))
+        .join(':');
+    }
 
     // Electron has a default value for process.env.GOOGLE_API_KEY
     // We don't want to leak this to the shell
