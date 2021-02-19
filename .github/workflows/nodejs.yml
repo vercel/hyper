@@ -52,62 +52,13 @@ jobs:
         with:
           name: spectron
           path: dist/tmp/*.png
-      - name: Get Artifact Names
-        id: getFileNames
-        run: |
-          echo "::set-output name=dmgName::$(ls dist/*-mac.dmg | cut -d'/' -f2)"
-          echo "::set-output name=dmgPath::$(ls dist/*-mac.dmg)"
-          echo "::set-output name=armDmgName::$(ls dist/*-mac-arm64.dmg | cut -d'/' -f2)"
-          echo "::set-output name=armDmgPath::$(ls dist/*-mac-arm64.dmg)"
-          echo "::set-output name=snapName::$(ls dist/*.snap | cut -d'/' -f2)"
-          echo "::set-output name=snapPath::$(ls dist/*.snap)"
-          echo "::set-output name=AppImageName::$(ls dist/*.AppImage | cut -d'/' -f2)"
-          echo "::set-output name=AppImagePath::$(ls dist/*.AppImage)"
-          echo "::set-output name=debName::$(ls dist/*.deb | cut -d'/' -f2)"
-          echo "::set-output name=debPath::$(ls dist/*.deb)"
-          echo "::set-output name=rpmName::$(ls dist/*.rpm | cut -d'/' -f2)"
-          echo "::set-output name=rpmPath::$(ls dist/*.rpm)"
-          echo "::set-output name=exeName::$(ls dist/*.exe | cut -d'/' -f2)"
-          echo "::set-output name=exePath::$(ls dist/*.exe)"
-      - name: Archive macOS Build Artifacts
-        if: runner.os == 'macOS'
-        uses: actions/upload-artifact@v2
+      - name: Archive Build Artifacts
+        uses: LabhanshAgrawal/upload-artifact@v3
         with:
-          name: ${{ steps.getFileNames.outputs.dmgName }}
-          path: ${{ steps.getFileNames.outputs.dmgPath }}
-      - name: Archive macOS arm64 Build Artifacts
-        if: runner.os == 'macOS'
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ steps.getFileNames.outputs.armDmgName }}
-          path: ${{ steps.getFileNames.outputs.armDmgPath }}
-      - name: Archive Linux Build Artifacts (Snap)
-        if: runner.os == 'Linux'
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ steps.getFileNames.outputs.snapName }}
-          path: ${{ steps.getFileNames.outputs.snapPath }}
-      - name: Archive Linux Build Artifacts (AppImage)
-        if: runner.os == 'Linux'
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ steps.getFileNames.outputs.AppImageName }}
-          path: ${{ steps.getFileNames.outputs.AppImagePath }}
-      - name: Archive Linux Build Artifacts (Deb)
-        if: runner.os == 'Linux'
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ steps.getFileNames.outputs.debName }}
-          path: ${{ steps.getFileNames.outputs.debPath }}
-      - name: Archive Linux Build Artifacts (RPM)
-        if: runner.os == 'Linux'
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ steps.getFileNames.outputs.rpmName }}
-          path: ${{ steps.getFileNames.outputs.rpmPath }}
-      - name: Archive Windows Build Artifacts (exe)
-        if: runner.os == 'Windows'
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ steps.getFileNames.outputs.exeName }}
-          path: ${{ steps.getFileNames.outputs.exePath }}
+          path: |
+            dist/*.dmg
+            dist/*.snap
+            dist/*.AppImage
+            dist/*.deb
+            dist/*.rpm
+            dist/*.exe
