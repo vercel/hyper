@@ -33,6 +33,7 @@
     "react-dom": "17.0.1",
     "semver": "7.3.4",
     "shell-env": "3.0.1",
+    "sudo-prompt": "^9.2.1",
     "uuid": "8.3.2"
   },
   "optionalDependencies": {
