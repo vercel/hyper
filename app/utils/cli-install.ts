@@ -134,6 +134,11 @@ export const installCLI = async (withNotification: boolean) => {
       logNotify(withNotification, 'Hyper CLI installation failed', `Failed to add Hyper CLI path to user PATH ${err}`);
     }
   } else if (process.platform === 'darwin' || process.platform === 'linux') {
+    // AppImages are mounted on run at a temporary path, don't create symlink
+    if (process.env['APPIMAGE']) {
+      console.log('Skipping CLI symlink creation as it is an AppImage install');
+      return;
+    }
     try {
       await addSymlink(!withNotification);
       logNotify(withNotification, 'Hyper CLI installed', `Symlink created at ${cliLinkPath}`);
