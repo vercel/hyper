@@ -32,15 +32,15 @@ export default class SearchBox extends React.PureComponent<SearchBoxProps> {
     return (
       <div style={searchBoxStyling}>
         <input type="text" className="search-box" onKeyUp={this.handleChange} ref={(input) => input?.focus()} />
-        <span className="search-button" onClick={() => this.props.prev(this.searchTerm)}>
-          {'←'}
-        </span>
-        <span className="search-button" onClick={() => this.props.next(this.searchTerm)}>
-          {'→'}
-        </span>
-        <span className="search-button" onClick={() => this.props.close()}>
-          {'✕'}
-        </span>
+        <svg className="search-button" onClick={() => this.props.prev(this.searchTerm)}>
+          <use xlinkHref="./renderer/assets/search-icons.svg#left-arrow" />
+        </svg>
+        <svg className="search-button" onClick={() => this.props.next(this.searchTerm)}>
+          <use xlinkHref="./renderer/assets/search-icons.svg#right-arrow" />
+        </svg>
+        <svg className="search-button" onClick={() => this.props.close()}>
+          <use xlinkHref="./renderer/assets/search-icons.svg#cancel" />
+        </svg>
         <style jsx>
           {`
             .search-box {
@@ -48,6 +48,7 @@ export default class SearchBox extends React.PureComponent<SearchBoxProps> {
               padding: 3px 6px;
               width: 152px;
               border: none;
+              float: left;
             }
 
             .search-box:focus {
@@ -57,7 +58,7 @@ export default class SearchBox extends React.PureComponent<SearchBoxProps> {
             .search-button {
               background-color: #ffffff;
               color: black;
-              padding: 3px;
+              padding: 7px 5.5px;
               text-align: center;
               text-decoration: none;
               display: inline-block;
@@ -66,6 +67,7 @@ export default class SearchBox extends React.PureComponent<SearchBoxProps> {
               cursor: pointer;
               height: 27px;
               width: 24px;
+              float: left;
             }
             .search-button:hover {
               background-color: #e7e7e7;
