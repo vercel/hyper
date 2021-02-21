@@ -7,7 +7,7 @@ const searchBoxStyling: React.CSSProperties = {
   backgroundColor: 'white',
   position: 'absolute',
   right: '10px',
-  top: '25px',
+  top: '0px',
   width: '224px',
   zIndex: 9999
 };
@@ -33,23 +33,20 @@ export default class SearchBox extends React.PureComponent<SearchBoxProps> {
       <div style={searchBoxStyling}>
         <input type="text" className="search-box" onKeyUp={this.handleChange} ref={(input) => input?.focus()} />
         <span className="search-button" onClick={() => this.props.prev(this.searchTerm)}>
-          {' '}
-          &#x2190;{' '}
+          {'←'}
         </span>
         <span className="search-button" onClick={() => this.props.next(this.searchTerm)}>
-          {' '}
-          &#x2192;{' '}
+          {'→'}
         </span>
         <span className="search-button" onClick={() => this.props.close()}>
-          {' '}
-          x{' '}
+          {'✕'}
         </span>
         <style jsx>
           {`
             .search-box {
               font-size: 18px;
-              padding: 6px;
-              width: 145px;
+              padding: 3px 6px;
+              width: 152px;
               border: none;
             }
 
@@ -60,13 +57,15 @@ export default class SearchBox extends React.PureComponent<SearchBoxProps> {
             .search-button {
               background-color: #ffffff;
               color: black;
-              padding: 7px;
+              padding: 3px;
               text-align: center;
               text-decoration: none;
               display: inline-block;
               font-size: 16px;
               transition-duration: 0.4s;
               cursor: pointer;
+              height: 27px;
+              width: 24px;
             }
             .search-button:hover {
               background-color: #e7e7e7;
