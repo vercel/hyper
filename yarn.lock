@@ -7097,10 +7097,10 @@ style-loader@2.0.0:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
 
-styled-jsx@3.4.2:
-  version "3.4.2"
-  resolved "https://registry.npmjs.org/styled-jsx/-/styled-jsx-3.4.2.tgz#40b90ab433e8e26f57919b5333d8427340521096"
-  integrity sha512-SCEwcnnRHlv0iJ56T/ke1pKnkMiIHPvIPm18kyne9Hirug8RV5p9+tjuQB8GDr6UXN+GH5gzPOqnYhNnNV0jaw==
+styled-jsx@3.4.4:
+  version "3.4.4"
+  resolved "https://registry.npmjs.org/styled-jsx/-/styled-jsx-3.4.4.tgz#d5012cac2ed22be0b72e28932f3eece8d83b695c"
+  integrity sha512-PkZi/col7R4cpwSPY2n4JjpcTYfBgaWg/1mt0+1E/pmkXL+Pik5Kr/snYMWj90+N3kDw+BqfnJOogdRw4621GQ==
   dependencies:
     "@babel/helper-module-imports" "7.12.5"
     "@babel/types" "7.8.3"
