@@ -21,7 +21,7 @@
     "file-uri-to-path": "2.0.0",
     "fs-extra": "9.1.0",
     "git-describe": "4.0.4",
-    "lodash": "4.17.20",
+    "lodash": "4.17.21",
     "mkdirp": "1.0.4",
     "ms": "2.1.3",
     "node-pty": "0.10.0",
