@@ -89,7 +89,7 @@
       ],
       "extends": [
         "plugin:@typescript-eslint/recommended",
-        "prettier/@typescript-eslint"
+        "prettier"
       ],
       "rules": {
         "@typescript-eslint/explicit-function-return-type": "off",
