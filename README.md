@@ -23,10 +23,10 @@ In the future, we anticipate the community will come up with innovative addition
 
 ### Linux
 #### Arch and derivatives
-Hyper is available in the [AUR](https://aur.archlinux.org/packages/hyper/). Use an AUR package manager like [aurman](https://github.com/polygamma/aurman)
+Hyper is available in the [AUR](https://aur.archlinux.org/packages/hyper/). Use an AUR package manager like [paru](https://github.com/Morganamilo/paru)
 
 ```sh
-aurman -S hyper
+paru -S hyper
 ```
 
 #### NixOS
