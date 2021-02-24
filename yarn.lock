@@ -288,11 +288,6 @@
   resolved "https://registry.npmjs.org/@babel/helper-validator-option/-/helper-validator-option-7.12.17.tgz#d1fbf012e1a79b7eebbfdc6d270baaf8d9eb9831"
   integrity sha512-TopkMDmLzq8ngChwRlyjR6raKD6gMSae4JdYDB8bByKreQgG0RBTuKe9LRxW3wFtUnjxOPRKBDwEH6Mg5KeDfw==
 
-"@babel/helper-validator-option@^7.12.17":
-  version "7.12.17"
-  resolved "https://registry.npmjs.org/@babel/helper-validator-option/-/helper-validator-option-7.12.17.tgz#d1fbf012e1a79b7eebbfdc6d270baaf8d9eb9831"
-  integrity sha512-TopkMDmLzq8ngChwRlyjR6raKD6gMSae4JdYDB8bByKreQgG0RBTuKe9LRxW3wFtUnjxOPRKBDwEH6Mg5KeDfw==
-
 "@babel/helpers@^7.13.0":
   version "7.13.0"
   resolved "https://registry.npmjs.org/@babel/helpers/-/helpers-7.13.0.tgz#7647ae57377b4f0408bf4f8a7af01c42e41badc0"
@@ -2088,6 +2083,14 @@ chalk@4.1.0, chalk@^4.0.0, chalk@^4.1.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
+chalk@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/chalk/-/chalk-3.0.0.tgz#3f73c2bf526591f574cc492c51e2456349f844e4"
+  integrity sha512-4D3B6Wf41KOYRFdszmDqMCGq5VV/uMAB273JILmO+3jAlh8X4qDtdtgCR3fxtbLEMzSx22QdhnDcJvu2u1fVwg==
+  dependencies:
+    ansi-styles "^4.1.0"
+    supports-color "^7.1.0"
+
 chardet@^0.7.0:
   version "0.7.0"
   resolved "https://registry.npmjs.org/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
@@ -3061,6 +3064,16 @@ electron@^11.3.0:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"
     extract-zip "^1.0.3"
+
+electronmon@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/electronmon/-/electronmon-1.1.2.tgz#b64c6f20c0faeb07bec7554d1fee5c88914e7fcc"
+  integrity sha512-0VSG5sRxNLDmGYVq08BbTfXtZ7cJ6yNByuDTrHjY+S6Ms+LVGuUROtHOhm1mSFhm33es5MNwgHb9ik8M4gW4Iw==
+  dependencies:
+    chalk "^3.0.0"
+    import-from "^3.0.0"
+    runtime-required "^1.0.2"
+    watchboy "^0.4.2"
 
 emittery@^0.8.0:
   version "0.8.0"
@@ -4225,6 +4238,13 @@ import-fresh@^3.0.0, import-fresh@^3.2.1:
   dependencies:
     parent-module "^1.0.0"
     resolve-from "^4.0.0"
+
+import-from@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/import-from/-/import-from-3.0.0.tgz#055cfec38cd5a27d8057ca51376d7d3bf0891966"
+  integrity sha512-CiuXOFFSzkU5x/CR0+z7T91Iht4CXgfCxVOFRhh2Zyhg5wOpWvvDLQUsWl+gcN+QscYBjez8hDCt85O7RLDttQ==
+  dependencies:
+    resolve-from "^5.0.0"
 
 import-lazy@^2.1.0:
   version "2.1.0"
@@ -6657,6 +6677,13 @@ run-parallel@^1.1.9:
   resolved "https://registry.npmjs.org/run-parallel/-/run-parallel-1.1.10.tgz#60a51b2ae836636c81377df16cb107351bcd13ef"
   integrity sha512-zb/1OuZ6flOlH6tQyMPUrE3x3Ulxjlo9WIVXR4yVYi4H9UXQaeIsPbLn2R3O3vQCnDKkAl2qHiuocKKX4Tz/Sw==
 
+runtime-required@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/runtime-required/-/runtime-required-1.0.2.tgz#23de8382f33f8dff5486963891288d52ab74d28c"
+  integrity sha512-pYR+fg0jG2MYXjmY3JcVGSPI224O4b2O9StwRmY3VU9WnTSSXaSn/WiWD2wicYBo53rVjg2yRr2dr08aFtHSsQ==
+  dependencies:
+    resolve-from "^4.0.0"
+
 rxjs@^6.6.0, rxjs@^6.6.3:
   version "6.6.3"
   resolved "https://registry.npmjs.org/rxjs/-/rxjs-6.6.3.tgz#8ca84635c4daa900c0d3967a6ee7ac60271ee552"
@@ -7611,6 +7638,13 @@ universalify@^2.0.0:
   resolved "https://registry.npmjs.org/universalify/-/universalify-2.0.0.tgz#75a4984efedc4b08975c5aeb73f530d02df25717"
   integrity sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==
 
+unixify@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/unixify/-/unixify-1.0.0.tgz#3a641c8c2ffbce4da683a5c70f03a462940c2090"
+  integrity sha1-OmQcjC/7zk2mg6XHDwOkYpQMIJA=
+  dependencies:
+    normalize-path "^2.1.1"
+
 unset-value@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/unset-value/-/unset-value-1.0.0.tgz#8376873f7d2335179ffb1e6fc3a8ed0dfc8ab559"
@@ -7730,6 +7764,16 @@ version-range@^1.0.0:
   integrity sha512-R1Ggfg2EXamrnrV3TkZ6yBNgITDbclB3viwSjbZ3+eK0VVNK4ajkYJTnDz5N0bIMYDtK9MUBvXJUnKO5RWWJ6w==
   dependencies:
     version-compare "^1.0.0"
+
+watchboy@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.npmjs.org/watchboy/-/watchboy-0.4.2.tgz#a5ca6b64a32eb7da9d740b0e021bc1c533f1d555"
+  integrity sha512-bzzZDhNjLvnn66q3zvwZ5vgF/aeI53z30yo7qgwCU8QrbjOR/Whl7gdoY28vXTp4lz7qo43jU0a2+iv9pedHzg==
+  dependencies:
+    lodash.difference "^4.5.0"
+    micromatch "^4.0.2"
+    pify "^4.0.1"
+    unixify "^1.0.0"
 
 watchpack@^2.0.0:
   version "2.1.0"
