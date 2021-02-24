@@ -3131,10 +3131,10 @@ es-abstract@^1.18.0-next.1:
     string.prototype.trimend "^1.0.1"
     string.prototype.trimstart "^1.0.1"
 
-es-module-lexer@^0.3.26:
-  version "0.3.26"
-  resolved "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-0.3.26.tgz#7b507044e97d5b03b01d4392c74ffeb9c177a83b"
-  integrity sha512-Va0Q/xqtrss45hWzP8CZJwzGSZJjDM5/MJRE3IXXnUCcVLElR9BRaE9F62BopysASyc4nM3uwhSW7FFB9nlWAA==
+es-module-lexer@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-0.4.0.tgz#21f4181cc8b7eee06855f1c59e6087c7bc4f77b0"
+  integrity sha512-iuEGihqqhKWFgh72Q/Jtch7V2t/ft8w8IPP2aEN8ArYKO+IWyo6hsi96hCdgyeEDQIV3InhYQ9BlwUFPGXrbEQ==
 
 es-to-primitive@^1.2.1:
   version "1.2.1"
@@ -7730,10 +7730,10 @@ webpack-sources@^2.1.1:
     source-list-map "^2.0.1"
     source-map "^0.6.1"
 
-webpack@5.22.0, webpack@^5.1.0:
-  version "5.22.0"
-  resolved "https://registry.npmjs.org/webpack/-/webpack-5.22.0.tgz#8505158bc52dcbbdb01ac94796a8aed61badf11a"
-  integrity sha512-xqlb6r9RUXda/d9iA6P7YRTP1ChWeP50TEESKMMNIg0u8/Rb66zN9YJJO7oYgJTRyFyYi43NVC5feG45FSO1vQ==
+webpack@5.24.1, webpack@^5.1.0:
+  version "5.24.1"
+  resolved "https://registry.npmjs.org/webpack/-/webpack-5.24.1.tgz#6b7730bfba1ee94b05d05ef7c32743a35105a744"
+  integrity sha512-eg+6OIt6npUSwbhRQY6XffAixEUSARBf+WAWOxrZwOB4jRbbpMXlridFy/Yt7N0U20Ry1vp/nnDbtN7l1rUdIA==
   dependencies:
     "@types/eslint-scope" "^3.7.0"
     "@types/estree" "^0.0.46"
@@ -7744,7 +7744,7 @@ webpack@5.22.0, webpack@^5.1.0:
     browserslist "^4.14.5"
     chrome-trace-event "^1.0.2"
     enhanced-resolve "^5.7.0"
-    es-module-lexer "^0.3.26"
+    es-module-lexer "^0.4.0"
     eslint-scope "^5.1.1"
     events "^3.2.0"
     glob-to-regexp "^0.4.1"
