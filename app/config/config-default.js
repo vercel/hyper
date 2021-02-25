@@ -114,10 +114,6 @@ module.exports = {
     //
     // Cygwin
     // - Example: `C:\\cygwin64\\bin\\bash.exe`
-    //
-    // Git Bash
-    // - Example: `C:\\Program Files\\Git\\git-cmd.exe`
-    // Then Add `--command=usr/bin/bash.exe` to shellArgs
     shell: '',
 
     // for setting shell arguments (i.e. for using interactive shellArgs: `['-i']`)
