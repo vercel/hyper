@@ -130,26 +130,15 @@
     browserslist "^4.14.5"
     semver "7.0.0"
 
-"@babel/helper-create-class-features-plugin@^7.12.13":
-  version "7.12.13"
-  resolved "https://registry.npmjs.org/@babel/helper-create-class-features-plugin/-/helper-create-class-features-plugin-7.12.13.tgz#0f1707c2eec1a4604f2a22a6fb209854ef2a399a"
-  integrity sha512-Vs/e9wv7rakKYeywsmEBSRC9KtmE7Px+YBlESekLeJOF0zbGUicGfXSNi3o+tfXSNS48U/7K9mIOOCR79Cl3+Q==
+"@babel/helper-create-class-features-plugin@^7.12.17", "@babel/helper-create-class-features-plugin@^7.13.0":
+  version "7.13.8"
+  resolved "https://registry.npmjs.org/@babel/helper-create-class-features-plugin/-/helper-create-class-features-plugin-7.13.8.tgz#0367bd0a7505156ce018ca464f7ac91ba58c1a04"
+  integrity sha512-qioaRrKHQbn4hkRKDHbnuQ6kAxmmOF+kzKGnIfxPK4j2rckSJCpKzr/SSTlohSCiE3uAQpNDJ9FIh4baeE8W+w==
   dependencies:
     "@babel/helper-function-name" "^7.12.13"
-    "@babel/helper-member-expression-to-functions" "^7.12.13"
+    "@babel/helper-member-expression-to-functions" "^7.13.0"
     "@babel/helper-optimise-call-expression" "^7.12.13"
-    "@babel/helper-replace-supers" "^7.12.13"
-    "@babel/helper-split-export-declaration" "^7.12.13"
-
-"@babel/helper-create-class-features-plugin@^7.12.17":
-  version "7.12.17"
-  resolved "https://registry.npmjs.org/@babel/helper-create-class-features-plugin/-/helper-create-class-features-plugin-7.12.17.tgz#704b69c8a78d03fb1c5fcc2e7b593f8a65628944"
-  integrity sha512-I/nurmTxIxHV0M+rIpfQBF1oN342+yvl2kwZUrQuOClMamHF1w5tknfZubgNOLRoA73SzBFAdFcpb4M9HwOeWQ==
-  dependencies:
-    "@babel/helper-function-name" "^7.12.13"
-    "@babel/helper-member-expression-to-functions" "^7.12.17"
-    "@babel/helper-optimise-call-expression" "^7.12.13"
-    "@babel/helper-replace-supers" "^7.12.13"
+    "@babel/helper-replace-supers" "^7.13.0"
     "@babel/helper-split-export-declaration" "^7.12.13"
 
 "@babel/helper-function-name@^7.12.13":
@@ -167,20 +156,6 @@
   integrity sha512-DjEVzQNz5LICkzN0REdpD5prGoidvbdYk1BVgRUOINaWJP2t6avB27X1guXK1kXNrX0WMfsrm1A/ZBthYuIMQg==
   dependencies:
     "@babel/types" "^7.12.13"
-
-"@babel/helper-member-expression-to-functions@^7.12.13":
-  version "7.12.13"
-  resolved "https://registry.npmjs.org/@babel/helper-member-expression-to-functions/-/helper-member-expression-to-functions-7.12.13.tgz#c5715695b4f8bab32660dbdcdc2341dec7e3df40"
-  integrity sha512-B+7nN0gIL8FZ8SvMcF+EPyB21KnCcZHQZFczCxbiNGV/O0rsrSBlWGLzmtBJ3GMjSVMIm4lpFhR+VdVBuIsUcQ==
-  dependencies:
-    "@babel/types" "^7.12.13"
-
-"@babel/helper-member-expression-to-functions@^7.12.17":
-  version "7.12.17"
-  resolved "https://registry.npmjs.org/@babel/helper-member-expression-to-functions/-/helper-member-expression-to-functions-7.12.17.tgz#f82838eb06e1235307b6d71457b6670ff71ee5ac"
-  integrity sha512-Bzv4p3ODgS/qpBE0DiJ9qf5WxSmrQ8gVTe8ClMfwwsY2x/rhykxxy3bXzG7AGTnPB2ij37zGJ/Q/6FruxHxsxg==
-  dependencies:
-    "@babel/types" "^7.12.17"
 
 "@babel/helper-member-expression-to-functions@^7.13.0":
   version "7.13.0"
@@ -229,16 +204,6 @@
   version "7.13.0"
   resolved "https://registry.npmjs.org/@babel/helper-plugin-utils/-/helper-plugin-utils-7.13.0.tgz#806526ce125aed03373bc416a828321e3a6a33af"
   integrity sha512-ZPafIPSwzUlAoWT8DKs1W2VyF2gOWthGd5NGFMsBcMMol+ZhK+EQY/e6V96poa6PA/Bh+C9plWN0hXO1uB8AfQ==
-
-"@babel/helper-replace-supers@^7.12.13":
-  version "7.12.13"
-  resolved "https://registry.npmjs.org/@babel/helper-replace-supers/-/helper-replace-supers-7.12.13.tgz#00ec4fb6862546bd3d0aff9aac56074277173121"
-  integrity sha512-pctAOIAMVStI2TMLhozPKbf5yTEXc0OJa0eENheb4w09SrgOWEs+P4nTOZYJQCqs8JlErGLDPDJTiGIp3ygbLg==
-  dependencies:
-    "@babel/helper-member-expression-to-functions" "^7.12.13"
-    "@babel/helper-optimise-call-expression" "^7.12.13"
-    "@babel/traverse" "^7.12.13"
-    "@babel/types" "^7.12.13"
 
 "@babel/helper-replace-supers@^7.13.0":
   version "7.13.0"
@@ -311,13 +276,13 @@
   resolved "https://registry.npmjs.org/@babel/parser/-/parser-7.13.4.tgz#340211b0da94a351a6f10e63671fa727333d13ab"
   integrity sha512-uvoOulWHhI+0+1f9L4BoozY7U5cIkZ9PgJqvb041d6vypgUmtVPG4vmGm4pSggjl8BELzvHyUeJSUyEMY6b+qA==
 
-"@babel/plugin-proposal-class-properties@^7.12.13":
-  version "7.12.13"
-  resolved "https://registry.npmjs.org/@babel/plugin-proposal-class-properties/-/plugin-proposal-class-properties-7.12.13.tgz#3d2ce350367058033c93c098e348161d6dc0d8c8"
-  integrity sha512-8SCJ0Ddrpwv4T7Gwb33EmW1V9PY5lggTO+A8WjyIwxrSHDUyBw4MtF96ifn1n8H806YlxbVCoKXbbmzD6RD+cA==
+"@babel/plugin-proposal-class-properties@^7.13.0":
+  version "7.13.0"
+  resolved "https://registry.npmjs.org/@babel/plugin-proposal-class-properties/-/plugin-proposal-class-properties-7.13.0.tgz#146376000b94efd001e57a40a88a525afaab9f37"
+  integrity sha512-KnTDjFNC1g+45ka0myZNvSBFLhNCLN+GeGYLDEA8Oq7MZ6yMgfLoIRh86GRT0FjtJhZw8JyUskP9uvj5pHM9Zg==
   dependencies:
-    "@babel/helper-create-class-features-plugin" "^7.12.13"
-    "@babel/helper-plugin-utils" "^7.12.13"
+    "@babel/helper-create-class-features-plugin" "^7.13.0"
+    "@babel/helper-plugin-utils" "^7.13.0"
 
 "@babel/plugin-proposal-dynamic-import@^7.8.3":
   version "7.12.1"
@@ -505,7 +470,7 @@
     "@babel/parser" "^7.12.13"
     "@babel/types" "^7.12.13"
 
-"@babel/traverse@^7.12.13", "@babel/traverse@^7.13.0":
+"@babel/traverse@^7.13.0":
   version "7.13.0"
   resolved "https://registry.npmjs.org/@babel/traverse/-/traverse-7.13.0.tgz#6d95752475f86ee7ded06536de309a65fc8966cc"
   integrity sha512-xys5xi5JEhzC3RzEmSGrs/b3pJW/o87SypZ+G/PhaE7uqVQNv/jlmVIBXuoh5atqQ434LfXV+sf23Oxj0bchJQ==
@@ -533,15 +498,6 @@
   version "7.13.0"
   resolved "https://registry.npmjs.org/@babel/types/-/types-7.13.0.tgz#74424d2816f0171b4100f0ab34e9a374efdf7f80"
   integrity sha512-hE+HE8rnG1Z6Wzo+MhaKE5lM5eMx71T4EHJgku2E3xIfaULhDcxiiRxUYgwX8qwP1BBSlag+TdGOt6JAidIZTA==
-  dependencies:
-    "@babel/helper-validator-identifier" "^7.12.11"
-    lodash "^4.17.19"
-    to-fast-properties "^2.0.0"
-
-"@babel/types@^7.12.17":
-  version "7.12.17"
-  resolved "https://registry.npmjs.org/@babel/types/-/types-7.12.17.tgz#9d711eb807e0934c90b8b1ca0eb1f7230d150963"
-  integrity sha512-tNMDjcv/4DIcHxErTgwB9q2ZcYyN0sUfgGKUK/mm1FJK7Wz+KstoEekxrl/tBiNDgLK1HGi+sppj1An/1DR4fQ==
   dependencies:
     "@babel/helper-validator-identifier" "^7.12.11"
     lodash "^4.17.19"
