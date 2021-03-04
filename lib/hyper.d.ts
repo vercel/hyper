@@ -162,8 +162,11 @@ export type hyperPlugin = {
   reduceUI: IUiReducer;
 };
 
-import rootReducer from './reducers/index';
-export type HyperState = ReturnType<typeof rootReducer>;
+export type HyperState = {
+  ui: Immutable<uiState>;
+  sessions: Immutable<sessionState>;
+  termGroups: Immutable<ITermState>;
+};
 
 import {UIActions} from './constants/ui';
 import {ConfigActions} from './constants/config';

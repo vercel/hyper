@@ -11,7 +11,6 @@ import Color from 'color';
 import terms from '../terms';
 import processClipboard from '../utils/paste';
 import SearchBox from './searchBox';
-import ResizeObserver from 'resize-observer-polyfill';
 import {TermProps} from '../hyper';
 import {ObjectTypedKeys} from '../utils/object';
 
