@@ -7,9 +7,6 @@
  </p>
   
 [![Node CI](https://github.com/vercel/hyper/workflows/Node%20CI/badge.svg?event=push)](https://github.com/vercel/hyper/actions?query=workflow%3A%22Node+CI%22+branch%3Acanary+event%3Apush)
-[![macOS CI Status](https://circleci.com/gh/vercel/hyper.svg?style=shield)](https://circleci.com/gh/vercel/hyper)
-[![Windows CI status](https://ci.appveyor.com/api/projects/status/kqvb4oa772an58sc?svg=true)](https://ci.appveyor.com/project/zeit/hyper)
-[![Linux CI status](https://travis-ci.org/vercel/hyper.svg?branch=master)](https://travis-ci.org/vercel/hyper)
 [![Changelog #213](https://img.shields.io/badge/changelog-%23213-lightgrey.svg)](https://changelog.com/213)
 
 For more details, head to: https://hyper.is
