@@ -39,7 +39,8 @@ export function newWindow(
     webPreferences: {
       nodeIntegration: true,
       navigateOnDragDrop: true,
-      enableRemoteModule: true
+      enableRemoteModule: true,
+      contextIsolation: false
     },
     ...options_
   };
