@@ -4,17 +4,17 @@ import {TERM_GROUP_EXIT, TERM_GROUP_RESIZE} from '../constants/term-groups';
 import {SESSION_ADD, SESSION_SET_ACTIVE, SessionAddAction} from '../constants/sessions';
 import findBySession from '../utils/term-groups';
 import {decorateTermGroupsReducer} from '../utils/plugins';
-import {ITermGroup, ITermState, ITermGroups, HyperActions} from '../hyper';
+import {ITermGroup, ITermState, ITermGroups, ITermGroupReducer, Mutable} from '../hyper';
 
 const MIN_SIZE = 0.05;
-const initialState = Immutable<ITermState>({
+const initialState: ITermState = Immutable<Mutable<ITermState>>({
   termGroups: {},
   activeSessions: {},
   activeRootGroup: null
 });
 
-function TermGroup(obj: Immutable.DeepPartial<ITermGroup>) {
-  const x: ITermGroup = {
+function TermGroup(obj: Immutable.DeepPartial<Mutable<ITermGroup>>) {
+  const x: Mutable<ITermGroup> = {
     uid: '',
     sessionUid: null,
     parentUid: null,
@@ -26,7 +26,7 @@ function TermGroup(obj: Immutable.DeepPartial<ITermGroup>) {
 }
 
 // Recurse upwards until we find a root term group (no parent).
-const findRootGroup = (termGroups: ImmutableType<ITermGroups>, uid: string): ImmutableType<ITermGroup> => {
+const findRootGroup = (termGroups: ITermGroups, uid: string): ITermGroup => {
   const current = termGroups[uid];
   if (!current.parentUid) {
     return current;
@@ -35,7 +35,7 @@ const findRootGroup = (termGroups: ImmutableType<ITermGroups>, uid: string): Imm
   return findRootGroup(termGroups, current.parentUid);
 };
 
-const setActiveGroup = (state: ImmutableType<ITermState>, action: {uid: string}) => {
+const setActiveGroup = (state: ITermState, action: {uid: string}) => {
   if (!action.uid) {
     return state.set('activeRootGroup', null);
   }
@@ -66,7 +66,7 @@ const removalRebalance = (oldSizes: ImmutableType<number[]>, index: number) => {
   );
 };
 
-const splitGroup = (state: ImmutableType<ITermState>, action: SessionAddAction) => {
+const splitGroup = (state: ITermState, action: SessionAddAction) => {
   const {splitDirection, uid, activeUid} = action;
   const activeGroup = findBySession(state, activeUid!)!;
   // If we're splitting in the same direction as the current active
@@ -132,11 +132,7 @@ const splitGroup = (state: ImmutableType<ITermState>, action: SessionAddAction) 
 // Replace the parent by the given child in the tree,
 // used when we remove another child and we're left
 // with a one-to-one mapping between parent and child.
-const replaceParent = (
-  state: ImmutableType<ITermState>,
-  parent: ImmutableType<ITermGroup>,
-  child: ImmutableType<ITermGroup>
-) => {
+const replaceParent = (state: ITermState, parent: ITermGroup, child: ITermGroup) => {
   if (parent.parentUid) {
     const parentParent = state.termGroups[parent.parentUid];
     // If the parent we're replacing has a parent,
@@ -161,7 +157,7 @@ const replaceParent = (
     .setIn(['termGroups', child.uid, 'parentUid'], parent.parentUid);
 };
 
-const removeGroup = (state: ImmutableType<ITermState>, uid: string) => {
+const removeGroup = (state: ITermState, uid: string) => {
   const group = state.termGroups[uid];
   // when close tab with multiple panes, it remove group from parent to child. so maybe the parentUid exists but parent group have removed.
   // it's safe to remove the group.
@@ -188,7 +184,7 @@ const removeGroup = (state: ImmutableType<ITermState>, uid: string) => {
     .set('activeSessions', state.activeSessions.without(uid));
 };
 
-const resizeGroup = (state: ImmutableType<ITermState>, uid: string, sizes: number[]) => {
+const resizeGroup = (state: ITermState, uid: string, sizes: number[]) => {
   // Make sure none of the sizes fall below MIN_SIZE:
   if (sizes.find((size) => size < MIN_SIZE)) {
     return state;
@@ -197,7 +193,7 @@ const resizeGroup = (state: ImmutableType<ITermState>, uid: string, sizes: numbe
   return state.setIn(['termGroups', uid, 'sizes'], sizes);
 };
 
-const reducer = (state = initialState, action: HyperActions) => {
+const reducer: ITermGroupReducer = (state = initialState, action) => {
   switch (action.type) {
     case SESSION_ADD: {
       if (action.splitDirection) {
@@ -226,7 +222,5 @@ const reducer = (state = initialState, action: HyperActions) => {
       return state;
   }
 };
-
-export type ITermGroupReducer = typeof reducer;
 
 export default decorateTermGroupsReducer(reducer);

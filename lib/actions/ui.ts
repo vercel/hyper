@@ -28,7 +28,7 @@ import {
 
 import {setActiveGroup} from './term-groups';
 import parseUrl from 'parse-url';
-import {HyperState, HyperDispatch, HyperActions} from '../hyper';
+import {HyperState, HyperDispatch, HyperActions, ITermGroups} from '../hyper';
 import {stat, Stats} from 'fs';
 
 export function openContextMenu(uid: string, selection: any) {
@@ -110,7 +110,7 @@ export function windowGeometryUpdated(): HyperActions {
 
 // Find all sessions that are below the given
 // termGroup uid in the hierarchy:
-const findChildSessions = (termGroups: HyperState['termGroups']['termGroups'], uid: string): string[] => {
+const findChildSessions = (termGroups: ITermGroups, uid: string): string[] => {
   const group = termGroups[uid];
   if (group.sessionUid) {
     return [uid];

@@ -11,7 +11,6 @@ import findBySession from '../utils/term-groups';
 import {getRootGroups} from '../selectors';
 import {setActiveSession, ptyExitSession, userExitSession} from './sessions';
 import {ITermState, ITermGroup, HyperState, HyperDispatch, HyperActions} from '../hyper';
-import {Immutable} from 'seamless-immutable';
 
 function requestSplit(direction: 'VERTICAL' | 'HORIZONTAL') {
   return (activeUid: string) => (dispatch: HyperDispatch, getState: () => HyperState): void => {
@@ -67,7 +66,7 @@ export function setActiveGroup(uid: string) {
 // When we've found the next group which we want to
 // set as active (after closing something), we also need
 // to find the first child group which has a sessionUid.
-const findFirstSession = (state: Immutable<ITermState>, group: Immutable<ITermGroup>): string | undefined => {
+const findFirstSession = (state: ITermState, group: ITermGroup): string | undefined => {
   if (group.sessionUid) {
     return group.sessionUid;
   }
@@ -90,7 +89,7 @@ const findPrevious = <T>(list: T[], old: T) => {
   return index ? list[index - 1] : list[1];
 };
 
-const findNextSessionUid = (state: Immutable<ITermState>, group: Immutable<ITermGroup>) => {
+const findNextSessionUid = (state: ITermState, group: ITermGroup) => {
   // If we're closing a root group (i.e. a whole tab),
   // the next group needs to be a root group as well:
   if (state.activeRootGroup === group.uid) {

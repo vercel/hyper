@@ -1,5 +1,24 @@
 import {FontWeight} from 'xterm';
 
+export type ColorMap = {
+  black: string;
+  blue: string;
+  cyan: string;
+  green: string;
+  lightBlack: string;
+  lightBlue: string;
+  lightCyan: string;
+  lightGreen: string;
+  lightMagenta: string;
+  lightRed: string;
+  lightWhite: string;
+  lightYellow: string;
+  magenta: string;
+  red: string;
+  white: string;
+  yellow: string;
+};
+
 export type configOptions = {
   autoUpdatePlugins: boolean | string;
   backgroundColor: string;
@@ -7,24 +26,7 @@ export type configOptions = {
   bellSound: string | null;
   bellSoundURL: string | null;
   borderColor: string;
-  colors: {
-    black: string;
-    blue: string;
-    cyan: string;
-    green: string;
-    lightBlack: string;
-    lightBlue: string;
-    lightCyan: string;
-    lightGreen: string;
-    lightMagenta: string;
-    lightRed: string;
-    lightWhite: string;
-    lightYellow: string;
-    magenta: string;
-    red: string;
-    white: string;
-    yellow: string;
-  };
+  colors: ColorMap;
   copyOnSelect: boolean;
   css: string;
   cursorAccentColor: string;
