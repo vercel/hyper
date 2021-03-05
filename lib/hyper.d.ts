@@ -9,27 +9,28 @@ declare global {
   }
 }
 
-export type ITermGroup = {
+export type ITermGroup = Immutable<{
   uid: string;
   sessionUid: string | null;
   parentUid: string | null;
   direction: 'HORIZONTAL' | 'VERTICAL' | null;
   sizes: number[] | null;
   children: string[];
-};
+}>;
 
-export type ITermGroups = Record<string, ITermGroup>;
+export type ITermGroups = Immutable<Record<string, ITermGroup>>;
 
-export type ITermState = {
-  termGroups: ITermGroups;
+export type ITermState = Immutable<{
+  termGroups: Mutable<ITermGroups>;
   activeSessions: Record<string, string>;
   activeRootGroup: string | null;
-};
+}>;
 
 export type cursorShapes = 'BEAM' | 'UNDERLINE' | 'BLOCK';
 import {FontWeight, Terminal} from 'xterm';
+import {ColorMap} from './config';
 
-export type uiState = {
+export type uiState = Immutable<{
   _lastUpdate: number | null;
   activeUid: string | null;
   activityMarkers: Record<string, boolean>;
@@ -38,24 +39,7 @@ export type uiState = {
   bellSoundURL: string | null;
   bellSound: string | null;
   borderColor: string;
-  colors: {
-    black: string;
-    blue: string;
-    cyan: string;
-    green: string;
-    lightBlack: string;
-    lightBlue: string;
-    lightCyan: string;
-    lightGreen: string;
-    lightMagenta: string;
-    lightRed: string;
-    lightWhite: string;
-    lightYellow: string;
-    magenta: string;
-    red: string;
-    white: string;
-    yellow: string;
-  };
+  colors: ColorMap;
   cols: number | null;
   copyOnSelect: boolean;
   css: string;
@@ -107,7 +91,7 @@ export type uiState = {
   updateVersion: string | null;
   webGLRenderer: boolean;
   webLinksActivationKey: string;
-};
+}>;
 
 export type session = {
   cleared: boolean;
@@ -123,22 +107,19 @@ export type session = {
   splitDirection?: 'HORIZONTAL' | 'VERTICAL';
   activeUid?: string;
 };
-export type sessionState = {
+export type sessionState = Immutable<{
   sessions: Record<string, session>;
   activeUid: string | null;
   write?: any;
-};
+}>;
 
-export {ITermGroupReducer} from './reducers/term-groups';
-import {ITermGroupReducer} from './reducers/term-groups';
+export type ITermGroupReducer = Reducer<ITermState, HyperActions>;
 
-export {IUiReducer} from './reducers/ui';
-import {IUiReducer} from './reducers/ui';
+export type IUiReducer = Reducer<uiState, HyperActions>;
 
-export {ISessionReducer} from './reducers/sessions';
-import {ISessionReducer} from './reducers/sessions';
+export type ISessionReducer = Reducer<sessionState, HyperActions>;
 
-import {Middleware} from 'redux';
+import {Middleware, Reducer} from 'redux';
 export type hyperPlugin = {
   getTabProps: any;
   getTabsProps: any;
@@ -163,9 +144,9 @@ export type hyperPlugin = {
 };
 
 export type HyperState = {
-  ui: Immutable<uiState>;
-  sessions: Immutable<sessionState>;
-  termGroups: Immutable<ITermState>;
+  ui: uiState;
+  sessions: sessionState;
+  termGroups: ITermState;
 };
 
 import {UIActions} from './constants/ui';
@@ -187,8 +168,6 @@ export type HyperActions = (
   | InitActions
   | TabActions
 ) & {effect?: () => void};
-
-type immutableRecord<T> = {[k in keyof T]: Immutable<T[k]>};
 
 import configureStore from './store/configure-store';
 export type HyperDispatch = ReturnType<typeof configureStore>['dispatch'];
@@ -276,7 +255,7 @@ export type TermGroupOwnProps = {
   fontSmoothing?: string;
   parentProps: TermsProps;
   ref_: (uid: string, term: Term | null) => void;
-  termGroup: Immutable<ITermGroup>;
+  termGroup: ITermGroup;
   terms: Record<string, Term | null>;
 } & Pick<
   TermsProps,
@@ -336,7 +315,7 @@ export type TermProps = {
   bellSoundURL: string | null;
   borderColor: string;
   cleared: boolean;
-  colors: uiState['colors'];
+  colors: ColorMap;
   cols: number | null;
   copyOnSelect: boolean;
   cursorAccentColor?: string;
@@ -378,5 +357,11 @@ export type TermProps = {
   webLinksActivationKey: string;
   ref_: (uid: string, term: Term | null) => void;
 } & extensionProps;
+
+// Utility types
+
+export type Mutable<T> = T extends Immutable<infer U> ? (Exclude<U, T> extends never ? U : Exclude<U, T>) : T;
+
+export type immutableRecord<T> = {[k in keyof T]: Immutable<T[k]>};
 
 export type Assignable<T, U> = {[k in keyof U]: k extends keyof T ? T[k] : U[k]} & Partial<T>;
