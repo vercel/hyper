@@ -157,7 +157,7 @@ args.command(
   (name, args_) => {
     const pluginName = args_[0];
     assertPluginName(pluginName);
-    open(`http://ghub.io/${pluginName}`, {wait: false, url: true});
+    open(`http://ghub.io/${pluginName}`, {wait: false});
     process.exit(0);
   },
   ['d', 'h', 'home']
