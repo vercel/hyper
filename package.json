@@ -57,7 +57,7 @@
     "xterm-addon-search": "^0.8.0",
     "xterm-addon-unicode11": "^0.2.0",
     "xterm-addon-web-links": "^0.4.0",
-    "xterm-addon-webgl": "^0.9.0"
+    "xterm-addon-webgl": "^0.10.0"
   },
   "devDependencies": {
     "@ava/babel": "1.0.1",

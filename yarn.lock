@@ -7938,10 +7938,10 @@ xterm-addon-web-links@^0.4.0:
   resolved "https://registry.npmjs.org/xterm-addon-web-links/-/xterm-addon-web-links-0.4.0.tgz#265cbf8221b9b315d0a748e1323bee331cd5da03"
   integrity sha512-xv8GeiINmx0zENO9hf5k+5bnkaE8mRzF+OBAr9WeFq2eLaQSudioQSiT34M1ofKbzcdjSsKiZm19Rw3i4eXamg==
 
-xterm-addon-webgl@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.npmjs.org/xterm-addon-webgl/-/xterm-addon-webgl-0.9.0.tgz#947ca94f9fd72462155c300dfb82bc471402d60a"
-  integrity sha512-JSRoe/MgPEKCpr7LbiC+sQUq0c9l/ZhsBXYugKx5BJsJEPsY+5EFcqAexuhsJVe/qV+CP3hsbYDe/411rw3ASA==
+xterm-addon-webgl@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.npmjs.org/xterm-addon-webgl/-/xterm-addon-webgl-0.10.0.tgz#e99366fdc4cbd46b798a5e2fc114ecc19f9fd4b7"
+  integrity sha512-MJzyWie5yw+PH6p//fXlXzmsULLtpBo992EWEKl2uv5M5Zj9etTwfuutCUK7o98mr6itDl+vS/CYIMP68jCf8w==
 
 xterm@^4.10.0:
   version "4.10.0"
