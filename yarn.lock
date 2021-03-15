@@ -3003,10 +3003,10 @@ electron@^12.0.1:
     "@types/node" "^14.6.2"
     extract-zip "^1.0.3"
 
-electronmon@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.npmjs.org/electronmon/-/electronmon-1.1.2.tgz#b64c6f20c0faeb07bec7554d1fee5c88914e7fcc"
-  integrity sha512-0VSG5sRxNLDmGYVq08BbTfXtZ7cJ6yNByuDTrHjY+S6Ms+LVGuUROtHOhm1mSFhm33es5MNwgHb9ik8M4gW4Iw==
+electronmon@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/electronmon/-/electronmon-2.0.0.tgz#79ac7cb46deac8537756c4a41e6978784aa992a0"
+  integrity sha512-U8TgiScbp3tJGxX1ZlSODFCZVdCIU8c1+olnYy7gftwI/GRMODk0GEh/nY9YV49CpPUZFUt6FBh7ygwjNeamgQ==
   dependencies:
     chalk "^3.0.0"
     import-from "^3.0.0"
