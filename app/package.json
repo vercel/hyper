@@ -37,6 +37,6 @@
     "uuid": "8.3.2"
   },
   "optionalDependencies": {
-    "native-reg": "0.3.4"
+    "native-reg": "0.3.5"
   }
 }
