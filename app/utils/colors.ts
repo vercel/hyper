@@ -25,10 +25,12 @@ export const getColorMap: {
   if (!Array.isArray(colors)) {
     return colors;
   }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return colors.reduce((result, color, index) => {
     if (index < colorList.length) {
       result[colorList[index]] = color;
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return result;
   }, {});
 };

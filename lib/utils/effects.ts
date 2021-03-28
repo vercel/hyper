@@ -14,6 +14,7 @@ const effectsMiddleware: Middleware = () => (next) => (action) => {
     action.effect();
     delete action.effect;
   }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return ret;
 };
 export default effectsMiddleware;
