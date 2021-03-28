@@ -210,8 +210,7 @@ export function newWindow(
   });
   rpc.on('open context menu', (selection) => {
     const {createWindow} = app;
-    const {buildFromTemplate} = Menu;
-    buildFromTemplate(contextMenuTemplate(createWindow, selection)).popup({window});
+    Menu.buildFromTemplate(contextMenuTemplate(createWindow, selection)).popup({window});
   });
   rpc.on('open hamburger menu', ({x, y}) => {
     Menu.getApplicationMenu()!.popup({x: Math.ceil(x), y: Math.ceil(y)});

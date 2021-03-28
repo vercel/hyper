@@ -18,6 +18,7 @@ export class Server extends EventEmitter {
     const uid = uuidv4();
     this.id = uid;
 
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     ipcMain.on(uid, this.ipcListener);
 
     // we intentionally subscribe to `on` instead of `once`
@@ -48,6 +49,7 @@ export class Server extends EventEmitter {
     this.removeAllListeners();
     this.wc.removeAllListeners();
     if (this.id) {
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       ipcMain.removeListener(this.id, this.ipcListener);
     } else {
       // mark for `genUid` in constructor
