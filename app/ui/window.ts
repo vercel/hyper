@@ -206,7 +206,7 @@ export function newWindow(
     setRendererType(uid, type);
   });
   rpc.on('open external', ({url}) => {
-    shell.openExternal(url);
+    void shell.openExternal(url);
   });
   rpc.on('open context menu', (selection) => {
     const {createWindow} = app;
@@ -277,7 +277,7 @@ export function newWindow(
     const protocol = typeof url === 'string' && parseUrl(url).protocol;
     if (protocol === 'http:' || protocol === 'https:') {
       event.preventDefault();
-      shell.openExternal(url);
+      void shell.openExternal(url);
     }
   });
 

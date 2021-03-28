@@ -59,9 +59,14 @@ const _watch = () => {
   app.on('before-quit', (e) => {
     if (Object.keys(_watcher.getWatched()).length > 0) {
       e.preventDefault();
-      _watcher.close().then(() => {
-        app.quit();
-      });
+      _watcher
+        .close()
+        .catch((err) => {
+          console.warn(err);
+        })
+        .finally(() => {
+          app.quit();
+        });
     }
   });
 };

@@ -9,7 +9,7 @@ export default (commands: Record<string, string>, showAbout: () => void): MenuIt
     {
       label: `${app.name} Website`,
       click() {
-        shell.openExternal('https://hyper.is');
+        void shell.openExternal('https://hyper.is');
       }
     },
     {
@@ -60,7 +60,7 @@ ${JSON.stringify(getPlugins(), null, 2)}
         const issueURL = `https://github.com/vercel/hyper/issues/new?body=${encodeURIComponent(body)}`;
         const copyAndSend = () => {
           clipboard.writeText(body);
-          shell.openExternal(
+          void shell.openExternal(
             `https://github.com/vercel/hyper/issues/new?body=${encodeURIComponent(
               '<!-- We have written the needed data into your clipboard because it was too large to send. ' +
                 'Please paste. -->\n'
@@ -70,7 +70,7 @@ ${JSON.stringify(getPlugins(), null, 2)}
         if (!focusedWindow) {
           copyAndSend();
         } else if (issueURL.length > 6144) {
-          dialog
+          void dialog
             .showMessageBox(focusedWindow, {
               message:
                 'There is too much data to send to GitHub directly. The data will be copied to the clipboard, ' +
@@ -84,7 +84,7 @@ ${JSON.stringify(getPlugins(), null, 2)}
               }
             });
         } else {
-          shell.openExternal(issueURL);
+          void shell.openExternal(issueURL);
         }
       }
     }

@@ -61,7 +61,7 @@ async function init() {
 
 export default (win: BrowserWindow) => {
   if (!isInit) {
-    init();
+    void init();
   }
 
   const {rpc} = win;

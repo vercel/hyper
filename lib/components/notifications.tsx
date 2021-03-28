@@ -51,7 +51,7 @@ export default class Notifications extends React.PureComponent<NotificationsProp
                     key="link"
                     style={{color: '#fff'}}
                     onClick={(ev) => {
-                      window.require('electron').shell.openExternal(ev.currentTarget.href);
+                      void window.require('electron').shell.openExternal(ev.currentTarget.href);
                       ev.preventDefault();
                     }}
                     href={this.props.messageURL}
@@ -78,7 +78,7 @@ export default class Notifications extends React.PureComponent<NotificationsProp
             <a
               style={{color: '#000'}}
               onClick={(ev) => {
-                window.require('electron').shell.openExternal(ev.currentTarget.href);
+                void window.require('electron').shell.openExternal(ev.currentTarget.href);
                 ev.preventDefault();
               }}
               href={`https://github.com/vercel/hyper/releases/tag/${this.props.updateVersion}`}
@@ -106,7 +106,7 @@ export default class Notifications extends React.PureComponent<NotificationsProp
                   fontWeight: 'bold'
                 }}
                 onClick={(ev) => {
-                  window.require('electron').shell.openExternal(ev.currentTarget.href);
+                  void window.require('electron').shell.openExternal(ev.currentTarget.href);
                   ev.preventDefault();
                 }}
                 href={this.props.updateReleaseUrl!}

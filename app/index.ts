@@ -127,7 +127,7 @@ app.on('ready', () =>
 
         const hwin = newWindow({width, height, x: startX, y: startY}, cfg, fn);
         windowSet.add(hwin);
-        hwin.loadURL(url);
+        void hwin.loadURL(url);
 
         // the window can be closed by the browser process itself
         hwin.on('close', () => {
@@ -191,7 +191,7 @@ app.on('ready', () =>
           console.log('Removing Hyper from default client for ssh:// protocol');
           app.removeAsDefaultProtocolClient('ssh');
         }
-        installCLI(false);
+        void installCLI(false);
       }
     })
     .catch((err) => {

@@ -39,7 +39,7 @@ const fetchFileData = (configData: configOptions) => {
     return;
   }
 
-  getBase64FileData(configInfo.bellSoundURL).then((base64FileData) => {
+  void getBase64FileData(configInfo.bellSoundURL).then((base64FileData) => {
     // prepend "base64," to the result of this method in order for this to work properly within xterm.js
     const bellSound = !base64FileData ? null : 'base64,' + base64FileData;
     configInfo.bellSound = bellSound;

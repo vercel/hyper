@@ -51,7 +51,7 @@ export const createMenu = (
       .map(([type, count]) => type + (count > 1 ? ` (${count})` : ''))
       .join(', ');
 
-    dialog.showMessageBox({
+    void dialog.showMessageBox({
       title: `About ${appName}`,
       message: `${appName} ${appVersion} (${updateChannel})`,
       detail: `Renderers: ${renderers}\nPlugins: ${pluginList}\n\nCreated by Guillermo Rauch\nCopyright © 2020 Vercel, Inc.`,
