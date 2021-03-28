@@ -77,6 +77,7 @@ function installDevExtensions(isDev_: boolean) {
   return Promise.all(extensions.map((name) => installer.default(installer[name], forceDownload)));
 }
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 app.on('ready', () =>
   installDevExtensions(isDev)
     .then(() => {
