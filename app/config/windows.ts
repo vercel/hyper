@@ -2,8 +2,8 @@ import Config from 'electron-store';
 import {BrowserWindow} from 'electron';
 
 export const defaults = {
-  windowPosition: [50, 50],
-  windowSize: [540, 380]
+  windowPosition: [50, 50] as [number, number],
+  windowSize: [540, 380] as [number, number]
 };
 
 // local storage

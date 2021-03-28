@@ -299,9 +299,9 @@ export function openSSH(url: string) {
       type: UI_OPEN_SSH_URL,
       effect() {
         const parsedUrl = parseUrl(url, true);
-        let command = parsedUrl.protocol + ' ' + (parsedUrl.user ? `${parsedUrl.user}@` : '') + parsedUrl.resource;
+        let command = `${parsedUrl.protocol} ${parsedUrl.user ? `${parsedUrl.user}@` : ''}${parsedUrl.resource}`;
 
-        if (parsedUrl.port) command += ' -p ' + parsedUrl.port;
+        if (parsedUrl.port) command += ` -p ${parsedUrl.port}`;
 
         command += '\n';
 
