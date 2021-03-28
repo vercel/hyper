@@ -254,13 +254,14 @@ export default class Term extends React.PureComponent<TermProps> {
 
   // intercepting paste event for any necessary processing of
   // clipboard data, if result is falsy, paste event continues
-  onWindowPaste = (e: any) => {
+  onWindowPaste = (e: Event) => {
     if (!this.props.isTermActive) return;
 
     const processed = processClipboard();
     if (processed) {
       e.preventDefault();
       e.stopPropagation();
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       (this.term as any)._core.handler(processed);
     }
   };

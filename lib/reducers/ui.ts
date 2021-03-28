@@ -304,12 +304,12 @@ const reducer = (state = initial, action: HyperActions) => {
 
     case SESSION_PTY_EXIT:
       state_ = state
-        .updateIn(['openAt'], (times: ImmutableType<any>) => {
+        .updateIn(['openAt'], (times: ImmutableType<Record<string, number>>) => {
           const times_ = times.asMutable();
           delete times_[action.uid];
           return times_;
         })
-        .updateIn(['activityMarkers'], (markers: ImmutableType<any>) => {
+        .updateIn(['activityMarkers'], (markers: ImmutableType<Record<string, boolean>>) => {
           const markers_ = markers.asMutable();
           delete markers_[action.uid];
           return markers_;

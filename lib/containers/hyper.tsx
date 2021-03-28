@@ -52,6 +52,7 @@ class Hyper extends React.PureComponent<HyperProps> {
 
   attachKeyListeners() {
     if (!this.mousetrap) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       this.mousetrap = new (Mousetrap as any)(window, true);
       this.mousetrap.stopCallback = () => {
         // All events should be intercepted even if focus is in an input/textarea
@@ -65,10 +66,10 @@ class Hyper extends React.PureComponent<HyperProps> {
     Object.keys(keys).forEach((commandKeys) => {
       this.mousetrap.bind(
         commandKeys,
-        (e: any) => {
+        (e) => {
           const command = keys[commandKeys];
           // We should tell to xterm that it should ignore this event.
-          e.catched = true;
+          (e as any).catched = true;
           this.props.execCommand(command, getCommandHandler(command), e);
           shouldPreventDefault(command) && e.preventDefault();
         },

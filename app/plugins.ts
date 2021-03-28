@@ -1,3 +1,5 @@
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import {app, dialog, BrowserWindow, App} from 'electron';
 import {resolve, basename} from 'path';
 import {writeFileSync} from 'fs';

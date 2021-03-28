@@ -51,7 +51,7 @@ export function newWindow(
   window.uid = classOpts.uid;
 
   const rpc = createRPC(window);
-  const sessions = new Map();
+  const sessions = new Map<string, Session>();
 
   const updateBackgroundColor = () => {
     const cfg_ = app.plugins.getDecoratedConfig();
@@ -187,11 +187,11 @@ export function newWindow(
       session.resize({cols, rows});
     }
   });
-  rpc.on('data', ({uid, data, escaped}) => {
+  rpc.on('data', ({uid, data, escaped}: {uid: string; data: string; escaped: boolean}) => {
     const session = sessions.get(uid);
     if (session) {
       if (escaped) {
-        const escapedData = session.shell.endsWith('cmd.exe')
+        const escapedData = session.shell?.endsWith('cmd.exe')
           ? `"${data}"` // This is how cmd.exe does it
           : `'${data.replace(/'/g, `'\\''`)}'`; // Inside a single-quoted string nothing is interpreted
 
