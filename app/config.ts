@@ -2,7 +2,6 @@ import chokidar from 'chokidar';
 import notify from './notify';
 import {_import, getDefaultConfig} from './config/import';
 import _openConfig from './config/open';
-import win from './config/windows';
 import {cfgPath, cfgDir} from './config/paths';
 import {getColorMap} from './utils/colors';
 import {parsedConfig, configOptions} from '../lib/config';
@@ -108,9 +107,7 @@ export const setup = () => {
   checkDeprecatedConfig();
 };
 
-export const getWin = win.get;
-export const winRecord = win.recordState;
-export const windowDefaults = win.defaults;
+export {get as getWin, recordState as winRecord, defaults as windowDefaults} from './config/windows';
 
 export const fixConfigDefaults = (decoratedConfig: configOptions) => {
   const defaultConfig = getDefaultConfig().config!;
