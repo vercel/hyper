@@ -213,7 +213,7 @@ function syncPackageJSON() {
 }
 
 function alert(message: string) {
-  dialog.showMessageBox({
+  void dialog.showMessageBox({
     message,
     buttons: ['Ok']
   });

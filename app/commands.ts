@@ -26,7 +26,7 @@ const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
     focusedWindow?.rpc.emit('termgroup close req');
   },
   'window:preferences': () => {
-    openConfig();
+    void openConfig();
   },
   'editor:clearBuffer': (focusedWindow) => {
     focusedWindow?.rpc.emit('session clear req');
@@ -118,7 +118,7 @@ const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
     focusedWindow?.rpc.emit('session search close');
   },
   'cli:install': () => {
-    installCLI(true);
+    void installCLI(true);
   },
   'window:hamburgerMenu': () => {
     if (process.platform !== 'darwin' && ['', true].includes(getConfig().showHamburgerMenu)) {

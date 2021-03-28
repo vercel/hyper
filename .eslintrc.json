@@ -104,7 +104,6 @@
         "@typescript-eslint/ban-types": "off",
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": ["error"],
-        "@typescript-eslint/no-floating-promises": "off",
         "@typescript-eslint/no-misused-promises": "off",
         "@typescript-eslint/no-unnecessary-type-assertion": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",
