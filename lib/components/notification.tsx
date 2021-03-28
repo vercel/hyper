@@ -50,7 +50,7 @@ export default class Notification extends React.PureComponent<NotificationProps,
   setDismissTimer() {
     this.dismissTimer = setTimeout(() => {
       this.handleDismiss();
-    }, this.props.dismissAfter!);
+    }, this.props.dismissAfter);
   }
 
   resetDismissTimer() {

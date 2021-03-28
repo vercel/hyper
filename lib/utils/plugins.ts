@@ -212,7 +212,7 @@ const getPluginName = (path: string) => pathModule.basename(path);
 const getPluginVersion = (path: string): string | null => {
   let version = null;
   try {
-    version = (window.require(pathModule.resolve(path, 'package.json')) as any).version as string;
+    version = window.require(pathModule.resolve(path, 'package.json')).version as string;
   } catch (err) {
     console.warn(`No package.json found in ${path}`);
   }
