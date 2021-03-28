@@ -13,7 +13,7 @@ import got from 'got';
 import ora from 'ora';
 import * as api from './api';
 
-let commandPromise: Promise<void>;
+let commandPromise: Promise<void> | undefined;
 
 const assertPluginName = (pluginName: string) => {
   if (!pluginName) {
