@@ -7,7 +7,10 @@ declare module 'electron' {
     getWindows: () => Set<BrowserWindow>;
     getLastFocusedWindow: () => BrowserWindow | null;
     windowCallback?: (win: BrowserWindow) => void;
-    createWindow: (fn?: (win: BrowserWindow) => void, options?: Record<string, any>) => BrowserWindow;
+    createWindow: (
+      fn?: (win: BrowserWindow) => void,
+      options?: {size?: [number, number]; position?: [number, number]}
+    ) => BrowserWindow;
     setVersion: (version: string) => void;
   }
 

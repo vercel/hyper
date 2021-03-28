@@ -81,7 +81,10 @@ function installDevExtensions(isDev_: boolean) {
 app.on('ready', () =>
   installDevExtensions(isDev)
     .then(() => {
-      function createWindow(fn?: (win: BrowserWindow) => void, options: Record<string, any> = {}) {
+      function createWindow(
+        fn?: (win: BrowserWindow) => void,
+        options: {size?: [number, number]; position?: [number, number]} = {}
+      ) {
         const cfg = plugins.getDecoratedConfig();
 
         const winSet = config.getWin();
