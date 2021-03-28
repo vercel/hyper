@@ -29,6 +29,7 @@ const config: webpack.Configuration[] = [
       ]
     },
     plugins: [
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       new Copy({
         patterns: [
           {
@@ -98,6 +99,7 @@ const config: webpack.Configuration[] = [
           NODE_ENV: JSON.stringify(nodeEnv)
         }
       }),
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       new Copy({
         patterns: [
           {

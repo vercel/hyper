@@ -47,6 +47,7 @@ export default class SplitPane extends React.PureComponent<SplitPaneProps, {drag
   };
 
   handleDragStart = (ev: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     ev.preventDefault();
     this.setState({dragging: true});
     window.addEventListener('mousemove', this.onDrag);
@@ -65,6 +66,7 @@ export default class SplitPane extends React.PureComponent<SplitPaneProps, {drag
 
     this.dragTarget = ev.target;
     this.dragPanePosition = this.dragTarget.getBoundingClientRect()[this.d2];
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     this.panesSize = ev.target.parentNode.getBoundingClientRect()[this.d1];
     this.setupPanes(ev);
   };

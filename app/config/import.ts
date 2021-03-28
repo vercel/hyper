@@ -7,7 +7,7 @@ import {rawConfig} from '../../lib/config';
 
 let defaultConfig: rawConfig;
 
-const _write = (path: string, data: any) => {
+const _write = (path: string, data: string) => {
   // This method will take text formatted as Unix line endings and transform it
   // to text formatted with DOS line endings. We do this because the default
   // text editor on Windows (notepad) doesn't Deal with LF files. Still. In 2017.

@@ -29,9 +29,7 @@ import {
 import {setActiveGroup} from './term-groups';
 import parseUrl from 'parse-url';
 import {HyperState, HyperDispatch, HyperActions} from '../hyper';
-import {Stats} from 'fs';
-
-const {stat} = window.require('fs');
+import {stat, Stats} from 'fs';
 
 export function openContextMenu(uid: string, selection: any) {
   return (dispatch: HyperDispatch, getState: () => HyperState) => {
