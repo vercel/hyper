@@ -1,3 +1,5 @@
+/* eslint-disable eslint-comments/disable-enable-pair */
+/* eslint-disable @typescript-eslint/await-thenable */
 // Native
 import path from 'path';
 import fs from 'fs-extra';

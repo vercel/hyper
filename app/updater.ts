@@ -29,8 +29,8 @@ async function init() {
     console.error('Error fetching updates', `${err.message} (${err.stack})`);
   });
 
-  const config = await retry(async () => {
-    const content = await getDecoratedConfig();
+  const config = await retry(() => {
+    const content = getDecoratedConfig();
 
     if (!content) {
       throw new Error('No config content loaded');
