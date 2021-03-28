@@ -1,4 +1,5 @@
-// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable eslint-comments/disable-enable-pair */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import {app, dialog, BrowserWindow, App} from 'electron';
 import {resolve, basename} from 'path';
@@ -100,7 +101,7 @@ function updatePlugins({force = false} = {}) {
   updating = true;
   syncPackageJSON();
   const id_ = id;
-  install((err: any) => {
+  install((err) => {
     updating = false;
 
     if (err) {
@@ -125,7 +126,9 @@ function updatePlugins({force = false} = {}) {
       cache.set('hyper.plugin-versions', pluginVersions);
 
       // notify watchers
-      watchers.forEach((fn) => fn(err, {force}));
+      watchers.forEach((fn) => {
+        fn(err, {force});
+      });
 
       if (force || changed) {
         if (changed) {
@@ -142,7 +145,7 @@ function updatePlugins({force = false} = {}) {
 function getPluginVersions() {
   const paths_ = paths.plugins.concat(paths.localPlugins);
   return paths_.map((path_) => {
-    let version = null;
+    let version: string | null = null;
     try {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       version = require(resolve(path_, 'package.json')).version;

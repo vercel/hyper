@@ -148,7 +148,8 @@ export default class Term extends React.PureComponent<TermProps> {
       }
       Term.reportRenderer(props.uid, useWebGL ? 'WebGL' : 'Canvas');
 
-      const shallActivateWebLink = (event: Record<string, any> | undefined) => {
+      const shallActivateWebLink = (event: Record<string, any> | undefined): boolean => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return event && (!props.webLinksActivationKey || event[`${props.webLinksActivationKey}Key`]);
       };
 

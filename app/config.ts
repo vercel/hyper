@@ -44,7 +44,9 @@ const _watch = () => {
     setTimeout(() => {
       cfg = _import();
       notify('Configuration updated', 'Hyper configuration reloaded!');
-      watchers.forEach((fn) => fn());
+      watchers.forEach((fn) => {
+        fn();
+      });
       checkDeprecatedConfig();
     }, 100);
   };

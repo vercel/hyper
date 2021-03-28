@@ -9,6 +9,7 @@ const _extract = (script?: vm.Script): Record<string, any> => {
   if (!module.exports) {
     throw new Error('Error reading configuration: `module.exports` not set');
   }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return module.exports;
 };
 

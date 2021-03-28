@@ -98,7 +98,9 @@ export function newWindow(
     // If no callback is passed to createWindow,
     // a new session will be created by default.
     if (!fn) {
-      fn = (win: BrowserWindow) => win.rpc.emit('termgroup add req', {});
+      fn = (win: BrowserWindow) => {
+        win.rpc.emit('termgroup add req', {});
+      };
     }
 
     // app.windowCallback is the createWindow callback
@@ -219,7 +221,9 @@ export function newWindow(
   // is maximized on Windows results in unmaximize, without hitting any
   // app buttons
   for (const ev of ['maximize', 'unmaximize', 'minimize', 'restore'] as any) {
-    window.on(ev, () => rpc.emit('windowGeometry change', {}));
+    window.on(ev, () => {
+      rpc.emit('windowGeometry change', {});
+    });
   }
   window.on('move', () => {
     const position = window.getPosition();

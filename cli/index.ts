@@ -84,8 +84,9 @@ const lsRemote = (pattern?: string) => {
   const URL = `https://api.npms.io/v2/search?q=${
     (pattern && `${pattern}+`) || ''
   }keywords:hyper-plugin,hyper-theme&size=250`;
+  type npmResult = {package: {name: string; description: string}};
   return got(URL)
-    .then((response) => JSON.parse(response.body).results as any[])
+    .then((response) => JSON.parse(response.body).results as npmResult[])
     .then((entries) => entries.map((entry) => entry.package))
     .then((entries) =>
       entries.map(({name, description}) => {

@@ -205,7 +205,9 @@ app.on('ready', () =>
 
 app.on('open-file', (event, path) => {
   const lastWindow = app.getLastFocusedWindow();
-  const callback = (win: BrowserWindow) => win.rpc.emit('open file', {path});
+  const callback = (win: BrowserWindow) => {
+    win.rpc.emit('open file', {path});
+  };
   if (lastWindow) {
     callback(lastWindow);
   } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
@@ -219,7 +221,9 @@ app.on('open-file', (event, path) => {
 
 app.on('open-url', (event, sshUrl) => {
   const lastWindow = app.getLastFocusedWindow();
-  const callback = (win: BrowserWindow) => win.rpc.emit('open ssh', sshUrl);
+  const callback = (win: BrowserWindow) => {
+    win.rpc.emit('open ssh', sshUrl);
+  };
   if (lastWindow) {
     callback(lastWindow);
   } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
