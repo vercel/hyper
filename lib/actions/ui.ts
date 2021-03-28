@@ -144,7 +144,7 @@ function moveToNeighborPane(type: typeof UI_MOVE_NEXT_PANE | typeof UI_MOVE_PREV
         if (childGroups.length === 1) {
           console.log('ignoring move for single group');
         } else {
-          const index = getNeighborIndex(childGroups, uid!, type);
+          const index = getNeighborIndex(childGroups, uid, type);
           const {sessionUid} = termGroups.termGroups[childGroups[index]];
           dispatch(setActiveSession(sessionUid!));
         }

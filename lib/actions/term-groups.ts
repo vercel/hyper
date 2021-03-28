@@ -101,7 +101,7 @@ const findNextSessionUid = (state: Immutable<ITermState>, group: Immutable<ITerm
 
   const {children} = state.termGroups[group.parentUid!];
   const nextUid = findPrevious(children.asMutable(), group.uid);
-  return findFirstSession(state, state.termGroups[nextUid!]);
+  return findFirstSession(state, state.termGroups[nextUid]);
 };
 
 export function ptyExitTermGroup(sessionUid: string) {
@@ -168,7 +168,7 @@ export function exitActiveTermGroup() {
       effect() {
         const {sessions, termGroups} = getState();
         const {uid} = findBySession(termGroups, sessions.activeUid!)!;
-        dispatch(userExitTermGroup(uid!));
+        dispatch(userExitTermGroup(uid));
       }
     });
   };

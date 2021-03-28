@@ -126,7 +126,7 @@ const _importConf = () => {
 export const _import = () => {
   const imported = _importConf();
   defaultConfig = imported.defaultCfg;
-  const result = _init(imported!);
+  const result = _init(imported);
   return result;
 };
 
