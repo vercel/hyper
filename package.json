@@ -67,7 +67,7 @@
     "@babel/plugin-proposal-numeric-separator": "^7.12.13",
     "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
     "@babel/plugin-proposal-optional-chaining": "7.13.8",
-    "@babel/preset-react": "7.12.13",
+    "@babel/preset-react": "7.13.13",
     "@babel/preset-typescript": "7.13.0",
     "@types/args": "3.0.0",
     "@types/async-retry": "1.4.2",
