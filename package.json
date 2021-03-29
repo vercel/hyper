@@ -62,7 +62,7 @@
   "devDependencies": {
     "@ava/babel": "1.0.1",
     "@babel/cli": "7.13.10",
-    "@babel/core": "7.13.10",
+    "@babel/core": "7.13.13",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-proposal-numeric-separator": "^7.12.13",
     "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
