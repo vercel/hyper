@@ -74,7 +74,7 @@
     "@types/color": "3.0.1",
     "@types/columnify": "^1.5.0",
     "@types/electron-devtools-installer": "2.2.0",
-    "@types/fs-extra": "9.0.8",
+    "@types/fs-extra": "9.0.9",
     "@types/lodash": "^4.14.168",
     "@types/mkdirp": "1.0.1",
     "@types/mousetrap": "1.6.3",
