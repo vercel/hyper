@@ -45,7 +45,7 @@
     "redux-thunk": "2.3.0",
     "reselect": "4.0.0",
     "seamless-immutable": "7.1.4",
-    "semver": "7.3.4",
+    "semver": "7.3.5",
     "shebang-loader": "0.0.1",
     "styled-jsx": "3.4.4",
     "stylis": "3.5.4",
