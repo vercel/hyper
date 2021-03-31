@@ -1,0 +1,40 @@
+name: Comment spectron screenshots on PR
+on:
+  workflow_run:
+    workflows: ['Node CI']
+    types:
+      - completed
+jobs:
+  spectron_comment:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.event == 'pull_request'
+    steps:
+      - name: Download Artifacts
+        uses: dawidd6/action-download-artifact@v2.11.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: nodejs.yml
+          run_id: ${{ github.event.workflow_run.id }}
+          name: spectron
+      - name: List images
+        run: ls -al
+      - name: Upload images to imgur
+        id: upload_screenshots
+        uses: devicons/public-upload-to-imgur@v2.2.1
+        with:
+          path: ./*.png
+          client_id: ${{ secrets.IMGUR_CLIENT_ID }}
+      - name: Comment on the PR
+        uses: jungwinter/comment@v1
+        env:
+          IMG_MARKDOWN: ${{ join(fromJSON(steps.upload_screenshots.outputs.markdown_urls), '') }}
+          MESSAGE: |
+            Hi there,
+            Here are screenshots of Hyper built from this pr.
+            {0}
+            Thank you for contributing to Hyper!
+        with:
+          type: create
+          issue_number: ${{ github.event.workflow_run.pull_requests[0].number }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: ${{ format(env.MESSAGE, env.IMG_MARKDOWN) }}
