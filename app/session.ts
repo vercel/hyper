@@ -187,7 +187,7 @@ please check the shell config: ${JSON.stringify({shell, shellArgs}, undefined, 2
 fallback to default shell config: ${JSON.stringify(defaultShellConfig, undefined, 2)}
 `;
           console.warn(msg);
-          this.batcher?.write(msg.replaceAll('\n', '\r\n') as any);
+          this.batcher?.write(msg.replace(/\n/g, '\r\n') as any);
           this.init({uid, rows, cols: columns, cwd, ...defaultShellConfig});
         } else {
           this.ended = true;
