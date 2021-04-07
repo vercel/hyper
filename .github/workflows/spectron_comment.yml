@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.workflow_run.event == 'pull_request'
     steps:
+      - name: Dump Workflow run info from GitHub context
+        env:
+          WORKFLOW_RUN_INFO: ${{ toJSON(github.event.workflow_run) }}
+        run: echo "$WORKFLOW_RUN_INFO"
       - name: Download Artifacts
         uses: dawidd6/action-download-artifact@v2.11.0
         with:
