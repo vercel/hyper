@@ -3,13 +3,8 @@
     "allowJs": true,
     "checkJs": false,
     "composite": true,
-    "downlevelIteration": true,
     "esModuleInterop": true,
     "jsx": "react",
-    "lib": [
-      "dom",
-      "es2017"
-    ],
     "module": "commonjs",
     "moduleResolution": "node",
     "preserveConstEnums": true,
@@ -17,7 +12,7 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2018",
+    "target": "ES2020",
     "typeRoots": [
       "./node_modules/@types"
     ]
