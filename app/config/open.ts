@@ -1,10 +1,9 @@
 import {shell} from 'electron';
 import {cfgPath} from './paths';
-import {Registry, loadRegistry} from '../utils/registry';
+import * as Registry from 'native-reg';
 import {exec} from 'child_process';
 
 const getUserChoiceKey = () => {
-  if (!loadRegistry()) return;
   try {
     // Load FileExts keys for .js files
     const fileExtsKeys = Registry.openKey(
@@ -27,7 +26,6 @@ const getUserChoiceKey = () => {
 };
 
 const hasDefaultSet = () => {
-  if (!loadRegistry()) return false;
   const userChoice = getUserChoiceKey();
   if (!userChoice) return false;
 
