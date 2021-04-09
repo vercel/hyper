@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import notify from '../notify';
 import {cliScriptPath, cliLinkPath} from '../config/paths';
-import {Registry, loadRegistry} from './registry';
+import * as Registry from 'native-reg';
 import type {ValueType} from 'native-reg';
 import sudoPrompt from 'sudo-prompt';
 import {clipboard, dialog} from 'electron';
@@ -73,10 +73,6 @@ sudo ln -sf "${cliScriptPath}" "${cliLinkPath}"`,
 
 const addBinToUserPath = () => {
   return new Promise<void>((resolve, reject) => {
-    if (!loadRegistry()) {
-      reject('Failed to load Registry Module');
-      return;
-    }
     try {
       const envKey = Registry.openKey(Registry.HKCU, 'Environment', Registry.Access.ALL_ACCESS)!;
 
