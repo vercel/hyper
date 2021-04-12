@@ -90,7 +90,7 @@
     "@types/terser-webpack-plugin": "5.0.3",
     "@types/uuid": "8.3.0",
     "@typescript-eslint/eslint-plugin": "4.20.0",
-    "@typescript-eslint/parser": "4.20.0",
+    "@typescript-eslint/parser": "4.21.0",
     "ava": "3.15.0",
     "babel-loader": "8.2.2",
     "concurrently": "6.0.0",
