@@ -102,7 +102,7 @@
     "electron-devtools-installer": "3.1.1",
     "electron-rebuild": "2.3.5",
     "electronmon": "^2.0.0",
-    "eslint": "7.23.0",
+    "eslint": "7.24.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-prettier": "3.3.1",
