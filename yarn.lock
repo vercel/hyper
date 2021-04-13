@@ -8223,10 +8223,10 @@ webpack-sources@^2.1.1:
     source-list-map "^2.0.1"
     source-map "^0.6.1"
 
-webpack@5.30.0, webpack@^5.1.0:
-  version "5.30.0"
-  resolved "https://registry.npmjs.org/webpack/-/webpack-5.30.0.tgz#07d87c182a060e0c2491062f3dc0edc85a29d884"
-  integrity sha512-Zr9NIri5yzpfmaMea2lSMV1UygbW0zQsSlGLMgKUm63ACXg6alhd1u4v5UBSBjzYKXJN6BNMGVM7w165e7NxYA==
+webpack@5.32.0, webpack@^5.1.0:
+  version "5.32.0"
+  resolved "https://registry.npmjs.org/webpack/-/webpack-5.32.0.tgz#f013932d778dad81bd51292d0ea00865056dc22c"
+  integrity sha512-jB9PrNMFnPRiZGnm/j3qfNqJmP3ViRzkuQMIf8za0dgOYvSLi/cgA+UEEGvik9EQHX1KYyGng5PgBTTzGrH9xg==
   dependencies:
     "@types/eslint-scope" "^3.7.0"
     "@types/estree" "^0.0.46"
