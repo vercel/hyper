@@ -3117,15 +3117,15 @@ electron@^12.0.2:
     "@types/node" "^14.6.2"
     extract-zip "^1.0.3"
 
-electronmon@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/electronmon/-/electronmon-2.0.0.tgz#79ac7cb46deac8537756c4a41e6978784aa992a0"
-  integrity sha512-U8TgiScbp3tJGxX1ZlSODFCZVdCIU8c1+olnYy7gftwI/GRMODk0GEh/nY9YV49CpPUZFUt6FBh7ygwjNeamgQ==
+electronmon@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/electronmon/-/electronmon-2.0.1.tgz#f946ec432bf12e87c948921204b7b2b76a86e7ca"
+  integrity sha512-ircyGO6PLlJJ8fmfDTMbdJedzScRHI96AnLkRz8ezpmaz5Nh5wUI/D/h35R8VZxRwKAII/w3whRpaXyO1/SgXg==
   dependencies:
     chalk "^3.0.0"
     import-from "^3.0.0"
     runtime-required "^1.0.2"
-    watchboy "^0.4.2"
+    watchboy "^0.4.3"
 
 emittery@^0.8.0:
   version "0.8.0"
@@ -8121,10 +8121,10 @@ version-range@^1.0.0:
   dependencies:
     version-compare "^1.0.0"
 
-watchboy@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.npmjs.org/watchboy/-/watchboy-0.4.2.tgz#a5ca6b64a32eb7da9d740b0e021bc1c533f1d555"
-  integrity sha512-bzzZDhNjLvnn66q3zvwZ5vgF/aeI53z30yo7qgwCU8QrbjOR/Whl7gdoY28vXTp4lz7qo43jU0a2+iv9pedHzg==
+watchboy@^0.4.3:
+  version "0.4.3"
+  resolved "https://registry.npmjs.org/watchboy/-/watchboy-0.4.3.tgz#4b766e7923d8122e5811a6b9736a8e3e5943838c"
+  integrity sha512-GHs1HxwvxSMBsqd/WfTOZhj5gBdMqf5HQpfgtKxDfZRxrlYPDdVLRB61LCeRzJaWANmvSIMlfmRVDwVmJFgAKA==
   dependencies:
     lodash.difference "^4.5.0"
     micromatch "^4.0.2"
