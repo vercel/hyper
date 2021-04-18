@@ -60,7 +60,7 @@ const openNotepad = (file: string) =>
         exec(`start write.exe ${file}`, (error) => {
           resolve(!error);
         });
-      };
+      }
       resolve(!error);
     });
   });
