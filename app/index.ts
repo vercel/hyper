@@ -64,17 +64,20 @@ if (isDev) {
 const url = `file://${resolve(isDev ? __dirname : app.getAppPath(), 'index.html')}`;
 console.log('electron will open', url);
 
-function installDevExtensions(isDev_: boolean) {
+async function installDevExtensions(isDev_: boolean) {
   if (!isDev_) {
-    return Promise.resolve([]);
+    return [];
   }
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const installer = require('electron-devtools-installer') as typeof import('electron-devtools-installer');
+  const installer = await import('electron-devtools-installer');
 
   const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'] as const;
   const forceDownload = Boolean(process.env.UPGRADE_EXTENSIONS);
 
-  return Promise.all(extensions.map((name) => installer.default(installer[name], forceDownload)));
+  return Promise.all(
+    extensions.map((name) =>
+      installer.default(installer[name], {forceDownload, loadExtensionOptions: {allowFileAccess: true}})
+    )
+  );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
