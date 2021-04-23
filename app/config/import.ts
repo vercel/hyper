@@ -23,17 +23,12 @@ const _write = (path: string, data: string) => {
 const saveAsBackup = (src: string) => {
   let attempt = 1;
   while (attempt < 100) {
-    try {
-      const backupPath = `${src}.backup${attempt === 1 ? '' : attempt}`;
+    const backupPath = `${src}.backup${attempt === 1 ? '' : attempt}`;
+    if (!existsSync(backupPath)) {
       moveSync(src, backupPath);
       return backupPath;
-    } catch (e) {
-      if (e.code === 'EEXIST') {
-        attempt++;
-      } else {
-        throw e;
-      }
     }
+    attempt++;
   }
   throw new Error('Failed to create backup for config file. Too many backups');
 };
