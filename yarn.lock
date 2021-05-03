@@ -5962,10 +5962,10 @@ onetime@^5.1.0, onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
-open@8.0.6:
-  version "8.0.6"
-  resolved "https://registry.npmjs.org/open/-/open-8.0.6.tgz#bdf94a80b4ef5685d8c7b58fb0fbbe5729b37204"
-  integrity sha512-vDOC0KwGabMPFtIpCO2QOnQeOz0N2rEkbuCuxICwLMUCrpv+A7NHrrzJ2dQReJmVluHhO4pYRh/Pn6s8t7Op6Q==
+open@8.0.7:
+  version "8.0.7"
+  resolved "https://registry.npmjs.org/open/-/open-8.0.7.tgz#5597eeff14b440f6ff78fb7ced9ede9f69b2122d"
+  integrity sha512-qoyG0kpdaWVoL5MiwTRQWujSdivwBOgfLadVEdpsZNHOK1+kBvmVtLYdgWr8G4cgBpG9zaxezn6jz6PPdQW5xg==
   dependencies:
     define-lazy-prop "^2.0.0"
     is-docker "^2.1.1"
