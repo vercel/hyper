@@ -1,5 +1,5 @@
 import React from 'react';
-import Mousetrap from 'mousetrap';
+import Mousetrap, {MousetrapInstance} from 'mousetrap';
 
 import {connect} from '../utils/plugins';
 import * as uiActions from '../actions/ui';
