@@ -16,5 +16,6 @@ yarn-error.log
 .hyper_plugins
 
 .DS_Store
-.vscode/settings.json
+.vscode/*
+!.vscode/launch.json
 .idea
