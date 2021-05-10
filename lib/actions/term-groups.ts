@@ -13,19 +13,20 @@ import {setActiveSession, ptyExitSession, userExitSession} from './sessions';
 import {ITermState, ITermGroup, HyperState, HyperDispatch, HyperActions} from '../hyper';
 
 function requestSplit(direction: 'VERTICAL' | 'HORIZONTAL') {
-  return (activeUid: string) => (dispatch: HyperDispatch, getState: () => HyperState): void => {
-    dispatch({
-      type: SESSION_REQUEST,
-      effect: () => {
-        const {ui, sessions} = getState();
-        rpc.emit('new', {
-          splitDirection: direction,
-          cwd: ui.cwd,
-          activeUid: activeUid ? activeUid : sessions.activeUid
-        });
-      }
-    });
-  };
+  return (activeUid: string) =>
+    (dispatch: HyperDispatch, getState: () => HyperState): void => {
+      dispatch({
+        type: SESSION_REQUEST,
+        effect: () => {
+          const {ui, sessions} = getState();
+          rpc.emit('new', {
+            splitDirection: direction,
+            cwd: ui.cwd,
+            activeUid: activeUid ? activeUid : sessions.activeUid
+          });
+        }
+      });
+    };
 }
 
 export const requestVerticalSplit = requestSplit(DIRECTION.VERTICAL);

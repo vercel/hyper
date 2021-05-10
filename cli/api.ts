@@ -108,15 +108,13 @@ function getPackageName(plugin: string) {
 
 function existsOnNpm(plugin: string) {
   const name = getPackageName(plugin);
-  return got
-    .get<any>(registryUrl + name.toLowerCase(), {timeout: 10000, responseType: 'json'})
-    .then((res) => {
-      if (!res.body.versions) {
-        return Promise.reject(res);
-      } else {
-        return res;
-      }
-    });
+  return got.get<any>(registryUrl + name.toLowerCase(), {timeout: 10000, responseType: 'json'}).then((res) => {
+    if (!res.body.versions) {
+      return Promise.reject(res);
+    } else {
+      return res;
+    }
+  });
 }
 
 function install(plugin: string, locally?: boolean) {
