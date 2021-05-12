@@ -206,11 +206,12 @@ app.on('ready', () =>
     })
 );
 
-app.on('open-file', (event, path) => {
+/**
+ * Get last focused BrowserWindow or create new if none and callback
+ * @param callback Function to call with the BrowserWindow
+ */
+function GetWindow(callback: (win: BrowserWindow) => void) {
   const lastWindow = app.getLastFocusedWindow();
-  const callback = (win: BrowserWindow) => {
-    win.rpc.emit('open file', {path});
-  };
   if (lastWindow) {
     callback(lastWindow);
   } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
@@ -220,20 +221,16 @@ app.on('open-file', (event, path) => {
     // sets his callback to an app.windowCallback property.
     app.windowCallback = callback;
   }
+}
+
+app.on('open-file', (_event, path) => {
+  GetWindow((win: BrowserWindow) => {
+    win.rpc.emit('open file', {path});
+  });
 });
 
-app.on('open-url', (event, sshUrl) => {
-  const lastWindow = app.getLastFocusedWindow();
-  const callback = (win: BrowserWindow) => {
+app.on('open-url', (_event, sshUrl) => {
+  GetWindow((win: BrowserWindow) => {
     win.rpc.emit('open ssh', sshUrl);
-  };
-  if (lastWindow) {
-    callback(lastWindow);
-  } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
-    app.createWindow(callback);
-  } else {
-    // If createWindow doesn't exist yet ('ready' event was not fired),
-    // sets his callback to an app.windowCallback property.
-    app.windowCallback = callback;
-  }
+  });
 });
