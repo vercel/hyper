@@ -206,8 +206,11 @@ app.on('ready', () =>
     })
 );
 
-// TODO: Help name this function
-function HelpNameThis(callback: (win: BrowserWindow) => void) {
+/**
+ * Get last focused BrowserWindow or create new if none and callback
+ * @param callback Function to call with the BrowserWindow
+ */
+function GetWindow(callback: (win: BrowserWindow) => void) {
   const lastWindow = app.getLastFocusedWindow();
   if (lastWindow) {
     callback(lastWindow);
@@ -221,13 +224,13 @@ function HelpNameThis(callback: (win: BrowserWindow) => void) {
 }
 
 app.on('open-file', (_event, path) => {
-  HelpNameThis((win: BrowserWindow) => {
+  GetWindow((win: BrowserWindow) => {
     win.rpc.emit('open file', {path});
   });
 });
 
 app.on('open-url', (_event, sshUrl) => {
-  HelpNameThis((win: BrowserWindow) => {
-    win.rpc.emit('open file', sshUrl);
+  GetWindow((win: BrowserWindow) => {
+    win.rpc.emit('open ssh', sshUrl);
   });
 });
