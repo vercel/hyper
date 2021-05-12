@@ -26,6 +26,7 @@ import {installCLI} from './utils/cli-install';
 import * as AppMenu from './menus/menu';
 import {newWindow} from './ui/window';
 import * as windowUtils from './utils/window-utils';
+import help from './menus/menus/help';
 
 const windowSet = new Set<BrowserWindow>([]);
 
@@ -206,11 +207,11 @@ app.on('ready', () =>
     })
 );
 
-app.on('open-file', (event, path) => {
+// TODO: Help name this function
+// FIXME: I used the Any type because I haven't got the slightest clue what type is being used
+// for window events. :^(
+function HelpNameThis(callback: (win: BrowserWindow) => void) {
   const lastWindow = app.getLastFocusedWindow();
-  const callback = (win: BrowserWindow) => {
-    win.rpc.emit('open file', {path});
-  };
   if (lastWindow) {
     callback(lastWindow);
   } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
@@ -220,20 +221,16 @@ app.on('open-file', (event, path) => {
     // sets his callback to an app.windowCallback property.
     app.windowCallback = callback;
   }
+}
+
+app.on('open-file', (_event, path) => {
+  HelpNameThis((win: BrowserWindow) => {
+    win.rpc.emit('open file', {path});
+  });
 });
 
-app.on('open-url', (event, sshUrl) => {
-  const lastWindow = app.getLastFocusedWindow();
-  const callback = (win: BrowserWindow) => {
-    win.rpc.emit('open ssh', sshUrl);
-  };
-  if (lastWindow) {
-    callback(lastWindow);
-  } else if (!lastWindow && {}.hasOwnProperty.call(app, 'createWindow')) {
-    app.createWindow(callback);
-  } else {
-    // If createWindow doesn't exist yet ('ready' event was not fired),
-    // sets his callback to an app.windowCallback property.
-    app.windowCallback = callback;
-  }
+app.on('open-url', (_event, sshUrl) => {
+  HelpNameThis((win: BrowserWindow) => {
+    win.rpc.emit('open file', sshUrl);
+  });
 });
