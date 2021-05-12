@@ -207,8 +207,6 @@ app.on('ready', () =>
 );
 
 // TODO: Help name this function
-// FIXME: I used the Any type because I haven't got the slightest clue what type is being used
-// for window events. :^(
 function HelpNameThis(callback: (win: BrowserWindow) => void) {
   const lastWindow = app.getLastFocusedWindow();
   if (lastWindow) {
