@@ -26,7 +26,6 @@ import {installCLI} from './utils/cli-install';
 import * as AppMenu from './menus/menu';
 import {newWindow} from './ui/window';
 import * as windowUtils from './utils/window-utils';
-import help from './menus/menus/help';
 
 const windowSet = new Set<BrowserWindow>([]);
 
