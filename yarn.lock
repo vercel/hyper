@@ -69,10 +69,10 @@
   dependencies:
     "@babel/highlight" "^7.12.13"
 
-"@babel/compat-data@^7.13.15", "@babel/compat-data@^7.14.0":
-  version "7.14.0"
-  resolved "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.14.0.tgz#a901128bce2ad02565df95e6ecbf195cf9465919"
-  integrity sha512-vu9V3uMM/1o5Hl5OekMUowo3FqXLJSw+s+66nt0fSWVWTtmosdzn45JHOB3cPtZoe6CTBDzvSw0RdOY85Q37+Q==
+"@babel/compat-data@^7.14.4":
+  version "7.14.4"
+  resolved "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.14.4.tgz#45720fe0cecf3fd42019e1d12cc3d27fadc98d58"
+  integrity sha512-i2wXrWQNkH6JplJQGn3Rd2I4Pij8GdHkXwHMxm+zV5YG/Jci+bCNrWZEWC4o+umiDkRrRs4dVzH3X4GP7vyjQQ==
 
 "@babel/core@7.14.3", "@babel/core@^7.8.4":
   version "7.14.3"
@@ -118,14 +118,14 @@
   dependencies:
     "@babel/types" "^7.12.13"
 
-"@babel/helper-compilation-targets@^7.13.16":
-  version "7.13.16"
-  resolved "https://registry.npmjs.org/@babel/helper-compilation-targets/-/helper-compilation-targets-7.13.16.tgz#6e91dccf15e3f43e5556dffe32d860109887563c"
-  integrity sha512-3gmkYIrpqsLlieFwjkGgLaSHmhnvlAYzZLlYVjlW+QwI+1zE17kGxuJGmIqDQdYp56XdmGeD+Bswx0UTyG18xA==
+"@babel/helper-compilation-targets@^7.13.16", "@babel/helper-compilation-targets@^7.14.4":
+  version "7.14.4"
+  resolved "https://registry.npmjs.org/@babel/helper-compilation-targets/-/helper-compilation-targets-7.14.4.tgz#33ebd0ffc34248051ee2089350a929ab02f2a516"
+  integrity sha512-JgdzOYZ/qGaKTVkn5qEDV/SXAh8KcyUVkCoSWGN8T3bwrgd6m+/dJa2kVGi6RJYJgEYPBdZ84BZp9dUjNWkBaA==
   dependencies:
-    "@babel/compat-data" "^7.13.15"
+    "@babel/compat-data" "^7.14.4"
     "@babel/helper-validator-option" "^7.12.17"
-    browserslist "^4.14.5"
+    browserslist "^4.16.6"
     semver "^6.3.0"
 
 "@babel/helper-create-class-features-plugin@^7.13.0":
@@ -336,13 +336,13 @@
     "@babel/helper-plugin-utils" "^7.13.0"
     "@babel/plugin-syntax-numeric-separator" "^7.10.4"
 
-"@babel/plugin-proposal-object-rest-spread@^7.14.2":
-  version "7.14.2"
-  resolved "https://registry.npmjs.org/@babel/plugin-proposal-object-rest-spread/-/plugin-proposal-object-rest-spread-7.14.2.tgz#e17d418f81cc103fedd4ce037e181c8056225abc"
-  integrity sha512-hBIQFxwZi8GIp934+nj5uV31mqclC1aYDhctDu5khTi9PCCUOczyy0b34W0oE9U/eJXiqQaKyVsmjeagOaSlbw==
+"@babel/plugin-proposal-object-rest-spread@^7.14.4":
+  version "7.14.4"
+  resolved "https://registry.npmjs.org/@babel/plugin-proposal-object-rest-spread/-/plugin-proposal-object-rest-spread-7.14.4.tgz#0e2b4de419915dc0b409378e829412e2031777c4"
+  integrity sha512-AYosOWBlyyXEagrPRfLJ1enStufsr7D1+ddpj8OLi9k7B6+NdZ0t/9V7Fh+wJ4g2Jol8z2JkgczYqtWrZd4vbA==
   dependencies:
-    "@babel/compat-data" "^7.14.0"
-    "@babel/helper-compilation-targets" "^7.13.16"
+    "@babel/compat-data" "^7.14.4"
+    "@babel/helper-compilation-targets" "^7.14.4"
     "@babel/helper-plugin-utils" "^7.13.0"
     "@babel/plugin-syntax-object-rest-spread" "^7.8.3"
     "@babel/plugin-transform-parameters" "^7.14.2"
@@ -1930,7 +1930,7 @@ braces@^3.0.1, braces@~3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
-browserslist@^4.14.5:
+browserslist@^4.14.5, browserslist@^4.16.6:
   version "4.16.6"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.16.6.tgz#d7901277a5a88e554ed305b183ec9b0c08f66fa2"
   integrity sha512-Wspk/PqO+4W9qp5iUTJsa1B/QrYn1keNCcEP5OvP7WBwT4KaDly0uONYmC6Xa3Z5IqnUgS0KcgLYu1l74x0ZXQ==
