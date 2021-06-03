@@ -38,11 +38,11 @@ jobs:
       - name: Build (push)
         if: github.event_name == 'push'
         run: yarn run dist --publish=never
-        # env:
-        #   CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
-        #   CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
-        #   WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
-        #   WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
+        env:
+          CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
+          WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
       - name: Test Spectron
         if: runner.os != 'Linux'
         run: yarn run test:spectron
