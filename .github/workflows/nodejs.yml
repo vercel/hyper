@@ -37,8 +37,9 @@ jobs:
         run: yarn run dist --publish=never
       - name: Build (push)
         if: github.event_name == 'push'
-        run: yarn run dist --publish=never
+        run: yarn run dist
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
           WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
