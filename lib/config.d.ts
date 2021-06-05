@@ -1,4 +1,5 @@
 import {FontWeight} from 'xterm';
+import {Vibrancy} from 'electron-acrylic-window';
 
 export type ColorMap = {
   black: string;
@@ -63,6 +64,7 @@ export type configOptions = {
   webGLRenderer: boolean;
   webLinksActivationKey: 'ctrl' | 'alt' | 'meta' | 'shift';
   windowSize: [number, number];
+  vibrancy: Vibrancy;
 };
 
 export type rawConfig = {
