@@ -1,4 +1,4 @@
-import {AcrylicBrowserWindowConstructorOptions, BrowserWindow, setVibrancy } from 'electron-acrylic-window';
+import {AcrylicBrowserWindowConstructorOptions, BrowserWindow, setVibrancy} from 'electron-acrylic-window';
 import {app, shell, Menu, BrowserWindowConstructorOptions} from 'electron';
 import {isAbsolute, normalize, sep} from 'path';
 import {parse as parseUrl} from 'url';

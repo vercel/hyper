@@ -1,4 +1,5 @@
 import type {Server} from './rpc';
+import type {Vibrancy} from 'electron-acrylic-window';
 
 declare module 'electron' {
   interface App {
@@ -21,5 +22,11 @@ declare module 'electron' {
     focusTime: number;
     clean: () => void;
     rpc: Server;
+  }
+}
+
+declare module 'electron-acrylic-window' {
+  interface BrowserWindow {
+    setVibrancy(options?: Vibrancy | null): void;
   }
 }
