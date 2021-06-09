@@ -1,4 +1,5 @@
-import {app, BrowserWindow, shell, Menu, BrowserWindowConstructorOptions} from 'electron';
+import {AcrylicBrowserWindowConstructorOptions, BrowserWindow, setVibrancy} from 'electron-acrylic-window';
+import {app, shell, Menu, BrowserWindowConstructorOptions} from 'electron';
 import {isAbsolute, normalize, sep} from 'path';
 import {parse as parseUrl} from 'url';
 import {v4 as uuidv4} from 'uuid';
@@ -24,7 +25,7 @@ export function newWindow(
   const classOpts = Object.assign({uid: uuidv4()});
   app.plugins.decorateWindowClass(classOpts);
 
-  const winOpts: BrowserWindowConstructorOptions = {
+  const winOpts: AcrylicBrowserWindowConstructorOptions = {
     minWidth: 370,
     minHeight: 190,
     backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
@@ -42,6 +43,7 @@ export function newWindow(
       enableRemoteModule: true,
       contextIsolation: false
     },
+    vibrancy: cfg.vibrancy,
     ...options_
   };
   const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(winOpts));
