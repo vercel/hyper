@@ -1006,10 +1006,10 @@
   resolved "https://registry.npmjs.org/@types/yargs-parser/-/yargs-parser-20.2.0.tgz#dd3e6699ba3237f0348cd085e4698780204842f9"
   integrity sha512-37RSHht+gzzgYeobbG+KWryeAW8J33Nhr69cjTqSYymXVZEN9NbRYWoYlRtDhHKPVT1FyNKwaTPC1NynKZpzRA==
 
-"@types/yargs@^16.0.1":
-  version "16.0.1"
-  resolved "https://registry.npmjs.org/@types/yargs/-/yargs-16.0.1.tgz#5fc5d41f69762e00fbecbc8d4bf9dea47d8726f4"
-  integrity sha512-x4HABGLyzr5hKUzBC9dvjciOTm11WVH1NWonNjGgxapnTHu5SWUqyqn0zQ6Re0yQU0lsQ6ztLCoMAKDGZflyxA==
+"@types/yargs@^16.0.2":
+  version "16.0.3"
+  resolved "https://registry.npmjs.org/@types/yargs/-/yargs-16.0.3.tgz#4b6d35bb8e680510a7dc2308518a80ee1ef27e01"
+  integrity sha512-YlFfTGS+zqCgXuXNV26rOIeETOkXnGQXP/pjjL9P0gO/EP9jTmc7pUBhx+jVEIxpq41RX33GQ7N3DzOSfZoglQ==
   dependencies:
     "@types/yargs-parser" "*"
 
@@ -1468,10 +1468,10 @@ app-builder-bin@3.5.13:
   resolved "https://registry.npmjs.org/app-builder-bin/-/app-builder-bin-3.5.13.tgz#6dd7f4de34a4e408806f99b8c7d6ef1601305b7e"
   integrity sha512-ighVe9G+bT1ENGdp9ecO1P+94vv/f+FUwaI+XkNzeg9bYF8Oi3BQ+mJuxS00UgyHs8luuOzjzC+qnAtdb43Mpg==
 
-app-builder-lib@22.11.5:
-  version "22.11.5"
-  resolved "https://registry.npmjs.org/app-builder-lib/-/app-builder-lib-22.11.5.tgz#d49f49dc2d9fd225249e4ae7e30add2996e7062f"
-  integrity sha512-lLEDvJuLdc4IVyADJK6t4qEIjRhOUj4p19B1RS/8pN/oAb8X5Qe1t3Einbsi4oFBJBweH2LIygnSAwumjQh9iA==
+app-builder-lib@22.11.7:
+  version "22.11.7"
+  resolved "https://registry.npmjs.org/app-builder-lib/-/app-builder-lib-22.11.7.tgz#c0ad1119ebfbf4189a8280ad693625f5e684dca6"
+  integrity sha512-pS9/cR4/TnNZVAHZECiSvvwTBzbwblj7KBBZkMKDG57nibq0I1XY8zAaYeHFdlYTyrRcz9JUXbAqJKezya7UFQ==
   dependencies:
     "7zip-bin" "~5.1.1"
     "@develar/schema-utils" "~2.6.5"
@@ -1479,12 +1479,12 @@ app-builder-lib@22.11.5:
     "@malept/flatpak-bundler" "^0.4.0"
     async-exit-hook "^2.0.1"
     bluebird-lst "^1.0.9"
-    builder-util "22.11.5"
-    builder-util-runtime "8.7.6"
+    builder-util "22.11.7"
+    builder-util-runtime "8.7.7"
     chromium-pickle-js "^0.2.0"
     debug "^4.3.2"
     ejs "^3.1.6"
-    electron-publish "22.11.5"
+    electron-publish "22.11.7"
     fs-extra "^10.0.0"
     hosted-git-info "^4.0.2"
     is-ci "^3.0.0"
@@ -1990,17 +1990,25 @@ builder-util-runtime@8.7.6:
     debug "^4.3.2"
     sax "^1.2.4"
 
-builder-util@22.11.5:
-  version "22.11.5"
-  resolved "https://registry.npmjs.org/builder-util/-/builder-util-22.11.5.tgz#08836d00e6bef39bdffd8a66fb07d2d5021b9c3c"
-  integrity sha512-ur9ksncYOnJg/VuJz3PdsBQHeg9tjdOC2HVj8mQ0WNcn/H3MO4tnwKBOWWikPDiWEjeBSvFUmYBnGFkRiUNkww==
+builder-util-runtime@8.7.7:
+  version "8.7.7"
+  resolved "https://registry.npmjs.org/builder-util-runtime/-/builder-util-runtime-8.7.7.tgz#6c83cc3abe7a7a5c8b4ec8878f68adc828c07f0d"
+  integrity sha512-RUfoXzVrmFFI0K/Oft0CtP1LpTIOlBeLJatt5DePTI0KlxE156am4SGUpqtbbdqZNm++LkV9mX4olBDcXyGPow==
+  dependencies:
+    debug "^4.3.2"
+    sax "^1.2.4"
+
+builder-util@22.11.7:
+  version "22.11.7"
+  resolved "https://registry.npmjs.org/builder-util/-/builder-util-22.11.7.tgz#ae9707afa6a31feafa13c274ac83b4fe28ef1467"
+  integrity sha512-ihqUe5ey82LM9qqQe0/oIcaSm9w+B9UjcsWJZxJliTBsbU+sErOpDFpHW+sim0veiTF/EIcGUh9HoduWw+l9FA==
   dependencies:
     "7zip-bin" "~5.1.1"
     "@types/debug" "^4.1.5"
     "@types/fs-extra" "^9.0.11"
     app-builder-bin "3.5.13"
     bluebird-lst "^1.0.9"
-    builder-util-runtime "8.7.6"
+    builder-util-runtime "8.7.7"
     chalk "^4.1.1"
     debug "^4.3.2"
     fs-extra "^10.0.0"
@@ -2989,13 +2997,13 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-dmg-builder@22.11.5:
-  version "22.11.5"
-  resolved "https://registry.npmjs.org/dmg-builder/-/dmg-builder-22.11.5.tgz#0df9843def73a217097956982fa21bb4d6a5836e"
-  integrity sha512-91Shh9+OK9RwBlBURxvhSnQNibEh/JYNAnMOfFguyNbasSfF50Jme4b3dgsQrHTTTfkFijcvzykPPFAZofQs6g==
+dmg-builder@22.11.7:
+  version "22.11.7"
+  resolved "https://registry.npmjs.org/dmg-builder/-/dmg-builder-22.11.7.tgz#5956008c18d40ee72c0ea01ffea9590dbf51df89"
+  integrity sha512-+I+XfP2DODHB6PwFANgpH/WMzzCA5r5XoMvbFCIYjQjJpXlO0XnqQaamzFl2vh/Wz/Qt0d0lJMgRy8gKR3MGdQ==
   dependencies:
-    app-builder-lib "22.11.5"
-    builder-util "22.11.5"
+    app-builder-lib "22.11.7"
+    builder-util "22.11.7"
     builder-util-runtime "8.7.6"
     fs-extra "^10.0.0"
     iconv-lite "^0.6.2"
@@ -3074,17 +3082,17 @@ ejs@^3.1.6:
   dependencies:
     jake "^10.6.1"
 
-electron-builder@^22.11.5:
-  version "22.11.5"
-  resolved "https://registry.npmjs.org/electron-builder/-/electron-builder-22.11.5.tgz#914d8183e1bab7cda43ef1d67fc3d17314c7e242"
-  integrity sha512-QIhzrmSLNteItRvmAjwNpsya08oZeOJIrxFww/Alkjcwnrn5Xgog2qf3Xfa3ocuNUQIwb+mMzZrzqnPu0Mamyg==
+electron-builder@^22.11.7:
+  version "22.11.7"
+  resolved "https://registry.npmjs.org/electron-builder/-/electron-builder-22.11.7.tgz#cd97a0d9f6e6d388112e66b4376de431cca4d596"
+  integrity sha512-yQExSLt7Hbz/P8lLkZDdE/OnJJ7NCX+uiQcV+XIH0TeEZcD87ZnSqBBzGUN5akySU4BXXlrVZKeUsXACWrm5Kw==
   dependencies:
-    "@types/yargs" "^16.0.1"
-    app-builder-lib "22.11.5"
-    builder-util "22.11.5"
-    builder-util-runtime "8.7.6"
+    "@types/yargs" "^16.0.2"
+    app-builder-lib "22.11.7"
+    builder-util "22.11.7"
+    builder-util-runtime "8.7.7"
     chalk "^4.1.1"
-    dmg-builder "22.11.5"
+    dmg-builder "22.11.7"
     fs-extra "^10.0.0"
     is-ci "^3.0.0"
     lazy-val "^1.0.5"
@@ -3110,14 +3118,14 @@ electron-devtools-installer@3.2.0:
     tslib "^2.1.0"
     unzip-crx-3 "^0.2.0"
 
-electron-publish@22.11.5:
-  version "22.11.5"
-  resolved "https://registry.npmjs.org/electron-publish/-/electron-publish-22.11.5.tgz#2fcd3280c4267e70e4aa15003c9b7dc34923320e"
-  integrity sha512-peN4tEP80Kb6reuwKKvSu9p/XUWpx/7x747u5NSg7Kg2axBjzdMtX5ZqBThfPtJWJhSWZ7PEYWmNyUCfdQl2Ag==
+electron-publish@22.11.7:
+  version "22.11.7"
+  resolved "https://registry.npmjs.org/electron-publish/-/electron-publish-22.11.7.tgz#4126cbb08ccf082a2aa7fef89ee629b3a4b8ae9a"
+  integrity sha512-A4EhRRNBVz4SPzUlBrPO6BmuyDeI0pyprggPAV9rQ+SDVSnSB/WKPot9JwWMyArkGj3AUUTMNVT6hwZhMvhfqw==
   dependencies:
     "@types/fs-extra" "^9.0.11"
-    builder-util "22.11.5"
-    builder-util-runtime "8.7.6"
+    builder-util "22.11.7"
+    builder-util-runtime "8.7.7"
     chalk "^4.1.1"
     fs-extra "^10.0.0"
     lazy-val "^1.0.5"
