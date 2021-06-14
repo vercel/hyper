@@ -928,10 +928,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/react-dom@^17.0.6":
-  version "17.0.6"
-  resolved "https://registry.npmjs.org/@types/react-dom/-/react-dom-17.0.6.tgz#c158325cf91b196270bc0f4af73463f149e7eafe"
-  integrity sha512-MGTI+TudxAnGTj8aco8mogaPSJGK2Whje7OZh1CxNLRyhJpTZg/pGQpIbCT0eCVFQyH7UFpdvCqQEThHIp/gsA==
+"@types/react-dom@^17.0.7":
+  version "17.0.7"
+  resolved "https://registry.npmjs.org/@types/react-dom/-/react-dom-17.0.7.tgz#b8ee15ead9e5d6c2c858b44949fdf2ebe5212232"
+  integrity sha512-Wd5xvZRlccOrCTej8jZkoFZuZRKHzanDDv1xglI33oBNFMWrqOSzrvWFw7ngSiZjrpJAzPKFtX7JvuXpkNmQHA==
   dependencies:
     "@types/react" "*"
 
