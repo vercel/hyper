@@ -119,7 +119,7 @@
     "style-loader": "2.0.0",
     "terser": "5.7.0",
     "ts-node": "10.0.0",
-    "typescript": "4.3.2",
+    "typescript": "4.3.3",
     "webpack": "5.39.0"
   },
   "electronmon": {
