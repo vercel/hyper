@@ -85,7 +85,13 @@ class Hyper extends React.PureComponent<HyperProps> {
 
   onTermsRef = (terms: Terms) => {
     this.terms = terms;
-    window.focusActiveTerm = this.handleFocusActive;
+    window.focusActiveTerm = (uid?: string) => {
+      if (uid) {
+        this.handleFocusActive(uid);
+      } else {
+        this.terms.getActiveTerm().focus();
+      }
+    };
   };
 
   componentWillUnmount() {
