@@ -87,7 +87,7 @@
     "@types/seamless-immutable": "7.1.15",
     "@types/styled-jsx": "2.2.8",
     "@types/terser-webpack-plugin": "5.0.3",
-    "@types/uuid": "8.3.0",
+    "@types/uuid": "8.3.1",
     "@typescript-eslint/eslint-plugin": "4.28.1",
     "@typescript-eslint/parser": "4.28.1",
     "ava": "3.15.0",
