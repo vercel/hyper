@@ -962,10 +962,10 @@
   resolved "https://registry.npmjs.org/@types/seamless-immutable/-/seamless-immutable-7.1.15.tgz#eacc868b98ef677493bc7ea8e2ff0f5288389335"
   integrity sha512-8OKW2jocSNv0oQYbimzqZeYDJ13yIOWcf5eTS7y3IDJfGg0A4tf3lQnBO9UPWP8PZA4Zt9b/hb8xHGypTf14zg==
 
-"@types/styled-jsx@2.2.8":
-  version "2.2.8"
-  resolved "https://registry.npmjs.org/@types/styled-jsx/-/styled-jsx-2.2.8.tgz#b50d13d8a3c34036282d65194554cf186bab7234"
-  integrity sha512-Yjye9VwMdYeXfS71ihueWRSxrruuXTwKCbzue4+5b2rjnQ//AtyM7myZ1BEhNhBQ/nL/RE7bdToUoLln2miKvg==
+"@types/styled-jsx@2.2.9":
+  version "2.2.9"
+  resolved "https://registry.npmjs.org/@types/styled-jsx/-/styled-jsx-2.2.9.tgz#e50b3f868c055bcbf9bc353eca6c10fdad32a53f"
+  integrity sha512-W/iTlIkGEyTBGTEvZCey8EgQlQ5l0DwMqi3iOXlLs2kyBwYTXHKEiU6IZ5EwoRwngL8/dGYuzezSup89ttVHLw==
   dependencies:
     "@types/react" "*"
 
