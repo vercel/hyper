@@ -60,7 +60,7 @@
     "xterm-addon-webgl": "^0.11.1"
   },
   "devDependencies": {
-    "@ava/babel": "1.0.1",
+    "@ava/babel": "2.0.0",
     "@babel/cli": "7.14.5",
     "@babel/core": "7.14.6",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
