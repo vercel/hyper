@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        node-version: [15.x]
+        node-version: [14.x]
         os: [macos-11.0, ubuntu-latest, windows-latest]
       fail-fast: false
     steps:
