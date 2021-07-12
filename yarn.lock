@@ -757,10 +757,10 @@
   dependencies:
     "@types/color-convert" "*"
 
-"@types/columnify@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.npmjs.org/@types/columnify/-/columnify-1.5.0.tgz#94bb31f14c66bab6d968caa455ff13af1f0e7632"
-  integrity sha512-f39gUbf4NuSTVG9XEUJzYQ8L9e3l91jwywbJdU0fJixCRHKzQnyWxa9KfRPEuC3PhH5TIAi79kX2sAkXXSTB9Q==
+"@types/columnify@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.npmjs.org/@types/columnify/-/columnify-1.5.1.tgz#c6551c5e8614e13a6ccee97c5172637815066d6b"
+  integrity sha512-pXWQTEvwcO7GAwFvSvaMOIktLcJ2ajIAUyMR93KDZZVWN2G7uieEDBPJskEmXb0Qv8JMPHhaRA52azCPfiFmQA==
 
 "@types/debug@^4.1.5":
   version "4.1.5"
