@@ -721,10 +721,10 @@
   resolved "https://registry.npmjs.org/@types/args/-/args-3.0.0.tgz#2fd21cfbdaf5e1ed110bd239de42a82330d6ecf6"
   integrity sha512-2A817ZtVj1/nD44MV0/U/R6xe3GM2n1WDdni4ioCuLjay6dE0bLJd5RafHC/ddqwXL1xa2RQUdJhsGZKyr3vpA==
 
-"@types/async-retry@1.4.2":
-  version "1.4.2"
-  resolved "https://registry.npmjs.org/@types/async-retry/-/async-retry-1.4.2.tgz#7f910188cd3893b51e32df51765ee8d5646053e3"
-  integrity sha512-GUDuJURF0YiJZ+CBjNQA0+vbP/VHlJbB0sFqkzsV7EcOPRfurVonXpXKAt3w8qIjM1TEzpz6hc6POocPvHOS3w==
+"@types/async-retry@1.4.3":
+  version "1.4.3"
+  resolved "https://registry.npmjs.org/@types/async-retry/-/async-retry-1.4.3.tgz#8b78f6ce88d97e568961732cdd9e5325cdc8c246"
+  integrity sha512-B3C9QmmNULVPL2uSJQ088eGWTNPIeUk35hca6CV8rRDJ8GXuQJP5CCVWA1ZUCrb9xYP7Js/RkLqnNNwKhe+Zsw==
   dependencies:
     "@types/retry" "*"
 
