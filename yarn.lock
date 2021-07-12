@@ -875,10 +875,10 @@
   resolved "https://registry.npmjs.org/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
 
-"@types/pify@5.0.0":
-  version "5.0.0"
-  resolved "https://registry.npmjs.org/@types/pify/-/pify-5.0.0.tgz#50eac92722df9ae02caa9f514609cb8d18f9acd7"
-  integrity sha512-Y7rZv5LH4WqWXiCBDp+OqMG43XekhABHsUoWnfWcpy2TE4YxekicDMxt95aQsRgGYWAZ21ab7IxOQj0pHhVKsQ==
+"@types/pify@5.0.1":
+  version "5.0.1"
+  resolved "https://registry.npmjs.org/@types/pify/-/pify-5.0.1.tgz#10e398a89e3740dd5c316c502acad9ea5e444d3f"
+  integrity sha512-UYcJBAqWLyg+eITXGIu9DR7RXJFvSupz+Hf+RqJYHzDJedvDMTsB1JmDV6Qfna2g62VIxUKvoWqTxGHy6U/bLA==
 
 "@types/plist@3.0.2", "@types/plist@^3.0.1":
   version "3.0.2"
