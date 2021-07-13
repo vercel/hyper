@@ -950,10 +950,10 @@
   resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.1.tgz#18845205e86ff0038517aab7a18a62a6b9f71275"
   integrity sha512-EaCxbanVeyxDRTQBkdLb3Bvl/HK7PBK6UJjsSixB0iHKoWxE5uu2Q/DgtpOhPIojN0Zl1whvOd7PoHs2P0s5eA==
 
-"@types/seamless-immutable@7.1.15":
-  version "7.1.15"
-  resolved "https://registry.npmjs.org/@types/seamless-immutable/-/seamless-immutable-7.1.15.tgz#eacc868b98ef677493bc7ea8e2ff0f5288389335"
-  integrity sha512-8OKW2jocSNv0oQYbimzqZeYDJ13yIOWcf5eTS7y3IDJfGg0A4tf3lQnBO9UPWP8PZA4Zt9b/hb8xHGypTf14zg==
+"@types/seamless-immutable@7.1.16":
+  version "7.1.16"
+  resolved "https://registry.npmjs.org/@types/seamless-immutable/-/seamless-immutable-7.1.16.tgz#f593ea86da53d66d74c87c2cc4ff8bd71dd066d5"
+  integrity sha512-aoi1L9llrDtviLpv+2VoYM9OgAAsoDtHL8uw4mokuNXl0qwRoen/t4aSAZpoTJVQ2DIdhZQ55L0R0duwz19WEw==
 
 "@types/styled-jsx@2.2.9":
   version "2.2.9"
