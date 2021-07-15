@@ -1,6 +1,7 @@
 # build output
 dist
 app/renderer
+target
 bin/cli.*
 
 # dependencies
@@ -15,3 +16,6 @@ yarn-error.log
 .hyper_plugins
 
 .DS_Store
+.vscode/*
+!.vscode/launch.json
+.idea

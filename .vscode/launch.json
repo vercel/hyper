@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "Launch Hyper",
       "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
-      "program": "${workspaceRoot}/app/index.js",
+      "program": "${workspaceRoot}/target/index.js",
       "protocol": "inspector"
     },
      {

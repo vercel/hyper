@@ -1,0 +1,76 @@
+name: Node CI
+on:
+  push:
+    branches:
+      - master
+      - canary
+  pull_request:
+defaults:
+  run:
+    shell: bash
+jobs:
+  build:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        node-version: [14.x]
+        os: [macos-11.0, ubuntu-latest, windows-latest]
+      fail-fast: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install
+        run: yarn install
+      - name: Test
+        run: yarn run test
+      - name: Getting Build Icon
+        if: github.ref == 'refs/heads/canary' || github.base_ref == 'canary'
+        run: |
+          cp build/canary.ico build/icon.ico
+          cp build/canary.icns build/icon.icns
+      - name: Build (pr)
+        if: github.event_name == 'pull_request'
+        run: yarn run dist --publish=never
+      - name: Build (push)
+        if: github.event_name == 'push'
+        run: yarn run dist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
+          WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
+      - name: Test Spectron
+        if: runner.os != 'Linux'
+        run: yarn run test:spectron
+      - name: Archive Spectron test screenshot
+        if: runner.os != 'Linux'
+        uses: actions/upload-artifact@v2
+        with:
+          name: spectron
+          path: dist/tmp/*.png
+      - name: Archive Build Artifacts
+        uses: LabhanshAgrawal/upload-artifact@v3
+        with:
+          path: |
+            dist/*.dmg
+            dist/*.snap
+            dist/*.AppImage
+            dist/*.deb
+            dist/*.rpm
+            dist/*.exe
+      - name: Save the pr number in an artifact
+        if: github.event_name == 'pull_request'
+        env:
+          PR_NUM: ${{ github.event.number }}
+        run: echo $PR_NUM > pr_num.txt
+      - name: Upload the pr num
+        uses: actions/upload-artifact@v2
+        if: github.event_name == 'pull_request'
+        with:
+          name: pr_num
+          path: ./pr_num.txt

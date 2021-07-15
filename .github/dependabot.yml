@@ -1,0 +1,16 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: weekly
+    time: '11:00'
+  open-pull-requests-limit: 30
+  target-branch: canary
+- package-ecosystem: npm
+  directory: "/app"
+  schedule:
+    interval: weekly
+    time: '11:00'
+  open-pull-requests-limit: 30
+  target-branch: canary

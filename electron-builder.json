@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json.schemastore.org/electron-builder",
+  "appId": "co.zeit.hyper",
+  "directories": {
+    "app": "target"
+  },
+  "extraResources": [
+    "./bin/yarn-standalone.js",
+    "./bin/cli.js",
+    {
+      "from": "./build/${os}/",
+      "to": "./bin/",
+      "filter": [
+        "hyper*"
+      ]
+    }
+  ],
+  "linux": {
+    "category": "TerminalEmulator",
+    "target": [
+      {
+        "target": "deb",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      },
+      {
+        "target": "AppImage",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      },
+      {
+        "target": "rpm",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      },
+      {
+        "target": "snap",
+        "arch": [
+          "x64"
+        ]
+      }
+    ]
+  },
+  "win": {
+    "target": [
+      "nsis"
+    ],
+    "rfc3161TimeStampServer": "http://timestamp.comodoca.com"
+  },
+  "nsis": {
+    "include": "build/win/installer.nsh",
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true
+  },
+  "mac": {
+    "target": {
+      "target": "default",
+      "arch": [
+        "x64",
+        "arm64"
+      ]
+    },
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "category": "public.app-category.developer-tools",
+    "extendInfo": {
+      "CFBundleDocumentTypes": [
+        {
+          "CFBundleTypeName": "Folders",
+          "CFBundleTypeRole": "Viewer",
+          "LSHandlerRank": "Alternate",
+          "LSItemContentTypes": [
+            "public.folder",
+            "com.apple.bundle",
+            "com.apple.package",
+            "com.apple.resolvable"
+          ]
+        },
+        {
+          "CFBundleTypeName": "UnixExecutables",
+          "CFBundleTypeRole": "Shell",
+          "LSHandlerRank": "Alternate",
+          "LSItemContentTypes": [
+            "public.unix-executable"
+          ]
+        }
+      ],
+      "NSAppleEventsUsageDescription": "An application in Hyper wants to use AppleScript.",
+      "NSCalendarsUsageDescription": "An application in Hyper wants to access Calendar data.",
+      "NSCameraUsageDescription": "An application in Hyper wants to use the Camera.",
+      "NSContactsUsageDescription": "An application in Hyper wants to access your Contacts.",
+      "NSDesktopFolderUsageDescription": "An application in Hyper wants to access the Desktop folder.",
+      "NSDocumentsFolderUsageDescription": "An application in Hyper wants to access the Documents folder.",
+      "NSDownloadsFolderUsageDescription": "An application in Hyper wants to access the Downloads folder.",
+      "NSFileProviderDomainUsageDescription": "An application in Hyper wants to access files managed by a file provider.",
+      "NSFileProviderPresenceUsageDescription": "An application in Hyper wants to be informed when other apps access files that it manages.",
+      "NSLocationUsageDescription": "An application in Hyper wants to access your location information.",
+      "NSMicrophoneUsageDescription": "An application in Hyper wants to use your microphone.",
+      "NSMotionUsageDescription": "An application in Hyper wants to use the device’s accelerometer.",
+      "NSNetworkVolumesUsageDescription": "An application in Hyper wants to access files on a network volume.",
+      "NSPhotoLibraryUsageDescription": "An application in Hyper wants to access the photo library.",
+      "NSRemindersUsageDescription": "An application in Hyper wants to access your reminders.",
+      "NSRemovableVolumesUsageDescription": "An application in Hyper wants to access files on a removable volume.",
+      "NSSpeechRecognitionUsageDescription": "An application in Hyper wants to send user data to Apple’s speech recognition servers.",
+      "NSSystemAdministrationUsageDescription": "The operation being performed by an application in Hyper requires elevated permission."
+    },
+    "darkModeSupport": true
+  },
+  "deb": {
+    "compression": "bzip2",
+    "afterInstall": "./build/linux/after-install.tpl"
+  },
+  "rpm": {
+    "afterInstall": "./build/linux/after-install.tpl"
+  },
+  "snap": {
+    "confinement": "classic",
+    "publish": "github"
+  },
+  "protocols": {
+    "name": "ssh URL",
+    "schemes": [
+      "ssh"
+    ]
+  }
+}
