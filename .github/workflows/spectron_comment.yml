@@ -34,11 +34,17 @@ jobs:
           path: ./pr_num.txt
       - name: List images
         run: ls -al
-      - name: Upload images to imgur
+      - name: Upload images to imgur - win32
         id: upload_screenshots
         uses: devicons/public-upload-to-imgur@v2.2.1
         with:
-          path: ./*.png
+          path: ./win32_test.png
+          client_id: ${{ secrets.IMGUR_CLIENT_ID }}
+      - name: Upload images to imgur - darwin
+        id: upload_screenshots
+        uses: devicons/public-upload-to-imgur@v2.2.1
+        with:
+          path: ./darwin_test.png
           client_id: ${{ secrets.IMGUR_CLIENT_ID }}
       - name: Comment on the PR
         uses: jungwinter/comment@v1
