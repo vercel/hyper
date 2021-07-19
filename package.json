@@ -120,7 +120,7 @@
     "terser": "5.7.1",
     "ts-node": "10.1.0",
     "typescript": "4.3.5",
-    "webpack": "5.44.0"
+    "webpack": "5.45.1"
   },
   "electronmon": {
     "patterns": [
