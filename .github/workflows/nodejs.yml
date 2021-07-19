@@ -14,7 +14,10 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x]
-        os: [macos-11.0, ubuntu-latest, windows-latest]
+        os:
+          - macos-11.0
+          - ubuntu-18.04
+          - windows-latest
       fail-fast: false
     steps:
       - name: Checkout
