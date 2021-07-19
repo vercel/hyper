@@ -35,13 +35,13 @@ jobs:
       - name: List images
         run: ls -al
       - name: Upload images to imgur - win32
-        id: upload_screenshots
+        id: upload_screenshots_win32
         uses: devicons/public-upload-to-imgur@v2.2.1
         with:
           path: ./win32_test.png
           client_id: ${{ secrets.IMGUR_CLIENT_ID }}
       - name: Upload images to imgur - darwin
-        id: upload_screenshots
+        id: upload_screenshots_darwin
         uses: devicons/public-upload-to-imgur@v2.2.1
         with:
           path: ./darwin_test.png
@@ -49,7 +49,7 @@ jobs:
       - name: Comment on the PR
         uses: jungwinter/comment@v1
         env:
-          IMG_MARKDOWN: ${{ join(fromJSON(steps.upload_screenshots.outputs.markdown_urls), '') }}
+          IMG_MARKDOWN: ${{ join([fromJSON(steps.upload_screenshots_win32.outputs.markdown_urls)[0], fromJSON(steps.upload_screenshots_darwin.outputs.markdown_urls)[0]], '') }}
           MESSAGE: |
             Hi there,
             Here are screenshots of Hyper built from this pr.
