@@ -51,6 +51,7 @@ export default class Notifications extends React.PureComponent<NotificationsProp
                     key="link"
                     style={{color: '#fff'}}
                     onClick={(ev) => {
+                      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
                       void window.require('electron').shell.openExternal(ev.currentTarget.href);
                       ev.preventDefault();
                     }}
@@ -78,6 +79,7 @@ export default class Notifications extends React.PureComponent<NotificationsProp
             <a
               style={{color: '#000'}}
               onClick={(ev) => {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-call
                 void window.require('electron').shell.openExternal(ev.currentTarget.href);
                 ev.preventDefault();
               }}
@@ -106,6 +108,7 @@ export default class Notifications extends React.PureComponent<NotificationsProp
                   fontWeight: 'bold'
                 }}
                 onClick={(ev) => {
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
                   void window.require('electron').shell.openExternal(ev.currentTarget.href);
                   ev.preventDefault();
                 }}

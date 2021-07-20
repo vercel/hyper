@@ -108,6 +108,7 @@ app.on('ready', () =>
           [startX, startY] = winPos;
         } else if (focusedWindow) {
           const points = focusedWindow.getPosition();
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
           const currentScreen = screen.getDisplayNearestPoint({
             x: points[0],
             y: points[1]
