@@ -4,6 +4,7 @@ on:
     branches:
       - master
       - canary
+      - electron11
   pull_request:
 defaults:
   run:
