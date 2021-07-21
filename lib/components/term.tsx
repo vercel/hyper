@@ -262,8 +262,7 @@ export default class Term extends React.PureComponent<TermProps> {
     if (processed) {
       e.preventDefault();
       e.stopPropagation();
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      (this.term as any)._core.handler(processed);
+      this.term.paste(processed);
     }
   };
 
