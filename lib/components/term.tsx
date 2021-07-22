@@ -239,6 +239,11 @@ export default class Term extends React.PureComponent<TermProps> {
       capture: true
     });
 
+    this.term.element?.addEventListener('textInput', this.onEmojiInput);
+    this.disposableListeners.push({
+      dispose: () => this.term.element?.removeEventListener('textInput', this.onEmojiInput)
+    });
+
     terms[this.props.uid] = this;
   }
 
@@ -252,6 +257,15 @@ export default class Term extends React.PureComponent<TermProps> {
     );
     return document;
   }
+
+  onEmojiInput = (event: Event) => {
+    const data: string = (event as any).data;
+    if (/\p{Extended_Pictographic}/u.test(data)) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.term.paste(data);
+    }
+  };
 
   // intercepting paste event for any necessary processing of
   // clipboard data, if result is falsy, paste event continues
