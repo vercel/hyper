@@ -7,6 +7,7 @@ import retry from 'async-retry';
 import {version} from './package.json';
 import {getDecoratedConfig} from './plugins';
 import autoUpdaterLinux from './auto-updater-linux';
+import {execSync} from 'child_process';
 
 const {platform} = process;
 const isLinux = platform === 'linux';
@@ -17,9 +18,25 @@ let isInit = false;
 // Default to the "stable" update channel
 let canaryUpdates = false;
 
+// Detect if we are running inside Rosetta emulation
+const isRosetta = () => {
+  if (platform !== 'darwin') {
+    return false;
+  }
+  const sysctlRosettaInfoKey = 'sysctl.proc_translated';
+  let results = '';
+  try {
+    results = execSync(`sysctl ${sysctlRosettaInfoKey}`).toString();
+  } catch (error) {
+    console.log('Failed to detect Rosetta');
+  }
+  return results.includes(`${sysctlRosettaInfoKey}: 1`);
+};
+
 const buildFeedUrl = (canary: boolean, currentVersion: string) => {
   const updatePrefix = canary ? 'releases-canary' : 'releases';
-  return `https://${updatePrefix}.hyper.is/update/${isLinux ? 'deb' : platform}/${currentVersion}`;
+  const archSuffix = process.arch === 'arm64' || isRosetta() ? '_arm64' : '';
+  return `https://${updatePrefix}.hyper.is/update/${isLinux ? 'deb' : platform}${archSuffix}/${currentVersion}`;
 };
 
 const isCanary = (updateChannel: string) => updateChannel === 'canary';
