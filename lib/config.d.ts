@@ -1,4 +1,4 @@
-import {FontWeight} from 'xterm';
+import { FontWeight } from 'xterm';
 
 export type ColorMap = {
   black: string;
@@ -21,6 +21,7 @@ export type ColorMap = {
 
 export type configOptions = {
   autoUpdatePlugins: boolean | string;
+  disableAutoUpdates: boolean;
   backgroundColor: string;
   bell: string;
   bellSound: string | null;
