@@ -21,7 +21,6 @@ export type ColorMap = {
 
 export type configOptions = {
   autoUpdatePlugins: boolean | string;
-  disableAutoUpdates: boolean;
   backgroundColor: string;
   bell: string;
   bellSound: string | null;
@@ -35,6 +34,7 @@ export type configOptions = {
   cursorColor: string;
   cursorShape: 'BEAM' | 'UNDERLINE' | 'BLOCK';
   defaultSSHApp: boolean;
+  disableAutoUpdates: boolean;
   disableLigatures: boolean;
   env: Record<string, string>;
   fontFamily: string;

@@ -1,6 +1,5 @@
 import fetch from 'electron-fetch';
 import {EventEmitter} from 'events';
-import * as config from './config';
 
 class AutoUpdater extends EventEmitter implements Electron.AutoUpdater {
   updateURL!: string;
@@ -16,10 +15,6 @@ class AutoUpdater extends EventEmitter implements Electron.AutoUpdater {
   }
 
   checkForUpdates() {
-    const baseConfig = config.getConfig();
-
-    if (baseConfig['disableAutoUpdates']) return false;
-
     if (!this.updateURL) {
       return this.emitError('Update URL is not set');
     }

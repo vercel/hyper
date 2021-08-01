@@ -14,6 +14,21 @@ const isLinux = platform === 'linux';
 
 const autoUpdater: AutoUpdater = isLinux ? autoUpdaterLinux : electron.autoUpdater;
 
+const checkForUpdates = async () => {
+  const config = await retry(() => {
+    const content = getDecoratedConfig();
+
+    if (!content) {
+      throw new Error('No config content loaded');
+    }
+    return content;
+  });
+
+  if (!config.disableAutoUpdates) {
+    autoUpdater.checkForUpdates();
+  }
+};
+
 let isInit = false;
 // Default to the "stable" update channel
 let canaryUpdates = false;
@@ -66,11 +81,11 @@ async function init() {
   autoUpdater.setFeedURL({url: feedURL});
 
   setTimeout(() => {
-    autoUpdater.checkForUpdates();
+    void checkForUpdates();
   }, ms('10s'));
 
   setInterval(() => {
-    autoUpdater.checkForUpdates();
+    void checkForUpdates();
   }, ms('30m'));
 
   isInit = true;
@@ -111,7 +126,7 @@ export default (win: BrowserWindow) => {
       const feedURL = buildFeedUrl(newUpdateIsCanary, version);
 
       autoUpdater.setFeedURL({url: feedURL});
-      autoUpdater.checkForUpdates();
+      void checkForUpdates();
 
       canaryUpdates = newUpdateIsCanary;
     }

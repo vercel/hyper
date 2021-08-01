@@ -54,6 +54,9 @@ module.exports = {
     // custom CSS to embed in the main window
     css: '',
 
+    // set to true to disable auto updates
+    disableAutoUpdates: false,
+
     // custom CSS to embed in the terminal window
     termCSS: '',
 
@@ -172,8 +175,6 @@ module.exports = {
   // `~/.hyper_plugins/local/` and include it here
   // to load it and avoid it being `npm install`ed
   localPlugins: [],
-
-  disableAutoUpdates: false,
 
   keymaps: {
     // Example
