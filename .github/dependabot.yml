@@ -1,21 +1,21 @@
 version: 2
 updates:
 - package-ecosystem: npm
-  directory: /
+  directory: "/"
   schedule:
     interval: weekly
     time: '11:00'
   open-pull-requests-limit: 30
   target-branch: canary
 - package-ecosystem: npm
-  directory: /app
+  directory: "/app"
   schedule:
     interval: weekly
     time: '11:00'
   open-pull-requests-limit: 30
   target-branch: canary
 - package-ecosystem: github-actions
-  directory: /
+  directory: "/"
   schedule:
     interval: weekly
     time: '11:00'
