@@ -157,6 +157,9 @@ module.exports = {
     // if `false` (without backticks and without quotes), Hyper will use ligatures provided by some fonts
     disableLigatures: true,
 
+    // set to true to disable auto updates
+    disableAutoUpdates: false,
+
     // for advanced config flags please refer to https://hyper.is/#cfg
   },
 

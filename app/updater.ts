@@ -14,6 +14,23 @@ const isLinux = platform === 'linux';
 
 const autoUpdater: AutoUpdater = isLinux ? autoUpdaterLinux : electron.autoUpdater;
 
+const getDecoratedConfigWithRetry = async () => {
+  return await retry(() => {
+    const content = getDecoratedConfig();
+    if (!content) {
+      throw new Error('No config content loaded');
+    }
+    return content;
+  });
+};
+
+const checkForUpdates = async () => {
+  const config = await getDecoratedConfigWithRetry();
+  if (!config.disableAutoUpdates) {
+    autoUpdater.checkForUpdates();
+  }
+};
+
 let isInit = false;
 // Default to the "stable" update channel
 let canaryUpdates = false;
@@ -46,15 +63,7 @@ async function init() {
     console.error('Error fetching updates', `${err.message} (${err.stack})`);
   });
 
-  const config = await retry(() => {
-    const content = getDecoratedConfig();
-
-    if (!content) {
-      throw new Error('No config content loaded');
-    }
-
-    return content;
-  });
+  const config = await getDecoratedConfigWithRetry();
 
   // If defined in the config, switch to the "canary" channel
   if (config.updateChannel && isCanary(config.updateChannel)) {
@@ -66,11 +75,11 @@ async function init() {
   autoUpdater.setFeedURL({url: feedURL});
 
   setTimeout(() => {
-    autoUpdater.checkForUpdates();
+    void checkForUpdates();
   }, ms('10s'));
 
   setInterval(() => {
-    autoUpdater.checkForUpdates();
+    void checkForUpdates();
   }, ms('30m'));
 
   isInit = true;
@@ -103,15 +112,15 @@ export default (win: BrowserWindow) => {
     autoUpdater.quitAndInstall();
   });
 
-  app.config.subscribe(() => {
-    const {updateChannel} = app.plugins.getDecoratedConfig();
+  app.config.subscribe(async () => {
+    const {updateChannel} = await getDecoratedConfigWithRetry();
     const newUpdateIsCanary = isCanary(updateChannel);
 
     if (newUpdateIsCanary !== canaryUpdates) {
       const feedURL = buildFeedUrl(newUpdateIsCanary, version);
 
       autoUpdater.setFeedURL({url: feedURL});
-      autoUpdater.checkForUpdates();
+      void checkForUpdates();
 
       canaryUpdates = newUpdateIsCanary;
     }
