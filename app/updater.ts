@@ -14,16 +14,18 @@ const isLinux = platform === 'linux';
 
 const autoUpdater: AutoUpdater = isLinux ? autoUpdaterLinux : electron.autoUpdater;
 
-const checkForUpdates = async () => {
-  const config = await retry(() => {
+const getDecoratedConfigWithRetry = async () => {
+  return await retry(() => {
     const content = getDecoratedConfig();
-
     if (!content) {
       throw new Error('No config content loaded');
     }
     return content;
   });
+};
 
+const checkForUpdates = async () => {
+  const config = await getDecoratedConfigWithRetry();
   if (!config.disableAutoUpdates) {
     autoUpdater.checkForUpdates();
   }
@@ -61,15 +63,7 @@ async function init() {
     console.error('Error fetching updates', `${err.message} (${err.stack})`);
   });
 
-  const config = await retry(() => {
-    const content = getDecoratedConfig();
-
-    if (!content) {
-      throw new Error('No config content loaded');
-    }
-
-    return content;
-  });
+  const config = await getDecoratedConfigWithRetry();
 
   // If defined in the config, switch to the "canary" channel
   if (config.updateChannel && isCanary(config.updateChannel)) {
@@ -118,8 +112,8 @@ export default (win: BrowserWindow) => {
     autoUpdater.quitAndInstall();
   });
 
-  app.config.subscribe(() => {
-    const {updateChannel} = app.plugins.getDecoratedConfig();
+  app.config.subscribe(async () => {
+    const {updateChannel} = await getDecoratedConfigWithRetry();
     const newUpdateIsCanary = isCanary(updateChannel);
 
     if (newUpdateIsCanary !== canaryUpdates) {
