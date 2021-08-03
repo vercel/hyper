@@ -34,6 +34,7 @@ export type configOptions = {
   cursorColor: string;
   cursorShape: 'BEAM' | 'UNDERLINE' | 'BLOCK';
   defaultSSHApp: boolean;
+  disableAutoUpdates: boolean;
   disableLigatures: boolean;
   env: Record<string, string>;
   fontFamily: string;

@@ -28,6 +28,8 @@ import {
 } from '../hyper';
 import {Middleware} from 'redux';
 import {ObjectTypedKeys} from './object';
+import IPCChildProcess from './ipc-child-process';
+import ChildProcess from 'child_process';
 
 // remote interface to `../plugins`
 const plugins = remote.require('./plugins') as typeof import('../../app/plugins');
@@ -182,6 +184,8 @@ Module._load = function _load(path: string) {
       return Notification;
     case 'hyper/decorate':
       return decorate;
+    case 'child_process':
+      return process.platform === 'darwin' ? IPCChildProcess : ChildProcess;
     default:
       // eslint-disable-next-line prefer-rest-params
       return originalLoad.apply(this, arguments);

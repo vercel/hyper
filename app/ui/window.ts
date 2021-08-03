@@ -1,8 +1,7 @@
-import {app, BrowserWindow, shell, Menu, BrowserWindowConstructorOptions} from 'electron';
+import {app, BrowserWindow, shell, Menu, BrowserWindowConstructorOptions, Event} from 'electron';
 import {isAbsolute, normalize, sep} from 'path';
-import {parse as parseUrl} from 'url';
+import {URL, fileURLToPath} from 'url';
 import {v4 as uuidv4} from 'uuid';
-import fileUriToPath from 'file-uri-to-path';
 import isDev from 'electron-is-dev';
 import updater from '../updater';
 import toElectronBackgroundColor from '../utils/to-electron-background-color';
@@ -259,30 +258,22 @@ export function newWindow(
     }
   });
 
-  // If file is dropped onto the terminal window, navigate event is prevented
-  // and his path is added to active session.
-  window.webContents.on('will-navigate', (event, url) => {
-    const protocol = typeof url === 'string' && parseUrl(url).protocol;
+  const handleDrop = (event: Event, url: string) => {
+    const protocol = typeof url === 'string' && new URL(url).protocol;
     if (protocol === 'file:') {
       event.preventDefault();
-
-      const path = fileUriToPath(url);
-
+      const path = fileURLToPath(url);
       rpc.emit('session data send', {data: path, escaped: true});
     } else if (protocol === 'http:' || protocol === 'https:') {
       event.preventDefault();
       rpc.emit('session data send', {data: url});
     }
-  });
+  };
 
-  // xterm makes link clickable
-  window.webContents.on('new-window', (event, url) => {
-    const protocol = typeof url === 'string' && parseUrl(url).protocol;
-    if (protocol === 'http:' || protocol === 'https:') {
-      event.preventDefault();
-      void shell.openExternal(url);
-    }
-  });
+  // If file is dropped onto the terminal window, navigate and new-window events are prevented
+  // and his path is added to active session.
+  window.webContents.on('will-navigate', handleDrop);
+  window.webContents.on('new-window', handleDrop);
 
   // expose internals to extension authors
   window.rpc = rpc;
