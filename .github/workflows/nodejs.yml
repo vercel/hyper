@@ -27,6 +27,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: yarn
+          cache-dependency-path: |
+            yarn.lock
+            app/yarn.lock
       - name: Install
         run: yarn install
       - name: Test
