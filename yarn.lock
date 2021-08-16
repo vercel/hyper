@@ -966,10 +966,10 @@
     hoist-non-react-statics "^3.3.0"
     redux "^4.0.0"
 
-"@types/react@*", "@types/react@^17.0.16":
-  version "17.0.16"
-  resolved "https://registry.npmjs.org/@types/react/-/react-17.0.16.tgz#056f40c45645761527baeb7d89d842a6abdf285a"
-  integrity sha512-3kCUiOOlQTwUUvjNFkbBTWMTxdTGybz/PfjCw9JmaRGcEDBQh+nGMg7/E9P2rklhJuYVd25IYLNcvqgSPCPksg==
+"@types/react@*", "@types/react@^17.0.18":
+  version "17.0.18"
+  resolved "https://registry.npmjs.org/@types/react/-/react-17.0.18.tgz#4109cbbd901be9582e5e39e3d77acd7b66bb7fbe"
+  integrity sha512-YTLgu7oS5zvSqq49X5Iue5oAbVGhgPc5Au29SJC4VeE17V6gASoOxVkUDy9pXFMRFxCWCD9fLeweNFizo3UzOg==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
