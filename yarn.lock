@@ -3044,10 +3044,10 @@ electron-publish@22.11.7:
     lazy-val "^1.0.5"
     mime "^2.5.2"
 
-electron-rebuild@3.1.1:
-  version "3.1.1"
-  resolved "https://registry.npmjs.org/electron-rebuild/-/electron-rebuild-3.1.1.tgz#d3d12d0f0f58e3a3af5e3bede7e7d3b7748ad9e2"
-  integrity sha512-RZwfpTKX8secCONpmQk3X0Ryf6GSEzzsqZ4RTrBoae3sMi76DI0ChG90XqdSE775Xpyts3V40VpqJHv3QUAavw==
+electron-rebuild@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.npmjs.org/electron-rebuild/-/electron-rebuild-3.2.0.tgz#5e5b8737501c49a3d3966702f9cf65292ac2683b"
+  integrity sha512-iCR90cKuLZaVsVGpEPp7XASkqLiuoZfpJnBVyKXZy0e6HuE8CtNSSNskkOCzEIcxQXcQAklFr0LJUj/zeFxJMw==
   dependencies:
     "@malept/cross-spawn-promise" "^2.0.0"
     colors "^1.3.3"
