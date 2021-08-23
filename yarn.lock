@@ -3111,14 +3111,14 @@ electron@^13.1.9:
     "@types/node" "^14.6.2"
     extract-zip "^1.0.3"
 
-electronmon@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/electronmon/-/electronmon-2.0.1.tgz#f946ec432bf12e87c948921204b7b2b76a86e7ca"
-  integrity sha512-ircyGO6PLlJJ8fmfDTMbdJedzScRHI96AnLkRz8ezpmaz5Nh5wUI/D/h35R8VZxRwKAII/w3whRpaXyO1/SgXg==
+electronmon@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/electronmon/-/electronmon-2.0.2.tgz#082cb4c7cd5eee0602308c3253b17ecbef77aea8"
+  integrity sha512-Yw1CXEp5HJT9P6Sns3UP3Krwm5eb2JKqTRAVczKdsUa+U/dMTgONwKIHkPbKSSmtyTV+5JwobxkhFPiRgegObA==
   dependencies:
     chalk "^3.0.0"
     import-from "^3.0.0"
-    runtime-required "^1.0.2"
+    runtime-required "^1.1.0"
     watchboy "^0.4.3"
 
 emittery@^0.8.0:
@@ -6765,12 +6765,10 @@ run-parallel@^1.1.9:
   resolved "https://registry.npmjs.org/run-parallel/-/run-parallel-1.1.10.tgz#60a51b2ae836636c81377df16cb107351bcd13ef"
   integrity sha512-zb/1OuZ6flOlH6tQyMPUrE3x3Ulxjlo9WIVXR4yVYi4H9UXQaeIsPbLn2R3O3vQCnDKkAl2qHiuocKKX4Tz/Sw==
 
-runtime-required@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/runtime-required/-/runtime-required-1.0.2.tgz#23de8382f33f8dff5486963891288d52ab74d28c"
-  integrity sha512-pYR+fg0jG2MYXjmY3JcVGSPI224O4b2O9StwRmY3VU9WnTSSXaSn/WiWD2wicYBo53rVjg2yRr2dr08aFtHSsQ==
-  dependencies:
-    resolve-from "^4.0.0"
+runtime-required@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/runtime-required/-/runtime-required-1.1.0.tgz#a000a50c2748dba123f4dac5105e66d4599519c4"
+  integrity sha512-yX97f5E0WfNpcQnfVjap6vzQcvErkYYCx6eTK4siqGEdC8lglwypUFgZVTX7ShvIlgfkC4XGFl9O1KTYcff0pw==
 
 rxjs@^6.6.3:
   version "6.6.6"
