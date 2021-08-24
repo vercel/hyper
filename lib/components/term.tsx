@@ -176,7 +176,7 @@ export default class Term extends React.PureComponent<TermProps> {
       if (useWebGL) {
         this.term.loadAddon(new WebglAddon());
       }
-      if (props.disableLigatures !== true && !useWebGL) {
+      if (props.disableLigatures !== true) {
         this.term.loadAddon(new LigaturesAddon());
       }
       this.term.loadAddon(new Unicode11Addon());
