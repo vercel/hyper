@@ -154,7 +154,8 @@ export default class Session extends EventEmitter {
 
     try {
       this.pty = spawn(shell, shellArgs, options);
-    } catch (err) {
+    } catch (_err) {
+      const err = _err as {message: string};
       if (/is not a function/.test(err.message)) {
         throw createNodePtyError();
       } else {
@@ -215,7 +216,8 @@ fallback to default shell config: ${JSON.stringify(defaultShellConfig, undefined
     if (this.pty) {
       try {
         this.pty.resize(cols, rows);
-      } catch (err) {
+      } catch (_err) {
+        const err = _err as {stack: any};
         console.error(err.stack);
       }
     } else {
@@ -227,7 +229,8 @@ fallback to default shell config: ${JSON.stringify(defaultShellConfig, undefined
     if (this.pty) {
       try {
         this.pty.kill();
-      } catch (err) {
+      } catch (_err) {
+        const err = _err as {stack: any};
         console.error('exit error', err.stack);
       }
     } else {

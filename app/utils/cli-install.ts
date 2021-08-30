@@ -40,7 +40,8 @@ const addSymlink = async (silent: boolean) => {
       }
     }
     await symlink(cliScriptPath, cliLinkPath);
-  } catch (err) {
+  } catch (_err) {
+    const err = _err as {code: string};
     // 'EINVAL' is returned by readlink,
     // 'EEXIST' is returned by symlink
     let error =
@@ -61,7 +62,7 @@ sudo ln -sf "${cliScriptPath}" "${cliLinkPath}"`,
           await sudoExec(`ln -sf "${cliScriptPath}" "${cliLinkPath}"`, {name: 'Hyper'});
           return;
         } catch (_error) {
-          error = _error[0];
+          error = (_error as any[])[0];
         }
       } else if (result.response === 1) {
         clipboard.writeText(`sudo ln -sf "${cliScriptPath}" "${cliLinkPath}"`);
