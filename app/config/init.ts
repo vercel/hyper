@@ -16,7 +16,8 @@ const _extract = (script?: vm.Script): Record<string, any> => {
 const _syntaxValidation = (cfg: string) => {
   try {
     return new vm.Script(cfg, {filename: '.hyper.js', displayErrors: true});
-  } catch (err) {
+  } catch (_err) {
+    const err = _err as {name: string};
     notify(`Error loading config: ${err.name}`, `${err}`, {error: err});
   }
 };

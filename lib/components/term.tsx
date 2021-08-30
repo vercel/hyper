@@ -352,7 +352,8 @@ export default class Term extends React.PureComponent<TermProps> {
       .forEach((option) => {
         try {
           this.term.setOption(option, nextTermOptions[option]);
-        } catch (e) {
+        } catch (_e) {
+          const e = _e as {message: string};
           if (/The webgl renderer only works with the webgl char atlas/i.test(e.message)) {
             // Ignore this because the char atlas will also be changed
           } else {

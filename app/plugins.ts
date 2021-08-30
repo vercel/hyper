@@ -296,7 +296,8 @@ function requirePlugins(): any[] {
       console.log(`Plugin ${mod._name} (${mod._version}) loaded.`);
 
       return mod;
-    } catch (err) {
+    } catch (_err) {
+      const err = _err as {code: string; message: string};
       if (err.code === 'MODULE_NOT_FOUND') {
         console.warn(`Plugin error while loading "${basename(path_)}" (${path_}): ${err.message}`);
       } else {
