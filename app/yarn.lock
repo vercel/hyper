@@ -165,7 +165,12 @@ debounce-fn@^4.0.0:
   dependencies:
     mimic-fn "^3.0.0"
 
-default-shell@1.0.1, default-shell@^1.0.1:
+default-shell@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/default-shell/-/default-shell-2.0.0.tgz#02b1e912447f08c4025e37b52f3194fa17fb9733"
+  integrity sha512-/+Rzp2ybcQMkmtgY0g518Vpk4TWAFg0MqfLLY6r4iWckG7kQacMma+xI3jbA+t+JW21Q9ZD0C+sODwVdwpbixw==
+
+default-shell@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/default-shell/-/default-shell-1.0.1.tgz#752304bddc6174f49eb29cb988feea0b8813c8bc"
   integrity sha1-dSMEvdxhdPSespy5iP7qC4gTyLw=
