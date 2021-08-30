@@ -15,7 +15,7 @@
     "color": "4.0.1",
     "convert-css-color-name-to-hex": "0.1.1",
     "default-shell": "1.0.1",
-    "electron-fetch": "1.7.3",
+    "electron-fetch": "1.7.4",
     "electron-is-dev": "2.0.0",
     "electron-store": "8.0.0",
     "fs-extra": "10.0.0",
