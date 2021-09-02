@@ -73,7 +73,7 @@ args.command(
     commandPromise = api
       .uninstall(pluginName)
       .then(() => console.log(chalk.green(`${pluginName} uninstalled successfully!`)))
-      .catch((err) => console.log(chalk.red(err)));
+      .catch((err) => console.error(chalk.red(err)));
   },
   ['u', 'rm', 'remove']
 );
