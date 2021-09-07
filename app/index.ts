@@ -18,6 +18,10 @@ import {gitDescribe} from 'git-describe';
 import isDev from 'electron-is-dev';
 import * as config from './config';
 
+// Enable remote module
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-var-requires
+require('@electron/remote/main').initialize();
+
 // set up config
 config.setup();
 
