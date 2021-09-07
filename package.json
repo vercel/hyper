@@ -23,6 +23,7 @@
     "email": "team@zeit.co"
   },
   "dependencies": {
+    "@electron/remote": "2.0.1",
     "args": "5.0.1",
     "chalk": "4.1.2",
     "color": "4.0.1",
