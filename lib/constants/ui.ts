@@ -69,6 +69,7 @@ export interface UIWindowUnmaximizeAction {
 }
 export interface UIWindowGeometryChangedAction {
   type: typeof UI_WINDOW_GEOMETRY_CHANGED;
+  isMaximized: boolean;
 }
 export interface UIOpenFileAction {
   type: typeof UI_OPEN_FILE;

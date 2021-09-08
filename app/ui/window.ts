@@ -221,7 +221,7 @@ export function newWindow(
   // app buttons
   for (const ev of ['maximize', 'unmaximize', 'minimize', 'restore'] as any) {
     window.on(ev, () => {
-      rpc.emit('windowGeometry change', {});
+      rpc.emit('windowGeometry change', {isMaximized: window.isMaximized()});
     });
   }
   window.on('move', () => {

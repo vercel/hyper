@@ -1,6 +1,3 @@
-import {remote} from 'electron';
-// TODO: Should be updates to new async API https://medium.com/@nornagon/electrons-remote-module-considered-harmful-70d69500f31
-
 import Immutable, {Immutable as ImmutableType} from 'seamless-immutable';
 import {decorateUIReducer} from '../utils/plugins';
 import {CONFIG_LOAD, CONFIG_RELOAD} from '../constants/config';
@@ -112,8 +109,6 @@ const initial: uiState = Immutable<Mutable<uiState>>({
   macOptionSelectionMode: 'vertical',
   disableLigatures: false
 });
-
-const currentWindow = remote.getCurrentWindow();
 
 const reducer: IUiReducer = (state = initial, action) => {
   let state_ = state;
@@ -380,7 +375,7 @@ const reducer: IUiReducer = (state = initial, action) => {
       break;
 
     case UI_WINDOW_GEOMETRY_CHANGED:
-      isMax = currentWindow.isMaximized();
+      isMax = action.isMaximized;
       if (state.maximized !== isMax) {
         state_ = state.set('maximized', isMax);
       }
