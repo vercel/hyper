@@ -215,8 +215,8 @@ rpc.on('move', (window) => {
   store_.dispatch(uiActions.windowMove(window));
 });
 
-rpc.on('windowGeometry change', () => {
-  store_.dispatch(uiActions.windowGeometryUpdated());
+rpc.on('windowGeometry change', (data) => {
+  store_.dispatch(uiActions.windowGeometryUpdated(data));
 });
 
 rpc.on('add notification', ({text, url, dismissable}) => {
