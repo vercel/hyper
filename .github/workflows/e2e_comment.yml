@@ -1,11 +1,11 @@
-name: Comment spectron screenshots on PR
+name: Comment e2e test screenshots on PR
 on:
   workflow_run:
     workflows: ['Node CI']
     types:
       - completed
 jobs:
-  spectron_comment:
+  e2e_comment:
     runs-on: ubuntu-latest
     if: github.event.workflow_run.event == 'pull_request'
     steps:
@@ -19,7 +19,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: nodejs.yml
           run_id: ${{ github.event.workflow_run.id }}
-          name: spectron
+          name: e2e
       - name: Get PR number
         uses: dawidd6/action-download-artifact@v2.15.0
         with:
