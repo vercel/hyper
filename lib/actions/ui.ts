@@ -102,9 +102,10 @@ export function setFontSmoothing() {
   };
 }
 
-export function windowGeometryUpdated(): HyperActions {
+export function windowGeometryUpdated({isMaximized}: {isMaximized: boolean}): HyperActions {
   return {
-    type: UI_WINDOW_GEOMETRY_CHANGED
+    type: UI_WINDOW_GEOMETRY_CHANGED,
+    isMaximized
   };
 }
 

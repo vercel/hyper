@@ -45,7 +45,8 @@ function memoize<T extends (...args: any[]) => any>(fn: T): T {
 const getFileContents = memoize(() => {
   try {
     return fs.readFileSync(fileName, 'utf8');
-  } catch (err) {
+  } catch (_err) {
+    const err = _err as {code: string};
     if (err.code !== 'ENOENT') {
       // ENOENT === !exists()
       throw err;

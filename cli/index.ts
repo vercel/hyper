@@ -8,7 +8,7 @@ import pify from 'pify';
 import args from 'args';
 import chalk from 'chalk';
 import open from 'open';
-import columnify from 'columnify';
+import _columnify from 'columnify';
 import got from 'got';
 import ora from 'ora';
 import * as api from './api';
@@ -30,6 +30,22 @@ const checkConfig = () => {
   msg += 'Please launch Hyper and retry.';
   console.error(msg);
   process.exit(1);
+};
+
+const columnify = (data: {name: string; description: string}[]) => {
+  const maxNameLength = Math.max(...data.map((entry) => entry.name.length), 0);
+  const descriptionWidth = process.stdout.columns - maxNameLength - 1;
+  return _columnify(data, {
+    showHeaders: false,
+    config: {
+      description: {
+        maxWidth: descriptionWidth
+      },
+      name: {
+        dataTransform: (nameValue) => chalk.green(nameValue)
+      }
+    }
+  }).replace(/\s+$/gm, ''); // remove padding from the end of all lines
 };
 
 args.command(
@@ -57,7 +73,7 @@ args.command(
     commandPromise = api
       .uninstall(pluginName)
       .then(() => console.log(chalk.green(`${pluginName} uninstalled successfully!`)))
-      .catch((err) => console.log(chalk.red(err)));
+      .catch((err) => console.error(chalk.red(err)));
   },
   ['u', 'rm', 'remove']
 );
@@ -92,12 +108,6 @@ const lsRemote = (pattern?: string) => {
       entries.map(({name, description}) => {
         return {name, description};
       })
-    )
-    .then((entries) =>
-      entries.map((entry) => {
-        entry.name = chalk.green(entry.name);
-        return entry;
-      })
     );
 };
 
@@ -116,9 +126,8 @@ args.command(
           console.error(`${chalk.red('Try')} ${chalk.green('hyper ls-remote')}`);
           process.exit(1);
         } else {
-          let msg = columnify(entries);
+          const msg = columnify(entries);
           spinner.succeed();
-          msg = msg.substring(msg.indexOf('\n') + 1); // remove header
           console.log(msg);
         }
       })
@@ -138,10 +147,8 @@ args.command(
 
     commandPromise = lsRemote()
       .then((entries) => {
-        let msg = columnify(entries);
-
+        const msg = columnify(entries);
         spinner.succeed();
-        msg = msg.substring(msg.indexOf('\n') + 1); // remove header
         console.log(msg);
       })
       .catch((err) => {

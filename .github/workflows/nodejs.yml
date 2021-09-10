@@ -23,10 +23,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.3.0
+        uses: actions/setup-node@v2.4.0
         with:
           node-version: ${{ matrix.node-version }}
           cache: yarn
+          cache-dependency-path: |
+            yarn.lock
+            app/yarn.lock
       - name: Install
         run: yarn install
       - name: Test
@@ -36,12 +39,8 @@ jobs:
         run: |
           cp build/canary.ico build/icon.ico
           cp build/canary.icns build/icon.icns
-      - name: Build (pr)
-        if: github.event_name == 'pull_request'
-        run: yarn run dist --publish=never
-      - name: Build (push)
-        if: github.event_name == 'push'
-        run: yarn run dist
+      - name: Build
+        run: if [ ! -z "$CSC_LINK" ] ; then yarn run dist ; else unset CSC_LINK && unset WIN_CSC_LINK && yarn run dist --publish=never ; fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
