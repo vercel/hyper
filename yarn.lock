@@ -8136,10 +8136,10 @@ xterm-addon-ligatures@^0.5.1:
     font-finder "^1.1.0"
     font-ligatures "^1.4.0"
 
-xterm-addon-search@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.npmjs.org/xterm-addon-search/-/xterm-addon-search-0.8.0.tgz#e33eab918df7eac7e7baf95dd2b3d14133754881"
-  integrity sha512-MPJGPVPpHRUw9cLIuqQbrVepmENMOybVUSxIALz5h1ryyQBrVqVujq2hL5aroX5/dZJoHx9lGHQTVLQ07SKgKA==
+xterm-addon-search@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.npmjs.org/xterm-addon-search/-/xterm-addon-search-0.8.1.tgz#dfc557e9bcf5fd8ed96292c0d271aa865bc545d5"
+  integrity sha512-OtOaC9gxD2Q4ZnjZrCSRZmKLwwUjXX3gP7mIzq8Rs50317DGRDqgTLuHTYv/Nx/LvI5ceVFRYCxK36Ixs1nXNw==
 
 xterm-addon-unicode11@^0.3.0:
   version "0.3.0"
