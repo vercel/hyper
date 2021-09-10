@@ -57,7 +57,7 @@
         "bracketSpacing": false,
         "semi": true,
         "useTabs": false,
-        "jsxBracketSameLine": false
+        "bracketSameLine": false
       }
     ],
     "eslint-comments/no-unused-disable": "error"
@@ -80,7 +80,7 @@
             "semi": true,
             "useTabs": false,
             "parser": "babel",
-            "jsxBracketSameLine": false
+            "bracketSameLine": false
           }
         ]
       }
