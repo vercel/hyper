@@ -8,6 +8,7 @@ const {getDecoratedKeymaps} = remote.require('./plugins') as typeof import('../a
 let commands: Record<string, (event: any, dispatch: HyperDispatch) => void> = {
   'editor:search-close': (e, dispatch) => {
     dispatch(closeSearch(undefined, e));
+    window.focusActiveTerm();
   }
 };
 
