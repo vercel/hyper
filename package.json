@@ -69,7 +69,7 @@
     "@babel/plugin-proposal-optional-chaining": "7.14.5",
     "@babel/preset-react": "7.14.5",
     "@babel/preset-typescript": "7.15.0",
-    "@types/args": "3.0.1",
+    "@types/args": "5.0.0",
     "@types/async-retry": "1.4.3",
     "@types/color": "3.0.2",
     "@types/columnify": "^1.5.1",

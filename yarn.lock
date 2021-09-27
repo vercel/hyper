@@ -810,10 +810,10 @@
   resolved "https://registry.npmjs.org/@tsconfig/node16/-/node16-1.0.2.tgz#423c77877d0569db20e1fc80885ac4118314010e"
   integrity sha512-eZxlbI8GZscaGS7kkc/trHTT5xgrjH3/1n2JDwusC9iahPKWMRvRjJSAN5mCXviuTGQ/lHnhvv8Q1YTpnfz9gA==
 
-"@types/args@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/@types/args/-/args-3.0.1.tgz#59e8e787ed8a810408dd9a324157cc20b7001468"
-  integrity sha512-Mfre8T2comeJbw2D6W8mzQP+0Q8fpS7nkbHgatzU31tWsLs0Lkyc+ObdYfgV4SuMZn/n5MEWlxh2rc25125s0Q==
+"@types/args@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.npmjs.org/@types/args/-/args-5.0.0.tgz#8ea9d8094404ef88366ac62705bb8a8037437f8b"
+  integrity sha512-3fNb8ja/wQWFrHf5SQC5S3n0iBXdnT3PTPEJni2tBQRuv0BnAsz5u12U5gPRBSR7xdY6fI6QjWoTK/8ysuTt0w==
 
 "@types/async-retry@1.4.3":
   version "1.4.3"
