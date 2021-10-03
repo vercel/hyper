@@ -47,6 +47,8 @@ jobs:
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
           WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
           WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
       - name: Archive Build Artifacts
         uses: LabhanshAgrawal/upload-artifact@v3
         with:
