@@ -1,6 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/electron-builder",
   "appId": "co.zeit.hyper",
+  "afterSign": "./bin/notarize.js",
   "directories": {
     "app": "target"
   },
@@ -69,6 +70,8 @@
     },
     "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "category": "public.app-category.developer-tools",
+    "entitlements": "./build/mac/entitlements.plist",
+    "entitlementsInherit": "./build/mac/entitlements.plist",
     "extendInfo": {
       "CFBundleDocumentTypes": [
         {

@@ -23,7 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.4.0
+        uses: actions/setup-node@v2.4.1
         with:
           node-version: ${{ matrix.node-version }}
           cache: yarn
@@ -47,15 +47,8 @@ jobs:
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
           WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
           WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
-      - name: Test Spectron
-        if: runner.os != 'Linux'
-        run: yarn run test:spectron
-      - name: Archive Spectron test screenshot
-        if: runner.os != 'Linux'
-        uses: actions/upload-artifact@v2
-        with:
-          name: spectron
-          path: dist/tmp/*.png
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
       - name: Archive Build Artifacts
         uses: LabhanshAgrawal/upload-artifact@v3
         with:
@@ -66,6 +59,15 @@ jobs:
             dist/*.deb
             dist/*.rpm
             dist/*.exe
+      - name: Test Spectron
+        if: runner.os != 'Linux'
+        run: yarn run test:spectron
+      - name: Archive Spectron test screenshot
+        if: runner.os != 'Linux'
+        uses: actions/upload-artifact@v2
+        with:
+          name: spectron
+          path: dist/tmp/*.png
       - name: Save the pr number in an artifact
         if: github.event_name == 'pull_request'
         env:
