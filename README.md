@@ -36,6 +36,13 @@ Hyper is available as [Nix package](https://github.com/NixOS/nixpkgs/blob/master
 nix-env -i hyper
 ```
 
+#### Debian/Ubuntu
+Hyper is available in [Pacstall](https://github.com/pacstall/pacstall-programs/blob/master/packages/hyper-deb/hyper-deb.pacscript). Installation instructions are [here](https://github.com/pacstall/pacstall#installing)
+
+```sh
+pacstall -I hyper-deb
+```
+
 ### macOS
 
 Use [Homebrew Cask](https://brew.sh) to download the app by running these commands:
