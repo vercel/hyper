@@ -99,14 +99,14 @@ export default class Notification extends React.PureComponent<NotificationProps,
             position: relative;
             left: 4px;
             cursor: pointer;
-            opacity: 0.5;
+            font-weight: 600;
             color: currentColor;
-            transition: opacity 0.1s ease-in-out;
+            transition: font-weight 0.1s ease-in-out;
           }
 
           .notification_dismissLink:hover,
           .notification_dismissLink:focus {
-            opacity: 1;
+            font-weight: 900;
           }
         `}</style>
       </div>
