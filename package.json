@@ -119,7 +119,7 @@
     "redux-devtools-extension": "2.13.9",
     "style-loader": "3.3.0",
     "terser": "5.9.0",
-    "ts-node": "10.2.1",
+    "ts-node": "10.3.0",
     "typescript": "4.4.4",
     "webpack": "5.58.1"
   },
