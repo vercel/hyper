@@ -13,7 +13,7 @@ if (['--help', '-v', '--version'].includes(process.argv[1])) {
 import {resolve} from 'path';
 
 // Packages
-import {app, BrowserWindow, Menu} from 'electron';
+import {app, BrowserWindow, dialog, Menu} from 'electron';
 import {gitDescribe} from 'git-describe';
 import isDev from 'electron-is-dev';
 import * as config from './config';
@@ -26,6 +26,8 @@ import {installCLI} from './utils/cli-install';
 import * as AppMenu from './menus/menu';
 import {newWindow} from './ui/window';
 import * as windowUtils from './utils/window-utils';
+import Session from './session';
+import {readFileSync} from 'fs';
 
 const windowSet = new Set<BrowserWindow>([]);
 
@@ -136,8 +138,39 @@ app.on('ready', () =>
         windowSet.add(hwin);
         void hwin.loadURL(url);
 
+        const sessionHasRunningChildren = (session: Session): boolean => {
+          if (process.platform == 'linux') {
+            if (session.pty != null) {
+              const childProcInfoPath = `/proc/${session.pty.pid}/task/${session.pty.pid}/children`;
+              // we don't care *what* children the shell has, we only care if it has any
+              return readFileSync(childProcInfoPath, 'utf8').length >= 1;
+            } else {
+              return false;
+            }
+          } else {
+            return false;
+          }
+        };
         // the window can be closed by the browser process itself
-        hwin.on('close', () => {
+        hwin.on('close', (evt) => {
+          for (const s of hwin.sessions.values()) {
+            const session: Session = s;
+            if (sessionHasRunningChildren(session)) {
+              // todo: focus the window/pane that has a child running in the foreground?
+              const opt = dialog.showMessageBoxSync(hwin, {
+                title: 'Close window & all terminals?',
+                buttons: ['Close terminal', 'Cancel'],
+                message: `There is still a process running in a hyper terminal. Closing the terminal will kill it`
+              });
+              if (opt == 1) {
+                evt.preventDefault();
+                return;
+              } else {
+                hwin.clean();
+                windowSet.delete(hwin);
+              }
+            }
+          }
           hwin.clean();
           windowSet.delete(hwin);
         });
