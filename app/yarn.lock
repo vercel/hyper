@@ -446,17 +446,17 @@ nan@^2.14.0:
   resolved "https://registry.npmjs.org/nan/-/nan-2.14.2.tgz#f5376400695168f4cc694ac9393d0c9585eeea19"
   integrity sha512-M2ufzIiINKCuDfBSAUr1vWQ+vuVcA9kqx8JJUsbQi6yf1uGRyb7HfpdfUr5qLXf3B/t8dPvcjhKMmlfnP47EzQ==
 
-native-reg@0.3.5:
-  version "0.3.5"
-  resolved "https://registry.npmjs.org/native-reg/-/native-reg-0.3.5.tgz#80f6601028f236be68ef45b5c17493a94abb1145"
-  integrity sha512-lwaSAbq02DZ2aFK/ZvHzDpaHQSo7fh0GjIol+juMe6iwmeBO+ZMXFSPLfpOksOhcxgEBhgCU1bVm1G0u9lkdpA==
+native-reg@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/native-reg/-/native-reg-1.0.0.tgz#77f9acbf59eda02680c00b0b1b9d1e0078b7820d"
+  integrity sha512-MxukmqY7jOeiS9+b4TAlfG9cvaQ03oLET35nUGYGHDRcLx0NFk7eeoWqX4wAXaFiMW50ZiFalOA6W8q3fprcsw==
   dependencies:
-    node-gyp-build "^4"
+    node-gyp-build "4"
 
-node-gyp-build@^4:
-  version "4.2.3"
-  resolved "https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.2.3.tgz#ce6277f853835f718829efb47db20f3e4d9c4739"
-  integrity sha512-MN6ZpzmfNCRM+3t57PTJHgHyw/h4OWnZ6mR8P5j/uZtqQr46RRuDE/P+g3n0YR/AiYXeWixZZzaip77gdICfRg==
+node-gyp-build@4:
+  version "4.3.0"
+  resolved "https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.3.0.tgz#9f256b03e5826150be39c764bf51e993946d71a3"
+  integrity sha512-iWjXZvmboq0ja1pUGULQBexmxq8CV4xBhX7VDOTbL7ZR4FOowwY/VOtRxBN/yKxmdGoIp4j5ysNT4u3S2pDQ3Q==
 
 node-pty@0.10.1:
   version "0.10.1"
