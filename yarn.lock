@@ -1333,7 +1333,7 @@ acorn@^8.0.4, acorn@^8.4.1:
   resolved "https://registry.npmjs.org/acorn/-/acorn-8.4.1.tgz#56c36251fc7cabc7096adc18f05afe814321a28c"
   integrity sha512-asabaBSkEKosYKMITunzX177CXxQ4Q8BSSzMTKD+FefUhipQC70gfW5SiUDhYQ3vk8G+81HqQk7Fv9OXwwn9KA==
 
-agent-base@6:
+agent-base@6, agent-base@^6.0.2:
   version "6.0.2"
   resolved "https://registry.npmjs.org/agent-base/-/agent-base-6.0.2.tgz#49fff58577cfee3f37176feab4c22e00f86d7f77"
   integrity sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==
@@ -2356,15 +2356,15 @@ commander@^5.0.0:
   resolved "https://registry.npmjs.org/commander/-/commander-5.1.0.tgz#46abbd1652f8e059bddaef99bbdcb2ad9cf179ae"
   integrity sha512-P0CysNDQ7rtVw4QIQtm+MRxV66vKFSvlsQvGYXZWR3qFU0jlMKHZZZgw8e+8DSah4UDKMqnknRDQz+xuQXQ/Zg==
 
-commander@^6.1.0:
-  version "6.2.1"
-  resolved "https://registry.npmjs.org/commander/-/commander-6.2.1.tgz#0792eb682dfbc325999bb2b84fddddba110ac73c"
-  integrity sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==
-
 commander@^7.0.0:
   version "7.0.0"
   resolved "https://registry.npmjs.org/commander/-/commander-7.0.0.tgz#3e2bbfd8bb6724760980988fb5b22b7ee6b71ab2"
   integrity sha512-ovx/7NkTrnPuIV8sqk/GjUIIM1+iUQeqA3ye2VNpq9sVoiZsooObWlQy+OPWGI17GDaEoybuAGJm6U8yC077BA==
+
+commander@^8.2.0:
+  version "8.3.0"
+  resolved "https://registry.npmjs.org/commander/-/commander-8.3.0.tgz#4837ea1b2da67b9c616a67afbb0fafee567bca66"
+  integrity sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==
 
 common-path-prefix@^3.0.0:
   version "3.0.0"
@@ -6005,12 +6005,12 @@ pkg-dir@^4.1.0, pkg-dir@^4.2.0:
   dependencies:
     find-up "^4.0.0"
 
-playwright@1.15.2:
-  version "1.15.2"
-  resolved "https://registry.npmjs.org/playwright/-/playwright-1.15.2.tgz#b350056d1fffbe5de5b1bdaca6ab73e35758baad"
-  integrity sha512-+Z+7ckihyxR6rK5q8DWC6eUbKARfXpyxpjNcoJfgwSr64lAOzjhyFQiPC/JkdIqhsLgZjxpWfl1S7fLb+wPkgA==
+playwright-core@=1.16.1:
+  version "1.16.1"
+  resolved "https://registry.npmjs.org/playwright-core/-/playwright-core-1.16.1.tgz#f8564359c9b0881eab1de55ca7723b21539eb585"
+  integrity sha512-SdThyChaLkvFkVEPZ/pfhiaaD4pnBTts2MYZzRMS+fYeyHzPy/FI+NUTj5Rgs+ZN9BCIrbJhfzvfYBxco/4X4A==
   dependencies:
-    commander "^6.1.0"
+    commander "^8.2.0"
     debug "^4.1.1"
     extract-zip "^2.0.1"
     https-proxy-agent "^5.0.0"
@@ -6021,9 +6021,18 @@ playwright@1.15.2:
     proper-lockfile "^4.1.1"
     proxy-from-env "^1.1.0"
     rimraf "^3.0.2"
+    socks-proxy-agent "^6.1.0"
     stack-utils "^2.0.3"
     ws "^7.4.6"
+    yauzl "^2.10.0"
     yazl "^2.5.1"
+
+playwright@1.16.1:
+  version "1.16.1"
+  resolved "https://registry.npmjs.org/playwright/-/playwright-1.16.1.tgz#c3518b02448f7fd0246e8f4ccdc38ac4f74b428d"
+  integrity sha512-D7o7itqxsJ4vx4OlcPv9brOe74M2J4gDDt9qVI9ptgtHtxCi48I8tSXE/trX1PoHFuJeeVlo+tGvhtisvPGu1A==
+  dependencies:
+    playwright-core "=1.16.1"
 
 plist@3.0.4, plist@^3.0.1:
   version "3.0.4"
@@ -6853,10 +6862,27 @@ socks-proxy-agent@^5.0.0:
     debug "4"
     socks "^2.3.3"
 
+socks-proxy-agent@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.npmjs.org/socks-proxy-agent/-/socks-proxy-agent-6.1.0.tgz#869cf2d7bd10fea96c7ad3111e81726855e285c3"
+  integrity sha512-57e7lwCN4Tzt3mXz25VxOErJKXlPfXmkMLnk310v/jwW20jWRVcgsOit+xNkN3eIEdB47GwnfAEBLacZ/wVIKg==
+  dependencies:
+    agent-base "^6.0.2"
+    debug "^4.3.1"
+    socks "^2.6.1"
+
 socks@^2.3.3:
   version "2.6.0"
   resolved "https://registry.npmjs.org/socks/-/socks-2.6.0.tgz#6b984928461d39871b3666754b9000ecf39dfac2"
   integrity sha512-mNmr9owlinMplev0Wd7UHFlqI4ofnBnNzFuzrm63PPaHgbkqCFe4T5LzwKmtQ/f2tX0NTpcdVLyD/FHxFBstYw==
+  dependencies:
+    ip "^1.1.5"
+    smart-buffer "^4.1.0"
+
+socks@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.npmjs.org/socks/-/socks-2.6.1.tgz#989e6534a07cf337deb1b1c94aaa44296520d30e"
+  integrity sha512-kLQ9N5ucj8uIcxrDwjm0Jsqk06xdpBjGNQtpXy4Q8/QY2k+fY7nZH8CARy+hkbG+SGAovmzzuauCpBlb8FrnBA==
   dependencies:
     ip "^1.1.5"
     smart-buffer "^4.1.0"
