@@ -112,7 +112,7 @@
     "node-addon-api": "4.2.0",
     "node-gyp": "8.2.0",
     "null-loader": "4.0.1",
-    "playwright": "1.15.2",
+    "playwright": "1.16.1",
     "plist": "3.0.4",
     "prettier": "2.4.1",
     "proxyquire": "2.1.3",
