@@ -39,10 +39,10 @@
   resolved "https://registry.npmjs.org/@ava/require-precompiled/-/require-precompiled-1.0.0.tgz#6f4a48b75904a753eadff020bbfca81d3bbc0357"
   integrity sha512-N7w4g+P/SUL8SF+HC4Z4e/ctV6nQ5AERC90K90r4xZQ8WVrJux9albvfyYAzygyU47CSqMWh6yJwFs8DYaeWmg==
 
-"@babel/cli@7.15.7":
-  version "7.15.7"
-  resolved "https://registry.npmjs.org/@babel/cli/-/cli-7.15.7.tgz#62658abedb786d09c1f70229224b11a65440d7a1"
-  integrity sha512-YW5wOprO2LzMjoWZ5ZG6jfbY9JnkDxuHDwvnrThnuYtByorova/I0HNXJedrUfwuXFQfYOjcqDA4PU3qlZGZjg==
+"@babel/cli@7.16.0":
+  version "7.16.0"
+  resolved "https://registry.npmjs.org/@babel/cli/-/cli-7.16.0.tgz#a729b7a48eb80b49f48a339529fc4129fd7bcef3"
+  integrity sha512-WLrM42vKX/4atIoQB+eb0ovUof53UUvecb4qGjU2PDDWRiZr50ZpiV8NpcLo7iSxeGYrRG0Mqembsa+UrTAV6Q==
   dependencies:
     commander "^4.0.1"
     convert-source-map "^1.1.0"
