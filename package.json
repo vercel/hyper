@@ -27,7 +27,7 @@
     "chalk": "4.1.2",
     "color": "4.0.1",
     "columnify": "1.5.4",
-    "css-loader": "6.4.0",
+    "css-loader": "6.5.0",
     "got": "11.8.2",
     "json-loader": "0.5.7",
     "mousetrap": "chabou/mousetrap#useCapture",
