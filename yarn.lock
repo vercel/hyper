@@ -303,12 +303,12 @@
   dependencies:
     "@babel/types" "^7.15.4"
 
-"@babel/helper-skip-transparent-expression-wrappers@^7.14.5":
-  version "7.14.5"
-  resolved "https://registry.npmjs.org/@babel/helper-skip-transparent-expression-wrappers/-/helper-skip-transparent-expression-wrappers-7.14.5.tgz#96f486ac050ca9f44b009fbe5b7d394cab3a0ee4"
-  integrity sha512-dmqZB7mrb94PZSAOYtr+ZN5qt5owZIAgqtoTuqiFbHFtxgEcmQlRJVI+bO++fciBunXtB6MK7HrzrfcAzIz2NQ==
+"@babel/helper-skip-transparent-expression-wrappers@^7.16.0":
+  version "7.16.0"
+  resolved "https://registry.npmjs.org/@babel/helper-skip-transparent-expression-wrappers/-/helper-skip-transparent-expression-wrappers-7.16.0.tgz#0ee3388070147c3ae051e487eca3ebb0e2e8bb09"
+  integrity sha512-+il1gTy0oHwUsBQZyJvukbB4vPMdcYBrFHa0Uc4AizLxbq6BOYC51Rv4tWocX9BLBDLZ4kc6qUFpQ6HRgL+3zw==
   dependencies:
-    "@babel/types" "^7.14.5"
+    "@babel/types" "^7.16.0"
 
 "@babel/helper-split-export-declaration@^7.14.5":
   version "7.14.5"
@@ -424,13 +424,13 @@
     "@babel/plugin-syntax-object-rest-spread" "^7.8.3"
     "@babel/plugin-transform-parameters" "^7.15.4"
 
-"@babel/plugin-proposal-optional-chaining@7.14.5", "@babel/plugin-proposal-optional-chaining@^7.14.5":
-  version "7.14.5"
-  resolved "https://registry.npmjs.org/@babel/plugin-proposal-optional-chaining/-/plugin-proposal-optional-chaining-7.14.5.tgz#fa83651e60a360e3f13797eef00b8d519695b603"
-  integrity sha512-ycz+VOzo2UbWNI1rQXxIuMOzrDdHGrI23fRiz/Si2R4kv2XZQ1BK8ccdHwehMKBlcH/joGW/tzrUmo67gbJHlQ==
+"@babel/plugin-proposal-optional-chaining@7.16.0", "@babel/plugin-proposal-optional-chaining@^7.14.5":
+  version "7.16.0"
+  resolved "https://registry.npmjs.org/@babel/plugin-proposal-optional-chaining/-/plugin-proposal-optional-chaining-7.16.0.tgz#56dbc3970825683608e9efb55ea82c2a2d6c8dc0"
+  integrity sha512-Y4rFpkZODfHrVo70Uaj6cC1JJOt3Pp0MdWSwIKtb8z1/lsjl9AmnB7ErRFV+QNGIfcY1Eruc2UMx5KaRnXjMyg==
   dependencies:
     "@babel/helper-plugin-utils" "^7.14.5"
-    "@babel/helper-skip-transparent-expression-wrappers" "^7.14.5"
+    "@babel/helper-skip-transparent-expression-wrappers" "^7.16.0"
     "@babel/plugin-syntax-optional-chaining" "^7.8.3"
 
 "@babel/plugin-syntax-dynamic-import@^7.8.3":
