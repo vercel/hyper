@@ -5359,23 +5359,7 @@ node-gyp-build@^4.2.1:
   resolved "https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.2.3.tgz#ce6277f853835f718829efb47db20f3e4d9c4739"
   integrity sha512-MN6ZpzmfNCRM+3t57PTJHgHyw/h4OWnZ6mR8P5j/uZtqQr46RRuDE/P+g3n0YR/AiYXeWixZZzaip77gdICfRg==
 
-node-gyp@8.3.0:
-  version "8.3.0"
-  resolved "https://registry.npmjs.org/node-gyp/-/node-gyp-8.3.0.tgz#ebc36a146d45095e1c6af6ccb0e47d1c8fc3fe69"
-  integrity sha512-e+vmKyTiybKgrmvs4M2REFKCnOd+NcrAAnn99Yko6NQA+zZdMlRvbIUHojfsHrSQ1CddLgZnHicnEVgDHziJzA==
-  dependencies:
-    env-paths "^2.2.0"
-    glob "^7.1.4"
-    graceful-fs "^4.2.6"
-    make-fetch-happen "^9.1.0"
-    nopt "^5.0.0"
-    npmlog "^4.1.2"
-    rimraf "^3.0.2"
-    semver "^7.3.5"
-    tar "^6.1.2"
-    which "^2.0.2"
-
-node-gyp@^8.4.0:
+node-gyp@8.4.0, node-gyp@^8.4.0:
   version "8.4.0"
   resolved "https://registry.npmjs.org/node-gyp/-/node-gyp-8.4.0.tgz#6e1112b10617f0f8559c64b3f737e8109e5a8338"
   integrity sha512-Bi/oCm5bH6F+FmzfUxJpPaxMEyIhszULGR3TprmTeku8/dMFcdTcypk120NeZqEt54r1BrgEKtm2jJiuIKE28Q==
