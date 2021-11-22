@@ -43,7 +43,7 @@
     "recast": "0.20.5",
     "redux": "4.1.2",
     "redux-thunk": "2.4.0",
-    "reselect": "4.1.1",
+    "reselect": "4.1.4",
     "seamless-immutable": "7.1.4",
     "semver": "7.3.5",
     "shebang-loader": "0.0.1",
