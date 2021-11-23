@@ -54,4 +54,4 @@ jobs:
           type: create
           issue_number: ${{ steps.pr_num_reader.outputs.content }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          body: ${{ format(env.MESSAGE, env.IMG_MARKDOWN, github.repository, github.run_id) }}
+          body: ${{ format(env.MESSAGE, env.IMG_MARKDOWN, github.repository, github.event.workflow_run.id) }}
