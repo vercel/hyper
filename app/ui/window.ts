@@ -1,4 +1,4 @@
-import {app, BrowserWindow, shell, Menu, BrowserWindowConstructorOptions, Event, WebPreferences} from 'electron';
+import {app, BrowserWindow, shell, Menu, BrowserWindowConstructorOptions, Event} from 'electron';
 import {isAbsolute, normalize, sep} from 'path';
 import {URL, fileURLToPath} from 'url';
 import {v4 as uuidv4} from 'uuid';
@@ -14,6 +14,7 @@ import contextMenuTemplate from './contextmenu';
 import {execCommand} from '../commands';
 import {setRendererType, unsetRendererType} from '../utils/renderer-utils';
 import {decorateSessionOptions, decorateSessionClass} from '../plugins';
+import {enable as remoteEnable} from '@electron/remote/main';
 
 export function newWindow(
   options_: BrowserWindowConstructorOptions,
@@ -38,12 +39,15 @@ export function newWindow(
     webPreferences: {
       nodeIntegration: true,
       navigateOnDragDrop: true,
-      enableRemoteModule: true,
       contextIsolation: false
-    } as WebPreferences,
+    },
     ...options_
   };
   const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(winOpts));
+
+  // Enable remote module on this window
+  remoteEnable(window.webContents);
+
   window.uid = classOpts.uid;
 
   app.plugins.onWindowClass(window);

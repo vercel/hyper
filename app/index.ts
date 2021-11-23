@@ -10,8 +10,8 @@ if (['--help', '-v', '--version'].includes(process.argv[1])) {
 }
 
 // Enable remote module
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-var-requires
-require('@electron/remote/main').initialize();
+import {initialize as remoteInitialize} from '@electron/remote/main';
+remoteInitialize();
 
 // Native
 import {resolve} from 'path';
