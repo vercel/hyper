@@ -46,11 +46,12 @@ jobs:
           IMG_MARKDOWN: ${{ join(fromJSON(steps.upload_screenshots.outputs.markdown_urls), '') }}
           MESSAGE: |
             Hi there,
+            Thank you for contributing to Hyper!
+            You can get the build artifacts from [here](https://nightly.link/{1}/actions/runs/{2}).
             Here are screenshots of Hyper built from this pr.
             {0}
-            Thank you for contributing to Hyper!
         with:
           type: create
           issue_number: ${{ steps.pr_num_reader.outputs.content }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          body: ${{ format(env.MESSAGE, env.IMG_MARKDOWN) }}
+          body: ${{ format(env.MESSAGE, env.IMG_MARKDOWN, env.GITHUB_REPOSITORY, env.GITHUB_RUN_ID) }}
