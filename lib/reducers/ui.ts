@@ -107,7 +107,7 @@ const initial: uiState = Immutable<Mutable<uiState>>({
   webGLRenderer: true,
   webLinksActivationKey: '',
   macOptionSelectionMode: 'vertical',
-  disableLigatures: false
+  disableLigatures: true
 });
 
 const reducer: IUiReducer = (state = initial, action) => {
@@ -260,7 +260,7 @@ const reducer: IUiReducer = (state = initial, action) => {
               ret.macOptionSelectionMode = config.macOptionSelectionMode;
             }
 
-            if (config.disableLigatures) {
+            if (config.disableLigatures !== undefined) {
               ret.disableLigatures = config.disableLigatures;
             }
 
