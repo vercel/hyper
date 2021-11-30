@@ -22,7 +22,7 @@ export default (commands: Record<string, string>, showAbout: () => void): MenuIt
   If not, please try and fulfil these first.
 -->
 <!-- 👉 Checked checkbox should look like this: [x] -->
-- [ ] Your Hyper.app version is **${version}**. Please verify your using the [latest](https://github.com/vercel/hyper/releases/latest) Hyper.app version
+- [ ] Your Hyper.app version is **${version}**. Please verify you're using the [latest](https://github.com/vercel/hyper/releases/latest) Hyper.app version
 - [ ] I have searched the [issues](https://github.com/vercel/hyper/issues) of this repo and believe that this is not a duplicate
 ---
 - **Any relevant information from devtools?** _(CMD+OPTION+I on macOS, CTRL+SHIFT+I elsewhere)_:
