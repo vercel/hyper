@@ -4,7 +4,6 @@ on:
     branches:
       - master
       - canary
-      - screenreader
   pull_request:
 defaults:
   run:
