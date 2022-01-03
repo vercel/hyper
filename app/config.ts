@@ -57,17 +57,11 @@ const _watch = () => {
     console.error('error watching config', error);
   });
 
-  app.on('before-quit', (e) => {
+  app.on('before-quit', () => {
     if (Object.keys(_watcher.getWatched()).length > 0) {
-      e.preventDefault();
-      _watcher
-        .close()
-        .catch((err) => {
-          console.warn(err);
-        })
-        .finally(() => {
-          app.quit();
-        });
+      _watcher.close().catch((err) => {
+        console.warn(err);
+      });
     }
   });
 };
