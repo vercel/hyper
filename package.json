@@ -62,6 +62,7 @@
   },
   "devDependencies": {
     "@ava/babel": "2.0.0",
+    "@ava/typescript": "^3.0.1",
     "@babel/cli": "7.16.7",
     "@babel/core": "7.16.7",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
