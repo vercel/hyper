@@ -1,11 +1,11 @@
-name: Comment spectron screenshots on PR
+name: Comment e2e test screenshots on PR
 on:
   workflow_run:
     workflows: ['Node CI']
     types:
       - completed
 jobs:
-  spectron_comment:
+  e2e_comment:
     runs-on: ubuntu-latest
     if: github.event.workflow_run.event == 'pull_request'
     steps:
@@ -14,14 +14,14 @@ jobs:
           WORKFLOW_RUN_INFO: ${{ toJSON(github.event.workflow_run) }}
         run: echo "$WORKFLOW_RUN_INFO"
       - name: Download Artifacts
-        uses: dawidd6/action-download-artifact@v2.14.1
+        uses: dawidd6/action-download-artifact@v2.16.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: nodejs.yml
           run_id: ${{ github.event.workflow_run.id }}
-          name: spectron
+          name: e2e
       - name: Get PR number
-        uses: dawidd6/action-download-artifact@v2.14.1
+        uses: dawidd6/action-download-artifact@v2.16.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: nodejs.yml
@@ -46,11 +46,18 @@ jobs:
           IMG_MARKDOWN: ${{ join(fromJSON(steps.upload_screenshots.outputs.markdown_urls), '') }}
           MESSAGE: |
             Hi there,
+            Thank you for contributing to Hyper!
+            You can get the build artifacts from [here](https://nightly.link/{1}/actions/runs/{2}).
             Here are screenshots of Hyper built from this pr.
             {0}
-            Thank you for contributing to Hyper!
         with:
           type: create
           issue_number: ${{ steps.pr_num_reader.outputs.content }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          body: ${{ format(env.MESSAGE, env.IMG_MARKDOWN) }}
+          body: ${{ format(env.MESSAGE, env.IMG_MARKDOWN, github.repository, github.event.workflow_run.id) }}
+      - name: Hide older comments
+        uses: kanga333/comment-hider@v0.3.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          leave_visible: 1
+          issue_number: ${{ steps.pr_num_reader.outputs.content }}

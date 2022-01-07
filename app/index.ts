@@ -9,6 +9,10 @@ if (['--help', '-v', '--version'].includes(process.argv[1])) {
   process.exit();
 }
 
+// Enable remote module
+import {initialize as remoteInitialize} from '@electron/remote/main';
+remoteInitialize();
+
 // Native
 import {resolve} from 'path';
 

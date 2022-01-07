@@ -51,6 +51,7 @@ export type configOptions = {
   };
   padding: string;
   quickEdit: boolean;
+  screenReaderMode: boolean;
   scrollback: number;
   selectionColor: string;
   shell: string;

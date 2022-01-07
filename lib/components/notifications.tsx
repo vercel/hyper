@@ -38,10 +38,10 @@ export default class Notifications extends React.PureComponent<NotificationsProp
           <Notification
             key="message"
             backgroundColor="#FE354E"
+            color="#fff"
             text={this.props.messageText}
             onDismiss={this.props.onDismissMessage}
             userDismissable={this.props.messageDismissable}
-            userDismissColor="#AA2D3C"
           >
             {this.props.messageURL
               ? [
@@ -58,7 +58,7 @@ export default class Notifications extends React.PureComponent<NotificationsProp
                   >
                     more
                   </a>,
-                  ')'
+                  ') '
                 ]
               : null}
           </Notification>

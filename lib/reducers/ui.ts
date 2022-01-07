@@ -107,7 +107,8 @@ const initial: uiState = Immutable<Mutable<uiState>>({
   webGLRenderer: true,
   webLinksActivationKey: '',
   macOptionSelectionMode: 'vertical',
-  disableLigatures: false
+  disableLigatures: true,
+  screenReaderMode: false
 });
 
 const reducer: IUiReducer = (state = initial, action) => {
@@ -260,8 +261,12 @@ const reducer: IUiReducer = (state = initial, action) => {
               ret.macOptionSelectionMode = config.macOptionSelectionMode;
             }
 
-            if (config.disableLigatures) {
+            if (config.disableLigatures !== undefined) {
               ret.disableLigatures = config.disableLigatures;
+            }
+
+            if (config.screenReaderMode !== undefined) {
+              ret.screenReaderMode = config.screenReaderMode;
             }
 
             ret._lastUpdate = now;

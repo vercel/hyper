@@ -1,14 +1,12 @@
-/* eslint-disable eslint-comments/disable-enable-pair */
-/* eslint-disable @typescript-eslint/await-thenable */
 // Native
 import path from 'path';
 import fs from 'fs-extra';
 
 // Packages
 import test from 'ava';
-import {Application} from 'spectron';
+import {_electron, ElectronApplication} from 'playwright';
 
-let app: Application;
+let app: ElectronApplication;
 
 test.before(async () => {
   let pathToBinary;
@@ -30,22 +28,31 @@ test.before(async () => {
       throw new Error('Path to the built binary needs to be defined for this platform in test/index.js');
   }
 
-  app = new Application({
-    path: pathToBinary
+  app = await _electron.launch({
+    executablePath: pathToBinary
   });
-
-  await app.start();
+  await app.firstWindow();
+  await new Promise((resolve) => setTimeout(resolve, 5000));
 });
 
 test.after(async () => {
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-  await app.browserWindow.capturePage().then(async (imageBuffer) => {
-    await fs.writeFile(`dist/tmp/${process.platform}_test.png`, imageBuffer);
-  });
-  await app.stop();
+  await app
+    .evaluate(async ({BrowserWindow, desktopCapturer, screen}) => {
+      // eslint-disable-next-line prefer-const
+      let {width, height, ...position} = BrowserWindow.getFocusedWindow()!.getBounds();
+      const {scaleFactor} = screen.getDisplayNearestPoint(position);
+      width *= scaleFactor;
+      height *= scaleFactor;
+      const sources = await desktopCapturer.getSources({types: ['window'], thumbnailSize: {width, height}});
+      return sources[0].thumbnail.toPNG().toString('base64');
+    })
+    .then((img) => Buffer.from(img || '', 'base64'))
+    .then(async (imageBuffer) => {
+      await fs.writeFile(`dist/tmp/${process.platform}_test.png`, imageBuffer);
+    });
+  await app.close();
 });
 
 test('see if dev tools are open', async (t) => {
-  await app.client.waitUntilWindowLoaded();
-  t.false(await app.webContents.isDevToolsOpened());
+  t.false(await app.evaluate(({webContents}) => webContents.getFocusedWebContents().isDevToolsOpened()));
 });
