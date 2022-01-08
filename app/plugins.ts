@@ -234,7 +234,7 @@ function toDependencies(plugins_: {plugins: string[]}) {
 
     if (match) {
       const index = match.index + 1;
-      const pieces = [];
+      const pieces: string[] = [];
 
       pieces[0] = plugin.substring(0, index);
       pieces[1] = plugin.substring(index + 1, plugin.length);

@@ -15,10 +15,11 @@ import {execCommand} from '../commands';
 import {setRendererType, unsetRendererType} from '../utils/renderer-utils';
 import {decorateSessionOptions, decorateSessionClass} from '../plugins';
 import {enable as remoteEnable} from '@electron/remote/main';
+import {configOptions} from '../../lib/config';
 
 export function newWindow(
   options_: BrowserWindowConstructorOptions,
-  cfg: any,
+  cfg: configOptions,
   fn?: (win: BrowserWindow) => void
 ): BrowserWindow {
   const classOpts = Object.assign({uid: uuidv4()});
