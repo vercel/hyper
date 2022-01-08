@@ -50,6 +50,7 @@ export type configOptions = {
     cmdIsMeta: boolean;
   };
   padding: string;
+  preserveCWD: boolean;
   quickEdit: boolean;
   screenReaderMode: boolean;
   scrollback: number;
