@@ -45,12 +45,12 @@ export function requestTermGroup(activeUid: string) {
     dispatch({
       type: TERM_GROUP_REQUEST,
       effect: () => {
-        const {ui} = getState();
+        const {ui, sessions} = getState();
         const {cwd} = ui;
         rpc.emit('new', {
           isNewGroup: true,
           cwd,
-          activeUid
+          activeUid: activeUid ? activeUid : sessions.activeUid
         });
       }
     });

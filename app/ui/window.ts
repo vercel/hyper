@@ -16,6 +16,7 @@ import {setRendererType, unsetRendererType} from '../utils/renderer-utils';
 import {decorateSessionOptions, decorateSessionClass} from '../plugins';
 import {enable as remoteEnable} from '@electron/remote/main';
 import {configOptions} from '../../lib/config';
+import {getWorkingDirectoryFromPID} from 'native-process-working-directory';
 
 export function newWindow(
   options_: BrowserWindowConstructorOptions,
@@ -129,10 +130,21 @@ export function newWindow(
       if (extraOptions[key] !== undefined) extraOptionsFiltered[key] = extraOptions[key];
     });
 
+    let cwd = '';
+    if (cfg.preserveCWD === undefined || cfg.preserveCWD) {
+      const activePID = extraOptionsFiltered.activeUid && sessions.get(extraOptionsFiltered.activeUid)?.pty?.pid;
+      try {
+        cwd = activePID && getWorkingDirectoryFromPID(activePID);
+      } catch (error) {
+        console.error(error);
+      }
+      cwd = cwd && isAbsolute(cwd) ? cwd : '';
+    }
+
     // remove the rows and cols, the wrong value of them will break layout when init create
     const defaultOptions = Object.assign(
       {
-        cwd: workingDirectory,
+        cwd: cwd || workingDirectory,
         splitDirection: undefined,
         shell: cfg.shell,
         shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
