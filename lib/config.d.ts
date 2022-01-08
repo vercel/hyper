@@ -65,6 +65,7 @@ export type configOptions = {
   webGLRenderer: boolean;
   webLinksActivationKey: 'ctrl' | 'alt' | 'meta' | 'shift';
   windowSize: [number, number];
+  workingDirectory: string;
 };
 
 export type rawConfig = {
