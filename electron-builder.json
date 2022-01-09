@@ -120,7 +120,11 @@
     "afterInstall": "./build/linux/after-install.tpl"
   },
   "rpm": {
-    "afterInstall": "./build/linux/after-install.tpl"
+    "afterInstall": "./build/linux/after-install.tpl",
+    "fpm": [
+      "--rpm-rpmbuild-define",
+      "_build_id_links none"
+    ]
   },
   "snap": {
     "confinement": "classic",
