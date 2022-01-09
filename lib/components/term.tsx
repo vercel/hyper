@@ -309,7 +309,7 @@ export default class Term extends React.PureComponent<TermProps> {
   };
 
   closeSearchBox = () => {
-    this.props.toggleSearch();
+    this.props.onCloseSearch();
   };
 
   resize(cols: number, rows: number) {
