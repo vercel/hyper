@@ -13,8 +13,7 @@ import {
   SESSION_CLEAR_ACTIVE,
   SESSION_USER_DATA,
   SESSION_SET_XTERM_TITLE,
-  SESSION_SEARCH,
-  SESSION_SEARCH_CLOSE
+  SESSION_SEARCH
 } from '../constants/sessions';
 import {HyperState, session, HyperDispatch, HyperActions} from '../hyper';
 
@@ -135,12 +134,13 @@ export function resizeSession(uid: string, cols: number, rows: number) {
   };
 }
 
-export function onSearch(uid?: string) {
+export function openSearch(uid?: string) {
   return (dispatch: HyperDispatch, getState: () => HyperState) => {
     const targetUid = uid || getState().sessions.activeUid!;
     dispatch({
       type: SESSION_SEARCH,
-      uid: targetUid
+      uid: targetUid,
+      value: true
     });
   };
 }
@@ -150,8 +150,9 @@ export function closeSearch(uid?: string, keyEvent?: any) {
     const targetUid = uid || getState().sessions.activeUid!;
     if (getState().sessions.sessions[targetUid]?.search) {
       dispatch({
-        type: SESSION_SEARCH_CLOSE,
-        uid: targetUid
+        type: SESSION_SEARCH,
+        uid: targetUid,
+        value: false
       });
     } else {
       if (keyEvent) {
