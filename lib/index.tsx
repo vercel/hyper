@@ -148,7 +148,7 @@ rpc.on('session tmux req', () => {
 });
 
 rpc.on('session search', () => {
-  store_.dispatch(sessionActions.onSearch());
+  store_.dispatch(sessionActions.openSearch());
 });
 
 rpc.on('session search close', () => {
