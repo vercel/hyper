@@ -310,6 +310,7 @@ export default class Term extends React.PureComponent<TermProps> {
 
   closeSearchBox = () => {
     this.props.onCloseSearch();
+    this.term.focus();
   };
 
   resize(cols: number, rows: number) {
