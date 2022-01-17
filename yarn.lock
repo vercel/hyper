@@ -2903,10 +2903,10 @@ electron-publish@22.14.5:
     lazy-val "^1.0.5"
     mime "^2.5.2"
 
-electron-rebuild@3.2.6:
-  version "3.2.6"
-  resolved "https://registry.npmjs.org/electron-rebuild/-/electron-rebuild-3.2.6.tgz#d71b914b21822b0fc7222369935d6674c3342a54"
-  integrity sha512-oVAouqlW1IJivSKrw+ahTIGhLoH2GQiiIwPcZGAPt6ZnynsROG31jpSLDlE5veAiD91szbpaVT4qhU5oGbrsKA==
+electron-rebuild@3.2.7:
+  version "3.2.7"
+  resolved "https://registry.npmjs.org/electron-rebuild/-/electron-rebuild-3.2.7.tgz#0f56c1cc99a6fec0a5b990532283c2a8c838c19b"
+  integrity sha512-WvaW1EgRinDQ61khHFZfx30rkPQG5ItaOT0wrI7iJv9A3SbghriQGfZQfHZs25fWLBe6/vkv05LOqg6aDw6Wzw==
   dependencies:
     "@malept/cross-spawn-promise" "^2.0.0"
     chalk "^4.0.0"
@@ -2914,7 +2914,7 @@ electron-rebuild@3.2.6:
     detect-libc "^1.0.3"
     fs-extra "^10.0.0"
     got "^11.7.0"
-    lzma-native "^8.0.1"
+    lzma-native "^8.0.5"
     node-abi "^3.0.0"
     node-api-version "^0.1.4"
     node-gyp "^8.4.0"
@@ -4986,10 +4986,10 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
-lzma-native@^8.0.1:
-  version "8.0.1"
-  resolved "https://registry.npmjs.org/lzma-native/-/lzma-native-8.0.1.tgz#8569e2f88de461a9a2469ac9d8183637c387d682"
-  integrity sha512-Ryr9X3yDVZhRYOxR8QhUBCNe6GdEfy9BvFDIFtUvEkocvSvnrYt9lRm6FR1z0eQn0QSMenrgrDIJRMgUf9zsKQ==
+lzma-native@^8.0.5:
+  version "8.0.5"
+  resolved "https://registry.npmjs.org/lzma-native/-/lzma-native-8.0.5.tgz#096758ef54ff2402cc36d25e3bb5921efaa1c156"
+  integrity sha512-lEkBBmePuYBycdlK8ul/sKQuZW47FMxAdjeTgDZLY4duX5Q067JJLUueyzN0wCAw6t2Y6YXCcAqHA5A1jQ9ttQ==
   dependencies:
     node-addon-api "^3.1.0"
     node-gyp-build "^4.2.1"
