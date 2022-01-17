@@ -7789,10 +7789,10 @@ xterm-addon-fit@^0.5.0:
   resolved "https://registry.npmjs.org/xterm-addon-fit/-/xterm-addon-fit-0.5.0.tgz#2d51b983b786a97dcd6cde805e700c7f913bc596"
   integrity sha512-DsS9fqhXHacEmsPxBJZvfj2la30Iz9xk+UKjhQgnYNkrUIN5CYLbw7WEfz117c7+S86S/tpHPfvNxJsF5/G8wQ==
 
-xterm-addon-ligatures@0.6.0-beta.4:
-  version "0.6.0-beta.4"
-  resolved "https://registry.npmjs.org/xterm-addon-ligatures/-/xterm-addon-ligatures-0.6.0-beta.4.tgz#d97520ccf874726127562ab42c6c57057d1742bf"
-  integrity sha512-gQJ4NJodeqc6PfRfHa+DLoWqnSHAyG6J/qIdFyQgcAl827eL1K9PnDQ+8mVjPQRv9mjbfG6fDRNh/hfqbVS52w==
+xterm-addon-ligatures@0.6.0-beta.7:
+  version "0.6.0-beta.7"
+  resolved "https://registry.npmjs.org/xterm-addon-ligatures/-/xterm-addon-ligatures-0.6.0-beta.7.tgz#9c4bfc96a165e44add390ddcc3e7ea64650e1cf3"
+  integrity sha512-ZX1H1S79JaFhwzkkUD3WKIn6lTktLBU3UqCwB+0B8vXS6PNAboAjeioTck+aB+N6uyQEBESrimwFBEhwPjujlw==
   dependencies:
     font-finder "^1.1.0"
     font-ligatures "^1.4.1"
