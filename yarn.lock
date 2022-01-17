@@ -47,10 +47,10 @@
     escape-string-regexp "^5.0.0"
     execa "^5.1.1"
 
-"@babel/cli@7.16.7":
-  version "7.16.7"
-  resolved "https://registry.npmjs.org/@babel/cli/-/cli-7.16.7.tgz#4184b5ec6a22106e9dd64bbcaa2eb22675ff595d"
-  integrity sha512-0iBF+G2Qml0y3mY5dirolyToLSR88a/KB6F2Gm8J/lOnyL8wbEOHak0DHF8gjc9XZGgTDGv/jYXNiapvsYyHTA==
+"@babel/cli@7.16.8":
+  version "7.16.8"
+  resolved "https://registry.npmjs.org/@babel/cli/-/cli-7.16.8.tgz#44b9be7706762bfa3bff8adbf746da336eb0ab7c"
+  integrity sha512-FTKBbxyk5TclXOGmwYyqelqP5IF6hMxaeJskd85jbR5jBfYlwqgwAbJwnixi1ZBbTqKfFuAA95mdmUFeSRwyJA==
   dependencies:
     commander "^4.0.1"
     convert-source-map "^1.1.0"
