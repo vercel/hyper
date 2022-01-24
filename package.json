@@ -111,7 +111,7 @@
     "eslint-plugin-react": "7.28.0",
     "husky": "7.0.4",
     "inquirer": "8.2.0",
-    "node-addon-api": "4.2.0",
+    "node-addon-api": "4.3.0",
     "node-gyp": "8.4.1",
     "null-loader": "4.0.1",
     "playwright": "1.17.2",
