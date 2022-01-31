@@ -35,24 +35,9 @@ let isInit = false;
 // Default to the "stable" update channel
 let canaryUpdates = false;
 
-// Detect if we are running inside Rosetta emulation
-const isRosetta = () => {
-  if (platform !== 'darwin') {
-    return false;
-  }
-  const sysctlRosettaInfoKey = 'sysctl.proc_translated';
-  let results = '';
-  try {
-    results = execSync(`sysctl ${sysctlRosettaInfoKey}`).toString();
-  } catch (error) {
-    console.log('Failed to detect Rosetta');
-  }
-  return results.includes(`${sysctlRosettaInfoKey}: 1`);
-};
-
 const buildFeedUrl = (canary: boolean, currentVersion: string) => {
   const updatePrefix = canary ? 'releases-canary' : 'releases';
-  const archSuffix = process.arch === 'arm64' || isRosetta() ? '_arm64' : '';
+  const archSuffix = process.arch === 'arm64' || app.runningUnderARM64Translation ? '_arm64' : '';
   return `https://${updatePrefix}.hyper.is/update/${isLinux ? 'deb' : platform}${archSuffix}/${currentVersion}`;
 };
 
