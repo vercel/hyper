@@ -7,7 +7,6 @@ import retry from 'async-retry';
 import {version} from './package.json';
 import {getDecoratedConfig} from './plugins';
 import autoUpdaterLinux from './auto-updater-linux';
-import {execSync} from 'child_process';
 
 const {platform} = process;
 const isLinux = platform === 'linux';
