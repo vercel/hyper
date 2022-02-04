@@ -283,7 +283,9 @@ export type TermGroupOwnProps = {
   | 'modifierKeys'
   | 'onActive'
   | 'onContextMenu'
+  | 'onCloseSearch'
   | 'onData'
+  | 'onOpenSearch'
   | 'onResize'
   | 'onTitle'
   | 'padding'
@@ -292,7 +294,6 @@ export type TermGroupOwnProps = {
   | 'scrollback'
   | 'selectionColor'
   | 'sessions'
-  | 'toggleSearch'
   | 'uiFontFamily'
   | 'webGLRenderer'
   | 'webLinksActivationKey'
@@ -338,9 +339,11 @@ export type TermProps = {
   macOptionSelectionMode: string;
   modifierKeys: Immutable<{altIsMeta: boolean; cmdIsMeta: boolean}>;
   onActive: () => void;
+  onCloseSearch: () => void;
   onContextMenu: (selection: any) => void;
   onCursorMove?: (cursorFrame: {x: number; y: number; width: number; height: number; col: number; row: number}) => void;
   onData: (data: string) => void;
+  onOpenSearch: () => void;
   onResize: (cols: number, rows: number) => void;
   onTitle: (title: string) => void;
   padding: string;
@@ -352,7 +355,6 @@ export type TermProps = {
   searchAddon: SearchAddon | null;
   selectionColor: string;
   term: Terminal | null;
-  toggleSearch: () => void;
   uid: string;
   uiFontFamily: string;
   url: string | null;

@@ -37,15 +37,11 @@ test.before(async () => {
 
 test.after(async () => {
   await app
-    .evaluate(async ({BrowserWindow, desktopCapturer, screen}) => {
-      // eslint-disable-next-line prefer-const
-      let {width, height, ...position} = BrowserWindow.getFocusedWindow()!.getBounds();
-      const {scaleFactor} = screen.getDisplayNearestPoint(position);
-      width *= scaleFactor;
-      height *= scaleFactor;
-      const sources = await desktopCapturer.getSources({types: ['window'], thumbnailSize: {width, height}});
-      return sources[0].thumbnail.toPNG().toString('base64');
-    })
+    .evaluate(({BrowserWindow}) =>
+      BrowserWindow.getFocusedWindow()
+        ?.capturePage()
+        .then((img) => img.toPNG().toString('base64'))
+    )
     .then((img) => Buffer.from(img || '', 'base64'))
     .then(async (imageBuffer) => {
       await fs.writeFile(`dist/tmp/${process.platform}_test.png`, imageBuffer);
