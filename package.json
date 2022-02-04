@@ -52,13 +52,13 @@
     "stylis": "3.5.4",
     "uuid": "8.3.2",
     "webpack-cli": "4.9.2",
-    "xterm": "^4.16.0",
+    "xterm": "4.18.0-beta.2",
     "xterm-addon-fit": "^0.5.0",
     "xterm-addon-ligatures": "0.6.0-beta.7",
     "xterm-addon-search": "^0.8.2",
     "xterm-addon-unicode11": "^0.3.0",
     "xterm-addon-web-links": "^0.5.0",
-    "xterm-addon-webgl": "^0.11.4"
+    "xterm-addon-webgl": "0.12.0-beta.24"
   },
   "devDependencies": {
     "@ava/babel": "2.0.0",
