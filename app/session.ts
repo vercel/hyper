@@ -7,6 +7,7 @@ import * as config from './config';
 import {IPty, IWindowsPtyForkOptions, spawn as npSpawn} from 'node-pty';
 import {cliScriptPath} from './config/paths';
 import {dirname} from 'path';
+import shellEnv from 'shell-env';
 
 const createNodePtyError = () =>
   new Error(
@@ -107,9 +108,10 @@ export default class Session extends EventEmitter {
   init({uid, rows, cols: columns, cwd, shell: _shell, shellArgs: _shellArgs}: SessionOptions) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const osLocale = require('os-locale') as typeof import('os-locale');
+    const cleanEnv = shellEnv.sync(_shell || defaultShell);
     const baseEnv = Object.assign(
       {},
-      process.env,
+      cleanEnv,
       {
         LANG: `${osLocale.sync().replace(/-/, '_')}.UTF-8`,
         TERM: 'xterm-256color',
