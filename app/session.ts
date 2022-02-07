@@ -108,7 +108,8 @@ export default class Session extends EventEmitter {
   init({uid, rows, cols: columns, cwd, shell: _shell, shellArgs: _shellArgs}: SessionOptions) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const osLocale = require('os-locale') as typeof import('os-locale');
-    const cleanEnv = shellEnv.sync(_shell || defaultShell);
+    const cleanEnv =
+      process.env['APPIMAGE'] && process.env['APPDIR'] ? shellEnv.sync(_shell || defaultShell) : process.env;
     const baseEnv = Object.assign(
       {},
       cleanEnv,
