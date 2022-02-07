@@ -27,7 +27,7 @@
     "args": "5.0.1",
     "chalk": "5.0.0",
     "color": "4.2.0",
-    "columnify": "1.5.4",
+    "columnify": "1.6.0",
     "css-loader": "6.6.0",
     "got": "12.0.1",
     "json-loader": "0.5.7",
