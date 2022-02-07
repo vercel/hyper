@@ -25,7 +25,7 @@
   "dependencies": {
     "@electron/remote": "2.0.4",
     "args": "5.0.1",
-    "chalk": "4.1.2",
+    "chalk": "5.0.0",
     "color": "4.2.0",
     "columnify": "1.5.4",
     "css-loader": "6.5.1",
