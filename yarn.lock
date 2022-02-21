@@ -85,10 +85,10 @@
   dependencies:
     "@babel/highlight" "^7.16.7"
 
-"@babel/compat-data@^7.16.4":
-  version "7.16.4"
-  resolved "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.16.4.tgz#081d6bbc336ec5c2435c6346b2ae1fb98b5ac68e"
-  integrity sha512-1o/jo7D+kC9ZjHX5v+EHrdjl3PhxMrLSOTGsOdHJ+KL8HCaEK6ehrVL2RS6oHDZp+L7xLirLrPmQtEng769J/Q==
+"@babel/compat-data@^7.16.4", "@babel/compat-data@^7.17.0":
+  version "7.17.0"
+  resolved "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.17.0.tgz#86850b8597ea6962089770952075dcaabb8dba34"
+  integrity sha512-392byTlpGWXMv4FbyWw3sAZ/FrW/DrwqLGXpy0mbyNe9Taqv1mg9yON5/o0cnr8XYCkFTZbC1eV+c+LAROgrng==
 
 "@babel/core@7.17.2", "@babel/core@^7.14.6":
   version "7.17.2"
@@ -317,12 +317,12 @@
     "@babel/helper-plugin-utils" "^7.16.7"
     "@babel/plugin-syntax-numeric-separator" "^7.10.4"
 
-"@babel/plugin-proposal-object-rest-spread@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.npmjs.org/@babel/plugin-proposal-object-rest-spread/-/plugin-proposal-object-rest-spread-7.16.7.tgz#94593ef1ddf37021a25bdcb5754c4a8d534b01d8"
-  integrity sha512-3O0Y4+dw94HA86qSg9IHfyPktgR7q3gpNVAeiKQd+8jBKFaU5NQS1Yatgo4wY+UFNuLjvxcSmzcsHqrhgTyBUA==
+"@babel/plugin-proposal-object-rest-spread@^7.17.3":
+  version "7.17.3"
+  resolved "https://registry.npmjs.org/@babel/plugin-proposal-object-rest-spread/-/plugin-proposal-object-rest-spread-7.17.3.tgz#d9eb649a54628a51701aef7e0ea3d17e2b9dd390"
+  integrity sha512-yuL5iQA/TbZn+RGAfxQXfi7CNLmKi1f8zInn4IgobuCWcAb7i+zj4TYzQ9l8cEzVyJ89PDGuqxK1xZpUDISesw==
   dependencies:
-    "@babel/compat-data" "^7.16.4"
+    "@babel/compat-data" "^7.17.0"
     "@babel/helper-compilation-targets" "^7.16.7"
     "@babel/helper-plugin-utils" "^7.16.7"
     "@babel/plugin-syntax-object-rest-spread" "^7.8.3"
