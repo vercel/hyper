@@ -54,10 +54,10 @@
     escape-string-regexp "^5.0.0"
     execa "^5.1.1"
 
-"@babel/cli@7.17.3":
-  version "7.17.3"
-  resolved "https://registry.npmjs.org/@babel/cli/-/cli-7.17.3.tgz#0ccb93a348d0e3a4ff8776a63dbeefd329f7b3cc"
-  integrity sha512-1+WRlh1IqLocOp122CLx4if345RSHMspwIZNJTlqG/GA46HVZC6p49N1kolfdd2/GOdr+tu4nScbAR3ACJ2ZiA==
+"@babel/cli@7.17.6":
+  version "7.17.6"
+  resolved "https://registry.npmjs.org/@babel/cli/-/cli-7.17.6.tgz#169e5935f1795f0b62ded5a2accafeedfe5c5363"
+  integrity sha512-l4w608nsDNlxZhiJ5tE3DbNmr61fIKMZ6fTBo171VEFuFMIYuJ3mHRhTLEkKKyvx2Mizkkv/0a8OJOnZqkKYNA==
   dependencies:
     "@jridgewell/trace-mapping" "^0.3.4"
     commander "^4.0.1"
