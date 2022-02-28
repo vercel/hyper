@@ -110,10 +110,7 @@ export default class Header extends React.PureComponent<HeaderProps> {
             style={{borderColor}}
           >
             {hambMenu && (
-              <svg
-                className="header_shape"
-                onClick={this.handleHamburgerMenuClick}
-              >
+              <svg className="header_shape" onClick={this.handleHamburgerMenuClick}>
                 <use xlinkHref="./renderer/assets/icons.svg#hamburger-menu" />
               </svg>
             )}
@@ -172,7 +169,7 @@ export default class Header extends React.PureComponent<HeaderProps> {
             -webkit-app-region: drag;
             -webkit-user-select: none;
             display: flex;
-            flex-direction: ${left ? "row-reverse" : "row"};
+            flex-direction: ${left ? 'row-reverse' : 'row'};
             justify-content: space-between;
             align-items: center;
           }
@@ -184,7 +181,7 @@ export default class Header extends React.PureComponent<HeaderProps> {
           }
 
           .header_appTitle_container {
-            overflow: hidden
+            overflow: hidden;
           }
 
           .header_appTitle {
@@ -216,7 +213,7 @@ export default class Header extends React.PureComponent<HeaderProps> {
             display: flex;
             width: 120px;
             height: 34px;
-            justify-content: space-between
+            justify-content: space-between;
           }
 
           .header_closeWindowLeft {
