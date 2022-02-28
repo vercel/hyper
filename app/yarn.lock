@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@electron/remote@2.0.4":
-  version "2.0.4"
-  resolved "https://registry.npmjs.org/@electron/remote/-/remote-2.0.4.tgz#c3dae436aed79d1b8adcefc5a4963c06750ad5d8"
-  integrity sha512-8m2P/d2RH986PmMW5lKygbPEjEYJ7RgCe37Y8DQ1wujKMH6VjmLIB+Y+DP2SA611svCZc58TRSd8FraGvcfGZw==
+"@electron/remote@2.0.5":
+  version "2.0.5"
+  resolved "https://registry.npmjs.org/@electron/remote/-/remote-2.0.5.tgz#d38bcd2ad2825cca42c5ea4c92efafa99720c52a"
+  integrity sha512-Ot8VsYCwAJ+9DgqRuYCiAobS8TVKvnXJMncR14/28ORso1iWFG0X6geyk3hc13N48Oc/WJnPYlYI3o7g5Ja2Qg==
 
 "@types/semver@^7.3.8":
   version "7.3.8"
