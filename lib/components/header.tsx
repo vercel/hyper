@@ -117,7 +117,9 @@ export default class Header extends React.PureComponent<HeaderProps> {
                 <use xlinkHref="./renderer/assets/icons.svg#hamburger-menu" />
               </svg>
             )}
-            <span className="header_appTitle">{title}</span>
+            <div className="header_appTitle_container">
+              <span className="header_appTitle">{title}</span>
+            </div>
             {winCtrls && (
               <div className="header_windowControls">
                 <div className={`${left ? 'header_minimizeWindowLeft' : ''}`} onClick={this.handleMinimizeClick}>
@@ -181,13 +183,19 @@ export default class Header extends React.PureComponent<HeaderProps> {
             border-bottom-width: 1px;
           }
 
+          .header_appTitle_container {
+            overflow: hidden
+          }
+
           .header_appTitle {
             font-size: 12px;
+            white-space: nowrap;
           }
 
           .header_shape,
           .header_shape > svg {
             width: 40px;
+            min-width: 40px;
             height: 34px;
             padding: 12px 15px 12px 15px;
             -webkit-app-region: no-drag;
