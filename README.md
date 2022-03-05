@@ -110,7 +110,6 @@ If you have issues in the `codesign` step when running `yarn run dist` on macOS,
 
 ## Related Repositories
 
-- [Art](https://github.com/vercel/art/tree/master/hyper)
 - [Website](https://github.com/vercel/hyper-site)
 - [Sample Extension](https://github.com/vercel/hyperpower)
 - [Sample Theme](https://github.com/vercel/hyperyellow)
