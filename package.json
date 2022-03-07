@@ -52,7 +52,7 @@
     "stylis": "3.5.4",
     "uuid": "8.3.2",
     "webpack-cli": "4.9.2",
-    "xterm": "4.18.0-beta.5",
+    "xterm": "4.18.0",
     "xterm-addon-fit": "^0.5.0",
     "xterm-addon-ligatures": "0.6.0-beta.9",
     "xterm-addon-search": "^0.8.2",
