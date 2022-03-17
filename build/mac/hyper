@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
-# Deeply inspired by https://github.com/Microsoft/vscode/blob/1.17.0/resources/darwin/bin/code.sh
 
-function realpath() { /usr/bin/python -c "import os,sys; print(os.path.realpath(sys.argv[1]))" "$0"; }
-CONTENTS="$(dirname "$(dirname "$(dirname "$(realpath "$0")")")")"
+# On modern macOS there's readlink -f, but that's fairly recent so we can't rely on it.
+# instead, check for failure (i.e., not a symlink) and just echo the actual path
+# https://unix.stackexchange.com/a/534101
+_readlink(){ readlink "$1" || echo "$1"; }
+
+# Don't shadow the 'realpath' executable which may be installed on
+# some systems (e.g., via homebrew)
+_realpath() { cd "$(dirname "$0")" && _readlink "$(pwd)"/"$(basename "$0")"; }
+
+CONTENTS="$(dirname "$(dirname "$(dirname "$(_realpath "$0")")")")"
 ELECTRON="$CONTENTS/MacOS/Hyper"
 CLI="$CONTENTS/Resources/bin/cli.js"
 ELECTRON_RUN_AS_NODE=1 "$ELECTRON" "$CLI" "$@"
