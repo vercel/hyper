@@ -10,7 +10,7 @@
   },
   "repository": "zeit/hyper",
   "dependencies": {
-    "@electron/remote": "2.0.5",
+    "@electron/remote": "2.0.8",
     "async-retry": "1.3.3",
     "chokidar": "^3.5.3",
     "color": "4.2.1",
