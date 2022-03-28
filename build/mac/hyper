@@ -1,15 +1,28 @@
 #!/usr/bin/env bash
 
-# On modern macOS there's readlink -f, but that's fairly recent so we can't rely on it.
-# instead, check for failure (i.e., not a symlink) and just echo the actual path
-# https://unix.stackexchange.com/a/534101
-_readlink(){ readlink "$1" || echo "$1"; }
+# TODO: bash is deprecated on macOS and will be removed.
+# Port this to /bin/sh or /bin/zsh
 
-# Don't shadow the 'realpath' executable which may be installed on
-# some systems (e.g., via homebrew)
-_realpath() { cd "$(dirname "$0")" && _readlink "$(pwd)"/"$(basename "$0")"; }
+# Adapted from Microsoft Visual Studio Code:
+# https://github.com/Microsoft/vscode/blob/1.65.2/resources/darwin/bin/code.sh
 
-CONTENTS="$(dirname "$(dirname "$(dirname "$(_realpath "$0")")")")"
+function app_realpath() {
+	SOURCE=$1
+	while [ -h "$SOURCE" ]; do
+		DIR=$(dirname "$SOURCE")
+		SOURCE=$(readlink "$SOURCE")
+		[[ $SOURCE != /* ]] && SOURCE=$DIR/$SOURCE
+	done
+	SOURCE_DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+	echo "${SOURCE_DIR%%"${SOURCE_DIR#*.app}"}"
+}
+
+APP_PATH="$(app_realpath "${BASH_SOURCE[0]}")"
+if [ -z "$APP_PATH" ]; then
+	echo "Unable to determine app path from symlink : ${BASH_SOURCE[0]}"
+	exit 1
+fi
+CONTENTS="$APP_PATH/Contents"
 ELECTRON="$CONTENTS/MacOS/Hyper"
 CLI="$CONTENTS/Resources/bin/cli.js"
 ELECTRON_RUN_AS_NODE=1 "$ELECTRON" "$CLI" "$@"
