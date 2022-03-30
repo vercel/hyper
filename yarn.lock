@@ -3925,10 +3925,10 @@ globby@^9.2.0:
     pify "^4.0.1"
     slash "^2.0.0"
 
-got@12.0.2:
-  version "12.0.2"
-  resolved "https://registry.npmjs.org/got/-/got-12.0.2.tgz#8ce4c3baa50bb18a0858d2539caa0fac19e109bf"
-  integrity sha512-Zi4yHiqCgaorUbknr/RHFBsC3XqjSodaw0F3qxlqAqyj+OGYZl37/uy01R0qz++KANKQYdY5FHJ0okXZpEzwWQ==
+got@12.0.3:
+  version "12.0.3"
+  resolved "https://registry.npmjs.org/got/-/got-12.0.3.tgz#c7314daab26d42039e624adbf98f6d442e5de749"
+  integrity sha512-hmdcXi/S0gcAtDg4P8j/rM7+j3o1Aq6bXhjxkDhRY2ipe7PHpvx/14DgTY2czHOLaGeU8VRvRecidwfu9qdFug==
   dependencies:
     "@sindresorhus/is" "^4.6.0"
     "@szmarczak/http-timer" "^5.0.1"
