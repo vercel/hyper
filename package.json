@@ -101,7 +101,7 @@
     "electron": "^17.2.0",
     "electron-builder": "^22.14.13",
     "electron-devtools-installer": "3.2.0",
-    "electron-notarize": "1.1.1",
+    "electron-notarize": "1.2.1",
     "electron-rebuild": "3.2.7",
     "electronmon": "^2.0.2",
     "eslint": "7.32.0",
