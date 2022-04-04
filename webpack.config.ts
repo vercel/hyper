@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Copy = require('copy-webpack-plugin');
+import Copy from 'copy-webpack-plugin';
 import path from 'path';
 import TerserPlugin from 'terser-webpack-plugin';
 import webpack from 'webpack';
@@ -29,7 +28,6 @@ const config: webpack.Configuration[] = [
       ]
     },
     plugins: [
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       new Copy({
         patterns: [
           {
@@ -99,7 +97,6 @@ const config: webpack.Configuration[] = [
           NODE_ENV: JSON.stringify(nodeEnv)
         }
       }),
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       new Copy({
         patterns: [
           {

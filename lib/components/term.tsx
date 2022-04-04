@@ -131,15 +131,9 @@ export default class Term extends React.PureComponent<TermProps> {
     this.termWrapperRef?.appendChild(this.termRef);
 
     if (!props.term) {
-      const needTransparency = Color(props.backgroundColor).alpha() < 1;
       let useWebGL = false;
       if (props.webGLRenderer) {
-        if (needTransparency) {
-          console.warn(
-            'WebGL Renderer has been disabled since it does not support transparent backgrounds yet. ' +
-              'Falling back to canvas-based rendering.'
-          );
-        } else if (!isWebgl2Supported()) {
+        if (!isWebgl2Supported()) {
           console.warn('WebGL2 is not supported on your machine. Falling back to canvas-based rendering.');
         } else {
           // Experimental WebGL renderer needs some more glue-code to make it work on Hyper.
