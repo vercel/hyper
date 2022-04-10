@@ -26,7 +26,7 @@
     "@electron/remote": "2.0.8",
     "args": "5.0.1",
     "chalk": "5.0.1",
-    "color": "4.2.1",
+    "color": "4.2.3",
     "columnify": "1.6.0",
     "css-loader": "6.7.1",
     "got": "12.0.3",
