@@ -64,7 +64,7 @@
     "@ava/babel": "2.0.0",
     "@ava/typescript": "^3.0.1",
     "@babel/cli": "7.17.6",
-    "@babel/core": "7.17.8",
+    "@babel/core": "7.17.9",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/plugin-proposal-numeric-separator": "^7.16.7",
     "@babel/plugin-proposal-object-rest-spread": "^7.17.3",
