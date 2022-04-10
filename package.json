@@ -98,7 +98,7 @@
     "copy-webpack-plugin": "10.2.4",
     "cpy-cli": "^3.1.1",
     "cross-env": "7.0.3",
-    "electron": "^17.2.0",
+    "electron": "^18.0.3",
     "electron-builder": "^22.14.13",
     "electron-devtools-installer": "3.2.0",
     "electron-notarize": "1.2.1",
