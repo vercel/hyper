@@ -7,6 +7,17 @@ declare global {
     rpc: Client;
     focusActiveTerm: (uid?: string) => void;
   }
+
+  const snapshotResult: {
+    customRequire: {
+      (module: string): NodeModule;
+      cache: Record<string, {exports: NodeModule}>;
+      definitions: Record<string, {exports: any}>;
+    };
+    setGlobals(global: any, process: any, window: any, document: any, console: any, require: any): void;
+  };
+
+  const __non_webpack_require__: NodeRequire;
 }
 
 export type ITermGroup = Immutable<{
