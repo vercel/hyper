@@ -7518,10 +7518,10 @@ styled-jsx@5.0.2:
   resolved "https://registry.npmjs.org/styled-jsx/-/styled-jsx-5.0.2.tgz#ff230fd593b737e9e68b630a694d460425478729"
   integrity sha512-LqPQrbBh3egD57NBcHET4qcgshPks+yblyhPlH2GY8oaDgKs8SK4C3dBh3oSJjgzJ3G5t1SYEZGHkP+QEpX9EQ==
 
-stylis@3.5.4:
-  version "3.5.4"
-  resolved "https://registry.npmjs.org/stylis/-/stylis-3.5.4.tgz#f665f25f5e299cf3d64654ab949a57c768b73fbe"
-  integrity sha512-8/3pSmthWM7lsPBKv7NXkzn2Uc9W7NotcwGNpJaa3k7WMM1XDCA4MgT5k/8BIexd5ydZdboXtU90XH9Ec4Bv/Q==
+stylis@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.npmjs.org/stylis/-/stylis-4.1.0.tgz#e3c7b24ff96d8af35efd161b6991a81c46e51933"
+  integrity sha512-SrSDzNasOCBTo7C2N9geFwydg/2bmdkWXd4gJirtq82m5JBYtR2+Ialck8czmfBLIdPxCOotlgJESPa8C1RqvA==
 
 sumchecker@^3.0.1:
   version "3.0.1"
