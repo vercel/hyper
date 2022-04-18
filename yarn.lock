@@ -551,26 +551,10 @@
   resolved "https://registry.npmjs.org/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz#8f03a22a04de437254e8ce8cc84ba39689288752"
   integrity sha512-HyYEUDeIj5rRQU2Hk5HTB2uHsbRQpF70nvMhVzi+VJR0X+xNEhjPui4/kBf3VeH/wqD28PT4sVOm8qqLjBrSZg==
 
-"@electron/get@^1.12.2":
+"@electron/get@^1.12.2", "@electron/get@^1.13.0":
   version "1.14.1"
   resolved "https://registry.npmjs.org/@electron/get/-/get-1.14.1.tgz#16ba75f02dffb74c23965e72d617adc721d27f40"
   integrity sha512-BrZYyL/6m0ZXz/lDxy/nlVhQz+WF+iPS6qXolEU8atw7h6v1aYkjwJZ63m+bJMBTxDE66X+r2tPS4a/8C82sZw==
-  dependencies:
-    debug "^4.1.1"
-    env-paths "^2.2.0"
-    fs-extra "^8.1.0"
-    got "^9.6.0"
-    progress "^2.0.3"
-    semver "^6.2.0"
-    sumchecker "^3.0.1"
-  optionalDependencies:
-    global-agent "^3.0.0"
-    global-tunnel-ng "^2.7.1"
-
-"@electron/get@^1.13.0":
-  version "1.13.1"
-  resolved "https://registry.npmjs.org/@electron/get/-/get-1.13.1.tgz#42a0aa62fd1189638bd966e23effaebb16108368"
-  integrity sha512-U5vkXDZ9DwXtkPqlB45tfYnnYBN8PePp1z/XDCupnSpdrxT8/ThCv9WCwPLf9oqiSGZTkH6dx2jDUPuoXpjkcA==
   dependencies:
     debug "^4.1.1"
     env-paths "^2.2.0"
@@ -3000,10 +2984,10 @@ electron-link@^0.6.0:
     resolve "^1.19.0"
     source-map "^0.7.3"
 
-electron-mksnapshot@17.0.1:
-  version "17.0.1"
-  resolved "https://registry.npmjs.org/electron-mksnapshot/-/electron-mksnapshot-17.0.1.tgz#886132b9eef63065647da3cd178c94fbafdce1d7"
-  integrity sha512-dl3J5nnk7j2hXkVCfmSutK2rmw6hXWbRH3zOWQmKUJiO5x+cFMZuA3jijAFIb+oY6e8Tmu4Mz3ZfUuOQyv1I9w==
+electron-mksnapshot@18.0.0:
+  version "18.0.0"
+  resolved "https://registry.npmjs.org/electron-mksnapshot/-/electron-mksnapshot-18.0.0.tgz#f4146caeba13e076471eb2e84c0630681a8f8314"
+  integrity sha512-vNp3GSSo23Nv+shTndJ7XBdhmqYrtbeZd7gALsgsdbTSW+l3/g3/hT2IEsmuI8n5IQXdoDU3hmhbOQtMwDBF0Q==
   dependencies:
     "@electron/get" "^1.12.2"
     extract-zip "^2.0.0"
