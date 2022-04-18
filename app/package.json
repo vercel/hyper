@@ -18,7 +18,7 @@
     "electron-fetch": "1.7.4",
     "electron-is-dev": "2.0.0",
     "electron-store": "8.0.1",
-    "fs-extra": "10.0.1",
+    "fs-extra": "10.1.0",
     "git-describe": "4.1.0",
     "lodash": "4.17.21",
     "mkdirp": "1.0.4",
