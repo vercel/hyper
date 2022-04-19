@@ -80,6 +80,7 @@ jobs:
           name: pr_num
           path: ./pr_num.txt
       - name: Publish to Snap Store
+        if: runner.os == 'Linux'
         run: |
             sudo snap install snapcraft --classic
             echo "$SNAP_TOKEN" | snapcraft login --with -
