@@ -9,73 +9,97 @@ defaults:
   run:
     shell: bash
 jobs:
-  build:
-    runs-on: ${{matrix.os}}
-    strategy:
-      matrix:
-        node-version: [16.x]
-        os:
-          - macos-11.0
-          - ubuntu-18.04
-          - windows-latest
-      fail-fast: false
+  build-arm:
+    runs-on: ubuntu-18.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: build
+        uses: pguyot/arm-runner-action@v2
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: yarn
-          cache-dependency-path: |
-            yarn.lock
-            app/yarn.lock
-      - name: Install
-        run: yarn install
-      - name: Lint and Run Unit Tests
-        run: yarn run test
-      - name: Getting Build Icon
-        if: github.ref == 'refs/heads/canary' || github.base_ref == 'canary'
-        run: |
-          cp build/canary.ico build/icon.ico
-          cp build/canary.icns build/icon.icns
-      - name: Build
-        run: if [ ! -z "$CSC_LINK" ] ; then yarn run dist ; else unset CSC_LINK && unset WIN_CSC_LINK && yarn run dist --publish=never ; fi
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
-          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
-          WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
-          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-      - name: Archive Build Artifacts
-        uses: LabhanshAgrawal/upload-artifact@v3
-        with:
-          path: |
-            dist/*.dmg
-            dist/*.snap
-            dist/*.AppImage
-            dist/*.deb
-            dist/*.rpm
-            dist/*.exe
-      - name: Run E2E Tests
-        if: runner.os != 'Linux'
-        run: yarn run test:e2e
-      - name: Archive E2E test screenshot
-        if: runner.os != 'Linux'
-        uses: actions/upload-artifact@v3
-        with:
-          name: e2e
-          path: dist/tmp/*.png
-      - name: Save the pr number in an artifact
-        if: github.event_name == 'pull_request'
-        env:
-          PR_NUM: ${{ github.event.number }}
-        run: echo $PR_NUM > pr_num.txt
-      - name: Upload the pr num
-        uses: actions/upload-artifact@v3
-        if: github.event_name == 'pull_request'
-        with:
-          name: pr_num
-          path: ./pr_num.txt
+          image_additional_mb: 20000
+          optimize_image: no
+          base_image: raspios_lite_arm64:2022-01-28
+          shell: bash
+          commands: |
+            apt update
+            apt install -y curl
+            curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+            apt install -y nodejs
+            curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/yarnkey.gpg >/dev/null
+            echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+            apt update && apt install yarn
+            yarn
+            yarn run build
+            yarn run electron-builder -l snap --arm64
+
+  # build:
+  #   runs-on: ${{matrix.os}}
+  #   strategy:
+  #     matrix:
+  #       node-version: [16.x]
+  #       os:
+  #         # - macos-11.0
+  #         - ubuntu-18.04
+  #         # - windows-latest
+  #     fail-fast: false
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #         cache: yarn
+  #         cache-dependency-path: |
+  #           yarn.lock
+  #           app/yarn.lock
+  #     - name: Install
+  #       run: yarn install
+  #     - name: Lint and Run Unit Tests
+  #       run: yarn run test
+  #     - name: Getting Build Icon
+  #       if: github.ref == 'refs/heads/canary' || github.base_ref == 'canary'
+  #       run: |
+  #         cp build/canary.ico build/icon.ico
+  #         cp build/canary.icns build/icon.icns
+  #     - name: Build
+  #       run: if [ ! -z "$CSC_LINK" ] ; then yarn run dist ; else unset CSC_LINK && unset WIN_CSC_LINK && yarn run dist --publish=never ; fi
+  #       env:
+  #         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
+  #         CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
+  #         WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
+  #         WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
+  #         APPLE_ID: ${{ secrets.APPLE_ID }}
+  #         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+  #     - name: Archive Build Artifacts
+  #       uses: LabhanshAgrawal/upload-artifact@v3
+  #       with:
+  #         path: |
+  #           dist/*.dmg
+  #           dist/*.snap
+  #           dist/*.AppImage
+  #           dist/*.deb
+  #           dist/*.rpm
+  #           dist/*.exe
+  #     - name: Run E2E Tests
+  #       if: runner.os != 'Linux'
+  #       run: yarn run test:e2e
+  #     - name: Archive E2E test screenshot
+  #       if: runner.os != 'Linux'
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: e2e
+  #         path: dist/tmp/*.png
+  #     - name: Save the pr number in an artifact
+  #       if: github.event_name == 'pull_request'
+  #       env:
+  #         PR_NUM: ${{ github.event.number }}
+  #       run: echo $PR_NUM > pr_num.txt
+  #     - name: Upload the pr num
+  #       uses: actions/upload-artifact@v3
+  #       if: github.event_name == 'pull_request'
+  #       with:
+  #         name: pr_num
+  #         path: ./pr_num.txt
