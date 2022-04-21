@@ -18,9 +18,10 @@ jobs:
         uses: pguyot/arm-runner-action@v2
         with:
           image_additional_mb: 20000
-          optimize_image: no
+          optimize_image: false
           base_image: raspios_lite_arm64:2022-01-28
           shell: bash
+          debug: false
           commands: |
             apt update
             apt install -y curl
@@ -29,7 +30,7 @@ jobs:
             curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/yarnkey.gpg >/dev/null
             echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
             apt update && apt install yarn
-            yarn
+            yarn install --network-timeout 1000000
             yarn run build
             yarn run electron-builder -l snap --arm64
 
