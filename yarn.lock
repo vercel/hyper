@@ -6327,10 +6327,10 @@ pkg-dir@^4.1.0, pkg-dir@^4.2.0:
   dependencies:
     find-up "^4.0.0"
 
-playwright-core@1.21.0:
-  version "1.21.0"
-  resolved "https://registry.npmjs.org/playwright-core/-/playwright-core-1.21.0.tgz#1b68e87f4fd2fc5653def1e61ccdef6845c604a6"
-  integrity sha512-yDGVs9qaaW6WiefgR7wH1CGt9D6D/X4U3jNpIzH0FjjrrWLCOYQo78Tu3SkW8X+/kWlBpj49iWf3QNSxhYc12Q==
+playwright-core@1.21.1:
+  version "1.21.1"
+  resolved "https://registry.npmjs.org/playwright-core/-/playwright-core-1.21.1.tgz#2757be7921576f047c0a622194dc45f4e1962e17"
+  integrity sha512-SbK5dEsai9ZUKlxcinqegorBq4GnftXd4/GfW+pLsdQIQWrLCM/JNh6YQ2Rf2enVykXCejtoXW8L5vJXBBVSJQ==
   dependencies:
     colors "1.4.0"
     commander "8.3.0"
@@ -6351,12 +6351,12 @@ playwright-core@1.21.0:
     yauzl "2.10.0"
     yazl "2.5.1"
 
-playwright@1.21.0:
-  version "1.21.0"
-  resolved "https://registry.npmjs.org/playwright/-/playwright-1.21.0.tgz#375a2a6419070e59d7e7f24ce4e7150afbbff9f1"
-  integrity sha512-OH5ZFoiS0HkBZzhb7HPVeE8lEx3PO/AaKgoQfgs1NbmwFPqHgPzfKFa3fO+VM27WqTLjtYOL6hM03sWnJhT3ig==
+playwright@1.21.1:
+  version "1.21.1"
+  resolved "https://registry.npmjs.org/playwright/-/playwright-1.21.1.tgz#62bdefc0e8baba192d93d8daf0c0eb9213869d76"
+  integrity sha512-Of0h1XAvsqK1XfHVZ8sL2PjJVoQUu9gTmmMTtLS7MEyWMRD0kn8myeI90xj1ncJhUysQxGboH64S5v+lL2USrg==
   dependencies:
-    playwright-core "1.21.0"
+    playwright-core "1.21.1"
 
 plist@3.0.5, plist@^3.0.1, plist@^3.0.4:
   version "3.0.5"
