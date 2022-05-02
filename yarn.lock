@@ -54,19 +54,18 @@
     escape-string-regexp "^5.0.0"
     execa "^5.1.1"
 
-"@babel/cli@7.17.6":
-  version "7.17.6"
-  resolved "https://registry.npmjs.org/@babel/cli/-/cli-7.17.6.tgz#169e5935f1795f0b62ded5a2accafeedfe5c5363"
-  integrity sha512-l4w608nsDNlxZhiJ5tE3DbNmr61fIKMZ6fTBo171VEFuFMIYuJ3mHRhTLEkKKyvx2Mizkkv/0a8OJOnZqkKYNA==
+"@babel/cli@7.17.10":
+  version "7.17.10"
+  resolved "https://registry.npmjs.org/@babel/cli/-/cli-7.17.10.tgz#5ea0bf6298bb78f3b59c7c06954f9bd1c79d5943"
+  integrity sha512-OygVO1M2J4yPMNOW9pb+I6kFGpQK77HmG44Oz3hg8xQIl5L/2zq+ZohwAdSaqYgVwM0SfmPHZHphH4wR8qzVYw==
   dependencies:
-    "@jridgewell/trace-mapping" "^0.3.4"
+    "@jridgewell/trace-mapping" "^0.3.8"
     commander "^4.0.1"
     convert-source-map "^1.1.0"
     fs-readdir-recursive "^1.1.0"
     glob "^7.0.0"
     make-dir "^2.1.0"
     slash "^2.0.0"
-    source-map "^0.5.0"
   optionalDependencies:
     "@nicolo-ribaudo/chokidar-2" "2.1.8-no-fsevents.3"
     chokidar "^3.4.0"
@@ -629,10 +628,10 @@
   resolved "https://registry.npmjs.org/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.4.10.tgz#baf57b4e2a690d4f38560171f91783656b7f8186"
   integrity sha512-Ht8wIW5v165atIX1p+JvKR5ONzUyF4Ac8DZIQ5kZs9zrb6M8SJNXpx1zn04rn65VjBMygRoMXcyYwNK0fT7bEg==
 
-"@jridgewell/trace-mapping@^0.3.0", "@jridgewell/trace-mapping@^0.3.4":
-  version "0.3.4"
-  resolved "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.4.tgz#f6a0832dffd5b8a6aaa633b7d9f8e8e94c83a0c3"
-  integrity sha512-vFv9ttIedivx0ux3QSjhgtCVjPZd5l46ZOMDSCwnH1yUO2e964gO8LZGyv2QkqcgR6TnBU1v+1IFqmeoG+0UJQ==
+"@jridgewell/trace-mapping@^0.3.0", "@jridgewell/trace-mapping@^0.3.8":
+  version "0.3.9"
+  resolved "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.9.tgz#6534fd5933a53ba7cbf3a17615e273a0d1273ff9"
+  integrity sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==
   dependencies:
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
