@@ -115,7 +115,7 @@
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "7.29.4",
-    "husky": "7.0.4",
+    "husky": "8.0.1",
     "inquirer": "8.2.4",
     "node-addon-api": "5.0.0",
     "node-gyp": "9.0.0",
