@@ -92,6 +92,7 @@ export default class Terms extends React.Component<TermsProps> {
             cursorShape: this.props.cursorShape,
             cursorBlink: this.props.cursorBlink,
             cursorColor: this.props.cursorColor,
+            cursorAccentColor: this.props.cursorAccentColor,
             fontSize: this.props.fontSize,
             fontFamily: this.props.fontFamily,
             uiFontFamily: this.props.uiFontFamily,
