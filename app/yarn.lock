@@ -278,10 +278,10 @@ get-stream@^5.0.0:
   dependencies:
     pump "^3.0.0"
 
-git-describe@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.npmjs.org/git-describe/-/git-describe-4.1.0.tgz#0c50fa1ec5ead55932b6e875b2299b17ce5e07d3"
-  integrity sha512-NM7JSseVK4Z0r505+2TIrgPQKPvqbOowHP73IY5y69v/t/PmoMleJdij1vTO3qVm1qSvqb6342p1MYSxsnV8QA==
+git-describe@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npmjs.org/git-describe/-/git-describe-4.1.1.tgz#a2a2882e442aa68abd0b3cb467459c83ed2f96ef"
+  integrity sha512-JC8ganO5kO80G8+XE98TDDjnMXQN3Estk3qdJuG2EGRF/l6zuMTMcN+8OSfQZ5FWpqIRLB015anWX4aSRgnxAQ==
   dependencies:
     "@types/semver" "^7.3.8"
     lodash "^4.17.21"
