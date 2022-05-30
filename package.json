@@ -106,7 +106,7 @@
     "electron-builder": "^23.0.3",
     "electron-devtools-installer": "3.2.0",
     "electron-link": "^0.6.0",
-    "electron-mksnapshot": "18.0.0",
+    "electron-mksnapshot": "19.0.0",
     "electron-notarize": "1.2.1",
     "electron-rebuild": "3.2.7",
     "electronmon": "^2.0.2",
