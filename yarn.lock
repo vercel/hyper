@@ -536,7 +536,7 @@
   resolved "https://registry.npmjs.org/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz#8f03a22a04de437254e8ce8cc84ba39689288752"
   integrity sha512-HyYEUDeIj5rRQU2Hk5HTB2uHsbRQpF70nvMhVzi+VJR0X+xNEhjPui4/kBf3VeH/wqD28PT4sVOm8qqLjBrSZg==
 
-"@electron/get@^1.12.2", "@electron/get@^1.13.0":
+"@electron/get@^1.12.2", "@electron/get@^1.14.1":
   version "1.14.1"
   resolved "https://registry.npmjs.org/@electron/get/-/get-1.14.1.tgz#16ba75f02dffb74c23965e72d617adc721d27f40"
   integrity sha512-BrZYyL/6m0ZXz/lDxy/nlVhQz+WF+iPS6qXolEU8atw7h6v1aYkjwJZ63m+bJMBTxDE66X+r2tPS4a/8C82sZw==
@@ -3076,12 +3076,12 @@ electron-to-chromium@^1.4.118:
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.131.tgz#ca42d22eac0fe545860fbc636a6f4a7190ba70a9"
   integrity sha512-oi3YPmaP87hiHn0c4ePB67tXaF+ldGhxvZnT19tW9zX6/Ej+pLN0Afja5rQ6S+TND7I9EuwQTT8JYn1k7R7rrw==
 
-electron@18.2.4:
-  version "18.2.4"
-  resolved "https://registry.npmjs.org/electron/-/electron-18.2.4.tgz#3ea3392f008ea4bdf66b0e3b2e1769e04370323c"
-  integrity sha512-wSjU2N6kBGyGKb2GgBhujpfKtnmNr+gDaZZ6fMmlVMoPJ+GvuW0Zr1ImKPdb5zPXopPYmaURDSvHuAfSd4oHFA==
+electron@19.0.3:
+  version "19.0.3"
+  resolved "https://registry.npmjs.org/electron/-/electron-19.0.3.tgz#e8289e45d58b2603f406e24f7117bb3fae5362d3"
+  integrity sha512-V/8pFkXUOsoHcBzuTYVSbIQKLIwI/FAxfpvbkMazdaO/weZoIf9AN3Qc4Wuo9+489mhelDYc8lSX5N7c6A5n6A==
   dependencies:
-    "@electron/get" "^1.13.0"
+    "@electron/get" "^1.14.1"
     "@types/node" "^16.11.26"
     extract-zip "^1.0.3"
 
