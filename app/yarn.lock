@@ -117,10 +117,10 @@ color@4.2.3:
     color-convert "^2.0.1"
     color-string "^1.9.0"
 
-conf@^10.0.3:
-  version "10.0.3"
-  resolved "https://registry.npmjs.org/conf/-/conf-10.0.3.tgz#af266186cc754daefd2749398861ec538c50da17"
-  integrity sha512-4gtQ/Q36qVxBzMe6B7gWOAfni1VdhuHkIzxydHkclnwGmgN+eW4bb6jj73vigCfr7d3WlmqawvhZrpCUCTPYxQ==
+conf@^10.1.2:
+  version "10.1.2"
+  resolved "https://registry.npmjs.org/conf/-/conf-10.1.2.tgz#50132158f388756fa9dea3048f6b47935315c14e"
+  integrity sha512-o9Fv1Mv+6A0JpoayQ8JleNp3hhkbOJP/Re/Q+QqxMPHPkABVsRjQGWZn9A5GcqLiTNC6d89p2PB5ZhHVDSMwyg==
   dependencies:
     ajv "^8.6.3"
     ajv-formats "^2.1.1"
@@ -189,13 +189,13 @@ electron-is-dev@2.0.0:
   resolved "https://registry.npmjs.org/electron-is-dev/-/electron-is-dev-2.0.0.tgz#833487a069b8dad21425c67a19847d9064ab19bd"
   integrity sha512-3X99K852Yoqu9AcW50qz3ibYBWY79/pBhlMCab8ToEWS48R0T9tyxRiQhwylE7zQdXrMnx2JKqUJyMPmt5FBqA==
 
-electron-store@8.0.1:
-  version "8.0.1"
-  resolved "https://registry.npmjs.org/electron-store/-/electron-store-8.0.1.tgz#9b598c1d2edeffebee9d8c1cd957ad368c528925"
-  integrity sha512-ZyLvNywiqSpbwC/pp89O/AycVWY/UJIkmtyzF2Bd0Nm/rLmcFc0NTGuLdg6+LE8mS8qsiK5JMoe4PnrecLHH5w==
+electron-store@8.0.2:
+  version "8.0.2"
+  resolved "https://registry.npmjs.org/electron-store/-/electron-store-8.0.2.tgz#95c8cf81c1e1cf48b24f3ceeea24b921c1ff62d7"
+  integrity sha512-9GwUMv51w8ydbkaG7X0HrPlElXLApg63zYy1/VZ/a08ndl0gfm4iCoD3f0E1JvP3V16a+7KxqriCI0c122stiA==
   dependencies:
-    conf "^10.0.3"
-    type-fest "^1.0.2"
+    conf "^10.1.2"
+    type-fest "^2.12.2"
 
 encoding@^0.1.13:
   version "0.1.13"
@@ -904,10 +904,10 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-type-fest@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/type-fest/-/type-fest-1.0.2.tgz#3f9c39982859f385c77c38b7e5f1432b8a3661c6"
-  integrity sha512-a720oz3Kjbp3ll0zkeN9qjRhO7I34MKMhPGQiQJAmaZQZQ1lo+NWThK322f7sXV+kTg9B1Ybt16KgBXWgteT8w==
+type-fest@^2.12.2:
+  version "2.13.1"
+  resolved "https://registry.npmjs.org/type-fest/-/type-fest-2.13.1.tgz#621c84220df0e01a8469002594fc005714f0cfba"
+  integrity sha512-hXYyrPFwETT2swFLHeoKtJrvSF/ftG/sA15/8nGaLuaDGfVAaq8DYFpu4yOyV4tzp082WqnTEoMsm3flKMI2FQ==
 
 universalify@^2.0.0:
   version "2.0.0"
