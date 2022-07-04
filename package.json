@@ -120,7 +120,7 @@
     "node-addon-api": "5.0.0",
     "node-gyp": "9.0.0",
     "null-loader": "4.0.1",
-    "playwright": "1.22.2",
+    "playwright": "1.23.1",
     "plist": "3.0.5",
     "prettier": "2.7.1",
     "proxyquire": "2.1.3",
