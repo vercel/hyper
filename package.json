@@ -113,7 +113,7 @@
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-prettier": "4.0.0",
+    "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-react": "7.30.1",
     "husky": "8.0.1",
     "inquirer": "8.2.4",
