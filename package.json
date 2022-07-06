@@ -76,7 +76,7 @@
     "@babel/preset-react": "7.18.6",
     "@babel/preset-typescript": "7.18.6",
     "@types/args": "5.0.0",
-    "@types/async-retry": "1.4.3",
+    "@types/async-retry": "1.4.4",
     "@types/color": "3.0.3",
     "@types/columnify": "^1.5.1",
     "@types/fs-extra": "9.0.13",
