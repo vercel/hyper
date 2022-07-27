@@ -1,4 +1,5 @@
-![](https://assets.vercel.com/image/upload/v1549723846/repositories/hyper/hyper-3-repo-banner.png)
+![](https://assets.vercel.com/image/upload/v1549723846/repositories/hyper/hyper-3-repo-banner.png#gh-light-mode-only)
+![](https://res.cloudinary.com/dp93uvgmu/image/upload/v1658930404/hyper-logo-dark_ptlgxi.png#gh-dark-mode-only)
 
 <p align="center">
   <a aria-label="Vercel logo" href="https://vercel.com">
