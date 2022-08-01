@@ -17,7 +17,7 @@
     "default-shell": "1.0.1",
     "electron-fetch": "1.7.4",
     "electron-is-dev": "2.0.0",
-    "electron-store": "8.0.2",
+    "electron-store": "8.1.0",
     "fs-extra": "10.1.0",
     "git-describe": "4.1.1",
     "lodash": "4.17.21",
