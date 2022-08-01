@@ -489,10 +489,10 @@ native-process-working-directory@^1.0.2:
   dependencies:
     node-addon-api "^3.1.0"
 
-native-reg@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/native-reg/-/native-reg-1.0.0.tgz#77f9acbf59eda02680c00b0b1b9d1e0078b7820d"
-  integrity sha512-MxukmqY7jOeiS9+b4TAlfG9cvaQ03oLET35nUGYGHDRcLx0NFk7eeoWqX4wAXaFiMW50ZiFalOA6W8q3fprcsw==
+native-reg@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/native-reg/-/native-reg-1.1.0.tgz#caa7a21c8e537c977cf481296d5675edebcbcbe2"
+  integrity sha512-nykrWHVAp9E6oLUypAVDFj+kq5J4AMd7VA5CVOqMw/k4w7Mhuc6p/1tLTqDLJbQsFs85qT1ElQw8Yn/RayUupg==
   dependencies:
     node-gyp-build "4"
 
