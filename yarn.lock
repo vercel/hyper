@@ -3059,10 +3059,10 @@ electron-publish@23.3.3:
     lazy-val "^1.0.5"
     mime "^2.5.2"
 
-electron-rebuild@3.2.8:
-  version "3.2.8"
-  resolved "https://registry.npmjs.org/electron-rebuild/-/electron-rebuild-3.2.8.tgz#01fc262213caf12bef4dd3cd7f6fffa82c60cb40"
-  integrity sha512-+U/G5ZH9RNfvPQsEHevC3yDlgSB+wliNXnG6haqUeZBEq061pEgSTWK9ZBEfqMEq+PKxvniMNxfou/h6079s3A==
+electron-rebuild@3.2.9:
+  version "3.2.9"
+  resolved "https://registry.npmjs.org/electron-rebuild/-/electron-rebuild-3.2.9.tgz#ea372be15f591f8d6d978ee9bca6526dadbcf20f"
+  integrity sha512-FkEZNFViUem3P0RLYbZkUjC8LUFIK+wKq09GHoOITSJjfDAVQv964hwaNseTTWt58sITQX3/5fHNYcTefqaCWw==
   dependencies:
     "@malept/cross-spawn-promise" "^2.0.0"
     chalk "^4.0.0"
