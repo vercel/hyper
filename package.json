@@ -102,7 +102,7 @@
     "copy-webpack-plugin": "11.0.0",
     "cpy-cli": "^3.1.1",
     "cross-env": "7.0.3",
-    "electron": "19.0.8",
+    "electron": "20.0.2",
     "electron-builder": "^23.3.3",
     "electron-devtools-installer": "3.2.0",
     "electron-link": "^0.6.0",
