@@ -17,6 +17,6 @@ export function keys(imm: Record<string, any>) {
   return keysCache.get(imm);
 }
 
-export const ObjectTypedKeys = <T>(obj: T) => {
+export const ObjectTypedKeys = <T extends object>(obj: T) => {
   return Object.keys(obj) as (keyof T)[];
 };
