@@ -118,7 +118,7 @@
     "husky": "8.0.1",
     "inquirer": "9.1.0",
     "node-addon-api": "5.0.0",
-    "node-gyp": "9.0.0",
+    "node-gyp": "9.1.0",
     "null-loader": "4.0.1",
     "playwright": "1.25.0",
     "plist": "3.0.6",
