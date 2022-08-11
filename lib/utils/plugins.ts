@@ -91,7 +91,10 @@ function exposeDecorated<P extends Record<string, any>>(
   };
 }
 
-function getDecorated<P extends Record<string, any>>(parent: React.ComponentType<P>, name: string): React.ComponentClass<P> {
+function getDecorated<P extends Record<string, any>>(
+  parent: React.ComponentType<P>,
+  name: string
+): React.ComponentClass<P> {
   if (!decorated[name]) {
     let class_ = exposeDecorated(parent);
     (class_ as any).displayName = `_exposeDecorated(${name})`;
