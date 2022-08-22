@@ -3,6 +3,7 @@ dist
 app/renderer
 target
 bin/cli.*
+cache
 
 # dependencies
 node_modules

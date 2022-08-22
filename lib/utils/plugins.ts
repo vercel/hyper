@@ -91,7 +91,10 @@ function exposeDecorated<P extends Record<string, any>>(
   };
 }
 
-function getDecorated<P>(parent: React.ComponentType<P>, name: string): React.ComponentClass<P> {
+function getDecorated<P extends Record<string, any>>(
+  parent: React.ComponentType<P>,
+  name: string
+): React.ComponentClass<P> {
   if (!decorated[name]) {
     let class_ = exposeDecorated(parent);
     (class_ as any).displayName = `_exposeDecorated(${name})`;
@@ -136,7 +139,7 @@ function getDecorated<P>(parent: React.ComponentType<P>, name: string): React.Co
 // for each component, we return a higher-order component
 // that wraps with the higher-order components
 // exposed by plugins
-export function decorate<P>(
+export function decorate<P extends Record<string, any>>(
   Component_: React.ComponentType<P>,
   name: string
 ): React.ComponentClass<P, {hasError: boolean}> {
@@ -450,7 +453,7 @@ export function getTabProps<T extends Assignable<TabProps, T>>(tab: any, parentP
 // connects + decorates a class
 // plugins can override mapToState, dispatchToProps
 // and the class gets decorated (proxied)
-export function connect<stateProps, dispatchProps>(
+export function connect<stateProps extends {}, dispatchProps>(
   stateFn: (state: HyperState) => stateProps,
   dispatchFn: (dispatch: HyperDispatch) => dispatchProps,
   c: any,

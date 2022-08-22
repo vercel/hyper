@@ -1,0 +1,31 @@
+require('color-convert');
+require('color-string');
+require('columnify');
+require('lodash');
+require('ms');
+require('normalize-url');
+require('parse-url');
+require('php-escape-shell');
+require('plist');
+require('react-deep-force-update');
+require('react-dom');
+require('react-redux');
+require('react');
+require('redux-thunk');
+require('redux');
+require('reselect');
+require('seamless-immutable');
+require('stylis');
+require('xterm-addon-unicode11');
+// eslint-disable-next-line no-constant-condition
+if (false) {
+  require('args');
+  require('mousetrap');
+  require('open');
+  require('xterm-addon-fit');
+  require('xterm-addon-ligatures');
+  require('xterm-addon-search');
+  require('xterm-addon-web-links');
+  require('xterm-addon-webgl');
+  require('xterm');
+}
