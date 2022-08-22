@@ -80,7 +80,7 @@
     "@types/color": "3.0.3",
     "@types/columnify": "^1.5.1",
     "@types/fs-extra": "9.0.13",
-    "@types/lodash": "^4.14.182",
+    "@types/lodash": "^4.14.184",
     "@types/mkdirp": "1.0.2",
     "@types/mousetrap": "1.6.9",
     "@types/ms": "0.7.31",
