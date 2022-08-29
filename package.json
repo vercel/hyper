@@ -96,7 +96,7 @@
     "@types/uuid": "8.3.4",
     "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.33.0",
-    "ava": "4.3.1",
+    "ava": "4.3.3",
     "babel-loader": "8.2.5",
     "concurrently": "7.3.0",
     "copy-webpack-plugin": "11.0.0",
