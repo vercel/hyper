@@ -26,7 +26,7 @@
     "native-process-working-directory": "^1.0.2",
     "node-pty": "0.10.1",
     "os-locale": "5.0.0",
-    "parse-url": "7.0.2",
+    "parse-url": "8.1.0",
     "pify": "5.0.0",
     "queue": "6.0.2",
     "react": "17.0.2",
