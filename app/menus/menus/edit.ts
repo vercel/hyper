@@ -31,7 +31,8 @@ export default (
     } as any,
     {
       role: 'paste',
-      accelerator: commandKeys['editor:paste']
+      accelerator: commandKeys['editor:paste'],
+      registerAccelerator: true
     },
     {
       label: 'Select All',
