@@ -34,7 +34,7 @@
     "semver": "7.3.7",
     "shell-env": "3.0.1",
     "sudo-prompt": "^9.2.1",
-    "uuid": "8.3.2"
+    "uuid": "9.0.0"
   },
   "optionalDependencies": {
     "native-reg": "1.1.0"
