@@ -15,7 +15,7 @@
     "chokidar": "^3.5.3",
     "color": "4.2.3",
     "default-shell": "1.0.1",
-    "electron-fetch": "1.7.4",
+    "electron-fetch": "1.9.1",
     "electron-is-dev": "2.0.0",
     "electron-store": "8.1.0",
     "fs-extra": "10.1.0",
