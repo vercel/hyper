@@ -29,7 +29,7 @@ jobs:
           name: pr_num
       - name: Read the pr_num file
         id: pr_num_reader
-        uses: juliangruber/read-file-action@v1.1.4
+        uses: juliangruber/read-file-action@v1.1.6
         with:
           path: ./pr_num.txt
       - name: List images
