@@ -56,7 +56,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           body: ${{ format(env.MESSAGE, env.IMG_MARKDOWN, github.repository, github.event.workflow_run.id) }}
       - name: Hide older comments
-        uses: kanga333/comment-hider@v0.3.0
+        uses: kanga333/comment-hider@v0.4.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           leave_visible: 1
