@@ -971,10 +971,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/mousetrap@1.6.9":
-  version "1.6.9"
-  resolved "https://registry.npmjs.org/@types/mousetrap/-/mousetrap-1.6.9.tgz#f1ef9adbd1eac3466f21b6988b1c82c633a45340"
-  integrity sha512-HUAiN65VsRXyFCTicolwb5+I7FM6f72zjMWr+ajGk+YTvzBgXqa2A5U7d+rtsouAkunJ5U4Sb5lNJjo9w+nmXg==
+"@types/mousetrap@1.6.10":
+  version "1.6.10"
+  resolved "https://registry.npmjs.org/@types/mousetrap/-/mousetrap-1.6.10.tgz#29701db9c44257689f5270575e25c09fad7fc75d"
+  integrity sha512-MY9CcBNaR304SnweEZgJB/YsNcaeJk/7v6gtDi3yPCCVdszN9+BIqOVlsTMqUHMmdxM4DObve+0g0SBmr5EHdw==
 
 "@types/ms@*", "@types/ms@0.7.31":
   version "0.7.31"
