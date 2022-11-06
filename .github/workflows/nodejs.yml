@@ -17,7 +17,7 @@ jobs:
         os:
           - macos-11.0
           - ubuntu-18.04
-          - windows-latest
+          - windows-2019
       fail-fast: false
     steps:
       - name: Checkout
