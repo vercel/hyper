@@ -47,7 +47,7 @@
     "react-redux": "7.2.8",
     "recast": "0.21.5",
     "redux": "4.1.2",
-    "redux-thunk": "2.4.1",
+    "redux-thunk": "2.4.2",
     "reselect": "4.1.7",
     "seamless-immutable": "7.1.4",
     "semver": "7.3.8",
