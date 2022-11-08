@@ -96,7 +96,7 @@ const config: webpack.Configuration[] = [
       lodash: 'require("./node_modules/lodash/lodash.js")',
       ms: 'require("./node_modules/ms/index.js")',
       'normalize-url': 'require("./node_modules/normalize-url/index.js")',
-      'parse-url': 'require("./node_modules/parse-url/lib/index.js")',
+      'parse-url': 'require("./node_modules/parse-url/dist/index.js")',
       'php-escape-shell': 'require("./node_modules/php-escape-shell/php-escape-shell.js")',
       plist: 'require("./node_modules/plist/index.js")',
       'react-deep-force-update': 'require("./node_modules/react-deep-force-update/lib/index.js")',
