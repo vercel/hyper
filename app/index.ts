@@ -1,11 +1,12 @@
+import {cfgPath} from './config/paths';
+
 // Print diagnostic information for a few arguments instead of running Hyper.
 if (['--help', '-v', '--version'].includes(process.argv[1])) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const {version} = require('./package');
-  const configLocation = process.platform === 'win32' ? `${process.env.userprofile}\\.hyper.js` : '~/.hyper.js';
   console.log(`Hyper version ${version}`);
   console.log('Hyper does not accept any command line arguments. Please modify the config file instead.');
-  console.log(`Hyper configuration file located at: ${configLocation}`);
+  console.log(`Hyper configuration file located at: ${cfgPath}`);
   process.exit();
 }
 

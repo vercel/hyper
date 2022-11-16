@@ -39,12 +39,12 @@ export default (commands: Record<string, string>, showAbout: () => void): MenuIt
 
 
 ---
-<!-- ~/.hyper.js config -->
+<!-- hyper.json config -->
 - **${app.name} version**: ${env.TERM_PROGRAM_VERSION} "${app.getVersion()}"
 - **OS ARCH VERSION:** ${platform} ${arch} ${release()}
 - **Electron:** ${versions.electron}  **LANG:** ${env.LANG}
 - **SHELL:** ${env.SHELL}   **TERM:** ${env.TERM}
-<details><summary><strong>.hyper.js contents</strong></summary>
+<details><summary><strong>hyper.json contents</strong></summary>
 
 \`\`\`json
 ${JSON.stringify(getConfig(), null, 2)}

@@ -11,3 +11,4 @@ bin
 dist
 target
 cache
+schema.json
