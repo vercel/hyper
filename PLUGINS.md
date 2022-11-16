@@ -11,11 +11,11 @@ Prerequisites and steps are described in the ["Contributing" section of our READ
 Be sure to use the `canary` branch.
 
 ### Create a dev config file
-Copy your config file `.hyper.js` to the root of your cloned repository. Hyper, in dev mode, will use this copied config file. That means that you can continue to use your main installation of Hyper with your day-to-day configuration.
-After the first run, Hyper, in dev mode, will have created a new `.hyper_plugins` directory in your repository directory.
+Copy your config file `hyper.json` to the root of your cloned repository. Hyper, in dev mode, will use this copied config file. That means that you can continue to use your main installation of Hyper with your day-to-day configuration.
+After the first run, Hyper, in dev mode, will have created a new `plugins` directory in your repository directory.
 
 ### Setup your plugin
-Go to your recently created `<repository_root>/.hyper_plugins/local` directory and create/clone your plugin repo. An even better method on macOS/Linux is to add a symlink to your plugin directory.
+Go to your recently created `<repository_root>/plugins/local` directory and create/clone your plugin repo. An even better method on macOS/Linux is to add a symlink to your plugin directory.
 
 Edit your dev config file, and add your plugin name (directory name in your `local` directory) in the `localPlugins` array.
 ```js

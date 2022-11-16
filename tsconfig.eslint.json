@@ -5,7 +5,7 @@
     "./lib/",
     "./test/",
     "./cli/",
-    "./",
+    "./"
   ],
   "files": [
     "./app/index.d.ts"

@@ -26,7 +26,7 @@ assignees: ''
 
 - **OS version and name**: <!-- Replace with version + name -->
 - **Hyper.app version**: <!-- Replace with version -->
-- **Link of a [Gist](https://gist.github.com/) with the contents of your .hyper.js**: <!-- Gist Link Here -->
+- **Link of a [Gist](https://gist.github.com/) with the contents of your hyper.json**: <!-- Gist Link Here -->
 - **Relevant information from devtools** _(CMD+ALT+I on macOS, CTRL+SHIFT+I elsewhere)_: <!-- Replace with info if applicable, or N/A -->
 - **The issue is reproducible in vanilla Hyper.app**: <!-- Replace with info if applicable, or `Is Vanilla`. (Vanilla means Hyper.app without any add-ons or extras. Straight out of the box.) -->
 
