@@ -1,7 +1,7 @@
 // This module exports paths, names, and other metadata that is referenced
 import {homedir} from 'os';
 import {app} from 'electron';
-import {statSync} from 'fs';
+import {statSync, existsSync} from 'fs';
 import {resolve, join} from 'path';
 import isDev from 'electron-is-dev';
 
@@ -9,17 +9,23 @@ const cfgFile = '.hyper.js';
 const defaultCfgFile = 'config-default.js';
 const homeDirectory = homedir();
 
+
 // If the user defines XDG_CONFIG_HOME they definitely want their config there,
 // otherwise use the home directory in linux/mac and userdata in windows
-const applicationDirectory =
-  process.env.XDG_CONFIG_HOME !== undefined
-    ? join(process.env.XDG_CONFIG_HOME, 'hyper')
-    : process.platform == 'win32'
-    ? app.getPath('userData')
-    : homedir();
+// this should look for a preexisting config folder, if not defaults to local
+// as said on website for hyper https://hyper.is/#cfg
+const configFolder = () =>{
+  if(!!process.env.XDG_CONFIG_HOME) return process.env.XDG_CONFIG_HOME;
+  if(process.platform == 'win32') return app.getPath('userData');
 
-let cfgDir = applicationDirectory;
-let cfgPath = join(applicationDirectory, cfgFile);
+  const primaryConfigPath = join(homeDirectory, ".config/Hyper");
+  if(existsSync(primaryConfigPath))return primaryConfigPath;
+  return homeDirectory;
+}
+
+
+let cfgDir = configFolder();
+let cfgPath = join(cfgDir, cfgFile);
 const legacyCfgPath = join(homeDirectory, cfgFile); // Hyper 2 config location
 
 const devDir = resolve(__dirname, '../..');
