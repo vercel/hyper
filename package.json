@@ -27,7 +27,7 @@
     "email": "team@zeit.co"
   },
   "dependencies": {
-    "@electron/remote": "2.0.8",
+    "@electron/remote": "2.0.9",
     "args": "5.0.3",
     "chalk": "5.1.2",
     "color": "4.2.3",
