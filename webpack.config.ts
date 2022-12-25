@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Copy = require('copy-webpack-plugin');
+import Copy from 'copy-webpack-plugin';
 import path from 'path';
 import TerserPlugin from 'terser-webpack-plugin';
 import webpack from 'webpack';
@@ -29,7 +28,6 @@ const config: webpack.Configuration[] = [
       ]
     },
     plugins: [
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       new Copy({
         patterns: [
           {
@@ -91,6 +89,36 @@ const config: webpack.Configuration[] = [
         }
       ]
     },
+    externals: {
+      'color-convert': 'require("./node_modules/color-convert/index.js")',
+      'color-string': 'require("./node_modules/color-string/index.js")',
+      columnify: 'require("./node_modules/columnify/columnify.js")',
+      lodash: 'require("./node_modules/lodash/lodash.js")',
+      ms: 'require("./node_modules/ms/index.js")',
+      'normalize-url': 'require("./node_modules/normalize-url/index.js")',
+      'parse-url': 'require("./node_modules/parse-url/dist/index.js")',
+      'php-escape-shell': 'require("./node_modules/php-escape-shell/php-escape-shell.js")',
+      plist: 'require("./node_modules/plist/index.js")',
+      'react-deep-force-update': 'require("./node_modules/react-deep-force-update/lib/index.js")',
+      'react-dom': 'require("./node_modules/react-dom/index.js")',
+      'react-redux': 'require("./node_modules/react-redux/lib/index.js")',
+      react: 'require("./node_modules/react/index.js")',
+      'redux-thunk': 'require("./node_modules/redux-thunk/lib/index.js")',
+      redux: 'require("./node_modules/redux/lib/redux.js")',
+      reselect: 'require("./node_modules/reselect/lib/index.js")',
+      'seamless-immutable': 'require("./node_modules/seamless-immutable/src/seamless-immutable.js")',
+      stylis: 'require("./node_modules/stylis/stylis.js")',
+      'xterm-addon-unicode11': 'require("./node_modules/xterm-addon-unicode11/lib/xterm-addon-unicode11.js")',
+      args: 'require("./node_modules/args/lib/index.js")',
+      mousetrap: 'require("./node_modules/mousetrap/mousetrap.js")',
+      open: 'require("./node_modules/open/index.js")',
+      'xterm-addon-fit': 'require("./node_modules/xterm-addon-fit/lib/xterm-addon-fit.js")',
+      'xterm-addon-ligatures': 'require("./node_modules/xterm-addon-ligatures/lib/xterm-addon-ligatures.js")',
+      'xterm-addon-search': 'require("./node_modules/xterm-addon-search/lib/xterm-addon-search.js")',
+      'xterm-addon-web-links': 'require("./node_modules/xterm-addon-web-links/lib/xterm-addon-web-links.js")',
+      'xterm-addon-webgl': 'require("./node_modules/xterm-addon-webgl/lib/xterm-addon-webgl.js")',
+      xterm: 'require("./node_modules/xterm/lib/xterm.js")'
+    },
     plugins: [
       new webpack.IgnorePlugin({resourceRegExp: /.*\.js.map$/i}),
 
@@ -99,7 +127,6 @@ const config: webpack.Configuration[] = [
           NODE_ENV: JSON.stringify(nodeEnv)
         }
       }),
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       new Copy({
         patterns: [
           {

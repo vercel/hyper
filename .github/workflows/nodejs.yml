@@ -13,17 +13,17 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [16.x]
         os:
-          - macos-11.0
+          - macos-12
           - ubuntu-18.04
           - windows-latest
       fail-fast: false
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: yarn
@@ -64,7 +64,7 @@ jobs:
         run: yarn run test:e2e
       - name: Archive E2E test screenshot
         if: runner.os != 'Linux'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: e2e
           path: dist/tmp/*.png
@@ -74,7 +74,7 @@ jobs:
           PR_NUM: ${{ github.event.number }}
         run: echo $PR_NUM > pr_num.txt
       - name: Upload the pr num
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: github.event_name == 'pull_request'
         with:
           name: pr_num
