@@ -284,9 +284,9 @@ export default class Term extends React.PureComponent<TermProps> {
     this.term.write(data);
   }
 
-  focus() {
+  focus = () => {
     this.term.focus();
-  }
+  };
 
   clear() {
     this.term.clear();
@@ -431,6 +431,7 @@ export default class Term extends React.PureComponent<TermProps> {
         className={`term_fit ${this.props.isTermActive ? 'term_active' : ''}`}
         style={{padding: this.props.padding}}
         onMouseUp={this.onMouseUp}
+        onClick={this.focus}
       >
         {this.props.customChildrenBefore}
         <div ref={this.onTermWrapperRef} className="term_fit term_wrapper" />
