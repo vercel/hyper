@@ -17,6 +17,7 @@ import {decorateSessionOptions, decorateSessionClass} from '../plugins';
 import {enable as remoteEnable} from '@electron/remote/main';
 import {configOptions} from '../../lib/config';
 import {getWorkingDirectoryFromPID} from 'native-process-working-directory';
+import {existsSync} from 'fs';
 
 export function newWindow(
   options_: BrowserWindowConstructorOptions,
@@ -138,7 +139,7 @@ export function newWindow(
       } catch (error) {
         console.error(error);
       }
-      cwd = cwd && isAbsolute(cwd) ? cwd : '';
+      cwd = cwd && isAbsolute(cwd) && existsSync(cwd) ? cwd : '';
     }
 
     // remove the rows and cols, the wrong value of them will break layout when init create
