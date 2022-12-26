@@ -94,7 +94,7 @@ export type uiState = Immutable<{
   scrollback: number;
   selectionColor: string;
   showHamburgerMenu: boolean | '';
-  showWindowControls: string;
+  showWindowControls: boolean | 'left' | '';
   termCSS: string;
   uiFontFamily: string;
   updateCanInstall: null | boolean;

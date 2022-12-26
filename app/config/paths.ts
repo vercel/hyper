@@ -5,22 +5,30 @@ import {statSync} from 'fs';
 import {resolve, join} from 'path';
 import isDev from 'electron-is-dev';
 
-const cfgFile = '.hyper.js';
-const defaultCfgFile = 'config-default.js';
+const cfgFile = 'hyper.json';
+const defaultCfgFile = 'config-default.json';
+const schemaFile = 'schema.json';
 const homeDirectory = homedir();
 
 // If the user defines XDG_CONFIG_HOME they definitely want their config there,
 // otherwise use the home directory in linux/mac and userdata in windows
-const applicationDirectory =
+let cfgDir = process.env.XDG_CONFIG_HOME
+  ? join(process.env.XDG_CONFIG_HOME, 'Hyper')
+  : process.platform === 'win32'
+  ? app.getPath('userData')
+  : join(homeDirectory, '.config', 'Hyper');
+
+const legacyCfgPath = join(
   process.env.XDG_CONFIG_HOME !== undefined
     ? join(process.env.XDG_CONFIG_HOME, 'hyper')
     : process.platform == 'win32'
     ? app.getPath('userData')
-    : homedir();
+    : homedir(),
+  '.hyper.js'
+);
 
-let cfgDir = applicationDirectory;
-let cfgPath = join(applicationDirectory, cfgFile);
-const legacyCfgPath = join(homeDirectory, cfgFile); // Hyper 2 config location
+let cfgPath = join(cfgDir, cfgFile);
+const schemaPath = resolve(__dirname, schemaFile);
 
 const devDir = resolve(__dirname, '../..');
 const devCfg = join(devDir, cfgFile);
@@ -38,10 +46,8 @@ if (isDev) {
   }
 }
 
-const plugins = resolve(cfgDir, '.hyper_plugins');
+const plugins = resolve(cfgDir, 'plugins');
 const plugs = {
-  legacyBase: resolve(homeDirectory, '.hyper_plugins'),
-  legacyLocal: resolve(homeDirectory, '.hyper_plugins', 'local'),
   base: plugins,
   local: resolve(plugins, 'local'),
   cache: resolve(plugins, 'cache')
@@ -82,5 +88,7 @@ export {
   yarn,
   cliScriptPath,
   cliLinkPath,
-  homeDirectory
+  homeDirectory,
+  schemaFile,
+  schemaPath
 };

@@ -5,25 +5,22 @@ import os from 'os';
 import got from 'got';
 import registryUrlModule from 'registry-url';
 const registryUrl = registryUrlModule();
-import pify from 'pify';
-import * as recast from 'recast';
 import path from 'path';
 
 // If the user defines XDG_CONFIG_HOME they definitely want their config there,
 // otherwise use the home directory in linux/mac and userdata in windows
-const applicationDirectory =
-  process.env.XDG_CONFIG_HOME !== undefined
-    ? path.join(process.env.XDG_CONFIG_HOME, 'hyper')
-    : process.platform == 'win32'
-    ? path.join(process.env.APPDATA!, 'Hyper')
-    : os.homedir();
+const applicationDirectory = process.env.XDG_CONFIG_HOME
+  ? path.join(process.env.XDG_CONFIG_HOME, 'Hyper')
+  : process.platform === 'win32'
+  ? path.join(process.env.APPDATA!, 'Hyper')
+  : path.join(os.homedir(), '.config', 'Hyper');
 
-const devConfigFileName = path.join(__dirname, `../.hyper.js`);
+const devConfigFileName = path.join(__dirname, `../hyper.json`);
 
 const fileName =
   process.env.NODE_ENV !== 'production' && fs.existsSync(devConfigFileName)
     ? devConfigFileName
-    : path.join(applicationDirectory, '.hyper.js');
+    : path.join(applicationDirectory, 'hyper.json');
 
 /**
  * We need to make sure the file reading and parsing is lazy so that failure to
@@ -43,34 +40,12 @@ function memoize<T extends (...args: any[]) => any>(fn: T): T {
 }
 
 const getFileContents = memoize(() => {
-  try {
-    return fs.readFileSync(fileName, 'utf8');
-  } catch (_err) {
-    const err = _err as {code: string};
-    if (err.code !== 'ENOENT') {
-      // ENOENT === !exists()
-      throw err;
-    }
-  }
-  return null;
+  return fs.readFileSync(fileName, 'utf8');
 });
 
-const getParsedFile = memoize(() => recast.parse(getFileContents()!));
+const getParsedFile = memoize(() => JSON.parse(getFileContents()));
 
-const getProperties = memoize(
-  (): any[] =>
-    ((getParsedFile()?.program?.body as any[]) || []).find(
-      (bodyItem) =>
-        bodyItem.type === 'ExpressionStatement' &&
-        bodyItem.expression.type === 'AssignmentExpression' &&
-        bodyItem.expression.left.object.name === 'module' &&
-        bodyItem.expression.left.property.name === 'exports' &&
-        bodyItem.expression.right.type === 'ObjectExpression'
-    )?.expression?.right?.properties || []
-);
-
-const getPluginsByKey = (key: string): any[] =>
-  getProperties().find((property) => property?.key?.name === key)?.value?.elements || [];
+const getPluginsByKey = (key: string): any[] => getParsedFile()[key] || [];
 
 const getPlugins = memoize(() => {
   return getPluginsByKey('plugins');
@@ -87,13 +62,13 @@ function exists() {
 function isInstalled(plugin: string, locally?: boolean) {
   const array = locally ? getLocalPlugins() : getPlugins();
   if (array && Array.isArray(array)) {
-    return array.some((entry) => entry.value === plugin);
+    return array.includes(plugin);
   }
   return false;
 }
 
-function save() {
-  return pify(fs.writeFile)(fileName, recast.print(getParsedFile()).code, 'utf8');
+function save(config: any) {
+  return fs.writeFileSync(fileName, JSON.stringify(config, null, 2), 'utf8');
 }
 
 function getPackageName(plugin: string) {
@@ -135,26 +110,25 @@ function install(plugin: string, locally?: boolean) {
         return Promise.reject(`${plugin} is already installed`);
       }
 
-      array.push(recast.types.builders.literal(plugin));
-      return save();
+      const config = getParsedFile();
+      config[locally ? 'localPlugins' : 'plugins'] = [...array, plugin];
+      save(config);
     });
 }
 
-function uninstall(plugin: string) {
+async function uninstall(plugin: string) {
   if (!isInstalled(plugin)) {
     return Promise.reject(`${plugin} is not installed`);
   }
 
-  const index = getPlugins().findIndex((entry) => entry.value === plugin);
-  getPlugins().splice(index, 1);
-  return save();
+  const config = getParsedFile();
+  config.plugins = getPlugins().filter((p) => p !== plugin);
+  save(config);
 }
 
 function list() {
   if (getPlugins().length > 0) {
-    return getPlugins()
-      .map((plugin) => plugin.value)
-      .join('\n');
+    return getPlugins().join('\n');
   }
   return false;
 }
