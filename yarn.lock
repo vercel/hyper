@@ -3152,10 +3152,10 @@ electron-to-chromium@^1.4.251:
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.254.tgz#c6203583890abf88dfc0be046cd72d3b48f8beb6"
   integrity sha512-Sh/7YsHqQYkA6ZHuHMy24e6TE4eX6KZVsZb9E/DvU1nQRIrH4BflO/4k+83tfdYvDl+MObvlqHPRICzEdC9c6Q==
 
-electron@20.3.6:
-  version "20.3.6"
-  resolved "https://registry.npmjs.org/electron/-/electron-20.3.6.tgz#d7818528c3fd37978e449ca30be224f626188d07"
-  integrity sha512-Ig0v38KIDrjO/KWR12IzoHfS3Jq95FB46weXq74eLFW/pug/m0CngjHpBjITKm6eXleL5V6rAXm6zM4ahyc1JQ==
+electron@20.3.8:
+  version "20.3.8"
+  resolved "https://registry.npmjs.org/electron/-/electron-20.3.8.tgz#94a4b2bb89a3e6bbeb824365cfd0f65658bc1a2c"
+  integrity sha512-P93ZWoJjXEVwsjUJ4q6640KZ4+rmWMZ9O5IB1eq/L9S52ZYsXo0o82afpPXq3j8vpneY0N5J62hgRzC1ZKzYmw==
   dependencies:
     "@electron/get" "^1.14.1"
     "@types/node" "^16.11.26"
