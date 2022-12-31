@@ -14,6 +14,7 @@ yarn-error.log
 
 # optional dev config file and plugins directory
 hyper.json
+schema.json
 plugins
 
 .DS_Store
