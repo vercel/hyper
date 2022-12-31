@@ -188,6 +188,12 @@ export default class Term extends React.PureComponent<TermProps> {
       this.searchAddon = props.searchAddon!;
     }
 
+    try {
+      this.term.element!.style.padding = props.padding;
+    } catch (error) {
+      console.log(error);
+    }
+
     this.fitAddon.fit();
 
     if (this.props.isTermActive) {
@@ -377,6 +383,12 @@ export default class Term extends React.PureComponent<TermProps> {
 
     this.termOptions = nextTermOptions;
 
+    try {
+      this.term.element!.style.padding = this.props.padding;
+    } catch (error) {
+      console.log(error);
+    }
+
     if (
       this.props.fontSize !== prevProps.fontSize ||
       this.props.fontFamily !== prevProps.fontFamily ||
@@ -427,12 +439,7 @@ export default class Term extends React.PureComponent<TermProps> {
 
   render() {
     return (
-      <div
-        className={`term_fit ${this.props.isTermActive ? 'term_active' : ''}`}
-        style={{padding: this.props.padding}}
-        onMouseUp={this.onMouseUp}
-        onClick={this.focus}
-      >
+      <div className={`term_fit ${this.props.isTermActive ? 'term_active' : ''}`} onMouseUp={this.onMouseUp}>
         {this.props.customChildrenBefore}
         <div ref={this.onTermWrapperRef} className="term_fit term_wrapper" />
         {this.props.customChildren}
