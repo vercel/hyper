@@ -314,10 +314,21 @@ import {TermGroupConnectedProps} from './components/term-group';
 export type TermGroupProps = TermGroupConnectedProps & TermGroupOwnProps;
 
 export type SearchBoxProps = {
-  search: (searchTerm: string) => void;
+  caseSensitive: boolean;
+  wholeWord: boolean;
+  regex: boolean;
+  results: {resultIndex: number; resultCount: number} | undefined;
+  toggleCaseSensitive: () => void;
+  toggleWholeWord: () => void;
+  toggleRegex: () => void;
   next: (searchTerm: string) => void;
   prev: (searchTerm: string) => void;
   close: () => void;
+  backgroundColor: string;
+  foregroundColor: string;
+  borderColor: string;
+  selectionColor: string;
+  font: string;
 };
 
 import {FitAddon} from 'xterm-addon-fit';
