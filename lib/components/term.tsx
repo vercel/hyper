@@ -2,7 +2,7 @@ import React from 'react';
 import {Terminal, ITerminalOptions, IDisposable} from 'xterm';
 import {FitAddon} from 'xterm-addon-fit';
 import {WebLinksAddon} from 'xterm-addon-web-links';
-import {SearchAddon} from 'xterm-addon-search';
+import {SearchAddon, ISearchDecorationOptions} from 'xterm-addon-search';
 import {WebglAddon} from 'xterm-addon-webgl';
 import {LigaturesAddon} from 'xterm-addon-ligatures';
 import {Unicode11Addon} from 'xterm-addon-unicode11';
@@ -10,9 +10,12 @@ import {clipboard, shell} from 'electron';
 import Color from 'color';
 import terms from '../terms';
 import processClipboard from '../utils/paste';
-import SearchBox from './searchBox';
+import _SearchBox from './searchBox';
 import {TermProps} from '../hyper';
 import {ObjectTypedKeys} from '../utils/object';
+import {decorate} from '../utils/plugins';
+
+const SearchBox = decorate(_SearchBox, 'SearchBox');
 
 const isWindows = ['Windows', 'Win16', 'Win32', 'WinCE'].includes(navigator.platform);
 
@@ -78,11 +81,27 @@ const getTermOptions = (props: TermProps): ITerminalOptions => {
       brightCyan: props.colors.lightCyan,
       brightWhite: props.colors.lightWhite
     },
-    screenReaderMode: props.screenReaderMode
+    screenReaderMode: props.screenReaderMode,
+    overviewRulerWidth: 20
   };
 };
 
-export default class Term extends React.PureComponent<TermProps> {
+export default class Term extends React.PureComponent<
+  TermProps,
+  {
+    searchOptions: {
+      caseSensitive: boolean;
+      wholeWord: boolean;
+      regex: boolean;
+    };
+    searchResults:
+      | {
+          resultIndex: number;
+          resultCount: number;
+        }
+      | undefined;
+  }
+> {
   termRef: HTMLElement | null;
   termWrapperRef: HTMLElement | null;
   termOptions: ITerminalOptions;
@@ -94,6 +113,16 @@ export default class Term extends React.PureComponent<TermProps> {
   term!: Terminal;
   resizeObserver!: ResizeObserver;
   resizeTimeout!: NodeJS.Timeout;
+  searchDecorations: ISearchDecorationOptions;
+  state = {
+    searchOptions: {
+      caseSensitive: false,
+      wholeWord: false,
+      regex: false
+    },
+    searchResults: undefined
+  };
+
   constructor(props: TermProps) {
     super(props);
     props.ref_(props.uid, this);
@@ -104,6 +133,11 @@ export default class Term extends React.PureComponent<TermProps> {
     this.termDefaultBellSound = null;
     this.fitAddon = new FitAddon();
     this.searchAddon = new SearchAddon();
+    this.searchDecorations = {
+      activeMatchColorOverviewRuler: Color(this.props.cursorColor).hex(),
+      matchOverviewRuler: Color(this.props.borderColor).hex(),
+      activeMatchBackground: Color(this.props.cursorColor).hex()
+    };
   }
 
   // The main process shows this in the About dialog
@@ -242,6 +276,15 @@ export default class Term extends React.PureComponent<TermProps> {
       );
     }
 
+    this.disposableListeners.push(
+      this.searchAddon.onDidChangeResults((results) => {
+        this.setState((state) => ({
+          ...state,
+          searchResults: results
+        }));
+      })
+    );
+
     window.addEventListener('paste', this.onWindowPaste, {
       capture: true
     });
@@ -302,20 +345,28 @@ export default class Term extends React.PureComponent<TermProps> {
     this.term.reset();
   }
 
-  search = (searchTerm = '') => {
-    this.searchAddon.findNext(searchTerm);
-  };
-
   searchNext = (searchTerm: string) => {
-    this.searchAddon.findNext(searchTerm);
+    this.searchAddon.findNext(searchTerm, {
+      ...this.state.searchOptions,
+      decorations: this.searchDecorations
+    });
   };
 
   searchPrevious = (searchTerm: string) => {
-    this.searchAddon.findPrevious(searchTerm);
+    this.searchAddon.findPrevious(searchTerm, {
+      ...this.state.searchOptions,
+      decorations: this.searchDecorations
+    });
   };
 
   closeSearchBox = () => {
     this.props.onCloseSearch();
+    this.searchAddon.clearDecorations();
+    this.searchAddon.clearActiveDecoration();
+    this.setState((state) => ({
+      ...state,
+      searchResults: undefined
+    }));
     this.term.focus();
   };
 
@@ -350,8 +401,8 @@ export default class Term extends React.PureComponent<TermProps> {
     // otherwise use the default sound found in xterm.
     nextTermOptions.bellSound = this.props.bellSound || this.termDefaultBellSound!;
 
-    if (!prevProps.search && this.props.search) {
-      this.search();
+    if (prevProps.search && !this.props.search) {
+      this.closeSearchBox();
     }
 
     // Update only options that have changed.
@@ -445,14 +496,38 @@ export default class Term extends React.PureComponent<TermProps> {
         {this.props.customChildren}
         {this.props.search ? (
           <SearchBox
-            search={this.search}
             next={this.searchNext}
             prev={this.searchPrevious}
             close={this.closeSearchBox}
+            caseSensitive={this.state.searchOptions.caseSensitive}
+            wholeWord={this.state.searchOptions.wholeWord}
+            regex={this.state.searchOptions.regex}
+            results={this.state.searchResults}
+            toggleCaseSensitive={() =>
+              this.setState({
+                ...this.state,
+                searchOptions: {...this.state.searchOptions, caseSensitive: !this.state.searchOptions.caseSensitive}
+              })
+            }
+            toggleWholeWord={() =>
+              this.setState({
+                ...this.state,
+                searchOptions: {...this.state.searchOptions, wholeWord: !this.state.searchOptions.wholeWord}
+              })
+            }
+            toggleRegex={() =>
+              this.setState({
+                ...this.state,
+                searchOptions: {...this.state.searchOptions, regex: !this.state.searchOptions.regex}
+              })
+            }
+            selectionColor={this.props.selectionColor}
+            backgroundColor={this.props.backgroundColor}
+            foregroundColor={this.props.foregroundColor}
+            borderColor={this.props.borderColor}
+            font={this.props.uiFontFamily}
           />
-        ) : (
-          ''
-        )}
+        ) : null}
 
         <style jsx global>{`
           .term_fit {

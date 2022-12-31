@@ -137,6 +137,15 @@ export default class StyleSheet extends React.PureComponent<StyleSheetProps> {
           overflow: hidden;
         }
 
+        .xterm .xterm-decoration-overview-ruler {
+          position: absolute;
+          z-index: 10;
+          right: 0px;
+          top: unset;
+          left: unset;
+          pointer-events: none;
+        }
+
         ::-webkit-scrollbar {
           width: 5px;
         }

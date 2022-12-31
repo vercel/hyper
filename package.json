@@ -29,8 +29,10 @@
   },
   "dependencies": {
     "@electron/remote": "2.0.9",
+    "@react-icons/all-files": "4.1.0",
     "args": "5.0.3",
     "chalk": "5.2.0",
+    "clsx": "1.2.1",
     "color": "4.2.3",
     "columnify": "1.6.0",
     "css-loader": "6.7.3",
