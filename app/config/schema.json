@@ -1,5 +1,31 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "FontWeight": {
+            "anyOf": [
+                {
+                    "enum": [
+                        "100",
+                        "200",
+                        "300",
+                        "400",
+                        "500",
+                        "600",
+                        "700",
+                        "800",
+                        "900",
+                        "bold",
+                        "normal"
+                    ],
+                    "type": "string"
+                },
+                {
+                    "type": "number"
+                }
+            ],
+            "description": "A string or number representing text font weight."
+        }
+    },
     "properties": {
         "config": {
             "properties": {
@@ -165,51 +191,11 @@
                     "type": "number"
                 },
                 "fontWeight": {
-                    "anyOf": [
-                        {
-                            "enum": [
-                                "100",
-                                "200",
-                                "300",
-                                "400",
-                                "500",
-                                "600",
-                                "700",
-                                "800",
-                                "900",
-                                "bold",
-                                "normal"
-                            ],
-                            "type": "string"
-                        },
-                        {
-                            "type": "number"
-                        }
-                    ],
+                    "$ref": "#/definitions/FontWeight",
                     "description": "default font weight eg:'normal', '400', 'bold'"
                 },
                 "fontWeightBold": {
-                    "anyOf": [
-                        {
-                            "enum": [
-                                "100",
-                                "200",
-                                "300",
-                                "400",
-                                "500",
-                                "600",
-                                "700",
-                                "800",
-                                "900",
-                                "bold",
-                                "normal"
-                            ],
-                            "type": "string"
-                        },
-                        {
-                            "type": "number"
-                        }
-                    ],
+                    "$ref": "#/definitions/FontWeight",
                     "description": "font weight for bold characters eg:'normal', '600', 'bold'"
                 },
                 "foregroundColor": {
