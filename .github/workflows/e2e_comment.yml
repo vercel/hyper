@@ -14,14 +14,14 @@ jobs:
           WORKFLOW_RUN_INFO: ${{ toJSON(github.event.workflow_run) }}
         run: echo "$WORKFLOW_RUN_INFO"
       - name: Download Artifacts
-        uses: dawidd6/action-download-artifact@v2.22.0
+        uses: dawidd6/action-download-artifact@v2.24.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: nodejs.yml
           run_id: ${{ github.event.workflow_run.id }}
           name: e2e
       - name: Get PR number
-        uses: dawidd6/action-download-artifact@v2.22.0
+        uses: dawidd6/action-download-artifact@v2.24.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: nodejs.yml
@@ -29,7 +29,7 @@ jobs:
           name: pr_num
       - name: Read the pr_num file
         id: pr_num_reader
-        uses: juliangruber/read-file-action@v1.1.4
+        uses: juliangruber/read-file-action@v1.1.6
         with:
           path: ./pr_num.txt
       - name: List images
@@ -56,7 +56,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           body: ${{ format(env.MESSAGE, env.IMG_MARKDOWN, github.repository, github.event.workflow_run.id) }}
       - name: Hide older comments
-        uses: kanga333/comment-hider@v0.3.0
+        uses: kanga333/comment-hider@v0.4.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           leave_visible: 1
