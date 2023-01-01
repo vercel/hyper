@@ -14,6 +14,7 @@ import _SearchBox from './searchBox';
 import {TermProps} from '../hyper';
 import {ObjectTypedKeys} from '../utils/object';
 import {decorate} from '../utils/plugins';
+import 'xterm/css/xterm.css';
 
 const SearchBox = decorate(_SearchBox, 'SearchBox');
 
@@ -136,7 +137,9 @@ export default class Term extends React.PureComponent<
     this.searchDecorations = {
       activeMatchColorOverviewRuler: Color(this.props.cursorColor).hex(),
       matchOverviewRuler: Color(this.props.borderColor).hex(),
-      activeMatchBackground: Color(this.props.cursorColor).hex()
+      activeMatchBackground: Color(this.props.cursorColor).hex(),
+      activeMatchBorder: Color(this.props.cursorColor).hex(),
+      matchBorder: Color(this.props.cursorColor).hex()
     };
   }
 
