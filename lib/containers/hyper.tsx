@@ -130,7 +130,7 @@ class Hyper extends React.PureComponent<HyperProps> {
             }
 
             .hyper_mainRounded {
-              border-radius: 5px;
+              border-radius: 10px;
             }
           `}
         </style>
