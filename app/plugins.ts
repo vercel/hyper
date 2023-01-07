@@ -306,9 +306,12 @@ function requirePlugins(): any[] {
     }
   };
 
-  return plugins_
+  return [
+    ...localPlugins.filter((p) => basename(p) === 'migrated-hyper3-config'),
+    ...plugins_,
+    ...localPlugins.filter((p) => basename(p) !== 'migrated-hyper3-config')
+  ]
     .map(load)
-    .concat(localPlugins.map(load))
     .filter((v) => Boolean(v));
 }
 

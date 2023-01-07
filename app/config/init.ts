@@ -32,7 +32,7 @@ const _init = (userCfg: rawConfig, defaultCfg: rawConfig): parsedConfig => {
   return {
     config: (() => {
       if (userCfg?.config) {
-        return _.merge(defaultCfg.config, userCfg.config);
+        return _.merge({}, defaultCfg.config, userCfg.config);
       } else {
         notify('Error reading configuration: `config` key is missing');
         return defaultCfg.config || ({} as configOptions);
