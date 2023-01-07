@@ -1729,13 +1729,6 @@ ast-types@0.14.2:
   dependencies:
     tslib "^2.0.1"
 
-ast-types@0.15.2:
-  version "0.15.2"
-  resolved "https://registry.npmjs.org/ast-types/-/ast-types-0.15.2.tgz#39ae4809393c4b16df751ee563411423e85fb49d"
-  integrity sha512-c27loCv9QkZinsa5ProX751khO9DJl/AcB5c2KNtA6NRvHKS0PgLfcftz72KVq504vB0Gku5s2kUZzDBvQWvHg==
-  dependencies:
-    tslib "^2.0.1"
-
 ast-util-plus@^0.7.1:
   version "0.7.1"
   resolved "https://registry.npmjs.org/ast-util-plus/-/ast-util-plus-0.7.1.tgz#5612e2f2af2ee127a8f6ac846520856f517c7c51"
@@ -6868,16 +6861,6 @@ readdirp@~3.6.0:
   integrity sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==
   dependencies:
     picomatch "^2.2.1"
-
-recast@0.21.5:
-  version "0.21.5"
-  resolved "https://registry.npmjs.org/recast/-/recast-0.21.5.tgz#e8cd22bb51bcd6130e54f87955d33a2b2e57b495"
-  integrity sha512-hjMmLaUXAm1hIuTqOdeYObMslq/q+Xff6QE3Y2P+uoHAg2nmVlLBps2hzh1UJDdMtDTMXOFewK6ky51JQIeECg==
-  dependencies:
-    ast-types "0.15.2"
-    esprima "~4.0.0"
-    source-map "~0.6.1"
-    tslib "^2.0.1"
 
 recast@^0.20.4:
   version "0.20.5"
