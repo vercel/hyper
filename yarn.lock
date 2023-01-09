@@ -3420,10 +3420,10 @@ eslint-plugin-json-schema-validator@^4.0.3:
     tunnel-agent "^0.6.0"
     yaml-eslint-parser "^1.0.0"
 
-eslint-plugin-jsonc@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.npmjs.org/eslint-plugin-jsonc/-/eslint-plugin-jsonc-2.5.0.tgz#b0daea12f0927a3bba99557902ce6e0b48c37b4b"
-  integrity sha512-G257khwkrOQ5MJpSzz4yQh5K12W4xFZRcHmVlhVFWh2GCLDX+JwHnmkQoUoFDbOieSPBMsPFZDTJScwrXiWlIg==
+eslint-plugin-jsonc@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.npmjs.org/eslint-plugin-jsonc/-/eslint-plugin-jsonc-2.6.0.tgz#5a439ec15b4930c022bf157264a3d4f4712b982c"
+  integrity sha512-4bA9YTx58QaWalua1Q1b82zt7eZMB7i+ed8q8cKkbKP75ofOA2SXbtFyCSok7RY6jIXeCqQnKjN9If8zCgv6PA==
   dependencies:
     eslint-utils "^3.0.0"
     jsonc-eslint-parser "^2.0.4"
