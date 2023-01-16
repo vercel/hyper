@@ -118,6 +118,7 @@ const config: webpack.Configuration[] = [
       mousetrap: 'require("./node_modules/mousetrap/mousetrap.js")',
       open: 'require("./node_modules/open/index.js")',
       'xterm-addon-fit': 'require("./node_modules/xterm-addon-fit/lib/xterm-addon-fit.js")',
+      'xterm-addon-image': 'require("./node_modules/xterm-addon-image/lib/xterm-addon-image.js")',
       'xterm-addon-search': 'require("./node_modules/xterm-addon-search/lib/xterm-addon-search.js")',
       'xterm-addon-web-links': 'require("./node_modules/xterm-addon-web-links/lib/xterm-addon-web-links.js")',
       'xterm-addon-webgl': 'require("./node_modules/xterm-addon-webgl/lib/xterm-addon-webgl.js")',

@@ -16,6 +16,7 @@ import {TermProps} from '../hyper';
 import {pickBy, isEqual} from 'lodash';
 import {decorate} from '../utils/plugins';
 import 'xterm/css/xterm.css';
+import {ImageAddon} from 'xterm-addon-image';
 
 const SearchBox = decorate(_SearchBox, 'SearchBox');
 
@@ -212,6 +213,7 @@ export default class Term extends React.PureComponent<
         })
       );
       this.term.open(this.termRef);
+      this.term.loadAddon(new ImageAddon());
       if (useWebGL) {
         this.term.loadAddon(new WebglAddon());
       } else {
