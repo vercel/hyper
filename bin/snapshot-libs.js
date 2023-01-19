@@ -16,6 +16,7 @@ require('redux');
 require('reselect');
 require('seamless-immutable');
 require('stylis');
+require('xterm-addon-image');
 require('xterm-addon-unicode11');
 // eslint-disable-next-line no-constant-condition
 if (false) {
