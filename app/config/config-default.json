@@ -6,6 +6,7 @@
     "fontFamily": "Menlo, \"DejaVu Sans Mono\", Consolas, \"Lucida Console\", monospace",
     "fontWeight": "normal",
     "fontWeightBold": "bold",
+    "drawBoldTextInBrightColors": true,
     "lineHeight": 1,
     "letterSpacing": 0,
     "scrollback": 1000,

@@ -28,6 +28,7 @@ const mapStateToProps = (state: HyperState) => {
     fontFamily: state.ui.fontFamily,
     fontWeight: state.ui.fontWeight,
     fontWeightBold: state.ui.fontWeightBold,
+    drawBoldTextInBrightColors: state.ui.drawBoldTextInBrightColors,
     lineHeight: state.ui.lineHeight,
     letterSpacing: state.ui.letterSpacing,
     uiFontFamily: state.ui.uiFontFamily,
