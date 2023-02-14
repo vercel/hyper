@@ -606,10 +606,10 @@ mimic-fn@^3.0.0:
   resolved "https://registry.npmjs.org/mimic-fn/-/mimic-fn-3.1.0.tgz#65755145bbf3e36954b949c16450427451d5ca74"
   integrity sha512-Ysbi9uYW9hFyfrThdDEQuykN4Ey6BuwPD2kpI5ES/nFTDn/98yxYNLZJcgUAKPT/mcrLLKaGzJR9YVxJrIdASQ==
 
-mkdirp@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
-  integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
+mkdirp@2.1.3:
+  version "2.1.3"
+  resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-2.1.3.tgz#b083ff37be046fd3d6552468c1f0ff44c1545d1f"
+  integrity sha512-sjAkg21peAG9HS+Dkx7hlG9Ztx7HLeKnvB3NQRcu/mltCVmvkF0pisbiTSfDVYTT86XEfZrTUosLdZLStquZUw==
 
 ms@2.1.3:
   version "2.1.3"
