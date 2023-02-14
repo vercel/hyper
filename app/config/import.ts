@@ -1,5 +1,4 @@
-import {readFileSync} from 'fs-extra';
-import {sync as mkdirpSync} from 'mkdirp';
+import {readFileSync, mkdirpSync} from 'fs-extra';
 import {defaultCfg, cfgPath, plugs, defaultPlatformKeyPath} from './paths';
 import {_init} from './init';
 import notify from '../notify';
