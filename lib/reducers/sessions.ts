@@ -35,7 +35,7 @@ function Session(obj: Immutable.DeepPartial<session>) {
 }
 
 function deleteSession(state: sessionState, uid: string) {
-  return state.updateIn(['sessions'], (sessions: typeof state['sessions']) => {
+  return state.updateIn(['sessions'], (sessions: (typeof state)['sessions']) => {
     const sessions_ = sessions.asMutable();
     delete sessions_[uid];
     return sessions_;
