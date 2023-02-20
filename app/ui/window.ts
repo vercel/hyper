@@ -276,22 +276,33 @@ export function newWindow(
     }
   });
 
-  const handleDrop = (event: Event, url: string) => {
+  const handleDroppedURL = (url: string) => {
     const protocol = typeof url === 'string' && new URL(url).protocol;
     if (protocol === 'file:') {
-      event.preventDefault();
       const path = fileURLToPath(url);
-      rpc.emit('session data send', {data: path, escaped: true});
+      return {data: path, escaped: true};
     } else if (protocol === 'http:' || protocol === 'https:') {
-      event.preventDefault();
-      rpc.emit('session data send', {data: url});
+      return {data: url};
     }
   };
 
   // If file is dropped onto the terminal window, navigate and new-window events are prevented
-  // and his path is added to active session.
-  window.webContents.on('will-navigate', handleDrop);
-  window.webContents.on('new-window', handleDrop);
+  // and it's path is added to active session.
+  window.webContents.on('will-navigate', (event, url) => {
+    const data = handleDroppedURL(url);
+    if (data) {
+      event.preventDefault();
+      rpc.emit('session data send', data);
+    }
+  });
+  window.webContents.setWindowOpenHandler(({url}) => {
+    const data = handleDroppedURL(url);
+    if (data) {
+      rpc.emit('session data send', data);
+      return {action: 'deny'};
+    }
+    return {action: 'allow'};
+  });
 
   // expose internals to extension authors
   window.rpc = rpc;
