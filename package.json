@@ -119,7 +119,7 @@
     "eslint-plugin-json-schema-validator": "^4.0.3",
     "eslint-plugin-jsonc": "^2.6.0",
     "eslint-plugin-prettier": "4.2.1",
-    "eslint-plugin-react": "7.31.1",
+    "eslint-plugin-react": "7.32.2",
     "husky": "8.0.3",
     "inquirer": "9.1.4",
     "node-addon-api": "6.0.0",
