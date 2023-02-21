@@ -1,4 +1,4 @@
-import {app, BrowserWindow, shell, Menu, BrowserWindowConstructorOptions, Event} from 'electron';
+import {app, BrowserWindow, shell, Menu, BrowserWindowConstructorOptions} from 'electron';
 import {isAbsolute, normalize, sep} from 'path';
 import {URL, fileURLToPath} from 'url';
 import {v4 as uuidv4} from 'uuid';
