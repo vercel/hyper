@@ -59,7 +59,16 @@
         "bracketSameLine": false
       }
     ],
-    "eslint-comments/no-unused-disable": "error"
+    "eslint-comments/no-unused-disable": "error",
+    "react/no-unknown-property":[
+      "error",
+      {
+        "ignore": [
+          "jsx",
+          "global"
+        ]
+      }
+    ]
   },
   "overrides": [
     {
