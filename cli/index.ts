@@ -4,7 +4,7 @@ import {spawn, exec, SpawnOptions} from 'child_process';
 import {isAbsolute, resolve} from 'path';
 import {existsSync} from 'fs';
 import {version} from '../app/package.json';
-import pify from 'pify';
+import {promisify} from 'util';
 import args from 'args';
 import chalk from 'chalk';
 import open from 'open';
@@ -232,7 +232,7 @@ const main = (argv: string[]) => {
       const opts = {
         env
       };
-      return pify(exec)(cmd, opts);
+      return promisify(exec)(cmd, opts);
     }
   }
 
