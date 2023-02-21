@@ -6,3 +6,11 @@ declare module 'default-shell' {
   const val: string;
   export default val;
 }
+
+declare module 'sudo-prompt' {
+  export function exec(
+    cmd: string,
+    options: {name?: string; icns?: string; env?: {[key: string]: string}},
+    callback: (error?: Error, stdout?: string | Buffer, stderr?: string | Buffer) => void
+  ): void;
+}
