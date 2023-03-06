@@ -16,7 +16,7 @@ jobs:
         node-version: [16.x]
         os:
           - macos-12
-          - ubuntu-18.04
+          - ubuntu-20.04
           - windows-latest
       fail-fast: false
     steps:
