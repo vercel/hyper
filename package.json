@@ -113,7 +113,7 @@
     "electron-rebuild": "3.2.9",
     "electronmon": "^2.0.2",
     "eslint": "7.32.0",
-    "eslint-config-prettier": "8.6.0",
+    "eslint-config-prettier": "8.7.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-json-schema-validator": "^4.0.3",
     "eslint-plugin-jsonc": "^2.6.0",
