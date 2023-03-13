@@ -3305,19 +3305,19 @@ eslint-plugin-eslint-comments@^3.2.0:
     escape-string-regexp "^1.0.5"
     ignore "^5.0.5"
 
-eslint-plugin-json-schema-validator@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.npmjs.org/eslint-plugin-json-schema-validator/-/eslint-plugin-json-schema-validator-4.0.3.tgz#d064407259fdd3e8913cb59f083f39b34d83526f"
-  integrity sha512-REsXqE3fXb6aibHPtBmPdTtsDcc6YYXi5sHazVdGBPU+lNHuWZjhlYmZIIF8ZBiTWUCYJCefFzXpgcy6aqk4eg==
+eslint-plugin-json-schema-validator@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.npmjs.org/eslint-plugin-json-schema-validator/-/eslint-plugin-json-schema-validator-4.1.0.tgz#0cb4c0654545a9c8571c228eaacd3d65c4cf32f4"
+  integrity sha512-Qms50M0jkpmLP2W0KgSnHRrNVDf3V8HOLb84+3tOub8BVgLSosTdRQ98K+ayqBjLwvLzgFAbB+YulGNnw423Hg==
   dependencies:
     ajv "^8.0.0"
     debug "^4.3.1"
     eslint-utils "^3.0.0"
     json-schema-migrate "^2.0.0"
     jsonc-eslint-parser "^2.0.0"
-    minimatch "^5.0.0"
+    minimatch "^7.0.0"
     synckit "^0.8.0"
-    toml-eslint-parser "^0.4.0"
+    toml-eslint-parser "^0.5.0"
     tunnel-agent "^0.6.0"
     yaml-eslint-parser "^1.0.0"
 
@@ -5374,10 +5374,17 @@ minimatch@^3.0.4, minimatch@^3.1.1, minimatch@^3.1.2:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimatch@^5.0.0, minimatch@^5.0.1:
+minimatch@^5.0.1:
   version "5.1.0"
   resolved "https://registry.npmjs.org/minimatch/-/minimatch-5.1.0.tgz#1717b464f4971b144f6aabe8f2d0b8e4511e09c7"
   integrity sha512-9TPBGGak4nHfGZsPBohm9AWg6NoT7QTCehS3BIJABslyZbzxfV78QM2Y6+i741OPZIafFAaiiEMh5OyIrJPgtg==
+  dependencies:
+    brace-expansion "^2.0.1"
+
+minimatch@^7.0.0:
+  version "7.4.2"
+  resolved "https://registry.npmjs.org/minimatch/-/minimatch-7.4.2.tgz#157e847d79ca671054253b840656720cb733f10f"
+  integrity sha512-xy4q7wou3vUoC9k1xGTXc+awNdGaGVHtFUaey8tiX4H1QRc04DZ/rmDFwNm2EBsuYEhAZ6SgMmYf3InGY6OauA==
   dependencies:
     brace-expansion "^2.0.1"
 
@@ -7349,10 +7356,10 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-toml-eslint-parser@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.npmjs.org/toml-eslint-parser/-/toml-eslint-parser-0.4.0.tgz#4c7ebdc4ae585be886d881a0855ac0b089a85666"
-  integrity sha512-lwMC8RPBoAksoMFpQnB4c3zz+o9JPv1sxsduVH9AHb2o4kxQl7mtP5YaYoS33+6IdVrzHAXxi4JgowJDERoynw==
+toml-eslint-parser@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.npmjs.org/toml-eslint-parser/-/toml-eslint-parser-0.5.0.tgz#db95b86ce8c59ae7743ba6beef75a73d11c1aab9"
+  integrity sha512-SrneDiwkE/iQ3ndP/TkPN6Thfgd+ZGbtm7tV8WXlmVzUP2DIYXSCporm0Rgy/C40h7r9ANZfIW9YwQMUepqAmw==
   dependencies:
     eslint-visitor-keys "^3.0.0"
 
