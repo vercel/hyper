@@ -36,7 +36,7 @@
     "color": "4.2.3",
     "columnify": "1.6.0",
     "css-loader": "6.7.3",
-    "got": "12.4.1",
+    "got": "12.6.0",
     "json-loader": "0.5.7",
     "mousetrap": "chabou/mousetrap#useCapture",
     "ms": "2.1.3",
