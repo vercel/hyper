@@ -629,7 +629,7 @@
     minimatch "^3.0.4"
     plist "^3.0.4"
 
-"@eslint-community/eslint-utils@^4.2.0":
+"@eslint-community/eslint-utils@^4.2.0", "@eslint-community/eslint-utils@^4.3.0":
   version "4.3.0"
   resolved "https://registry.npmjs.org/@eslint-community/eslint-utils/-/eslint-utils-4.3.0.tgz#a556790523a351b4e47e9d385f47265eaaf9780a"
   integrity sha512-v3oplH6FYCULtFuCeqyuTd9D2WKO937Dxdq+GmHOLL72TTRriLxz2VLlNfkZRsvj6PKnOPAtuT6dwrs/pA5DvA==
@@ -3312,14 +3312,14 @@ eslint-plugin-eslint-comments@^3.2.0:
     escape-string-regexp "^1.0.5"
     ignore "^5.0.5"
 
-eslint-plugin-json-schema-validator@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.npmjs.org/eslint-plugin-json-schema-validator/-/eslint-plugin-json-schema-validator-4.1.0.tgz#0cb4c0654545a9c8571c228eaacd3d65c4cf32f4"
-  integrity sha512-Qms50M0jkpmLP2W0KgSnHRrNVDf3V8HOLb84+3tOub8BVgLSosTdRQ98K+ayqBjLwvLzgFAbB+YulGNnw423Hg==
+eslint-plugin-json-schema-validator@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.npmjs.org/eslint-plugin-json-schema-validator/-/eslint-plugin-json-schema-validator-4.3.0.tgz#c136d10df6b03f40bc03238dd4afbe655a1f5d10"
+  integrity sha512-yy4QB4WaLz5WELwW6F7JxsBk0el+dwKLhjW0LX6Iec9ivzZOYfusX0vTAuj/lSxl/xXllpO7BW1T6IOy2G5+KQ==
   dependencies:
+    "@eslint-community/eslint-utils" "^4.3.0"
     ajv "^8.0.0"
     debug "^4.3.1"
-    eslint-utils "^3.0.0"
     json-schema-migrate "^2.0.0"
     jsonc-eslint-parser "^2.0.0"
     minimatch "^7.0.0"
