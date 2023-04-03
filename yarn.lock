@@ -3312,17 +3312,17 @@ eslint-plugin-eslint-comments@^3.2.0:
     escape-string-regexp "^1.0.5"
     ignore "^5.0.5"
 
-eslint-plugin-json-schema-validator@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.npmjs.org/eslint-plugin-json-schema-validator/-/eslint-plugin-json-schema-validator-4.3.0.tgz#c136d10df6b03f40bc03238dd4afbe655a1f5d10"
-  integrity sha512-yy4QB4WaLz5WELwW6F7JxsBk0el+dwKLhjW0LX6Iec9ivzZOYfusX0vTAuj/lSxl/xXllpO7BW1T6IOy2G5+KQ==
+eslint-plugin-json-schema-validator@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.npmjs.org/eslint-plugin-json-schema-validator/-/eslint-plugin-json-schema-validator-4.4.0.tgz#9f9965482803136d589304487c164187ebbd89f2"
+  integrity sha512-8A+9iL53ri4ayJV+/c9Q6r3hpU3ohHraLY6TJgI8bR1jvzHEIS7Z9fuvMkamVxZHOQlOUye+xeqlM/JjU5Nh9w==
   dependencies:
     "@eslint-community/eslint-utils" "^4.3.0"
     ajv "^8.0.0"
     debug "^4.3.1"
     json-schema-migrate "^2.0.0"
     jsonc-eslint-parser "^2.0.0"
-    minimatch "^7.0.0"
+    minimatch "^8.0.0"
     synckit "^0.8.0"
     toml-eslint-parser "^0.5.0"
     tunnel-agent "^0.6.0"
@@ -5393,10 +5393,10 @@ minimatch@^5.0.1:
   dependencies:
     brace-expansion "^2.0.1"
 
-minimatch@^7.0.0:
-  version "7.4.2"
-  resolved "https://registry.npmjs.org/minimatch/-/minimatch-7.4.2.tgz#157e847d79ca671054253b840656720cb733f10f"
-  integrity sha512-xy4q7wou3vUoC9k1xGTXc+awNdGaGVHtFUaey8tiX4H1QRc04DZ/rmDFwNm2EBsuYEhAZ6SgMmYf3InGY6OauA==
+minimatch@^8.0.0:
+  version "8.0.2"
+  resolved "https://registry.npmjs.org/minimatch/-/minimatch-8.0.2.tgz#ba35f8afeb255a4cbad4b6677b46132f3278c469"
+  integrity sha512-ikHGF67ODxj7vS5NKU2wvTsFLbExee+KXVCnBWh8Cg2hVJfBMQIrlo50qru/09E0EifjnU8dZhJ/iHhyXJM6Mw==
   dependencies:
     brace-expansion "^2.0.1"
 
