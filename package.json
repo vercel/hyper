@@ -132,7 +132,7 @@
     "style-loader": "3.3.2",
     "terser": "5.16.8",
     "ts-node": "10.9.1",
-    "typescript": "5.0.3",
+    "typescript": "5.0.4",
     "webpack": "5.77.0"
   },
   "electronmon": {
