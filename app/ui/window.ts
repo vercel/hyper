@@ -126,7 +126,7 @@ export function newWindow(
 
   function createSession(extraOptions: any = {}) {
     const uid = uuidv4();
-    const extraOptionsFiltered: any = Object.fromEntries(extraOptions);
+    const extraOptionsFiltered: any = Object.fromEntries(Object.entries(extraOptions));
 
     let cwd = '';
     if (cfg.preserveCWD === undefined || cfg.preserveCWD) {
