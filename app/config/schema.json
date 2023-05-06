@@ -253,11 +253,11 @@
                     "type": "string"
                 },
                 "shell": {
-                    "description": "the shell to run when spawning a new session (i.e. /usr/local/bin/fish)\nif left empty, your system's login shell will be used by default\n\nWindows\n- Make sure to use a full path if the binary name doesn't work\n- Remove `--login` in shellArgs\n\nWindows Subsystem for Linux (WSL) - previously Bash on Windows\n- Example: `C:\\\\Windows\\\\System32\\\\wsl.exe`\n\nGit-bash on Windows\n- Example: `C:\\\\Program Files\\\\Git\\\\bin\\\\bash.exe`\n\nPowerShell on Windows\n- Example: `C:\\\\WINDOWS\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe`\n\nCygwin\n- Example: `C:\\\\cygwin64\\\\bin\\\\bash.exe`\n\nGit Bash\n- Example: `C:\\\\Program Files\\\\Git\\\\git-cmd.exe`\nThen Add `--command=usr/bin/bash.exe` to shellArgs",
+                    "description": "the shell to run when spawning a new session (e.g. /usr/local/bin/fish)\nif left empty, your system's login shell will be used by default\n\nWindows\n- Make sure to use a full path if the binary name doesn't work\n- Remove `--login` in shellArgs\n\nWindows Subsystem for Linux (WSL) - previously Bash on Windows\n- Example: `C:\\\\Windows\\\\System32\\\\wsl.exe`\n\nGit-bash on Windows\n- Example: `C:\\\\Program Files\\\\Git\\\\bin\\\\bash.exe`\n\nPowerShell on Windows\n- Example: `C:\\\\WINDOWS\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe`\n\nCygwin\n- Example: `C:\\\\cygwin64\\\\bin\\\\bash.exe`\n\nGit Bash\n- Example: `C:\\\\Program Files\\\\Git\\\\git-cmd.exe`\nThen Add `--command=usr/bin/bash.exe` to shellArgs",
                     "type": "string"
                 },
                 "shellArgs": {
-                    "description": "for setting shell arguments (i.e. for using interactive shellArgs: `['-i']`)\nby default `['--login']` will be used",
+                    "description": "for setting shell arguments (e.g. for using interactive shellArgs: `['-i']`)\nby default `['--login']` will be used",
                     "items": {
                         "type": "string"
                     },

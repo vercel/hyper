@@ -31,6 +31,7 @@ import {installCLI} from './utils/cli-install';
 import * as AppMenu from './menus/menu';
 import {newWindow} from './ui/window';
 import * as windowUtils from './utils/window-utils';
+import parseUrl from 'parse-url';
 
 const windowSet = new Set<BrowserWindow>([]);
 
@@ -234,6 +235,6 @@ app.on('open-file', (_event, path) => {
 
 app.on('open-url', (_event, sshUrl) => {
   GetWindow((win: BrowserWindow) => {
-    win.rpc.emit('open ssh', sshUrl);
+    win.rpc.emit('open ssh', parseUrl(sshUrl));
   });
 });
