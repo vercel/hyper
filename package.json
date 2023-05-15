@@ -104,7 +104,7 @@
     "cpy-cli": "^4.2.0",
     "cross-env": "7.0.3",
     "electron": "24.1.2",
-    "electron-builder": "^24.3.0",
+    "electron-builder": "^24.4.0",
     "electron-devtools-installer": "3.2.0",
     "electron-link": "^0.6.0",
     "electron-mksnapshot": "24.0.0",
