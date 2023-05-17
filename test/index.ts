@@ -50,5 +50,5 @@ test.after(async () => {
 });
 
 test('see if dev tools are open', async (t) => {
-  t.false(await app.evaluate(({webContents}) => webContents.getFocusedWebContents().isDevToolsOpened()));
+  t.false(await app.evaluate(({webContents}) => !!webContents.getFocusedWebContents()?.isDevToolsOpened()));
 });
