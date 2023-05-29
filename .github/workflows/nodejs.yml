@@ -79,3 +79,11 @@ jobs:
         with:
           name: pr_num
           path: ./pr_num.txt
+      - name: Publish to Snap Store
+        if: runner.os == 'Linux'
+        run: |
+            sudo snap install snapcraft --classic
+            echo "$SNAP_TOKEN" | snapcraft login --with -
+            snapcraft upload --release=stable ./dist/*.snap
+        env:
+          SNAP_TOKEN: ${{secrets.SNAP_TOKEN}}
