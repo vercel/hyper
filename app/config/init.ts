@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 const _extract = (script?: vm.Script): Record<string, any> => {
   const module: Record<string, any> = {};
-  script?.runInNewContext({module});
+  script?.runInNewContext({module}, {displayErrors: true});
   if (!module.exports) {
     throw new Error('Error reading configuration: `module.exports` not set');
   }
@@ -16,7 +16,7 @@ const _extract = (script?: vm.Script): Record<string, any> => {
 
 const _syntaxValidation = (cfg: string) => {
   try {
-    return new vm.Script(cfg, {filename: '.hyper.js', displayErrors: true});
+    return new vm.Script(cfg, {filename: '.hyper.js'});
   } catch (_err) {
     const err = _err as {name: string};
     notify(`Error loading config: ${err.name}`, `${err}`, {error: err});

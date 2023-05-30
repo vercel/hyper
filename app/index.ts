@@ -74,15 +74,13 @@ async function installDevExtensions(isDev_: boolean) {
   if (!isDev_) {
     return [];
   }
-  const installer = await import('electron-devtools-installer');
+  const {default: installer, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS} = await import('electron-devtools-installer');
 
-  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'] as const;
+  const extensions = [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS];
   const forceDownload = Boolean(process.env.UPGRADE_EXTENSIONS);
 
   return Promise.all(
-    extensions.map((name) =>
-      installer.default(installer[name], {forceDownload, loadExtensionOptions: {allowFileAccess: true}})
-    )
+    extensions.map((extension) => installer(extension, {forceDownload, loadExtensionOptions: {allowFileAccess: true}}))
   );
 }
 
