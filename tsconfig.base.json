@@ -12,7 +12,7 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ES2021",
+    "target": "ES2022",
     "typeRoots": [
       "./node_modules/@types"
     ]
