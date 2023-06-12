@@ -99,7 +99,7 @@
     "@typescript-eslint/parser": "4.33.0",
     "ava": "5.3.0",
     "babel-loader": "9.1.2",
-    "concurrently": "8.1.0",
+    "concurrently": "8.2.0",
     "copy-webpack-plugin": "11.0.0",
     "cpy-cli": "^4.2.0",
     "cross-env": "7.0.3",
