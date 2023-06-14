@@ -10,7 +10,6 @@ defaults:
     shell: bash
 env:
   NODE_VERSION: 18.x
-  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   build:
     runs-on: ${{matrix.os}}
@@ -21,22 +20,7 @@ jobs:
           - ubuntu-20.04
           - windows-latest
       fail-fast: false
-    env:
-      CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
-      CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
-      WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
-      WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
-      APPLE_ID: ${{ secrets.APPLE_ID }}
-      APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
     steps:
-      - name: Cleanup Environment variables
-        run: |
-          if [ -z "$CSC_LINK" ] ; then unset CSC_LINK ; fi
-          if [ -z "$CSC_KEY_PASSWORD" ] ; then unset CSC_KEY_PASSWORD ; fi
-          if [ -z "$WIN_CSC_LINK" ] ; then unset WIN_CSC_LINK ; fi
-          if [ -z "$WIN_CSC_KEY_PASSWORD" ] ; then unset WIN_CSC_KEY_PASSWORD ; fi
-          if [ -z "$APPLE_ID" ] ; then unset APPLE_ID ; fi
-          if [ -z "$APPLE_APP_SPECIFIC_PASSWORD" ] ; then unset APPLE_APP_SPECIFIC_PASSWORD ; fi
       - name: Checkout
         uses: actions/checkout@v3
       - name: Use Node.js ${{ env.NODE_VERSION }}
@@ -62,7 +46,22 @@ jobs:
           cp build/canary.ico build/icon.ico
           cp build/canary.icns build/icon.icns
       - name: Build
-        run: yarn run dist
+        run: |
+          if [ -z "$CSC_LINK" ] ; then unset CSC_LINK ; fi
+          if [ -z "$CSC_KEY_PASSWORD" ] ; then unset CSC_KEY_PASSWORD ; fi
+          if [ -z "$WIN_CSC_LINK" ] ; then unset WIN_CSC_LINK ; fi
+          if [ -z "$WIN_CSC_KEY_PASSWORD" ] ; then unset WIN_CSC_KEY_PASSWORD ; fi
+          if [ -z "$APPLE_ID" ] ; then unset APPLE_ID ; fi
+          if [ -z "$APPLE_APP_SPECIFIC_PASSWORD" ] ; then unset APPLE_APP_SPECIFIC_PASSWORD ; fi
+          yarn run dist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
+          WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
       - name: Archive Build Artifacts
         uses: LabhanshAgrawal/upload-artifact@v3
         with:
@@ -157,6 +156,8 @@ jobs:
           npm_config_arch=armv7l yarn run v8-snapshot:arch
       - name: Build
         run: yarn run electron-builder -l deb rpm AppImage --${{ matrix.name }} -c electron-builder-linux-ci.json
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Archive Build Artifacts
         uses: LabhanshAgrawal/upload-artifact@v3
         with:
