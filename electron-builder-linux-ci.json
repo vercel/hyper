@@ -1,0 +1,6 @@
+{
+  "$schema": "http://json.schemastore.org/electron-builder",
+  "extends": "electron-builder.json",
+  "afterSign": null,
+  "npmRebuild": false
+}
