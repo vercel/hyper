@@ -17,6 +17,7 @@
       ]
     }
   ],
+  "artifactName": "${productName}-${version}-${arch}.${ext}",
   "linux": {
     "category": "TerminalEmulator",
     "target": [
@@ -27,9 +28,13 @@
     ]
   },
   "win": {
-    "target": [
-      "nsis"
-    ],
+    "target": {
+      "target": "nsis",
+      "arch": [
+        "x64",
+        "arm64"
+      ]
+    },
     "rfc3161TimeStampServer": "http://timestamp.comodoca.com"
   },
   "nsis": {
@@ -46,7 +51,6 @@
         "arm64"
       ]
     },
-    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "category": "public.app-category.developer-tools",
     "entitlements": "./build/mac/entitlements.plist",
     "entitlementsInherit": "./build/mac/entitlements.plist",
