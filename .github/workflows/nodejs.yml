@@ -8,12 +8,14 @@ on:
 defaults:
   run:
     shell: bash
+env:
+  NODE_VERSION: 18.x
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   build:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        node-version: [18.x]
         os:
           - macos-12
           - ubuntu-20.04
@@ -22,14 +24,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: yarn
-          cache-dependency-path: |
-            yarn.lock
-            app/yarn.lock
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      - uses: actions/cache/restore@v3
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - name: Install
         run: yarn install
       - name: Lint and Run Unit Tests
@@ -39,16 +46,23 @@ jobs:
         run: |
           cp build/canary.ico build/icon.ico
           cp build/canary.icns build/icon.icns
-      - name: Build
-        run: if [ ! -z "$CSC_LINK" ] ; then yarn run dist ; else unset CSC_LINK && unset WIN_CSC_LINK && yarn run dist --publish=never ; fi
+      - name: Set Environment variables
+        run: |
+          if [ ! -z "$CSC_LINK" ] ; then echo "CSC_LINK=$CSC_LINK" >> $GITHUB_ENV ; fi
+          if [ ! -z "$CSC_KEY_PASSWORD" ] ; then echo "CSC_KEY_PASSWORD=$CSC_KEY_PASSWORD" >> $GITHUB_ENV ; fi
+          if [ ! -z "$WIN_CSC_LINK" ] ; then echo "WIN_CSC_LINK=$WIN_CSC_LINK" >> $GITHUB_ENV ; fi
+          if [ ! -z "$WIN_CSC_KEY_PASSWORD" ] ; then echo "WIN_CSC_KEY_PASSWORD=$WIN_CSC_KEY_PASSWORD" >> $GITHUB_ENV ; fi
+          if [ ! -z "$APPLE_ID" ] ; then echo "APPLE_ID=$APPLE_ID" >> $GITHUB_ENV ; fi
+          if [ ! -z "$APPLE_APP_SPECIFIC_PASSWORD" ] ; then echo "APPLE_APP_SPECIFIC_PASSWORD=$APPLE_APP_SPECIFIC_PASSWORD" >> $GITHUB_ENV ; fi
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
           WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
           WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+      - name: Build
+        run: yarn run dist
       - name: Archive Build Artifacts
         uses: LabhanshAgrawal/upload-artifact@v3
         with:
@@ -79,3 +93,7 @@ jobs:
         with:
           name: pr_num
           path: ./pr_num.txt
+      - uses: actions/cache/save@v3
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
