@@ -102,7 +102,7 @@ export type uiState = Immutable<{
   updateReleaseUrl: string | null;
   updateVersion: string | null;
   webGLRenderer: boolean;
-  webLinksActivationKey: string;
+  webLinksActivationKey: 'ctrl' | 'alt' | 'meta' | 'shift' | '';
 }>;
 
 export type session = {
@@ -381,7 +381,7 @@ export type TermProps = {
   uiFontFamily: string;
   url: string | null;
   webGLRenderer: boolean;
-  webLinksActivationKey: string;
+  webLinksActivationKey: 'ctrl' | 'alt' | 'meta' | 'shift' | '';
   ref_: (uid: string, term: Term | null) => void;
 } & extensionProps;
 

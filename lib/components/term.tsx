@@ -4,6 +4,7 @@ import {FitAddon} from 'xterm-addon-fit';
 import {WebLinksAddon} from 'xterm-addon-web-links';
 import {SearchAddon, ISearchDecorationOptions} from 'xterm-addon-search';
 import {WebglAddon} from 'xterm-addon-webgl';
+import {CanvasAddon} from 'xterm-addon-canvas';
 import {LigaturesAddon} from 'xterm-addon-ligatures';
 import {Unicode11Addon} from 'xterm-addon-unicode11';
 import {clipboard, shell} from 'electron';
@@ -12,7 +13,7 @@ import terms from '../terms';
 import processClipboard from '../utils/paste';
 import _SearchBox from './searchBox';
 import {TermProps} from '../hyper';
-import {ObjectTypedKeys} from '../utils/object';
+import {pickBy, isEqual} from 'lodash';
 import {decorate} from '../utils/plugins';
 import 'xterm/css/xterm.css';
 
@@ -57,14 +58,13 @@ const getTermOptions = (props: TermProps): ITerminalOptions => {
     letterSpacing: props.letterSpacing,
     allowTransparency: needTransparency,
     macOptionClickForcesSelection: props.macOptionSelectionMode === 'force',
-    bellStyle: props.bell === 'SOUND' ? 'sound' : 'none',
     windowsMode: isWindows,
     theme: {
       foreground: props.foregroundColor,
       background: backgroundColor,
       cursor: props.cursorColor,
       cursorAccent: props.cursorAccentColor,
-      selection: props.selectionColor,
+      selectionBackground: props.selectionColor,
       black: props.colors.black,
       red: props.colors.red,
       green: props.colors.green,
@@ -83,7 +83,8 @@ const getTermOptions = (props: TermProps): ITerminalOptions => {
       brightWhite: props.colors.lightWhite
     },
     screenReaderMode: props.screenReaderMode,
-    overviewRulerWidth: 20
+    overviewRulerWidth: 20,
+    allowProposedApi: true
   };
 };
 
@@ -107,7 +108,8 @@ export default class Term extends React.PureComponent<
   termWrapperRef: HTMLElement | null;
   termOptions: ITerminalOptions;
   disposableListeners: IDisposable[];
-  termDefaultBellSound: string | null;
+  defaultBellSound: HTMLAudioElement | null;
+  bellSound: HTMLAudioElement | null;
   fitAddon: FitAddon;
   searchAddon: SearchAddon;
   static rendererTypes: Record<string, string>;
@@ -131,7 +133,8 @@ export default class Term extends React.PureComponent<
     this.termWrapperRef = null;
     this.termOptions = {};
     this.disposableListeners = [];
-    this.termDefaultBellSound = null;
+    this.defaultBellSound = null;
+    this.bellSound = null;
     this.fitAddon = new FitAddon();
     this.searchAddon = new SearchAddon();
     this.searchDecorations = {
@@ -158,7 +161,14 @@ export default class Term extends React.PureComponent<
 
     this.termOptions = getTermOptions(props);
     this.term = props.term || new Terminal(this.termOptions);
-    this.termDefaultBellSound = this.term.getOption('bellSound');
+    this.defaultBellSound = new Audio(
+      // Source: https://freesound.org/people/altemark/sounds/45759/
+      // This sound is released under the Creative Commons Attribution 3.0 Unported
+      // (CC BY 3.0) license. It was created by 'altemark'. No modifications have been
+      // made, apart from the conversion to base64.
+      'data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjMyLjEwNAAAAAAAAAAAAAAA//tQxAADB8AhSmxhIIEVCSiJrDCQBTcu3UrAIwUdkRgQbFAZC1CQEwTJ9mjRvBA4UOLD8nKVOWfh+UlK3z/177OXrfOdKl7pyn3Xf//WreyTRUoAWgBgkOAGbZHBgG1OF6zM82DWbZaUmMBptgQhGjsyYqc9ae9XFz280948NMBWInljyzsNRFLPWdnZGWrddDsjK1unuSrVN9jJsK8KuQtQCtMBjCEtImISdNKJOopIpBFpNSMbIHCSRpRR5iakjTiyzLhchUUBwCgyKiweBv/7UsQbg8isVNoMPMjAAAA0gAAABEVFGmgqK////9bP/6XCykxBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
+    );
+    this.setBellSound(props.bell, props.bellSound);
 
     // The parent element for the terminal is attached and removed manually so
     // that we can preserve it across mounts and unmounts of the component
@@ -186,9 +196,9 @@ export default class Term extends React.PureComponent<
       }
       Term.reportRenderer(props.uid, useWebGL ? 'WebGL' : 'Canvas');
 
-      const shallActivateWebLink = (event: Record<string, any> | undefined): boolean => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return event && (!props.webLinksActivationKey || event[`${props.webLinksActivationKey}Key`]);
+      const shallActivateWebLink = (event: MouseEvent): boolean => {
+        if (!event) return false;
+        return props.webLinksActivationKey ? event[`${props.webLinksActivationKey}Key`] : true;
       };
 
       // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -196,25 +206,17 @@ export default class Term extends React.PureComponent<
       this.term.loadAddon(this.fitAddon);
       this.term.loadAddon(this.searchAddon);
       this.term.loadAddon(
-        new WebLinksAddon(
-          (event: MouseEvent | undefined, uri: string) => {
-            if (shallActivateWebLink(event)) void shell.openExternal(uri);
-          },
-          {
-            // prevent default electron link handling to allow selection, e.g. via double-click
-            willLinkActivate: (event: MouseEvent | undefined) => {
-              event?.preventDefault();
-              return shallActivateWebLink(event);
-            },
-            priority: Date.now()
-          }
-        )
+        new WebLinksAddon((event, uri) => {
+          if (shallActivateWebLink(event)) void shell.openExternal(uri);
+        })
       );
       this.term.open(this.termRef);
       if (useWebGL) {
         this.term.loadAddon(new WebglAddon());
+      } else {
+        this.term.loadAddon(new CanvasAddon());
       }
-      if (props.disableLigatures !== true && !useWebGL) {
+      if (props.disableLigatures !== true) {
         this.term.loadAddon(new LigaturesAddon());
       }
       this.term.loadAddon(new Unicode11Addon());
@@ -251,6 +253,10 @@ export default class Term extends React.PureComponent<
     if (props.onData) {
       this.disposableListeners.push(this.term.onData(props.onData));
     }
+
+    this.term.onBell(() => {
+      this.ringBell();
+    });
 
     if (props.onResize) {
       this.disposableListeners.push(
@@ -393,6 +399,18 @@ export default class Term extends React.PureComponent<
     return !e.catched;
   }
 
+  setBellSound(bell: string | null, sound: string | null) {
+    if (bell?.toUpperCase() === 'SOUND') {
+      this.bellSound = sound ? new Audio(sound) : this.defaultBellSound;
+    } else {
+      this.bellSound = null;
+    }
+  }
+
+  ringBell() {
+    void this.bellSound?.play();
+  }
+
   componentDidUpdate(prevProps: TermProps) {
     if (!prevProps.cleared && this.props.cleared) {
       this.clear();
@@ -400,40 +418,19 @@ export default class Term extends React.PureComponent<
 
     const nextTermOptions = getTermOptions(this.props);
 
-    // Use bellSound in nextProps if it exists
-    // otherwise use the default sound found in xterm.
-    nextTermOptions.bellSound = this.props.bellSound || this.termDefaultBellSound!;
+    if (prevProps.bell !== this.props.bell || prevProps.bellSound !== this.props.bellSound) {
+      this.setBellSound(this.props.bell, this.props.bellSound);
+    }
 
     if (prevProps.search && !this.props.search) {
       this.closeSearchBox();
     }
 
     // Update only options that have changed.
-    ObjectTypedKeys(nextTermOptions)
-      .filter((option) => option !== 'theme' && nextTermOptions[option] !== this.termOptions[option])
-      .forEach((option) => {
-        try {
-          this.term.setOption(option, nextTermOptions[option]);
-        } catch (_e) {
-          const e = _e as {message: string};
-          if (/The webgl renderer only works with the webgl char atlas/i.test(e.message)) {
-            // Ignore this because the char atlas will also be changed
-          } else {
-            throw e;
-          }
-        }
-      });
-
-    // Do we need to update theme?
-    const shouldUpdateTheme =
-      !this.termOptions.theme ||
-      nextTermOptions.rendererType !== this.termOptions.rendererType ||
-      ObjectTypedKeys(nextTermOptions.theme!).some(
-        (option) => nextTermOptions.theme![option] !== this.termOptions.theme![option]
-      );
-    if (shouldUpdateTheme) {
-      this.term.setOption('theme', nextTermOptions.theme);
-    }
+    this.term.options = pickBy(
+      nextTermOptions,
+      (value, key) => !isEqual(this.termOptions[key as keyof ITerminalOptions], value)
+    );
 
     this.termOptions = nextTermOptions;
 
