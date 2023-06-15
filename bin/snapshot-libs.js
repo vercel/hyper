@@ -23,9 +23,9 @@ if (false) {
   require('mousetrap');
   require('open');
   require('xterm-addon-fit');
-  require('xterm-addon-ligatures');
   require('xterm-addon-search');
   require('xterm-addon-web-links');
   require('xterm-addon-webgl');
+  require('xterm-addon-canvas');
   require('xterm');
 }
