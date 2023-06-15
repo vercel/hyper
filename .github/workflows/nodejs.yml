@@ -38,6 +38,8 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install
         run: yarn install
+        env:
+          npm_config_node_gyp: ${{ github.workspace }}${{ runner.os == 'Windows' && '\node_modules\node-gyp\bin\node-gyp.js' || '/node_modules/node-gyp/bin/node-gyp.js' }}
       - name: Lint and Run Unit Tests
         run: yarn run test
       - name: Getting Build Icon
