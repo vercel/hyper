@@ -22,6 +22,9 @@ import {
 } from '../constants/sessions';
 import {UPDATE_AVAILABLE} from '../constants/updater';
 import {uiState, Mutable, IUiReducer} from '../hyper';
+import {release} from 'os';
+
+const isWindows = ['Windows', 'Win16', 'Win32', 'WinCE'].includes(navigator.platform) || process.platform === 'win32';
 
 const allowedCursorShapes = new Set(['BEAM', 'BLOCK', 'UNDERLINE']);
 const allowedCursorBlinkValues = new Set([true, false]);
@@ -267,6 +270,15 @@ const reducer: IUiReducer = (state = initial, action) => {
 
             if (config.screenReaderMode !== undefined) {
               ret.screenReaderMode = config.screenReaderMode;
+            }
+
+            const buildNumber = parseInt(release().split('.').at(-1) || '0', 10);
+            if (isWindows && !Number.isNaN(buildNumber) && buildNumber > 0) {
+              const useConpty = typeof config.useConpty === 'boolean' ? config.useConpty : buildNumber >= 18309;
+              ret.windowsPty = {
+                backend: useConpty ? 'conpty' : 'winpty',
+                buildNumber
+              };
             }
 
             ret._lastUpdate = now;
