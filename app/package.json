@@ -34,8 +34,7 @@
     "semver": "7.5.1",
     "shell-env": "3.0.1",
     "sudo-prompt": "^9.2.1",
-    "uuid": "9.0.0",
-    "xterm-addon-image": "0.4.1"
+    "uuid": "9.0.0"
   },
   "optionalDependencies": {
     "native-reg": "1.1.1"

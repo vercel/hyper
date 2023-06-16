@@ -219,9 +219,11 @@ export default class Term extends React.PureComponent<
       } else {
         this.term.loadAddon(new CanvasAddon());
       }
+
       if (props.disableLigatures !== true) {
         this.term.loadAddon(new LigaturesAddon());
       }
+
       this.term.loadAddon(new Unicode11Addon());
       this.term.unicode.activeVersion = '11';
 
