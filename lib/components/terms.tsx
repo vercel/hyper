@@ -119,6 +119,7 @@ export default class Terms extends React.Component<TermsProps> {
             macOptionSelectionMode: this.props.macOptionSelectionMode,
             disableLigatures: this.props.disableLigatures,
             screenReaderMode: this.props.screenReaderMode,
+            windowsPty: this.props.windowsPty,
             parentProps: this.props
           });
 

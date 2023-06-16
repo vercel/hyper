@@ -38,7 +38,7 @@ export type ITermState = Immutable<{
 }>;
 
 export type cursorShapes = 'BEAM' | 'UNDERLINE' | 'BLOCK';
-import {FontWeight, Terminal} from 'xterm';
+import {FontWeight, IWindowsPty, Terminal} from 'xterm';
 import {ColorMap} from './config';
 
 export type uiState = Immutable<{
@@ -103,6 +103,7 @@ export type uiState = Immutable<{
   updateVersion: string | null;
   webGLRenderer: boolean;
   webLinksActivationKey: 'ctrl' | 'alt' | 'meta' | 'shift' | '';
+  windowsPty?: IWindowsPty;
 }>;
 
 export type session = {
@@ -308,6 +309,7 @@ export type TermGroupOwnProps = {
   | 'uiFontFamily'
   | 'webGLRenderer'
   | 'webLinksActivationKey'
+  | 'windowsPty'
 >;
 
 import {TermGroupConnectedProps} from './components/term-group';
@@ -382,6 +384,7 @@ export type TermProps = {
   url: string | null;
   webGLRenderer: boolean;
   webLinksActivationKey: 'ctrl' | 'alt' | 'meta' | 'shift' | '';
+  windowsPty?: IWindowsPty;
   ref_: (uid: string, term: Term | null) => void;
 } & extensionProps;
 

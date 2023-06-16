@@ -106,6 +106,7 @@ class TermGroup_ extends React.PureComponent<TermGroupProps> {
       macOptionSelectionMode: this.props.macOptionSelectionMode,
       disableLigatures: this.props.disableLigatures,
       screenReaderMode: this.props.screenReaderMode,
+      windowsPty: this.props.windowsPty,
       uid
     });
 

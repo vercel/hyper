@@ -19,7 +19,7 @@ import 'xterm/css/xterm.css';
 
 const SearchBox = decorate(_SearchBox, 'SearchBox');
 
-const isWindows = ['Windows', 'Win16', 'Win32', 'WinCE'].includes(navigator.platform);
+const isWindows = ['Windows', 'Win16', 'Win32', 'WinCE'].includes(navigator.platform) || process.platform === 'win32';
 
 // map old hterm constants to xterm.js
 const CURSOR_STYLES = {
@@ -59,6 +59,7 @@ const getTermOptions = (props: TermProps): ITerminalOptions => {
     allowTransparency: needTransparency,
     macOptionClickForcesSelection: props.macOptionSelectionMode === 'force',
     windowsMode: isWindows,
+    ...(isWindows && props.windowsPty && {windowsPty: props.windowsPty}),
     theme: {
       foreground: props.foregroundColor,
       background: backgroundColor,
