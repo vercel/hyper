@@ -202,6 +202,10 @@
                     "description": "color of the text",
                     "type": "string"
                 },
+                "imageSupport": {
+                    "description": "Whether to enable Sixel and iTerm2 inline image protocol support or not.",
+                    "type": "boolean"
+                },
                 "letterSpacing": {
                     "description": "letter spacing as a relative unit",
                     "type": "number"
@@ -355,6 +359,7 @@
                 "fontWeight",
                 "fontWeightBold",
                 "foregroundColor",
+                "imageSupport",
                 "letterSpacing",
                 "lineHeight",
                 "macOptionSelectionMode",

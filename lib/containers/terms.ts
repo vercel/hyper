@@ -54,7 +54,8 @@ const mapStateToProps = (state: HyperState) => {
     macOptionSelectionMode: state.ui.macOptionSelectionMode,
     disableLigatures: state.ui.disableLigatures,
     screenReaderMode: state.ui.screenReaderMode,
-    windowsPty: state.ui.windowsPty
+    windowsPty: state.ui.windowsPty,
+    imageSupport: state.ui.imageSupport
   };
 };
 

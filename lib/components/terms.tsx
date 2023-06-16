@@ -120,6 +120,7 @@ export default class Terms extends React.Component<TermsProps> {
             disableLigatures: this.props.disableLigatures,
             screenReaderMode: this.props.screenReaderMode,
             windowsPty: this.props.windowsPty,
+            imageSupport: this.props.imageSupport,
             parentProps: this.props
           });
 

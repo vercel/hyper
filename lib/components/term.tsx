@@ -16,6 +16,7 @@ import {TermProps} from '../hyper';
 import {pickBy, isEqual} from 'lodash';
 import {decorate} from '../utils/plugins';
 import 'xterm/css/xterm.css';
+import {ImageAddon} from 'xterm-addon-image';
 
 const SearchBox = decorate(_SearchBox, 'SearchBox');
 
@@ -212,16 +213,23 @@ export default class Term extends React.PureComponent<
         })
       );
       this.term.open(this.termRef);
+
       if (useWebGL) {
         this.term.loadAddon(new WebglAddon());
       } else {
         this.term.loadAddon(new CanvasAddon());
       }
+
       if (props.disableLigatures !== true) {
         this.term.loadAddon(new LigaturesAddon());
       }
+
       this.term.loadAddon(new Unicode11Addon());
       this.term.unicode.activeVersion = '11';
+
+      if (props.imageSupport) {
+        this.term.loadAddon(new ImageAddon());
+      }
     } else {
       // get the cached plugins
       this.fitAddon = props.fitAddon!;
