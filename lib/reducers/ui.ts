@@ -53,6 +53,7 @@ const initial: uiState = Immutable<Mutable<uiState>>({
   fontSmoothingOverride: 'antialiased',
   fontWeight: 'normal',
   fontWeightBold: 'bold',
+  imageSupport: true,
   lineHeight: 1,
   letterSpacing: 0,
   css: '',
@@ -279,6 +280,10 @@ const reducer: IUiReducer = (state = initial, action) => {
                 backend: useConpty ? 'conpty' : 'winpty',
                 buildNumber
               };
+            }
+
+            if (config.imageSupport !== undefined) {
+              ret.imageSupport = config.imageSupport;
             }
 
             ret._lastUpdate = now;

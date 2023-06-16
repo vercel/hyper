@@ -68,6 +68,7 @@ export type uiState = Immutable<{
   fontWeightBold: FontWeight;
   foregroundColor: string;
   fullScreen: boolean;
+  imageSupport: boolean;
   letterSpacing: number;
   lineHeight: number;
   macOptionSelectionMode: string;
@@ -310,6 +311,7 @@ export type TermGroupOwnProps = {
   | 'webGLRenderer'
   | 'webLinksActivationKey'
   | 'windowsPty'
+  | 'imageSupport'
 >;
 
 import {TermGroupConnectedProps} from './components/term-group';
@@ -357,6 +359,7 @@ export type TermProps = {
   fontWeight: FontWeight;
   fontWeightBold: FontWeight;
   foregroundColor: string;
+  imageSupport: boolean;
   isTermActive: boolean;
   letterSpacing: number;
   lineHeight: number;

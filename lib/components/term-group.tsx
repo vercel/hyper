@@ -107,6 +107,7 @@ class TermGroup_ extends React.PureComponent<TermGroupProps> {
       disableLigatures: this.props.disableLigatures,
       screenReaderMode: this.props.screenReaderMode,
       windowsPty: this.props.windowsPty,
+      imageSupport: this.props.imageSupport,
       uid
     });
 

@@ -213,7 +213,7 @@ export default class Term extends React.PureComponent<
         })
       );
       this.term.open(this.termRef);
-      this.term.loadAddon(new ImageAddon());
+
       if (useWebGL) {
         this.term.loadAddon(new WebglAddon());
       } else {
@@ -224,6 +224,10 @@ export default class Term extends React.PureComponent<
       }
       this.term.loadAddon(new Unicode11Addon());
       this.term.unicode.activeVersion = '11';
+
+      if (props.imageSupport) {
+        this.term.loadAddon(new ImageAddon());
+      }
     } else {
       // get the cached plugins
       this.fitAddon = props.fitAddon!;

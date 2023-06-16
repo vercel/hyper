@@ -86,6 +86,10 @@ export type configOptions = {
   fontWeightBold: FontWeight;
   /** color of the text */
   foregroundColor: string;
+  /**
+   * Whether to enable Sixel and iTerm2 inline image protocol support or not.
+   */
+  imageSupport: boolean;
   /** letter spacing as a relative unit */
   letterSpacing: number;
   /** line height as a relative unit */

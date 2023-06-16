@@ -61,7 +61,8 @@
     "disableAutoUpdates": false,
     "autoUpdatePlugins": true,
     "preserveCWD": true,
-    "screenReaderMode": false
+    "screenReaderMode": false,
+    "imageSupport": true
   },
   "plugins": [],
   "localPlugins": [],
