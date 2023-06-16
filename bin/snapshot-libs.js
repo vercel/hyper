@@ -16,7 +16,6 @@ require('redux');
 require('reselect');
 require('seamless-immutable');
 require('stylis');
-require('xterm-addon-image');
 require('xterm-addon-unicode11');
 // eslint-disable-next-line no-constant-condition
 if (false) {
@@ -24,6 +23,7 @@ if (false) {
   require('mousetrap');
   require('open');
   require('xterm-addon-fit');
+  require('xterm-addon-image');
   require('xterm-addon-search');
   require('xterm-addon-web-links');
   require('xterm-addon-webgl');
