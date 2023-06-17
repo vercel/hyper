@@ -76,6 +76,7 @@ jobs:
             dist/*.AppImage
             dist/*.deb
             dist/*.rpm
+            dist/*.pacman
             dist/*.exe
       - name: Run E2E Tests
         if: runner.os != 'Linux'
@@ -173,3 +174,4 @@ jobs:
             dist/*.AppImage
             dist/*.deb
             dist/*.rpm
+            dist/*.pacman
