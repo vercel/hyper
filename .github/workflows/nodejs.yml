@@ -40,6 +40,9 @@ jobs:
         run: yarn install
         env:
           npm_config_node_gyp: ${{ github.workspace }}${{ runner.os == 'Windows' && '\node_modules\node-gyp\bin\node-gyp.js' || '/node_modules/node-gyp/bin/node-gyp.js' }}
+      - name: Install libarchive-tools
+        if: runner.os == 'Linux'
+        run: sudo apt install libarchive-tools
       - name: Lint and Run Unit Tests
         run: yarn run test
       - name: Getting Build Icon
@@ -73,6 +76,7 @@ jobs:
             dist/*.AppImage
             dist/*.deb
             dist/*.rpm
+            dist/*.pacman
             dist/*.exe
       - name: Run E2E Tests
         if: runner.os != 'Linux'
@@ -128,7 +132,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Install
-        run: yarn install
+        run: |
+          yarn install
+          sudo apt install libarchive-tools
       - name: Compile
         run: yarn run build
       - name: rebuild node-pty
@@ -157,7 +163,7 @@ jobs:
           sudo apt install -y libglib2.0-0:i386 libexpat1:i386
           npm_config_arch=armv7l yarn run v8-snapshot:arch
       - name: Build
-        run: yarn run electron-builder -l deb rpm AppImage --${{ matrix.name }} -c electron-builder-linux-ci.json
+        run: yarn run electron-builder -l deb rpm AppImage pacman --${{ matrix.name }} -c electron-builder-linux-ci.json
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Archive Build Artifacts
@@ -168,3 +174,4 @@ jobs:
             dist/*.AppImage
             dist/*.deb
             dist/*.rpm
+            dist/*.pacman
