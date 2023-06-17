@@ -40,6 +40,9 @@ jobs:
         run: yarn install
         env:
           npm_config_node_gyp: ${{ github.workspace }}${{ runner.os == 'Windows' && '\node_modules\node-gyp\bin\node-gyp.js' || '/node_modules/node-gyp/bin/node-gyp.js' }}
+      - name: Install libarchive-tools
+        if: runner.os == 'Linux'
+        run: sudo apt install libarchive-tools
       - name: Lint and Run Unit Tests
         run: yarn run test
       - name: Getting Build Icon
@@ -128,7 +131,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Install
-        run: yarn install
+        run: |
+          yarn install
+          sudo apt install libarchive-tools
       - name: Compile
         run: yarn run build
       - name: rebuild node-pty
