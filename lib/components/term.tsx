@@ -215,12 +215,18 @@ export default class Term extends React.PureComponent<
       this.term.open(this.termRef);
 
       if (useWebGL) {
-        this.term.loadAddon(new WebglAddon());
+        const webglAddon = new WebglAddon();
+        this.term.loadAddon(webglAddon);
+        webglAddon.onContextLoss(() => {
+          console.warn('WebGL context lost. Falling back to canvas-based rendering.');
+          webglAddon.dispose();
+          this.term.loadAddon(new CanvasAddon());
+        });
       } else {
         this.term.loadAddon(new CanvasAddon());
       }
 
-      if (props.disableLigatures !== true) {
+      if (props.disableLigatures !== true && !useWebGL) {
         this.term.loadAddon(new LigaturesAddon());
       }
 
