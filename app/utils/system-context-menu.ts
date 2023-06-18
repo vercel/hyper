@@ -9,7 +9,7 @@ const regKeys = [
 ];
 const regParts = [
   {key: 'command', name: '', value: `${appPath} "%V"`},
-  {name: '', value: 'Open Hyper here'},
+  {name: '', value: 'Open &Hyper here'},
   {name: 'Icon', value: `${appPath}`}
 ];
 
