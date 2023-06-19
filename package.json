@@ -120,7 +120,7 @@
     "eslint-plugin-react": "7.32.2",
     "husky": "8.0.3",
     "inquirer": "9.2.7",
-    "node-addon-api": "6.1.0",
+    "node-addon-api": "7.0.0",
     "null-loader": "4.0.1",
     "parse-url": "8.1.0",
     "playwright": "1.35.0",
