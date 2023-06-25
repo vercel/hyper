@@ -30,7 +30,7 @@ const fileName =
 function memoize<T extends (...args: any[]) => any>(fn: T): T {
   let hasResult = false;
   let result: any;
-  return ((...args: any[]) => {
+  return ((...args: Parameters<T>) => {
     if (!hasResult) {
       result = fn(...args);
       hasResult = true;

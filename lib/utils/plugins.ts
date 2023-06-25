@@ -9,7 +9,7 @@ import {basename} from 'path';
 // patching Module._load
 // so plugins can `require` them without needing their own version
 // https://github.com/vercel/hyper/issues/619
-import React, {PureComponent} from 'react';
+import React, {ComponentType, PureComponent} from 'react';
 import ReactDOM from 'react-dom';
 import Notification from '../components/notification';
 import notify from './notify';
@@ -24,9 +24,10 @@ import {
   TabsProps,
   TermGroupOwnProps,
   TermProps,
-  Assignable
+  Assignable,
+  HyperActions
 } from '../hyper';
-import {Middleware} from 'redux';
+import {Dispatch, Middleware} from 'redux';
 import {ObjectTypedKeys} from './object';
 import IPCChildProcess from './ipc-child-process';
 import ChildProcess from 'child_process';
@@ -456,10 +457,10 @@ export function getTabProps<T extends Assignable<TabProps, T>>(tab: any, parentP
 export function connect<stateProps extends {}, dispatchProps>(
   stateFn: (state: HyperState) => stateProps,
   dispatchFn: (dispatch: HyperDispatch) => dispatchProps,
-  c: any,
+  c: null | undefined,
   d: Options = {}
 ) {
-  return (Class: any, name: keyof typeof connectors) => {
+  return (Class: ComponentType<any>, name: keyof typeof connectors) => {
     return reduxConnect<stateProps, dispatchProps, any, HyperState>(
       (state) => {
         let ret = stateFn(state);
@@ -570,7 +571,7 @@ export function decorateSessionsReducer(fn: ISessionReducer) {
 }
 
 // redux middleware generator
-export const middleware: Middleware = (store) => (next) => (action) => {
+export const middleware: Middleware<{}, HyperState, Dispatch<HyperActions>> = (store) => (next) => (action) => {
   const nextMiddleware = (remaining: Middleware[]) => (action_: any) =>
     remaining.length ? remaining[0](store)(nextMiddleware(remaining.slice(1)))(action_) : next(action_);
   nextMiddleware(middlewares)(action);

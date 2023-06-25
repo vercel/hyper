@@ -1,3 +1,5 @@
+import {Dispatch, Middleware} from 'redux';
+import {HyperActions, HyperState} from '../hyper';
 /**
  * Simple redux middleware that executes
  * the `effect` field if provided in an action
@@ -6,8 +8,7 @@
  * defer or add to existing side effects at will
  * as the result of an action being triggered.
  */
-import {Middleware} from 'redux';
-const effectsMiddleware: Middleware = () => (next) => (action) => {
+const effectsMiddleware: Middleware<{}, HyperState, Dispatch<HyperActions>> = () => (next) => (action) => {
   const ret = next(action);
   if (action.effect) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
