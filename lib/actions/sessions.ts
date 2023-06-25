@@ -17,7 +17,15 @@ import {
 } from '../constants/sessions';
 import {HyperState, session, HyperDispatch, HyperActions} from '../hyper';
 
-export function addSession({uid, shell, pid, cols, rows, splitDirection, activeUid}: session) {
+export function addSession({
+  uid,
+  shell,
+  pid,
+  cols,
+  rows,
+  splitDirection,
+  activeUid
+}: Pick<session, 'uid' | 'shell' | 'pid' | 'cols' | 'rows' | 'splitDirection' | 'activeUid'>) {
   return (dispatch: HyperDispatch, getState: () => HyperState) => {
     const {sessions} = getState();
     const now = Date.now();

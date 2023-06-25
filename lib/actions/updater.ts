@@ -6,7 +6,7 @@ export function installUpdate(): HyperActions {
   return {
     type: UPDATE_INSTALL,
     effect: () => {
-      rpc.emit('quit and install', null);
+      rpc.emit('quit and install');
     }
   };
 }
