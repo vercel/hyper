@@ -126,10 +126,7 @@ export function newWindow(
 
   function createSession(extraOptions: any = {}) {
     const uid = uuidv4();
-    const extraOptionsFiltered: any = {};
-    Object.keys(extraOptions).forEach((key) => {
-      if (extraOptions[key] !== undefined) extraOptionsFiltered[key] = extraOptions[key];
-    });
+    const extraOptionsFiltered: any = Object.fromEntries(Object.entries(extraOptions));
 
     let cwd = '';
     if (cfg.preserveCWD === undefined || cfg.preserveCWD) {

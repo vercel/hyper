@@ -58,7 +58,7 @@ const SearchButton = ({
             margin: 4px 0px;
             height: 18px;
             width: 18px;
-            border-radius: 2px;
+            border-radius: 3px;
           }
 
           .search-button:focus {
@@ -207,7 +207,7 @@ class SearchBox extends React.PureComponent<SearchBoxProps> {
             .search-container {
               background-color: ${backgroundColor};
               border: 1px solid ${borderColor};
-              border-radius: 2px;
+              border-radius: 8px;
               position: absolute;
               right: 13px;
               top: 4px;
@@ -215,6 +215,7 @@ class SearchBox extends React.PureComponent<SearchBoxProps> {
               padding: 4px;
               font-family: ${font};
               font-size: 12px;
+              box-shadow: 0 40px 80px 0 #000;
             }
 
             .search-input {
@@ -236,11 +237,12 @@ class SearchBox extends React.PureComponent<SearchBoxProps> {
 
             .search-box {
               border: none;
-              border-radius: 2px;
-              outline: ${borderColor} solid 1px;
+              border-radius: 3px;
+              outline: ${borderColor} 1px solid;
               background-color: ${backgroundColor};
               color: ${foregroundColor};
               padding: 0px 4px;
+              padding-left: 8px;
             }
 
             .search-input::placeholder {

@@ -1,5 +1,8 @@
 import electron from 'electron';
 
+/**
+ * Check if target position falls within workArea of each filtered display
+ */
 export function positionIsValid(position: [number, number]) {
   const displays = electron.screen.getAllDisplays();
   const [x, y] = position;

@@ -4,38 +4,42 @@ const generatePrefixedCommand = (command: string, shortcuts: string[]) => {
   for (let i = 1; i <= 9; i++) {
     // 9 is a special number because it means 'last'
     const index = i === 9 ? 'last' : i;
-    const prefixedShortcuts = shortcuts.map((shortcut) => `${shortcut}+${i}`);
-    result[`${baseCmd}:${index}`] = prefixedShortcuts;
+    result[`${baseCmd}:${index}`] = [];
+    for (let j = 0; j < shortcuts.length; j++) {
+      result[`${baseCmd}:${index}`].push(`${shortcuts[j]}+${i}`);
+    }
   }
 
   return result;
 };
 
 export default (config: Record<string, string[] | string>) => {
-  return Object.keys(config).reduce((keymap: Record<string, string[]>, command: string) => {
+  const keymap: Record<string, string[]> = {};
+
+  for (const command in config) {
     if (!command) {
-      return keymap;
+      continue;
     }
-    // We can have different keys for a same command.
+
     const _shortcuts = config[command];
     const shortcuts = Array.isArray(_shortcuts) ? _shortcuts : [_shortcuts];
     const fixedShortcuts: string[] = [];
-    shortcuts.forEach((shortcut) => {
+
+    for (const shortcut of shortcuts) {
       let newShortcut = shortcut;
-      if (newShortcut.indexOf('cmd') !== -1) {
-        // Mousetrap use `command` and not `cmd`
+      if (newShortcut.includes('cmd')) {
         console.warn('Your config use deprecated `cmd` in key combination. Please use `command` instead.');
         newShortcut = newShortcut.replace('cmd', 'command');
       }
       fixedShortcuts.push(newShortcut);
-    });
-
-    if (command.endsWith(':prefix')) {
-      return Object.assign(keymap, generatePrefixedCommand(command, fixedShortcuts));
     }
 
-    keymap[command] = fixedShortcuts;
+    if (command.endsWith(':prefix')) {
+      Object.assign(keymap, generatePrefixedCommand(command, fixedShortcuts));
+    } else {
+      keymap[command] = fixedShortcuts;
+    }
+  }
 
-    return keymap;
-  }, {});
+  return keymap;
 };
