@@ -206,8 +206,8 @@ export function newWindow(
       session.resize({cols, rows});
     }
   });
-  rpc.on('data', ({uid, data, escaped}: {uid: string; data: string; escaped: boolean}) => {
-    const session = sessions.get(uid);
+  rpc.on('data', ({uid, data, escaped}) => {
+    const session = uid && sessions.get(uid);
     if (session) {
       if (escaped) {
         const escapedData = session.shell?.endsWith('cmd.exe')
@@ -255,10 +255,10 @@ export function newWindow(
   });
   // pass on the full screen events from the window to react
   rpc.win.on('enter-full-screen', () => {
-    rpc.emit('enter full screen', {});
+    rpc.emit('enter full screen');
   });
   rpc.win.on('leave-full-screen', () => {
-    rpc.emit('leave full screen', {});
+    rpc.emit('leave full screen');
   });
   const deleteSessions = () => {
     sessions.forEach((session, key) => {
@@ -280,9 +280,9 @@ export function newWindow(
     const protocol = typeof url === 'string' && new URL(url).protocol;
     if (protocol === 'file:') {
       const path = fileURLToPath(url);
-      return {data: path, escaped: true};
+      return {uid: null, data: path, escaped: true};
     } else if (protocol === 'http:' || protocol === 'https:') {
-      return {data: url};
+      return {uid: null, data: url};
     }
   };
 

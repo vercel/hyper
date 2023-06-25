@@ -1,13 +1,17 @@
 import {EventEmitter} from 'events';
 import {IpcRenderer, IpcRendererEvent} from 'electron';
 import electron from 'electron';
+import {FilterNever, MainEvents, RendererEvents, TypedEmitter} from '../../common';
+
 export default class Client {
-  emitter: EventEmitter;
+  emitter: TypedEmitter<RendererEvents>;
   ipc: IpcRenderer;
   id!: string;
+
   constructor() {
     this.emitter = new EventEmitter();
     this.ipc = electron.ipcRenderer;
+    this.emit = this.emit.bind(this);
     if (window.__rpcId) {
       setTimeout(() => {
         this.id = window.__rpcId;
@@ -27,35 +31,43 @@ export default class Client {
     }
   }
 
-  ipcListener = (event: any, {ch, data}: {ch: string; data: any}) => {
-    this.emitter.emit(ch, data);
+  ipcListener = <U extends keyof RendererEvents>(
+    event: IpcRendererEvent,
+    {ch, data}: {ch: U; data: RendererEvents[U]}
+  ) => this.emitter.emit(ch, data);
+
+  on = <U extends keyof RendererEvents>(ev: U, fn: (arg0: RendererEvents[U]) => void) => {
+    this.emitter.on(ev, fn);
+    return this;
   };
 
-  on(ev: string, fn: (...args: any[]) => void) {
-    this.emitter.on(ev, fn);
-  }
-
-  once(ev: string, fn: (...args: any[]) => void) {
+  once = <U extends keyof RendererEvents>(ev: U, fn: (arg0: RendererEvents[U]) => void) => {
     this.emitter.once(ev, fn);
-  }
+    return this;
+  };
 
-  emit(ev: string, data: any) {
+  emit<U extends Exclude<keyof MainEvents, FilterNever<MainEvents>>>(ch: U): boolean;
+  emit<U extends FilterNever<MainEvents>>(ch: U, data: MainEvents[U]): boolean;
+  emit<U extends keyof MainEvents>(ev: U, data?: MainEvents[U]) {
     if (!this.id) {
       throw new Error('Not ready');
     }
     this.ipc.send(this.id, {ev, data});
+    return true;
   }
 
-  removeListener(ev: string, fn: (...args: any[]) => void) {
+  removeListener = <U extends keyof RendererEvents>(ev: U, fn: (arg0: RendererEvents[U]) => void) => {
     this.emitter.removeListener(ev, fn);
-  }
+    return this;
+  };
 
-  removeAllListeners() {
+  removeAllListeners = () => {
     this.emitter.removeAllListeners();
-  }
+    return this;
+  };
 
-  destroy() {
+  destroy = () => {
     this.removeAllListeners();
     this.ipc.removeAllListeners(this.id);
-  }
+  };
 }

@@ -13,7 +13,7 @@ import {setActiveSession, ptyExitSession, userExitSession} from './sessions';
 import {ITermState, ITermGroup, HyperState, HyperDispatch, HyperActions} from '../hyper';
 
 function requestSplit(direction: 'VERTICAL' | 'HORIZONTAL') {
-  return (activeUid: string) =>
+  return (activeUid: string | undefined) =>
     (dispatch: HyperDispatch, getState: () => HyperState): void => {
       dispatch({
         type: SESSION_REQUEST,
@@ -40,7 +40,7 @@ export function resizeTermGroup(uid: string, sizes: number[]): HyperActions {
   };
 }
 
-export function requestTermGroup(activeUid: string) {
+export function requestTermGroup(activeUid: string | undefined) {
   return (dispatch: HyperDispatch, getState: () => HyperState) => {
     dispatch({
       type: TERM_GROUP_REQUEST,
