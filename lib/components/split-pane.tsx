@@ -24,13 +24,14 @@ export default class SplitPane extends React.PureComponent<SplitPaneProps, {drag
     }
   }
 
-  setupPanes(ev: any) {
-    this.panes = Array.from(ev.target.parentNode.childNodes);
-    this.paneIndex = this.panes.indexOf(ev.target);
+  setupPanes(ev: React.MouseEvent<HTMLDivElement>) {
+    const target = ev.target as HTMLDivElement;
+    this.panes = Array.from(target.parentElement?.children || []);
+    this.paneIndex = this.panes.indexOf(target);
     this.paneIndex -= Math.ceil(this.paneIndex / 2);
   }
 
-  handleAutoResize = (ev: React.MouseEvent) => {
+  handleAutoResize = (ev: React.MouseEvent<HTMLDivElement>) => {
     ev.preventDefault();
 
     this.setupPanes(ev);
@@ -46,8 +47,7 @@ export default class SplitPane extends React.PureComponent<SplitPaneProps, {drag
     this.props.onResize(sizes_);
   };
 
-  handleDragStart = (ev: any) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  handleDragStart = (ev: React.MouseEvent<HTMLDivElement>) => {
     ev.preventDefault();
     this.setState({dragging: true});
     window.addEventListener('mousemove', this.onDrag);
@@ -64,10 +64,10 @@ export default class SplitPane extends React.PureComponent<SplitPaneProps, {drag
       this.d3 = 'clientX';
     }
 
-    this.dragTarget = ev.target;
+    const target = ev.target as HTMLDivElement;
+    this.dragTarget = target;
     this.dragPanePosition = this.dragTarget.getBoundingClientRect()[this.d2];
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    this.panesSize = ev.target.parentNode.getBoundingClientRect()[this.d1];
+    this.panesSize = target.parentElement!.getBoundingClientRect()[this.d1];
     this.setupPanes(ev);
   };
 

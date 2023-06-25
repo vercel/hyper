@@ -76,21 +76,16 @@ export default (win: BrowserWindow) => {
 
   const {rpc} = win;
 
-  const onupdate = (
-    ev: Event,
-    releaseNotes: string,
-    releaseName: string,
-    date: Date,
-    updateUrl: string,
-    onQuitAndInstall: any
-  ) => {
+  const onupdate = (ev: Event, releaseNotes: string, releaseName: string, date: Date, updateUrl: string) => {
     const releaseUrl = updateUrl || `https://github.com/vercel/hyper/releases/tag/${releaseName}`;
-    rpc.emit('update available', {releaseNotes, releaseName, releaseUrl, canInstall: !!onQuitAndInstall});
+    rpc.emit('update available', {releaseNotes, releaseName, releaseUrl, canInstall: !isLinux});
   };
 
-  const eventName: any = isLinux ? 'update-available' : 'update-downloaded';
-
-  autoUpdater.on(eventName, onupdate);
+  if (isLinux) {
+    autoUpdater.on('update-available', onupdate);
+  } else {
+    autoUpdater.on('update-downloaded', onupdate);
+  }
 
   rpc.once('quit and install', () => {
     autoUpdater.quitAndInstall();
@@ -111,6 +106,10 @@ export default (win: BrowserWindow) => {
   });
 
   win.on('close', () => {
-    autoUpdater.removeListener(eventName, onupdate);
+    if (isLinux) {
+      autoUpdater.removeListener('update-available', onupdate);
+    } else {
+      autoUpdater.removeListener('update-downloaded', onupdate);
+    }
   });
 };

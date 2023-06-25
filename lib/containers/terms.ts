@@ -85,7 +85,7 @@ const mapDispatchToProps = (dispatch: HyperDispatch) => {
       dispatch(closeSearch(uid));
     },
 
-    onContextMenu(uid: string, selection: any) {
+    onContextMenu(uid: string, selection: string) {
       dispatch(setActiveSession(uid));
       dispatch(openContextMenu(uid, selection));
     }

@@ -41,6 +41,7 @@ export interface SessionAddDataAction {
 }
 export interface SessionPtyDataAction {
   type: typeof SESSION_PTY_DATA;
+  data: string;
   uid: string;
   now: number;
 }

@@ -2,7 +2,7 @@ if (typeof snapshotResult !== 'undefined') {
   const Module = __non_webpack_require__('module');
   const originalLoad: (module: string, ...args: any[]) => any = Module._load;
 
-  Module._load = function _load(module: string, ...args: any[]): NodeModule {
+  Module._load = function _load(module: string, ...args: unknown[]): NodeModule {
     let cachedModule = snapshotResult.customRequire.cache[module];
 
     if (cachedModule) return cachedModule.exports;

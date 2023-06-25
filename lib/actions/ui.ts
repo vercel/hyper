@@ -31,7 +31,7 @@ import parseUrl from 'parse-url';
 import {HyperState, HyperDispatch, HyperActions, ITermGroups} from '../hyper';
 import {stat, Stats} from 'fs';
 
-export function openContextMenu(uid: string, selection: any) {
+export function openContextMenu(uid: string, selection: string) {
   return (dispatch: HyperDispatch, getState: () => HyperState) => {
     dispatch({
       type: UI_CONTEXTMENU_OPEN,

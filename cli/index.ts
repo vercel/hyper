@@ -191,8 +191,10 @@ const main = (argv: string[]) => {
     version: false,
     mri: {
       boolean: ['v', 'verbose']
-    }
-  } as any);
+    },
+    mainColor: 'yellow',
+    subColor: 'dim'
+  });
 
   if (commandPromise) {
     return commandPromise;
