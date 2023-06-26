@@ -4,8 +4,8 @@ import type {ExecFileOptions, ExecOptions} from 'child_process';
 
 export type Session = {
   uid: string;
-  rows: number | null;
-  cols: number | null;
+  rows?: number | null;
+  cols?: number | null;
   splitDirection?: 'HORIZONTAL' | 'VERTICAL';
   shell: string | null;
   pid: number | null;
@@ -13,10 +13,14 @@ export type Session = {
 };
 
 export type sessionExtraOptions = {
-  cwd: string | undefined;
+  cwd?: string;
   splitDirection?: 'HORIZONTAL' | 'VERTICAL';
   activeUid?: string | null;
   isNewGroup?: boolean;
+  rows?: number;
+  cols?: number;
+  shell?: string;
+  shellArgs?: string[];
 };
 
 export type MainEvents = {
