@@ -1,4 +1,6 @@
 import type parseUrl from 'parse-url';
+import type {IpcMain, IpcRenderer} from 'electron';
+import type {ExecFileOptions, ExecOptions} from 'child_process';
 
 export type Session = {
   uid: string;
@@ -93,4 +95,35 @@ export interface TypedEmitter<Events> {
   emit<E extends keyof Events>(event: E, data?: Events[E]): boolean;
   removeListener<E extends keyof Events>(event: E, listener: (args: Events[E]) => void): this;
   removeAllListeners<E extends keyof Events>(event?: E): this;
+}
+
+type OptionalPromise<T> = T | Promise<T>;
+
+export type IpcCommands = {
+  'child_process.exec': (command: string, options: ExecOptions) => {stdout: string; stderr: string};
+  'child_process.execFile': (
+    file: string,
+    args: string[],
+    options: ExecFileOptions
+  ) => {
+    stdout: string;
+    stderr: string;
+  };
+};
+
+export interface IpcMainWithCommands extends IpcMain {
+  handle<E extends keyof IpcCommands>(
+    channel: E,
+    listener: (
+      event: Electron.IpcMainInvokeEvent,
+      ...args: Parameters<IpcCommands[E]>
+    ) => OptionalPromise<ReturnType<IpcCommands[E]>>
+  ): void;
+}
+
+export interface IpcRendererWithCommands extends IpcRenderer {
+  invoke<E extends keyof IpcCommands>(
+    channel: E,
+    ...args: Parameters<IpcCommands[E]>
+  ): Promise<ReturnType<IpcCommands[E]>>;
 }

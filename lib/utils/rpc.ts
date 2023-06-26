@@ -46,8 +46,8 @@ export default class Client {
     return this;
   };
 
-  emit<U extends Exclude<keyof MainEvents, FilterNever<MainEvents>>>(ch: U): boolean;
-  emit<U extends FilterNever<MainEvents>>(ch: U, data: MainEvents[U]): boolean;
+  emit<U extends Exclude<keyof MainEvents, FilterNever<MainEvents>>>(ev: U): boolean;
+  emit<U extends FilterNever<MainEvents>>(ev: U, data: MainEvents[U]): boolean;
   emit<U extends keyof MainEvents>(ev: U, data?: MainEvents[U]) {
     if (!this.id) {
       throw new Error('Not ready');
