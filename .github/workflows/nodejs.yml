@@ -99,6 +99,7 @@ jobs:
           name: pr_num
           path: ./pr_num.txt
       - uses: actions/cache/save@v3
+        if: github.event_name == 'push'
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
