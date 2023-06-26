@@ -270,7 +270,7 @@ export function openFile(path: string) {
             }
             rpc.once('session add', ({uid}) => {
               rpc.once('session data', () => {
-                dispatch(sendSessionData(uid, command, null));
+                dispatch(sendSessionData(uid, command));
               });
             });
           }
@@ -306,7 +306,7 @@ export function openSSH(parsedUrl: ReturnType<typeof parseUrl>) {
 
         rpc.once('session add', ({uid}) => {
           rpc.once('session data', () => {
-            dispatch(sendSessionData(uid, command, null));
+            dispatch(sendSessionData(uid, command));
           });
         });
 

@@ -1,8 +1,9 @@
 import electron from 'electron';
 import type {IpcRendererWithCommands} from '../../common';
+import type {ExecFileOptions, ExecOptions} from 'child_process';
 const ipcRenderer = electron.ipcRenderer as IpcRendererWithCommands;
 
-export function exec(command: string, options?: any, callback?: (..._args: any) => void) {
+export function exec(command: string, options: ExecOptions, callback: (..._args: any) => void) {
   if (typeof options === 'function') {
     callback = options;
     options = {};
@@ -17,15 +18,15 @@ export function execSync() {
   console.error('Calling execSync from renderer is disabled');
 }
 
-export function execFile(file: string, args?: any, options?: any, callback?: (..._args: any) => void) {
+export function execFile(file: string, args: string[], options: ExecFileOptions, callback: (..._args: any) => void) {
   if (typeof options === 'function') {
     callback = options;
-    options = null;
+    options = {};
   }
   if (typeof args === 'function') {
     callback = args;
-    args = null;
-    options = null;
+    args = [];
+    options = {};
   }
   ipcRenderer.invoke('child_process.execFile', file, args, options).then(
     ({stdout, stderr}) => callback?.(null, stdout, stderr),

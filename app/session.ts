@@ -56,7 +56,7 @@ class DataBatcher extends EventEmitter {
     this.timeout = null;
   }
 
-  write(chunk: Buffer) {
+  write(chunk: Buffer | string) {
     if (this.data.length + chunk.length >= BATCH_MAX_SIZE) {
       // We've reached the max batch size. Flush it and start another one
       if (this.timeout) {
@@ -66,7 +66,7 @@ class DataBatcher extends EventEmitter {
       this.flush();
     }
 
-    this.data += this.decoder.write(chunk);
+    this.data += typeof chunk === 'string' ? chunk : this.decoder.write(chunk);
 
     if (!this.timeout) {
       this.timeout = setTimeout(() => this.flush(), BATCH_DURATION_MS);
@@ -166,7 +166,7 @@ export default class Session extends EventEmitter {
       if (this.ended) {
         return;
       }
-      this.batcher?.write(chunk as any);
+      this.batcher?.write(chunk);
     });
 
     this.batcher.on('flush', (data: string) => {
@@ -186,7 +186,7 @@ please check the shell config: ${JSON.stringify({shell, shellArgs}, undefined, 2
 fallback to default shell config: ${JSON.stringify(defaultShellConfig, undefined, 2)}
 `;
           console.warn(msg);
-          this.batcher?.write(msg.replace(/\n/g, '\r\n') as any);
+          this.batcher?.write(msg.replace(/\n/g, '\r\n'));
           this.init({uid, rows, cols, cwd, ...defaultShellConfig});
         } else {
           this.ended = true;

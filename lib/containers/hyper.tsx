@@ -33,11 +33,11 @@ class Hyper extends React.PureComponent<HyperProps> {
       this.attachKeyListeners();
     }
     if (prev.activeSession !== this.props.activeSession) {
-      this.handleFocusActive(this.props.activeSession!);
+      this.handleFocusActive(this.props.activeSession);
     }
   }
 
-  handleFocusActive = (uid?: string) => {
+  handleFocusActive = (uid?: string | null) => {
     const term = uid && this.terms.getTermByUid(uid);
     if (term) {
       term.focus();
