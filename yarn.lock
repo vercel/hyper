@@ -1126,15 +1126,10 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-18.16.18.tgz#85da09bafb66d4bc14f7c899185336d0c1736390"
   integrity sha512-/aNaQZD0+iSBAGnvvN2Cx92HqE5sZCPZtx2TsK+4nvV23fFe09jVDvpArXr2j9DnYlzuU9WuoykDDc6wqvpNcw==
 
-"@types/node@^16.11.26":
+"@types/node@^16.11.26", "@types/node@^16.9.2":
   version "16.18.36"
   resolved "https://registry.npmjs.org/@types/node/-/node-16.18.36.tgz#0db5d7efc4760d36d0d1d22c85d1a53accd5dc27"
   integrity sha512-8egDX8dE50XyXWH6C6PRCNkTP106DuUrvdrednFouDSmCi7IOvrqr0frznfZaHifHH/3aq/7a7v9N4wdXMqhBQ==
-
-"@types/node@^16.9.2":
-  version "16.18.25"
-  resolved "https://registry.npmjs.org/@types/node/-/node-16.18.25.tgz#8863940fefa1234d3fcac7a4b7a48a6c992d67af"
-  integrity sha512-rUDO6s9Q/El1R1I21HG4qw/LstTHCPO/oQNAwI/4b2f9EWvMnqt4d3HJwPMawfZ3UvodB8516Yg+VAq54YM+eA==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -7192,10 +7187,10 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript-json-schema@0.57.0:
-  version "0.57.0"
-  resolved "https://registry.npmjs.org/typescript-json-schema/-/typescript-json-schema-0.57.0.tgz#e87e16355ecf942762a7cea224e4f5bf6f65d1c9"
-  integrity sha512-xirQK0s95K3OL7Knve0OOxQHErByCxUsgXr5oCHa9J0jWgiA+9/tidHWPu1UMjRv7MoX5ViP6QmOrWCi+dvRew==
+typescript-json-schema@0.58.1:
+  version "0.58.1"
+  resolved "https://registry.npmjs.org/typescript-json-schema/-/typescript-json-schema-0.58.1.tgz#841fc5c9a05c894ce77a04b28025af4135a00b1f"
+  integrity sha512-EcmquhfGEmEJOAezLZC6CzY0rPNzfXuky+Z3zoXULEEncW8e13aAjmC2r8ppT1bvvDekJj1TJ4xVhOdkjYtkUA==
   dependencies:
     "@types/json-schema" "^7.0.9"
     "@types/node" "^16.9.2"
