@@ -82,7 +82,6 @@ class TermGroup_ extends React.PureComponent<TermGroupProps> {
       letterSpacing: this.props.letterSpacing,
       modifierKeys: this.props.modifierKeys,
       padding: this.props.padding,
-      url: session.url,
       cleared: session.cleared,
       search: session.search,
       cols: session.cols,

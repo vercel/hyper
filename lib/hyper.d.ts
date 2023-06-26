@@ -117,10 +117,10 @@ export type session = {
   shell: string | null;
   title: string;
   uid: string;
-  url: string | null;
   splitDirection?: 'HORIZONTAL' | 'VERTICAL';
   activeUid?: string;
 };
+
 export type sessionState = Immutable<{
   sessions: Record<string, session>;
   activeUid: string | null;
@@ -384,7 +384,6 @@ export type TermProps = {
   term: Terminal | null;
   uid: string;
   uiFontFamily: string;
-  url: string | null;
   webGLRenderer: boolean;
   webLinksActivationKey: 'ctrl' | 'alt' | 'meta' | 'shift' | '';
   windowsPty?: IWindowsPty;
