@@ -58,7 +58,7 @@ if (isDev) {
   console.log('running in dev mode');
 
   // Override default appVersion which is set from package.json
-  gitDescribe({customArguments: ['--tags']}, (error: any, gitInfo: any) => {
+  gitDescribe({customArguments: ['--tags']}, (error: any, gitInfo: {raw: string}) => {
     if (!error) {
       app.setVersion(gitInfo.raw);
     }

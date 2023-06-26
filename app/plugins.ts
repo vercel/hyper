@@ -1,7 +1,7 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import {app, dialog, BrowserWindow, App, ipcMain as _ipcMain} from 'electron';
+import {app, dialog, BrowserWindow, App, ipcMain as _ipcMain, MenuItemConstructorOptions} from 'electron';
 import {resolve, basename} from 'path';
 import {writeFileSync} from 'fs';
 import Config from 'electron-store';
@@ -277,7 +277,7 @@ function requirePlugins(): any[] {
   const {plugins: plugins_, localPlugins} = paths;
 
   const load = (path_: string) => {
-    let mod: any;
+    let mod: Record<string, any>;
     try {
       mod = require(path_);
       const exposed = mod && Object.keys(mod).some((key) => availableExtensions.has(key));
@@ -313,7 +313,7 @@ function requirePlugins(): any[] {
     ...localPlugins.filter((p) => basename(p) !== 'migrated-hyper3-config')
   ]
     .map(load)
-    .filter((v) => Boolean(v));
+    .filter((v): v is Record<string, any> => Boolean(v));
 }
 
 export const onApp = (app_: App) => {
@@ -416,7 +416,7 @@ export const getDeprecatedConfig = () => {
   return deprecated;
 };
 
-export const decorateMenu = (tpl: any) => {
+export const decorateMenu = (tpl: MenuItemConstructorOptions[]) => {
   return decorateObject(tpl, 'decorateMenu');
 };
 
