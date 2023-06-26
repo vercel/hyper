@@ -3,8 +3,8 @@ import {decorate, getTermGroupProps} from '../utils/plugins';
 import {registerCommandHandlers} from '../command-registry';
 import TermGroup_ from './term-group';
 import StyleSheet_ from './style-sheet';
-import {TermsProps, HyperDispatch} from '../hyper';
-import Term from './term';
+import type {TermsProps, HyperDispatch} from '../hyper';
+import type Term from './term';
 import {ObjectTypedKeys} from '../utils/object';
 
 const TermGroup = decorate(TermGroup_, 'TermGroup');

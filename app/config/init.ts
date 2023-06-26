@@ -1,7 +1,7 @@
 import vm from 'vm';
 import notify from '../notify';
 import mapKeys from '../utils/map-keys';
-import {parsedConfig, rawConfig, configOptions} from '../../lib/config';
+import type {parsedConfig, rawConfig, configOptions} from '../../lib/config';
 import _ from 'lodash';
 
 const _extract = (script?: vm.Script): Record<string, any> => {

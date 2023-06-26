@@ -11,7 +11,7 @@ import {
 
 import {openContextMenu} from '../actions/ui';
 import {getRootGroups} from '../selectors';
-import {HyperState, HyperDispatch} from '../hyper';
+import type {HyperState, HyperDispatch} from '../hyper';
 
 const mapStateToProps = (state: HyperState) => {
   const {sessions} = state.sessions;

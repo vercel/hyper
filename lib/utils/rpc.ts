@@ -1,7 +1,7 @@
 import {EventEmitter} from 'events';
-import {IpcRenderer, IpcRendererEvent} from 'electron';
+import type {IpcRenderer, IpcRendererEvent} from 'electron';
 import electron from 'electron';
-import {FilterNever, MainEvents, RendererEvents, TypedEmitter} from '../../common';
+import type {FilterNever, MainEvents, RendererEvents, TypedEmitter} from '../../common';
 
 export default class Client {
   emitter: TypedEmitter<RendererEvents>;

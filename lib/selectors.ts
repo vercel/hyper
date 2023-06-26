@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import {HyperState} from './hyper';
+import type {HyperState} from './hyper';
 
 const getTermGroups = ({termGroups}: Pick<HyperState, 'termGroups'>) => termGroups.termGroups;
 export const getRootGroups = createSelector(getTermGroups, (termGroups) =>

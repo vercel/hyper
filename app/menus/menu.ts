@@ -1,5 +1,6 @@
 // Packages
-import {app, dialog, Menu, BrowserWindow} from 'electron';
+import type {BrowserWindow} from 'electron';
+import {app, dialog, Menu} from 'electron';
 
 // Utilities
 import {getConfig} from '../config';

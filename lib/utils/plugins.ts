@@ -3,17 +3,19 @@
 import {require as remoteRequire} from '@electron/remote';
 // TODO: Should be updates to new async API https://medium.com/@nornagon/electrons-remote-module-considered-harmful-70d69500f31
 
-import {connect as reduxConnect, Options} from 'react-redux';
+import type {Options} from 'react-redux';
+import {connect as reduxConnect} from 'react-redux';
 import {basename} from 'path';
 
 // patching Module._load
 // so plugins can `require` them without needing their own version
 // https://github.com/vercel/hyper/issues/619
-import React, {ComponentType, PureComponent} from 'react';
+import type {ComponentType} from 'react';
+import React, {PureComponent} from 'react';
 import ReactDOM from 'react-dom';
 import Notification from '../components/notification';
 import notify from './notify';
-import {
+import type {
   hyperPlugin,
   IUiReducer,
   ISessionReducer,
@@ -27,7 +29,7 @@ import {
   Assignable,
   HyperActions
 } from '../hyper';
-import {Dispatch, Middleware} from 'redux';
+import type {Dispatch, Middleware} from 'redux';
 import {ObjectTypedKeys} from './object';
 import IPCChildProcess from './ipc-child-process';
 import ChildProcess from 'child_process';

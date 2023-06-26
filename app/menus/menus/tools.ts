@@ -1,4 +1,4 @@
-import {BrowserWindow, MenuItemConstructorOptions} from 'electron';
+import type {BrowserWindow, MenuItemConstructorOptions} from 'electron';
 
 export default (
   commands: Record<string, string>,

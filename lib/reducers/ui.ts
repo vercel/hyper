@@ -1,4 +1,5 @@
-import Immutable, {Immutable as ImmutableType} from 'seamless-immutable';
+import type {Immutable as ImmutableType} from 'seamless-immutable';
+import Immutable from 'seamless-immutable';
 import {decorateUIReducer} from '../utils/plugins';
 import {CONFIG_LOAD, CONFIG_RELOAD} from '../constants/config';
 import {
@@ -21,7 +22,7 @@ import {
   SESSION_SET_CWD
 } from '../constants/sessions';
 import {UPDATE_AVAILABLE} from '../constants/updater';
-import {uiState, Mutable, IUiReducer} from '../hyper';
+import type {uiState, Mutable, IUiReducer} from '../hyper';
 import {release} from 'os';
 
 const isWindows = ['Windows', 'Win16', 'Win32', 'WinCE'].includes(navigator.platform) || process.platform === 'win32';

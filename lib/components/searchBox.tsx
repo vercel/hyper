@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {SearchBoxProps} from '../hyper';
+import type {SearchBoxProps} from '../hyper';
 import {VscArrowUp} from '@react-icons/all-files/vsc/VscArrowUp';
 import {VscArrowDown} from '@react-icons/all-files/vsc/VscArrowDown';
 import {VscClose} from '@react-icons/all-files/vsc/VscClose';

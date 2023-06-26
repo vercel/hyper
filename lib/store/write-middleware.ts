@@ -1,6 +1,6 @@
-import {HyperActions, HyperState} from '../hyper';
+import type {HyperActions, HyperState} from '../hyper';
 import terms from '../terms';
-import {Dispatch, Middleware} from 'redux';
+import type {Dispatch, Middleware} from 'redux';
 
 // the only side effect we perform from middleware
 // is to write to the react term instance directly

@@ -1,5 +1,6 @@
 import {release} from 'os';
-import {app, shell, MenuItemConstructorOptions, dialog, clipboard} from 'electron';
+import type {MenuItemConstructorOptions} from 'electron';
+import {app, shell, dialog, clipboard} from 'electron';
 import {getConfig, getPlugins} from '../../config';
 const {arch, env, platform, versions} = process;
 import {version} from '../../package.json';

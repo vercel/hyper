@@ -1,5 +1,5 @@
 import {NOTIFICATION_MESSAGE, NOTIFICATION_DISMISS} from '../constants/notifications';
-import {HyperActions} from '../hyper';
+import type {HyperActions} from '../hyper';
 
 export function dismissNotification(id: string): HyperActions {
   return {

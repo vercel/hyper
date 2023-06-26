@@ -4,7 +4,7 @@ import defaultShell from 'default-shell';
 import {getDecoratedEnv} from './plugins';
 import {productName, version} from './package.json';
 import * as config from './config';
-import {IPty, IWindowsPtyForkOptions, spawn as npSpawn} from 'node-pty';
+import type {IPty, IWindowsPtyForkOptions, spawn as npSpawn} from 'node-pty';
 import {cliScriptPath} from './config/paths';
 import {dirname} from 'path';
 import shellEnv from 'shell-env';

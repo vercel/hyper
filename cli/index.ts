@@ -1,6 +1,7 @@
 // This is a CLI tool, using console is OK
 /* eslint no-console: 0 */
-import {spawn, exec, SpawnOptions} from 'child_process';
+import type {SpawnOptions} from 'child_process';
+import {spawn, exec} from 'child_process';
 import {isAbsolute, resolve} from 'path';
 import {existsSync} from 'fs';
 import {version} from '../app/package.json';

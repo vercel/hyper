@@ -4,7 +4,8 @@ import fs from 'fs-extra';
 
 // Packages
 import test from 'ava';
-import {_electron, ElectronApplication} from 'playwright';
+import type {ElectronApplication} from 'playwright';
+import {_electron} from 'playwright';
 
 let app: ElectronApplication;
 
