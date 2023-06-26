@@ -8,6 +8,7 @@ import _ from 'lodash';
 import notify from '../notify';
 import {_extractDefault} from './init';
 import {cfgDir, cfgPath, defaultCfg, legacyCfgPath, plugs, schemaFile, schemaPath} from './paths';
+import type {ExpressionKind} from 'ast-types/lib/gen/kinds';
 
 // function to remove all json serializable entries from an array expression
 function removeElements(node: namedTypes.ArrayExpression): namedTypes.ArrayExpression {
@@ -63,7 +64,7 @@ export function configToPlugin(code: string): string {
   });
   const statements = ast.program.body;
   let moduleExportsNode: namedTypes.AssignmentExpression | null = null;
-  let configNode: any = null;
+  let configNode: ExpressionKind | null = null;
 
   for (const statement of statements) {
     if (namedTypes.ExpressionStatement.check(statement)) {
@@ -86,7 +87,7 @@ export function configToPlugin(code: string): string {
               namedTypes.Identifier.check(property.key) &&
               property.key.name === 'config'
             ) {
-              configNode = property.value;
+              configNode = property.value as ExpressionKind;
               if (namedTypes.ObjectExpression.check(property.value)) {
                 configNode = removeProperties(property.value);
               }

@@ -26,7 +26,7 @@ export type sessionExtraOptions = {
 export type MainEvents = {
   close: never;
   command: string;
-  data: {uid: string | null; data: string; escaped?: boolean | null};
+  data: {uid: string | null; data: string; escaped?: boolean};
   exit: {uid: string};
   'info renderer': {uid: string; type: string};
   init: null;

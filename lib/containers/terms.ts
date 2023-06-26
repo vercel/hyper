@@ -61,7 +61,7 @@ const mapStateToProps = (state: HyperState) => {
 
 const mapDispatchToProps = (dispatch: HyperDispatch) => {
   return {
-    onData(uid: string, data: any) {
+    onData(uid: string, data: string) {
       dispatch(sendSessionData(uid, data));
     },
 
