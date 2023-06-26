@@ -25,7 +25,6 @@ function Session(obj: Immutable.DeepPartial<session>) {
     title: '',
     cols: null,
     rows: null,
-    url: null,
     cleared: false,
     search: false,
     shell: '',
