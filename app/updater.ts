@@ -1,5 +1,6 @@
 // Packages
-import electron, {app, BrowserWindow, AutoUpdater} from 'electron';
+import type {BrowserWindow, AutoUpdater} from 'electron';
+import electron, {app} from 'electron';
 import ms from 'ms';
 import retry from 'async-retry';
 

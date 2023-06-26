@@ -1,7 +1,8 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import {app, dialog, BrowserWindow, App, ipcMain as _ipcMain, MenuItemConstructorOptions} from 'electron';
+import type {BrowserWindow, App, MenuItemConstructorOptions} from 'electron';
+import {app, dialog, ipcMain as _ipcMain} from 'electron';
 import {resolve, basename} from 'path';
 import {writeFileSync} from 'fs';
 import Config from 'electron-store';
@@ -14,10 +15,10 @@ import {availableExtensions} from './plugins/extensions';
 import {install} from './plugins/install';
 import {plugs} from './config/paths';
 import mapKeys from './utils/map-keys';
-import {configOptions} from '../lib/config';
+import type {configOptions} from '../lib/config';
 import {promisify} from 'util';
 import {exec, execFile} from 'child_process';
-import {IpcMainWithCommands} from '../common';
+import type {IpcMainWithCommands} from '../common';
 
 // local storage
 const cache = new Config();

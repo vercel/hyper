@@ -1,7 +1,7 @@
 import ms from 'ms';
 import fetch from 'electron-fetch';
 import {version} from './package.json';
-import {BrowserWindow} from 'electron';
+import type {BrowserWindow} from 'electron';
 
 const NEWS_URL = 'https://hyper-news.now.sh';
 

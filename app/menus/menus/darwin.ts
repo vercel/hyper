@@ -1,6 +1,7 @@
 // This menu label is overrided by OSX to be the appName
 // The label is set to appName here so it matches actual behavior
-import {app, BrowserWindow, MenuItemConstructorOptions} from 'electron';
+import type {BrowserWindow, MenuItemConstructorOptions} from 'electron';
+import {app} from 'electron';
 
 export default (
   commandKeys: Record<string, string>,

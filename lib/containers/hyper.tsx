@@ -1,5 +1,6 @@
 import React from 'react';
-import Mousetrap, {MousetrapInstance} from 'mousetrap';
+import type {MousetrapInstance} from 'mousetrap';
+import Mousetrap from 'mousetrap';
 
 import {connect} from '../utils/plugins';
 import * as uiActions from '../actions/ui';
@@ -9,8 +10,8 @@ import stylis from 'stylis';
 import {HeaderContainer} from './header';
 import TermsContainer from './terms';
 import NotificationsContainer from './notifications';
-import {HyperState, HyperProps, HyperDispatch} from '../hyper';
-import Terms from '../components/terms';
+import type {HyperState, HyperProps, HyperDispatch} from '../hyper';
+import type Terms from '../components/terms';
 
 const isMac = /Mac/.test(navigator.userAgent);
 

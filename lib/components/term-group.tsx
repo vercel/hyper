@@ -4,7 +4,7 @@ import {decorate, getTermProps, getTermGroupProps} from '../utils/plugins';
 import {resizeTermGroup} from '../actions/term-groups';
 import Term_ from './term';
 import SplitPane_ from './split-pane';
-import {HyperState, HyperDispatch, TermGroupProps, TermGroupOwnProps} from '../hyper';
+import type {HyperState, HyperDispatch, TermGroupProps, TermGroupOwnProps} from '../hyper';
 
 const Term = decorate(Term_, 'Term');
 const SplitPane = decorate(SplitPane_, 'SplitPane');

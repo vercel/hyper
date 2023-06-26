@@ -1,5 +1,5 @@
-import {Immutable} from 'seamless-immutable';
-import Client from './utils/rpc';
+import type {Immutable} from 'seamless-immutable';
+import type Client from './utils/rpc';
 
 declare global {
   interface Window {
@@ -38,8 +38,8 @@ export type ITermState = Immutable<{
 }>;
 
 export type cursorShapes = 'BEAM' | 'UNDERLINE' | 'BLOCK';
-import {FontWeight, IWindowsPty, Terminal} from 'xterm';
-import {ColorMap} from './config';
+import type {FontWeight, IWindowsPty, Terminal} from 'xterm';
+import type {ColorMap} from './config';
 
 export type uiState = Immutable<{
   _lastUpdate: number | null;
@@ -133,7 +133,7 @@ export type IUiReducer = Reducer<uiState, HyperActions>;
 
 export type ISessionReducer = Reducer<sessionState, HyperActions>;
 
-import {Middleware, Reducer} from 'redux';
+import type {Middleware, Reducer} from 'redux';
 export type hyperPlugin = {
   getTabProps: any;
   getTabsProps: any;
@@ -163,14 +163,14 @@ export type HyperState = {
   termGroups: ITermState;
 };
 
-import {UIActions} from './constants/ui';
-import {ConfigActions} from './constants/config';
-import {SessionActions} from './constants/sessions';
-import {NotificationActions} from './constants/notifications';
-import {UpdateActions} from './constants/updater';
-import {TermGroupActions} from './constants/term-groups';
-import {InitActions} from './constants';
-import {TabActions} from './constants/tabs';
+import type {UIActions} from './constants/ui';
+import type {ConfigActions} from './constants/config';
+import type {SessionActions} from './constants/sessions';
+import type {NotificationActions} from './constants/notifications';
+import type {UpdateActions} from './constants/updater';
+import type {TermGroupActions} from './constants/term-groups';
+import type {InitActions} from './constants';
+import type {TabActions} from './constants/tabs';
 
 export type HyperActions = (
   | UIActions
@@ -183,10 +183,10 @@ export type HyperActions = (
   | TabActions
 ) & {effect?: () => void};
 
-import configureStore from './store/configure-store';
+import type configureStore from './store/configure-store';
 export type HyperDispatch = ReturnType<typeof configureStore>['dispatch'];
 
-import {ReactChild} from 'react';
+import type {ReactChild} from 'react';
 type extensionProps = Partial<{
   customChildren: ReactChild | ReactChild[];
   customChildrenBefore: ReactChild | ReactChild[];
@@ -194,17 +194,17 @@ type extensionProps = Partial<{
   customInnerChildren: ReactChild | ReactChild[];
 }>;
 
-import {HeaderConnectedProps} from './containers/header';
+import type {HeaderConnectedProps} from './containers/header';
 export type HeaderProps = HeaderConnectedProps & extensionProps;
 
-import {HyperConnectedProps} from './containers/hyper';
+import type {HyperConnectedProps} from './containers/hyper';
 export type HyperProps = HyperConnectedProps & extensionProps;
 
-import {NotificationsConnectedProps} from './containers/notifications';
+import type {NotificationsConnectedProps} from './containers/notifications';
 export type NotificationsProps = NotificationsConnectedProps & extensionProps;
 
-import Terms from './components/terms';
-import {TermsConnectedProps} from './containers/terms';
+import type Terms from './components/terms';
+import type {TermsConnectedProps} from './containers/terms';
 export type TermsProps = TermsConnectedProps & extensionProps & {ref_: (terms: Terms | null) => void};
 
 export type StyleSheetProps = {
@@ -262,7 +262,7 @@ export type SplitPaneProps = {
   sizes?: Immutable<number[]> | null;
 };
 
-import Term from './components/term';
+import type Term from './components/term';
 
 export type TermGroupOwnProps = {
   cursorAccentColor?: string;
@@ -314,7 +314,7 @@ export type TermGroupOwnProps = {
   | 'imageSupport'
 >;
 
-import {TermGroupConnectedProps} from './components/term-group';
+import type {TermGroupConnectedProps} from './components/term-group';
 export type TermGroupProps = TermGroupConnectedProps & TermGroupOwnProps;
 
 export type SearchBoxProps = {
@@ -335,8 +335,8 @@ export type SearchBoxProps = {
   font: string;
 };
 
-import {FitAddon} from 'xterm-addon-fit';
-import {SearchAddon} from 'xterm-addon-search';
+import type {FitAddon} from 'xterm-addon-fit';
+import type {SearchAddon} from 'xterm-addon-search';
 export type TermProps = {
   backgroundColor: string;
   bell: string;

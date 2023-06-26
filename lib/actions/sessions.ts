@@ -15,7 +15,7 @@ import {
   SESSION_SET_XTERM_TITLE,
   SESSION_SEARCH
 } from '../constants/sessions';
-import {HyperState, session, HyperDispatch, HyperActions} from '../hyper';
+import type {HyperState, session, HyperDispatch, HyperActions} from '../hyper';
 
 export function addSession({
   uid,

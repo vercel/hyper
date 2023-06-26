@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheetProps} from '../hyper';
+import type {StyleSheetProps} from '../hyper';
 
 export default class StyleSheet extends React.PureComponent<StyleSheetProps> {
   render() {

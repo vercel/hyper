@@ -27,9 +27,10 @@ import {
 } from '../constants/ui';
 
 import {setActiveGroup} from './term-groups';
-import parseUrl from 'parse-url';
-import {HyperState, HyperDispatch, HyperActions, ITermGroups} from '../hyper';
-import {stat, Stats} from 'fs';
+import type parseUrl from 'parse-url';
+import type {HyperState, HyperDispatch, HyperActions, ITermGroups} from '../hyper';
+import type {Stats} from 'fs';
+import {stat} from 'fs';
 
 export function openContextMenu(uid: string, selection: string) {
   return (dispatch: HyperDispatch, getState: () => HyperState) => {

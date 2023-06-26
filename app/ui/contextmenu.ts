@@ -2,7 +2,7 @@ import editMenu from '../menus/menus/edit';
 import shellMenu from '../menus/menus/shell';
 import {execCommand} from '../commands';
 import {getDecoratedKeymaps} from '../plugins';
-import {MenuItemConstructorOptions, BrowserWindow} from 'electron';
+import type {MenuItemConstructorOptions, BrowserWindow} from 'electron';
 const separator: MenuItemConstructorOptions = {type: 'separator'};
 
 const getCommandKeys = (keymaps: Record<string, string[]>): Record<string, string> =>

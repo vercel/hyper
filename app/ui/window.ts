@@ -1,4 +1,5 @@
-import {app, BrowserWindow, shell, Menu, BrowserWindowConstructorOptions} from 'electron';
+import type {BrowserWindowConstructorOptions} from 'electron';
+import {app, BrowserWindow, shell, Menu} from 'electron';
 import {isAbsolute, normalize, sep} from 'path';
 import {URL, fileURLToPath} from 'url';
 import {v4 as uuidv4} from 'uuid';
@@ -15,7 +16,7 @@ import {execCommand} from '../commands';
 import {setRendererType, unsetRendererType} from '../utils/renderer-utils';
 import {decorateSessionOptions, decorateSessionClass} from '../plugins';
 import {enable as remoteEnable} from '@electron/remote/main';
-import {configOptions} from '../../lib/config';
+import type {configOptions} from '../../lib/config';
 import {getWorkingDirectoryFromPID} from 'native-process-working-directory';
 import {existsSync} from 'fs';
 

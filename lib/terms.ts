@@ -1,4 +1,4 @@
-import Term from './components/term';
+import type Term from './components/term';
 
 // react Term components add themselves
 // to this object upon mounting / unmounting

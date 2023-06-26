@@ -3,7 +3,7 @@ import React from 'react';
 import {decorate, getTabProps} from '../utils/plugins';
 
 import Tab_ from './tab';
-import {TabsProps} from '../hyper';
+import type {TabsProps} from '../hyper';
 
 const Tab = decorate(Tab_, 'Tab');
 const isMac = /Mac/.test(navigator.userAgent);
