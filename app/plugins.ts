@@ -1,7 +1,7 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import {app, dialog, BrowserWindow, App, ipcMain} from 'electron';
+import {app, dialog, BrowserWindow, App, ipcMain as _ipcMain} from 'electron';
 import {resolve, basename} from 'path';
 import {writeFileSync} from 'fs';
 import Config from 'electron-store';
@@ -17,6 +17,7 @@ import mapKeys from './utils/map-keys';
 import {configOptions} from '../lib/config';
 import {promisify} from 'util';
 import {exec, execFile} from 'child_process';
+import {IpcMainWithCommands} from '../common';
 
 // local storage
 const cache = new Config();
@@ -456,12 +457,12 @@ export const decorateSessionClass = <T>(Session: T): T => {
 
 export {toDependencies as _toDependencies};
 
-ipcMain.handle('child_process.exec', (event, args) => {
-  const {command, options} = args;
+const ipcMain = _ipcMain as IpcMainWithCommands;
+
+ipcMain.handle('child_process.exec', (event, command, options) => {
   return promisify(exec)(command, options);
 });
 
-ipcMain.handle('child_process.execFile', (event, _args) => {
-  const {file, args, options} = _args;
+ipcMain.handle('child_process.execFile', (event, file, args, options) => {
   return promisify(execFile)(file, args, options);
 });

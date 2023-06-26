@@ -1,11 +1,13 @@
-import {ipcRenderer} from 'electron';
+import electron from 'electron';
+import type {IpcRendererWithCommands} from '../../common';
+const ipcRenderer = electron.ipcRenderer as IpcRendererWithCommands;
 
 export function exec(command: string, options?: any, callback?: (..._args: any) => void) {
   if (typeof options === 'function') {
     callback = options;
     options = {};
   }
-  ipcRenderer.invoke('child_process.exec', {command, options}).then(
+  ipcRenderer.invoke('child_process.exec', command, options).then(
     ({stdout, stderr}) => callback?.(null, stdout, stderr),
     (error) => callback?.(error, '', '')
   );
@@ -25,7 +27,7 @@ export function execFile(file: string, args?: any, options?: any, callback?: (..
     args = null;
     options = null;
   }
-  ipcRenderer.invoke('child_process.execFile', {file, args, options}).then(
+  ipcRenderer.invoke('child_process.execFile', file, args, options).then(
     ({stdout, stderr}) => callback?.(null, stdout, stderr),
     (error) => callback?.(error, '', '')
   );
