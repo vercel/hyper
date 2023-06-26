@@ -15,17 +15,10 @@ import {
   SESSION_SET_XTERM_TITLE,
   SESSION_SEARCH
 } from '../constants/sessions';
-import type {HyperState, session, HyperDispatch, HyperActions} from '../hyper';
+import type {HyperState, HyperDispatch, HyperActions} from '../hyper';
+import type {Session} from '../../common';
 
-export function addSession({
-  uid,
-  shell,
-  pid,
-  cols,
-  rows,
-  splitDirection,
-  activeUid
-}: Pick<session, 'uid' | 'shell' | 'pid' | 'cols' | 'rows' | 'splitDirection' | 'activeUid'>) {
+export function addSession({uid, shell, pid, cols = null, rows = null, splitDirection, activeUid}: Session) {
   return (dispatch: HyperDispatch, getState: () => HyperState) => {
     const {sessions} = getState();
     const now = Date.now();

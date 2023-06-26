@@ -84,11 +84,11 @@ class DataBatcher extends EventEmitter {
 
 interface SessionOptions {
   uid: string;
-  rows: number;
-  cols: number;
-  cwd: string;
-  shell: string;
-  shellArgs: string[];
+  rows?: number;
+  cols?: number;
+  cwd?: string;
+  shell?: string;
+  shellArgs?: string[];
 }
 export default class Session extends EventEmitter {
   pty: IPty | null;
@@ -106,22 +106,23 @@ export default class Session extends EventEmitter {
     this.init(options);
   }
 
-  init({uid, rows, cols: columns, cwd, shell: _shell, shellArgs: _shellArgs}: SessionOptions) {
+  init({uid, rows, cols, cwd, shell: _shell, shellArgs: _shellArgs}: SessionOptions) {
+    const defaultShellArgs = ['--login'];
+
+    const shell = _shell || defaultShell;
+    const shellArgs = _shellArgs || defaultShellArgs;
+
     const cleanEnv =
       process.env['APPIMAGE'] && process.env['APPDIR'] ? shellEnv.sync(_shell || defaultShell) : process.env;
-    const baseEnv = Object.assign(
-      {},
-      cleanEnv,
-      {
-        LANG: `${osLocale.sync().replace(/-/, '_')}.UTF-8`,
-        TERM: 'xterm-256color',
-        COLORTERM: 'truecolor',
-        TERM_PROGRAM: productName,
-        TERM_PROGRAM_VERSION: version
-      },
-      envFromConfig
-    );
-
+    const baseEnv: Record<string, string> = {
+      ...cleanEnv,
+      LANG: `${osLocale.sync().replace(/-/, '_')}.UTF-8`,
+      TERM: 'xterm-256color',
+      COLORTERM: 'truecolor',
+      TERM_PROGRAM: productName,
+      TERM_PROGRAM_VERSION: version,
+      ...envFromConfig
+    };
     // path to AppImage mount point is added to PATH environment variable automatically
     // which conflicts with the cli
     if (baseEnv['APPIMAGE'] && baseEnv['APPDIR']) {
@@ -137,10 +138,8 @@ export default class Session extends EventEmitter {
       delete baseEnv.GOOGLE_API_KEY;
     }
 
-    const defaultShellArgs = ['--login'];
-
     const options: IWindowsPtyForkOptions = {
-      cols: columns,
+      cols,
       rows,
       cwd,
       env: getDecoratedEnv(baseEnv)
@@ -150,9 +149,6 @@ export default class Session extends EventEmitter {
     if (typeof useConpty === 'boolean') {
       options.useConpty = useConpty;
     }
-
-    const shell = _shell || defaultShell;
-    const shellArgs = _shellArgs || defaultShellArgs;
 
     try {
       this.pty = spawn(shell, shellArgs, options);
@@ -191,7 +187,7 @@ fallback to default shell config: ${JSON.stringify(defaultShellConfig, undefined
 `;
           console.warn(msg);
           this.batcher?.write(msg.replace(/\n/g, '\r\n') as any);
-          this.init({uid, rows, cols: columns, cwd, ...defaultShellConfig});
+          this.init({uid, rows, cols, cwd, ...defaultShellConfig});
         } else {
           this.ended = true;
           this.emit('exit');

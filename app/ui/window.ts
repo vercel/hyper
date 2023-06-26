@@ -19,6 +19,7 @@ import {enable as remoteEnable} from '@electron/remote/main';
 import type {configOptions} from '../../lib/config';
 import {getWorkingDirectoryFromPID} from 'native-process-working-directory';
 import {existsSync} from 'fs';
+import type {sessionExtraOptions} from '../../common';
 
 export function newWindow(
   options_: BrowserWindowConstructorOptions,
@@ -125,20 +126,23 @@ export function newWindow(
     }
   });
 
-  function createSession(extraOptions: any = {}) {
+  function createSession(extraOptions: sessionExtraOptions = {}) {
     const uid = uuidv4();
-    const extraOptionsFiltered: any = {};
+    const extraOptionsFiltered: sessionExtraOptions = {};
     Object.keys(extraOptions).forEach((key) => {
       if (extraOptions[key] !== undefined) extraOptionsFiltered[key] = extraOptions[key];
     });
 
     let cwd = '';
     if (cfg.preserveCWD === undefined || cfg.preserveCWD) {
-      const activePID = extraOptionsFiltered.activeUid && sessions.get(extraOptionsFiltered.activeUid)?.pty?.pid;
-      try {
-        cwd = activePID && getWorkingDirectoryFromPID(activePID);
-      } catch (error) {
-        console.error(error);
+      const activeUid = extraOptionsFiltered.activeUid;
+      const activePID = activeUid ? sessions.get(activeUid)?.pty?.pid : undefined;
+      if (activePID !== undefined) {
+        try {
+          cwd = getWorkingDirectoryFromPID(activePID) || '';
+        } catch (error) {
+          console.error(error);
+        }
       }
       cwd = cwd && isAbsolute(cwd) && existsSync(cwd) ? cwd : '';
     }
@@ -172,7 +176,7 @@ export function newWindow(
       splitDirection: options.splitDirection,
       shell: session.shell,
       pid: session.pty ? session.pty.pid : null,
-      activeUid: options.activeUid
+      activeUid: options.activeUid ?? undefined
     });
 
     session.on('data', (data: string) => {
@@ -238,11 +242,12 @@ export function newWindow(
   // Same deal as above, grabbing the window titlebar when the window
   // is maximized on Windows results in unmaximize, without hitting any
   // app buttons
-  for (const ev of ['maximize', 'unmaximize', 'minimize', 'restore'] as any) {
-    window.on(ev, () => {
-      rpc.emit('windowGeometry change', {isMaximized: window.isMaximized()});
-    });
-  }
+  const onGeometryChange = () => rpc.emit('windowGeometry change', {isMaximized: window.isMaximized()});
+  window.on('maximize', onGeometryChange);
+  window.on('unmaximize', onGeometryChange);
+  window.on('minimize', onGeometryChange);
+  window.on('restore', onGeometryChange);
+
   window.on('move', () => {
     const position = window.getPosition();
     rpc.emit('move', {bounds: {x: position[0], y: position[1]}});
