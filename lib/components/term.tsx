@@ -46,7 +46,7 @@ const isWebgl2Supported = (() => {
 const getTermOptions = (props: TermProps): ITerminalOptions => {
   // Set a background color only if it is opaque
   const needTransparency = Color(props.backgroundColor).alpha() < 1;
-  const backgroundColor = needTransparency ? 'transparent' : props.backgroundColor;
+  const backgroundColor = needTransparency ? 'rgba(0,0,0,0)' : props.backgroundColor;
 
   return {
     macOptionIsMeta: props.modifierKeys.altIsMeta,
