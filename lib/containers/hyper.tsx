@@ -23,11 +23,6 @@ class Hyper extends React.PureComponent<HyperProps> {
   }
 
   componentDidUpdate(prev: HyperProps) {
-    if (this.props.backgroundColor !== prev.backgroundColor) {
-      // this can be removed when `setBackgroundColor` in electron
-      // starts working again
-      document.body.style.backgroundColor = this.props.backgroundColor;
-    }
     const {lastConfigUpdate} = this.props;
     if (lastConfigUpdate && lastConfigUpdate !== prev.lastConfigUpdate) {
       this.attachKeyListeners();
@@ -96,7 +91,6 @@ class Hyper extends React.PureComponent<HyperProps> {
   };
 
   componentWillUnmount() {
-    document.body.style.backgroundColor = 'inherit';
     this.mousetrap?.reset();
   }
 
