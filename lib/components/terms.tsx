@@ -121,7 +121,8 @@ export default class Terms extends React.Component<TermsProps> {
             screenReaderMode: this.props.screenReaderMode,
             windowsPty: this.props.windowsPty,
             imageSupport: this.props.imageSupport,
-            parentProps: this.props
+            parentProps: this.props,
+            minimumContrastRatio: this.props.minimumContrastRatio
           });
 
           return (

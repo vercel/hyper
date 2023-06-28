@@ -107,6 +107,7 @@ class TermGroup_ extends React.PureComponent<TermGroupProps> {
       screenReaderMode: this.props.screenReaderMode,
       windowsPty: this.props.windowsPty,
       imageSupport: this.props.imageSupport,
+      minimumContrastRatio: this.props.minimumContrastRatio,
       uid
     });
 

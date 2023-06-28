@@ -100,6 +100,17 @@ export type configOptions = {
    * (inside tmux or vim with mouse mode enabled for example).
    */
   macOptionSelectionMode: string;
+  /**
+   * The minimum contrast ratio for text in the terminal, setting this will
+   * change the foreground color dynamically depending on whether the contrast
+   * ratio is met. Example values:
+   *
+   * - 1: The default, do nothing.
+   * - 4.5: Minimum for WCAG AA compliance.
+   * - 7: Minimum for WCAG AAA compliance.
+   * - 21: White on black or black on white.
+   */
+  minimumContrastRatio: number;
   modifierKeys?: {
     altIsMeta: boolean;
     cmdIsMeta: boolean;

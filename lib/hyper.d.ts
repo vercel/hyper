@@ -76,6 +76,7 @@ export type uiState = Immutable<{
   messageDismissable: null | boolean;
   messageText: string | null;
   messageURL: string | null;
+  minimumContrastRatio: number;
   modifierKeys: {
     altIsMeta: boolean;
     cmdIsMeta: boolean;
@@ -294,6 +295,7 @@ export type TermGroupOwnProps = {
   | 'lineHeight'
   | 'macOptionSelectionMode'
   | 'modifierKeys'
+  | 'minimumContrastRatio'
   | 'onActive'
   | 'onContextMenu'
   | 'onCloseSearch'
@@ -364,6 +366,7 @@ export type TermProps = {
   letterSpacing: number;
   lineHeight: number;
   macOptionSelectionMode: string;
+  minimumContrastRatio: number;
   modifierKeys: Immutable<{altIsMeta: boolean; cmdIsMeta: boolean}>;
   onActive: () => void;
   onCloseSearch: () => void;

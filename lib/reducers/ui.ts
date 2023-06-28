@@ -113,7 +113,8 @@ const initial: uiState = Immutable<Mutable<uiState>>({
   webLinksActivationKey: '',
   macOptionSelectionMode: 'vertical',
   disableLigatures: true,
-  screenReaderMode: false
+  screenReaderMode: false,
+  minimumContrastRatio: 1
 });
 
 const reducer: IUiReducer = (state = initial, action) => {
@@ -272,6 +273,10 @@ const reducer: IUiReducer = (state = initial, action) => {
 
             if (config.screenReaderMode !== undefined) {
               ret.screenReaderMode = config.screenReaderMode;
+            }
+
+            if (config.minimumContrastRatio) {
+              ret.minimumContrastRatio = config.minimumContrastRatio;
             }
 
             const buildNumber = parseInt(release().split('.').at(-1) || '0', 10);

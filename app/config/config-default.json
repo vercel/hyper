@@ -62,7 +62,8 @@
     "autoUpdatePlugins": true,
     "preserveCWD": true,
     "screenReaderMode": false,
-    "imageSupport": true
+    "imageSupport": true,
+    "minimumContrastRatio": 1
   },
   "plugins": [],
   "localPlugins": [],

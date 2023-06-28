@@ -55,7 +55,8 @@ const mapStateToProps = (state: HyperState) => {
     disableLigatures: state.ui.disableLigatures,
     screenReaderMode: state.ui.screenReaderMode,
     windowsPty: state.ui.windowsPty,
-    imageSupport: state.ui.imageSupport
+    imageSupport: state.ui.imageSupport,
+    minimumContrastRatio: state.ui.minimumContrastRatio
   };
 };
 

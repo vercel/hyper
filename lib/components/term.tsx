@@ -88,7 +88,8 @@ const getTermOptions = (props: TermProps): ITerminalOptions => {
     },
     screenReaderMode: props.screenReaderMode,
     overviewRulerWidth: 20,
-    allowProposedApi: true
+    allowProposedApi: true,
+    minimumContrastRatio: props.minimumContrastRatio
   };
 };
 
