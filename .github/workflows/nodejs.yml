@@ -42,7 +42,9 @@ jobs:
           npm_config_node_gyp: ${{ github.workspace }}${{ runner.os == 'Windows' && '\node_modules\node-gyp\bin\node-gyp.js' || '/node_modules/node-gyp/bin/node-gyp.js' }}
       - name: Install libarchive-tools
         if: runner.os == 'Linux'
-        run: sudo apt install libarchive-tools
+        run: |
+          sudo apt update
+          sudo apt install libarchive-tools
       - name: Lint and Run Unit Tests
         run: yarn run test
       - name: Getting Build Icon
@@ -135,6 +137,7 @@ jobs:
       - name: Install
         run: |
           yarn install
+          sudo apt update
           sudo apt install libarchive-tools
       - name: Compile
         run: yarn run build
