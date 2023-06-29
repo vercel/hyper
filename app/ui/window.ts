@@ -67,21 +67,6 @@ export function newWindow(
     window.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
   };
 
-  // set working directory
-  let argPath = process.argv[1];
-  if (argPath && process.platform === 'win32') {
-    if (/[a-zA-Z]:"/.test(argPath)) {
-      argPath = argPath.replace('"', sep);
-    }
-    argPath = normalize(argPath + sep);
-  }
-  let workingDirectory = homeDirectory;
-  if (argPath && isAbsolute(argPath)) {
-    workingDirectory = argPath;
-  } else if (cfg.workingDirectory && isAbsolute(cfg.workingDirectory)) {
-    workingDirectory = cfg.workingDirectory;
-  }
-
   // config changes
   const cfgUnsubscribe = app.config.subscribe(() => {
     const cfg_ = app.plugins.getDecoratedConfig(getDefaultProfile());
@@ -134,10 +119,11 @@ export function newWindow(
       if (extraOptions[key] !== undefined) extraOptionsFiltered[key] = extraOptions[key];
     });
 
+    const profile = extraOptionsFiltered.profile || getDefaultProfile();
+    const activeSession = extraOptionsFiltered.activeUid ? sessions.get(extraOptionsFiltered.activeUid) : undefined;
     let cwd = '';
-    if (cfg.preserveCWD === undefined || cfg.preserveCWD) {
-      const activeUid = extraOptionsFiltered.activeUid;
-      const activePID = activeUid ? sessions.get(activeUid)?.pty?.pid : undefined;
+    if (cfg.preserveCWD !== false && activeSession && activeSession.profile === profile) {
+      const activePID = activeSession.pty?.pid;
       if (activePID !== undefined) {
         try {
           cwd = getWorkingDirectoryFromPID(activePID) || '';
@@ -148,16 +134,36 @@ export function newWindow(
       cwd = cwd && isAbsolute(cwd) && existsSync(cwd) ? cwd : '';
     }
 
+    const profileCfg = app.plugins.getDecoratedConfig(profile);
+
+    // set working directory
+    let argPath = process.argv[1];
+    if (argPath && process.platform === 'win32') {
+      if (/[a-zA-Z]:"/.test(argPath)) {
+        argPath = argPath.replace('"', sep);
+      }
+      argPath = normalize(argPath + sep);
+    }
+    let workingDirectory = homeDirectory;
+    if (argPath && isAbsolute(argPath)) {
+      workingDirectory = argPath;
+    } else if (profileCfg.workingDirectory && isAbsolute(profileCfg.workingDirectory)) {
+      workingDirectory = profileCfg.workingDirectory;
+    }
+
     // remove the rows and cols, the wrong value of them will break layout when init create
     const defaultOptions = Object.assign(
       {
         cwd: cwd || workingDirectory,
         splitDirection: undefined,
-        shell: cfg.shell,
-        shellArgs: cfg.shellArgs && Array.from(cfg.shellArgs)
+        shell: profileCfg.shell,
+        shellArgs: profileCfg.shellArgs && Array.from(profileCfg.shellArgs)
       },
       extraOptionsFiltered,
-      {uid}
+      {
+        profile: extraOptionsFiltered.profile || getDefaultProfile(),
+        uid
+      }
     );
     const options = decorateSessionOptions(defaultOptions);
     const DecoratedSession = decorateSessionClass(Session);
@@ -177,7 +183,8 @@ export function newWindow(
       splitDirection: options.splitDirection,
       shell: session.shell,
       pid: session.pty ? session.pty.pid : null,
-      activeUid: options.activeUid ?? undefined
+      activeUid: options.activeUid ?? undefined,
+      profile: options.profile
     });
 
     session.on('data', (data: string) => {

@@ -18,7 +18,7 @@ import {
 import type {HyperState, HyperDispatch, HyperActions} from '../hyper';
 import type {Session} from '../../common';
 
-export function addSession({uid, shell, pid, cols = null, rows = null, splitDirection, activeUid}: Session) {
+export function addSession({uid, shell, pid, cols = null, rows = null, splitDirection, activeUid, profile}: Session) {
   return (dispatch: HyperDispatch, getState: () => HyperState) => {
     const {sessions} = getState();
     const now = Date.now();
@@ -31,20 +31,20 @@ export function addSession({uid, shell, pid, cols = null, rows = null, splitDire
       rows,
       splitDirection,
       activeUid: activeUid ? activeUid : sessions.activeUid,
-      now
+      now,
+      profile
     });
   };
 }
 
-export function requestSession() {
+export function requestSession(profile: string | undefined) {
   return (dispatch: HyperDispatch, getState: () => HyperState) => {
     dispatch({
       type: SESSION_REQUEST,
       effect: () => {
         const {ui} = getState();
-        // the cols and rows from preview session maybe not accurate. so remove.
-        const {/*cols, rows,*/ cwd} = ui;
-        rpc.emit('new', {cwd});
+        const {cwd} = ui;
+        rpc.emit('new', {cwd, profile});
       }
     });
   };

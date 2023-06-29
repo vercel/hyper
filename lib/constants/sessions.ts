@@ -22,6 +22,7 @@ export interface SessionAddAction {
   splitDirection?: 'HORIZONTAL' | 'VERTICAL';
   activeUid: string | null;
   now: number;
+  profile: string;
 }
 export interface SessionResizeAction {
   type: typeof SESSION_RESIZE;

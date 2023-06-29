@@ -28,7 +28,8 @@ function Session(obj: Immutable.DeepPartial<session>) {
     cleared: false,
     search: false,
     shell: '',
-    pid: null
+    pid: null,
+    profile: ''
   };
   return Immutable(x).merge(obj);
 }
@@ -51,7 +52,8 @@ const reducer: ISessionReducer = (state = initialState, action) => {
           rows: action.rows,
           uid: action.uid,
           shell: action.shell ? action.shell.split('/').pop() : null,
-          pid: action.pid
+          pid: action.pid,
+          profile: action.profile
         })
       );
 

@@ -13,16 +13,19 @@ import {setActiveSession, ptyExitSession, userExitSession} from './sessions';
 import type {ITermState, ITermGroup, HyperState, HyperDispatch, HyperActions} from '../hyper';
 
 function requestSplit(direction: 'VERTICAL' | 'HORIZONTAL') {
-  return (activeUid: string | undefined) =>
+  return (_activeUid: string | undefined, _profile: string | undefined) =>
     (dispatch: HyperDispatch, getState: () => HyperState): void => {
       dispatch({
         type: SESSION_REQUEST,
         effect: () => {
           const {ui, sessions} = getState();
+          const activeUid = _activeUid ? _activeUid : sessions.activeUid;
+          const profile = _profile ? _profile : activeUid ? sessions.sessions[activeUid].profile : undefined;
           rpc.emit('new', {
             splitDirection: direction,
             cwd: ui.cwd,
-            activeUid: activeUid ? activeUid : sessions.activeUid
+            activeUid,
+            profile
           });
         }
       });
@@ -40,17 +43,20 @@ export function resizeTermGroup(uid: string, sizes: number[]): HyperActions {
   };
 }
 
-export function requestTermGroup(activeUid: string | undefined) {
+export function requestTermGroup(_activeUid: string | undefined, _profile: string | undefined) {
   return (dispatch: HyperDispatch, getState: () => HyperState) => {
     dispatch({
       type: TERM_GROUP_REQUEST,
       effect: () => {
         const {ui, sessions} = getState();
         const {cwd} = ui;
+        const activeUid = _activeUid ? _activeUid : sessions.activeUid;
+        const profile = _profile ? _profile : activeUid ? sessions.sessions[activeUid].profile : undefined;
         rpc.emit('new', {
           isNewGroup: true,
           cwd,
-          activeUid: activeUid ? activeUid : sessions.activeUid
+          activeUid,
+          profile
         });
       }
     });
