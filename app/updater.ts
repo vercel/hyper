@@ -8,6 +8,7 @@ import retry from 'async-retry';
 import {version} from './package.json';
 import {getDecoratedConfig} from './plugins';
 import autoUpdaterLinux from './auto-updater-linux';
+import {getDefaultProfile} from './config';
 
 const {platform} = process;
 const isLinux = platform === 'linux';
@@ -16,7 +17,7 @@ const autoUpdater: AutoUpdater = isLinux ? autoUpdaterLinux : electron.autoUpdat
 
 const getDecoratedConfigWithRetry = async () => {
   return await retry(() => {
-    const content = getDecoratedConfig();
+    const content = getDecoratedConfig(getDefaultProfile());
     if (!content) {
       throw new Error('No config content loaded');
     }

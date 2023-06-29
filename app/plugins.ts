@@ -425,8 +425,12 @@ export const getDecoratedEnv = (baseEnv: Record<string, string>) => {
   return decorateObject(baseEnv, 'decorateEnv');
 };
 
-export const getDecoratedConfig = () => {
-  const baseConfig = config.getConfig();
+export const getDefaultProfile = () => {
+  return config.getDefaultProfile();
+};
+
+export const getDecoratedConfig = (profile: string) => {
+  const baseConfig = config.getProfileConfig(profile);
   const decoratedConfig = decorateObject(baseConfig, 'decorateConfig');
   const fixedConfig = config.fixConfigDefaults(decoratedConfig);
   const translatedConfig = config.htermConfigTranslate(fixedConfig);

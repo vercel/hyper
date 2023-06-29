@@ -32,7 +32,19 @@ const _init = (userCfg: rawConfig, defaultCfg: rawConfig): parsedConfig => {
   return {
     config: (() => {
       if (userCfg?.config) {
-        return _.merge({}, defaultCfg.config, userCfg.config);
+        const conf = userCfg.config;
+        conf.defaultProfile = conf.defaultProfile || 'default';
+        conf.profiles = conf.profiles || [];
+        conf.profiles = conf.profiles.length > 0 ? conf.profiles : [{name: 'default', config: {}}];
+        conf.profiles = conf.profiles.map((p, i) => ({
+          ...p,
+          name: p.name || `profile-${i + 1}`,
+          config: p.config || {}
+        }));
+        if (!conf.profiles.map((p) => p.name).includes(conf.defaultProfile)) {
+          conf.defaultProfile = conf.profiles[0].name;
+        }
+        return _.merge({}, defaultCfg.config, conf);
       } else {
         notify('Error reading configuration: `config` key is missing');
         return defaultCfg.config || ({} as configOptions);

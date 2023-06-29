@@ -92,7 +92,7 @@ app.on('ready', () =>
         fn?: (win: BrowserWindow) => void,
         options: {size?: [number, number]; position?: [number, number]} = {}
       ) {
-        const cfg = plugins.getDecoratedConfig();
+        const cfg = plugins.getDecoratedConfig(config.getDefaultProfile());
 
         const winSet = config.getWin();
         let [startX, startY] = winSet.position;

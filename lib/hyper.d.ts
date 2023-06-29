@@ -39,7 +39,7 @@ export type ITermState = Immutable<{
 
 export type cursorShapes = 'BEAM' | 'UNDERLINE' | 'BLOCK';
 import type {FontWeight, IWindowsPty, Terminal} from 'xterm';
-import type {ColorMap} from './config';
+import type {ColorMap, configOptions} from './config';
 
 export type uiState = Immutable<{
   _lastUpdate: number | null;
@@ -105,6 +105,8 @@ export type uiState = Immutable<{
   webGLRenderer: boolean;
   webLinksActivationKey: 'ctrl' | 'alt' | 'meta' | 'shift' | '';
   windowsPty?: IWindowsPty;
+  defaultProfile: string;
+  profiles: configOptions['profiles'];
 }>;
 
 export type session = {

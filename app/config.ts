@@ -78,8 +78,30 @@ export const getConfigDir = () => {
   return cfgDir;
 };
 
+export const getDefaultProfile = () => {
+  return cfg.config.defaultProfile || cfg.config.profiles[0]?.name || 'default';
+};
+
+// get config for the default profile, keeping it for backward compatibility
 export const getConfig = () => {
-  return cfg.config;
+  return getProfileConfig(getDefaultProfile());
+};
+
+export const getProfiles = () => {
+  return cfg.config.profiles;
+};
+
+export const getProfileConfig = (profileName: string): configOptions => {
+  const {profiles, defaultProfile, ...baseConfig} = cfg.config;
+  const profileConfig = profiles.find((p) => p.name === profileName)?.config || {};
+  for (const key in profileConfig) {
+    if (typeof baseConfig[key] === 'object' && !Array.isArray(baseConfig[key])) {
+      baseConfig[key] = {...baseConfig[key], ...profileConfig[key]};
+    } else {
+      baseConfig[key] = profileConfig[key];
+    }
+  }
+  return {...baseConfig, defaultProfile, profiles};
 };
 
 export const openConfig = () => {
