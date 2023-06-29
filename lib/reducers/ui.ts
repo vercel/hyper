@@ -113,7 +113,9 @@ const initial: uiState = Immutable<Mutable<uiState>>({
   webLinksActivationKey: '',
   macOptionSelectionMode: 'vertical',
   disableLigatures: true,
-  screenReaderMode: false
+  screenReaderMode: false,
+  defaultProfile: '',
+  profiles: []
 });
 
 const reducer: IUiReducer = (state = initial, action) => {
@@ -285,6 +287,14 @@ const reducer: IUiReducer = (state = initial, action) => {
 
             if (config.imageSupport !== undefined) {
               ret.imageSupport = config.imageSupport;
+            }
+
+            if (config.defaultProfile !== undefined) {
+              ret.defaultProfile = config.defaultProfile;
+            }
+
+            if (config.profiles !== undefined) {
+              ret.profiles = config.profiles;
             }
 
             ret._lastUpdate = now;

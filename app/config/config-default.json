@@ -62,7 +62,14 @@
     "autoUpdatePlugins": true,
     "preserveCWD": true,
     "screenReaderMode": false,
-    "imageSupport": true
+    "imageSupport": true,
+    "defaultProfile": "default",
+    "profiles": [
+      {
+        "name": "default",
+        "config": {}
+      }
+    ]
   },
   "plugins": [],
   "localPlugins": [],

@@ -20,6 +20,7 @@ import type {configOptions} from '../../lib/config';
 import {getWorkingDirectoryFromPID} from 'native-process-working-directory';
 import {existsSync} from 'fs';
 import type {sessionExtraOptions} from '../../common';
+import {getDefaultProfile} from '../config';
 
 export function newWindow(
   options_: BrowserWindowConstructorOptions,
@@ -62,7 +63,7 @@ export function newWindow(
   const sessions = new Map<string, Session>();
 
   const updateBackgroundColor = () => {
-    const cfg_ = app.plugins.getDecoratedConfig();
+    const cfg_ = app.plugins.getDecoratedConfig(getDefaultProfile());
     window.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
   };
 
@@ -83,7 +84,7 @@ export function newWindow(
 
   // config changes
   const cfgUnsubscribe = app.config.subscribe(() => {
-    const cfg_ = app.plugins.getDecoratedConfig();
+    const cfg_ = app.plugins.getDecoratedConfig(getDefaultProfile());
 
     // notify renderer
     window.webContents.send('config change');

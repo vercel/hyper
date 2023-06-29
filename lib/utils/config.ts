@@ -5,7 +5,7 @@ import {require as remoteRequire} from '@electron/remote';
 const plugins = remoteRequire('./plugins') as typeof import('../../app/plugins');
 
 export function getConfig() {
-  return plugins.getDecoratedConfig();
+  return plugins.getDecoratedConfig(plugins.getDefaultProfile());
 }
 
 export function subscribe(fn: (event: Electron.IpcRendererEvent, ...args: any[]) => void) {
