@@ -274,7 +274,7 @@ export function openFile(path: string) {
               });
             });
           }
-          dispatch(requestSession());
+          dispatch(requestSession(undefined));
         });
       }
     });
@@ -310,7 +310,7 @@ export function openSSH(parsedUrl: ReturnType<typeof parseUrl>) {
           });
         });
 
-        dispatch(requestSession());
+        dispatch(requestSession(undefined));
       }
     });
   };

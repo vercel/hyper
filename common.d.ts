@@ -10,6 +10,7 @@ export type Session = {
   shell: string | null;
   pid: number | null;
   activeUid?: string;
+  profile: string;
 };
 
 export type sessionExtraOptions = {
@@ -21,6 +22,7 @@ export type sessionExtraOptions = {
   cols?: number;
   shell?: string;
   shellArgs?: string[];
+  profile?: string;
 };
 
 export type MainEvents = {
@@ -72,9 +74,9 @@ export type RendererEvents = {
   'term selectAll': never;
   reload: never;
   'session clear req': never;
-  'split request horizontal': {activeUid?: string};
-  'split request vertical': {activeUid?: string};
-  'termgroup add req': {activeUid?: string};
+  'split request horizontal': {activeUid?: string; profile?: string};
+  'split request vertical': {activeUid?: string; profile?: string};
+  'termgroup add req': {activeUid?: string; profile?: string};
   'termgroup close req': never;
   'session add': Session;
   'session data': string;

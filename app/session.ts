@@ -23,7 +23,6 @@ try {
   throw createNodePtyError();
 }
 
-const envFromConfig = config.getConfig().env || {};
 const useConpty = config.getConfig().useConpty;
 
 // Max duration to batch session data before sending it to the renderer process.
@@ -89,6 +88,7 @@ interface SessionOptions {
   cwd?: string;
   shell?: string;
   shellArgs?: string[];
+  profile: string;
 }
 export default class Session extends EventEmitter {
   pty: IPty | null;
@@ -96,6 +96,7 @@ export default class Session extends EventEmitter {
   shell: string | null;
   ended: boolean;
   initTimestamp: number;
+  profile!: string;
   constructor(options: SessionOptions) {
     super();
     this.pty = null;
@@ -106,7 +107,9 @@ export default class Session extends EventEmitter {
     this.init(options);
   }
 
-  init({uid, rows, cols, cwd, shell: _shell, shellArgs: _shellArgs}: SessionOptions) {
+  init({uid, rows, cols, cwd, shell: _shell, shellArgs: _shellArgs, profile}: SessionOptions) {
+    this.profile = profile;
+    const envFromConfig = config.getProfileConfig(profile).env || {};
     const defaultShellArgs = ['--login'];
 
     const shell = _shell || defaultShell;
@@ -187,7 +190,7 @@ fallback to default shell config: ${JSON.stringify(defaultShellConfig, undefined
 `;
           console.warn(msg);
           this.batcher?.write(msg.replace(/\n/g, '\r\n'));
-          this.init({uid, rows, cols, cwd, ...defaultShellConfig});
+          this.init({uid, rows, cols, cwd, ...defaultShellConfig, profile});
         } else {
           this.ended = true;
           this.emit('exit');

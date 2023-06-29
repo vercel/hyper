@@ -156,16 +156,16 @@ rpc.on('session search close', () => {
   store_.dispatch(sessionActions.closeSearch());
 });
 
-rpc.on('termgroup add req', ({activeUid}) => {
-  store_.dispatch(termGroupActions.requestTermGroup(activeUid));
+rpc.on('termgroup add req', ({activeUid, profile}) => {
+  store_.dispatch(termGroupActions.requestTermGroup(activeUid, profile));
 });
 
-rpc.on('split request horizontal', ({activeUid}) => {
-  store_.dispatch(termGroupActions.requestHorizontalSplit(activeUid));
+rpc.on('split request horizontal', ({activeUid, profile}) => {
+  store_.dispatch(termGroupActions.requestHorizontalSplit(activeUid, profile));
 });
 
-rpc.on('split request vertical', ({activeUid}) => {
-  store_.dispatch(termGroupActions.requestVerticalSplit(activeUid));
+rpc.on('split request vertical', ({activeUid, profile}) => {
+  store_.dispatch(termGroupActions.requestVerticalSplit(activeUid, profile));
 });
 
 rpc.on('reset fontSize req', () => {
