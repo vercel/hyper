@@ -239,9 +239,13 @@ export type ITab = {
 export type TabsProps = {
   tabs: ITab[];
   borderColor: string;
+  backgroundColor: string;
   onChange: (uid: string) => void;
   onClose: (uid: string) => void;
   fullScreen: boolean;
+  defaultProfile: string;
+  profiles: configOptions['profiles'];
+  openNewTab: (profile: string) => void;
 } & extensionProps;
 
 export type NotificationProps = {

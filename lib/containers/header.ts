@@ -5,6 +5,7 @@ import {closeTab, changeTab, maximize, openHamburgerMenu, unmaximize, minimize, 
 import {connect} from '../utils/plugins';
 import {getRootGroups} from '../selectors';
 import type {HyperState, HyperDispatch, ITab} from '../hyper';
+import {requestTermGroup} from '../actions/term-groups';
 
 const isMac = /Mac/.test(navigator.userAgent);
 
@@ -38,7 +39,9 @@ const mapStateToProps = (state: HyperState) => {
     maximized: state.ui.maximized,
     fullScreen: state.ui.fullScreen,
     showHamburgerMenu: state.ui.showHamburgerMenu,
-    showWindowControls: state.ui.showWindowControls
+    showWindowControls: state.ui.showWindowControls,
+    defaultProfile: state.ui.defaultProfile,
+    profiles: state.ui.profiles
   };
 };
 
@@ -70,6 +73,10 @@ const mapDispatchToProps = (dispatch: HyperDispatch) => {
 
     close: () => {
       dispatch(close());
+    },
+
+    openNewTab: (profile: string) => {
+      dispatch(requestTermGroup(undefined, profile));
     }
   };
 };

@@ -4,6 +4,7 @@ import {decorate, getTabProps} from '../utils/plugins';
 
 import Tab_ from './tab';
 import type {TabsProps} from '../hyper';
+import DropdownButton from './new-tab';
 
 const Tab = decorate(Tab_, 'Tab');
 const isMac = /Mac/.test(navigator.userAgent);
@@ -45,6 +46,7 @@ export default class Tabs extends React.PureComponent<TabsProps> {
               )
             ]
           : null}
+        <DropdownButton {...this.props} tabsVisible={tabs.length > 1} />
         {this.props.customChildren}
 
         <style jsx>{`
@@ -59,6 +61,8 @@ export default class Tabs extends React.PureComponent<TabsProps> {
             -webkit-user-select: none;
             -webkit-app-region: ${isMac ? 'drag' : ''};
             top: ${isMac ? '0px' : '34px'};
+            display: flex;
+            flex-flow: row;
           }
 
           .tabs_hiddenNav {
@@ -73,6 +77,7 @@ export default class Tabs extends React.PureComponent<TabsProps> {
             white-space: nowrap;
             padding-left: 76px;
             padding-right: 76px;
+            flex-grow: 1;
           }
 
           .tabs_list {
@@ -80,6 +85,7 @@ export default class Tabs extends React.PureComponent<TabsProps> {
             display: flex;
             flex-flow: row;
             margin-left: ${isMac ? '76px' : '0'};
+            flex-grow: 1;
           }
 
           .tabs_fullScreen {
