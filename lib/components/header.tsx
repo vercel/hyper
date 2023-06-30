@@ -81,9 +81,13 @@ export default class Header extends React.PureComponent<HeaderProps> {
     const props = getTabsProps(this.props, {
       tabs: this.props.tabs,
       borderColor: this.props.borderColor,
+      backgroundColor: this.props.backgroundColor,
       onClose: this.props.onCloseTab,
       onChange: this.onChangeIntent,
-      fullScreen: this.props.fullScreen
+      fullScreen: this.props.fullScreen,
+      defaultProfile: this.props.defaultProfile,
+      profiles: this.props.profiles.asMutable({deep: true}),
+      openNewTab: this.props.openNewTab
     });
     const {borderColor} = props;
     let title = 'Hyper';
