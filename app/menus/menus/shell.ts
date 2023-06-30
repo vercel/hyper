@@ -55,6 +55,12 @@ export default (
               }
             },
             {
+              label: 'New Window',
+              click(item, focusedWindow) {
+                execCommand(`window:new:${profile}`, focusedWindow);
+              }
+            },
+            {
               type: 'separator'
             },
             {

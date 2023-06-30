@@ -90,9 +90,10 @@ app.on('ready', () =>
     .then(() => {
       function createWindow(
         fn?: (win: BrowserWindow) => void,
-        options: {size?: [number, number]; position?: [number, number]} = {}
+        options: {size?: [number, number]; position?: [number, number]} = {},
+        profileName: string = config.getDefaultProfile()
       ) {
-        const cfg = plugins.getDecoratedConfig(config.getDefaultProfile());
+        const cfg = plugins.getDecoratedConfig(profileName);
 
         const winSet = config.getWin();
         let [startX, startY] = winSet.position;
@@ -134,7 +135,7 @@ app.on('ready', () =>
           [startX, startY] = config.windowDefaults.windowPosition;
         }
 
-        const hwin = newWindow({width, height, x: startX, y: startY}, cfg, fn);
+        const hwin = newWindow({width, height, x: startX, y: startY}, cfg, fn, profileName);
         windowSet.add(hwin);
         void hwin.loadURL(url);
 

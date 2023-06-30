@@ -147,6 +147,9 @@ const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
 
 //Profile specific commands
 getConfig().profiles.forEach((profile) => {
+  commands[`window:new:${profile.name}`] = () => {
+    setTimeout(() => app.createWindow(undefined, undefined, profile.name), 0);
+  };
   commands[`tab:new:${profile.name}`] = (focusedWindow) => {
     focusedWindow?.rpc.emit('termgroup add req', {profile: profile.name});
   };
