@@ -62,7 +62,11 @@ export const createMenu = (
   };
   const menu = [
     ...(process.platform === 'darwin' ? [darwinMenu(commandKeys, execCommand, showAbout)] : []),
-    shellMenu(commandKeys, execCommand),
+    shellMenu(
+      commandKeys,
+      execCommand,
+      getConfig().profiles.map((p) => p.name)
+    ),
     editMenu(commandKeys, execCommand),
     viewMenu(commandKeys, execCommand),
     toolsMenu(commandKeys, execCommand),
