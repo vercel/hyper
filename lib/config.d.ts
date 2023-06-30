@@ -19,49 +19,22 @@ export type ColorMap = {
   yellow: string;
 };
 
-type profileConfigOptions = {
-  /** for environment variables */
-  env: {[k: string]: string};
-  /**
-   * the shell to run when spawning a new session (e.g. /usr/local/bin/fish)
-   * if left empty, your system's login shell will be used by default
-   *
-   * Windows
-   * - Make sure to use a full path if the binary name doesn't work
-   * - Remove `--login` in shellArgs
-   *
-   * Windows Subsystem for Linux (WSL) - previously Bash on Windows
-   * - Example: `C:\\Windows\\System32\\wsl.exe`
-   *
-   * Git-bash on Windows
-   * - Example: `C:\\Program Files\\Git\\bin\\bash.exe`
-   *
-   * PowerShell on Windows
-   * - Example: `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
-   *
-   * Cygwin
-   * - Example: `C:\\cygwin64\\bin\\bash.exe`
-   *
-   * Git Bash
-   * - Example: `C:\\Program Files\\Git\\git-cmd.exe`
-   * Then Add `--command=usr/bin/bash.exe` to shellArgs
-   */
-  shell: string;
-  /**
-   * for setting shell arguments (e.g. for using interactive shellArgs: `['-i']`)
-   * by default `['--login']` will be used
-   */
-  shellArgs: string[];
-  /** set custom startup directory (must be an absolute path) */
-  workingDirectory: string;
-};
-
 type rootConfigOptions = {
   /**
    * if `true` (default), Hyper will update plugins every 5 hours
    * you can also set it to a custom time e.g. `1d` or `2h`
    */
   autoUpdatePlugins: boolean | string;
+  /** if `true` hyper will be set as the default protocol client for SSH */
+  defaultSSHApp: boolean;
+  /** if `true` hyper will not check for updates */
+  disableAutoUpdates: boolean;
+  /** choose either `'stable'` for receiving highly polished, or `'canary'` for less polished but more frequent updates */
+  updateChannel: 'stable' | 'canary';
+  useConpty?: boolean;
+};
+
+type profileConfigOptions = {
   /**
    * terminal background color
    *
@@ -105,12 +78,10 @@ type rootConfigOptions = {
   cursorColor: string;
   /** `'BEAM'` for |, `'UNDERLINE'` for _, `'BLOCK'` for █ */
   cursorShape: 'BEAM' | 'UNDERLINE' | 'BLOCK';
-  /** if `true` hyper will be set as the default protocol client for SSH */
-  defaultSSHApp: boolean;
-  /** if `true` hyper will not check for updates */
-  disableAutoUpdates: boolean;
   /** if `false` Hyper will use ligatures provided by some fonts */
   disableLigatures: boolean;
+  /** for environment variables */
+  env: {[k: string]: string};
   /** font family with optional fallbacks */
   fontFamily: string;
   /** default font size in pixels for all tabs */
@@ -158,6 +129,36 @@ type rootConfigOptions = {
   /** terminal selection color */
   selectionColor: string;
   /**
+   * the shell to run when spawning a new session (e.g. /usr/local/bin/fish)
+   * if left empty, your system's login shell will be used by default
+   *
+   * Windows
+   * - Make sure to use a full path if the binary name doesn't work
+   * - Remove `--login` in shellArgs
+   *
+   * Windows Subsystem for Linux (WSL) - previously Bash on Windows
+   * - Example: `C:\\Windows\\System32\\wsl.exe`
+   *
+   * Git-bash on Windows
+   * - Example: `C:\\Program Files\\Git\\bin\\bash.exe`
+   *
+   * PowerShell on Windows
+   * - Example: `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
+   *
+   * Cygwin
+   * - Example: `C:\\cygwin64\\bin\\bash.exe`
+   *
+   * Git Bash
+   * - Example: `C:\\Program Files\\Git\\git-cmd.exe`
+   * Then Add `--command=usr/bin/bash.exe` to shellArgs
+   */
+  shell: string;
+  /**
+   * for setting shell arguments (e.g. for using interactive shellArgs: `['-i']`)
+   * by default `['--login']` will be used
+   */
+  shellArgs: string[];
+  /**
    * if you're using a Linux setup which show native menus, set to false
    *
    * default: `true` on Linux, `true` on Windows, ignored on macOS
@@ -174,9 +175,6 @@ type rootConfigOptions = {
   /** custom CSS to embed in the terminal window */
   termCSS: string;
   uiFontFamily?: string;
-  /** choose either `'stable'` for receiving highly polished, or `'canary'` for less polished but more frequent updates */
-  updateChannel: 'stable' | 'canary';
-  useConpty?: boolean;
   /**
    * Whether to use the WebGL renderer. Set it to false to use canvas-based
    * rendering (slower, but supports transparent backgrounds)
@@ -189,6 +187,8 @@ type rootConfigOptions = {
   webLinksActivationKey: 'ctrl' | 'alt' | 'meta' | 'shift' | '';
   /** Initial window size in pixels */
   windowSize?: [number, number];
+  /** set custom startup directory (must be an absolute path) */
+  workingDirectory: string;
 };
 
 export type configOptions = rootConfigOptions &
