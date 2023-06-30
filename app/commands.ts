@@ -145,6 +145,19 @@ const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
   };
 });
 
+//Profile specific commands
+getConfig().profiles.forEach((profile) => {
+  commands[`tab:new:${profile.name}`] = (focusedWindow) => {
+    focusedWindow?.rpc.emit('termgroup add req', {profile: profile.name});
+  };
+  commands[`pane:splitRight:${profile.name}`] = (focusedWindow) => {
+    focusedWindow?.rpc.emit('split request vertical', {profile: profile.name});
+  };
+  commands[`pane:splitDown:${profile.name}`] = (focusedWindow) => {
+    focusedWindow?.rpc.emit('split request horizontal', {profile: profile.name});
+  };
+});
+
 export const execCommand = (command: string, focusedWindow?: BrowserWindow) => {
   const fn = commands[command];
   if (fn) {

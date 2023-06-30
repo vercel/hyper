@@ -2,7 +2,8 @@ import type {BrowserWindow, MenuItemConstructorOptions} from 'electron';
 
 export default (
   commandKeys: Record<string, string>,
-  execCommand: (command: string, focusedWindow?: BrowserWindow) => void
+  execCommand: (command: string, focusedWindow?: BrowserWindow) => void,
+  profiles: string[]
 ): MenuItemConstructorOptions => {
   const isMac = process.platform === 'darwin';
 
@@ -40,6 +41,37 @@ export default (
           execCommand('pane:splitRight', focusedWindow);
         }
       },
+      {
+        type: 'separator'
+      },
+      ...profiles.map(
+        (profile): MenuItemConstructorOptions => ({
+          label: profile,
+          submenu: [
+            {
+              label: 'New Tab',
+              click(item, focusedWindow) {
+                execCommand(`tab:new:${profile}`, focusedWindow);
+              }
+            },
+            {
+              type: 'separator'
+            },
+            {
+              label: 'Split Down',
+              click(item, focusedWindow) {
+                execCommand(`pane:splitDown:${profile}`, focusedWindow);
+              }
+            },
+            {
+              label: 'Split Right',
+              click(item, focusedWindow) {
+                execCommand(`pane:splitRight:${profile}`, focusedWindow);
+              }
+            }
+          ]
+        })
+      ),
       {
         type: 'separator'
       },

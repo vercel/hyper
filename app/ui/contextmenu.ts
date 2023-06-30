@@ -3,6 +3,7 @@ import shellMenu from '../menus/menus/shell';
 import {execCommand} from '../commands';
 import {getDecoratedKeymaps} from '../plugins';
 import type {MenuItemConstructorOptions, BrowserWindow} from 'electron';
+import {getProfiles} from '../config';
 const separator: MenuItemConstructorOptions = {type: 'separator'};
 
 const getCommandKeys = (keymaps: Record<string, string[]>): Record<string, string> =>
@@ -25,7 +26,11 @@ export default (
   selection: string
 ) => {
   const commandKeys = getCommandKeys(getDecoratedKeymaps());
-  const _shell = shellMenu(commandKeys, execCommand).submenu as MenuItemConstructorOptions[];
+  const _shell = shellMenu(
+    commandKeys,
+    execCommand,
+    getProfiles().map((p) => p.name)
+  ).submenu as MenuItemConstructorOptions[];
   const _edit = editMenu(commandKeys, execCommand).submenu.filter(filterCutCopy.bind(null, selection));
   return _edit
     .concat(separator, _shell)
