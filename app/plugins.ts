@@ -425,10 +425,6 @@ export const getDecoratedEnv = (baseEnv: Record<string, string>) => {
   return decorateObject(baseEnv, 'decorateEnv');
 };
 
-export const getDefaultProfile = () => {
-  return config.getDefaultProfile();
-};
-
 export const getDecoratedConfig = (profile: string) => {
   const baseConfig = config.getProfileConfig(profile);
   const decoratedConfig = decorateObject(baseConfig, 'decorateConfig');

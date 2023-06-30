@@ -6,6 +6,7 @@ declare global {
     __rpcId: string;
     rpc: Client;
     focusActiveTerm: (uid?: string) => void;
+    profileName: string;
   }
 
   const snapshotResult: {

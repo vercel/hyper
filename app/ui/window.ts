@@ -25,7 +25,8 @@ import {getDefaultProfile} from '../config';
 export function newWindow(
   options_: BrowserWindowConstructorOptions,
   cfg: configOptions,
-  fn?: (win: BrowserWindow) => void
+  fn?: (win: BrowserWindow) => void,
+  profileName: string = getDefaultProfile()
 ): BrowserWindow {
   const classOpts = Object.assign({uid: uuidv4()});
   app.plugins.decorateWindowClass(classOpts);
@@ -51,6 +52,8 @@ export function newWindow(
   };
   const window = new BrowserWindow(app.plugins.getDecoratedBrowserOptions(winOpts));
 
+  window.profileName = profileName;
+
   // Enable remote module on this window
   remoteEnable(window.webContents);
 
@@ -63,13 +66,13 @@ export function newWindow(
   const sessions = new Map<string, Session>();
 
   const updateBackgroundColor = () => {
-    const cfg_ = app.plugins.getDecoratedConfig(getDefaultProfile());
+    const cfg_ = app.plugins.getDecoratedConfig(profileName);
     window.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
   };
 
   // config changes
   const cfgUnsubscribe = app.config.subscribe(() => {
-    const cfg_ = app.plugins.getDecoratedConfig(getDefaultProfile());
+    const cfg_ = app.plugins.getDecoratedConfig(profileName);
 
     // notify renderer
     window.webContents.send('config change');
@@ -119,7 +122,7 @@ export function newWindow(
       if (extraOptions[key] !== undefined) extraOptionsFiltered[key] = extraOptions[key];
     });
 
-    const profile = extraOptionsFiltered.profile || getDefaultProfile();
+    const profile = extraOptionsFiltered.profile || profileName;
     const activeSession = extraOptionsFiltered.activeUid ? sessions.get(extraOptionsFiltered.activeUid) : undefined;
     let cwd = '';
     if (cfg.preserveCWD !== false && activeSession && activeSession.profile === profile) {
@@ -161,7 +164,7 @@ export function newWindow(
       },
       extraOptionsFiltered,
       {
-        profile: extraOptionsFiltered.profile || getDefaultProfile(),
+        profile: extraOptionsFiltered.profile || profileName,
         uid
       }
     );

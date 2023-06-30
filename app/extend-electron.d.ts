@@ -10,7 +10,8 @@ declare global {
       windowCallback?: (win: BrowserWindow) => void;
       createWindow: (
         fn?: (win: BrowserWindow) => void,
-        options?: {size?: [number, number]; position?: [number, number]}
+        options?: {size?: [number, number]; position?: [number, number]},
+        profileName?: string
       ) => BrowserWindow;
       setVersion: (version: string) => void;
     }
@@ -22,6 +23,7 @@ declare global {
       focusTime: number;
       clean: () => void;
       rpc: Server;
+      profileName: string;
     }
   }
 }
