@@ -52,6 +52,7 @@
         "arm64"
       ]
     },
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "category": "public.app-category.developer-tools",
     "entitlements": "./build/mac/entitlements.plist",
     "entitlementsInherit": "./build/mac/entitlements.plist",
