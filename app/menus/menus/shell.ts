@@ -50,12 +50,14 @@ export default (
           submenu: [
             {
               label: 'New Tab',
+              accelerator: commandKeys[`tab:new:${profile}`],
               click(item, focusedWindow) {
                 execCommand(`tab:new:${profile}`, focusedWindow);
               }
             },
             {
               label: 'New Window',
+              accelerator: commandKeys[`window:new:${profile}`],
               click(item, focusedWindow) {
                 execCommand(`window:new:${profile}`, focusedWindow);
               }
@@ -65,12 +67,14 @@ export default (
             },
             {
               label: 'Split Down',
+              accelerator: commandKeys[`pane:splitDown:${profile}`],
               click(item, focusedWindow) {
                 execCommand(`pane:splitDown:${profile}`, focusedWindow);
               }
             },
             {
               label: 'Split Right',
+              accelerator: commandKeys[`pane:splitRight:${profile}`],
               click(item, focusedWindow) {
                 execCommand(`pane:splitRight:${profile}`, focusedWindow);
               }
