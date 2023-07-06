@@ -16,8 +16,8 @@ jobs:
     strategy:
       matrix:
         os:
-          - macos-12
-          - ubuntu-20.04
+          - macos-latest
+          - ubuntu-latest
           - windows-latest
       fail-fast: false
     steps:
@@ -107,7 +107,7 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
 
   build-linux-arm:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
@@ -163,7 +163,6 @@ jobs:
         run: |
           sudo dpkg --add-architecture i386
           sudo apt update
-          sudo apt install -y libpcre2-8-0=10.34-7 --allow-downgrades
           sudo apt install -y libglib2.0-0:i386 libexpat1:i386
           npm_config_arch=armv7l yarn run v8-snapshot:arch
       - name: Build
