@@ -158,14 +158,12 @@ jobs:
       - name: chown node-pty
         run: |
           sudo chown -R $USER:$USER target/node_modules/node-pty
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
       - name: Prepare v8 snapshot
         if: matrix.name == 'armv7l'
         run: |
           sudo dpkg --add-architecture i386
           sudo apt update
-          sudo apt install -y libglib2.0-0:i386 libexpat1:i386
+          sudo apt install -y libglib2.0-0:i386 libexpat1:i386 libgcc-s1:i386
           npm_config_arch=armv7l yarn run v8-snapshot:arch
       - name: Build
         run: yarn run electron-builder -l deb rpm AppImage pacman --${{ matrix.name }} -c electron-builder-linux-ci.json
