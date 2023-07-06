@@ -158,6 +158,8 @@ jobs:
       - name: chown node-pty
         run: |
           sudo chown -R $USER:$USER target/node_modules/node-pty
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       - name: Prepare v8 snapshot
         if: matrix.name == 'armv7l'
         run: |
