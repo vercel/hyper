@@ -112,7 +112,11 @@ const Tab = (props: TabProps) => {
         }
 
         .tab_icon {
-          transition: opacity 0.2s ease, color 0.2s ease, transform 0.25s ease, background-color 0.1s ease;
+          transition:
+            opacity 0.2s ease,
+            color 0.2s ease,
+            transform 0.25s ease,
+            background-color 0.1s ease;
           pointer-events: none;
           position: absolute;
           right: 7px;
