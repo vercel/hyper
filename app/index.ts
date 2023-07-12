@@ -18,7 +18,7 @@ remoteInitialize();
 import {resolve} from 'path';
 
 // Packages
-import {app, BrowserWindow, Menu, screen} from 'electron';
+import {app, BrowserWindow, dialog, Event, Menu, screen} from 'electron';
 import {gitDescribe} from 'git-describe';
 import isDev from 'electron-is-dev';
 import * as config from './config';
@@ -32,6 +32,8 @@ import * as AppMenu from './menus/menu';
 import {newWindow} from './ui/window';
 import * as windowUtils from './utils/window-utils';
 import parseUrl from 'parse-url';
+import type Session from './session';
+import sessionHasRunningChildren from './utils/session-has-children';
 
 const windowSet = new Set<BrowserWindow>([]);
 
@@ -140,7 +142,24 @@ app.on('ready', () =>
         void hwin.loadURL(url);
 
         // the window can be closed by the browser process itself
-        hwin.on('close', () => {
+        hwin.on('close', (evt) => {
+          for (const s of hwin.sessions.values()) {
+            const session: Session = s;
+            if (sessionHasRunningChildren(session)) {
+              const opt = dialog.showMessageBoxSync(hwin, {
+                title: 'Close window & all terminals?',
+                buttons: ['Close terminal', 'Cancel'],
+                message: `There is still a process running in a hyper terminal. Closing the terminal will kill it`
+              });
+              if (opt == 1) {
+                evt.preventDefault();
+                return;
+              } else {
+                hwin.clean();
+                windowSet.delete(hwin);
+              }
+            }
+          }
           hwin.clean();
           windowSet.delete(hwin);
         });
