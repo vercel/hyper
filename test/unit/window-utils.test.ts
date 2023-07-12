@@ -1,6 +1,7 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import test from 'ava';
+import sessionHasRunningChildren from '../../app/utils/session-has-children';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const proxyquire = require('proxyquire').noCallThru();
 
@@ -88,4 +89,18 @@ test('positionIsValid() returns false when position isnt valid', (t) => {
   const result = windowUtils.positionIsValid(position);
 
   t.false(result);
+});
+
+test('Closing the terminal should show dialog', (t) => {
+  const shouldClose = sessionHasRunningChildren({pty: {pid: 1}});
+  t.true(shouldClose);
+});
+
+test('Has a invalid pid', (t) => {
+  t.false(sessionHasRunningChildren({pty: {pid: -99999}}));
+});
+
+test('Should not show dialog', (t) => {
+  const shouldClose = sessionHasRunningChildren({pty: null});
+  t.false(shouldClose);
 });
