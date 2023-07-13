@@ -46,7 +46,7 @@ type profileConfigOptions = {
    * 1. 'SOUND' -> Enables the bell as a sound
    * 2. false: turns off the bell
    */
-  bell: string;
+  bell: 'SOUND' | false;
   /**
    * base64 encoded string of the sound file to use for the bell
    * if null, the default bell will be used
