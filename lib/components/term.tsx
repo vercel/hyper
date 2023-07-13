@@ -416,8 +416,8 @@ export default class Term extends React.PureComponent<
     return !e.catched;
   }
 
-  setBellSound(bell: string | null, sound: string | null) {
-    if (bell?.toUpperCase() === 'SOUND') {
+  setBellSound(bell: 'SOUND' | false, sound: string | null) {
+    if (bell && bell.toUpperCase() === 'SOUND') {
       this.bellSound = sound ? new Audio(sound) : this.defaultBellSound;
     } else {
       this.bellSound = null;

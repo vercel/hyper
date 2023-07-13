@@ -47,7 +47,7 @@ export type uiState = Immutable<{
   activeUid: string | null;
   activityMarkers: Record<string, boolean>;
   backgroundColor: string;
-  bell: string;
+  bell: 'SOUND' | false;
   bellSoundURL: string | null;
   bellSound: string | null;
   borderColor: string;
@@ -347,7 +347,7 @@ import type {FitAddon} from 'xterm-addon-fit';
 import type {SearchAddon} from 'xterm-addon-search';
 export type TermProps = {
   backgroundColor: string;
-  bell: string;
+  bell: 'SOUND' | false;
   bellSound: string | null;
   bellSoundURL: string | null;
   borderColor: string;

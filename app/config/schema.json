@@ -33,7 +33,10 @@
                 },
                 "bell": {
                     "description": "Supported Options:\n1. 'SOUND' -> Enables the bell as a sound\n2. false: turns off the bell",
-                    "type": "string"
+                    "enum": [
+                        "SOUND",
+                        false
+                    ]
                 },
                 "bellSound": {
                     "description": "base64 encoded string of the sound file to use for the bell\nif null, the default bell will be used",
@@ -357,7 +360,10 @@
                         },
                         "bell": {
                             "description": "Supported Options:\n1. 'SOUND' -> Enables the bell as a sound\n2. false: turns off the bell",
-                            "type": "string"
+                            "enum": [
+                                "SOUND",
+                                false
+                            ]
                         },
                         "bellSound": {
                             "description": "base64 encoded string of the sound file to use for the bell\nif null, the default bell will be used",

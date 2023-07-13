@@ -217,7 +217,7 @@ const reducer: IUiReducer = (state = initial, action) => {
             }
 
             if (allowedBells.has(config.bell)) {
-              ret.bell = config.bell;
+              ret.bell = (config.bell as any) === 'false' ? false : config.bell;
             }
 
             if (config.bellSoundURL !== state.bellSoundURL) {
