@@ -7,126 +7,124 @@ import type {NotificationsProps} from '../hyper';
 
 const Notification = decorate(Notification_, 'Notification');
 
-export default class Notifications extends React.PureComponent<NotificationsProps> {
-  render() {
-    return (
-      <div className="notifications_view">
-        {this.props.customChildrenBefore}
-        {this.props.fontShowing && (
-          <Notification
-            key="font"
-            backgroundColor="rgba(255, 255, 255, .2)"
-            text={`${this.props.fontSize}px`}
-            userDismissable={false}
-            onDismiss={this.props.onDismissFont}
-            dismissAfter={1000}
-          />
-        )}
+const Notifications: React.FC<NotificationsProps> = (props) => {
+  return (
+    <div className="notifications_view">
+      {props.customChildrenBefore}
+      {props.fontShowing && (
+        <Notification
+          key="font"
+          backgroundColor="rgba(255, 255, 255, .2)"
+          text={`${props.fontSize}px`}
+          userDismissable={false}
+          onDismiss={props.onDismissFont}
+          dismissAfter={1000}
+        />
+      )}
 
-        {this.props.resizeShowing && (
-          <Notification
-            key="resize"
-            backgroundColor="rgba(255, 255, 255, .2)"
-            text={`${this.props.cols}x${this.props.rows}`}
-            userDismissable={false}
-            onDismiss={this.props.onDismissResize}
-            dismissAfter={1000}
-          />
-        )}
+      {props.resizeShowing && (
+        <Notification
+          key="resize"
+          backgroundColor="rgba(255, 255, 255, .2)"
+          text={`${props.cols}x${props.rows}`}
+          userDismissable={false}
+          onDismiss={props.onDismissResize}
+          dismissAfter={1000}
+        />
+      )}
 
-        {this.props.messageShowing && (
-          <Notification
-            key="message"
-            backgroundColor="#FE354E"
-            color="#fff"
-            text={this.props.messageText}
-            onDismiss={this.props.onDismissMessage}
-            userDismissable={this.props.messageDismissable}
-          >
-            {this.props.messageURL
-              ? [
-                  this.props.messageText,
-                  ' (',
-                  <a
-                    key="link"
-                    style={{color: '#fff'}}
-                    onClick={(ev) => {
-                      void window.require('electron').shell.openExternal(ev.currentTarget.href);
-                      ev.preventDefault();
-                    }}
-                    href={this.props.messageURL}
-                  >
-                    more
-                  </a>,
-                  ') '
-                ]
-              : null}
-          </Notification>
-        )}
-
-        {this.props.updateShowing && (
-          <Notification
-            key="update"
-            backgroundColor="#18E179"
-            color="#000"
-            text={`Version ${this.props.updateVersion} ready`}
-            onDismiss={this.props.onDismissUpdate}
-            userDismissable
-          >
-            Version <b>{this.props.updateVersion}</b> ready.
-            {this.props.updateNote && ` ${this.props.updateNote.trim().replace(/\.$/, '')}`} (
-            <a
-              style={{color: '#000'}}
-              onClick={(ev) => {
-                void window.require('electron').shell.openExternal(ev.currentTarget.href);
-                ev.preventDefault();
-              }}
-              href={`https://github.com/vercel/hyper/releases/tag/${this.props.updateVersion}`}
-            >
-              notes
-            </a>
-            ).{' '}
-            {this.props.updateCanInstall ? (
+      {props.messageShowing && (
+        <Notification
+          key="message"
+          backgroundColor="#FE354E"
+          color="#fff"
+          text={props.messageText}
+          onDismiss={props.onDismissMessage}
+          userDismissable={props.messageDismissable}
+        >
+          {props.messageURL ? (
+            <>
+              {props.messageText} (
               <a
-                style={{
-                  cursor: 'pointer',
-                  textDecoration: 'underline',
-                  fontWeight: 'bold'
-                }}
-                onClick={this.props.onUpdateInstall}
-              >
-                Restart
-              </a>
-            ) : (
-              <a
-                style={{
-                  color: '#000',
-                  cursor: 'pointer',
-                  textDecoration: 'underline',
-                  fontWeight: 'bold'
-                }}
+                style={{color: '#fff'}}
                 onClick={(ev) => {
                   void window.require('electron').shell.openExternal(ev.currentTarget.href);
                   ev.preventDefault();
                 }}
-                href={this.props.updateReleaseUrl!}
+                href={props.messageURL}
               >
-                Download
+                more
               </a>
-            )}
-            .{' '}
-          </Notification>
-        )}
-        {this.props.customChildren}
+              )
+            </>
+          ) : null}
+        </Notification>
+      )}
 
-        <style jsx>{`
-          .notifications_view {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-          }
-        `}</style>
-      </div>
-    );
-  }
-}
+      {props.updateShowing && (
+        <Notification
+          key="update"
+          backgroundColor="#18E179"
+          color="#000"
+          text={`Version ${props.updateVersion} ready`}
+          onDismiss={props.onDismissUpdate}
+          userDismissable
+        >
+          Version <b>{props.updateVersion}</b> ready.
+          {props.updateNote && ` ${props.updateNote.trim().replace(/\.$/, '')}`} (
+          <a
+            style={{color: '#000'}}
+            onClick={(ev) => {
+              void window.require('electron').shell.openExternal(ev.currentTarget.href);
+              ev.preventDefault();
+            }}
+            href={`https://github.com/vercel/hyper/releases/tag/${props.updateVersion}`}
+          >
+            notes
+          </a>
+          ).{' '}
+          {props.updateCanInstall ? (
+            <a
+              style={{
+                cursor: 'pointer',
+                textDecoration: 'underline',
+                fontWeight: 'bold'
+              }}
+              onClick={props.onUpdateInstall}
+            >
+              Restart
+            </a>
+          ) : (
+            <a
+              style={{
+                color: '#000',
+                cursor: 'pointer',
+                textDecoration: 'underline',
+                fontWeight: 'bold'
+              }}
+              onClick={(ev) => {
+                void window.require('electron').shell.openExternal(ev.currentTarget.href);
+                ev.preventDefault();
+              }}
+              href={props.updateReleaseUrl!}
+            >
+              Download
+            </a>
+          )}
+          .{' '}
+        </Notification>
+      )}
+      {props.customChildren}
+
+      <style jsx>{`
+        .notifications_view {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default Notifications;
