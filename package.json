@@ -57,7 +57,7 @@
     "shebang-loader": "0.0.1",
     "styled-jsx": "5.1.2",
     "stylis": "3.5.4",
-    "typescript-json-schema": "0.58.1",
+    "typescript-json-schema": "0.59.0",
     "uuid": "9.0.0",
     "webpack-cli": "5.1.4",
     "xterm": "5.2.1",

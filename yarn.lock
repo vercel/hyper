@@ -7438,10 +7438,10 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript-json-schema@0.58.1:
-  version "0.58.1"
-  resolved "https://registry.npmjs.org/typescript-json-schema/-/typescript-json-schema-0.58.1.tgz#841fc5c9a05c894ce77a04b28025af4135a00b1f"
-  integrity sha512-EcmquhfGEmEJOAezLZC6CzY0rPNzfXuky+Z3zoXULEEncW8e13aAjmC2r8ppT1bvvDekJj1TJ4xVhOdkjYtkUA==
+typescript-json-schema@0.59.0:
+  version "0.59.0"
+  resolved "https://registry.npmjs.org/typescript-json-schema/-/typescript-json-schema-0.59.0.tgz#736d1b4e4b101b9e989741958f0b2571e998d6ed"
+  integrity sha512-eYB9RO8p4PntznWUukdDQHckNfxzjEFCJUgsWeCE43mcFioE0wXGTSECGk1uhty9XQMxkpuI4pKAqqnb62ln3Q==
   dependencies:
     "@types/json-schema" "^7.0.9"
     "@types/node" "^16.9.2"
