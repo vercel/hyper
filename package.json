@@ -117,7 +117,7 @@
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-json-schema-validator": "^4.5.0",
     "eslint-plugin-jsonc": "^2.9.0",
-    "eslint-plugin-prettier": "^5.0.0-alpha.2",
+    "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "7.32.2",
     "husky": "8.0.3",
     "inquirer": "9.2.7",
