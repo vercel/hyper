@@ -1,16 +1,16 @@
 import {EventEmitter} from 'events';
-import type {IpcRenderer, IpcRendererEvent} from 'electron';
-import electron from 'electron';
-import type {FilterNever, MainEvents, RendererEvents, TypedEmitter} from '../../common';
+import type {IpcRendererEvent} from 'electron';
+import type {FilterNever, IpcRendererWithCommands, MainEvents, RendererEvents, TypedEmitter} from '../../common';
+import {ipcRenderer} from './ipc';
 
 export default class Client {
   emitter: TypedEmitter<RendererEvents>;
-  ipc: IpcRenderer;
+  ipc: IpcRendererWithCommands;
   id!: string;
 
   constructor() {
     this.emitter = new EventEmitter();
-    this.ipc = electron.ipcRenderer;
+    this.ipc = ipcRenderer;
     this.emit = this.emit.bind(this);
     if (window.__rpcId) {
       setTimeout(() => {
@@ -19,11 +19,12 @@ export default class Client {
         this.emitter.emit('ready');
       }, 0);
     } else {
-      this.ipc.on('init', (ev: IpcRendererEvent, uid: string) => {
+      this.ipc.on('init', (ev: IpcRendererEvent, uid: string, profileName: string) => {
         // we cache so that if the object
         // gets re-instantiated we don't
         // wait for a `init` event
         window.__rpcId = uid;
+        // window.profileName = profileName;
         this.id = uid;
         this.ipc.on(uid, this.ipcListener);
         this.emitter.emit('ready');

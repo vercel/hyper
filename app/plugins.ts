@@ -467,3 +467,10 @@ ipcMain.handle('child_process.exec', (event, command, options) => {
 ipcMain.handle('child_process.execFile', (event, file, args, options) => {
   return promisify(execFile)(file, args, options);
 });
+
+ipcMain.handle('getLoadedPluginVersions', () => getLoadedPluginVersions());
+ipcMain.handle('getPaths', () => getPaths());
+ipcMain.handle('getBasePaths', () => getBasePaths());
+ipcMain.handle('getDeprecatedConfig', () => getDeprecatedConfig());
+ipcMain.handle('getDecoratedConfig', (e, profile) => getDecoratedConfig(profile));
+ipcMain.handle('getDecoratedKeymaps', () => getDecoratedKeymaps());

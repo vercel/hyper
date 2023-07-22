@@ -28,7 +28,7 @@ export class Server {
     // to support reloading the window and re-initializing
     // the channel
     this.wc.on('did-finish-load', () => {
-      this.wc.send('init', uid);
+      this.wc.send('init', uid, win.profileName);
     });
   }
 

@@ -1,7 +1,5 @@
-import electron from 'electron';
-import type {IpcRendererWithCommands} from '../../common';
 import type {ExecFileOptions, ExecOptions} from 'child_process';
-const ipcRenderer = electron.ipcRenderer as IpcRendererWithCommands;
+import {ipcRenderer} from './ipc';
 
 export function exec(command: string, options: ExecOptions, callback: (..._args: any) => void) {
   if (typeof options === 'function') {

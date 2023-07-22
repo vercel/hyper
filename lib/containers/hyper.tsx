@@ -25,7 +25,7 @@ class Hyper extends React.PureComponent<HyperProps> {
   componentDidUpdate(prev: HyperProps) {
     const {lastConfigUpdate} = this.props;
     if (lastConfigUpdate && lastConfigUpdate !== prev.lastConfigUpdate) {
-      this.attachKeyListeners();
+      void this.attachKeyListeners();
     }
     if (prev.activeSession !== this.props.activeSession) {
       this.handleFocusActive(this.props.activeSession);
@@ -46,7 +46,7 @@ class Hyper extends React.PureComponent<HyperProps> {
     }
   };
 
-  attachKeyListeners() {
+  async attachKeyListeners() {
     if (!this.mousetrap) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       this.mousetrap = new (Mousetrap as any)(window, true);
@@ -58,7 +58,7 @@ class Hyper extends React.PureComponent<HyperProps> {
       this.mousetrap.reset();
     }
 
-    const keys = getRegisteredKeys();
+    const keys = await getRegisteredKeys();
     Object.keys(keys).forEach((commandKeys) => {
       this.mousetrap.bind(
         commandKeys,
@@ -75,7 +75,7 @@ class Hyper extends React.PureComponent<HyperProps> {
   }
 
   componentDidMount() {
-    this.attachKeyListeners();
+    void this.attachKeyListeners();
     window.rpc.on('term selectAll', this.handleSelectAll);
   }
 
