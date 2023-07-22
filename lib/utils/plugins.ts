@@ -5,7 +5,7 @@ import {require as remoteRequire} from '@electron/remote';
 
 import type {Options} from 'react-redux';
 import {connect as reduxConnect} from 'react-redux';
-import {basename} from 'path';
+import pathModule from 'path';
 
 // patching Module._load
 // so plugins can `require` them without needing their own version
@@ -219,8 +219,6 @@ const clearModulesCache = () => {
   }
 };
 
-const pathModule = window.require('path') as typeof import('path');
-
 const getPluginName = (path: string) => pathModule.basename(path);
 
 const getPluginVersion = (path: string): string | null => {
@@ -269,7 +267,7 @@ const loadModules = () => {
   const loadedPlugins = plugins.getLoadedPluginVersions().map((plugin: any) => plugin.name);
   modules = paths.plugins
     .concat(paths.localPlugins)
-    .filter((plugin) => loadedPlugins.indexOf(basename(plugin)) !== -1)
+    .filter((plugin) => loadedPlugins.indexOf(pathModule.basename(plugin)) !== -1)
     .map((path) => {
       let mod: hyperPlugin;
       const pluginName = getPluginName(path);

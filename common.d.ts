@@ -1,6 +1,7 @@
 import type parseUrl from 'parse-url';
 import type {IpcMain, IpcRenderer} from 'electron';
 import type {ExecFileOptions, ExecOptions} from 'child_process';
+import type {configOptions} from './lib/config';
 
 export type Session = {
   uid: string;
@@ -115,6 +116,12 @@ export type IpcCommands = {
     stdout: string;
     stderr: string;
   };
+  getLoadedPluginVersions: () => {name: string; version: string}[];
+  getPaths: () => {plugins: string[]; localPlugins: string[]};
+  getBasePaths: () => {path: string; localPath: string};
+  getDeprecatedConfig: () => Record<string, {css: string[]}>;
+  getDecoratedConfig: (profile: string) => configOptions;
+  getDecoratedKeymaps: () => Record<string, string[]>;
 };
 
 export interface IpcMainWithCommands extends IpcMain {
