@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+import sum from 'lodash/sum';
 import type {SplitPaneProps} from '../hyper';
 
 export default class SplitPane extends React.PureComponent<SplitPaneProps, {dragging: boolean}> {
@@ -40,7 +40,7 @@ export default class SplitPane extends React.PureComponent<SplitPaneProps, {drag
     sizes_[this.paneIndex] = 0;
     sizes_[this.paneIndex + 1] = 0;
 
-    const availableWidth = 1 - _.sum(sizes_);
+    const availableWidth = 1 - sum(sizes_);
     sizes_[this.paneIndex] = availableWidth / 2;
     sizes_[this.paneIndex + 1] = availableWidth / 2;
 

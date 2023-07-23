@@ -3,7 +3,7 @@ import {builders, namedTypes} from 'ast-types';
 import * as babelParser from 'recast/parsers/babel';
 import {copy, copySync, existsSync, readFileSync, writeFileSync} from 'fs-extra';
 import {dirname, resolve} from 'path';
-import _ from 'lodash';
+import merge from 'lodash/merge';
 
 import notify from '../notify';
 import {_extractDefault} from './init';
@@ -166,7 +166,7 @@ export const migrateHyper3Config = () => {
   try {
     const legacyCfgRaw = readFileSync(legacyCfgPath, 'utf8');
     const legacyCfgData = _extractDefault(legacyCfgRaw);
-    newCfgData = _.merge({}, defaultCfgData, legacyCfgData);
+    newCfgData = merge({}, defaultCfgData, legacyCfgData);
 
     const pluginCode = configToPlugin(legacyCfgRaw);
     if (pluginCode) {

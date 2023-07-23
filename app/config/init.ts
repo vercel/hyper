@@ -2,7 +2,7 @@ import vm from 'vm';
 import notify from '../notify';
 import mapKeys from '../utils/map-keys';
 import type {parsedConfig, rawConfig, configOptions} from '../../lib/config';
-import _ from 'lodash';
+import merge from 'lodash/merge';
 
 const _extract = (script?: vm.Script): Record<string, any> => {
   const module: Record<string, any> = {};
@@ -44,7 +44,7 @@ const _init = (userCfg: rawConfig, defaultCfg: rawConfig): parsedConfig => {
         if (!conf.profiles.map((p) => p.name).includes(conf.defaultProfile)) {
           conf.defaultProfile = conf.profiles[0].name;
         }
-        return _.merge({}, defaultCfg.config, conf);
+        return merge({}, defaultCfg.config, conf);
       } else {
         notify('Error reading configuration: `config` key is missing');
         return defaultCfg.config || ({} as configOptions);
