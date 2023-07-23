@@ -2,7 +2,10 @@ import React from 'react';
 import sum from 'lodash/sum';
 import type {SplitPaneProps} from '../hyper';
 
-export default class SplitPane extends React.PureComponent<SplitPaneProps, {dragging: boolean}> {
+export default class SplitPane extends React.PureComponent<
+  React.PropsWithChildren<SplitPaneProps>,
+  {dragging: boolean}
+> {
   dragPanePosition!: number;
   dragTarget!: Element;
   panes!: Element[];

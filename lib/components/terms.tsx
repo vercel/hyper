@@ -12,7 +12,7 @@ const StyleSheet = decorate(StyleSheet_, 'StyleSheet');
 
 const isMac = /Mac/.test(navigator.userAgent);
 
-export default class Terms extends React.Component<TermsProps> {
+export default class Terms extends React.Component<React.PropsWithChildren<TermsProps>> {
   terms: Record<string, Term>;
   registerCommands: (cmds: Record<string, (e: any, dispatch: HyperDispatch) => void>) => void;
   constructor(props: TermsProps, context: any) {

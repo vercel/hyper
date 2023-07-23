@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import type {TabProps} from '../hyper';
 
-const Tab = (props: TabProps) => {
+const Tab = forwardRef<HTMLLIElement, TabProps>((props, ref) => {
   const handleClick = (event: React.MouseEvent) => {
     const isLeftClick = event.nativeEvent.which === 1;
 
@@ -28,6 +28,7 @@ const Tab = (props: TabProps) => {
         className={`tab_tab ${isFirst ? 'tab_first' : ''} ${isActive ? 'tab_active' : ''} ${
           isFirst && isActive ? 'tab_firstActive' : ''
         } ${hasActivity ? 'tab_hasActivity' : ''}`}
+        ref={ref}
       >
         {props.customChildrenBefore}
         <span
@@ -159,6 +160,8 @@ const Tab = (props: TabProps) => {
       `}</style>
     </>
   );
-};
+});
+
+Tab.displayName = 'Tab';
 
 export default Tab;

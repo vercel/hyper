@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useEffect} from 'react';
+import React, {useCallback, useRef, useEffect, forwardRef} from 'react';
 import type {SearchBoxProps} from '../hyper';
 import {VscArrowUp} from '@react-icons/all-files/vsc/VscArrowUp';
 import {VscArrowDown} from '@react-icons/all-files/vsc/VscArrowDown';
@@ -82,7 +82,7 @@ const SearchButton = ({
   );
 };
 
-const SearchBox = (props: SearchBoxProps) => {
+const SearchBox = forwardRef<HTMLDivElement, SearchBoxProps>((props, ref) => {
   const {
     caseSensitive,
     wholeWord,
@@ -127,7 +127,7 @@ const SearchBox = (props: SearchBoxProps) => {
   };
 
   return (
-    <div className="flex-row search-container">
+    <div className="flex-row search-container" ref={ref}>
       <div className="flex-row search-box">
         <input className="search-input" type="text" onKeyDown={handleChange} ref={inputRef} placeholder="Search" />
 
@@ -228,6 +228,8 @@ const SearchBox = (props: SearchBoxProps) => {
       </style>
     </div>
   );
-};
+});
+
+SearchBox.displayName = 'SearchBox';
 
 export default SearchBox;

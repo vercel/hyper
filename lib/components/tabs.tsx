@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 
 import {decorate, getTabProps} from '../utils/plugins';
 
@@ -9,13 +9,13 @@ import DropdownButton from './new-tab';
 const Tab = decorate(Tab_, 'Tab');
 const isMac = /Mac/.test(navigator.userAgent);
 
-const Tabs = (props: TabsProps) => {
+const Tabs = forwardRef<HTMLElement, TabsProps>((props, ref) => {
   const {tabs = [], borderColor, onChange, onClose, fullScreen} = props;
 
   const hide = !isMac && tabs.length === 1;
 
   return (
-    <nav className={`tabs_nav ${hide ? 'tabs_hiddenNav' : ''}`}>
+    <nav className={`tabs_nav ${hide ? 'tabs_hiddenNav' : ''}`} ref={ref}>
       {props.customChildrenBefore}
       {tabs.length === 1 && isMac ? <div className="tabs_title">{tabs[0].title}</div> : null}
       {tabs.length > 1 ? (
@@ -106,6 +106,8 @@ const Tabs = (props: TabsProps) => {
       `}</style>
     </nav>
   );
-};
+});
+
+Tabs.displayName = 'Tabs';
 
 export default Tabs;

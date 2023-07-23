@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import type {StyleSheetProps} from '../hyper';
 
-const StyleSheet: React.FC<StyleSheetProps> = (props) => {
+const StyleSheet: React.FC<StyleSheetProps> = forwardRef<HTMLStyleElement, StyleSheetProps>((props, ref) => {
   const {borderColor} = props;
 
   return (
-    <style jsx global>{`
+    <style jsx global ref={ref}>{`
       ::-webkit-scrollbar {
         width: 5px;
       }
@@ -19,6 +19,8 @@ const StyleSheet: React.FC<StyleSheetProps> = (props) => {
       }
     `}</style>
   );
-};
+});
+
+StyleSheet.displayName = 'StyleSheet';
 
 export default StyleSheet;

@@ -1,7 +1,10 @@
 import React from 'react';
 import type {NotificationProps, NotificationState} from '../hyper';
 
-export default class Notification extends React.PureComponent<NotificationProps, NotificationState> {
+export default class Notification extends React.PureComponent<
+  React.PropsWithChildren<NotificationProps>,
+  NotificationState
+> {
   dismissTimer!: NodeJS.Timeout;
   constructor(props: NotificationProps) {
     super(props);

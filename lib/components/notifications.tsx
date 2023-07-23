@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 
 import {decorate} from '../utils/plugins';
 
@@ -7,9 +7,9 @@ import type {NotificationsProps} from '../hyper';
 
 const Notification = decorate(Notification_, 'Notification');
 
-const Notifications: React.FC<NotificationsProps> = (props) => {
+const Notifications = forwardRef<HTMLDivElement, NotificationsProps>((props, ref) => {
   return (
-    <div className="notifications_view">
+    <div className="notifications_view" ref={ref}>
       {props.customChildrenBefore}
       {props.fontShowing && (
         <Notification
@@ -125,6 +125,8 @@ const Notifications: React.FC<NotificationsProps> = (props) => {
       `}</style>
     </div>
   );
-};
+});
+
+Notifications.displayName = 'Notifications';
 
 export default Notifications;
