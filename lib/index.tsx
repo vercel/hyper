@@ -1,9 +1,8 @@
 import './v8-snapshot-util';
 import {webFrame} from 'electron';
-import forceUpdate from 'react-deep-force-update';
 import {Provider} from 'react-redux';
 import React from 'react';
-import {render} from 'react-dom';
+import {createRoot} from 'react-dom/client';
 
 import rpc from './rpc';
 import init from './actions/index';
@@ -232,14 +231,14 @@ rpc.on('leave full screen', () => {
   store_.dispatch(uiActions.leaveFullScreen());
 });
 
-const app = render(
+const root = createRoot(document.getElementById('mount')!);
+
+root.render(
   <Provider store={store_}>
     <HyperContainer />
-  </Provider>,
-  document.getElementById('mount')
+  </Provider>
 );
 
 rpc.on('reload', () => {
   plugins.reload();
-  forceUpdate(app);
 });

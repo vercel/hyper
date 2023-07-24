@@ -108,7 +108,6 @@ const config: webpack.Configuration[] = [
       'parse-url': 'require("./node_modules/parse-url/dist/index.js")',
       'php-escape-shell': 'require("./node_modules/php-escape-shell/php-escape-shell.js")',
       plist: 'require("./node_modules/plist/index.js")',
-      'react-deep-force-update': 'require("./node_modules/react-deep-force-update/lib/index.js")',
       'react-dom': 'require("./node_modules/react-dom/index.js")',
       'react-redux': 'require("./node_modules/react-redux/lib/index.js")',
       react: 'require("./node_modules/react/index.js")',

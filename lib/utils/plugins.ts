@@ -3,7 +3,7 @@
 import {require as remoteRequire} from '@electron/remote';
 // TODO: Should be updates to new async API https://medium.com/@nornagon/electrons-remote-module-considered-harmful-70d69500f31
 
-import type {Options} from 'react-redux';
+import type {ConnectOptions} from 'react-redux/es/components/connect';
 import {connect as reduxConnect} from 'react-redux';
 import pathModule from 'path';
 
@@ -458,7 +458,7 @@ export function connect<stateProps extends {}, dispatchProps>(
   stateFn: (state: HyperState) => stateProps,
   dispatchFn: (dispatch: HyperDispatch) => dispatchProps,
   c: null | undefined,
-  d: Options = {}
+  d: ConnectOptions = {}
 ) {
   return (Class: ComponentType<any>, name: keyof typeof connectors) => {
     return reduxConnect<stateProps, dispatchProps, any, HyperState>(
