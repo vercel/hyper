@@ -118,7 +118,7 @@
     "eslint-plugin-jsonc": "^2.9.0",
     "eslint-plugin-lodash": "^7.4.0",
     "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-react": "7.32.2",
+    "eslint-plugin-react": "7.33.0",
     "husky": "8.0.3",
     "inquirer": "9.2.8",
     "node-addon-api": "7.0.0",
