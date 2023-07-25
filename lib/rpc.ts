@@ -1,3 +1,5 @@
 import RPC from './utils/rpc';
 
-export default new RPC();
+const rpc = new RPC();
+
+export default rpc;

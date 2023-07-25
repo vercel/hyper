@@ -5,7 +5,7 @@ import {getConfig, getPlugins} from '../../config';
 const {arch, env, platform, versions} = process;
 import {version} from '../../package.json';
 
-export default (commands: Record<string, string>, showAbout: () => void): MenuItemConstructorOptions => {
+const helpMenu = (commands: Record<string, string>, showAbout: () => void): MenuItemConstructorOptions => {
   const submenu: MenuItemConstructorOptions[] = [
     {
       label: `${app.name} Website`,
@@ -107,3 +107,5 @@ ${JSON.stringify(getPlugins(), null, 2)}
     submenu
   };
 };
+
+export default helpMenu;

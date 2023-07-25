@@ -48,7 +48,7 @@ export function fork() {
   console.error('Calling fork from renderer is disabled');
 }
 
-export default {
+const IPCChildProcess = {
   exec,
   execSync,
   execFile,
@@ -57,3 +57,5 @@ export default {
   spawnSync,
   fork
 };
+
+export default IPCChildProcess;

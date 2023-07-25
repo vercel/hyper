@@ -9,8 +9,10 @@ import {composeWithDevTools} from '@redux-devtools/extension';
 import type {HyperState, HyperActions} from '../../typings/hyper';
 const thunk: ThunkMiddleware<HyperState, HyperActions> = _thunk;
 
-export default () => {
+const configureStoreForDevelopment = () => {
   const enhancer = composeWithDevTools(applyMiddleware(thunk, plugins.middleware, thunk, writeMiddleware, effects));
 
   return createStore(rootReducer, enhancer);
 };
+
+export default configureStoreForDevelopment;

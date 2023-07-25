@@ -71,7 +71,7 @@ async function init() {
   isInit = true;
 }
 
-export default (win: BrowserWindow) => {
+const updater = (win: BrowserWindow) => {
   if (!isInit) {
     void init();
   }
@@ -115,3 +115,5 @@ export default (win: BrowserWindow) => {
     }
   });
 };
+
+export default updater;

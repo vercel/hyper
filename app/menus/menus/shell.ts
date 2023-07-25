@@ -1,6 +1,6 @@
 import type {BrowserWindow, MenuItemConstructorOptions} from 'electron';
 
-export default (
+const shellMenu = (
   commandKeys: Record<string, string>,
   execCommand: (command: string, focusedWindow?: BrowserWindow) => void,
   profiles: string[]
@@ -100,3 +100,5 @@ export default (
     ]
   };
 };
+
+export default shellMenu;

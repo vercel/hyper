@@ -46,4 +46,6 @@ class AutoUpdater extends EventEmitter implements Electron.AutoUpdater {
   }
 }
 
-export default new AutoUpdater();
+const autoUpdaterLinux = new AutoUpdater();
+
+export default autoUpdaterLinux;

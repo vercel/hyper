@@ -3,7 +3,7 @@
 import type {BrowserWindow, MenuItemConstructorOptions} from 'electron';
 import {app} from 'electron';
 
-export default (
+const darwinMenu = (
   commandKeys: Record<string, string>,
   execCommand: (command: string, focusedWindow?: BrowserWindow) => void,
   showAbout: () => void
@@ -55,3 +55,5 @@ export default (
     ]
   };
 };
+
+export default darwinMenu;

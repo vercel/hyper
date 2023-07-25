@@ -104,7 +104,8 @@
         "lodash/import-scope": [ "error", "method" ],
         "lodash/collection-return": "error",
         "lodash/collection-method-value": "error",
-        "import/no-extraneous-dependencies": "error"
+        "import/no-extraneous-dependencies": "error",
+        "import/no-anonymous-default-export": "error"
       }
     },
     {
