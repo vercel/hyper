@@ -1,23 +1,25 @@
 import './v8-snapshot-util';
 import {webFrame} from 'electron';
-import {Provider} from 'react-redux';
 import React from 'react';
-import {createRoot} from 'react-dom/client';
 
-import rpc from './rpc';
+import {createRoot} from 'react-dom/client';
+import {Provider} from 'react-redux';
+
+import type {configOptions} from '../typings/config';
+
+import {loadConfig, reloadConfig} from './actions/config';
 import init from './actions/index';
-import * as config from './utils/config';
-import * as plugins from './utils/plugins';
-import {getBase64FileData} from './utils/file';
-import * as uiActions from './actions/ui';
-import * as updaterActions from './actions/updater';
+import {addNotificationMessage} from './actions/notifications';
 import * as sessionActions from './actions/sessions';
 import * as termGroupActions from './actions/term-groups';
-import {addNotificationMessage} from './actions/notifications';
-import {loadConfig, reloadConfig} from './actions/config';
+import * as uiActions from './actions/ui';
+import * as updaterActions from './actions/updater';
 import HyperContainer from './containers/hyper';
+import rpc from './rpc';
 import configureStore from './store/configure-store';
-import type {configOptions} from '../typings/config';
+import * as config from './utils/config';
+import {getBase64FileData} from './utils/file';
+import * as plugins from './utils/plugins';
 
 // On Linux, the default zoom was somehow changed with Electron 3 (or maybe 2).
 // Setting zoom factor to 1.2 brings back the normal default size

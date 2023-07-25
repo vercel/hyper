@@ -1,6 +1,9 @@
-import type parseUrl from 'parse-url';
-import type {IpcMain, IpcRenderer} from 'electron';
 import type {ExecFileOptions, ExecOptions} from 'child_process';
+
+import type {IpcMain, IpcRenderer} from 'electron';
+
+import type parseUrl from 'parse-url';
+
 import type {configOptions} from './config';
 
 export type Session = {

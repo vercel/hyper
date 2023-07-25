@@ -1,7 +1,10 @@
-import {shell} from 'electron';
-import {cfgPath} from './paths';
-import * as Registry from 'native-reg';
 import {exec} from 'child_process';
+
+import {shell} from 'electron';
+
+import * as Registry from 'native-reg';
+
+import {cfgPath} from './paths';
 
 const getUserChoiceKey = () => {
   try {

@@ -1,11 +1,11 @@
 // Native
 import path from 'path';
-import fs from 'fs-extra';
 
 // Packages
 import test from 'ava';
-import type {ElectronApplication} from 'playwright';
+import fs from 'fs-extra';
 import {_electron} from 'playwright';
+import type {ElectronApplication} from 'playwright';
 
 let app: ElectronApplication;
 

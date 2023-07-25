@@ -6,9 +6,10 @@ import {
   UI_WINDOW_MINIMIZE,
   UI_WINDOW_CLOSE
 } from '../../typings/constants/ui';
-import rpc from '../rpc';
-import {userExitTermGroup, setActiveGroup} from './term-groups';
 import type {HyperDispatch} from '../../typings/hyper';
+import rpc from '../rpc';
+
+import {userExitTermGroup, setActiveGroup} from './term-groups';
 
 export function closeTab(uid: string) {
   return (dispatch: HyperDispatch) => {

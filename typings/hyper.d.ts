@@ -1,3 +1,5 @@
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable import/order */
 import type {Immutable} from 'seamless-immutable';
 import type Client from '../lib/utils/rpc';
 

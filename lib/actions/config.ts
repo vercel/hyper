@@ -1,6 +1,6 @@
+import type {configOptions} from '../../typings/config';
 import {CONFIG_LOAD, CONFIG_RELOAD} from '../../typings/constants/config';
 import type {HyperActions} from '../../typings/hyper';
-import type {configOptions} from '../../typings/config';
 
 export function loadConfig(config: configOptions): HyperActions {
   return {

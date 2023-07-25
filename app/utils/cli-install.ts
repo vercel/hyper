@@ -1,13 +1,16 @@
 import {existsSync, readlink, symlink} from 'fs';
 import path from 'path';
-import notify from '../notify';
-import {cliScriptPath, cliLinkPath} from '../config/paths';
+import {promisify} from 'util';
+
+import {clipboard, dialog} from 'electron';
+
+import {mkdirpSync} from 'fs-extra';
 import * as Registry from 'native-reg';
 import type {ValueType} from 'native-reg';
 import sudoPrompt from 'sudo-prompt';
-import {clipboard, dialog} from 'electron';
-import {mkdirpSync} from 'fs-extra';
-import {promisify} from 'util';
+
+import {cliScriptPath, cliLinkPath} from '../config/paths';
+import notify from '../notify';
 
 const readLink = promisify(readlink);
 const symLink = promisify(symlink);

@@ -1,17 +1,18 @@
 import React, {forwardRef, useEffect, useRef} from 'react';
-import type {MousetrapInstance} from 'mousetrap';
-import Mousetrap from 'mousetrap';
 
-import {connect} from '../utils/plugins';
-import * as uiActions from '../actions/ui';
-import {getRegisteredKeys, getCommandHandler, shouldPreventDefault} from '../command-registry';
+import Mousetrap from 'mousetrap';
+import type {MousetrapInstance} from 'mousetrap';
 import stylis from 'stylis';
 
-import {HeaderContainer} from './header';
-import TermsContainer from './terms';
-import NotificationsContainer from './notifications';
 import type {HyperState, HyperProps, HyperDispatch} from '../../typings/hyper';
+import * as uiActions from '../actions/ui';
+import {getRegisteredKeys, getCommandHandler, shouldPreventDefault} from '../command-registry';
 import type Terms from '../components/terms';
+import {connect} from '../utils/plugins';
+
+import {HeaderContainer} from './header';
+import NotificationsContainer from './notifications';
+import TermsContainer from './terms';
 
 const isMac = /Mac/.test(navigator.userAgent);
 

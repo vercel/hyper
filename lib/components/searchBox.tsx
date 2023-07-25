@@ -1,12 +1,14 @@
 import React, {useCallback, useRef, useEffect, forwardRef} from 'react';
-import type {SearchBoxProps} from '../../typings/hyper';
-import {VscArrowUp} from '@react-icons/all-files/vsc/VscArrowUp';
+
 import {VscArrowDown} from '@react-icons/all-files/vsc/VscArrowDown';
-import {VscClose} from '@react-icons/all-files/vsc/VscClose';
+import {VscArrowUp} from '@react-icons/all-files/vsc/VscArrowUp';
 import {VscCaseSensitive} from '@react-icons/all-files/vsc/VscCaseSensitive';
+import {VscClose} from '@react-icons/all-files/vsc/VscClose';
 import {VscRegex} from '@react-icons/all-files/vsc/VscRegex';
 import {VscWholeWord} from '@react-icons/all-files/vsc/VscWholeWord';
 import clsx from 'clsx';
+
+import type {SearchBoxProps} from '../../typings/hyper';
 
 type SearchButtonColors = {
   foregroundColor: string;

@@ -1,5 +1,7 @@
 import {EventEmitter} from 'events';
+
 import type {IpcRendererEvent} from 'electron';
+
 import type {
   FilterNever,
   IpcRendererWithCommands,
@@ -7,6 +9,7 @@ import type {
   RendererEvents,
   TypedEmitter
 } from '../../typings/common';
+
 import {ipcRenderer} from './ipc';
 
 export default class Client {

@@ -1,4 +1,5 @@
 import {createSelector} from 'reselect';
+
 import type {HyperState} from '../typings/hyper';
 
 const getTermGroups = ({termGroups}: Pick<HyperState, 'termGroups'>) => termGroups.termGroups;

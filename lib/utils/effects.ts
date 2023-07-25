@@ -1,4 +1,5 @@
 import type {Dispatch, Middleware} from 'redux';
+
 import type {HyperActions, HyperState} from '../../typings/hyper';
 /**
  * Simple redux middleware that executes

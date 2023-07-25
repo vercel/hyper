@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/order
 import {cfgPath} from './config/paths';
 
 // Print diagnostic information for a few arguments instead of running Hyper.
@@ -11,27 +12,30 @@ if (['--help', '-v', '--version'].includes(process.argv[1])) {
 }
 
 // Enable remote module
+// eslint-disable-next-line import/order
 import {initialize as remoteInitialize} from '@electron/remote/main';
 remoteInitialize();
+
+// set up config
+// eslint-disable-next-line import/order
+import * as config from './config';
+config.setup();
 
 // Native
 import {resolve} from 'path';
 
 // Packages
 import {app, BrowserWindow, Menu, screen} from 'electron';
-import {gitDescribe} from 'git-describe';
+
 import isDev from 'electron-is-dev';
-import * as config from './config';
-
-// set up config
-config.setup();
-
-import * as plugins from './plugins';
-import {installCLI} from './utils/cli-install';
-import * as AppMenu from './menus/menu';
-import {newWindow} from './ui/window';
-import * as windowUtils from './utils/window-utils';
+import {gitDescribe} from 'git-describe';
 import parseUrl from 'parse-url';
+
+import * as AppMenu from './menus/menu';
+import * as plugins from './plugins';
+import {newWindow} from './ui/window';
+import {installCLI} from './utils/cli-install';
+import * as windowUtils from './utils/window-utils';
 
 const windowSet = new Set<BrowserWindow>([]);
 

@@ -1,24 +1,28 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import type {BrowserWindow, App, MenuItemConstructorOptions} from 'electron';
-import {app, dialog, ipcMain as _ipcMain} from 'electron';
-import {resolve, basename} from 'path';
+import {exec, execFile} from 'child_process';
 import {writeFileSync} from 'fs';
+import {resolve, basename} from 'path';
+import {promisify} from 'util';
+
+import {app, dialog, ipcMain as _ipcMain} from 'electron';
+import type {BrowserWindow, App, MenuItemConstructorOptions} from 'electron';
+import React from 'react';
+
 import Config from 'electron-store';
 import ms from 'ms';
-import React from 'react';
 import ReactDom from 'react-dom';
+
+import type {IpcMainWithCommands} from '../typings/common';
+import type {configOptions} from '../typings/config';
+
 import * as config from './config';
+import {plugs} from './config/paths';
 import notify from './notify';
 import {availableExtensions} from './plugins/extensions';
 import {install} from './plugins/install';
-import {plugs} from './config/paths';
 import mapKeys from './utils/map-keys';
-import type {configOptions} from '../typings/config';
-import {promisify} from 'util';
-import {exec, execFile} from 'child_process';
-import type {IpcMainWithCommands} from '../typings/common';
 
 // local storage
 const cache = new Config();

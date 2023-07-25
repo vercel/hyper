@@ -1,7 +1,9 @@
 import React, {useRef, useState} from 'react';
+
 import {VscChevronDown} from '@react-icons/all-files/vsc/VscChevronDown';
-import type {configOptions} from '../../typings/config';
 import useClickAway from 'react-use/lib/useClickAway';
+
+import type {configOptions} from '../../typings/config';
 
 interface Props {
   defaultProfile: string;

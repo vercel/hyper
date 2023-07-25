@@ -1,11 +1,13 @@
 import React from 'react';
-import {decorate, getTermGroupProps} from '../utils/plugins';
-import {registerCommandHandlers} from '../command-registry';
-import TermGroup_ from './term-group';
-import StyleSheet_ from './style-sheet';
+
 import type {TermsProps, HyperDispatch} from '../../typings/hyper';
-import type Term from './term';
+import {registerCommandHandlers} from '../command-registry';
 import {ObjectTypedKeys} from '../utils/object';
+import {decorate, getTermGroupProps} from '../utils/plugins';
+
+import StyleSheet_ from './style-sheet';
+import type Term from './term';
+import TermGroup_ from './term-group';
 
 const TermGroup = decorate(TermGroup_, 'TermGroup');
 const StyleSheet = decorate(StyleSheet_, 'StyleSheet');

@@ -1,10 +1,13 @@
 import React from 'react';
+
 import {connect} from 'react-redux';
-import {decorate, getTermProps, getTermGroupProps} from '../utils/plugins';
-import {resizeTermGroup} from '../actions/term-groups';
-import Term_ from './term';
-import SplitPane_ from './split-pane';
+
 import type {HyperState, HyperDispatch, TermGroupProps, TermGroupOwnProps} from '../../typings/hyper';
+import {resizeTermGroup} from '../actions/term-groups';
+import {decorate, getTermProps, getTermGroupProps} from '../utils/plugins';
+
+import SplitPane_ from './split-pane';
+import Term_ from './term';
 
 const Term = decorate(Term_, 'Term');
 const SplitPane = decorate(SplitPane_, 'SplitPane');

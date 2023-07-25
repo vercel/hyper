@@ -1,6 +1,4 @@
-import rpc from '../rpc';
-import {keys} from '../utils/object';
-import findBySession from '../utils/term-groups';
+import type {Session} from '../../typings/common';
 import {
   SESSION_ADD,
   SESSION_RESIZE,
@@ -16,7 +14,9 @@ import {
   SESSION_SEARCH
 } from '../../typings/constants/sessions';
 import type {HyperState, HyperDispatch, HyperActions} from '../../typings/hyper';
-import type {Session} from '../../typings/common';
+import rpc from '../rpc';
+import {keys} from '../utils/object';
+import findBySession from '../utils/term-groups';
 
 export function addSession({uid, shell, pid, cols = null, rows = null, splitDirection, activeUid, profile}: Session) {
   return (dispatch: HyperDispatch, getState: () => HyperState) => {

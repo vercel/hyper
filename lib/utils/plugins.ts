@@ -1,20 +1,18 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import {require as remoteRequire} from '@electron/remote';
-// TODO: Should be updates to new async API https://medium.com/@nornagon/electrons-remote-module-considered-harmful-70d69500f31
-
-import type {ConnectOptions} from 'react-redux/es/components/connect';
-import {connect as reduxConnect} from 'react-redux';
+import ChildProcess from 'child_process';
 import pathModule from 'path';
 
-// patching Module._load
-// so plugins can `require` them without needing their own version
-// https://github.com/vercel/hyper/issues/619
-import type {ComponentType} from 'react';
 import React, {PureComponent} from 'react';
+import type {ComponentType} from 'react';
+
+import {require as remoteRequire} from '@electron/remote';
+// TODO: Should be updates to new async API https://medium.com/@nornagon/electrons-remote-module-considered-harmful-70d69500f31
 import ReactDOM from 'react-dom';
-import Notification from '../components/notification';
-import notify from './notify';
+import {connect as reduxConnect} from 'react-redux';
+import type {ConnectOptions} from 'react-redux/es/components/connect';
+import type {Dispatch, Middleware} from 'redux';
+
 import type {
   hyperPlugin,
   IUiReducer,
@@ -29,10 +27,11 @@ import type {
   Assignable,
   HyperActions
 } from '../../typings/hyper';
-import type {Dispatch, Middleware} from 'redux';
-import {ObjectTypedKeys} from './object';
+import Notification from '../components/notification';
+
 import IPCChildProcess from './ipc-child-process';
-import ChildProcess from 'child_process';
+import notify from './notify';
+import {ObjectTypedKeys} from './object';
 
 // remote interface to `../plugins`
 const plugins = remoteRequire('./plugins') as typeof import('../../app/plugins');
@@ -166,6 +165,9 @@ export function decorate<P extends Record<string, any>>(
   };
 }
 
+// patching Module._load
+// so plugins can `require` them without needing their own version
+// https://github.com/vercel/hyper/issues/619
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Module = require('module') as typeof import('module') & {_load: Function};
 const originalLoad = Module._load;

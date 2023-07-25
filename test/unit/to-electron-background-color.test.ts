@@ -1,4 +1,5 @@
 import test from 'ava';
+
 import toElectronBackgroundColor from '../../app/utils/to-electron-background-color';
 import {isHexColor} from '../testUtils/is-hex-color';
 

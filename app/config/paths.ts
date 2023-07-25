@@ -1,8 +1,10 @@
 // This module exports paths, names, and other metadata that is referenced
-import {homedir} from 'os';
-import {app} from 'electron';
 import {statSync} from 'fs';
+import {homedir} from 'os';
 import {resolve, join} from 'path';
+
+import {app} from 'electron';
+
 import isDev from 'electron-is-dev';
 
 const cfgFile = 'hyper.json';

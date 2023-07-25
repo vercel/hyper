@@ -1,10 +1,9 @@
+import {stat} from 'fs';
+import type {Stats} from 'fs';
+
+import type parseUrl from 'parse-url';
 import {php_escapeshellcmd as escapeShellCmd} from 'php-escape-shell';
-import {isExecutable} from '../utils/file';
-import {getRootGroups} from '../selectors';
-import findBySession from '../utils/term-groups';
-import notify from '../utils/notify';
-import rpc from '../rpc';
-import {requestSession, sendSessionData, setActiveSession} from './sessions';
+
 import {
   UI_FONT_SIZE_SET,
   UI_FONT_SIZE_INCR,
@@ -25,12 +24,15 @@ import {
   UI_CONTEXTMENU_OPEN,
   UI_COMMAND_EXEC
 } from '../../typings/constants/ui';
-
-import {setActiveGroup} from './term-groups';
-import type parseUrl from 'parse-url';
 import type {HyperState, HyperDispatch, HyperActions, ITermGroups} from '../../typings/hyper';
-import type {Stats} from 'fs';
-import {stat} from 'fs';
+import rpc from '../rpc';
+import {getRootGroups} from '../selectors';
+import {isExecutable} from '../utils/file';
+import notify from '../utils/notify';
+import findBySession from '../utils/term-groups';
+
+import {requestSession, sendSessionData, setActiveSession} from './sessions';
+import {setActiveGroup} from './term-groups';
 
 export function openContextMenu(uid: string, selection: string) {
   return (dispatch: HyperDispatch, getState: () => HyperState) => {
