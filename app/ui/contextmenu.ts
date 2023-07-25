@@ -21,7 +21,7 @@ const filterCutCopy = (selection: string, menuItem: MenuItemConstructorOptions) 
   return menuItem;
 };
 
-export default (
+const contextMenuTemplate = (
   createWindow: (fn?: (win: BrowserWindow) => void, options?: Record<string, any>) => BrowserWindow,
   selection: string
 ) => {
@@ -36,3 +36,5 @@ export default (
     .concat(separator, _shell)
     .filter((menuItem) => !Object.prototype.hasOwnProperty.call(menuItem, 'enabled') || menuItem.enabled);
 };
+
+export default contextMenuTemplate;

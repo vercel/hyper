@@ -73,6 +73,8 @@ export class Server {
   }
 }
 
-export default (win: BrowserWindow) => {
+const createRPC = (win: BrowserWindow) => {
   return new Server(win);
 };
+
+export default createRPC;

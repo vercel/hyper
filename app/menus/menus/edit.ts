@@ -1,6 +1,6 @@
 import type {BrowserWindow, MenuItemConstructorOptions} from 'electron';
 
-export default (
+const editMenu = (
   commandKeys: Record<string, string>,
   execCommand: (command: string, focusedWindow?: BrowserWindow) => void
 ) => {
@@ -147,3 +147,5 @@ export default (
     submenu
   };
 };
+
+export default editMenu;

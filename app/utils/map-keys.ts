@@ -11,7 +11,7 @@ const generatePrefixedCommand = (command: string, shortcuts: string[]) => {
   return result;
 };
 
-export default (config: Record<string, string[] | string>) => {
+const mapKeys = (config: Record<string, string[] | string>) => {
   return Object.keys(config).reduce((keymap: Record<string, string[]>, command: string) => {
     if (!command) {
       return keymap;
@@ -39,3 +39,5 @@ export default (config: Record<string, string[] | string>) => {
     return keymap;
   }, {});
 };
+
+export default mapKeys;

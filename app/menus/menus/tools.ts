@@ -1,6 +1,6 @@
 import type {BrowserWindow, MenuItemConstructorOptions} from 'electron';
 
-export default (
+const toolsMenu = (
   commands: Record<string, string>,
   execCommand: (command: string, focusedWindow?: BrowserWindow) => void
 ): MenuItemConstructorOptions => {
@@ -45,3 +45,5 @@ export default (
     ]
   };
 };
+
+export default toolsMenu;
