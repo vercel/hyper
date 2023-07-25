@@ -1,6 +1,12 @@
 import {EventEmitter} from 'events';
 import type {IpcRendererEvent} from 'electron';
-import type {FilterNever, IpcRendererWithCommands, MainEvents, RendererEvents, TypedEmitter} from '../../common';
+import type {
+  FilterNever,
+  IpcRendererWithCommands,
+  MainEvents,
+  RendererEvents,
+  TypedEmitter
+} from '../../typings/common';
 import {ipcRenderer} from './ipc';
 
 export default class Client {

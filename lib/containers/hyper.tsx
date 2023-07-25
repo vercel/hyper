@@ -10,7 +10,7 @@ import stylis from 'stylis';
 import {HeaderContainer} from './header';
 import TermsContainer from './terms';
 import NotificationsContainer from './notifications';
-import type {HyperState, HyperProps, HyperDispatch} from '../hyper';
+import type {HyperState, HyperProps, HyperDispatch} from '../../typings/hyper';
 import type Terms from '../components/terms';
 
 const isMac = /Mac/.test(navigator.userAgent);

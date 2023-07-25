@@ -1,4 +1,4 @@
-import type {HyperActions, HyperState} from '../hyper';
+import type {HyperActions, HyperState} from '../../typings/hyper';
 import terms from '../terms';
 import type {Dispatch, Middleware} from 'redux';
 

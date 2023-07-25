@@ -28,7 +28,7 @@ import {
 
 import {setActiveGroup} from './term-groups';
 import type parseUrl from 'parse-url';
-import type {HyperState, HyperDispatch, HyperActions, ITermGroups} from '../hyper';
+import type {HyperState, HyperDispatch, HyperActions, ITermGroups} from '../../typings/hyper';
 import type {Stats} from 'fs';
 import {stat} from 'fs';
 

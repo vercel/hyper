@@ -4,7 +4,7 @@ import Header from '../components/header';
 import {closeTab, changeTab, maximize, openHamburgerMenu, unmaximize, minimize, close} from '../actions/header';
 import {connect} from '../utils/plugins';
 import {getRootGroups} from '../selectors';
-import type {HyperState, HyperDispatch, ITab} from '../hyper';
+import type {HyperState, HyperDispatch, ITab} from '../../typings/hyper';
 import {requestTermGroup} from '../actions/term-groups';
 
 const isMac = /Mac/.test(navigator.userAgent);

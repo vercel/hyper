@@ -1,6 +1,6 @@
 import React from 'react';
 import sum from 'lodash/sum';
-import type {SplitPaneProps} from '../hyper';
+import type {SplitPaneProps} from '../../typings/hyper';
 
 export default class SplitPane extends React.PureComponent<
   React.PropsWithChildren<SplitPaneProps>,

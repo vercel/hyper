@@ -6,7 +6,7 @@ import type {SessionAddAction} from '../constants/sessions';
 import {SESSION_ADD, SESSION_SET_ACTIVE} from '../constants/sessions';
 import findBySession from '../utils/term-groups';
 import {decorateTermGroupsReducer} from '../utils/plugins';
-import type {ITermGroup, ITermState, ITermGroups, ITermGroupReducer, Mutable} from '../hyper';
+import type {ITermGroup, ITermState, ITermGroups, ITermGroupReducer, Mutable} from '../../typings/hyper';
 
 const MIN_SIZE = 0.05;
 const initialState: ITermState = Immutable<Mutable<ITermState>>({

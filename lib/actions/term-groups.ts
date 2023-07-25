@@ -10,7 +10,7 @@ import {SESSION_REQUEST} from '../constants/sessions';
 import findBySession from '../utils/term-groups';
 import {getRootGroups} from '../selectors';
 import {setActiveSession, ptyExitSession, userExitSession} from './sessions';
-import type {ITermState, ITermGroup, HyperState, HyperDispatch, HyperActions} from '../hyper';
+import type {ITermState, ITermGroup, HyperState, HyperDispatch, HyperActions} from '../../typings/hyper';
 
 function requestSplit(direction: 'VERTICAL' | 'HORIZONTAL') {
   return (_activeUid: string | undefined, _profile: string | undefined) =>

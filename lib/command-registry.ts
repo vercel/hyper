@@ -1,5 +1,5 @@
 import {ipcRenderer} from './utils/ipc';
-import type {HyperDispatch} from './hyper';
+import type {HyperDispatch} from '../typings/hyper';
 import {closeSearch} from './actions/sessions';
 
 let commands: Record<string, (event: any, dispatch: HyperDispatch) => void> = {

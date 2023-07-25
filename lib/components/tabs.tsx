@@ -3,7 +3,7 @@ import React, {forwardRef} from 'react';
 import {decorate, getTabProps} from '../utils/plugins';
 
 import Tab_ from './tab';
-import type {TabsProps} from '../hyper';
+import type {TabsProps} from '../../typings/hyper';
 import DropdownButton from './new-tab';
 
 const Tab = decorate(Tab_, 'Tab');

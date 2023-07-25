@@ -17,7 +17,7 @@ import {addNotificationMessage} from './actions/notifications';
 import {loadConfig, reloadConfig} from './actions/config';
 import HyperContainer from './containers/hyper';
 import configureStore from './store/configure-store';
-import type {configOptions} from './config';
+import type {configOptions} from '../typings/config';
 
 // On Linux, the default zoom was somehow changed with Electron 3 (or maybe 2).
 // Setting zoom factor to 1.2 brings back the normal default size

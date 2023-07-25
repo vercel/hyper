@@ -3,7 +3,7 @@ import React, {forwardRef} from 'react';
 import {decorate} from '../utils/plugins';
 
 import Notification_ from './notification';
-import type {NotificationsProps} from '../hyper';
+import type {NotificationsProps} from '../../typings/hyper';
 
 const Notification = decorate(Notification_, 'Notification');
 

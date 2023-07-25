@@ -2,7 +2,7 @@ import {EventEmitter} from 'events';
 import type {BrowserWindow, IpcMainEvent} from 'electron';
 import {ipcMain} from 'electron';
 import {v4 as uuidv4} from 'uuid';
-import type {TypedEmitter, MainEvents, RendererEvents, FilterNever} from '../common';
+import type {TypedEmitter, MainEvents, RendererEvents, FilterNever} from '../typings/common';
 
 export class Server {
   emitter: TypedEmitter<MainEvents>;

@@ -28,7 +28,7 @@ import type {
   TermProps,
   Assignable,
   HyperActions
-} from '../hyper';
+} from '../../typings/hyper';
 import type {Dispatch, Middleware} from 'redux';
 import {ObjectTypedKeys} from './object';
 import IPCChildProcess from './ipc-child-process';

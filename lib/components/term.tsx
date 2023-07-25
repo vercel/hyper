@@ -14,7 +14,7 @@ import Color from 'color';
 import terms from '../terms';
 import processClipboard from '../utils/paste';
 import _SearchBox from './searchBox';
-import type {TermProps} from '../hyper';
+import type {TermProps} from '../../typings/hyper';
 import pickBy from 'lodash/pickBy';
 import isEqual from 'lodash/isEqual';
 import {decorate} from '../utils/plugins';

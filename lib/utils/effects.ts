@@ -1,5 +1,5 @@
 import type {Dispatch, Middleware} from 'redux';
-import type {HyperActions, HyperState} from '../hyper';
+import type {HyperActions, HyperState} from '../../typings/hyper';
 /**
  * Simple redux middleware that executes
  * the `effect` field if provided in an action

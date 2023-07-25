@@ -16,10 +16,10 @@ import {execCommand} from '../commands';
 import {setRendererType, unsetRendererType} from '../utils/renderer-utils';
 import {decorateSessionOptions, decorateSessionClass} from '../plugins';
 import {enable as remoteEnable} from '@electron/remote/main';
-import type {configOptions} from '../../lib/config';
+import type {configOptions} from '../../typings/config';
 import {getWorkingDirectoryFromPID} from 'native-process-working-directory';
 import {existsSync} from 'fs';
-import type {sessionExtraOptions} from '../../common';
+import type {sessionExtraOptions} from '../../typings/common';
 import {getDefaultProfile} from '../config';
 
 export function newWindow(
