@@ -73,7 +73,7 @@ const Hyper = forwardRef<HTMLDivElement, HyperProps>((props, ref) => {
     window.rpc.on('term selectAll', handleSelectAll);
   }, []);
 
-  const onTermsRef = (_terms: Terms) => {
+  const onTermsRef = (_terms: Terms | null) => {
     terms.current = _terms;
     window.focusActiveTerm = (uid?: string) => {
       if (uid) {

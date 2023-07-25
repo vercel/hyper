@@ -222,7 +222,7 @@ const clearModulesCache = () => {
 const getPluginName = (path: string) => pathModule.basename(path);
 
 const getPluginVersion = (path: string): string | null => {
-  let version = null;
+  let version: string | null = null;
   try {
     version = window.require(pathModule.resolve(path, 'package.json')).version as string;
   } catch (err) {
@@ -460,9 +460,12 @@ export function connect<stateProps extends {}, dispatchProps>(
   c: null | undefined,
   d: ConnectOptions = {}
 ) {
-  return (Class: ComponentType<any>, name: keyof typeof connectors) => {
-    return reduxConnect<stateProps, dispatchProps, any, HyperState>(
-      (state) => {
+  return <P extends Record<string, unknown>>(
+    Class: ComponentType<P & stateProps & dispatchProps>,
+    name: keyof typeof connectors
+  ) => {
+    return reduxConnect(
+      (state: HyperState) => {
         let ret = stateFn(state);
         connectors[name].state.forEach((fn) => {
           let ret_;
@@ -488,7 +491,7 @@ export function connect<stateProps extends {}, dispatchProps>(
         });
         return ret;
       },
-      (dispatch) => {
+      (dispatch: HyperDispatch) => {
         let ret = dispatchFn(dispatch);
         connectors[name].dispatch.forEach((fn) => {
           let ret_;
@@ -519,7 +522,7 @@ export function connect<stateProps extends {}, dispatchProps>(
       },
       c,
       d
-    )(decorate(Class, name));
+    )(decorate(Class, name) as any) as ComponentType<P>;
   };
 }
 
