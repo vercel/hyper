@@ -3,7 +3,7 @@ import {combineReducers} from 'redux';
 import ui from './ui';
 import sessions from './sessions';
 import termGroups from './term-groups';
-import type {HyperActions, HyperState} from '../hyper';
+import type {HyperActions, HyperState} from '../../typings/hyper';
 
 export default combineReducers({
   ui,

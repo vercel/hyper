@@ -22,7 +22,7 @@ import {
   SESSION_SET_CWD
 } from '../constants/sessions';
 import {UPDATE_AVAILABLE} from '../constants/updater';
-import type {uiState, Mutable, IUiReducer} from '../hyper';
+import type {uiState, Mutable, IUiReducer} from '../../typings/hyper';
 import {release} from 'os';
 
 const isWindows = ['Windows', 'Win16', 'Win32', 'WinCE'].includes(navigator.platform) || process.platform === 'win32';

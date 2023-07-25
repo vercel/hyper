@@ -1,5 +1,5 @@
 import type {Immutable} from 'seamless-immutable';
-import type Client from './utils/rpc';
+import type Client from '../lib/utils/rpc';
 
 declare global {
   interface Window {
@@ -167,14 +167,14 @@ export type HyperState = {
   termGroups: ITermState;
 };
 
-import type {UIActions} from './constants/ui';
-import type {ConfigActions} from './constants/config';
-import type {SessionActions} from './constants/sessions';
-import type {NotificationActions} from './constants/notifications';
-import type {UpdateActions} from './constants/updater';
-import type {TermGroupActions} from './constants/term-groups';
-import type {InitActions} from './constants';
-import type {TabActions} from './constants/tabs';
+import type {UIActions} from '../lib/constants/ui';
+import type {ConfigActions} from '../lib/constants/config';
+import type {SessionActions} from '../lib/constants/sessions';
+import type {NotificationActions} from '../lib/constants/notifications';
+import type {UpdateActions} from '../lib/constants/updater';
+import type {TermGroupActions} from '../lib/constants/term-groups';
+import type {InitActions} from '../lib/constants';
+import type {TabActions} from '../lib/constants/tabs';
 
 export type HyperActions = (
   | UIActions
@@ -187,7 +187,7 @@ export type HyperActions = (
   | TabActions
 ) & {effect?: () => void};
 
-import type configureStore from './store/configure-store';
+import type configureStore from '../lib/store/configure-store';
 export type HyperDispatch = ReturnType<typeof configureStore>['dispatch'];
 
 import type {ReactChild} from 'react';
@@ -198,17 +198,17 @@ type extensionProps = Partial<{
   customInnerChildren: ReactChild | ReactChild[];
 }>;
 
-import type {HeaderConnectedProps} from './containers/header';
+import type {HeaderConnectedProps} from '../lib/containers/header';
 export type HeaderProps = HeaderConnectedProps & extensionProps;
 
-import type {HyperConnectedProps} from './containers/hyper';
+import type {HyperConnectedProps} from '../lib/containers/hyper';
 export type HyperProps = HyperConnectedProps & extensionProps;
 
-import type {NotificationsConnectedProps} from './containers/notifications';
+import type {NotificationsConnectedProps} from '../lib/containers/notifications';
 export type NotificationsProps = NotificationsConnectedProps & extensionProps;
 
-import type Terms from './components/terms';
-import type {TermsConnectedProps} from './containers/terms';
+import type Terms from '../lib/components/terms';
+import type {TermsConnectedProps} from '../lib/containers/terms';
 export type TermsProps = TermsConnectedProps & extensionProps & {ref_: (terms: Terms | null) => void};
 
 export type StyleSheetProps = {
@@ -266,7 +266,7 @@ export type SplitPaneProps = {
   sizes?: Immutable<number[]> | null;
 };
 
-import type Term from './components/term';
+import type Term from '../lib/components/term';
 
 export type TermGroupOwnProps = {
   cursorAccentColor?: string;
@@ -318,7 +318,7 @@ export type TermGroupOwnProps = {
   | 'imageSupport'
 >;
 
-import type {TermGroupConnectedProps} from './components/term-group';
+import type {TermGroupConnectedProps} from '../lib/components/term-group';
 export type TermGroupProps = TermGroupConnectedProps & TermGroupOwnProps;
 
 export type SearchBoxProps = {

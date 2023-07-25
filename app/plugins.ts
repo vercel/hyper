@@ -15,10 +15,10 @@ import {availableExtensions} from './plugins/extensions';
 import {install} from './plugins/install';
 import {plugs} from './config/paths';
 import mapKeys from './utils/map-keys';
-import type {configOptions} from '../lib/config';
+import type {configOptions} from '../typings/config';
 import {promisify} from 'util';
 import {exec, execFile} from 'child_process';
-import type {IpcMainWithCommands} from '../common';
+import type {IpcMainWithCommands} from '../typings/common';
 
 // local storage
 const cache = new Config();

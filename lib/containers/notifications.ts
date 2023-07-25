@@ -2,7 +2,7 @@ import Notifications from '../components/notifications';
 import {installUpdate} from '../actions/updater';
 import {connect} from '../utils/plugins';
 import {dismissNotification} from '../actions/notifications';
-import type {HyperState, HyperDispatch} from '../hyper';
+import type {HyperState, HyperDispatch} from '../../typings/hyper';
 
 const mapStateToProps = (state: HyperState) => {
   const {ui} = state;

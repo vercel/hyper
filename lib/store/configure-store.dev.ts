@@ -6,7 +6,7 @@ import effects from '../utils/effects';
 import * as plugins from '../utils/plugins';
 import writeMiddleware from './write-middleware';
 import {composeWithDevTools} from '@redux-devtools/extension';
-import type {HyperState, HyperActions} from '../hyper';
+import type {HyperState, HyperActions} from '../../typings/hyper';
 const thunk: ThunkMiddleware<HyperState, HyperActions> = _thunk;
 
 export default () => {

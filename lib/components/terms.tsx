@@ -3,7 +3,7 @@ import {decorate, getTermGroupProps} from '../utils/plugins';
 import {registerCommandHandlers} from '../command-registry';
 import TermGroup_ from './term-group';
 import StyleSheet_ from './style-sheet';
-import type {TermsProps, HyperDispatch} from '../hyper';
+import type {TermsProps, HyperDispatch} from '../../typings/hyper';
 import type Term from './term';
 import {ObjectTypedKeys} from '../utils/object';
 

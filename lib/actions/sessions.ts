@@ -15,8 +15,8 @@ import {
   SESSION_SET_XTERM_TITLE,
   SESSION_SEARCH
 } from '../constants/sessions';
-import type {HyperState, HyperDispatch, HyperActions} from '../hyper';
-import type {Session} from '../../common';
+import type {HyperState, HyperDispatch, HyperActions} from '../../typings/hyper';
+import type {Session} from '../../typings/common';
 
 export function addSession({uid, shell, pid, cols = null, rows = null, splitDirection, activeUid, profile}: Session) {
   return (dispatch: HyperDispatch, getState: () => HyperState) => {

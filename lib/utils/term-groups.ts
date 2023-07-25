@@ -1,4 +1,4 @@
-import type {ITermState} from '../hyper';
+import type {ITermState} from '../../typings/hyper';
 
 export default function findBySession(termGroupState: ITermState, sessionUid: string) {
   const {termGroups} = termGroupState;

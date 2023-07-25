@@ -1,7 +1,7 @@
 import type parseUrl from 'parse-url';
 import type {IpcMain, IpcRenderer} from 'electron';
 import type {ExecFileOptions, ExecOptions} from 'child_process';
-import type {configOptions} from './lib/config';
+import type {configOptions} from './config';
 
 export type Session = {
   uid: string;

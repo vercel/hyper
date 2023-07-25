@@ -4,7 +4,7 @@ import {_import, getDefaultConfig} from './config/import';
 import _openConfig from './config/open';
 import {cfgPath, cfgDir} from './config/paths';
 import {getColorMap} from './utils/colors';
-import type {parsedConfig, configOptions} from '../lib/config';
+import type {parsedConfig, configOptions} from '../typings/config';
 import {app} from 'electron';
 
 const watchers: Function[] = [];

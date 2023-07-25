@@ -20,7 +20,7 @@
     "v8-snapshot:arch": "yarn run mk-snapshot && yarn run cp-snapshot",
     "mk-snapshot": "cross-env ELECTRON_CUSTOM_VERSION=$npm_package_devDependencies_electron node node_modules/electron-mksnapshot/download-mksnapshot.js && node bin/mk-snapshot.js",
     "cp-snapshot": "node bin/cp-snapshot.js",
-    "generate-schema": "typescript-json-schema ./lib/config.d.ts rawConfig -o ./app/config/schema.json --required"
+    "generate-schema": "typescript-json-schema ./typings/config.d.ts rawConfig -o ./app/config/schema.json --required"
   },
   "license": "MIT",
   "author": {

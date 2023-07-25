@@ -1,3 +1,7 @@
+declare module 'php-escape-shell' {
+  export function php_escapeshellcmd(path: string): string;
+}
+
 declare module 'git-describe' {
   export function gitDescribe(...args: any[]): void;
 }
