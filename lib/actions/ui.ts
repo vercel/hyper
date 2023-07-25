@@ -24,7 +24,7 @@ import {
   UI_OPEN_SSH_URL,
   UI_CONTEXTMENU_OPEN,
   UI_COMMAND_EXEC
-} from '../constants/ui';
+} from '../../typings/constants/ui';
 
 import {setActiveGroup} from './term-groups';
 import type parseUrl from 'parse-url';

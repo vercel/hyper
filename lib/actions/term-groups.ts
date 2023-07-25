@@ -5,8 +5,8 @@ import {
   TERM_GROUP_REQUEST,
   TERM_GROUP_EXIT,
   TERM_GROUP_EXIT_ACTIVE
-} from '../constants/term-groups';
-import {SESSION_REQUEST} from '../constants/sessions';
+} from '../../typings/constants/term-groups';
+import {SESSION_REQUEST} from '../../typings/constants/sessions';
 import findBySession from '../utils/term-groups';
 import {getRootGroups} from '../selectors';
 import {setActiveSession, ptyExitSession, userExitSession} from './sessions';

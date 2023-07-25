@@ -167,14 +167,14 @@ export type HyperState = {
   termGroups: ITermState;
 };
 
-import type {UIActions} from '../lib/constants/ui';
-import type {ConfigActions} from '../lib/constants/config';
-import type {SessionActions} from '../lib/constants/sessions';
-import type {NotificationActions} from '../lib/constants/notifications';
-import type {UpdateActions} from '../lib/constants/updater';
-import type {TermGroupActions} from '../lib/constants/term-groups';
-import type {InitActions} from '../lib/constants';
-import type {TabActions} from '../lib/constants/tabs';
+import type {UIActions} from './constants/ui';
+import type {ConfigActions} from './constants/config';
+import type {SessionActions} from './constants/sessions';
+import type {NotificationActions} from './constants/notifications';
+import type {UpdateActions} from './constants/updater';
+import type {TermGroupActions} from './constants/term-groups';
+import type {InitActions} from './constants';
+import type {TabActions} from './constants/tabs';
 
 export type HyperActions = (
   | UIActions

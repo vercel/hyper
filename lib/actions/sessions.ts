@@ -14,7 +14,7 @@ import {
   SESSION_USER_DATA,
   SESSION_SET_XTERM_TITLE,
   SESSION_SEARCH
-} from '../constants/sessions';
+} from '../../typings/constants/sessions';
 import type {HyperState, HyperDispatch, HyperActions} from '../../typings/hyper';
 import type {Session} from '../../typings/common';
 
