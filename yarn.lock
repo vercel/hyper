@@ -554,7 +554,7 @@
   dependencies:
     regenerator-runtime "^0.13.11"
 
-"@babel/runtime@^7.12.1":
+"@babel/runtime@^7.12.1", "@babel/runtime@^7.20.7":
   version "7.22.6"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.22.6.tgz#57d64b9ae3cff1d67eb067ae117dac087f5bd438"
   integrity sha512-wDb5pWm4WDdF6LFUde3Jl8WzPA+3ZbxYqkC6xAXuD3irdEHN1k0NfTRrJD8ZD378SJ61miMLCqIOXYhd8x+AJQ==
@@ -933,6 +933,14 @@
   resolved "https://registry.npmjs.org/@react-icons/all-files/-/all-files-4.1.0.tgz#477284873a0821928224b6fc84c62d2534d6650b"
   integrity sha512-hxBI2UOuVaI3O/BhQfhtb4kcGn9ft12RWAFVMUeNjqqhLsHvFtzIkFaptBJpFDANTKoDfdVoHTKZDlwKCACbMQ==
 
+"@redux-devtools/extension@^3.2.5":
+  version "3.2.5"
+  resolved "https://registry.npmjs.org/@redux-devtools/extension/-/extension-3.2.5.tgz#a3daaf7b9edc82988366133f0c741b5266c4dcef"
+  integrity sha512-UhyDF7WmdnCrN1s++YC4sdQCo0z6YUnoB2eCh15nXDDq3QH1jDju1144UNRU6Nvi4inxhaIum4m9BXVYWVC1ng==
+  dependencies:
+    "@babel/runtime" "^7.20.7"
+    immutable "^4.2.2"
+
 "@sindresorhus/is@^4.0.0":
   version "4.6.0"
   resolved "https://registry.npmjs.org/@sindresorhus/is/-/is-4.6.0.tgz#3c7c9c46e678feefe7a2e5bb609d3dbd665ffb3f"
@@ -1218,13 +1226,6 @@
   integrity sha512-W/iTlIkGEyTBGTEvZCey8EgQlQ5l0DwMqi3iOXlLs2kyBwYTXHKEiU6IZ5EwoRwngL8/dGYuzezSup89ttVHLw==
   dependencies:
     "@types/react" "*"
-
-"@types/terser-webpack-plugin@5.2.0":
-  version "5.2.0"
-  resolved "https://registry.npmjs.org/@types/terser-webpack-plugin/-/terser-webpack-plugin-5.2.0.tgz#6aaec696593216917f9f03266bed222f8253483b"
-  integrity sha512-iHDR2pRfFjGyDqCALX2tgUgFtGoQf2AJhKpC2XD1IMBQVJF2bny6WChGRDKj9eaZJl4F2RmvBhxJNtVPj7aTRw==
-  dependencies:
-    terser-webpack-plugin "*"
 
 "@types/use-sync-external-store@^0.0.3":
   version "0.0.3"
@@ -4179,6 +4180,11 @@ immediate@~3.0.5:
   resolved "https://registry.npmjs.org/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
   integrity sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==
 
+immutable@^4.2.2:
+  version "4.3.1"
+  resolved "https://registry.npmjs.org/immutable/-/immutable-4.3.1.tgz#17988b356097ab0719e2f741d56f3ec6c317f9dc"
+  integrity sha512-lj9cnmB/kVS0QHsJnYKD1uo3o39nrbKxszjnqS9Fr6NB7bZzW45U6WSGBPKXDL/CvDKqDNPA4r3DoDQ8GTxo2A==
+
 import-fresh@^3.2.1:
   version "3.3.0"
   resolved "https://registry.npmjs.org/import-fresh/-/import-fresh-3.3.0.tgz#37162c25fcb9ebaa2e6e53d5b4d88ce17d9e0c2b"
@@ -6272,11 +6278,6 @@ redent@^4.0.0:
     indent-string "^5.0.0"
     strip-indent "^4.0.0"
 
-redux-devtools-extension@2.13.9:
-  version "2.13.9"
-  resolved "https://registry.npmjs.org/redux-devtools-extension/-/redux-devtools-extension-2.13.9.tgz#6b764e8028b507adcb75a1cae790f71e6be08ae7"
-  integrity sha512-cNJ8Q/EtjhQaZ71c8I9+BPySIBVEKssbPpskBfsXqb8HJ002A3KRVHfeRzwRo6mGPqsm7XuHTqNSNeS1Khig0A==
-
 redux-thunk@2.4.2:
   version "2.4.2"
   resolved "https://registry.npmjs.org/redux-thunk/-/redux-thunk-2.4.2.tgz#b9d05d11994b99f7a91ea223e8b04cf0afa5ef3b"
@@ -7135,7 +7136,7 @@ temp@^0.8.3:
   dependencies:
     rimraf "~2.6.2"
 
-terser-webpack-plugin@*, terser-webpack-plugin@^5.3.7:
+terser-webpack-plugin@^5.3.7:
   version "5.3.7"
   resolved "https://registry.npmjs.org/terser-webpack-plugin/-/terser-webpack-plugin-5.3.7.tgz#ef760632d24991760f339fe9290deb936ad1ffc7"
   integrity sha512-AfKwIktyP7Cu50xNjXF/6Qb5lBNzYaWpU6YfoX3uZicTx0zTy0stDDCsvjDapKsSDvOeWo5MEq4TmdBy2cNoHw==

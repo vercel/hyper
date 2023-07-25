@@ -1,7 +1,7 @@
 import React, {forwardRef} from 'react';
 import type {StyleSheetProps} from '../hyper';
 
-const StyleSheet: React.FC<StyleSheetProps> = forwardRef<HTMLStyleElement, StyleSheetProps>((props, ref) => {
+const StyleSheet = forwardRef<HTMLStyleElement, StyleSheetProps>((props, ref) => {
   const {borderColor} = props;
 
   return (
