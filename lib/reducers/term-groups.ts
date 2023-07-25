@@ -1,12 +1,13 @@
-import {v4 as uuidv4} from 'uuid';
-import type {Immutable as ImmutableType} from 'seamless-immutable';
 import Immutable from 'seamless-immutable';
-import {TERM_GROUP_EXIT, TERM_GROUP_RESIZE} from '../../typings/constants/term-groups';
-import type {SessionAddAction} from '../../typings/constants/sessions';
+import type {Immutable as ImmutableType} from 'seamless-immutable';
+import {v4 as uuidv4} from 'uuid';
+
 import {SESSION_ADD, SESSION_SET_ACTIVE} from '../../typings/constants/sessions';
-import findBySession from '../utils/term-groups';
-import {decorateTermGroupsReducer} from '../utils/plugins';
+import type {SessionAddAction} from '../../typings/constants/sessions';
+import {TERM_GROUP_EXIT, TERM_GROUP_RESIZE} from '../../typings/constants/term-groups';
 import type {ITermGroup, ITermState, ITermGroups, ITermGroupReducer, Mutable} from '../../typings/hyper';
+import {decorateTermGroupsReducer} from '../utils/plugins';
+import findBySession from '../utils/term-groups';
 
 const MIN_SIZE = 0.05;
 const initialState: ITermState = Immutable<Mutable<ITermState>>({

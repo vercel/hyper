@@ -1,17 +1,20 @@
 // This is a CLI tool, using console is OK
 /* eslint no-console: 0 */
-import type {SpawnOptions} from 'child_process';
 import {spawn, exec} from 'child_process';
-import {isAbsolute, resolve} from 'path';
+import type {SpawnOptions} from 'child_process';
 import {existsSync} from 'fs';
-import {version} from '../app/package.json';
+import {isAbsolute, resolve} from 'path';
 import {promisify} from 'util';
+
 import args from 'args';
 import chalk from 'chalk';
-import open from 'open';
 import _columnify from 'columnify';
 import got from 'got';
+import open from 'open';
 import ora from 'ora';
+
+import {version} from '../app/package.json';
+
 import * as api from './api';
 
 let commandPromise: Promise<void> | undefined;

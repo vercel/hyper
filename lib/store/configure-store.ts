@@ -1,5 +1,5 @@
-import configureStoreForProduction from './configure-store.prod';
 import configureStoreForDevelopment from './configure-store.dev';
+import configureStoreForProduction from './configure-store.prod';
 
 const configureStore = () => {
   if (process.env.NODE_ENV === 'production') {

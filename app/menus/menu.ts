@@ -1,20 +1,21 @@
 // Packages
-import type {BrowserWindow} from 'electron';
 import {app, dialog, Menu} from 'electron';
+import type {BrowserWindow} from 'electron';
 
 // Utilities
+import {execCommand} from '../commands';
 import {getConfig} from '../config';
 import {icon} from '../config/paths';
-import viewMenu from './menus/view';
-import shellMenu from './menus/shell';
-import editMenu from './menus/edit';
-import toolsMenu from './menus/tools';
-import windowMenu from './menus/window';
-import helpMenu from './menus/help';
-import darwinMenu from './menus/darwin';
 import {getDecoratedKeymaps} from '../plugins';
-import {execCommand} from '../commands';
 import {getRendererTypes} from '../utils/renderer-utils';
+
+import darwinMenu from './menus/darwin';
+import editMenu from './menus/edit';
+import helpMenu from './menus/help';
+import shellMenu from './menus/shell';
+import toolsMenu from './menus/tools';
+import viewMenu from './menus/view';
+import windowMenu from './menus/window';
 
 const appName = app.name;
 const appVersion = app.getVersion();

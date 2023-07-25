@@ -1,4 +1,5 @@
 import type {ExecFileOptions, ExecOptions} from 'child_process';
+
 import {ipcRenderer} from './ipc';
 
 export function exec(command: string, options: ExecOptions, callback: (..._args: any) => void) {

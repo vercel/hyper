@@ -1,4 +1,5 @@
 import React, {forwardRef} from 'react';
+
 import type {StyleSheetProps} from '../../typings/hyper';
 
 const StyleSheet = forwardRef<HTMLStyleElement, StyleSheetProps>((props, ref) => {

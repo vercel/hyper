@@ -1,5 +1,6 @@
-import type {BrowserWindow} from 'electron';
 import {app, Menu} from 'electron';
+import type {BrowserWindow} from 'electron';
+
 import {openConfig, getConfig} from './config';
 import {updatePlugins} from './plugins';
 import {installCLI} from './utils/cli-install';

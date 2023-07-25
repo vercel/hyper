@@ -1,9 +1,11 @@
 import {readFileSync, mkdirpSync} from 'fs-extra';
-import {defaultCfg, cfgPath, plugs, defaultPlatformKeyPath} from './paths';
-import {_init} from './init';
-import notify from '../notify';
+
 import type {rawConfig} from '../../typings/config';
+import notify from '../notify';
+
+import {_init} from './init';
 import {migrateHyper3Config} from './migrate';
+import {defaultCfg, cfgPath, plugs, defaultPlatformKeyPath} from './paths';
 
 let defaultConfig: rawConfig;
 

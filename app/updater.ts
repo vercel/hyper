@@ -1,14 +1,15 @@
 // Packages
-import type {BrowserWindow, AutoUpdater} from 'electron';
 import electron, {app} from 'electron';
-import ms from 'ms';
+import type {BrowserWindow, AutoUpdater} from 'electron';
+
 import retry from 'async-retry';
+import ms from 'ms';
 
 // Utilities
-import {version} from './package.json';
-import {getDecoratedConfig} from './plugins';
 import autoUpdaterLinux from './auto-updater-linux';
 import {getDefaultProfile} from './config';
+import {version} from './package.json';
+import {getDecoratedConfig} from './plugins';
 
 const {platform} = process;
 const isLinux = platform === 'linux';

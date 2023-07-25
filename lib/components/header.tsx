@@ -1,9 +1,9 @@
 import React from 'react';
 
+import type {HeaderProps} from '../../typings/hyper';
 import {decorate, getTabsProps} from '../utils/plugins';
 
 import Tabs_ from './tabs';
-import type {HeaderProps} from '../../typings/hyper';
 
 const Tabs = decorate(Tabs_, 'Tabs');
 

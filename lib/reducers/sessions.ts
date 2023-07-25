@@ -1,5 +1,5 @@
 import Immutable from 'seamless-immutable';
-import {decorateSessionsReducer} from '../utils/plugins';
+
 import {
   SESSION_ADD,
   SESSION_PTY_EXIT,
@@ -13,6 +13,7 @@ import {
   SESSION_SEARCH
 } from '../../typings/constants/sessions';
 import type {sessionState, session, Mutable, ISessionReducer} from '../../typings/hyper';
+import {decorateSessionsReducer} from '../utils/plugins';
 
 const initialState: sessionState = Immutable<Mutable<sessionState>>({
   sessions: {},

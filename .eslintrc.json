@@ -105,7 +105,26 @@
         "lodash/collection-return": "error",
         "lodash/collection-method-value": "error",
         "import/no-extraneous-dependencies": "error",
-        "import/no-anonymous-default-export": "error"
+        "import/no-anonymous-default-export": "error",
+        "import/order": [
+          "error",
+          {
+            "groups": [
+              "builtin",
+              "internal",
+              "external",
+              "parent",
+              "sibling",
+              "index"
+            ],
+            "newlines-between": "always",
+            "alphabetize": {
+              "order": "asc",
+              "orderImportKind": "desc",
+              "caseInsensitive": true
+            }
+          }
+        ]
       }
     },
     {

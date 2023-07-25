@@ -1,10 +1,10 @@
 import React, {forwardRef} from 'react';
 
+import type {TabsProps} from '../../typings/hyper';
 import {decorate, getTabProps} from '../utils/plugins';
 
-import Tab_ from './tab';
-import type {TabsProps} from '../../typings/hyper';
 import DropdownButton from './new-tab';
+import Tab_ from './tab';
 
 const Tab = decorate(Tab_, 'Tab');
 const isMac = /Mac/.test(navigator.userAgent);

@@ -1,11 +1,11 @@
 import {createSelector} from 'reselect';
 
-import Header from '../components/header';
-import {closeTab, changeTab, maximize, openHamburgerMenu, unmaximize, minimize, close} from '../actions/header';
-import {connect} from '../utils/plugins';
-import {getRootGroups} from '../selectors';
 import type {HyperState, HyperDispatch, ITab} from '../../typings/hyper';
+import {closeTab, changeTab, maximize, openHamburgerMenu, unmaximize, minimize, close} from '../actions/header';
 import {requestTermGroup} from '../actions/term-groups';
+import Header from '../components/header';
+import {getRootGroups} from '../selectors';
+import {connect} from '../utils/plugins';
 
 const isMac = /Mac/.test(navigator.userAgent);
 

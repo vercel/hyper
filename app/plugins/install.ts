@@ -1,6 +1,8 @@
 import cp from 'child_process';
-import queue from 'queue';
+
 import ms from 'ms';
+import queue from 'queue';
+
 import {yarn, plugs} from '../config/paths';
 
 export const install = (fn: (err: string | null) => void) => {

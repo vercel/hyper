@@ -1,5 +1,6 @@
-import Copy from 'copy-webpack-plugin';
 import path from 'path';
+
+import Copy from 'copy-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import webpack from 'webpack';
 

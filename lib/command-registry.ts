@@ -1,6 +1,7 @@
-import {ipcRenderer} from './utils/ipc';
 import type {HyperDispatch} from '../typings/hyper';
+
 import {closeSearch} from './actions/sessions';
+import {ipcRenderer} from './utils/ipc';
 
 let commands: Record<string, (event: any, dispatch: HyperDispatch) => void> = {
   'editor:search-close': (e, dispatch) => {

@@ -1,4 +1,5 @@
 import {app, Notification} from 'electron';
+
 import {icon} from './config/paths';
 
 export default function notify(title: string, body = '', details: {error?: any} = {}) {

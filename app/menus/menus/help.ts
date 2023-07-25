@@ -1,9 +1,12 @@
 import {release} from 'os';
-import type {MenuItemConstructorOptions} from 'electron';
+
 import {app, shell, dialog, clipboard} from 'electron';
+import type {MenuItemConstructorOptions} from 'electron';
+
 import {getConfig, getPlugins} from '../../config';
-const {arch, env, platform, versions} = process;
 import {version} from '../../package.json';
+
+const {arch, env, platform, versions} = process;
 
 const helpMenu = (commands: Record<string, string>, showAbout: () => void): MenuItemConstructorOptions => {
   const submenu: MenuItemConstructorOptions[] = [

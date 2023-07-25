@@ -1,11 +1,14 @@
+import {app} from 'electron';
+
 import chokidar from 'chokidar';
-import notify from './notify';
+
+import type {parsedConfig, configOptions} from '../typings/config';
+
 import {_import, getDefaultConfig} from './config/import';
 import _openConfig from './config/open';
 import {cfgPath, cfgDir} from './config/paths';
+import notify from './notify';
 import {getColorMap} from './utils/colors';
-import type {parsedConfig, configOptions} from '../typings/config';
-import {app} from 'electron';
 
 const watchers: Function[] = [];
 let cfg: parsedConfig = {} as any;

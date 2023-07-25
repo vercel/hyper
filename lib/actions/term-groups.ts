@@ -1,4 +1,4 @@
-import rpc from '../rpc';
+import {SESSION_REQUEST} from '../../typings/constants/sessions';
 import {
   DIRECTION,
   TERM_GROUP_RESIZE,
@@ -6,11 +6,12 @@ import {
   TERM_GROUP_EXIT,
   TERM_GROUP_EXIT_ACTIVE
 } from '../../typings/constants/term-groups';
-import {SESSION_REQUEST} from '../../typings/constants/sessions';
-import findBySession from '../utils/term-groups';
-import {getRootGroups} from '../selectors';
-import {setActiveSession, ptyExitSession, userExitSession} from './sessions';
 import type {ITermState, ITermGroup, HyperState, HyperDispatch, HyperActions} from '../../typings/hyper';
+import rpc from '../rpc';
+import {getRootGroups} from '../selectors';
+import findBySession from '../utils/term-groups';
+
+import {setActiveSession, ptyExitSession, userExitSession} from './sessions';
 
 function requestSplit(direction: 'VERTICAL' | 'HORIZONTAL') {
   return (_activeUid: string | undefined, _profile: string | undefined) =>

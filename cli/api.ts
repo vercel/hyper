@@ -2,10 +2,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import fs from 'fs';
 import os from 'os';
+import path from 'path';
+
 import got from 'got';
 import registryUrlModule from 'registry-url';
+
 const registryUrl = registryUrlModule();
-import path from 'path';
 
 // If the user defines XDG_CONFIG_HOME they definitely want their config there,
 // otherwise use the home directory in linux/mac and userdata in windows

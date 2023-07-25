@@ -1,9 +1,9 @@
 import React, {forwardRef} from 'react';
 
+import type {NotificationsProps} from '../../typings/hyper';
 import {decorate} from '../utils/plugins';
 
 import Notification_ from './notification';
-import type {NotificationsProps} from '../../typings/hyper';
 
 const Notification = decorate(Notification_, 'Notification');
 

@@ -1,14 +1,16 @@
-import {parse, prettyPrint} from 'recast';
-import {builders, namedTypes} from 'ast-types';
-import * as babelParser from 'recast/parsers/babel';
-import {copy, copySync, existsSync, readFileSync, writeFileSync} from 'fs-extra';
 import {dirname, resolve} from 'path';
+
+import {builders, namedTypes} from 'ast-types';
+import type {ExpressionKind} from 'ast-types/lib/gen/kinds';
+import {copy, copySync, existsSync, readFileSync, writeFileSync} from 'fs-extra';
 import merge from 'lodash/merge';
+import {parse, prettyPrint} from 'recast';
+import * as babelParser from 'recast/parsers/babel';
 
 import notify from '../notify';
+
 import {_extractDefault} from './init';
 import {cfgDir, cfgPath, defaultCfg, legacyCfgPath, plugs, schemaFile, schemaPath} from './paths';
-import type {ExpressionKind} from 'ast-types/lib/gen/kinds';
 
 // function to remove all json serializable entries from an array expression
 function removeElements(node: namedTypes.ArrayExpression): namedTypes.ArrayExpression {

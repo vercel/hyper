@@ -1,7 +1,18 @@
-import type {Immutable as ImmutableType} from 'seamless-immutable';
+import {release} from 'os';
+
 import Immutable from 'seamless-immutable';
-import {decorateUIReducer} from '../utils/plugins';
+import type {Immutable as ImmutableType} from 'seamless-immutable';
+
 import {CONFIG_LOAD, CONFIG_RELOAD} from '../../typings/constants/config';
+import {NOTIFICATION_MESSAGE, NOTIFICATION_DISMISS} from '../../typings/constants/notifications';
+import {
+  SESSION_ADD,
+  SESSION_RESIZE,
+  SESSION_PTY_DATA,
+  SESSION_PTY_EXIT,
+  SESSION_SET_ACTIVE,
+  SESSION_SET_CWD
+} from '../../typings/constants/sessions';
 import {
   UI_FONT_SIZE_SET,
   UI_FONT_SIZE_RESET,
@@ -12,18 +23,9 @@ import {
   UI_ENTER_FULLSCREEN,
   UI_LEAVE_FULLSCREEN
 } from '../../typings/constants/ui';
-import {NOTIFICATION_MESSAGE, NOTIFICATION_DISMISS} from '../../typings/constants/notifications';
-import {
-  SESSION_ADD,
-  SESSION_RESIZE,
-  SESSION_PTY_DATA,
-  SESSION_PTY_EXIT,
-  SESSION_SET_ACTIVE,
-  SESSION_SET_CWD
-} from '../../typings/constants/sessions';
 import {UPDATE_AVAILABLE} from '../../typings/constants/updater';
 import type {uiState, Mutable, IUiReducer} from '../../typings/hyper';
-import {release} from 'os';
+import {decorateUIReducer} from '../utils/plugins';
 
 const isWindows = ['Windows', 'Win16', 'Win32', 'WinCE'].includes(navigator.platform) || process.platform === 'win32';
 

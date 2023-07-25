@@ -1,5 +1,4 @@
-import Terms from '../components/terms';
-import {connect} from '../utils/plugins';
+import type {HyperState, HyperDispatch} from '../../typings/hyper';
 import {
   resizeSession,
   sendSessionData,
@@ -8,10 +7,10 @@ import {
   openSearch,
   closeSearch
 } from '../actions/sessions';
-
 import {openContextMenu} from '../actions/ui';
+import Terms from '../components/terms';
 import {getRootGroups} from '../selectors';
-import type {HyperState, HyperDispatch} from '../../typings/hyper';
+import {connect} from '../utils/plugins';
 
 const mapStateToProps = (state: HyperState) => {
   const {sessions} = state.sessions;

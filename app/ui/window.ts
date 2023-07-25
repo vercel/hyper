@@ -1,26 +1,30 @@
-import type {BrowserWindowConstructorOptions} from 'electron';
-import {app, BrowserWindow, shell, Menu} from 'electron';
+import {existsSync} from 'fs';
 import {isAbsolute, normalize, sep} from 'path';
 import {URL, fileURLToPath} from 'url';
-import {v4 as uuidv4} from 'uuid';
-import isDev from 'electron-is-dev';
-import updater from '../updater';
-import toElectronBackgroundColor from '../utils/to-electron-background-color';
-import {icon, homeDirectory} from '../config/paths';
-import createRPC from '../rpc';
-import notify from '../notify';
-import fetchNotifications from '../notifications';
-import Session from '../session';
-import contextMenuTemplate from './contextmenu';
-import {execCommand} from '../commands';
-import {setRendererType, unsetRendererType} from '../utils/renderer-utils';
-import {decorateSessionOptions, decorateSessionClass} from '../plugins';
+
+import {app, BrowserWindow, shell, Menu} from 'electron';
+import type {BrowserWindowConstructorOptions} from 'electron';
+
 import {enable as remoteEnable} from '@electron/remote/main';
-import type {configOptions} from '../../typings/config';
+import isDev from 'electron-is-dev';
 import {getWorkingDirectoryFromPID} from 'native-process-working-directory';
-import {existsSync} from 'fs';
+import {v4 as uuidv4} from 'uuid';
+
 import type {sessionExtraOptions} from '../../typings/common';
+import type {configOptions} from '../../typings/config';
+import {execCommand} from '../commands';
 import {getDefaultProfile} from '../config';
+import {icon, homeDirectory} from '../config/paths';
+import fetchNotifications from '../notifications';
+import notify from '../notify';
+import {decorateSessionOptions, decorateSessionClass} from '../plugins';
+import createRPC from '../rpc';
+import Session from '../session';
+import updater from '../updater';
+import {setRendererType, unsetRendererType} from '../utils/renderer-utils';
+import toElectronBackgroundColor from '../utils/to-electron-background-color';
+
+import contextMenuTemplate from './contextmenu';
 
 export function newWindow(
   options_: BrowserWindowConstructorOptions,

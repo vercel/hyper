@@ -1,5 +1,6 @@
-import fetch from 'electron-fetch';
 import {EventEmitter} from 'events';
+
+import fetch from 'electron-fetch';
 
 class AutoUpdater extends EventEmitter implements Electron.AutoUpdater {
   updateURL!: string;

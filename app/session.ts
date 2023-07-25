@@ -1,14 +1,16 @@
 import {EventEmitter} from 'events';
-import {StringDecoder} from 'string_decoder';
-import defaultShell from 'default-shell';
-import {getDecoratedEnv} from './plugins';
-import {productName, version} from './package.json';
-import * as config from './config';
-import type {IPty, IWindowsPtyForkOptions, spawn as npSpawn} from 'node-pty';
-import {cliScriptPath} from './config/paths';
 import {dirname} from 'path';
-import shellEnv from 'shell-env';
+import {StringDecoder} from 'string_decoder';
+
+import defaultShell from 'default-shell';
+import type {IPty, IWindowsPtyForkOptions, spawn as npSpawn} from 'node-pty';
 import osLocale from 'os-locale';
+import shellEnv from 'shell-env';
+
+import * as config from './config';
+import {cliScriptPath} from './config/paths';
+import {productName, version} from './package.json';
+import {getDecoratedEnv} from './plugins';
 
 const createNodePtyError = () =>
   new Error(

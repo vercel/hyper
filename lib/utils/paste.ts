@@ -1,4 +1,5 @@
 import {clipboard} from 'electron';
+
 import plist from 'plist';
 
 const getPath = (platform: string) => {
