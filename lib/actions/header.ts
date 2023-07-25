@@ -1,11 +1,11 @@
-import {CLOSE_TAB, CHANGE_TAB} from '../constants/tabs';
+import {CLOSE_TAB, CHANGE_TAB} from '../../typings/constants/tabs';
 import {
   UI_WINDOW_MAXIMIZE,
   UI_WINDOW_UNMAXIMIZE,
   UI_OPEN_HAMBURGER_MENU,
   UI_WINDOW_MINIMIZE,
   UI_WINDOW_CLOSE
-} from '../constants/ui';
+} from '../../typings/constants/ui';
 import rpc from '../rpc';
 import {userExitTermGroup, setActiveGroup} from './term-groups';
 import type {HyperDispatch} from '../../typings/hyper';

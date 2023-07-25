@@ -72,7 +72,7 @@ const config: webpack.Configuration[] = [
     mode: 'none',
     name: 'hyper',
     resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx']
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts']
     },
     devtool: isProd ? 'hidden-source-map' : 'cheap-module-source-map',
     entry: './lib/index.tsx',

@@ -11,7 +11,7 @@ import {
   SESSION_SET_XTERM_TITLE,
   SESSION_SET_CWD,
   SESSION_SEARCH
-} from '../constants/sessions';
+} from '../../typings/constants/sessions';
 import type {sessionState, session, Mutable, ISessionReducer} from '../../typings/hyper';
 
 const initialState: sessionState = Immutable<Mutable<sessionState>>({

@@ -1,4 +1,4 @@
-import type {configOptions} from '../../typings/config';
+import type {configOptions} from '../config';
 
 export const CONFIG_LOAD = 'CONFIG_LOAD';
 export const CONFIG_RELOAD = 'CONFIG_RELOAD';

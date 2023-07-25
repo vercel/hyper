@@ -2,10 +2,10 @@ export const TERM_GROUP_REQUEST = 'TERM_GROUP_REQUEST';
 export const TERM_GROUP_EXIT = 'TERM_GROUP_EXIT';
 export const TERM_GROUP_RESIZE = 'TERM_GROUP_RESIZE';
 export const TERM_GROUP_EXIT_ACTIVE = 'TERM_GROUP_EXIT_ACTIVE';
-export const DIRECTION = {
-  HORIZONTAL: 'HORIZONTAL',
-  VERTICAL: 'VERTICAL'
-} as const;
+export enum DIRECTION {
+  HORIZONTAL = 'HORIZONTAL',
+  VERTICAL = 'VERTICAL'
+}
 
 export interface TermGroupRequestAction {
   type: typeof TERM_GROUP_REQUEST;
