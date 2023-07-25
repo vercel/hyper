@@ -4,7 +4,8 @@
     "prettier",
     "@typescript-eslint",
     "eslint-comments",
-    "lodash"
+    "lodash",
+    "import"
   ],
   "extends": [
     "eslint:recommended",
@@ -33,7 +34,11 @@
   "settings": {
     "react": {
       "version": "detect"
-    }
+    },
+    "import/resolver": {
+      "typescript": {}
+    },
+    "import/internal-regex": "^(electron|react)$"
   },
   "rules": {
     "func-names": [
