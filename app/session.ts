@@ -184,16 +184,33 @@ export default class Session extends EventEmitter {
         // fall back to default shell config if the shell exits within 1 sec with non zero exit code
         // this will inform users in case there are errors in the config instead of instant exit
         const runDuration = new Date().getTime() - this.initTimestamp;
-        const fallBackShellConfig = getFallBackShellConfig(shell, shellArgs, defaultShell, defaultShellArgs);
-        if (e.exitCode > 0 && runDuration < 1000 && fallBackShellConfig) {
-          const msg = `
+        if (e.exitCode > 0 && runDuration < 1000) {
+          const fallBackShellConfig = getFallBackShellConfig(shell, shellArgs, defaultShell, defaultShellArgs);
+          if (fallBackShellConfig) {
+            const msg = `
 shell exited in ${runDuration} ms with exit code ${e.exitCode}
 please check the shell config: ${JSON.stringify({shell, shellArgs}, undefined, 2)}
 using fallback shell config: ${JSON.stringify(fallBackShellConfig, undefined, 2)}
 `;
-          console.warn(msg);
-          this.batcher?.write(msg.replace(/\n/g, '\r\n'));
-          this.init({uid, rows, cols, cwd, ...fallBackShellConfig, profile});
+            console.warn(msg);
+            this.batcher?.write(msg.replace(/\n/g, '\r\n'));
+            this.init({
+              uid,
+              rows,
+              cols,
+              cwd,
+              shell: fallBackShellConfig.shell,
+              shellArgs: fallBackShellConfig.shellArgs,
+              profile
+            });
+          } else {
+            const msg = `
+shell exited in ${runDuration} ms with exit code ${e.exitCode}
+No fallback available, please check the shell config.
+`;
+            console.warn(msg);
+            this.batcher?.write(msg.replace(/\n/g, '\r\n'));
+          }
         } else {
           this.ended = true;
           this.emit('exit');
