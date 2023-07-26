@@ -83,8 +83,14 @@ jobs:
       - name: Run E2E Tests
         if: runner.os != 'Linux'
         run: yarn run test:e2e
+      - name: Run E2E Tests on Linux
+        if: runner.os == 'Linux'
+        uses: GabrielBB/xvfb-action@v1.4
+        with:
+          run: yarn run test:e2e
+        env:
+          SHELL: /bin/bash
       - name: Archive E2E test screenshot
-        if: runner.os != 'Linux'
         uses: actions/upload-artifact@v3
         with:
           name: e2e
