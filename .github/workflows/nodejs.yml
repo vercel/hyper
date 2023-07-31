@@ -85,7 +85,7 @@ jobs:
         run: yarn run test:e2e
       - name: Run E2E Tests on Linux
         if: runner.os == 'Linux'
-        uses: GabrielBB/xvfb-action@v1.4
+        uses: GabrielBB/xvfb-action@v1.6
         with:
           run: yarn run test:e2e
         env:
