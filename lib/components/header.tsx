@@ -114,16 +114,15 @@ export default class Header extends React.PureComponent<HeaderProps> {
             style={{borderColor}}
           >
             {hambMenu && (
-              <svg
-                className={`header_shape ${left ? 'header_hamburgerMenuRight' : 'header_hamburgerMenuLeft'}`}
-                onClick={this.handleHamburgerMenuClick}
-              >
+              <svg className="header_shape" onClick={this.handleHamburgerMenuClick}>
                 <use xlinkHref="./renderer/assets/icons.svg#hamburger-menu" />
               </svg>
             )}
-            <span className="header_appTitle">{title}</span>
+            <div className="header_appTitle_container">
+              <span className="header_appTitle">{title}</span>
+            </div>
             {winCtrls && (
-              <div className={`header_windowControls ${left ? 'header_windowControlsLeft' : ''}`}>
+              <div className="header_windowControls">
                 <div className={`${left ? 'header_minimizeWindowLeft' : ''}`} onClick={this.handleMinimizeClick}>
                   <svg className="header_shape">
                     <use xlinkHref="./renderer/assets/icons.svg#minimize-window" />
@@ -174,7 +173,8 @@ export default class Header extends React.PureComponent<HeaderProps> {
             -webkit-app-region: drag;
             -webkit-user-select: none;
             display: flex;
-            justify-content: center;
+            flex-direction: ${left ? 'row-reverse' : 'row'};
+            justify-content: space-between;
             align-items: center;
           }
 
@@ -184,13 +184,19 @@ export default class Header extends React.PureComponent<HeaderProps> {
             border-bottom-width: 1px;
           }
 
+          .header_appTitle_container {
+            overflow: hidden;
+          }
+
           .header_appTitle {
             font-size: 12px;
+            white-space: nowrap;
           }
 
           .header_shape,
           .header_shape > svg {
             width: 40px;
+            min-width: 40px;
             height: 34px;
             padding: 12px 15px 12px 15px;
             -webkit-app-region: no-drag;
@@ -207,30 +213,11 @@ export default class Header extends React.PureComponent<HeaderProps> {
             opacity: 0.3;
           }
 
-          .header_hamburgerMenuLeft {
-            position: fixed;
-            top: 0;
-            left: 0;
-          }
-
-          .header_hamburgerMenuRight {
-            position: fixed;
-            top: 0;
-            right: 0;
-          }
-
           .header_windowControls {
             display: flex;
             width: 120px;
             height: 34px;
             justify-content: space-between;
-            position: fixed;
-            top: 0;
-            right: 0;
-          }
-
-          .header_windowControlsLeft {
-            left: 0px;
           }
 
           .header_closeWindowLeft {
