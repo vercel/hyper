@@ -192,7 +192,7 @@ export type HyperActions = (
 import type configureStore from '../lib/store/configure-store';
 export type HyperDispatch = ReturnType<typeof configureStore>['dispatch'];
 
-import type {ReactChild} from 'react';
+import type {ReactChild, ReactNode} from 'react';
 type extensionProps = Partial<{
   customChildren: ReactChild | ReactChild[];
   customChildrenBefore: ReactChild | ReactChild[];
@@ -264,8 +264,9 @@ export type NotificationProps = {
 export type SplitPaneProps = {
   borderColor: string;
   direction: 'horizontal' | 'vertical';
-  onResize: Function;
+  onResize: (sizes: number[]) => void;
   sizes?: Immutable<number[]> | null;
+  children: ReactNode[];
 };
 
 import type Term from '../lib/components/term';
