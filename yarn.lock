@@ -3010,6 +3010,11 @@ emittery@^1.0.1:
   resolved "https://registry.npmjs.org/emittery/-/emittery-1.0.1.tgz#e0cf36e2d7eef94dbd025969f642d57ae50a56cd"
   integrity sha512-2ID6FdrMD9KDLldGesP6317G78K7km/kMcwItRtVFva7I/cSEOIaLpewaUb+YLXVwdAp3Ctfxh/V5zIl1sj7dQ==
 
+emoji-regex@^10.2.1:
+  version "10.2.1"
+  resolved "https://registry.npmjs.org/emoji-regex/-/emoji-regex-10.2.1.tgz#a41c330d957191efd3d9dfe6e1e8e1e9ab048b3f"
+  integrity sha512-97g6QgOk8zlDRdgq1WxwgTMgEWGVAQvB5Fdpgc1MkNy56la5SKP9GsMXKDOdqwn90/41a8yPwIGk1Y6WVbeMQA==
+
 emoji-regex@^8.0.0:
   version "8.0.0"
   resolved "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
@@ -5834,10 +5839,10 @@ optionator@^0.9.3:
     prelude-ls "^1.2.1"
     type-check "^0.4.0"
 
-ora@7.0.0:
-  version "7.0.0"
-  resolved "https://registry.npmjs.org/ora/-/ora-7.0.0.tgz#7c48955ba40ae487054d2153c2a72c670f9c6697"
-  integrity sha512-jYSRKdGWCA69vNIcpuJwf8zJ8n1wlEyYmT+P5ljsQHAn1stHi+HGXJQWKtCOybQ+7oOekPgIhTdj0xexo2F/Sg==
+ora@7.0.1:
+  version "7.0.1"
+  resolved "https://registry.npmjs.org/ora/-/ora-7.0.1.tgz#cdd530ecd865fe39e451a0e7697865669cb11930"
+  integrity sha512-0TUxTiFJWv+JnjWm4o9yvuskpEJLXTcng8MJuKd+SzAzp2o+OP3HWqNhB4OdJRt1Vsd9/mR0oyaEYlOnL7XIRw==
   dependencies:
     chalk "^5.3.0"
     cli-cursor "^4.0.0"
@@ -5846,6 +5851,7 @@ ora@7.0.0:
     is-unicode-supported "^1.3.0"
     log-symbols "^5.1.0"
     stdin-discarder "^0.1.0"
+    string-width "^6.1.0"
     strip-ansi "^7.1.0"
 
 ora@^5.1.0, ora@^5.4.1:
@@ -7114,6 +7120,15 @@ string-width@^5.0.0, string-width@^5.0.1, string-width@^5.1.2:
   dependencies:
     eastasianwidth "^0.2.0"
     emoji-regex "^9.2.2"
+    strip-ansi "^7.0.1"
+
+string-width@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.npmjs.org/string-width/-/string-width-6.1.0.tgz#96488d6ed23f9ad5d82d13522af9e4c4c3fd7518"
+  integrity sha512-k01swCJAgQmuADB0YIc+7TuatfNvTBVOoaUWJjTB9R4VJzR5vNWzf5t42ESVZFPS8xTySF7CAdV4t/aaIm3UnQ==
+  dependencies:
+    eastasianwidth "^0.2.0"
+    emoji-regex "^10.2.1"
     strip-ansi "^7.0.1"
 
 string.prototype.matchall@^4.0.8:
