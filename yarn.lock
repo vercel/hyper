@@ -2345,10 +2345,10 @@ cli-truncate@^3.1.0:
     slice-ansi "^5.0.0"
     string-width "^5.0.0"
 
-cli-width@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/cli-width/-/cli-width-4.0.0.tgz#a5622f6a3b0a9e3e711a25f099bf2399f608caf6"
-  integrity sha512-ZksGS2xpa/bYkNzN3BAw1wEjsLV/ZKOf/CCrJ/QOBsxx6fOARIkwTutxp1XIOIohi6HKmOFjMoK/XaqDVUpEEw==
+cli-width@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.npmjs.org/cli-width/-/cli-width-4.1.0.tgz#42daac41d3c254ef38ad8ac037672130173691c5"
+  integrity sha512-ouuZd4/dm2Sw5Gmqy6bGyNNNe1qt9RpmxveLSO7KcgsTnU7RXfsw+/bukWGo1abgBiMAic068rclZsO4IWmmxQ==
 
 client-only@0.0.1:
   version "0.0.1"
@@ -3553,7 +3553,7 @@ exponential-backoff@^3.1.1:
   resolved "https://registry.npmjs.org/exponential-backoff/-/exponential-backoff-3.1.1.tgz#64ac7526fe341ab18a39016cd22c787d01e00bf6"
   integrity sha512-dX7e/LHVJ6W3DE1MHWi9S1EYzDESENfLrYohG2G++ovZrYOkm4Knwa0mc1cn84xJOR4KEU0WSchhLbd0UklbHw==
 
-external-editor@^3.0.3:
+external-editor@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/external-editor/-/external-editor-3.1.0.tgz#cb03f740befae03ea4d283caed2741a83f335495"
   integrity sha512-hMQ4CX1p1izmuLYyZqLMO/qGNw10wSv9QDCPfzXfyFrOaCSSoRfqE1Kf1s5an66J5JZC62NewG+mK49jOCtQew==
@@ -4448,17 +4448,17 @@ inline-style-prefixer@^6.0.0:
     css-in-js-utils "^3.1.0"
     fast-loops "^1.1.3"
 
-inquirer@9.2.9:
-  version "9.2.9"
-  resolved "https://registry.npmjs.org/inquirer/-/inquirer-9.2.9.tgz#49c16cae502b773209598f8668d8ddbfe5b07ecb"
-  integrity sha512-0VXHov2GGwWquYxwxlcIcm3yOHvFb2jh/+HkY8/AUXSTWShpo6QJMlSfHi5Xo74NO40UePBM3rQcI3OkzOF/7A==
+inquirer@9.2.10:
+  version "9.2.10"
+  resolved "https://registry.npmjs.org/inquirer/-/inquirer-9.2.10.tgz#495a846fd6722ffadba896bd9d93e1e5a7add5c7"
+  integrity sha512-tVVNFIXU8qNHoULiazz612GFl+yqNfjMTbLuViNJE/d860Qxrd3NMrse8dm40VUQLOQeULvaQF8lpAhvysjeyA==
   dependencies:
     "@ljharb/through" "^2.3.9"
     ansi-escapes "^4.3.2"
     chalk "^5.3.0"
     cli-cursor "^3.1.0"
-    cli-width "^4.0.0"
-    external-editor "^3.0.3"
+    cli-width "^4.1.0"
+    external-editor "^3.1.0"
     figures "^5.0.0"
     lodash "^4.17.21"
     mute-stream "1.0.0"
@@ -4467,7 +4467,7 @@ inquirer@9.2.9:
     rxjs "^7.8.1"
     string-width "^4.2.3"
     strip-ansi "^6.0.1"
-    wrap-ansi "^6.0.1"
+    wrap-ansi "^6.2.0"
 
 internal-slot@^1.0.3:
   version "1.0.3"
@@ -7935,7 +7935,7 @@ wildcard@^2.0.0:
     string-width "^4.1.0"
     strip-ansi "^6.0.0"
 
-wrap-ansi@^6.0.1:
+wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
   integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==

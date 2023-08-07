@@ -122,7 +122,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "7.33.1",
     "husky": "8.0.3",
-    "inquirer": "9.2.9",
+    "inquirer": "9.2.10",
     "node-addon-api": "7.0.0",
     "null-loader": "4.0.1",
     "parse-url": "8.1.0",
