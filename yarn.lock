@@ -7996,10 +7996,10 @@ xterm-addon-fit@0.7.0:
   resolved "https://registry.npmjs.org/xterm-addon-fit/-/xterm-addon-fit-0.7.0.tgz#b8ade6d96e63b47443862088f6670b49fb752c6a"
   integrity sha512-tQgHGoHqRTgeROPnvmtEJywLKoC/V9eNs4bLLz7iyJr1aW/QFzRwfd3MGiJ6odJd9xEfxcW36/xRU47JkD5NKQ==
 
-xterm-addon-image@0.4.2:
-  version "0.4.2"
-  resolved "https://registry.npmjs.org/xterm-addon-image/-/xterm-addon-image-0.4.2.tgz#d25bb3a8c543d014accbfbbc875927f54d5f43b9"
-  integrity sha512-QVuH5CGlValtFMVorb71TnMV7kQLqc9+V5oyOMNvFqW1NiOBNo/d0WVvMU8qOd2vsAdTbhjvUO8SPptZ5TJHYw==
+xterm-addon-image@0.5.0:
+  version "0.5.0"
+  resolved "https://registry.npmjs.org/xterm-addon-image/-/xterm-addon-image-0.5.0.tgz#3c9bb332a3de55ab200dbefd3411e3b0d985314f"
+  integrity sha512-bWXUBeDzhisYh0clVKx4JgQrZjpn+/QRMRwNsfnRpjCMhgmZ+SL3Bivktd7q03O4uKMMcAOe6bSmppwP9/um0Q==
 
 xterm-addon-ligatures@0.6.0:
   version "0.6.0"
