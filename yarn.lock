@@ -3346,10 +3346,10 @@ eslint-plugin-eslint-comments@^3.2.0:
     escape-string-regexp "^1.0.5"
     ignore "^5.0.5"
 
-eslint-plugin-import@^2.28.0:
-  version "2.28.0"
-  resolved "https://registry.npmjs.org/eslint-plugin-import/-/eslint-plugin-import-2.28.0.tgz#8d66d6925117b06c4018d491ae84469eb3cb1005"
-  integrity sha512-B8s/n+ZluN7sxj9eUf7/pRFERX0r5bnFA2dCaLHy2ZeaQEAz0k+ZZkFWRFHJAqxfxQDx6KLv9LeIki7cFdwW+Q==
+eslint-plugin-import@^2.28.1:
+  version "2.28.1"
+  resolved "https://registry.npmjs.org/eslint-plugin-import/-/eslint-plugin-import-2.28.1.tgz#63b8b5b3c409bfc75ebaf8fb206b07ab435482c4"
+  integrity sha512-9I9hFlITvOV55alzoKBI+K9q74kv0iKMeY6av5+umsNwayt59fz692daGyjR+oStBQgx6nwR9rXldDev3Clw+A==
   dependencies:
     array-includes "^3.1.6"
     array.prototype.findlastindex "^1.2.2"
@@ -3360,13 +3360,12 @@ eslint-plugin-import@^2.28.0:
     eslint-import-resolver-node "^0.3.7"
     eslint-module-utils "^2.8.0"
     has "^1.0.3"
-    is-core-module "^2.12.1"
+    is-core-module "^2.13.0"
     is-glob "^4.0.3"
     minimatch "^3.1.2"
     object.fromentries "^2.0.6"
     object.groupby "^1.0.0"
     object.values "^1.1.6"
-    resolve "^1.22.3"
     semver "^6.3.1"
     tsconfig-paths "^3.14.2"
 
@@ -4575,10 +4574,10 @@ is-ci@^3.0.0:
   dependencies:
     ci-info "^3.1.1"
 
-is-core-module@^2.11.0, is-core-module@^2.12.0, is-core-module@^2.12.1, is-core-module@^2.5.0, is-core-module@^2.8.1, is-core-module@^2.9.0:
-  version "2.12.1"
-  resolved "https://registry.npmjs.org/is-core-module/-/is-core-module-2.12.1.tgz#0c0b6885b6f80011c71541ce15c8d66cf5a4f9fd"
-  integrity sha512-Q4ZuBAe2FUsKtyQJoQHlvP8OvBERxO3jEmy1I7hcRXcJBGGHFh/aJBswbXuS9sgrDH2QUO8ilkwNPHvHMd8clg==
+is-core-module@^2.11.0, is-core-module@^2.12.0, is-core-module@^2.13.0, is-core-module@^2.5.0, is-core-module@^2.8.1, is-core-module@^2.9.0:
+  version "2.13.0"
+  resolved "https://registry.npmjs.org/is-core-module/-/is-core-module-2.13.0.tgz#bb52aa6e2cbd49a30c2ba68c42bf3435ba6072db"
+  integrity sha512-Z7dk6Qo8pOCp3l4tsX2C5ZVas4V+UxwQodwZhLopL91TX8UyyHEXafPcyoeeWuLrwzHcr3igO78wNLwHJHsMCQ==
   dependencies:
     has "^1.0.3"
 
@@ -6655,7 +6654,7 @@ resolve-pkg-maps@^1.0.0:
   resolved "https://registry.npmjs.org/resolve-pkg-maps/-/resolve-pkg-maps-1.0.0.tgz#616b3dc2c57056b5588c31cdf4b3d64db133720f"
   integrity sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==
 
-resolve@^1.11.1, resolve@^1.19.0, resolve@^1.20.0, resolve@^1.22.1, resolve@^1.22.3:
+resolve@^1.11.1, resolve@^1.19.0, resolve@^1.20.0, resolve@^1.22.1:
   version "1.22.3"
   resolved "https://registry.npmjs.org/resolve/-/resolve-1.22.3.tgz#4b4055349ffb962600972da1fdc33c46a4eb3283"
   integrity sha512-P8ur/gp/AmbEzjr729bZnLjXK5Z+4P0zhIJgBgzqRih7hL7BOukHGtSTA3ACMY467GRFz3duQsi0bDZdR7DKdw==
