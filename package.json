@@ -81,7 +81,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/plugin-proposal-optional-chaining": "7.21.0",
     "@babel/preset-react": "7.22.5",
-    "@babel/preset-typescript": "7.22.5",
+    "@babel/preset-typescript": "7.22.11",
     "@electron/rebuild": "^3.2.13",
     "@types/args": "5.0.0",
     "@types/async-retry": "1.4.3",
