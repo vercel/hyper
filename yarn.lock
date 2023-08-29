@@ -646,10 +646,10 @@
     minimist "^1.2.6"
     plist "^3.0.5"
 
-"@electron/rebuild@^3.2.13":
-  version "3.2.13"
-  resolved "https://registry.npmjs.org/@electron/rebuild/-/rebuild-3.2.13.tgz#98fbb98981b1a86162546a2ab91b2355569cca4c"
-  integrity sha512-DH9Ol4JCnHDYVOD0fKWq+Qqbn/0WU1O6QR0mIpMXEVU4YFM4PlaqNC9K36mGShNBxxGFotZCMDrB1wl/iHM12g==
+"@electron/rebuild@^3.2.13", "@electron/rebuild@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.npmjs.org/@electron/rebuild/-/rebuild-3.3.0.tgz#6ba0ae1cb545b2e314901d2ac175ca9c03a2e3da"
+  integrity sha512-S1vgpzIOS1wCJmsYjdLz97MTUV6UTLcMk/HE3w90HYtVxvW+PQdwxLbgsrECX2bysqcnmM5a0K6mXj/gwVgYtQ==
   dependencies:
     "@malept/cross-spawn-promise" "^2.0.0"
     chalk "^4.0.0"
@@ -657,7 +657,7 @@
     detect-libc "^2.0.1"
     fs-extra "^10.0.0"
     got "^11.7.0"
-    node-abi "^3.0.0"
+    node-abi "^3.45.0"
     node-api-version "^0.1.4"
     node-gyp "^9.0.0"
     ora "^5.1.0"
@@ -4104,24 +4104,7 @@ got@12.4.1:
     p-cancelable "^3.0.0"
     responselike "^3.0.0"
 
-got@^11.7.0:
-  version "11.8.3"
-  resolved "https://registry.npmjs.org/got/-/got-11.8.3.tgz#f496c8fdda5d729a90b4905d2b07dbd148170770"
-  integrity sha512-7gtQ5KiPh1RtGS9/Jbv1ofDpBFuq42gyfEib+ejaRBJuj/3tQFeR5+gw57e4ipaU8c/rCjvX6fkQz2lyDlGAOg==
-  dependencies:
-    "@sindresorhus/is" "^4.0.0"
-    "@szmarczak/http-timer" "^4.0.5"
-    "@types/cacheable-request" "^6.0.1"
-    "@types/responselike" "^1.0.0"
-    cacheable-lookup "^5.0.3"
-    cacheable-request "^7.0.2"
-    decompress-response "^6.0.0"
-    http2-wrapper "^1.0.0-beta.5.2"
-    lowercase-keys "^2.0.0"
-    p-cancelable "^2.0.0"
-    responselike "^2.0.0"
-
-got@^11.8.5:
+got@^11.7.0, got@^11.8.5:
   version "11.8.5"
   resolved "https://registry.npmjs.org/got/-/got-11.8.5.tgz#ce77d045136de56e8f024bebb82ea349bc730046"
   integrity sha512-o0Je4NvQObAuZPHLFoRSkdG2lTgtcynqymzg2Vupdx6PorhaT5MCbIyXG6d4D94kk8ZG57QeosgdiqfJWhEhlQ==
@@ -5512,11 +5495,6 @@ minipass@^3.0.0:
   dependencies:
     yallist "^4.0.0"
 
-minipass@^4.0.0:
-  version "4.2.5"
-  resolved "https://registry.npmjs.org/minipass/-/minipass-4.2.5.tgz#9e0e5256f1e3513f8c34691dd68549e85b2c8ceb"
-  integrity sha512-+yQl7SX3bIT83Lhb4BVorMAHVuqsskxRdlmO9kTpyukp8vsm2Sn/fUOV9xlnG8/a5JsypJzap21lz/y3FBMJ8Q==
-
 minipass@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmjs.org/minipass/-/minipass-5.0.0.tgz#3e9788ffb90b694a5d0ec94479a45b5d8738133d"
@@ -5618,10 +5596,10 @@ nested-error-stacks@^2.1.1:
   resolved "https://registry.npmjs.org/nested-error-stacks/-/nested-error-stacks-2.1.1.tgz#26c8a3cee6cc05fbcf1e333cd2fc3e003326c0b5"
   integrity sha512-9iN1ka/9zmX1ZvLV9ewJYEk9h7RyRRtqdK0woXcqohu8EWIerfPUjYJPg0ULy0UqP7cslmdGc8xKDJcojlKiaw==
 
-node-abi@^3.0.0:
-  version "3.40.0"
-  resolved "https://registry.npmjs.org/node-abi/-/node-abi-3.40.0.tgz#51d8ed44534f70ff1357dfbc3a89717b1ceac1b4"
-  integrity sha512-zNy02qivjjRosswoYmPi8hIKJRr8MpQyeKT6qlcq/OnOgA3Rhoae+IYOqsM9V5+JnHWmxKnWOT2GxvtqdtOCXA==
+node-abi@^3.45.0:
+  version "3.47.0"
+  resolved "https://registry.npmjs.org/node-abi/-/node-abi-3.47.0.tgz#6cbfa2916805ae25c2b7156ca640131632eb05e8"
+  integrity sha512-2s6B2CWZM//kPgwnuI0KrYwNjfdByE25zvAaEpq9IH4zcNsarH8Ihu/UuX6XMPEogDAxkuUFeZn60pXNHAqn3A==
   dependencies:
     semver "^7.3.5"
 
@@ -7379,19 +7357,7 @@ tapable@^2.1.1, tapable@^2.2.0:
   resolved "https://registry.npmjs.org/tapable/-/tapable-2.2.0.tgz#5c373d281d9c672848213d0e037d1c4165ab426b"
   integrity sha512-FBk4IesMV1rBxX2tfiK8RAmogtWn53puLOQlvO8XuwlgxcYbP4mVPS9Ph4aeamSyyVjOl24aYWAuc8U5kCVwMw==
 
-tar@^6.0.5, tar@^6.1.2:
-  version "6.1.11"
-  resolved "https://registry.npmjs.org/tar/-/tar-6.1.11.tgz#6760a38f003afa1b2ffd0ffe9e9abbd0eab3d621"
-  integrity sha512-an/KZQzQUkZCkuoAA64hM92X0Urb6VpRhAFllDzz44U2mcD5scmT3zBc4VgVpkugF580+DQn8eAFSyoQt0tznA==
-  dependencies:
-    chownr "^2.0.0"
-    fs-minipass "^2.0.0"
-    minipass "^3.0.0"
-    minizlib "^2.1.1"
-    mkdirp "^1.0.3"
-    yallist "^4.0.0"
-
-tar@^6.1.11:
+tar@^6.0.5, tar@^6.1.11, tar@^6.1.12, tar@^6.1.2:
   version "6.1.15"
   resolved "https://registry.npmjs.org/tar/-/tar-6.1.15.tgz#c9738b0b98845a3b344d334b8fa3041aaba53a69"
   integrity sha512-/zKt9UyngnxIT/EAGYuxaMYgOIJiP81ab9ZfkILq4oNLPFX50qyYmu7jRj9qeXoxmJHjGlbH0+cm2uy1WCs10A==
@@ -7399,18 +7365,6 @@ tar@^6.1.11:
     chownr "^2.0.0"
     fs-minipass "^2.0.0"
     minipass "^5.0.0"
-    minizlib "^2.1.1"
-    mkdirp "^1.0.3"
-    yallist "^4.0.0"
-
-tar@^6.1.12:
-  version "6.1.13"
-  resolved "https://registry.npmjs.org/tar/-/tar-6.1.13.tgz#46e22529000f612180601a6fe0680e7da508847b"
-  integrity sha512-jdIBIN6LTIe2jqzay/2vtYLlBHa3JF42ot3h1dW8Q0PaAG4v8rm0cvpVePtau5C6OKXGGcgO9q2AMNSWxiLqKw==
-  dependencies:
-    chownr "^2.0.0"
-    fs-minipass "^2.0.0"
-    minipass "^4.0.0"
     minizlib "^2.1.1"
     mkdirp "^1.0.3"
     yallist "^4.0.0"
