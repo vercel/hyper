@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@babel/parser@7.22.11":
-  version "7.22.11"
-  resolved "https://registry.npmjs.org/@babel/parser/-/parser-7.22.11.tgz#becf8ee33aad2a35ed5607f521fe6e72a615f905"
-  integrity sha512-R5zb8eJIBPJriQtbH/htEQy4k7E2dHWlD2Y2VT07JCzwYZHBxV5ZYtM0UhXSNMT74LyxuM+b1jdL7pSesXbC/g==
+"@babel/parser@7.22.14":
+  version "7.22.14"
+  resolved "https://registry.npmjs.org/@babel/parser/-/parser-7.22.14.tgz#c7de58e8de106e88efca42ce17f0033209dfd245"
+  integrity sha512-1KucTHgOvaw/LzCVrEOAyXkr9rQlp0A1HiHRYnSUE9dmb8PvPW7o5sscg+5169r54n3vGlbx6GevTE/Iw/P3AQ==
 
 "@electron/remote@2.0.10":
   version "2.0.10"
