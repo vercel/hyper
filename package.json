@@ -86,7 +86,7 @@
     "@types/args": "5.0.0",
     "@types/async-retry": "1.4.3",
     "@types/color": "3.0.3",
-    "@types/columnify": "^1.5.1",
+    "@types/columnify": "^1.5.2",
     "@types/fs-extra": "11.0.1",
     "@types/lodash": "^4.14.197",
     "@types/mousetrap": "1.6.11",
