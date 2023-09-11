@@ -2968,10 +2968,10 @@ electron-link@^0.6.0:
     resolve "^1.19.0"
     source-map "^0.7.3"
 
-electron-mksnapshot@26.1.0:
-  version "26.1.0"
-  resolved "https://registry.npmjs.org/electron-mksnapshot/-/electron-mksnapshot-26.1.0.tgz#602490553bc193acbe36c6ed144d8fad2d171a36"
-  integrity sha512-XRCTt8APH9TxfDrePwYnDsjBbkMKcp6gEySaT7Dfmz1oqax2CXzHSaOlhAsnOs9x3YX/f15WfsDW32px3LNIYg==
+electron-mksnapshot@26.2.0:
+  version "26.2.0"
+  resolved "https://registry.npmjs.org/electron-mksnapshot/-/electron-mksnapshot-26.2.0.tgz#e8f2435ae54e13b649d6364c4e8ad6b44c988fcf"
+  integrity sha512-4Lt+eGoHS+IU761xt4shKJ5lwuVQerp02Rp1o0qQ9g7GM/+7hwsWhG/szz6eAjx5YE6kaLGrvUlFhUKS682+uA==
   dependencies:
     "@electron/get" "^2.0.1"
     extract-zip "^2.0.0"
