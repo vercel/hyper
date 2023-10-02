@@ -1151,10 +1151,10 @@
   resolved "https://registry.npmjs.org/@types/minimist/-/minimist-1.2.2.tgz#ee771e2ba4b3dc5b372935d549fd9617bf345b8c"
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
-"@types/mousetrap@1.6.11":
-  version "1.6.11"
-  resolved "https://registry.npmjs.org/@types/mousetrap/-/mousetrap-1.6.11.tgz#ef9620160fdcefcb85bccda8aaa3e84d7429376d"
-  integrity sha512-F0oAily9Q9QQpv9JKxKn0zMKfOo36KHCW7myYsmUyf2t0g+sBTbG3UleTPoguHdE1z3GLFr3p7/wiOio52QFjQ==
+"@types/mousetrap@1.6.12":
+  version "1.6.12"
+  resolved "https://registry.npmjs.org/@types/mousetrap/-/mousetrap-1.6.12.tgz#d923b92fe138d73809a02716693f079850986553"
+  integrity sha512-tzXGzMbvXt815z0Z7FE45wmRVRitMTaPgfVcdGhOS6LtEOWBZBokFJxEdatVA8cj+cQxvdFLmlMC4c12TNqv9A==
 
 "@types/ms@*", "@types/ms@0.7.31":
   version "0.7.31"
