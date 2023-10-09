@@ -691,10 +691,10 @@
     tar "^6.0.5"
     yargs "^17.0.1"
 
-"@electron/remote@2.0.11":
-  version "2.0.11"
-  resolved "https://registry.npmjs.org/@electron/remote/-/remote-2.0.11.tgz#431a41b83c6193398e6679831dc5b135ddafbc92"
-  integrity sha512-PYEs7W3GrQNuhgiMHjFEvL5MbAL6C7m1AwSAHGqC+xc33IdP7rcGtJSdTP2eg1ssyB3oI00KwTsiSlsQbAoXpA==
+"@electron/remote@2.0.12":
+  version "2.0.12"
+  resolved "https://registry.npmjs.org/@electron/remote/-/remote-2.0.12.tgz#d1204165fa14b4b0fd24020b984667b409a294f4"
+  integrity sha512-IJN6xLAxptq5MCvXNCU6+pdQyz0DjpPtX6g2TPJftu3Z9pU6BTdnos9ZMN8nK471LkASqiA6C+Hzjv5SS8PAQw==
 
 "@electron/universal@1.4.1":
   version "1.4.1"
