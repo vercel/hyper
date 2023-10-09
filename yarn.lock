@@ -3324,6 +3324,11 @@ escape-string-regexp@^4.0.0:
   resolved "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz#14ba83a5d373e3d311e5afca29cf5bfad965bf34"
   integrity sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
 
+eslint-compat-utils@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.npmjs.org/eslint-compat-utils/-/eslint-compat-utils-0.1.2.tgz#f45e3b5ced4c746c127cf724fb074cd4e730d653"
+  integrity sha512-Jia4JDldWnFNIru1Ehx1H5s9/yxiRHY/TimCuUc0jNexew3cF1gI6CYZil1ociakfWO3rRqFjl1mskBblB3RYg==
+
 eslint-config-prettier@9.0.0:
   version "9.0.0"
   resolved "https://registry.npmjs.org/eslint-config-prettier/-/eslint-config-prettier-9.0.0.tgz#eb25485946dd0c66cd216a46232dc05451518d1f"
@@ -3389,14 +3394,15 @@ eslint-plugin-import@^2.28.1:
     semver "^6.3.1"
     tsconfig-paths "^3.14.2"
 
-eslint-plugin-json-schema-validator@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.npmjs.org/eslint-plugin-json-schema-validator/-/eslint-plugin-json-schema-validator-4.6.0.tgz#9c0c631b4c70645a020920c8c9f61b1264c71440"
-  integrity sha512-5DSW0X+ON4DFUBTlVWDz1+1Q8Nm7JBRN2JjSOALSY1SHn42GDsUbzEHrpuQCBtWLA/fCtZeMexC/ZBr3cy8d3g==
+eslint-plugin-json-schema-validator@^4.7.0:
+  version "4.7.0"
+  resolved "https://registry.npmjs.org/eslint-plugin-json-schema-validator/-/eslint-plugin-json-schema-validator-4.7.0.tgz#95cebac2fd426567769add515cd7125e21a8e97a"
+  integrity sha512-1AQJmVzCoZJjnc7uwcXvzWIwiNEQA4YRFybev6xOUwaCrcM4RFnJPzF+zmPW66MHTuOxJW0rsPMUGJy0w76TYg==
   dependencies:
     "@eslint-community/eslint-utils" "^4.3.0"
     ajv "^8.0.0"
     debug "^4.3.1"
+    eslint-compat-utils "^0.1.2"
     json-schema-migrate "^2.0.0"
     jsonc-eslint-parser "^2.0.0"
     minimatch "^8.0.0"
