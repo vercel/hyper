@@ -94,7 +94,7 @@
     "@types/node": "18.18.3",
     "@types/plist": "3.0.3",
     "@types/react": "18.2.24",
-    "@types/react-dom": "18.2.8",
+    "@types/react-dom": "18.2.13",
     "@types/seamless-immutable": "7.1.17",
     "@types/styled-jsx": "2.2.9",
     "@types/uuid": "9.0.4",
