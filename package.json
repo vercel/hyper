@@ -91,7 +91,7 @@
     "@types/lodash": "^4.14.199",
     "@types/mousetrap": "1.6.12",
     "@types/ms": "0.7.32",
-    "@types/node": "18.18.3",
+    "@types/node": "18.18.5",
     "@types/plist": "3.0.3",
     "@types/react": "18.2.24",
     "@types/react-dom": "18.2.8",
