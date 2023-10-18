@@ -19,6 +19,16 @@ import * as api from './api';
 
 let commandPromise: Promise<void> | undefined;
 
+const https = {
+  ...(
+    // Respect the NODE_EXTRA_CA_CERTS variable for environments that need alternate certificate
+    // authorities (SSL Inspection, etc.)
+    process.env.NODE_EXTRA_CA_CERTS && fs.existsSync(process.env.NODE_EXTRA_CA_CERTS)
+      ? { certificateAuthority: fs.readFileSync(process.env.NODE_EXTRA_CA_CERTS) }
+      : {}
+  )
+}
+
 const assertPluginName = (pluginName: string) => {
   if (!pluginName) {
     console.error(chalk.red('Plugin name is required'));
@@ -105,7 +115,7 @@ const lsRemote = (pattern?: string) => {
     (pattern && `${pattern}+`) || ''
   }keywords:hyper-plugin,hyper-theme&size=250`;
   type npmResult = {package: {name: string; description: string}};
-  return got(URL)
+  return got(URL, { https })
     .then((response) => JSON.parse(response.body).results as npmResult[])
     .then((entries) => entries.map((entry) => entry.package))
     .then((entries) =>

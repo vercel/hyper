@@ -9,6 +9,7 @@ export const install = (fn: (err: string | null) => void) => {
   const spawnQueue = queue({concurrency: 1});
   function yarnFn(args: string[], cb: (err: string | null) => void) {
     const env = {
+      ...process.env,
       NODE_ENV: 'production',
       ELECTRON_RUN_AS_NODE: 'true'
     };
