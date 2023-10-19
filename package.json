@@ -97,7 +97,7 @@
     "@types/react-dom": "18.2.14",
     "@types/seamless-immutable": "7.1.17",
     "@types/styled-jsx": "2.2.9",
-    "@types/uuid": "9.0.5",
+    "@types/uuid": "9.0.6",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "ava": "5.3.1",
