@@ -1223,10 +1223,10 @@
   resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.1.tgz#18845205e86ff0038517aab7a18a62a6b9f71275"
   integrity sha512-EaCxbanVeyxDRTQBkdLb3Bvl/HK7PBK6UJjsSixB0iHKoWxE5uu2Q/DgtpOhPIojN0Zl1whvOd7PoHs2P0s5eA==
 
-"@types/seamless-immutable@7.1.17":
-  version "7.1.17"
-  resolved "https://registry.npmjs.org/@types/seamless-immutable/-/seamless-immutable-7.1.17.tgz#1c1505eb4a915ee5f1fb36054a2ea21426f766f0"
-  integrity sha512-IngQqH5GyYm0D25KdTE4jdMIqBaiQB6XEjoXJZijN6b6n/D3eTMRbIWzvQjaSUAXpFaSrrE2ooY7W/nnIugKVw==
+"@types/seamless-immutable@7.1.18":
+  version "7.1.18"
+  resolved "https://registry.npmjs.org/@types/seamless-immutable/-/seamless-immutable-7.1.18.tgz#333f6f091ac76ac22cbb099d5d81ca8ee0cc8090"
+  integrity sha512-CGZCFsseB+/5oR0mDLmXRv+vmUIhtOs0WHUq/Fy/OnpMKwFLPaq82jMkiWNm/IlSNtK6HV4djMWjAqtacL63xg==
 
 "@types/semver@^7.3.12":
   version "7.5.0"
