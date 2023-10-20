@@ -1177,10 +1177,10 @@
   resolved "https://registry.npmjs.org/@types/normalize-package-data/-/normalize-package-data-2.4.1.tgz#d3357479a0fdfdd5907fe67e17e0a85c906e1301"
   integrity sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==
 
-"@types/plist@3.0.3", "@types/plist@^3.0.1":
-  version "3.0.3"
-  resolved "https://registry.npmjs.org/@types/plist/-/plist-3.0.3.tgz#8571d797ed09e0ee2700f7e40bbdec7fd80966ef"
-  integrity sha512-DXkBoKc7jwUR0p439icInmXXMJNhoImdpOrrgA5/nDFK7LVtcJ9MyQNKhJEKpEztnHGWnNWMWLOIR62By0Ln0A==
+"@types/plist@3.0.4", "@types/plist@^3.0.1":
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/@types/plist/-/plist-3.0.4.tgz#af0c5ffaf30d2302460adc17861021323c1410f9"
+  integrity sha512-pTa9xUFQFM9WJGSWHajYNljD+DbVylE1q9IweK1LBhUYJdJ28YNU8j3KZ4Q1Qw+cSl4+QLLLOVmqNjhhvVO8fA==
   dependencies:
     "@types/node" "*"
     xmlbuilder ">=11.0.1"

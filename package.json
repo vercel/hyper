@@ -92,7 +92,7 @@
     "@types/mousetrap": "1.6.12",
     "@types/ms": "0.7.33",
     "@types/node": "18.18.5",
-    "@types/plist": "3.0.3",
+    "@types/plist": "3.0.4",
     "@types/react": "18.2.29",
     "@types/react-dom": "18.2.14",
     "@types/seamless-immutable": "7.1.17",
