@@ -1039,10 +1039,10 @@
   dependencies:
     "@types/color-convert" "*"
 
-"@types/columnify@^1.5.3":
-  version "1.5.3"
-  resolved "https://registry.npmjs.org/@types/columnify/-/columnify-1.5.3.tgz#54f3ed215434c0209590e91a81659f8a11e5d5e2"
-  integrity sha512-miEnLeRzU2uQhs6Tf58vnQNDWC+tv70pSR2Mq+yA2BqgE5xFhhYUHaxg+qoeML8TIX5LE7+c8LU8zh2+V1/SGA==
+"@types/columnify@^1.5.4":
+  version "1.5.4"
+  resolved "https://registry.npmjs.org/@types/columnify/-/columnify-1.5.4.tgz#519fb13a2aa545300927b6fc3aa78327e8f1808e"
+  integrity sha512-YPEVzmy3kJupUee1ueLuvGspy6U2JHcxt6rYvRsSCEgVC54+KdBFjQ6NG/0koZk69e1bfXwSusgChwdFhvEXMw==
 
 "@types/debug@^4.1.6":
   version "4.1.7"
