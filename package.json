@@ -85,7 +85,7 @@
     "@electron/rebuild": "^3.3.0",
     "@types/args": "5.0.2",
     "@types/async-retry": "1.4.3",
-    "@types/color": "3.0.5",
+    "@types/color": "3.0.6",
     "@types/columnify": "^1.5.4",
     "@types/fs-extra": "11.0.3",
     "@types/lodash": "^4.14.200",
