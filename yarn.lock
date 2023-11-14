@@ -1168,10 +1168,10 @@
   resolved "https://registry.npmjs.org/@types/mousetrap/-/mousetrap-1.6.13.tgz#1b2e4cd374fdd1ee58a240be0aafd94f7270b3be"
   integrity sha512-dEzDpaR+P/thkMsjsREQDX9OP8AMyLncTkgUgTTIxq5lJTlQffiLJt67ImDtaX+kC7CaNIX30pfdrrMZkym+eg==
 
-"@types/ms@*", "@types/ms@0.7.33":
-  version "0.7.33"
-  resolved "https://registry.npmjs.org/@types/ms/-/ms-0.7.33.tgz#80bf1da64b15f21fd8c1dc387c31929317d99ee9"
-  integrity sha512-AuHIyzR5Hea7ij0P9q7vx7xu4z0C28ucwjAZC0ja7JhINyCnOw8/DnvAPQQ9TfOlCtZAmCERKQX9+o1mgQhuOQ==
+"@types/ms@*", "@types/ms@0.7.34":
+  version "0.7.34"
+  resolved "https://registry.npmjs.org/@types/ms/-/ms-0.7.34.tgz#10964ba0dee6ac4cd462e2795b6bebd407303433"
+  integrity sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==
 
 "@types/node@*", "@types/node@18.18.7":
   version "18.18.7"
