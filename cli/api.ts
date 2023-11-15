@@ -14,8 +14,8 @@ const registryUrl = registryUrlModule();
 const applicationDirectory = process.env.XDG_CONFIG_HOME
   ? path.join(process.env.XDG_CONFIG_HOME, 'Hyper')
   : process.platform === 'win32'
-  ? path.join(process.env.APPDATA!, 'Hyper')
-  : path.join(os.homedir(), '.config', 'Hyper');
+    ? path.join(process.env.APPDATA!, 'Hyper')
+    : path.join(os.homedir(), '.config', 'Hyper');
 
 const devConfigFileName = path.join(__dirname, `../hyper.json`);
 
