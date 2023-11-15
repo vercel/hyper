@@ -150,8 +150,8 @@ const SearchBox = forwardRef<HTMLDivElement, SearchBoxProps>((props, ref) => {
         {results === undefined
           ? ''
           : results.resultCount === 0
-          ? 'No results'
-          : `${results.resultIndex + 1} of ${results.resultCount}`}
+            ? 'No results'
+            : `${results.resultIndex + 1} of ${results.resultCount}`}
       </span>
 
       <div className="flex-row">

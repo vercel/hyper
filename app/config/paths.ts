@@ -17,15 +17,15 @@ const homeDirectory = homedir();
 let cfgDir = process.env.XDG_CONFIG_HOME
   ? join(process.env.XDG_CONFIG_HOME, 'Hyper')
   : process.platform === 'win32'
-  ? app.getPath('userData')
-  : join(homeDirectory, '.config', 'Hyper');
+    ? app.getPath('userData')
+    : join(homeDirectory, '.config', 'Hyper');
 
 const legacyCfgPath = join(
   process.env.XDG_CONFIG_HOME !== undefined
     ? join(process.env.XDG_CONFIG_HOME, 'hyper')
     : process.platform == 'win32'
-    ? app.getPath('userData')
-    : homedir(),
+      ? app.getPath('userData')
+      : homedir(),
   '.hyper.js'
 );
 
