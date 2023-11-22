@@ -25,11 +25,13 @@ import * as config from './config';
 // set up config
 config.setup();
 
+import notify from './notify';
 import * as plugins from './plugins';
 import {installCLI} from './utils/cli-install';
 import * as AppMenu from './menus/menu';
 import {newWindow} from './ui/window';
 import * as windowUtils from './utils/window-utils';
+import parseUrl from 'parse-url';
 
 const windowSet = new Set<BrowserWindow>([]);
 
@@ -233,6 +235,10 @@ app.on('open-file', (_event, path) => {
 
 app.on('open-url', (_event, sshUrl) => {
   GetWindow((win: BrowserWindow) => {
-    win.rpc.emit('open ssh', sshUrl);
+    try {
+      win.rpc.emit('open ssh', parseUrl(sshUrl));
+    } catch (e) {
+      notify('Invalid ssh url', 'Please check your ssh url and try again.', {error: e});
+    }
   });
 });
