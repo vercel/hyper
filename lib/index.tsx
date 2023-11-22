@@ -204,8 +204,8 @@ rpc.on('open file', ({path}) => {
   store_.dispatch(uiActions.openFile(path));
 });
 
-rpc.on('open ssh', (url) => {
-  store_.dispatch(uiActions.openSSH(url));
+rpc.on('open ssh', (parsedUrl) => {
+  store_.dispatch(uiActions.openSSH(parsedUrl));
 });
 
 rpc.on('update available', ({releaseName, releaseNotes, releaseUrl, canInstall}) => {
