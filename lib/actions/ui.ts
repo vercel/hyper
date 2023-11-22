@@ -300,6 +300,12 @@ export function openSSH(parsedUrl: ReturnType<typeof parseUrl>) {
     dispatch({
       type: UI_OPEN_SSH_URL,
       effect() {
+        const resourseIsValid = /^[a-zA-Z0-9.-]+$/.test(parsedUrl.resource);
+        if (!resourseIsValid) {
+          notify('Invalid ssh url', 'Please check your ssh url and try again.');
+          return;
+        }
+
         let command = `${parsedUrl.protocol} ${parsedUrl.user ? `${parsedUrl.user}@` : ''}${parsedUrl.resource}`;
 
         if (parsedUrl.port) command += ` -p ${parsedUrl.port}`;
