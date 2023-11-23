@@ -292,12 +292,17 @@ export function leaveFullScreen(): HyperActions {
   };
 }
 
-export function openSSH(url: string) {
+export function openSSH(parsedUrl: ReturnType<typeof parseUrl>) {
   return (dispatch: HyperDispatch) => {
     dispatch({
       type: UI_OPEN_SSH_URL,
       effect() {
-        const parsedUrl = parseUrl(url, true);
+        const resourseIsValid = /^[a-zA-Z0-9.-]+$/.test(parsedUrl.resource);
+        if (!resourseIsValid) {
+          notify('Invalid ssh url', 'Please check your ssh url and try again.');
+          return;
+        }
+
         let command = `${parsedUrl.protocol} ${parsedUrl.user ? `${parsedUrl.user}@` : ''}${parsedUrl.resource}`;
 
         if (parsedUrl.port) command += ` -p ${parsedUrl.port}`;

@@ -8,30 +8,40 @@ on:
 defaults:
   run:
     shell: bash
+env:
+  NODE_VERSION: 18.x
 jobs:
   build:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        node-version: [16.x]
         os:
           - macos-12
-          - ubuntu-18.04
+          - ubuntu-latest
           - windows-latest
       fail-fast: false
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
           cache: yarn
           cache-dependency-path: |
             yarn.lock
             app/yarn.lock
+      - name: Fix node-gyp and Python
+        run: python3 -m pip install packaging setuptools
       - name: Install
         run: yarn install
+        env:
+          npm_config_node_gyp: ${{ github.workspace }}${{ runner.os == 'Windows' && '\node_modules\node-gyp\bin\node-gyp.js' || '/node_modules/node-gyp/bin/node-gyp.js' }}
+      - name: Install libarchive-tools
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt update
+          sudo apt install libarchive-tools
       - name: Lint and Run Unit Tests
         run: yarn run test
       - name: Getting Build Icon
