@@ -8,30 +8,45 @@ on:
 defaults:
   run:
     shell: bash
+env:
+  NODE_VERSION: 18.x
 jobs:
   build:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        node-version: [16.x]
         os:
-          - macos-12
-          - ubuntu-18.04
+          - macos-latest
+          - ubuntu-latest
           - windows-latest
       fail-fast: false
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: yarn
-          cache-dependency-path: |
-            yarn.lock
-            app/yarn.lock
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Fix node-gyp and Python
+        run: python3 -m pip install packaging setuptools
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      - uses: actions/cache/restore@v3
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - name: Install
         run: yarn install
+        env:
+          npm_config_node_gyp: ${{ github.workspace }}${{ runner.os == 'Windows' && '\node_modules\node-gyp\bin\node-gyp.js' || '/node_modules/node-gyp/bin/node-gyp.js' }}
+      - name: Install libarchive-tools
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt update
+          sudo apt install libarchive-tools
       - name: Lint and Run Unit Tests
         run: yarn run test
       - name: Getting Build Icon
@@ -40,7 +55,14 @@ jobs:
           cp build/canary.ico build/icon.ico
           cp build/canary.icns build/icon.icns
       - name: Build
-        run: if [ ! -z "$CSC_LINK" ] ; then yarn run dist ; else unset CSC_LINK && unset WIN_CSC_LINK && yarn run dist --publish=never ; fi
+        run: |
+          if [ -z "$CSC_LINK" ] ; then unset CSC_LINK ; fi
+          if [ -z "$CSC_KEY_PASSWORD" ] ; then unset CSC_KEY_PASSWORD ; fi
+          if [ -z "$WIN_CSC_LINK" ] ; then unset WIN_CSC_LINK ; fi
+          if [ -z "$WIN_CSC_KEY_PASSWORD" ] ; then unset WIN_CSC_KEY_PASSWORD ; fi
+          if [ -z "$APPLE_ID" ] ; then unset APPLE_ID ; fi
+          if [ -z "$APPLE_APP_SPECIFIC_PASSWORD" ] ; then unset APPLE_APP_SPECIFIC_PASSWORD ; fi
+          yarn run dist
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
@@ -48,7 +70,7 @@ jobs:
           WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
           WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
       - name: Archive Build Artifacts
         uses: LabhanshAgrawal/upload-artifact@v3
         with:
@@ -58,12 +80,19 @@ jobs:
             dist/*.AppImage
             dist/*.deb
             dist/*.rpm
+            dist/*.pacman
             dist/*.exe
       - name: Run E2E Tests
         if: runner.os != 'Linux'
         run: yarn run test:e2e
+      - name: Run E2E Tests on Linux
+        if: runner.os == 'Linux'
+        uses: GabrielBB/xvfb-action@v1.6
+        with:
+          run: yarn run test:e2e
+        env:
+          SHELL: /bin/bash
       - name: Archive E2E test screenshot
-        if: runner.os != 'Linux'
         uses: actions/upload-artifact@v3
         with:
           name: e2e
@@ -79,3 +108,83 @@ jobs:
         with:
           name: pr_num
           path: ./pr_num.txt
+      - uses: actions/cache/save@v3
+        if: github.event_name == 'push'
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
+
+  build-linux-arm:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: armv7l
+            cpu: cortex-a8
+            image: raspios_lite:latest
+          - name: arm64
+            cpu: cortex-a53
+            image: raspios_lite_arm64:latest
+      fail-fast: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Fix node-gyp and Python
+        run: python3 -m pip install packaging setuptools
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      - uses: actions/cache/restore@v3
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install
+        run: |
+          yarn install
+          sudo apt update
+          sudo apt install libarchive-tools
+      - name: Compile
+        run: yarn run build
+      - name: rebuild node-pty
+        uses: pguyot/arm-runner-action@v2.5.2
+        with:
+          image_additional_mb: 2000
+          base_image: ${{ matrix.image }}
+          cpu: ${{ matrix.cpu }}
+          shell: bash
+          copy_artifact_path: target/node_modules/node-pty
+          copy_artifact_dest: target/node_modules
+          commands: |
+            wget https://nodejs.org/dist/v18.16.0/node-v18.16.0-linux-${{ matrix.name }}.tar.xz
+            tar -xJf node-v18.16.0-linux-${{ matrix.name }}.tar.xz
+            sudo cp node-v18.16.0-linux-${{ matrix.name }}/* /usr/local/ -R
+            npm run rebuild-node-pty
+      - name: chown node-pty
+        run: |
+          sudo chown -R $USER:$USER target/node_modules/node-pty
+      - name: Prepare v8 snapshot
+        if: matrix.name == 'armv7l'
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt update
+          sudo apt install -y libglib2.0-0:i386 libexpat1:i386 libgcc-s1:i386
+          npm_config_arch=armv7l yarn run v8-snapshot:arch
+      - name: Build
+        run: yarn run electron-builder -l deb rpm AppImage pacman --${{ matrix.name }} -c electron-builder-linux-ci.json
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Archive Build Artifacts
+        uses: LabhanshAgrawal/upload-artifact@v3
+        with:
+          path: |
+            dist/*.snap
+            dist/*.AppImage
+            dist/*.deb
+            dist/*.rpm
+            dist/*.pacman
