@@ -16,7 +16,7 @@ jobs:
         node-version: [16.x]
         os:
           - macos-12
-          - ubuntu-18.04
+          - ubuntu-latest
           - windows-latest
       fail-fast: false
     steps:
@@ -30,6 +30,8 @@ jobs:
           cache-dependency-path: |
             yarn.lock
             app/yarn.lock
+      - name: Fix node-gyp and Python
+        run: python3 -m pip install packaging setuptools
       - name: Install
         run: yarn install
       - name: Lint and Run Unit Tests
