@@ -34,6 +34,11 @@ jobs:
         run: python3 -m pip install packaging setuptools
       - name: Install
         run: yarn install
+      - name: Install libarchive-tools
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt update
+          sudo apt install libarchive-tools
       - name: Lint and Run Unit Tests
         run: yarn run test
       - name: Getting Build Icon
