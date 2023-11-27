@@ -134,7 +134,7 @@
     "terser": "5.24.0",
     "terser-webpack-plugin": "^5.3.9",
     "ts-node": "10.9.1",
-    "typescript": "5.2.2",
+    "typescript": "5.3.2",
     "webpack": "5.89.0"
   },
   "electronmon": {
