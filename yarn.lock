@@ -672,10 +672,10 @@
     minimist "^1.2.6"
     plist "^3.0.5"
 
-"@electron/rebuild@^3.3.1":
-  version "3.3.1"
-  resolved "https://registry.npmjs.org/@electron/rebuild/-/rebuild-3.3.1.tgz#7f1455e3f992b3c829873b0d3eb34859fdf8f0a2"
-  integrity sha512-bQDWw9rkEGYW+gzPNFCD+ugJ8LIFSu0pORJl5fmrT+H8qETOIPAe99Klzg0wGaZRu9JN+5qLzKG+PehRGOlzmQ==
+"@electron/rebuild@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.npmjs.org/@electron/rebuild/-/rebuild-3.4.0.tgz#b0152baa14f795f73bc5e154c261205a79aceed0"
+  integrity sha512-fi+O1zgxSmZR1X8oSOHRgCWALSS56dGHJ2AXLx9Ua3wg/NmBaMI/jpu7moU6T8lk/XRLnsC9Ds/Jo4I+UCkHAA==
   dependencies:
     "@malept/cross-spawn-promise" "^2.0.0"
     chalk "^4.0.0"
