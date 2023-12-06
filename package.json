@@ -112,7 +112,7 @@
     "electron-mksnapshot": "27.1.2",
     "electronmon": "^2.0.2",
     "eslint": "8.55.0",
-    "eslint-config-prettier": "9.0.0",
+    "eslint-config-prettier": "9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-import": "^2.29.0",
