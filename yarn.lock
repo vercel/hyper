@@ -667,10 +667,10 @@
     minimist "^1.2.6"
     plist "^3.0.5"
 
-"@electron/rebuild@^3.4.0":
-  version "3.4.0"
-  resolved "https://registry.npmjs.org/@electron/rebuild/-/rebuild-3.4.0.tgz#b0152baa14f795f73bc5e154c261205a79aceed0"
-  integrity sha512-fi+O1zgxSmZR1X8oSOHRgCWALSS56dGHJ2AXLx9Ua3wg/NmBaMI/jpu7moU6T8lk/XRLnsC9Ds/Jo4I+UCkHAA==
+"@electron/rebuild@^3.4.1":
+  version "3.4.1"
+  resolved "https://registry.npmjs.org/@electron/rebuild/-/rebuild-3.4.1.tgz#a547af63068f1e62ff18631beb7704190ceab895"
+  integrity sha512-iMKb6KJgKcdURbejs0j2GLEmrY8uY4rg1ESThXx9sFTgdWb8UOfJuTqW6LIEtcoY8FrbFqDmJrkWc4tBpdStXw==
   dependencies:
     "@malept/cross-spawn-promise" "^2.0.0"
     chalk "^4.0.0"
@@ -682,6 +682,7 @@
     node-api-version "^0.1.4"
     node-gyp "^9.0.0"
     ora "^5.1.0"
+    read-binary-file-arch "^1.0.6"
     semver "^7.3.5"
     tar "^6.0.5"
     yargs "^17.0.1"
@@ -6627,6 +6628,13 @@ react@18.2.0:
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
   dependencies:
     loose-envify "^1.1.0"
+
+read-binary-file-arch@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.npmjs.org/read-binary-file-arch/-/read-binary-file-arch-1.0.6.tgz#959c4637daa932280a9b911b1a6766a7e44288fc"
+  integrity sha512-BNg9EN3DD3GsDXX7Aa8O4p92sryjkmzYYgmgTAc6CA4uGLEDzFfxOxugu21akOxpcXHiEgsYkC6nPsQvLLLmEg==
+  dependencies:
+    debug "^4.3.4"
 
 read-config-file@6.3.2:
   version "6.3.2"
