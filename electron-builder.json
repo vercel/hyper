@@ -17,42 +17,25 @@
       ]
     }
   ],
+  "artifactName": "${productName}-${version}-${arch}.${ext}",
   "linux": {
     "category": "TerminalEmulator",
     "target": [
-      {
-        "target": "deb",
-        "arch": [
-          "x64",
-          "arm64"
-        ]
-      },
-      {
-        "target": "AppImage",
-        "arch": [
-          "x64",
-          "arm64"
-        ]
-      },
-      {
-        "target": "rpm",
-        "arch": [
-          "x64",
-          "arm64"
-        ]
-      },
-      {
-        "target": "snap",
-        "arch": [
-          "x64"
-        ]
-      }
+      "deb",
+      "AppImage",
+      "rpm",
+      "snap",
+      "pacman"
     ]
   },
   "win": {
-    "target": [
-      "nsis"
-    ],
+    "target": {
+      "target": "nsis",
+      "arch": [
+        "x64",
+        "arm64"
+      ]
+    },
     "rfc3161TimeStampServer": "http://timestamp.comodoca.com"
   },
   "nsis": {
