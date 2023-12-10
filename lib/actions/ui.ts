@@ -297,7 +297,7 @@ export function openSSH(parsedUrl: ReturnType<typeof parseUrl>) {
     dispatch({
       type: UI_OPEN_SSH_URL,
       effect() {
-        const resourseIsValid = /^[a-zA-Z0-9.-]+$/.test(parsedUrl.resource);
+        const resourseIsValid = /^(?!-)[\w.-]+$/.test(parsedUrl.resource);
         if (!resourseIsValid) {
           notify('Invalid ssh url', 'Please check your ssh url and try again.');
           return;
