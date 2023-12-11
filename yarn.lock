@@ -3515,10 +3515,10 @@ eslint-plugin-import@^2.29.0:
     semver "^6.3.1"
     tsconfig-paths "^3.14.2"
 
-eslint-plugin-json-schema-validator@^4.7.3:
-  version "4.7.3"
-  resolved "https://registry.npmjs.org/eslint-plugin-json-schema-validator/-/eslint-plugin-json-schema-validator-4.7.3.tgz#3869e20e6f601321e6553658e804121a4fdb8b92"
-  integrity sha512-odFpNM997t484eprsTEk7YTt7JXgZ5ewCIekcOPGJLe5OFGKoRkJWtQ5lUJdRqqaOOD5vE8kGmV8fDvs0h9iNg==
+eslint-plugin-json-schema-validator@^4.7.4:
+  version "4.7.4"
+  resolved "https://registry.npmjs.org/eslint-plugin-json-schema-validator/-/eslint-plugin-json-schema-validator-4.7.4.tgz#147dfc3ae93d8cc3abd3e07e98fceb08c17a45d2"
+  integrity sha512-jgLoOn1G0GMb8qOS+vlzDZwL589cbmOq02yTl1Z4YdDBlicV9qm+u/KYipRBF+6pyTDAfNQn00tLUj8ewxQEAw==
   dependencies:
     "@eslint-community/eslint-utils" "^4.3.0"
     ajv "^8.0.0"
