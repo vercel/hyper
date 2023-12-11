@@ -98,7 +98,7 @@
     "@types/seamless-immutable": "7.1.19",
     "@types/styled-jsx": "2.2.9",
     "@types/uuid": "9.0.7",
-    "@typescript-eslint/eslint-plugin": "5.62.0",
+    "@typescript-eslint/eslint-plugin": "6.13.2",
     "@typescript-eslint/parser": "6.13.1",
     "ava": "5.3.1",
     "babel-loader": "9.1.3",
