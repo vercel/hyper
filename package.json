@@ -93,7 +93,7 @@
     "@types/ms": "0.7.34",
     "@types/node": "18.19.2",
     "@types/plist": "3.0.5",
-    "@types/react": "18.2.41",
+    "@types/react": "18.2.43",
     "@types/react-dom": "18.2.17",
     "@types/seamless-immutable": "7.1.19",
     "@types/styled-jsx": "2.2.9",
