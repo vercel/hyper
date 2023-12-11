@@ -944,10 +944,10 @@
   resolved "https://registry.npmjs.org/@react-icons/all-files/-/all-files-4.1.0.tgz#477284873a0821928224b6fc84c62d2534d6650b"
   integrity sha512-hxBI2UOuVaI3O/BhQfhtb4kcGn9ft12RWAFVMUeNjqqhLsHvFtzIkFaptBJpFDANTKoDfdVoHTKZDlwKCACbMQ==
 
-"@redux-devtools/extension@^3.2.6":
-  version "3.2.6"
-  resolved "https://registry.npmjs.org/@redux-devtools/extension/-/extension-3.2.6.tgz#7e92b4dcc8e8062591bdc03222e3e78082aba40a"
-  integrity sha512-fWrqYAoFFKc5+78P/xWj+3NcoiJ07ak5qdiPTbO5CAuM5vE3dKk5fajpJyuOab+hLNEUJMTklCBYm+WTFcWWxA==
+"@redux-devtools/extension@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.npmjs.org/@redux-devtools/extension/-/extension-3.3.0.tgz#bc775d289f15604c472112920beac2cf4dbb7907"
+  integrity sha512-X34S/rC8S/M1BIrkYD1mJ5f8vlH0BDqxXrs96cvxSBo4FhMdbhU+GUGsmNYov1xjSyLMHgo8NYrUG8bNX7525g==
   dependencies:
     "@babel/runtime" "^7.23.2"
     immutable "^4.3.4"
