@@ -133,7 +133,7 @@
     "style-loader": "3.3.3",
     "terser": "5.26.0",
     "terser-webpack-plugin": "^5.3.9",
-    "ts-node": "10.9.1",
+    "ts-node": "10.9.2",
     "typescript": "5.3.3",
     "webpack": "5.89.0"
   },
