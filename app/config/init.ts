@@ -21,7 +21,7 @@ const _syntaxValidation = (cfg: string) => {
     return new vm.Script(cfg, {filename: '.hyper.js'});
   } catch (_err) {
     const err = _err as {name: string};
-    notify(`Error loading config: ${err.name}`, `${err}`, {error: err});
+    notify(`Error loading config: ${err.name}`, JSON.stringify(err), {error: err});
   }
 };
 
@@ -55,8 +55,8 @@ const _init = (userCfg: rawConfig, defaultCfg: rawConfig): parsedConfig => {
     // Merging platform specific keymaps with user defined keymaps
     keymaps: mapKeys({...defaultCfg.keymaps, ...userCfg?.keymaps}),
     // Ignore undefined values in plugin and localPlugins array Issue #1862
-    plugins: (userCfg?.plugins && userCfg.plugins.filter(Boolean)) || [],
-    localPlugins: (userCfg?.localPlugins && userCfg.localPlugins.filter(Boolean)) || []
+    plugins: userCfg?.plugins?.filter(Boolean) || [],
+    localPlugins: userCfg?.localPlugins?.filter(Boolean) || []
   };
 };
 

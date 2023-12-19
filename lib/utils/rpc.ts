@@ -28,6 +28,7 @@ export default class Client {
         this.emitter.emit('ready');
       }, 0);
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       this.ipc.on('init', (ev: IpcRendererEvent, uid: string, profileName: string) => {
         // we cache so that if the object
         // gets re-instantiated we don't
