@@ -461,13 +461,7 @@ const reducer: IUiReducer = (state = initial, action) => {
     }
   }
 
-  if (
-    typeof state.cols !== 'undefined' &&
-    state.cols !== null &&
-    typeof state.rows !== 'undefined' &&
-    state.rows !== null &&
-    (state.rows !== state_.rows || state.cols !== state_.cols)
-  ) {
+  if (state.cols !== null && state.rows !== null && (state.rows !== state_.rows || state.cols !== state_.cols)) {
     state_ = state_.merge({notifications: {resize: true}}, {deep: true});
   }
 
