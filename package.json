@@ -117,7 +117,7 @@
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-json-schema-validator": "^4.7.4",
-    "eslint-plugin-jsonc": "^2.11.1",
+    "eslint-plugin-jsonc": "^2.11.2",
     "eslint-plugin-lodash": "^7.4.0",
     "eslint-plugin-prettier": "^5.1.2",
     "eslint-plugin-react": "7.33.2",
