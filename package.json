@@ -33,7 +33,7 @@
     "@redux-devtools/extension": "^3.3.0",
     "args": "5.0.3",
     "chalk": "5.3.0",
-    "clsx": "2.0.0",
+    "clsx": "2.1.0",
     "color": "4.2.3",
     "columnify": "1.6.0",
     "css-loader": "6.8.1",
