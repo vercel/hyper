@@ -942,6 +942,11 @@
   resolved "https://registry.npmjs.org/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
+"@pkgr/core@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.npmjs.org/@pkgr/core/-/core-0.1.0.tgz#7d8dacb7fdef0e4387caf7396cbd77f179867d06"
+  integrity sha512-Zwq5OCzuwJC2jwqmpEQt7Ds1DTi6BWSwoGkbb1n9pO3hzb35BoJELx7c0T23iDkBGkh2e7tvOtjF3tr3OaQHDQ==
+
 "@pkgr/utils@^2.4.2":
   version "2.4.2"
   resolved "https://registry.npmjs.org/@pkgr/utils/-/utils-2.4.2.tgz#9e638bbe9a6a6f165580dc943f138fd3309a2cbc"
@@ -3588,6 +3593,13 @@ eslint-compat-utils@^0.1.2:
   resolved "https://registry.npmjs.org/eslint-compat-utils/-/eslint-compat-utils-0.1.2.tgz#f45e3b5ced4c746c127cf724fb074cd4e730d653"
   integrity sha512-Jia4JDldWnFNIru1Ehx1H5s9/yxiRHY/TimCuUc0jNexew3cF1gI6CYZil1ociakfWO3rRqFjl1mskBblB3RYg==
 
+eslint-compat-utils@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/eslint-compat-utils/-/eslint-compat-utils-0.2.0.tgz#5ba413feacdebebf303b2a03250a9157a0a43603"
+  integrity sha512-xQignOOtXOxDIA1J3rnXEWa0vkQYgex/64+o+vbgArVWzYFDOlsQyD6TDHjvwE+X80sUUCgXnaOhSbz9CnXqZw==
+  dependencies:
+    semver "^7.5.4"
+
 eslint-config-prettier@9.1.0:
   version "9.1.0"
   resolved "https://registry.npmjs.org/eslint-config-prettier/-/eslint-config-prettier-9.1.0.tgz#31af3d94578645966c082fcb71a5846d3c94867f"
@@ -3653,19 +3665,19 @@ eslint-plugin-import@^2.29.1:
     semver "^6.3.1"
     tsconfig-paths "^3.15.0"
 
-eslint-plugin-json-schema-validator@^4.7.4:
-  version "4.7.4"
-  resolved "https://registry.npmjs.org/eslint-plugin-json-schema-validator/-/eslint-plugin-json-schema-validator-4.7.4.tgz#147dfc3ae93d8cc3abd3e07e98fceb08c17a45d2"
-  integrity sha512-jgLoOn1G0GMb8qOS+vlzDZwL589cbmOq02yTl1Z4YdDBlicV9qm+u/KYipRBF+6pyTDAfNQn00tLUj8ewxQEAw==
+eslint-plugin-json-schema-validator@^4.8.1:
+  version "4.8.1"
+  resolved "https://registry.npmjs.org/eslint-plugin-json-schema-validator/-/eslint-plugin-json-schema-validator-4.8.1.tgz#d20713aec3f18efe30acb5e2f5844d8646109763"
+  integrity sha512-FsO7L1RrAznAoVzSUNOkc5C0zmFwtsxFzBsU9N5plCSNae/IXtEJpj5CJh7Sq9bvFJnKVkG/s4tTE85dRf5vfA==
   dependencies:
     "@eslint-community/eslint-utils" "^4.3.0"
     ajv "^8.0.0"
     debug "^4.3.1"
-    eslint-compat-utils "^0.1.2"
+    eslint-compat-utils "^0.2.0"
     json-schema-migrate "^2.0.0"
     jsonc-eslint-parser "^2.0.0"
     minimatch "^8.0.0"
-    synckit "^0.8.0"
+    synckit "^0.9.0"
     toml-eslint-parser "^0.9.0"
     tunnel-agent "^0.6.0"
     yaml-eslint-parser "^1.0.0"
@@ -5820,7 +5832,7 @@ min-indent@^1.0.1:
   resolved "https://registry.npmjs.org/min-indent/-/min-indent-1.0.1.tgz#a63f681673b30571fbe8bc25686ae746eefa9869"
   integrity sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==
 
-minimatch@9.0.3:
+minimatch@9.0.3, minimatch@^9.0.1:
   version "9.0.3"
   resolved "https://registry.npmjs.org/minimatch/-/minimatch-9.0.3.tgz#a6e00c3de44c3a542bfaae70abfc22420a6da825"
   integrity sha512-RHiac9mvaRw0x3AYRgDC1CxAP7HTcNrrECeA8YYJeWnpo+2Q5CegtZjaotWTWxDG3UeGA1coE05iH1mPjT/2mg==
@@ -5845,13 +5857,6 @@ minimatch@^8.0.0:
   version "8.0.2"
   resolved "https://registry.npmjs.org/minimatch/-/minimatch-8.0.2.tgz#ba35f8afeb255a4cbad4b6677b46132f3278c469"
   integrity sha512-ikHGF67ODxj7vS5NKU2wvTsFLbExee+KXVCnBWh8Cg2hVJfBMQIrlo50qru/09E0EifjnU8dZhJ/iHhyXJM6Mw==
-  dependencies:
-    brace-expansion "^2.0.1"
-
-minimatch@^9.0.1:
-  version "9.0.1"
-  resolved "https://registry.npmjs.org/minimatch/-/minimatch-9.0.1.tgz#8a555f541cf976c622daf078bb28f29fb927c253"
-  integrity sha512-0jWhJpD/MdhPXwPuiRkCbfYfSKp2qnn2eOc279qI7f+osl/l+prKSrvhg157zSYvx/1nmgn2NqdT6k2Z7zSH9w==
   dependencies:
     brace-expansion "^2.0.1"
 
@@ -7917,12 +7922,20 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-synckit@^0.8.0, synckit@^0.8.6:
+synckit@^0.8.6:
   version "0.8.6"
   resolved "https://registry.npmjs.org/synckit/-/synckit-0.8.6.tgz#b69b7fbce3917c2673cbdc0d87fb324db4a5b409"
   integrity sha512-laHF2savN6sMeHCjLRkheIU4wo3Zg9Ln5YOjOo7sZ5dVQW8yF5pPE5SIw1dsPhq3TRp1jisKRCdPhfs/1WMqDA==
   dependencies:
     "@pkgr/utils" "^2.4.2"
+    tslib "^2.6.2"
+
+synckit@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.npmjs.org/synckit/-/synckit-0.9.0.tgz#5b33b458b3775e4466a5b377fba69c63572ae449"
+  integrity sha512-7RnqIMq572L8PeEzKeBINYEJDDxpcH8JEgLwUqBd3TkofhFRbkq4QLR0u+36avGAhCRbk2nnmjcW9SE531hPDg==
+  dependencies:
+    "@pkgr/core" "^0.1.0"
     tslib "^2.6.2"
 
 tapable@^2.1.1, tapable@^2.2.0:
