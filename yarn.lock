@@ -672,10 +672,10 @@
     minimist "^1.2.6"
     plist "^3.0.5"
 
-"@electron/rebuild@^3.4.1":
-  version "3.4.1"
-  resolved "https://registry.npmjs.org/@electron/rebuild/-/rebuild-3.4.1.tgz#a547af63068f1e62ff18631beb7704190ceab895"
-  integrity sha512-iMKb6KJgKcdURbejs0j2GLEmrY8uY4rg1ESThXx9sFTgdWb8UOfJuTqW6LIEtcoY8FrbFqDmJrkWc4tBpdStXw==
+"@electron/rebuild@^3.5.0":
+  version "3.5.0"
+  resolved "https://registry.npmjs.org/@electron/rebuild/-/rebuild-3.5.0.tgz#4483a2577c516d9c7698edf51cf25496bcfe42d8"
+  integrity sha512-pWRza7F+JxzTNATkEgI5iW7lAQTVBtU5r6ZjUSbrD04kbuQWUIHBcuvqosaHvKLmTpdRlsZQkPxTYciIoOWf3A==
   dependencies:
     "@malept/cross-spawn-promise" "^2.0.0"
     chalk "^4.0.0"
@@ -684,7 +684,7 @@
     fs-extra "^10.0.0"
     got "^11.7.0"
     node-abi "^3.45.0"
-    node-api-version "^0.1.4"
+    node-api-version "^0.2.0"
     node-gyp "^9.0.0"
     ora "^5.1.0"
     read-binary-file-arch "^1.0.6"
@@ -3047,15 +3047,10 @@ depd@^1.1.2:
   resolved "https://registry.npmjs.org/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
   integrity sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=
 
-detect-libc@^2.0.0:
+detect-libc@^2.0.0, detect-libc@^2.0.1:
   version "2.0.2"
   resolved "https://registry.npmjs.org/detect-libc/-/detect-libc-2.0.2.tgz#8ccf2ba9315350e1241b88d0ac3b0e1fbd99605d"
   integrity sha512-UX6sGumvvqSaXgdKGUsgZWqcUyIXZ/vZTrlRT/iobiKhGL0zL4d3osHj3uqllWJK+i+sixDS/3COVEOFbupFyw==
-
-detect-libc@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/detect-libc/-/detect-libc-2.0.1.tgz#e1897aa88fa6ad197862937fbc0441ef352ee0cd"
-  integrity sha512-463v3ZeIrcWtdgIg6vI6XUncguvr2TnGl4SzDXinkt9mSLpBJKXT3mW6xT3VQdDN11+WVs29pgvivTc4Lp8v+w==
 
 detect-node@^2.0.4:
   version "2.0.4"
@@ -6039,10 +6034,10 @@ node-addon-api@^1.6.3:
   resolved "https://registry.npmjs.org/node-addon-api/-/node-addon-api-1.7.2.tgz#3df30b95720b53c24e59948b49532b662444f54d"
   integrity sha512-ibPK3iA+vaY1eEjESkQkM0BbCqFOaZMiXRTtdB0u7b4djtY6JnsjvPdUHVMg6xQt3B8fpTTWHI9A+ADjM9frzg==
 
-node-api-version@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.npmjs.org/node-api-version/-/node-api-version-0.1.4.tgz#1ed46a485e462d55d66b5aa1fe2821720dedf080"
-  integrity sha512-KGXihXdUChwJAOHO53bv9/vXcLmdUsZ6jIptbvYvkpKfth+r7jw44JkVxQFA3kX5nQjzjmGu1uAu/xNNLNlI5g==
+node-api-version@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/node-api-version/-/node-api-version-0.2.0.tgz#5177441da2b1046a4d4547ab9e0972eed7b1ac1d"
+  integrity sha512-fthTTsi8CxaBXMaBAD7ST2uylwvsnYxh2PfaScwpMhos6KlSFajXQPcM4ogNE1q2s3Lbz9GCGqeIHC+C6OZnKg==
   dependencies:
     semver "^7.3.5"
 
