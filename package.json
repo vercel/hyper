@@ -99,7 +99,7 @@
     "@types/styled-jsx": "2.2.9",
     "@types/uuid": "9.0.7",
     "@typescript-eslint/eslint-plugin": "6.18.1",
-    "@typescript-eslint/parser": "6.16.0",
+    "@typescript-eslint/parser": "6.19.0",
     "ava": "6.0.1",
     "babel-loader": "9.1.3",
     "concurrently": "8.2.2",
