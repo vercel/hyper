@@ -119,7 +119,7 @@
     "eslint-plugin-json-schema-validator": "^4.8.1",
     "eslint-plugin-jsonc": "^2.11.2",
     "eslint-plugin-lodash": "^7.4.0",
-    "eslint-plugin-prettier": "^5.1.2",
+    "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-react": "7.33.2",
     "husky": "8.0.3",
     "inquirer": "9.2.12",
