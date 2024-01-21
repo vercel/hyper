@@ -36,7 +36,8 @@ const Hyper = forwardRef<HTMLDivElement, HyperProps>((props, ref) => {
 
   const handleSelectAll = () => {
     const term = terms.current?.getActiveTerm();
-    if (term) {
+    const focus = document.activeElement?.classList.contains('xterm-helper-textarea');
+    if (term && focus) {
       term.selectAll();
     }
   };
