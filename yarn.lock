@@ -1712,17 +1712,7 @@ ajv@^6.10.0, ajv@^6.12.0, ajv@^6.12.4, ajv@^6.12.5:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-ajv@^8.0.0:
-  version "8.8.2"
-  resolved "https://registry.npmjs.org/ajv/-/ajv-8.8.2.tgz#01b4fef2007a28bf75f0b7fc009f62679de4abbb"
-  integrity sha512-x9VuX+R/jcFj1DHo/fCp99esgGDWiHENrKxaCENuCxpoMCmAt/COCGVDwA7kleEpEzJjDnvh3yGoOuLu0Dtllw==
-  dependencies:
-    fast-deep-equal "^3.1.1"
-    json-schema-traverse "^1.0.0"
-    require-from-string "^2.0.2"
-    uri-js "^4.2.2"
-
-ajv@^8.9.0:
+ajv@^8.0.0, ajv@^8.9.0:
   version "8.12.0"
   resolved "https://registry.npmjs.org/ajv/-/ajv-8.12.0.tgz#d1a0527323e22f53562c567c00991577dfbe19d1"
   integrity sha512-sRu1kpcO9yLtYxBKvqfTeh9KzZEwO3STyX1HT+4CaDzC6HpTGYhIhPIzj9XuKU7KYDwnaeh5hcOwjy1QuJzBPA==
@@ -3571,10 +3561,10 @@ eslint-compat-utils@^0.1.2:
   resolved "https://registry.npmjs.org/eslint-compat-utils/-/eslint-compat-utils-0.1.2.tgz#f45e3b5ced4c746c127cf724fb074cd4e730d653"
   integrity sha512-Jia4JDldWnFNIru1Ehx1H5s9/yxiRHY/TimCuUc0jNexew3cF1gI6CYZil1ociakfWO3rRqFjl1mskBblB3RYg==
 
-eslint-compat-utils@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/eslint-compat-utils/-/eslint-compat-utils-0.2.0.tgz#5ba413feacdebebf303b2a03250a9157a0a43603"
-  integrity sha512-xQignOOtXOxDIA1J3rnXEWa0vkQYgex/64+o+vbgArVWzYFDOlsQyD6TDHjvwE+X80sUUCgXnaOhSbz9CnXqZw==
+eslint-compat-utils@^0.4.0:
+  version "0.4.1"
+  resolved "https://registry.npmjs.org/eslint-compat-utils/-/eslint-compat-utils-0.4.1.tgz#498d9dad03961174a283f7741838a3fbe4a34e89"
+  integrity sha512-5N7ZaJG5pZxUeNNJfUchurLVrunD1xJvyg5kYOIVF8kg1f3ajTikmAu/5fZ9w100omNPOoMjngRszh/Q/uFGMg==
   dependencies:
     semver "^7.5.4"
 
@@ -3643,15 +3633,15 @@ eslint-plugin-import@^2.29.1:
     semver "^6.3.1"
     tsconfig-paths "^3.15.0"
 
-eslint-plugin-json-schema-validator@^4.8.1:
-  version "4.8.1"
-  resolved "https://registry.npmjs.org/eslint-plugin-json-schema-validator/-/eslint-plugin-json-schema-validator-4.8.1.tgz#d20713aec3f18efe30acb5e2f5844d8646109763"
-  integrity sha512-FsO7L1RrAznAoVzSUNOkc5C0zmFwtsxFzBsU9N5plCSNae/IXtEJpj5CJh7Sq9bvFJnKVkG/s4tTE85dRf5vfA==
+eslint-plugin-json-schema-validator@^4.8.3:
+  version "4.8.3"
+  resolved "https://registry.npmjs.org/eslint-plugin-json-schema-validator/-/eslint-plugin-json-schema-validator-4.8.3.tgz#3d04a085631734a51cbbf7c48bd22b22d9b0bffc"
+  integrity sha512-F4S6Aw7l/9NzB8E0CAbjiSlXWqDiK3rIiw0I+Jdp+qr/wN1yTg7HkJgeWX4mNnlDMDzydymYy2uuKmNaWUV/hA==
   dependencies:
     "@eslint-community/eslint-utils" "^4.3.0"
     ajv "^8.0.0"
     debug "^4.3.1"
-    eslint-compat-utils "^0.2.0"
+    eslint-compat-utils "^0.4.0"
     json-schema-migrate "^2.0.0"
     jsonc-eslint-parser "^2.0.0"
     minimatch "^8.0.0"
