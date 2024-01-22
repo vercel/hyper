@@ -32,7 +32,7 @@ jobs:
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-      - uses: actions/cache/restore@v3
+      - uses: actions/cache/restore@v4
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
@@ -108,7 +108,7 @@ jobs:
         with:
           name: pr_num
           path: ./pr_num.txt
-      - uses: actions/cache/save@v3
+      - uses: actions/cache/save@v4
         if: github.event_name == 'push'
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -138,7 +138,7 @@ jobs:
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-      - uses: actions/cache/restore@v3
+      - uses: actions/cache/restore@v4
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
