@@ -109,7 +109,7 @@
     "electron": "22.3.25",
     "electron-builder": "^24.9.1",
     "electron-link": "^0.6.0",
-    "electron-mksnapshot": "28.1.3",
+    "electron-mksnapshot": "28.1.4",
     "electronmon": "^2.0.2",
     "eslint": "8.56.0",
     "eslint-config-prettier": "9.1.0",
