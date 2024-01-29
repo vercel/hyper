@@ -13,7 +13,7 @@
     "postinstall": "npx patch-package"
   },
   "dependencies": {
-    "@babel/parser": "7.23.6",
+    "@babel/parser": "7.23.9",
     "@electron/remote": "2.1.1",
     "ast-types": "^0.16.1",
     "async-retry": "1.3.3",
