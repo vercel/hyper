@@ -28,7 +28,7 @@
     "email": "team@zeit.co"
   },
   "dependencies": {
-    "@electron/remote": "2.1.1",
+    "@electron/remote": "2.1.2",
     "@react-icons/all-files": "4.1.0",
     "@redux-devtools/extension": "^3.3.0",
     "args": "5.0.3",
