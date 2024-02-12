@@ -54,7 +54,7 @@
     "registry-url": "^6.0.1",
     "reselect": "4.1.8",
     "seamless-immutable": "7.1.4",
-    "semver": "7.5.4",
+    "semver": "7.6.0",
     "shebang-loader": "0.0.1",
     "styled-jsx": "5.1.2",
     "stylis": "3.5.4",
