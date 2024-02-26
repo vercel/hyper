@@ -1772,12 +1772,11 @@ app-builder-bin@4.0.0:
   resolved "https://registry.npmjs.org/app-builder-bin/-/app-builder-bin-4.0.0.tgz#1df8e654bd1395e4a319d82545c98667d7eed2f0"
   integrity sha512-xwdG0FJPQMe0M0UA4Tz0zEB8rBJTRA5a476ZawAqiBkMv16GRK5xpXThOjMaEOFnZ6zabejjG4J3da0SXG63KA==
 
-app-builder-lib@24.9.1:
-  version "24.9.1"
-  resolved "https://registry.npmjs.org/app-builder-lib/-/app-builder-lib-24.9.1.tgz#bf3568529298b4de8595ed1acbb351fe27db5ba4"
-  integrity sha512-Q1nYxZcio4r+W72cnIRVYofEAyjBd3mG47o+zms8HlD51zWtA/YxJb01Jei5F+jkWhge/PTQK+uldsPh6d0/4g==
+app-builder-lib@24.12.0:
+  version "24.12.0"
+  resolved "https://registry.npmjs.org/app-builder-lib/-/app-builder-lib-24.12.0.tgz#2e985968c341d28fc887be3ecee658e6a240e147"
+  integrity sha512-t/xinVrMbsEhwljLDoFOtGkiZlaxY1aceZbHERGAS02EkUHJp9lgs/+L8okXLlYCaDSqYdB05Yb8Co+krvguXA==
   dependencies:
-    "7zip-bin" "~5.2.0"
     "@develar/schema-utils" "~2.6.5"
     "@electron/notarize" "2.1.0"
     "@electron/osx-sign" "1.0.5"
@@ -1786,12 +1785,12 @@ app-builder-lib@24.9.1:
     "@types/fs-extra" "9.0.13"
     async-exit-hook "^2.0.1"
     bluebird-lst "^1.0.9"
-    builder-util "24.8.1"
+    builder-util "24.9.4"
     builder-util-runtime "9.2.3"
     chromium-pickle-js "^0.2.0"
     debug "^4.3.4"
     ejs "^3.1.8"
-    electron-publish "24.8.1"
+    electron-publish "24.9.4"
     form-data "^4.0.0"
     fs-extra "^10.1.0"
     hosted-git-info "^4.1.0"
@@ -2226,10 +2225,10 @@ builder-util-runtime@9.2.3:
     debug "^4.3.4"
     sax "^1.2.4"
 
-builder-util@24.8.1:
-  version "24.8.1"
-  resolved "https://registry.npmjs.org/builder-util/-/builder-util-24.8.1.tgz#594d45b0c86d1d17f5c7bebbb77405080b2571c2"
-  integrity sha512-ibmQ4BnnqCnJTNrdmdNlnhF48kfqhNzSeqFMXHLIl+o9/yhn6QfOaVrloZ9YUu3m0k3rexvlT5wcki6LWpjTZw==
+builder-util@24.9.4:
+  version "24.9.4"
+  resolved "https://registry.npmjs.org/builder-util/-/builder-util-24.9.4.tgz#8cde880e7c719285e9cb30e6850ddd5bf475ac04"
+  integrity sha512-YNon3rYjPSm4XDDho9wD6jq7vLRJZUy9FR+yFZnHoWvvdVCnZakL4BctTlPABP41MvIH5yk2cTZ2YfkOhGistQ==
   dependencies:
     "7zip-bin" "~5.2.0"
     "@types/debug" "^4.1.6"
@@ -3051,13 +3050,13 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-dmg-builder@24.9.1:
-  version "24.9.1"
-  resolved "https://registry.npmjs.org/dmg-builder/-/dmg-builder-24.9.1.tgz#04bf6c0dcd235f6214511f2358a78ed2b9379421"
-  integrity sha512-huC+O6hvHd24Ubj3cy2GMiGLe2xGFKN3klqVMLAdcbB6SWMd1yPSdZvV8W1O01ICzCCRlZDHiv4VrNUgnPUfbQ==
+dmg-builder@24.12.0:
+  version "24.12.0"
+  resolved "https://registry.npmjs.org/dmg-builder/-/dmg-builder-24.12.0.tgz#62a08162f2b3160a286d03ebb6db65c36a3711c7"
+  integrity sha512-nS22OyHUIYcK40UnILOtqC5Qffd1SN1Ljqy/6e+QR2H1wM3iNBrKJoEbDRfEmYYaALKNFRkKPqSbZKRsGUBdPw==
   dependencies:
-    app-builder-lib "24.9.1"
-    builder-util "24.8.1"
+    app-builder-lib "24.12.0"
+    builder-util "24.9.4"
     builder-util-runtime "9.2.3"
     fs-extra "^10.1.0"
     iconv-lite "^0.6.2"
@@ -3122,16 +3121,16 @@ ejs@^3.1.8:
   dependencies:
     jake "^10.8.5"
 
-electron-builder@^24.9.1:
-  version "24.9.1"
-  resolved "https://registry.npmjs.org/electron-builder/-/electron-builder-24.9.1.tgz#4aee03947963b829a7f48a850fe02c219311ef63"
-  integrity sha512-v7BuakDuY6sKMUYM8mfQGrwyjBpZ/ObaqnenU0H+igEL10nc6ht049rsCw2HghRBdEwJxGIBuzs3jbEhNaMDmg==
+electron-builder@^24.12.0:
+  version "24.12.0"
+  resolved "https://registry.npmjs.org/electron-builder/-/electron-builder-24.12.0.tgz#95c41d14b3b1cc177db62715e42ef9fd27344491"
+  integrity sha512-dH4O9zkxFxFbBVFobIR5FA71yJ1TZSCvjZ2maCskpg7CWjBF+SNRSQAThlDyUfRuB+jBTMwEMzwARywmap0CSw==
   dependencies:
-    app-builder-lib "24.9.1"
-    builder-util "24.8.1"
+    app-builder-lib "24.12.0"
+    builder-util "24.9.4"
     builder-util-runtime "9.2.3"
     chalk "^4.1.2"
-    dmg-builder "24.9.1"
+    dmg-builder "24.12.0"
     fs-extra "^10.1.0"
     is-ci "^3.0.0"
     lazy-val "^1.0.5"
@@ -3164,13 +3163,13 @@ electron-mksnapshot@28.2.3:
     fs-extra "^7.0.1"
     temp "^0.8.3"
 
-electron-publish@24.8.1:
-  version "24.8.1"
-  resolved "https://registry.npmjs.org/electron-publish/-/electron-publish-24.8.1.tgz#4216740372bf4297a429543402a1a15ce8c3560b"
-  integrity sha512-IFNXkdxMVzUdweoLJNXSupXkqnvgbrn3J4vognuOY06LaS/m0xvfFYIf+o1CM8if6DuWYWoQFKPcWZt/FUjZPw==
+electron-publish@24.9.4:
+  version "24.9.4"
+  resolved "https://registry.npmjs.org/electron-publish/-/electron-publish-24.9.4.tgz#70db542763a78e4980e4e6409c203aef320d0d05"
+  integrity sha512-FghbeVMfxHneHjsG2xUSC0NMZYWOOWhBxfZKPTbibcJ0CjPH0Ph8yb5CUO62nqywXfA5u1Otq6K8eOdOixxmNg==
   dependencies:
     "@types/fs-extra" "^9.0.11"
-    builder-util "24.8.1"
+    builder-util "24.9.4"
     builder-util-runtime "9.2.3"
     chalk "^4.1.2"
     fs-extra "^10.1.0"
