@@ -24,6 +24,16 @@ const fileName =
     ? devConfigFileName
     : path.join(applicationDirectory, 'hyper.json');
 
+const https = {
+  ...(
+    // Respect the NODE_EXTRA_CA_CERTS variable for environments that need alternate certificate
+    // authorities (SSL Inspection, etc.)
+    process.env.NODE_EXTRA_CA_CERTS && fs.existsSync(process.env.NODE_EXTRA_CA_CERTS)
+      ? { certificateAuthority: fs.readFileSync(process.env.NODE_EXTRA_CA_CERTS) }
+      : {}
+  )
+}
+
 /**
  * We need to make sure the file reading and parsing is lazy so that failure to
  * statically analyze the hyper configuration isn't fatal for all kinds of
@@ -87,7 +97,7 @@ function getPackageName(plugin: string) {
 function existsOnNpm(plugin: string) {
   const name = getPackageName(plugin);
   return got
-    .get<any>(registryUrl + name.toLowerCase(), {timeout: {request: 10000}, responseType: 'json'})
+    .get<any>(registryUrl + name.toLowerCase(), {timeout: {request: 10000}, https, responseType: 'json'})
     .then((res) => {
       if (!res.body.versions) {
         return Promise.reject(res);
