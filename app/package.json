@@ -35,7 +35,7 @@
     "queue": "6.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "recast": "0.23.4",
+    "recast": "0.23.6",
     "semver": "7.6.0",
     "shell-env": "3.0.1",
     "sudo-prompt": "^9.2.1",
