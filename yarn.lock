@@ -5971,10 +5971,10 @@ node-abi@^3.45.0:
   dependencies:
     semver "^7.3.5"
 
-node-addon-api@7.1.0:
-  version "7.1.0"
-  resolved "https://registry.npmjs.org/node-addon-api/-/node-addon-api-7.1.0.tgz#71f609369379c08e251c558527a107107b5e0fdb"
-  integrity sha512-mNcltoe1R8o7STTegSOHdnJNN7s5EUvhoS7ShnTHDyOSd+8H+UdWODq6qSv67PjC8Zc5JRT8+oLAMCr0SIXw7g==
+node-addon-api@8.0.0:
+  version "8.0.0"
+  resolved "https://registry.npmjs.org/node-addon-api/-/node-addon-api-8.0.0.tgz#5453b7ad59dd040d12e0f1a97a6fa1c765c5c9d2"
+  integrity sha512-ipO7rsHEBqa9STO5C5T10fj732ml+5kLN1cAG8/jdHd56ldQeGj3Q7+scUS+VHK/qy1zLEwC4wMK5+yM0btPvw==
 
 node-addon-api@^1.6.3:
   version "1.7.2"
