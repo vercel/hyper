@@ -88,7 +88,7 @@
     "@types/color": "3.0.6",
     "@types/columnify": "^1.5.4",
     "@types/fs-extra": "11.0.4",
-    "@types/lodash": "^4.14.202",
+    "@types/lodash": "^4.17.0",
     "@types/mousetrap": "1.6.15",
     "@types/ms": "0.7.34",
     "@types/node": "18.19.18",
