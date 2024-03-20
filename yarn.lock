@@ -8917,20 +8917,27 @@ xterm-addon-unicode11@0.6.0:
   resolved "https://registry.npmjs.org/xterm-addon-unicode11/-/xterm-addon-unicode11-0.6.0.tgz#733fd17bdf2ae6e818493db1d41241c999de0786"
   integrity sha512-5pkb8YoS/deRtNqQRw8t640mu+Ga8B2MG3RXGQu0bwgcfr8XiXIRI880TWM49ICAHhTmnOLPzIIBIjEnCq7k2A==
 
-xterm-addon-web-links@0.9.0:
-  version "0.9.0"
-  resolved "https://registry.npmjs.org/xterm-addon-web-links/-/xterm-addon-web-links-0.9.0.tgz#c65b18588d1f613e703eb6feb7f129e7ff1c63e7"
-  integrity sha512-LIzi4jBbPlrKMZF3ihoyqayWyTXAwGfu4yprz1aK2p71e9UKXN6RRzVONR0L+Zd+Ik5tPVI9bwp9e8fDTQh49Q==
-
 xterm-addon-webgl@0.16.0:
   version "0.16.0"
   resolved "https://registry.npmjs.org/xterm-addon-webgl/-/xterm-addon-webgl-0.16.0.tgz#9872d08a64136f893b27ef9a6412136d3bf563c4"
   integrity sha512-E8cq1AiqNOv0M/FghPT+zPAEnvIQRDbAbkb04rRYSxUym69elPWVJ4sv22FCLBqM/3LcrmBLl/pELnBebVFKgA==
 
+xterm-link-provider@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.npmjs.org/xterm-link-provider/-/xterm-link-provider-1.3.1.tgz#69727223220dfa8758056ad6b2b5394a8454b9cb"
+  integrity sha512-uOlaIeUED6kJeL2nIIf5YwreO0obMhsC0RWypEUmWkz7SAQewzgwdWFjQ2He7NGcT93c4KUf8bRgAu8cV9bAYA==
+  dependencies:
+    xterm "^4.6.0"
+
 xterm@5.3.0:
   version "5.3.0"
   resolved "https://registry.npmjs.org/xterm/-/xterm-5.3.0.tgz#867daf9cc826f3d45b5377320aabd996cb0fce46"
   integrity sha512-8QqjlekLUFTrU6x7xck1MsPzPA571K5zNqWm0M0oroYEWVOptZ0+ubQSkQ3uxIEhcIHRujJy6emDWX4A7qyFzg==
+
+xterm@^4.6.0:
+  version "4.14.1"
+  resolved "https://registry.npmjs.org/xterm/-/xterm-4.14.1.tgz#6884cb8fb3b83353b1a98139ea23daedf8e35796"
+  integrity sha512-jgzNg5BuGPwq5/M4dGnmbghZvHx2jaj+9crSEt15bV34Za49VziBmCu7zIy88zUKKiGTxeo7aVzirFSJArIMFw==
 
 y18n@^5.0.5:
   version "5.0.5"

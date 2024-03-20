@@ -13,11 +13,12 @@ import {LigaturesAddon} from 'xterm-addon-ligatures';
 import {SearchAddon} from 'xterm-addon-search';
 import type {ISearchDecorationOptions} from 'xterm-addon-search';
 import {Unicode11Addon} from 'xterm-addon-unicode11';
-import {WebLinksAddon} from 'xterm-addon-web-links';
 import {WebglAddon} from 'xterm-addon-webgl';
+import {LinkProvider} from 'xterm-link-provider';
 
 import type {TermProps} from '../../typings/hyper';
 import terms from '../terms';
+import {FileURLMatcher, URLMatcher} from '../utils/link-matchers';
 import processClipboard from '../utils/paste';
 import {decorate} from '../utils/plugins';
 
@@ -214,10 +215,27 @@ export default class Term extends React.PureComponent<
       this.term.attachCustomKeyEventHandler(this.keyboardHandler);
       this.term.loadAddon(this.fitAddon);
       this.term.loadAddon(this.searchAddon);
-      this.term.loadAddon(
-        new WebLinksAddon((event, uri) => {
-          if (shallActivateWebLink(event)) void shell.openExternal(uri);
-        })
+      this.term.registerLinkProvider(
+        new LinkProvider(
+          this.term,
+          URLMatcher.regex,
+          (event, text) => {
+            if (shallActivateWebLink(event)) void shell.openExternal(text);
+          },
+          {},
+          URLMatcher.matchIndex
+        )
+      );
+      this.term.registerLinkProvider(
+        new LinkProvider(
+          this.term,
+          FileURLMatcher.regex,
+          (event, text) => {
+            if (shallActivateWebLink(event)) void shell.openExternal(text);
+          },
+          {},
+          FileURLMatcher.matchIndex
+        )
       );
       this.term.open(this.termRef);
 
