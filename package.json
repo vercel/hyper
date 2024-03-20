@@ -107,7 +107,7 @@
     "cpy-cli": "^5.0.0",
     "cross-env": "7.0.3",
     "electron": "22.3.25",
-    "electron-builder": "^24.12.0",
+    "electron-builder": "^24.13.3",
     "electron-link": "^0.6.0",
     "electron-mksnapshot": "29.1.4",
     "electronmon": "^2.0.2",
