@@ -6829,17 +6829,17 @@ pkg-dir@^7.0.0:
   dependencies:
     find-up "^6.3.0"
 
-playwright-core@1.41.2:
-  version "1.41.2"
-  resolved "https://registry.npmjs.org/playwright-core/-/playwright-core-1.41.2.tgz#db22372c708926c697acc261f0ef8406606802d9"
-  integrity sha512-VaTvwCA4Y8kxEe+kfm2+uUUw5Lubf38RxF7FpBxLPmGe5sdNkSg5e3ChEigaGrX7qdqT3pt2m/98LiyvU2x6CA==
+playwright-core@1.42.1:
+  version "1.42.1"
+  resolved "https://registry.npmjs.org/playwright-core/-/playwright-core-1.42.1.tgz#13c150b93c940a3280ab1d3fbc945bc855c9459e"
+  integrity sha512-mxz6zclokgrke9p1vtdy/COWBH+eOZgYUVVU34C73M+4j4HLlQJHtfcqiqqxpP0o8HhMkflvfbquLX5dg6wlfA==
 
-playwright@1.41.2:
-  version "1.41.2"
-  resolved "https://registry.npmjs.org/playwright/-/playwright-1.41.2.tgz#4e760b1c79f33d9129a8c65cc27953be6dd35042"
-  integrity sha512-v0bOa6H2GJChDL8pAeLa/LZC4feoAMbSQm1/jF/ySsWWoaNItvrMP7GEkvEEFyCTUYKMxjQKaTSg5up7nR6/8A==
+playwright@1.42.1:
+  version "1.42.1"
+  resolved "https://registry.npmjs.org/playwright/-/playwright-1.42.1.tgz#79c828b51fe3830211137550542426111dc8239f"
+  integrity sha512-PgwB03s2DZBcNRoW+1w9E+VkLBxweib6KTXM0M3tkiT4jVxKSi6PmVJ591J+0u10LUrgxB7dLRbiJqO5s2QPMg==
   dependencies:
-    playwright-core "1.41.2"
+    playwright-core "1.42.1"
   optionalDependencies:
     fsevents "2.3.2"
 
