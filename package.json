@@ -125,7 +125,7 @@
     "inquirer": "9.2.16",
     "node-addon-api": "8.0.0",
     "null-loader": "4.0.1",
-    "parse-url": "8.1.0",
+    "parse-url": "9.0.1",
     "playwright": "1.41.2",
     "plist": "3.1.0",
     "prettier": "3.2.5",
