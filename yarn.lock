@@ -2044,10 +2044,10 @@ at-least-node@^1.0.0:
   resolved "https://registry.npmjs.org/at-least-node/-/at-least-node-1.0.0.tgz#602cd4b46e844ad4effc92a8011a3c46e0238dc2"
   integrity sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
 
-ava@6.1.1:
-  version "6.1.1"
-  resolved "https://registry.npmjs.org/ava/-/ava-6.1.1.tgz#76910bbd567cbe1e09345d7873e7116ae9b54153"
-  integrity sha512-A+DG0Ag0e5zvt262Ze0pG5QH7EBmhn+DB9uK7WkUtJVAtGjZFeKTpUOKx339DMGn53+FB24pCJC5klX2WU4VOw==
+ava@6.1.2:
+  version "6.1.2"
+  resolved "https://registry.npmjs.org/ava/-/ava-6.1.2.tgz#fe4f107177b8bf511135827bfcd0a4e6f82d457a"
+  integrity sha512-WcpxJ8yZ7mk9ABTinD0IAjcemovSeVGjuuwZx0JS9johREWFeLTl8UP6wd7l6nmnrWqkKZdwaD71a/ocH4qPKw==
   dependencies:
     "@vercel/nft" "^0.26.2"
     acorn "^8.11.3"
