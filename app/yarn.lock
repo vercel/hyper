@@ -12,6 +12,11 @@
   resolved "https://registry.npmjs.org/@electron/remote/-/remote-2.1.2.tgz#52a97c8faa5b769155b649ef262f2f8c851776e6"
   integrity sha512-EPwNx+nhdrTBxyCqXt/pftoQg/ybtWDW3DUWHafejvnB1ZGGfMpv6e15D8KeempocjXe78T7WreyGGb3mlZxdA==
 
+"@types/parse-path@^7.0.0":
+  version "7.0.3"
+  resolved "https://registry.npmjs.org/@types/parse-path/-/parse-path-7.0.3.tgz#cec2da2834ab58eb2eb579122d9a1fc13bd7ef36"
+  integrity sha512-LriObC2+KYZD3FzCrgWGv/qufdUy4eXrxcLgQMfYXgPbLIecKIsVBaQgUPmxSSLcjmYbDTQbMgr6qr6l/eb7Bg==
+
 "@types/semver@^7.3.8":
   version "7.3.8"
   resolved "https://registry.npmjs.org/@types/semver/-/semver-7.3.8.tgz#508a27995498d7586dcecd77c25e289bfaf90c59"
@@ -857,11 +862,12 @@ parse-path@^7.0.0:
   dependencies:
     protocols "^2.0.0"
 
-parse-url@8.1.0:
-  version "8.1.0"
-  resolved "https://registry.npmjs.org/parse-url/-/parse-url-8.1.0.tgz#972e0827ed4b57fc85f0ea6b0d839f0d8a57a57d"
-  integrity sha512-xDvOoLU5XRrcOZvnI6b8zA6n9O9ejNk/GExuz1yBuWUGn9KA97GI6HTs6u02wKara1CeVmZhH+0TZFdWScR89w==
+parse-url@9.0.1:
+  version "9.0.1"
+  resolved "https://registry.npmjs.org/parse-url/-/parse-url-9.0.1.tgz#1c0c5da861e1dc74e71ce7a2d4fb3dfabd2837c5"
+  integrity sha512-9BTx9oCKV8f+OhbAhU44KqRUCQrKf8tEbxRq0Ld7m2TSWgoqmy+iVt7xnjEixlz28J9V6sAjVBv/wZNv4+2Jsg==
   dependencies:
+    "@types/parse-path" "^7.0.0"
     parse-path "^7.0.0"
 
 path-exists@^3.0.0:
