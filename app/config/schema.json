@@ -161,6 +161,10 @@
                     "description": "if `false` Hyper will use ligatures provided by some fonts",
                     "type": "boolean"
                 },
+                "drawBoldTextInBrightColors": {
+                    "description": "if `false` hyper will draw bold text in normal colors instead of bright colors",
+                    "type": "boolean"
+                },
                 "env": {
                     "additionalProperties": {
                         "type": "string"
@@ -488,6 +492,10 @@
                             "description": "if `false` Hyper will use ligatures provided by some fonts",
                             "type": "boolean"
                         },
+                        "drawBoldTextInBrightColors": {
+                            "description": "if `false` hyper will draw bold text in normal colors instead of bright colors",
+                            "type": "boolean"
+                        },
                         "env": {
                             "additionalProperties": {
                                 "type": "string"
@@ -652,6 +660,7 @@
                         "cursorColor",
                         "cursorShape",
                         "disableLigatures",
+                        "drawBoldTextInBrightColors",
                         "env",
                         "fontFamily",
                         "fontSize",

@@ -90,6 +90,8 @@ type profileConfigOptions = {
   fontWeight: FontWeight;
   /** font weight for bold characters eg:'normal', '600', 'bold' */
   fontWeightBold: FontWeight;
+  /** if `false` hyper will draw bold text in normal colors instead of bright colors */
+  drawBoldTextInBrightColors: boolean;
   /** color of the text */
   foregroundColor: string;
   /**
