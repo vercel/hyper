@@ -55,7 +55,13 @@ const hasDefaultSet = () => {
 // This mimics shell.openItem, true if it worked, false if not.
 const openNotepad = (file: string) =>
   new Promise<boolean>((resolve) => {
-    exec(`start notepad.exe ${file}`, (error) => {
+    exec(`notepad.exe ${file}`, (error) => {
+      if (error) {
+        console.warn('Error opening notepad, using wordpad fallback');
+        exec(`start write.exe ${file}`, (error) => {
+          resolve(!error);
+        });
+      }
       resolve(!error);
     });
   });
