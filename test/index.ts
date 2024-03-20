@@ -38,11 +38,10 @@ test.before(async () => {
 
 test.after(async () => {
   await app
-    .evaluate(
-      ({BrowserWindow}) =>
-        BrowserWindow.getFocusedWindow()
-          ?.capturePage()
-          .then((img) => img.toPNG().toString('base64'))
+    .evaluate(({BrowserWindow}) =>
+      BrowserWindow.getFocusedWindow()
+        ?.capturePage()
+        .then((img) => img.toPNG().toString('base64'))
     )
     .then((img) => Buffer.from(img || '', 'base64'))
     .then(async (imageBuffer) => {
