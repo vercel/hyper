@@ -1,32 +1,30 @@
-// This is a CLI tool, using console is OK
 /* eslint no-console: 0 */
-import {spawn, exec} from 'child_process';
-import type {SpawnOptions} from 'child_process';
-import {existsSync} from 'fs';
-import {isAbsolute, resolve} from 'path';
-import {promisify} from 'util';
+import { spawn, exec, SpawnOptions } from 'child_process';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { isAbsolute, resolve } from 'path';
+import { promisify } from 'util';
 
 import args from 'args';
 import chalk from 'chalk';
-import _columnify from 'columnify';
+import columnify from 'columnify';
 import got from 'got';
 import open from 'open';
 import ora from 'ora';
 
-import {version} from '../app/package.json';
+import { version } from '../app/package.json';
 
 import * as api from './api';
 
 let commandPromise: Promise<void> | undefined;
 
-const assertPluginName = (pluginName: string) => {
+const assertPluginName = (pluginName: string): void => {
   if (!pluginName) {
     console.error(chalk.red('Plugin name is required'));
     process.exit(1);
   }
 };
 
-const checkConfig = () => {
+const checkConfig = (): boolean => {
   if (api.exists()) {
     return true;
   }
@@ -36,19 +34,19 @@ const checkConfig = () => {
   process.exit(1);
 };
 
-const columnify = (data: {name: string; description: string}[]) => {
+const columnifyData = (data: { name: string; description: string }[]): string => {
   const maxNameLength = Math.max(...data.map((entry) => entry.name.length), 0);
   const descriptionWidth = process.stdout.columns - maxNameLength - 1;
-  return _columnify(data, {
+  return columnify(data, {
     showHeaders: false,
     config: {
       description: {
-        maxWidth: descriptionWidth
+        maxWidth: descriptionWidth,
       },
       name: {
-        dataTransform: (nameValue) => chalk.green(nameValue)
-      }
-    }
+        dataTransform: (nameValue) => chalk.green(nameValue),
+      },
+    },
   }).replace(/\s+$/gm, ''); // remove padding from the end of all lines
 };
 
@@ -100,17 +98,14 @@ args.command(
 );
 
 const lsRemote = (pattern?: string) => {
-  // note that no errors are catched by this function
-  const URL = `https://api.npms.io/v2/search?q=${
-    (pattern && `${pattern}+`) || ''
-  }keywords:hyper-plugin,hyper-theme&size=250`;
-  type npmResult = {package: {name: string; description: string}};
+  const URL = `https://api.npms.io/v2/search?q=${(pattern && `${pattern}+`) || ''}keywords:hyper-plugin,hyper-theme&size=250`;
+  type npmResult = { package: { name: string; description: string } };
   return got(URL)
     .then((response) => JSON.parse(response.body).results as npmResult[])
     .then((entries) => entries.map((entry) => entry.package))
     .then((entries) =>
-      entries.map(({name, description}) => {
-        return {name, description};
+      entries.map(({ name, description }) => {
+        return { name, description };
       })
     );
 };
@@ -130,7 +125,7 @@ args.command(
           console.error(`${chalk.red('Try')} ${chalk.green('hyper ls-remote')}`);
           process.exit(1);
         } else {
-          const msg = columnify(entries);
+          const msg = columnifyData(entries);
           spinner.succeed();
           console.log(msg);
         }
@@ -151,7 +146,7 @@ args.command(
 
     commandPromise = lsRemote()
       .then((entries) => {
-        const msg = columnify(entries);
+        const msg = columnifyData(entries);
         spinner.succeed();
         console.log(msg);
       })
@@ -169,7 +164,7 @@ args.command(
   (name, args_) => {
     const pluginName = args_[0];
     assertPluginName(pluginName);
-    void open(`http://ghub.io/${pluginName}`, {wait: false});
+    void open(`http://ghub.io/${pluginName}`, { wait: false });
     process.exit(0);
   },
   ['d', 'h', 'home']
@@ -189,25 +184,24 @@ args.command('<default>', 'Launch Hyper');
 
 args.option(['v', 'verbose'], 'Verbose mode', false);
 
-const main = (argv: string[]) => {
+const main = async (argv: string[]) => {
   const flags = args.parse(argv, {
     name: 'hyper',
     version: false,
     mri: {
-      boolean: ['v', 'verbose']
+      boolean: ['v', 'verbose'],
     },
     mainColor: 'yellow',
-    subColor: 'dim'
+    subColor: 'dim',
   });
 
   if (commandPromise) {
-    return commandPromise;
+    await commandPromise;
   }
 
   const env = Object.assign({}, process.env, {
-    // this will signal Hyper that it was spawned from this module
     HYPER_CLI: '1',
-    ELECTRON_NO_ATTACH_CONSOLE: '1'
+    ELECTRON_NO_ATTACH_CONSOLE: '1',
   });
 
   delete env['ELECTRON_RUN_AS_NODE'];
@@ -218,7 +212,7 @@ const main = (argv: string[]) => {
 
   const options: SpawnOptions = {
     detached: true,
-    env
+    env,
   };
 
   const args_ = args.sub.map((arg) => {
@@ -231,33 +225,31 @@ const main = (argv: string[]) => {
   });
 
   if (!flags.verbose) {
-    options['stdio'] = 'ignore';
+    options.stdio = 'ignore';
     if (process.platform === 'darwin') {
-      //Use `open` to prevent multiple Hyper process
       const cmd = `open -b co.zeit.hyper ${args_}`;
       const opts = {
-        env
+        env,
       };
-      return promisify(exec)(cmd, opts);
+      await promisify(exec)(cmd, opts);
     }
   }
 
   const child = spawn(process.execPath, args_, options);
 
   if (flags.verbose) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     child.stdout?.on('data', (data) => console.log(data.toString('utf8')));
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     child.stderr?.on('data', (data) => console.error(data.toString('utf8')));
   }
+
   if (flags.verbose) {
-    return new Promise((c) => child.once('exit', () => c(null)));
+    await new Promise<void>((resolve) => child.once('exit', () => resolve()));
+  } else {
+    child.unref();
   }
-  child.unref();
-  return Promise.resolve();
 };
 
-function eventuallyExit(code: number) {
+function eventuallyExit(code: number): void {
   setTimeout(() => process.exit(code), 100);
 }
 
