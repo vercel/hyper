@@ -57,7 +57,7 @@ choco install hyper
 
 ## Contribute
 
-Regardless of the platform you are working on, you will need to have Yarn installed. If you have never installed Yarn before, you can find out how at: https://yarnpkg.com/en/docs/install.
+Regardless of the platform you are working on, you will need to have Yarn v1 installed. If you have never installed Yarn v1 before, you can find out how at: https://yarnpkg.com/en/docs/install.
 
 1. Install necessary packages:
   * Windows
@@ -107,6 +107,10 @@ If you are getting compiler errors when running `yarn` add the environment varia
 
 If you have issues in the `codesign` step when running `yarn run dist` on macOS, you can temporarily disable code signing locally by setting
 `export CSC_IDENTITY_AUTO_DISCOVERY=false` for the current terminal session.
+
+##### Error with `electron-rebuild` when using Python 3.12
+
+If you get an import error at `electron-rebuild` while using Python 3.12, you need to install `setuptools`.
 
 ## Related Repositories
 
