@@ -5,6 +5,7 @@ on:
       - master
       - canary
   pull_request:
+  workflow_dispatch:
 defaults:
   run:
     shell: bash
@@ -28,7 +29,12 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Fix node-gyp and Python
-        run: python3 -m pip install packaging setuptools
+        run: |
+          if [[ "$RUNNER_OS" == "macOS" ]]; then
+            brew install python-setuptools python-packaging
+          else
+            python3 -m pip install $EXTRA_ARGS packaging setuptools
+          fi
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
