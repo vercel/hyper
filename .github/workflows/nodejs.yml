@@ -2,14 +2,12 @@ name: Node CI
 on:
   push:
     branches:
-      - master
-      - canary
-  pull_request:
+  workflow_dispatch:
 defaults:
   run:
     shell: bash
 env:
-  NODE_VERSION: 18.x
+  NODE_VERSION: 20.x
 jobs:
   build:
     runs-on: ${{matrix.os}}
@@ -19,7 +17,7 @@ jobs:
           - ubuntu-latest
           #TODO re-enable these:
           #- macos-latest
-          #- windows-latest
+          - windows-latest
       fail-fast: false
     steps:
       - name: Checkout
@@ -29,7 +27,12 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Fix node-gyp and Python
-        run: python3 -m pip install packaging setuptools
+        run: |
+          if [[ "$RUNNER_OS" == "macOS" ]]; then
+            brew install python-setuptools python-packaging
+          else
+            python3 -m pip install $EXTRA_ARGS packaging setuptools
+          fi
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
@@ -85,7 +88,7 @@ jobs:
             dist/*.exe
       - name: Run E2E Tests
         if: runner.os != 'Linux'
-        run: yarn run test:e2e
+        run: yarn run test:e2e --verbose
       - name: Run E2E Tests on Linux
         if: runner.os == 'Linux'
         uses: GabrielBB/xvfb-action@v1.6
@@ -94,9 +97,9 @@ jobs:
         env:
           SHELL: /bin/bash
       - name: Archive E2E test screenshot
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: e2e
+          name: e2e-${{ matrix.os }}-${{ strategy.job-index }}
           path: dist/tmp/*.png
       - name: Save the pr number in an artifact
         if: github.event_name == 'pull_request'
@@ -104,7 +107,7 @@ jobs:
           PR_NUM: ${{ github.event.number }}
         run: echo $PR_NUM > pr_num.txt
       - name: Upload the pr num
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: github.event_name == 'pull_request'
         with:
           name: pr_num
@@ -153,7 +156,7 @@ jobs:
       - name: Compile
         run: yarn run build
       - name: rebuild node-pty
-        uses: pguyot/arm-runner-action@v2.5.2
+        uses: pguyot/arm-runner-action@v2.6.5
         with:
           image_additional_mb: 2000
           base_image: ${{ matrix.image }}

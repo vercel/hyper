@@ -5,17 +5,31 @@ updates:
   schedule:
     interval: weekly
     time: '11:00'
-  open-pull-requests-limit: 30
   target-branch: canary
   versioning-strategy: increase
+  commit-message:
+    prefix: "chore(deps-dev):"
+  groups:
+    minorAndPatch:
+      update-types:
+        - "minor"
+        - "patch"
+  open-pull-requests-limit: 100
 - package-ecosystem: npm
   directory: "/app"
   schedule:
     interval: weekly
     time: '11:00'
-  open-pull-requests-limit: 30
   target-branch: canary
   versioning-strategy: increase
+  commit-message:
+    prefix: "chore(deps):"
+  groups:
+    minorAndPatch:
+      update-types:
+        - "minor"
+        - "patch"
+  open-pull-requests-limit: 100
 - package-ecosystem: github-actions
   directory: "/"
   schedule:

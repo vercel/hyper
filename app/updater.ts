@@ -1,6 +1,6 @@
 // Packages
 import electron, {app} from 'electron';
-import type {BrowserWindow, AutoUpdater} from 'electron';
+import type {BrowserWindow, AutoUpdater as OriginalAutoUpdater} from 'electron';
 
 import retry from 'async-retry';
 import ms from 'ms';
@@ -10,6 +10,20 @@ import autoUpdaterLinux from './auto-updater-linux';
 import {getDefaultProfile} from './config';
 import {version} from './package.json';
 import {getDecoratedConfig} from './plugins';
+
+// Necessary due to typescript not handling overloads well
+type AutoUpdaterEvent =
+  | 'error'
+  | 'checking-for-update'
+  | 'before-quit-for-update'
+  | 'update-downloaded'
+  | 'update-available'
+  | 'update-not-available';
+
+interface AutoUpdater extends OriginalAutoUpdater {
+  on(event: AutoUpdaterEvent, listener: Function): this;
+  removeListener(event: AutoUpdaterEvent, listener: Function): this;
+}
 
 const {platform} = process;
 const isLinux = platform === 'linux';

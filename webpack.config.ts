@@ -58,10 +58,6 @@ const config: webpack.Configuration[] = [
           {
             from: './app/static',
             to: './static'
-          },
-          {
-            from: './app/patches',
-            to: './patches'
           }
         ]
       })

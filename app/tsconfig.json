@@ -1,8 +1,10 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
+    "declaration": true,
     "declarationDir": "../dist/tmp/appdts/",
     "outDir": "../target/",
+    "composite": true,
     "noImplicitAny": false
   },
   "include": [
@@ -10,5 +12,9 @@
     "./package.json",
     "../typings/extend-electron.d.ts",
     "../typings/ext-modules.d.ts"
+  ],
+  "exclude": [
+    "../dist/**/*",
+    "../target/**/*"
   ]
 }
