@@ -12,7 +12,7 @@ require('redux');
 require('reselect');
 require('seamless-immutable');
 require('stylis');
-require('xterm-addon-unicode11');
+require('@xterm/addon-unicode11');
 // eslint-disable-next-line no-constant-condition
 if (false) {
   require('args');
@@ -21,11 +21,11 @@ if (false) {
   require('react-dom');
   require('react-redux');
   require('react');
-  require('xterm-addon-fit');
-  require('xterm-addon-image');
-  require('xterm-addon-search');
-  require('xterm-addon-web-links');
-  require('xterm-addon-webgl');
-  require('xterm-addon-canvas');
-  require('xterm');
+  require('@xterm/addon-fit');
+  require('@xterm/addon-image');
+  require('@xterm/addon-search');
+  require('@xterm/addon-web-links');
+  require('@xterm/addon-webgl');
+  require('@xterm/addon-canvas');
+  require('@xterm/xterm');
 }

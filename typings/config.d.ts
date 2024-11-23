@@ -1,4 +1,4 @@
-import type {FontWeight} from 'xterm';
+import type {FontWeight} from '@xterm/xterm';
 
 export type ColorMap = {
   black: string;
