@@ -5,7 +5,7 @@
 ### Run Hyper in dev mode
 Hyper can be run in dev mode by cloning this repository and following the ["Contributing" section of our README](https://github.com/vercel/hyper#contribute).
 
-In dev mode you'll get more ouput and access to React/Redux dev-tools in Electron.
+In dev mode you'll get more output and access to React/Redux dev-tools in Electron.
 
 Prerequisites and steps are described in the ["Contributing" section of our README](https://github.com/vercel/hyper#contribute).
 Be sure to use the `canary` branch.
