@@ -6,7 +6,7 @@
   </a>
  </p>
   
-[![Node CI](https://github.com/vercel/hyper/workflows/Node%20CI/badge.svg?event=push)](https://github.com/vercel/hyper/actions?query=workflow%3A%22Node+CI%22+branch%3Acanary+event%3Apush)
+[![Node CI](https://github.com/vercel/hyper/actions/workflows/nodejs.yml/badge.svg)](https://github.com/vercel/hyper/actions/workflows/nodejs.yml)
 [![Changelog #213](https://img.shields.io/badge/changelog-%23213-lightgrey.svg)](https://changelog.com/213)
 
 For more details, head to: https://hyper.is
