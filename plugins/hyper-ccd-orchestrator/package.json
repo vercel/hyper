@@ -1,9 +1,9 @@
 {
   "name": "hyper-ccd-orchestrator",
-  "version": "0.2.0",
-  "description": "Orchestrator that spawns CCD/Codex agent tabs in Hyper with multi-provider LLM support",
+  "version": "0.3.0",
+  "description": "Orchestrator that spawns CCD/Codex agent tabs in Hyper with multi-provider LLM support, window splitting, and renaming",
   "main": "index.js",
-  "keywords": ["hyper", "terminal", "agents", "ccd", "codex", "llm", "openrouter", "deepseek", "glm", "orchestrator"],
+  "keywords": ["hyper", "terminal", "agents", "ccd", "codex", "llm", "openrouter", "deepseek", "glm", "orchestrator", "split", "rename"],
   "author": "You",
   "license": "MIT",
   "dependencies": {}

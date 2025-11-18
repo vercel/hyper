@@ -13,6 +13,7 @@ This plugin adds an "Orchestrator" feature to Hyper that allows you to:
 
 ## Features
 
+### Orchestration Features
 - **Orchestrator Button**: Click the "Orchestrate" button in the Hyper header to open the task input modal
 - **Natural Language Tasks**: Describe what you want done in plain English
 - **Automatic Tab Creation**: Spawns multiple tabs based on LLM-powered task decomposition
@@ -21,6 +22,12 @@ This plugin adds an "Orchestrator" feature to Hyper that allows you to:
 - **Local Configuration**: Settings and API keys stored securely in browser localStorage
 - **Error Handling**: Graceful fallback to stub mode if LLM fails
 - **Loading States**: Visual feedback during LLM processing
+
+### Window Management Features
+- **Terminal Splitting**: Split terminal panes vertically or horizontally
+- **Terminal Renaming**: Rename any terminal/pane with custom names
+- **Keyboard Shortcuts**: Quick access to split and rename commands
+- **Manual Control**: Full control over your workspace layout
 
 ## Installation
 
@@ -90,6 +97,51 @@ This might create tabs like:
 - `codex-auth-implementation` - Implement JWT authentication
 - `ccd-test-and-verify` - Test the authentication flow
 
+### Window Management
+
+The plugin adds powerful window splitting and renaming capabilities:
+
+#### Keyboard Shortcuts
+
+- **Ctrl+Shift+R** - Rename current terminal/pane
+- **Ctrl+Shift+E** - Split terminal vertically (side by side)
+- **Ctrl+Shift+O** - Split terminal horizontally (top and bottom)
+
+#### Renaming Terminals
+
+1. Focus the terminal/pane you want to rename
+2. Press `Ctrl+Shift+R` (or use custom keybinding)
+3. Enter a new name in the modal
+4. Press Enter or click "Rename"
+
+This allows you to give descriptive names to each pane, like:
+- `api-server` - Running your backend
+- `frontend-dev` - React development server
+- `database` - PostgreSQL connection
+- `logs` - Tail log files
+- `tests` - Running test watchers
+
+#### Splitting Terminals
+
+1. Focus the terminal you want to split from
+2. Press `Ctrl+Shift+E` for vertical split or `Ctrl+Shift+O` for horizontal split
+3. A new pane appears, sharing the same working directory
+4. Name each pane as needed for easy identification
+
+#### Workflow Example
+
+```
+1. Start with one terminal
+2. Split vertically (Ctrl+Shift+E) → now you have 2 panes
+3. Rename left pane to "api-server" (Ctrl+Shift+R)
+4. Rename right pane to "frontend" (Ctrl+Shift+R)
+5. Split right pane horizontally (Ctrl+Shift+O) → now you have 3 panes
+6. Rename bottom-right to "tests"
+7. Run commands in each named pane
+```
+
+Result: Organized workspace with clearly labeled panes!
+
 ## Supported LLM Providers
 
 ### OpenRouter
@@ -136,11 +188,13 @@ hyper-ccd-orchestrator/
 ├── package.json              # Plugin metadata
 ├── index.js                  # Main plugin logic (decorators, middleware)
 ├── orchestratorClient.js     # LLM integration with multi-provider support
+├── windowControls.js         # Window split and rename actions
 ├── PRD.md                    # Product requirements document
 ├── README.md                 # This file
 └── ui/
     ├── OrchestratorButton.js  # Header button component
-    └── OrchestratorModal.js   # Task input modal with settings
+    ├── OrchestratorModal.js   # Task input modal with settings
+    └── RenameModal.js         # Terminal rename modal
 ```
 
 ### How It Works
@@ -188,6 +242,14 @@ The plugin includes robust error handling:
 
 ## Current Status
 
+**v0.3.0 - Window Management Features**
+
+- ✅ Terminal splitting (vertical and horizontal)
+- ✅ Terminal/pane renaming with modal
+- ✅ Keyboard shortcuts for split and rename
+- ✅ Command handlers for window operations
+- ✅ Custom keymaps integration
+
 **v0.2.0 - M2: Real LLM Integration**
 
 - ✅ Multi-provider LLM support (OpenRouter, DeepSeek, GLM-4, OpenAI, Anthropic, Custom)
@@ -198,7 +260,7 @@ The plugin includes robust error handling:
 - ✅ JSON parsing and validation
 - ✅ Fallback to stub mode
 
-**Previous: v0.1.0 - M1: Basic Implementation**
+**v0.1.0 - M1: Basic Implementation**
 
 - ✅ Orchestrator button in header
 - ✅ Task input modal

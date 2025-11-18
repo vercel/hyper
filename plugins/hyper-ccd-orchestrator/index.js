@@ -2,17 +2,27 @@
 const React = require('react');
 const OrchestratorButton = require('./ui/OrchestratorButton');
 const OrchestratorModal = require('./ui/OrchestratorModal');
+const RenameModal = require('./ui/RenameModal');
 const { getAgentPlan } = require('./orchestratorClient');
+const { renameTerminal, splitVertical, splitHorizontal } = require('./windowControls');
 
 const ORCH_RUN_TASK = 'CCD_ORCH/RUN_TASK';
 const ORCH_SPAWN_AGENT_TAB = 'CCD_ORCH/SPAWN_AGENT_TAB';
 const ORCH_RESET = 'CCD_ORCH/RESET';
 const ORCH_SET_LOADING = 'CCD_ORCH/SET_LOADING';
 const ORCH_SET_ERROR = 'CCD_ORCH/SET_ERROR';
+const ORCH_SHOW_RENAME = 'CCD_ORCH/SHOW_RENAME';
+const ORCH_HIDE_RENAME = 'CCD_ORCH/HIDE_RENAME';
 
 const CONFIG_STORAGE_KEY = 'hyper-ccd-orchestrator-config';
 
 let cachedStore = null;
+let renameModalState = {
+  visible: false,
+  sessionUid: null,
+  currentName: '',
+  callback: null
+};
 
 // Helper functions for localStorage
 function loadConfig() {
@@ -133,7 +143,161 @@ exports.decorateHeader = (Header, { React: R }) => {
   };
 };
 
-// 2) Capture store so we can dispatch from UI
+// 2) Decorate Terms to add rename modal
+exports.decorateTerms = (Terms, { React }) => {
+  return class extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        renameVisible: false,
+        renameSessionUid: null,
+        renameCurrentName: ''
+      };
+      this.showRename = this.showRename.bind(this);
+      this.hideRename = this.hideRename.bind(this);
+      this.handleRename = this.handleRename.bind(this);
+    }
+
+    componentDidMount() {
+      // Listen for rename command
+      window.addEventListener('ccd-orch-rename', this.showRename);
+    }
+
+    componentWillUnmount() {
+      window.removeEventListener('ccd-orch-rename', this.showRename);
+    }
+
+    showRename(event) {
+      const { uid, name } = event.detail || {};
+      if (uid) {
+        this.setState({
+          renameVisible: true,
+          renameSessionUid: uid,
+          renameCurrentName: name || ''
+        });
+      }
+    }
+
+    hideRename() {
+      this.setState({
+        renameVisible: false,
+        renameSessionUid: null,
+        renameCurrentName: ''
+      });
+    }
+
+    handleRename(newName) {
+      if (this.state.renameSessionUid && cachedStore) {
+        cachedStore.dispatch(renameTerminal(this.state.renameSessionUid, newName));
+      }
+      this.hideRename();
+    }
+
+    render() {
+      return React.createElement(
+        React.Fragment,
+        null,
+        React.createElement(Terms, this.props),
+        React.createElement(RenameModal, {
+          visible: this.state.renameVisible,
+          currentName: this.state.renameCurrentName,
+          onRename: this.handleRename,
+          onClose: this.hideRename
+        })
+      );
+    }
+  };
+};
+
+// 3) Add keymaps for split and rename
+exports.decorateKeymaps = (keymaps) => {
+  return Object.assign({}, keymaps, {
+    'terminal:rename': 'ctrl+shift+r',
+    'terminal:split-vertical': 'ctrl+shift+e',
+    'terminal:split-horizontal': 'ctrl+shift+o'
+  });
+};
+
+// 4) Decorate Hyper to register command handlers
+exports.decorateHyper = (Hyper, { React }) => {
+  return class extends React.Component {
+    constructor(props) {
+      super(props);
+      this.commandHandlers = {
+        'terminal:rename': this.handleRenameCommand.bind(this),
+        'terminal:split-vertical': this.handleSplitVertical.bind(this),
+        'terminal:split-horizontal': this.handleSplitHorizontal.bind(this)
+      };
+    }
+
+    componentDidMount() {
+      // Register command handlers
+      if (window.rpc) {
+        Object.keys(this.commandHandlers).forEach(command => {
+          window.rpc.on(`command ${command}`, this.commandHandlers[command]);
+        });
+      }
+    }
+
+    componentWillUnmount() {
+      // Unregister command handlers
+      if (window.rpc) {
+        Object.keys(this.commandHandlers).forEach(command => {
+          window.rpc.removeListener(`command ${command}`, this.commandHandlers[command]);
+        });
+      }
+    }
+
+    handleRenameCommand() {
+      if (!cachedStore) return;
+
+      const state = cachedStore.getState();
+      const activeUid = state.sessions && state.sessions.activeUid;
+
+      if (activeUid) {
+        const session = state.sessions.sessions[activeUid];
+        const currentName = session && session.title ? session.title : '';
+
+        // Dispatch custom event to show rename modal
+        window.dispatchEvent(new CustomEvent('ccd-orch-rename', {
+          detail: { uid: activeUid, name: currentName }
+        }));
+      }
+    }
+
+    handleSplitVertical() {
+      if (!cachedStore) return;
+
+      const state = cachedStore.getState();
+      const activeUid = state.sessions && state.sessions.activeUid;
+
+      if (activeUid) {
+        const session = state.sessions.sessions[activeUid];
+        const profile = session && session.profile;
+        cachedStore.dispatch(splitVertical(activeUid, profile));
+      }
+    }
+
+    handleSplitHorizontal() {
+      if (!cachedStore) return;
+
+      const state = cachedStore.getState();
+      const activeUid = state.sessions && state.sessions.activeUid;
+
+      if (activeUid) {
+        const session = state.sessions.sessions[activeUid];
+        const profile = session && session.profile;
+        cachedStore.dispatch(splitHorizontal(activeUid, profile));
+      }
+    }
+
+    render() {
+      return React.createElement(Hyper, this.props);
+    }
+  };
+};
+
+// 5) Capture store so we can dispatch from UI
 exports.middleware = (store) => {
   cachedStore = store;
 
@@ -227,7 +391,7 @@ exports.middleware = (store) => {
   };
 };
 
-// 3) Optional: track orchestrator state in UI reducer
+// 6) Optional: track orchestrator state in UI reducer
 exports.reduceUI = (state, action) => {
   switch (action.type) {
     case ORCH_RESET:
