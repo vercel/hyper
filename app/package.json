@@ -43,5 +43,8 @@
   },
   "optionalDependencies": {
     "native-reg": "1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1"
   }
 }

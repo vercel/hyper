@@ -21,8 +21,13 @@ class AutoUpdater extends EventEmitter implements Electron.AutoUpdater {
     }
     this.emit('checking-for-update');
 
-    fetch(this.updateURL)
+    // Use a short timeout so a blocked network or proxy won't hang the app
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+
+    fetch(this.updateURL, {signal: controller.signal})
       .then((res) => {
+        clearTimeout(timeout);
         if (res.status === 204) {
           this.emit('update-not-available');
           return;
