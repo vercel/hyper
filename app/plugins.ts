@@ -8,6 +8,7 @@ import {promisify} from 'util';
 
 import {app, dialog, ipcMain as _ipcMain} from 'electron';
 import type {BrowserWindow, App, MenuItemConstructorOptions} from 'electron';
+import {isOnline} from './network';
 import React from 'react';
 
 import Config from 'electron-store';
@@ -189,18 +190,33 @@ export const getLoadedPluginVersions = () => {
 // a bit after the user launches the terminal
 // to prevent slowness
 if (cache.get('hyper.plugins') !== id || process.env.HYPER_FORCE_UPDATE) {
-  // install immediately if the user changed plugins
-  console.log('plugins have changed / not init, scheduling plugins installation');
-  setTimeout(() => {
-    updatePlugins();
-  }, 1000);
+  // install immediately if the user changed plugins, but only if online.
+  (async () => {
+    const online = await isOnline();
+    if (!online) {
+      console.warn('Plugin installer: offline or network blocked; skipping initial updatePlugins');
+      return;
+    }
+    console.log('plugins have changed / not init, scheduling plugins installation');
+    setTimeout(() => {
+      updatePlugins();
+    }, 1000);
+  })();
 }
 
 (() => {
   const baseConfig = config.getConfig();
   if (baseConfig['autoUpdatePlugins']) {
-    // otherwise update plugins every 5 hours
-    setInterval(updatePlugins, ms(baseConfig['autoUpdatePlugins'] === true ? '5h' : baseConfig['autoUpdatePlugins']));
+    // otherwise update plugins every 5 hours, but only trigger updates when online.
+    const intervalMs = ms(baseConfig['autoUpdatePlugins'] === true ? '5h' : baseConfig['autoUpdatePlugins']);
+    setInterval(async () => {
+      const online = await isOnline();
+      if (online) {
+        updatePlugins();
+      } else {
+        console.warn('Plugin updater: offline or network blocked; skipping scheduled updatePlugins');
+      }
+    }, intervalMs);
   }
 })();
 
@@ -464,12 +480,20 @@ export {toDependencies as _toDependencies};
 
 const ipcMain = _ipcMain as IpcMainWithCommands;
 
-ipcMain.handle('child_process.exec', (event, command, options) => {
-  return promisify(exec)(command, options);
+ipcMain.handle('child_process.exec', async (event, command, options) => {
+  const result = await promisify(exec)(command, options as any);
+  return {
+    stdout: typeof result.stdout === 'string' ? result.stdout : String(result.stdout),
+    stderr: typeof result.stderr === 'string' ? result.stderr : String(result.stderr)
+  };
 });
 
-ipcMain.handle('child_process.execFile', (event, file, args, options) => {
-  return promisify(execFile)(file, args, options);
+ipcMain.handle('child_process.execFile', async (event, file, args, options) => {
+  const result = await promisify(execFile)(file, args as any, options as any);
+  return {
+    stdout: typeof result.stdout === 'string' ? result.stdout : String(result.stdout),
+    stderr: typeof result.stderr === 'string' ? result.stderr : String(result.stderr)
+  };
 });
 
 ipcMain.handle('getLoadedPluginVersions', () => getLoadedPluginVersions());

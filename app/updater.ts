@@ -10,11 +10,12 @@ import autoUpdaterLinux from './auto-updater-linux';
 import {getDefaultProfile} from './config';
 import {version} from './package.json';
 import {getDecoratedConfig} from './plugins';
+import {isOnline} from './network';
 
 const {platform} = process;
 const isLinux = platform === 'linux';
 
-const autoUpdater: AutoUpdater = isLinux ? autoUpdaterLinux : electron.autoUpdater;
+const autoUpdater: any = isLinux ? autoUpdaterLinux : electron.autoUpdater;
 
 const getDecoratedConfigWithRetry = async () => {
   return await retry(() => {
@@ -62,11 +63,25 @@ async function init() {
   autoUpdater.setFeedURL({url: feedURL});
 
   setTimeout(() => {
-    void checkForUpdates();
+    void (async () => {
+      const online = await isOnline();
+      if (online) {
+        void checkForUpdates();
+      } else {
+        console.warn('Updater: offline or network blocked; skipping checkForUpdates');
+      }
+    })();
   }, ms('10s'));
 
   setInterval(() => {
-    void checkForUpdates();
+    void (async () => {
+      const online = await isOnline();
+      if (online) {
+        void checkForUpdates();
+      } else {
+        console.warn('Updater: offline or network blocked; skipping periodic checkForUpdates');
+      }
+    })();
   }, ms('30m'));
 
   isInit = true;
