@@ -10,6 +10,7 @@ import type {configOptions} from '../typings/config';
 import {loadConfig, reloadConfig} from './actions/config';
 import init from './actions/index';
 import {addNotificationMessage} from './actions/notifications';
+import * as headerActions from './actions/header';
 import * as sessionActions from './actions/sessions';
 import * as termGroupActions from './actions/term-groups';
 import * as uiActions from './actions/ui';
@@ -95,6 +96,10 @@ rpc.on('session exit', ({uid}) => {
 
 rpc.on('termgroup close req', () => {
   store_.dispatch(termGroupActions.exitActiveTermGroup());
+});
+
+rpc.on('tab close req', () => {
+  store_.dispatch(headerActions.closeTab(store_.getState().sessions.activeUid));
 });
 
 rpc.on('session clear req', () => {

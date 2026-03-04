@@ -27,6 +27,7 @@
     "command+alt+left",
     "ctrl+shift+tab"
   ],
+  "tab:close": "command+w",
   "tab:jump:prefix": "command",
   "pane:next": "command+]",
   "pane:prev": "command+[",
