@@ -27,6 +27,9 @@ const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
   'pane:close': (focusedWindow) => {
     focusedWindow?.rpc.emit('termgroup close req');
   },
+  'tab:close': (focusedWindow) => {
+    focusedWindow?.rpc.emit('tab close req');
+  },
   'window:preferences': () => {
     void openConfig();
   },

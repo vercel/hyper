@@ -22,6 +22,7 @@
   "tab:prev": [
     "ctrl+shift+tab"
   ],
+  "tab:close": "ctrl+w",
   "tab:jump:prefix": "ctrl",
   "pane:next": "ctrl+pageup",
   "pane:prev": "ctrl+pagedown",
