@@ -418,7 +418,7 @@ export default class Term extends React.PureComponent<
 
   keyboardHandler(e: any) {
     // Has Mousetrap flagged this event as a command?
-    return !e.catched;
+    return !e.caught;
   }
 
   setBellSound(bell: 'SOUND' | false, sound: string | null) {

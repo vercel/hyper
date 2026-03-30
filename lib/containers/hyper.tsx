@@ -60,7 +60,7 @@ const Hyper = forwardRef<HTMLDivElement, HyperProps>((props, ref) => {
         (e) => {
           const command = keys[commandKeys];
           // We should tell xterm to ignore this event.
-          (e as any).catched = true;
+          (e as any).caught = true;
           props.execCommand(command, getCommandHandler(command), e);
           shouldPreventDefault(command) && e.preventDefault();
         },

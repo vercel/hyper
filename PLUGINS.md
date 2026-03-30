@@ -5,7 +5,7 @@
 ### Run Hyper in dev mode
 Hyper can be run in dev mode by cloning this repository and following the ["Contributing" section of our README](https://github.com/vercel/hyper#contribute).
 
-In dev mode you'll get more ouput and access to React/Redux dev-tools in Electron.
+In dev mode you'll get more output and access to React/Redux dev-tools in Electron.
 
 Prerequisites and steps are described in the ["Contributing" section of our README](https://github.com/vercel/hyper#contribute).
 Be sure to use the `canary` branch.
@@ -32,7 +32,7 @@ module.exports = {
 ### Running your plugin
 To load, your plugin should expose at least one API method. All possible methods are listed [here](https://github.com/vercel/hyper/blob/canary/app/plugins/extensions.ts).
 
-After launching Hyper in dev mode, run `yarn run app`, it should log that your plugin has been correcty loaded: `Plugin hyper-awesome-plugin (0.1.0) loaded.`. Name and version printed are the ones in your plugins `package.json` file.
+After launching Hyper in dev mode, run `yarn run app`, it should log that your plugin has been correctly loaded: `Plugin hyper-awesome-plugin (0.1.0) loaded.`. Name and version printed are the ones in your plugins `package.json` file.
 
 When you put a `console.log()` in your plugin code, it will be displayed in the Electron dev-tools, but only if it is located in a renderer method, like component decorators. If it is located in the Electron main process method, like the `onApp` handler, it will be displayed in your terminal where you ran `yarn run app` or in your VSCode console.
 
@@ -152,7 +152,7 @@ exports.decorateMenu = (menu) => {
         label: 'Clear all panes in all tabs',
         accelerator: 'ctrl+shift+y',
         click(item, focusedWindow) {
-          // on macOS, menu item can clicked without or minized window
+          // on macOS, menu item can clicked without or minimized window
           if (focusedWindow) {
             focusedWindow.rpc.emit('clear allPanes');
           }
