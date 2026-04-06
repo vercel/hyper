@@ -708,19 +708,19 @@ pako@~1.0.2:
   resolved "https://registry.npmjs.org/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
   integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
 
-parse-path@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.npmjs.org/parse-path/-/parse-path-7.0.0.tgz#605a2d58d0a749c8594405d8cc3a2bf76d16099b"
-  integrity sha512-Euf9GG8WT9CdqwuWJGdf3RkUcTBArppHABkO7Lm8IzRQp0e2r/kkFnmhu4TSK30Wcu5rVAZLmfPKSBBi9tWFog==
+parse-path@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.npmjs.org/parse-path/-/parse-path-7.1.0.tgz#41fb513cb122831807a4c7b29c8727947a09d8c6"
+  integrity sha512-EuCycjZtfPcjWk7KTksnJ5xPMvWGA/6i4zrLYhRG0hGvC3GPU/jGUj3Cy+ZR0v30duV3e23R95T1lE2+lsndSw==
   dependencies:
     protocols "^2.0.0"
 
-parse-url@8.1.0:
-  version "8.1.0"
-  resolved "https://registry.npmjs.org/parse-url/-/parse-url-8.1.0.tgz#972e0827ed4b57fc85f0ea6b0d839f0d8a57a57d"
-  integrity sha512-xDvOoLU5XRrcOZvnI6b8zA6n9O9ejNk/GExuz1yBuWUGn9KA97GI6HTs6u02wKara1CeVmZhH+0TZFdWScR89w==
+parse-url@11.1.0:
+  version "11.1.0"
+  resolved "https://registry.npmjs.org/parse-url/-/parse-url-11.1.0.tgz#0f1edd8a18c4830562721dbe452c27e11b259393"
+  integrity sha512-UYn/lNb1bmkYiM6UaqEbHl9T/VIYreM2Vm79MGZ2soUOXOoOq7qxoTwx8C8p9V4Ko2DLcsVnEhRJzhxsF2kssg==
   dependencies:
-    parse-path "^7.0.0"
+    parse-path "^7.1.0"
 
 path-exists@^3.0.0:
   version "3.0.0"
