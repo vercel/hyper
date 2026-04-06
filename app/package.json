@@ -26,7 +26,7 @@
     "electron-store": "8.2.0",
     "fs-extra": "11.2.0",
     "git-describe": "4.1.1",
-    "lodash": "4.17.21",
+    "lodash": "4.18.1",
     "ms": "2.1.3",
     "native-process-working-directory": "^1.0.2",
     "node-pty": "1.0.0",
