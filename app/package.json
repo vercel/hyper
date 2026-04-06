@@ -30,7 +30,7 @@
     "ms": "2.1.3",
     "native-process-working-directory": "^1.0.2",
     "node-pty": "1.0.0",
-    "os-locale": "5.0.0",
+    "os-locale": "8.0.0",
     "parse-url": "8.1.0",
     "queue": "6.0.2",
     "react": "18.2.0",
