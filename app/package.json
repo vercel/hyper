@@ -20,7 +20,7 @@
     "chokidar": "^3.6.0",
     "color": "4.2.3",
     "default-shell": "1.0.1",
-    "electron-devtools-installer": "3.2.0",
+    "electron-devtools-installer": "4.0.0",
     "electron-fetch": "1.9.1",
     "electron-is-dev": "2.0.0",
     "electron-store": "8.2.0",
