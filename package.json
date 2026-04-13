@@ -120,7 +120,7 @@
     "eslint-plugin-jsonc": "^2.15.1",
     "eslint-plugin-lodash": "^7.4.0",
     "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-react": "7.34.1",
+    "eslint-plugin-react": "7.37.5",
     "husky": "9.0.11",
     "inquirer": "9.2.18",
     "node-addon-api": "8.0.0",
