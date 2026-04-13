@@ -51,7 +51,7 @@
     "react-use": "^17.5.0",
     "redux": "4.2.1",
     "redux-thunk": "2.4.2",
-    "registry-url": "^6.0.1",
+    "registry-url": "^7.2.0",
     "reselect": "4.1.8",
     "seamless-immutable": "7.1.4",
     "semver": "7.6.0",
