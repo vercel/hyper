@@ -12,9 +12,44 @@ import sudoPrompt from 'sudo-prompt';
 import {cliScriptPath, cliLinkPath} from '../config/paths';
 import notify from '../notify';
 
+import {pathContainsEntry, pathStartsWithEntry, refreshPathValueForHyperCLI} from './windows-path';
+
 const readLink = promisify(readlink);
 const symLink = promisify(symlink);
 const sudoExec = promisify(sudoPrompt.exec);
+
+type RegistryKey = object;
+type RegistryFormattedValue = unknown;
+
+type RegistryApi = {
+  HKCU: unknown;
+  Access: {
+    ALL_ACCESS: unknown;
+  };
+  ValueType: {
+    SZ: ValueType;
+    EXPAND_SZ: ValueType;
+  };
+  openKey(root: unknown, key: string, access: unknown): RegistryKey | null;
+  enumValueNames(key: RegistryKey): string[];
+  queryValueRaw(key: RegistryKey, valueName: string): {type: ValueType} | null;
+  queryValue(key: RegistryKey, valueName: string): string;
+  setValueRaw(key: RegistryKey, valueName: string, type: ValueType, value: RegistryFormattedValue): void;
+  formatString(value: string): RegistryFormattedValue;
+  closeKey(key: RegistryKey): void;
+};
+
+const registry = Registry as RegistryApi;
+
+const refreshCurrentProcessPath = (binPath: string, oldPath: string) => {
+  const currentPathKey = Object.keys(process.env).find((key) => key.toUpperCase() === 'PATH') ?? 'PATH';
+  const currentPath = process.env[currentPathKey] ?? '';
+  const refreshedPath = refreshPathValueForHyperCLI(currentPath, binPath, oldPath);
+
+  process.env[currentPathKey] = refreshedPath;
+  process.env.PATH = refreshedPath;
+  process.env.Path = refreshedPath;
+};
 
 const checkInstall = () => {
   return readLink(cliLinkPath)
@@ -78,45 +113,44 @@ sudo ln -sf "${cliScriptPath}" "${cliLinkPath}"`,
 const addBinToUserPath = () => {
   return new Promise<void>((resolve, reject) => {
     try {
-      const envKey = Registry.openKey(Registry.HKCU, 'Environment', Registry.Access.ALL_ACCESS)!;
+      const envKey = registry.openKey(registry.HKCU, 'Environment', registry.Access.ALL_ACCESS)!;
 
       // C:\Users\<user>\AppData\Local\Programs\hyper\resources\bin
       const binPath = path.dirname(cliScriptPath);
       // C:\Users\<user>\AppData\Local\hyper
       const oldPath = path.resolve(process.env.LOCALAPPDATA!, 'hyper');
 
-      const items = Registry.enumValueNames(envKey);
+      const items = registry.enumValueNames(envKey);
       const pathItem = items.find((item) => item.toUpperCase() === 'PATH');
       const pathItemName = pathItem || 'PATH';
 
       let newPathValue = binPath;
-      let type: ValueType = Registry.ValueType.SZ;
+      let type: ValueType = registry.ValueType.SZ;
       if (pathItem) {
-        type = Registry.queryValueRaw(envKey, pathItem)!.type;
-        if (type !== Registry.ValueType.SZ && type !== Registry.ValueType.EXPAND_SZ) {
+        type = registry.queryValueRaw(envKey, pathItem)!.type;
+        if (type !== registry.ValueType.SZ && type !== registry.ValueType.EXPAND_SZ) {
           reject(`Registry key type is ${type}`);
           return;
         }
-        const value = Registry.queryValue(envKey, pathItem) as string;
-        let pathParts = value.split(';');
-        const existingPath = pathParts.includes(binPath);
-        const existingOldPath = pathParts.some((pathPart) => pathPart.startsWith(oldPath));
+        const value = registry.queryValue(envKey, pathItem);
+        const pathParts = value.split(';');
+        const currentPathValue = refreshPathValueForHyperCLI(value, binPath, oldPath);
+        const existingPath = pathContainsEntry(pathParts, binPath);
+        const existingOldPath = pathParts.some((pathPart) => pathStartsWithEntry(pathPart, oldPath));
         if (existingPath && !existingOldPath) {
           console.log('Hyper CLI already in PATH');
-          Registry.closeKey(envKey);
+          refreshCurrentProcessPath(binPath, oldPath);
+          registry.closeKey(envKey);
           resolve();
           return;
         }
 
-        // Because nsis install path is different from squirrel we need to remove old path if present
-        // and add current path if absent
-        if (existingOldPath) pathParts = pathParts.filter((pathPart) => !pathPart.startsWith(oldPath));
-        if (!pathParts.includes(binPath)) pathParts.push(binPath);
-        newPathValue = pathParts.join(';');
+        newPathValue = currentPathValue;
       }
       console.log('Adding HyperCLI path (registry)');
-      Registry.setValueRaw(envKey, pathItemName, type, Registry.formatString(newPathValue));
-      Registry.closeKey(envKey);
+      registry.setValueRaw(envKey, pathItemName, type, registry.formatString(newPathValue));
+      refreshCurrentProcessPath(binPath, oldPath);
+      registry.closeKey(envKey);
       resolve();
     } catch (error) {
       reject(error);
@@ -136,7 +170,7 @@ export const installCLI = async (withNotification: boolean) => {
       logNotify(
         withNotification,
         'Hyper CLI installed',
-        'You may need to restart your computer to complete this installation process.'
+        'Hyper CLI is ready in Hyper. Other terminal apps may need to restart to pick up the PATH change.'
       );
     } catch (err) {
       logNotify(withNotification, 'Hyper CLI installation failed', `Failed to add Hyper CLI path to user PATH ${err}`);
