@@ -100,7 +100,7 @@ args.command(
 );
 
 const lsRemote = (pattern?: string) => {
-  // note that no errors are catched by this function
+  // note that no errors are caught by this function
   const URL = `https://api.npms.io/v2/search?q=${
     (pattern && `${pattern}+`) || ''
   }keywords:hyper-plugin,hyper-theme&size=250`;

@@ -65,7 +65,7 @@ test('positionIsValid() returns true when window is on second screen', (t) => {
   t.true(result);
 });
 
-test('positionIsValid() returns false when position isnt valid', (t) => {
+test('positionIsValid() returns false when position isn't valid', (t) => {
   const primaryDisplay = {
     workArea: {
       x: 0,

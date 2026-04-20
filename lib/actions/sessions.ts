@@ -157,7 +157,7 @@ export function closeSearch(uid?: string, keyEvent?: any) {
       });
     } else {
       if (keyEvent) {
-        keyEvent.catched = false;
+        keyEvent.caught = false;
       }
     }
   };
