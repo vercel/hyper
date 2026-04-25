@@ -1,3 +1,4 @@
+import {execFile} from 'child_process';
 import {existsSync, readlink, symlink} from 'fs';
 import path from 'path';
 import {promisify} from 'util';
@@ -12,9 +13,12 @@ import sudoPrompt from 'sudo-prompt';
 import {cliScriptPath, cliLinkPath} from '../config/paths';
 import notify from '../notify';
 
+import {BROADCAST_PS_SCRIPT, encodePowerShellCommand, POWERSHELL_BROADCAST_ARGS} from './broadcast-env-change';
+
 const readLink = promisify(readlink);
 const symLink = promisify(symlink);
 const sudoExec = promisify(sudoPrompt.exec);
+const execFileP = promisify(execFile);
 
 const checkInstall = () => {
   return readLink(cliLinkPath)
@@ -75,6 +79,24 @@ sudo ln -sf "${cliScriptPath}" "${cliLinkPath}"`,
   }
 };
 
+// Tells the rest of Windows that the user's PATH changed so already-running
+// shells / Explorer pick up the new value without requiring a logout or
+// reboot. See ./broadcast-env-change.ts for the why and the WinAPI details.
+// Failure here is non-fatal: the registry value is already persisted, so a
+// reboot/logout still works as the fallback.
+const broadcastEnvChange = async (): Promise<boolean> => {
+  try {
+    await execFileP('powershell.exe', [...POWERSHELL_BROADCAST_ARGS, encodePowerShellCommand(BROADCAST_PS_SCRIPT)], {
+      windowsHide: true,
+      timeout: 10000
+    });
+    return true;
+  } catch (err) {
+    console.warn('Failed to broadcast WM_SETTINGCHANGE for PATH update', err);
+    return false;
+  }
+};
+
 const addBinToUserPath = () => {
   return new Promise<void>((resolve, reject) => {
     try {
@@ -117,6 +139,17 @@ const addBinToUserPath = () => {
       console.log('Adding HyperCLI path (registry)');
       Registry.setValueRaw(envKey, pathItemName, type, Registry.formatString(newPathValue));
       Registry.closeKey(envKey);
+
+      // Update the running Hyper process's PATH so any shells spawned from
+      // within Hyper (or commands run via child_process) see the CLI right
+      // away, without waiting on the broadcast or a reboot.
+      const binPathDir = path.dirname(cliScriptPath);
+      const currentRuntimePath = process.env.Path || process.env.PATH || '';
+      if (!currentRuntimePath.split(';').some((entry) => entry.toLowerCase() === binPathDir.toLowerCase())) {
+        const updated = currentRuntimePath ? `${currentRuntimePath};${binPathDir}` : binPathDir;
+        process.env.Path = updated;
+        process.env.PATH = updated;
+      }
       resolve();
     } catch (error) {
       reject(error);
@@ -133,10 +166,13 @@ export const installCLI = async (withNotification: boolean) => {
   if (process.platform === 'win32') {
     try {
       await addBinToUserPath();
+      const broadcasted = await broadcastEnvChange();
       logNotify(
         withNotification,
         'Hyper CLI installed',
-        'You may need to restart your computer to complete this installation process.'
+        broadcasted
+          ? 'Hyper CLI is now on your PATH. Open a new terminal window to use it.'
+          : 'You may need to open a new terminal session (or restart your computer) to complete this installation process.'
       );
     } catch (err) {
       logNotify(withNotification, 'Hyper CLI installation failed', `Failed to add Hyper CLI path to user PATH ${err}`);
