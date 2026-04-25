@@ -25,6 +25,13 @@ type rootConfigOptions = {
    * you can also set it to a custom time e.g. `1d` or `2h`
    */
   autoUpdatePlugins: boolean | string;
+  /**
+   * Show a confirmation dialog before quitting Hyper.
+   * - `'always'`: always confirm before quit
+   * - `'on-running-process'`: only confirm when at least one session has a running process (default)
+   * - `'never'`: never confirm
+   */
+  confirmOnQuit: 'always' | 'on-running-process' | 'never';
   /** if `true` hyper will be set as the default protocol client for SSH */
   defaultSSHApp: boolean;
   /** if `true` hyper will not check for updates */

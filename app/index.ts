@@ -35,6 +35,7 @@ import * as AppMenu from './menus/menu';
 import * as plugins from './plugins';
 import {newWindow} from './ui/window';
 import {installCLI} from './utils/cli-install';
+import {shouldAllowQuit} from './utils/confirm-quit';
 import * as windowUtils from './utils/window-utils';
 
 const windowSet = new Set<BrowserWindow>([]);
@@ -170,6 +171,21 @@ app.on('ready', () =>
       app.on('window-all-closed', () => {
         if (process.platform !== 'darwin') {
           app.quit();
+        }
+      });
+
+      // Confirm before quitting if the user still has running processes.
+      // Tracking guards against re-prompting when the user has already
+      // confirmed once (e.g. plugins triggering `app.quit()` again).
+      let quitConfirmed = false;
+      app.on('before-quit', (event) => {
+        if (quitConfirmed) return;
+        const mode = config.getConfig().confirmOnQuit;
+        const allow = shouldAllowQuit(mode, windowSet);
+        if (!allow) {
+          event.preventDefault();
+        } else {
+          quitConfirmed = true;
         }
       });
 
