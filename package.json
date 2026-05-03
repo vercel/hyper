@@ -14,7 +14,7 @@
     "build": "cross-env NODE_ENV=production webpack && tsc -b -v && cross-env BABEL_ENV=production babel target/renderer/bundle.js --out-file target/renderer/bundle.js --no-comments --minified",
     "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx,.json",
     "test": "yarn run lint && yarn run test:unit",
-    "test:unit": "tsc -b app/tsconfig.json && node --eval \"const{cpSync,mkdirSync}=require('fs');const{basename}=require('path');mkdirSync('dist/tmp/root/app',{recursive:true});cpSync('target','dist/tmp/root/app',{recursive:true,filter:function(s){const b=basename(s);if(b==='node_modules'||b==='renderer')return false;return true;}})\" && cross-env DEBUG=ava:watcher AVA_IMPORT_FROM_PROJECT_NO_STUB=1 ava --no-cache",
+    "test:unit": "zx test-unit.mjs",
     "test:unit:watch": "yarn run test:unit -- --watch",
     "test:e2e": "cross-env DEBUG=ava:watcher AVA_IMPORT_FROM_PROJECT_NO_STUB=1 ava --no-cache --config ava-e2e.config.js",
     "postinstall": "yarn run v8-snapshot && webpack --config-name hyper-app && yarn run install-app-deps-with-retry && yarn run rebuild-node-pty && cpy --cwd=target node_modules \"../../app/\" && husky && yarn run generate-schema",
@@ -146,7 +146,8 @@
     "ts-node": "10.9.2",
     "typescript": "5.7.2",
     "uuaw": "^1.2.2",
-    "webpack": "5.96.1"
+    "webpack": "5.96.1",
+    "zx": "^8.8.5"
   },
   "electronmon": {
     "patterns": [
