@@ -3,6 +3,7 @@
   "productName": "Hyper",
   "description": "A terminal built on web technologies",
   "version": "4.0.0-canary.5",
+  "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319",
   "license": "MIT",
   "author": {
     "name": "ZEIT, Inc.",

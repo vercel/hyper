@@ -10,6 +10,7 @@ defaults:
     shell: bash
 env:
   NODE_VERSION: 18.x
+  PNPM_VERSION: 10.33.0
 jobs:
   build:
     runs-on: ${{matrix.os}}
@@ -27,19 +28,23 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+      - name: Enable pnpm ${{ env.PNPM_VERSION }}
+        run: |
+          corepack enable pnpm
+          corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
       - name: Fix node-gyp and Python
         run: python3 -m pip install packaging setuptools
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      - name: Get pnpm store directory path
+        id: pnpm-store-dir-path
+        run: echo "dir=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
       - uses: actions/cache/restore@v4
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
+          path: ${{ steps.pnpm-store-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml', 'app/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-pnpm-
       - name: Install
-        run: yarn install
+        run: pnpm install --frozen-lockfile
         env:
           npm_config_node_gyp: ${{ github.workspace }}${{ runner.os == 'Windows' && '\node_modules\node-gyp\bin\node-gyp.js' || '/node_modules/node-gyp/bin/node-gyp.js' }}
       - name: Install libarchive-tools
@@ -48,7 +53,7 @@ jobs:
           sudo apt update
           sudo apt install libarchive-tools
       - name: Lint and Run Unit Tests
-        run: yarn run test
+        run: pnpm run test
       - name: Getting Build Icon
         if: github.ref == 'refs/heads/canary' || github.base_ref == 'canary'
         run: |
@@ -62,7 +67,7 @@ jobs:
           if [ -z "$WIN_CSC_KEY_PASSWORD" ] ; then unset WIN_CSC_KEY_PASSWORD ; fi
           if [ -z "$APPLE_ID" ] ; then unset APPLE_ID ; fi
           if [ -z "$APPLE_APP_SPECIFIC_PASSWORD" ] ; then unset APPLE_APP_SPECIFIC_PASSWORD ; fi
-          yarn run dist
+          pnpm run dist
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
@@ -84,12 +89,12 @@ jobs:
             dist/*.exe
       - name: Run E2E Tests
         if: runner.os != 'Linux'
-        run: yarn run test:e2e
+        run: pnpm run test:e2e
       - name: Run E2E Tests on Linux
         if: runner.os == 'Linux'
         uses: GabrielBB/xvfb-action@v1.6
         with:
-          run: yarn run test:e2e
+          run: pnpm run test:e2e
         env:
           SHELL: /bin/bash
       - name: Archive E2E test screenshot
@@ -111,8 +116,8 @@ jobs:
       - uses: actions/cache/save@v4
         if: github.event_name == 'push'
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
+          path: ${{ steps.pnpm-store-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml', 'app/pnpm-lock.yaml') }}
 
   build-linux-arm:
     runs-on: ubuntu-latest
@@ -133,24 +138,28 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+      - name: Enable pnpm ${{ env.PNPM_VERSION }}
+        run: |
+          corepack enable pnpm
+          corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
       - name: Fix node-gyp and Python
         run: python3 -m pip install packaging setuptools
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      - name: Get pnpm store directory path
+        id: pnpm-store-dir-path
+        run: echo "dir=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
       - uses: actions/cache/restore@v4
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
+          path: ${{ steps.pnpm-store-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml', 'app/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-pnpm-
       - name: Install
         run: |
-          yarn install
+          pnpm install --frozen-lockfile
           sudo apt update
           sudo apt install libarchive-tools
       - name: Compile
-        run: yarn run build
+        run: pnpm run build
       - name: rebuild node-pty
         uses: pguyot/arm-runner-action@v2.5.2
         with:
@@ -164,7 +173,9 @@ jobs:
             wget https://nodejs.org/dist/v18.16.0/node-v18.16.0-linux-${{ matrix.name }}.tar.xz
             tar -xJf node-v18.16.0-linux-${{ matrix.name }}.tar.xz
             sudo cp node-v18.16.0-linux-${{ matrix.name }}/* /usr/local/ -R
-            npm run rebuild-node-pty
+            corepack enable pnpm
+            corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
+            pnpm run rebuild-node-pty
       - name: chown node-pty
         run: |
           sudo chown -R $USER:$USER target/node_modules/node-pty
@@ -174,9 +185,9 @@ jobs:
           sudo dpkg --add-architecture i386
           sudo apt update
           sudo apt install -y libglib2.0-0:i386 libexpat1:i386 libgcc-s1:i386
-          npm_config_arch=armv7l yarn run v8-snapshot:arch
+          npm_config_arch=armv7l pnpm run v8-snapshot:arch
       - name: Build
-        run: yarn run electron-builder -l deb rpm AppImage pacman --${{ matrix.name }} -c electron-builder-linux-ci.json
+        run: pnpm exec electron-builder -l deb rpm AppImage pacman --${{ matrix.name }} -c electron-builder-linux-ci.json
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Archive Build Artifacts

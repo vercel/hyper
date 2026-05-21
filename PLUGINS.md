@@ -32,9 +32,9 @@ module.exports = {
 ### Running your plugin
 To load, your plugin should expose at least one API method. All possible methods are listed [here](https://github.com/vercel/hyper/blob/canary/app/plugins/extensions.ts).
 
-After launching Hyper in dev mode, run `yarn run app`, it should log that your plugin has been correcty loaded: `Plugin hyper-awesome-plugin (0.1.0) loaded.`. Name and version printed are the ones in your plugins `package.json` file.
+After launching Hyper in dev mode, run `pnpm run app`, it should log that your plugin has been correcty loaded: `Plugin hyper-awesome-plugin (0.1.0) loaded.`. Name and version printed are the ones in your plugins `package.json` file.
 
-When you put a `console.log()` in your plugin code, it will be displayed in the Electron dev-tools, but only if it is located in a renderer method, like component decorators. If it is located in the Electron main process method, like the `onApp` handler, it will be displayed in your terminal where you ran `yarn run app` or in your VSCode console.
+When you put a `console.log()` in your plugin code, it will be displayed in the Electron dev-tools, but only if it is located in a renderer method, like component decorators. If it is located in the Electron main process method, like the `onApp` handler, it will be displayed in your terminal where you ran `pnpm run app` or in your VSCode console.
 
 ## Recipes
 Almost all available API methods can be found on https://hyper.is.

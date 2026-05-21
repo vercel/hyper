@@ -47,8 +47,8 @@ const config: webpack.Configuration[] = [
             to: './config/[name][ext]'
           },
           {
-            from: './app/yarn.lock',
-            to: 'yarn.lock'
+            from: './app/pnpm-lock.yaml',
+            to: 'pnpm-lock.yaml'
           },
           {
             from: './app/keymaps/*.json',
