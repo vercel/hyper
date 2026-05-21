@@ -1,1 +1,5 @@
 minimumReleaseAge: 2880
+onlyBuiltDependencies:
+  - native-process-working-directory
+  - native-reg
+  - node-pty

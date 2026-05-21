@@ -44,12 +44,5 @@
   },
   "optionalDependencies": {
     "native-reg": "1.1.1"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "native-process-working-directory",
-      "native-reg",
-      "node-pty"
-    ]
   }
 }

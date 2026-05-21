@@ -1,2 +1,8 @@
 packages: []
 minimumReleaseAge: 2880
+onlyBuiltDependencies:
+  - electron
+  - electron-mksnapshot
+  - leveldown
+ignoredBuiltDependencies:
+  - core-js

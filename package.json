@@ -144,15 +144,5 @@
       "!lib/**",
       "!dist/**"
     ]
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "electron",
-      "electron-mksnapshot",
-      "leveldown"
-    ],
-    "ignoredBuiltDependencies": [
-      "core-js"
-    ]
   }
 }
