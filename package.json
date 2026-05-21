@@ -19,7 +19,7 @@
     "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer",
     "v8-snapshot": "cross-env npm_config_arch=x64 pnpm run v8-snapshot:arch && cross-env npm_config_arch=arm64 pnpm run v8-snapshot:arch",
     "v8-snapshot:arch": "pnpm run mk-snapshot && pnpm run cp-snapshot",
-    "mk-snapshot": "cross-env ELECTRON_CUSTOM_VERSION=$npm_package_devDependencies_electron node node_modules/electron-mksnapshot/download-mksnapshot.js && node bin/mk-snapshot.js",
+    "mk-snapshot": "node bin/download-mksnapshot.js && node bin/mk-snapshot.js",
     "cp-snapshot": "node bin/cp-snapshot.js",
     "generate-schema": "typescript-json-schema ./typings/config.d.ts rawConfig -o ./app/config/schema.json --required"
   },
@@ -143,6 +143,16 @@
       "!app/**",
       "!lib/**",
       "!dist/**"
+    ]
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron",
+      "electron-mksnapshot",
+      "leveldown"
+    ],
+    "ignoredBuiltDependencies": [
+      "core-js"
     ]
   }
 }
