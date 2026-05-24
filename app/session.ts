@@ -137,11 +137,12 @@ export default class Session extends EventEmitter {
         .join(':');
     }
 
-    // Electron has a default value for process.env.GOOGLE_API_KEY
-    // We don't want to leak this to the shell
+    // Electron injects certain API keys into process.env that we don't want to leak to the shell
     // See https://github.com/vercel/hyper/issues/696
-    if (baseEnv.GOOGLE_API_KEY && process.env.GOOGLE_API_KEY === baseEnv.GOOGLE_API_KEY) {
-      delete baseEnv.GOOGLE_API_KEY;
+    for (const key of ['GOOGLE_API_KEY', 'GOOGLE_DEFAULT_CLIENT_ID', 'GOOGLE_DEFAULT_CLIENT_SECRET']) {
+      if (baseEnv[key] && process.env[key] === baseEnv[key]) {
+        delete baseEnv[key];
+      }
     }
 
     const options: IWindowsPtyForkOptions = {
