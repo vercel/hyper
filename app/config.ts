@@ -9,6 +9,7 @@ import _openConfig from './config/open';
 import {cfgPath, cfgDir} from './config/paths';
 import notify from './notify';
 import {getColorMap} from './utils/colors';
+import {resolvePlatformConfig} from './utils/resolve-platform-config';
 
 const watchers: Function[] = [];
 let cfg: parsedConfig = {} as any;
@@ -76,8 +77,9 @@ export const subscribe = (fn: Function) => {
   };
 };
 
+export {resolvePlatformConfig} from './utils/resolve-platform-config';
+
 export const getConfigDir = () => {
-  // expose config directory to load plugin from the right place
   return cfgDir;
 };
 
@@ -104,7 +106,7 @@ export const getProfileConfig = (profileName: string): configOptions => {
       baseConfig[key] = profileConfig[key];
     }
   }
-  return {...baseConfig, defaultProfile, profiles};
+  return resolvePlatformConfig({...baseConfig, defaultProfile, profiles});
 };
 
 export const openConfig = () => {
