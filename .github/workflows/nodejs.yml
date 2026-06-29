@@ -37,7 +37,7 @@ jobs:
       - name: Get pnpm store directory path
         id: pnpm-store-dir-path
         run: echo "dir=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@v6
         with:
           path: ${{ steps.pnpm-store-dir-path.outputs.dir }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml', 'app/pnpm-lock.yaml') }}
@@ -113,7 +113,7 @@ jobs:
         with:
           name: pr_num
           path: ./pr_num.txt
-      - uses: actions/cache/save@v4
+      - uses: actions/cache/save@v6
         if: github.event_name == 'push'
         with:
           path: ${{ steps.pnpm-store-dir-path.outputs.dir }}
@@ -147,7 +147,7 @@ jobs:
       - name: Get pnpm store directory path
         id: pnpm-store-dir-path
         run: echo "dir=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@v6
         with:
           path: ${{ steps.pnpm-store-dir-path.outputs.dir }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml', 'app/pnpm-lock.yaml') }}
