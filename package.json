@@ -37,6 +37,7 @@
     "clsx": "2.1.0",
     "color": "4.2.3",
     "columnify": "1.6.0",
+    "cross-spawn": "7.0.5",
     "css-loader": "7.1.1",
     "got": "12.4.1",
     "json-loader": "0.5.7",
