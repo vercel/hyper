@@ -18,6 +18,7 @@ import {WebglAddon} from 'xterm-addon-webgl';
 
 import type {TermProps} from '../../typings/hyper';
 import terms from '../terms';
+import {handleOsc52Clipboard} from '../utils/osc52';
 import processClipboard from '../utils/paste';
 import {decorate} from '../utils/plugins';
 
@@ -170,6 +171,13 @@ export default class Term extends React.PureComponent<
 
     this.termOptions = getTermOptions(props);
     this.term = props.term || new Terminal(this.termOptions);
+    this.disposableListeners.push(
+      this.term.parser.registerOscHandler(52, (data) =>
+        handleOsc52Clipboard(data, (text) => {
+          clipboard.writeText(text);
+        })
+      )
+    );
     this.defaultBellSound = new Audio(
       // Source: https://freesound.org/people/altemark/sounds/45759/
       // This sound is released under the Creative Commons Attribution 3.0 Unported
