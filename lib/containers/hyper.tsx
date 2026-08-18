@@ -26,6 +26,16 @@ const Hyper = forwardRef<HTMLDivElement, HyperProps>((props, ref) => {
   useEffect(() => {
     handleFocusActive(props.activeSession);
   }, [props.activeSession]);
+  useEffect(() => {
+    // Electron ignores the BrowserWindow backgroundColor (and setBackgroundColor)
+    // alpha channel on transparent windows, so the translucent background must be
+    // painted by the renderer. Running on mount as well as on change fixes new
+    // windows opening without their configured transparency (#6531).
+    document.body.style.backgroundColor = props.backgroundColor;
+    return () => {
+      document.body.style.backgroundColor = 'inherit';
+    };
+  }, [props.backgroundColor]);
 
   const handleFocusActive = (uid?: string | null) => {
     const term = uid && terms.current?.getTermByUid(uid);
