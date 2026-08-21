@@ -78,14 +78,29 @@ async function installDevExtensions(isDev_: boolean) {
   if (!isDev_) {
     return [];
   }
-  const {default: installer, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS} = await import('electron-devtools-installer');
+  // Installing devtools extensions is a dev-only convenience that depends on a
+  // remote download, and it can fail (e.g. the Chrome Web Store returning an
+  // error page instead of a .crx). This must never reject: the `ready` handler
+  // below creates the app windows inside the `.then()` of this promise, so a
+  // rejection here starts Hyper with no window at all.
+  try {
+    const {default: installer, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS} = await import('electron-devtools-installer');
 
-  const extensions = [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS];
-  const forceDownload = Boolean(process.env.UPGRADE_EXTENSIONS);
+    const extensions = [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS];
+    const forceDownload = Boolean(process.env.UPGRADE_EXTENSIONS);
 
-  return Promise.all(
-    extensions.map((extension) => installer(extension, {forceDownload, loadExtensionOptions: {allowFileAccess: true}}))
-  );
+    return await Promise.all(
+      extensions.map((extension) =>
+        installer(extension, {forceDownload, loadExtensionOptions: {allowFileAccess: true}}).catch((err: unknown) => {
+          console.warn('Skipping devtools extension:', err);
+          return undefined;
+        })
+      )
+    );
+  } catch (err) {
+    console.warn('Skipping devtools extensions:', err);
+    return [];
+  }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises

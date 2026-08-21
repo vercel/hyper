@@ -42,9 +42,22 @@ async function main() {
   }
 
   console.log(`Generating startup blob in "${outputBlobPath}"`);
+  const isWindows = process.platform === 'win32';
+  const mksnapshotPath = path.resolve(
+    __dirname,
+    '..',
+    'node_modules',
+    '.bin',
+    'mksnapshot' + (isWindows ? '.cmd' : '')
+  );
+  // Node >= 18.20.2 / 20.12.2 / 21.7.0 refuses to spawn .cmd and .bat files
+  // without `shell` (CVE-2024-27980), which makes execFileSync fail with
+  // EINVAL. On Windows, go through the shell and quote the arguments here.
+  const quote = (arg) => (isWindows ? `"${arg}"` : arg);
   childProcess.execFileSync(
-    path.resolve(__dirname, '..', 'node_modules', '.bin', 'mksnapshot' + (process.platform === 'win32' ? '.cmd' : '')),
-    [snapshotScriptPath, '--output_dir', outputBlobPath]
+    quote(mksnapshotPath),
+    [snapshotScriptPath, '--output_dir', outputBlobPath].map(quote),
+    isWindows ? {shell: true} : {}
   );
 }
 

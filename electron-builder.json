@@ -18,6 +18,9 @@
     }
   ],
   "artifactName": "${productName}-${version}-${arch}.${ext}",
+  "asarUnpack": [
+    "**/node_modules/node-pty/**"
+  ],
   "linux": {
     "category": "TerminalEmulator",
     "target": [
