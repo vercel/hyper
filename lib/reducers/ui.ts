@@ -56,6 +56,7 @@ const initial: uiState = Immutable<Mutable<uiState>>({
   fontSmoothingOverride: 'antialiased',
   fontWeight: 'normal',
   fontWeightBold: 'bold',
+  drawBoldTextInBrightColors: true,
   imageSupport: true,
   lineHeight: 1,
   letterSpacing: 0,
@@ -160,6 +161,10 @@ const reducer: IUiReducer = (state = initial, action) => {
 
             if (config.fontWeightBold) {
               ret.fontWeightBold = config.fontWeightBold;
+            }
+
+            if (config.drawBoldTextInBrightColors != undefined) {
+              ret.drawBoldTextInBrightColors = config.drawBoldTextInBrightColors;
             }
 
             if (Number.isFinite(config.lineHeight)) {

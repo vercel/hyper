@@ -100,6 +100,7 @@ export default class Terms extends React.Component<React.PropsWithChildren<Terms
             uiFontFamily: this.props.uiFontFamily,
             fontWeight: this.props.fontWeight,
             fontWeightBold: this.props.fontWeightBold,
+            drawBoldTextInBrightColors: this.props.drawBoldTextInBrightColors,
             lineHeight: this.props.lineHeight,
             letterSpacing: this.props.letterSpacing,
             padding: this.props.padding,

@@ -69,6 +69,7 @@ export type uiState = Immutable<{
   fontSmoothingOverride: string;
   fontWeight: FontWeight;
   fontWeightBold: FontWeight;
+  drawBoldTextInBrightColors: boolean;
   foregroundColor: string;
   fullScreen: boolean;
   imageSupport: boolean;
@@ -296,6 +297,7 @@ export type TermGroupOwnProps = {
   | 'fontSize'
   | 'fontWeight'
   | 'fontWeightBold'
+  | 'drawBoldTextInBrightColors'
   | 'foregroundColor'
   | 'letterSpacing'
   | 'lineHeight'
@@ -365,6 +367,7 @@ export type TermProps = {
   fontSmoothing?: string;
   fontWeight: FontWeight;
   fontWeightBold: FontWeight;
+  drawBoldTextInBrightColors: boolean;
   foregroundColor: string;
   imageSupport: boolean;
   isTermActive: boolean;

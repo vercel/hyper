@@ -81,6 +81,7 @@ class TermGroup_ extends React.PureComponent<TermGroupProps> {
       fontSmoothing: this.props.fontSmoothing,
       fontWeight: this.props.fontWeight,
       fontWeightBold: this.props.fontWeightBold,
+      drawBoldTextInBrightColors: this.props.drawBoldTextInBrightColors,
       lineHeight: this.props.lineHeight,
       letterSpacing: this.props.letterSpacing,
       modifierKeys: this.props.modifierKeys,

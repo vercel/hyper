@@ -62,6 +62,7 @@ const getTermOptions = (props: TermProps): ITerminalOptions => {
     fontSize: props.fontSize,
     fontWeight: props.fontWeight,
     fontWeightBold: props.fontWeightBold,
+    drawBoldTextInBrightColors: props.drawBoldTextInBrightColors,
     lineHeight: props.lineHeight,
     letterSpacing: props.letterSpacing,
     allowTransparency: needTransparency,
