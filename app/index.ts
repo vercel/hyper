@@ -32,6 +32,7 @@ import {gitDescribe} from 'git-describe';
 import parseUrl from 'parse-url';
 
 import * as AppMenu from './menus/menu';
+import notify from './notify';
 import * as plugins from './plugins';
 import {newWindow} from './ui/window';
 import {installCLI} from './utils/cli-install';
@@ -238,6 +239,10 @@ app.on('open-file', (_event, path) => {
 
 app.on('open-url', (_event, sshUrl) => {
   GetWindow((win: BrowserWindow) => {
-    win.rpc.emit('open ssh', parseUrl(sshUrl));
+    try {
+      win.rpc.emit('open ssh', parseUrl(sshUrl));
+    } catch (e) {
+      notify('Invalid ssh url', 'Please check your ssh url and try again.', {error: e});
+    }
   });
 });
