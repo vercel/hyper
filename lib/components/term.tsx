@@ -475,6 +475,18 @@ export default class Term extends React.PureComponent<
     if (prevProps.rows !== this.props.rows || prevProps.cols !== this.props.cols) {
       this.resize(this.props.cols!, this.props.rows!);
     }
+
+    if (this.props.isTermActive) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      (this.term as any)._core._renderService.clear();
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      (this.term as any)._core._renderService.handleResize((this.term as any).cols, (this.term as any).rows);
+    } else {
+      this.term.element?.querySelectorAll('canvas').forEach((canvas) => {
+        canvas.width = canvas.height = 0;
+        canvas.style.width = canvas.style.height = '0px';
+      });
+    }
   }
 
   onTermWrapperRef = (component: HTMLElement | null) => {
