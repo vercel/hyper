@@ -14,7 +14,7 @@
     "test:unit:watch": "pnpm run test:unit -- --watch",
     "test:e2e": "ava --config ava-e2e.config.js",
     "postinstall": "pnpm run v8-snapshot && webpack --config-name hyper-app && electron-builder install-app-deps && pnpm run rebuild-node-pty && cpy --cwd=target node_modules \"../../app/\" && husky install && pnpm run generate-schema",
-    "rebuild-node-pty": "electron-rebuild -f -o node-pty -m target",
+    "rebuild-node-pty": "electron-rebuild -f -o node-pty -m target && node target/node_modules/node-pty/scripts/post-install.js",
     "dist": "pnpm run build && electron-builder",
     "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer",
     "v8-snapshot": "cross-env npm_config_arch=x64 pnpm run v8-snapshot:arch && cross-env npm_config_arch=arm64 pnpm run v8-snapshot:arch",

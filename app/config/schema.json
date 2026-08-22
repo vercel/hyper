@@ -342,6 +342,10 @@
                         },
                         "useConpty": {
                             "type": "boolean"
+                        },
+                        "useConptyDll": {
+                            "description": "Windows only. If `true` (default), use the ConPTY that ships with `node-pty`\ninstead of the one built into Windows. The bundled ConPTY (1.23+) passes DCS\nsequences such as Sixel through to the terminal verbatim and reports Sixel\nsupport in its DA1 response; older inbox ConPTY versions filter them out,\nwhich breaks `imageSupport`.",
+                            "type": "boolean"
                         }
                     },
                     "required": [
