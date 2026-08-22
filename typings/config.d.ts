@@ -82,6 +82,12 @@ type profileConfigOptions = {
   disableLigatures: boolean;
   /** for environment variables */
   env: {[k: string]: string};
+  /** platform-specific env override for Linux (merged with `env` on Linux) */
+  envLinux?: {[k: string]: string};
+  /** platform-specific env override for macOS (merged with `env` on macOS) */
+  envOsx?: {[k: string]: string};
+  /** platform-specific env override for Windows (merged with `env` on Windows) */
+  envWindows?: {[k: string]: string};
   /** font family with optional fallbacks */
   fontFamily: string;
   /** default font size in pixels for all tabs */
@@ -153,11 +159,23 @@ type profileConfigOptions = {
    * Then Add `--command=usr/bin/bash.exe` to shellArgs
    */
   shell: string;
+  /** platform-specific shell override for Linux (overrides `shell` on Linux) */
+  shellLinux?: string;
+  /** platform-specific shell override for macOS (overrides `shell` on macOS) */
+  shellOsx?: string;
+  /** platform-specific shell override for Windows (overrides `shell` on Windows) */
+  shellWindows?: string;
   /**
    * for setting shell arguments (e.g. for using interactive shellArgs: `['-i']`)
    * by default `['--login']` will be used
    */
   shellArgs: string[];
+  /** platform-specific shellArgs override for Linux (overrides `shellArgs` on Linux) */
+  shellArgsLinux?: string[];
+  /** platform-specific shellArgs override for macOS (overrides `shellArgs` on macOS) */
+  shellArgsOsx?: string[];
+  /** platform-specific shellArgs override for Windows (overrides `shellArgs` on Windows) */
+  shellArgsWindows?: string[];
   /**
    * if you're using a Linux setup which show native menus, set to false
    *

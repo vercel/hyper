@@ -168,6 +168,27 @@
                     "description": "for environment variables",
                     "type": "object"
                 },
+                "envLinux": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "platform-specific env override for Linux (merged with `env` on Linux)",
+                    "type": "object"
+                },
+                "envOsx": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "platform-specific env override for macOS (merged with `env` on macOS)",
+                    "type": "object"
+                },
+                "envWindows": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "platform-specific env override for Windows (merged with `env` on Windows)",
+                    "type": "object"
+                },
                 "fontFamily": {
                     "description": "font family with optional fallbacks",
                     "type": "string"
@@ -252,6 +273,39 @@
                         "type": "string"
                     },
                     "type": "array"
+                },
+                "shellArgsLinux": {
+                    "description": "platform-specific shellArgs override for Linux (overrides `shellArgs` on Linux)",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "shellArgsOsx": {
+                    "description": "platform-specific shellArgs override for macOS (overrides `shellArgs` on macOS)",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "shellArgsWindows": {
+                    "description": "platform-specific shellArgs override for Windows (overrides `shellArgs` on Windows)",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "shellLinux": {
+                    "description": "platform-specific shell override for Linux (overrides `shell` on Linux)",
+                    "type": "string"
+                },
+                "shellOsx": {
+                    "description": "platform-specific shell override for macOS (overrides `shell` on macOS)",
+                    "type": "string"
+                },
+                "shellWindows": {
+                    "description": "platform-specific shell override for Windows (overrides `shell` on Windows)",
+                    "type": "string"
                 },
                 "showHamburgerMenu": {
                     "description": "if you're using a Linux setup which show native menus, set to false\n\ndefault: `true` on Linux, `true` on Windows, ignored on macOS",
@@ -495,6 +549,27 @@
                             "description": "for environment variables",
                             "type": "object"
                         },
+                        "envLinux": {
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "description": "platform-specific env override for Linux (merged with `env` on Linux)",
+                            "type": "object"
+                        },
+                        "envOsx": {
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "description": "platform-specific env override for macOS (merged with `env` on macOS)",
+                            "type": "object"
+                        },
+                        "envWindows": {
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "description": "platform-specific env override for Windows (merged with `env` on Windows)",
+                            "type": "object"
+                        },
                         "fontFamily": {
                             "description": "font family with optional fallbacks",
                             "type": "string"
@@ -579,6 +654,39 @@
                                 "type": "string"
                             },
                             "type": "array"
+                        },
+                        "shellArgsLinux": {
+                            "description": "platform-specific shellArgs override for Linux (overrides `shellArgs` on Linux)",
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        "shellArgsOsx": {
+                            "description": "platform-specific shellArgs override for macOS (overrides `shellArgs` on macOS)",
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        "shellArgsWindows": {
+                            "description": "platform-specific shellArgs override for Windows (overrides `shellArgs` on Windows)",
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        "shellLinux": {
+                            "description": "platform-specific shell override for Linux (overrides `shell` on Linux)",
+                            "type": "string"
+                        },
+                        "shellOsx": {
+                            "description": "platform-specific shell override for macOS (overrides `shell` on macOS)",
+                            "type": "string"
+                        },
+                        "shellWindows": {
+                            "description": "platform-specific shell override for Windows (overrides `shell` on Windows)",
+                            "type": "string"
                         },
                         "showHamburgerMenu": {
                             "description": "if you're using a Linux setup which show native menus, set to false\n\ndefault: `true` on Linux, `true` on Windows, ignored on macOS",
