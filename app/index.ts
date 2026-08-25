@@ -34,6 +34,7 @@ import parseUrl from 'parse-url';
 import * as AppMenu from './menus/menu';
 import * as plugins from './plugins';
 import {newWindow} from './ui/window';
+import {installUpdateIfNoWindows} from './updater';
 import {installCLI} from './utils/cli-install';
 import * as windowUtils from './utils/window-utils';
 
@@ -168,6 +169,9 @@ app.on('ready', () =>
       });
 
       app.on('window-all-closed', () => {
+        if (installUpdateIfNoWindows()) {
+          return;
+        }
         if (process.platform !== 'darwin') {
           app.quit();
         }

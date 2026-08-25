@@ -10,6 +10,7 @@ import autoUpdaterLinux from './auto-updater-linux';
 import {getDefaultProfile} from './config';
 import {version} from './package.json';
 import {getDecoratedConfig} from './plugins';
+import {shouldAutoInstallUpdate} from './utils/should-auto-install-update';
 
 const {platform} = process;
 const isLinux = platform === 'linux';
@@ -36,6 +37,15 @@ const checkForUpdates = async () => {
 let isInit = false;
 // Default to the "stable" update channel
 let canaryUpdates = false;
+let updateReady = false;
+
+export function installUpdateIfNoWindows(): boolean {
+  if (!shouldAutoInstallUpdate(updateReady, app.getWindows().size, platform)) {
+    return false;
+  }
+  autoUpdater.quitAndInstall();
+  return true;
+}
 
 const buildFeedUrl = (canary: boolean, currentVersion: string) => {
   const updatePrefix = canary ? 'releases-canary' : 'releases';
@@ -60,6 +70,13 @@ async function init() {
   const feedURL = buildFeedUrl(canaryUpdates, version);
 
   autoUpdater.setFeedURL({url: feedURL});
+
+  if (!isLinux) {
+    autoUpdater.on('update-downloaded', () => {
+      updateReady = true;
+      installUpdateIfNoWindows();
+    });
+  }
 
   setTimeout(() => {
     void checkForUpdates();
