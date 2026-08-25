@@ -40,7 +40,7 @@ let canaryUpdates = false;
 let updateReady = false;
 
 export function installUpdateIfNoWindows(): boolean {
-  if (!shouldAutoInstallUpdate(updateReady, app.getWindows().size, !isLinux)) {
+  if (!shouldAutoInstallUpdate(updateReady, app.getWindows().size, platform)) {
     return false;
   }
   autoUpdater.quitAndInstall();
