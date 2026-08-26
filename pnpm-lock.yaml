@@ -32,6 +32,9 @@ importers:
       columnify:
         specifier: 1.6.0
         version: 1.6.0
+      cross-spawn:
+        specifier: 7.0.5
+        version: 7.0.5
       css-loader:
         specifier: 7.1.1
         version: 7.1.1(webpack@5.91.0)
@@ -1770,8 +1773,8 @@ packages:
     engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
     hasBin: true
 
-  cross-spawn@7.0.3:
-    resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
+  cross-spawn@7.0.5:
+    resolution: {integrity: sha512-ZVJrKKYunU38/76t0RMOulHOnUcbU9GbpWKAOZ0mhjr7CX6FVrH+4FrAapSOekrgFQ3f/8gwMEuIft0aKq6Hug==}
     engines: {node: '>= 8'}
 
   css-in-js-utils@3.1.0:
@@ -5490,11 +5493,11 @@ snapshots:
 
   '@malept/cross-spawn-promise@1.1.1':
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
 
   '@malept/cross-spawn-promise@2.0.0':
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
 
   '@malept/flatpak-bundler@0.4.0':
     dependencies:
@@ -5546,7 +5549,7 @@ snapshots:
 
   '@pkgr/utils@2.4.2':
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       fast-glob: 3.3.2
       is-glob: 4.0.3
       open: 9.1.0
@@ -6426,7 +6429,7 @@ snapshots:
       bluebird-lst: 1.0.9
       builder-util-runtime: 9.2.4
       chalk: 4.1.2
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       debug: 4.3.4
       fs-extra: 10.1.0
       http-proxy-agent: 5.0.0
@@ -6764,9 +6767,9 @@ snapshots:
 
   cross-env@7.0.3:
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
 
-  cross-spawn@7.0.3:
+  cross-spawn@7.0.5:
     dependencies:
       path-key: 3.1.1
       shebang-command: 2.0.0
@@ -7379,7 +7382,7 @@ snapshots:
       '@ungap/structured-clone': 1.2.0
       ajv: 6.12.6
       chalk: 4.1.2
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       debug: 4.3.4
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
@@ -7449,7 +7452,7 @@ snapshots:
 
   execa@5.1.1:
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       get-stream: 6.0.1
       human-signals: 2.1.0
       is-stream: 2.0.0
@@ -7461,7 +7464,7 @@ snapshots:
 
   execa@7.1.1:
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       get-stream: 6.0.1
       human-signals: 4.3.0
       is-stream: 3.0.0
@@ -7597,7 +7600,7 @@ snapshots:
 
   foreground-child@3.1.1:
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       signal-exit: 4.0.2
 
   form-data-encoder@2.1.0: {}
@@ -9991,7 +9994,7 @@ snapshots:
       '@webpack-cli/serve': 2.0.5(webpack-cli@5.1.4)(webpack@5.91.0)
       colorette: 2.0.16
       commander: 10.0.1
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       envinfo: 7.7.3
       fastest-levenshtein: 1.0.12
       import-local: 3.0.2
