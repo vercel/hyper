@@ -75,8 +75,8 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       recast:
-        specifier: 0.23.6
-        version: 0.23.6
+        specifier: 0.23.12
+        version: 0.23.12
       semver:
         specifier: 7.6.0
         version: 7.6.0
@@ -551,8 +551,8 @@ packages:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
 
-  recast@0.23.6:
-    resolution: {integrity: sha512-9FHoNjX1yjuesMwuthAmPKabxYQdOgihFYmT5ebXfYGBcnqXZf3WOVz+5foEZ8Y83P4ZY6yQD5GMmtV+pgCCAQ==}
+  recast@0.23.12:
+    resolution: {integrity: sha512-dEWRjcINDu/F4l2dYx57ugBtD7HV9KXESyxhzw/MqWLeglJrsjJKqACPyUPg+6AF8mIgm+Zi0dZ3ACoIg+QtpA==}
     engines: {node: '>= 4'}
 
   require-from-string@2.0.2:
@@ -1153,7 +1153,7 @@ snapshots:
     dependencies:
       picomatch: 2.3.2
 
-  recast@0.23.6:
+  recast@0.23.12:
     dependencies:
       ast-types: 0.16.1
       esprima: 4.0.1
