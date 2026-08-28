@@ -125,6 +125,11 @@ type profileConfigOptions = {
    * set to true to enable screen reading apps (like NVDA) to read the contents of the terminal
    */
   screenReaderMode: boolean;
+  /**
+   * number of lines to keep in memory for scrollback
+   *
+   * default: 1000
+   */
   scrollback: number;
   /** terminal selection color */
   selectionColor: string;

@@ -236,6 +236,7 @@
                     "type": "boolean"
                 },
                 "scrollback": {
+                    "description": "number of lines to keep in memory for scrollback\n\ndefault: 1000",
                     "type": "number"
                 },
                 "selectionColor": {
@@ -563,6 +564,7 @@
                             "type": "boolean"
                         },
                         "scrollback": {
+                            "description": "number of lines to keep in memory for scrollback\n\ndefault: 1000",
                             "type": "number"
                         },
                         "selectionColor": {
