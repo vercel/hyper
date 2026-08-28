@@ -161,7 +161,7 @@ jobs:
       - name: Compile
         run: pnpm run build
       - name: rebuild node-pty
-        uses: pguyot/arm-runner-action@v2.5.2
+        uses: pguyot/arm-runner-action@v2.6.5
         with:
           image_additional_mb: 2000
           base_image: ${{ matrix.image }}
