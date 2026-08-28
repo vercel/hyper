@@ -60,6 +60,7 @@
     "disableLigatures": true,
     "disableAutoUpdates": false,
     "autoUpdatePlugins": true,
+    "confirmOnQuit": "on-running-process",
     "preserveCWD": true,
     "screenReaderMode": false,
     "imageSupport": true,

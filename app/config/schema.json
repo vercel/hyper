@@ -324,6 +324,15 @@
                                 "boolean"
                             ]
                         },
+                        "confirmOnQuit": {
+                            "description": "Show a confirmation dialog before quitting Hyper.\n- `'always'`: always confirm before quit\n- `'on-running-process'`: only confirm when at least one session has a running process (default)\n- `'never'`: never confirm",
+                            "enum": [
+                                "always",
+                                "never",
+                                "on-running-process"
+                            ],
+                            "type": "string"
+                        },
                         "defaultSSHApp": {
                             "description": "if `true` hyper will be set as the default protocol client for SSH",
                             "type": "boolean"
@@ -346,6 +355,7 @@
                     },
                     "required": [
                         "autoUpdatePlugins",
+                        "confirmOnQuit",
                         "defaultSSHApp",
                         "disableAutoUpdates",
                         "updateChannel"
