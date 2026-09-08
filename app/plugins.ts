@@ -31,7 +31,12 @@ const cache = new Config();
 const path = plugs.base;
 const localPath = plugs.local;
 
-patchModuleLoad();
+// patchModuleLoad() は Module._load をプロセス全体で差し替える実装で、
+// Electron 44 の内部ブートストラップ処理(require('./plugins')等)まで巻き込み、
+// 'Cannot find module' エラーを引き起こすことを確認した(2026-09)。
+// 'react'/'react-dom'/'hyper/component' 等の旧式プラグインAPI互換のためだけの
+// 機能であり、このフォークでは対象の旧式プラグインを使わないため無効化する。
+// patchModuleLoad();
 
 // caches
 let plugins = config.getPlugins();

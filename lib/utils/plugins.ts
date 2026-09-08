@@ -6,7 +6,7 @@ import pathModule from 'path';
 import React, {PureComponent} from 'react';
 import type {ComponentType} from 'react';
 
-import {require as remoteRequire} from '@electron/remote';
+import {app as remoteApp, require as remoteRequire} from '@electron/remote';
 // TODO: Should be updates to new async API https://medium.com/@nornagon/electrons-remote-module-considered-harmful-70d69500f31
 import ReactDOM from 'react-dom';
 import {connect as reduxConnect} from 'react-redux';
@@ -34,7 +34,9 @@ import notify from './notify';
 import {ObjectTypedKeys} from './object';
 
 // remote interface to `../plugins`
-const plugins = remoteRequire('./plugins') as typeof import('../../app/plugins');
+// Electron 44 の @electron/remote 内部フォールバック(mainModule解決)が相対パス指定と
+// 噛み合わず 'Cannot find module' になることを確認したため、絶対パスで解決する(2026-09)。
+const plugins = remoteRequire(pathModule.join(remoteApp.getAppPath(), 'plugins')) as typeof import('../../app/plugins');
 
 // `require`d modules
 let modules: hyperPlugin[];

@@ -1,5 +1,5 @@
 import {app, Menu} from 'electron';
-import type {BrowserWindow} from 'electron';
+import type {BaseWindow, BrowserWindow} from 'electron';
 
 import {openConfig, getConfig} from './config';
 import {updatePlugins} from './plugins';
@@ -162,9 +162,13 @@ getConfig().profiles.forEach((profile) => {
   };
 });
 
-export const execCommand = (command: string, focusedWindow?: BrowserWindow) => {
+export const execCommand = (command: string, focusedWindow?: BaseWindow) => {
   const fn = commands[command];
   if (fn) {
-    fn(focusedWindow);
+    // Electron's Menu click handler now types the focused window as the more
+    // general `BaseWindow`, but Hyper only ever creates `BrowserWindow`
+    // instances (and attaches its own `.rpc` property to them), so this cast
+    // is safe at runtime.
+    fn(focusedWindow as BrowserWindow | undefined);
   }
 };

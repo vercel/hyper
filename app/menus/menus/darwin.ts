@@ -1,11 +1,11 @@
 // This menu label is overrided by OSX to be the appName
 // The label is set to appName here so it matches actual behavior
 import {app} from 'electron';
-import type {BrowserWindow, MenuItemConstructorOptions} from 'electron';
+import type {BaseWindow, BrowserWindow, MenuItemConstructorOptions} from 'electron';
 
 const darwinMenu = (
   commandKeys: Record<string, string>,
-  execCommand: (command: string, focusedWindow?: BrowserWindow) => void,
+  execCommand: (command: string, focusedWindow?: BaseWindow) => void,
   showAbout: () => void
 ): MenuItemConstructorOptions => {
   return {
