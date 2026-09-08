@@ -46,11 +46,11 @@
     "native-reg": "1.1.1"
   },
   "devDependencies": {
-    "electron": "22.3.25"
+    "electron": "44.2.0"
   },
   "pnpm": {
     "overrides": {
-      "electron": "22.3.25"
+      "electron": "44.2.0"
     }
   }
 }

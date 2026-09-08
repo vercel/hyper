@@ -4,6 +4,7 @@
 import {exec, execFile} from 'child_process';
 import {writeFileSync} from 'fs';
 import {resolve, basename} from 'path';
+import {fileURLToPath} from 'url';
 import {promisify} from 'util';
 
 import {app, clipboard, dialog, ipcMain as _ipcMain} from 'electron';
@@ -12,7 +13,6 @@ import React from 'react';
 
 import Config from 'electron-store';
 import ms from 'ms';
-import plist from 'plist';
 import ReactDom from 'react-dom';
 
 import type {IpcMainWithCommands} from '../typings/common';
@@ -463,24 +463,22 @@ export const decorateSessionClass = <T>(Session: T): T => {
 
 export {toDependencies as _toDependencies};
 
-export const getPathFromClipboard = (): string | null => {
-  switch (process.platform) {
-    case 'darwin': {
-      if (clipboard.has('NSFilenamesPboardType')) {
-        // Parse plist file containing the path list of copied files
-        const list = plist.parse(clipboard.read('NSFilenamesPboardType')) as plist.PlistArray;
-        return "'" + list.join("' '") + "'";
-      }
-      return null;
+export const getPathFromClipboard = async (): Promise<string | null> => {
+  const items = await clipboard.read();
+  for (const item of items) {
+    if (!item.types.includes('text/uri-list')) continue;
+    const blob = await item.getType('text/uri-list');
+    if (!(blob instanceof Blob)) continue;
+    const uriList = await blob.text();
+    const paths = uriList
+      .split(/\r?\n/)
+      .filter(Boolean)
+      .map((uri) => fileURLToPath(uri));
+    if (paths.length > 0) {
+      return "'" + paths.join("' '") + "'";
     }
-    case 'win32': {
-      const filepath = clipboard.read('FileNameW');
-      return filepath.replace(new RegExp(String.fromCharCode(0), 'g'), '');
-    }
-    // Linux already pastes full path
-    default:
-      return null;
   }
+  return null;
 };
 
 const ipcMain = _ipcMain as IpcMainWithCommands;
