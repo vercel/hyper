@@ -6,12 +6,13 @@ import {writeFileSync} from 'fs';
 import {resolve, basename} from 'path';
 import {promisify} from 'util';
 
-import {app, dialog, ipcMain as _ipcMain} from 'electron';
+import {app, clipboard, dialog, ipcMain as _ipcMain} from 'electron';
 import type {BrowserWindow, App, MenuItemConstructorOptions} from 'electron';
 import React from 'react';
 
 import Config from 'electron-store';
 import ms from 'ms';
+import plist from 'plist';
 import ReactDom from 'react-dom';
 
 import type {IpcMainWithCommands} from '../typings/common';
@@ -462,6 +463,26 @@ export const decorateSessionClass = <T>(Session: T): T => {
 
 export {toDependencies as _toDependencies};
 
+export const getPathFromClipboard = (): string | null => {
+  switch (process.platform) {
+    case 'darwin': {
+      if (clipboard.has('NSFilenamesPboardType')) {
+        // Parse plist file containing the path list of copied files
+        const list = plist.parse(clipboard.read('NSFilenamesPboardType')) as plist.PlistArray;
+        return "'" + list.join("' '") + "'";
+      }
+      return null;
+    }
+    case 'win32': {
+      const filepath = clipboard.read('FileNameW');
+      return filepath.replace(new RegExp(String.fromCharCode(0), 'g'), '');
+    }
+    // Linux already pastes full path
+    default:
+      return null;
+  }
+};
+
 const ipcMain = _ipcMain as IpcMainWithCommands;
 
 ipcMain.handle('child_process.exec', (event, command, options) => {
@@ -478,3 +499,4 @@ ipcMain.handle('getBasePaths', () => getBasePaths());
 ipcMain.handle('getDeprecatedConfig', () => getDeprecatedConfig());
 ipcMain.handle('getDecoratedConfig', (e, profile) => getDecoratedConfig(profile));
 ipcMain.handle('getDecoratedKeymaps', () => getDecoratedKeymaps());
+ipcMain.handle('getPathFromClipboard', () => getPathFromClipboard());
