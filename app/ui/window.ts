@@ -43,7 +43,9 @@ export function newWindow(
     title: 'Hyper.app',
     // we want to go frameless on Windows and Linux
     frame: process.platform === 'darwin',
-    transparent: process.platform === 'darwin',
+    // Linux (Hyprland/Wayland) もコンポジタが透過合成に対応しているため、
+    // darwin限定ではなく win32 以外で有効にする(2026-09)。
+    transparent: process.platform !== 'win32',
     icon,
     show: Boolean(process.env.HYPER_DEBUG || process.env.HYPERTERM_DEBUG || isDev),
     acceptFirstMouse: true,
