@@ -1,28 +1,25 @@
-import { release } from "os";
+import {release} from 'os';
 
-import { app, shell, dialog, clipboard } from "electron";
-import type { MenuItemConstructorOptions } from "electron";
+import {app, shell, dialog, clipboard} from 'electron';
+import type {MenuItemConstructorOptions} from 'electron';
 
-import { getConfig, getPlugins } from "../../config";
-import { version } from "../../package.json";
+import {getConfig, getPlugins} from '../../config';
+import {version} from '../../package.json';
 
-const { arch, env, platform, versions } = process;
+const {arch, env, platform, versions} = process;
 
-const helpMenu = (
-    commands: Record<string, string>,
-    showAbout: () => void,
-): MenuItemConstructorOptions => {
-    const submenu: MenuItemConstructorOptions[] = [
-        {
-            label: `${app.name} Website`,
-            click() {
-                void shell.openExternal("https://hyper.is");
-            },
-        },
-        {
-            label: "Report Issue",
-            click(menuItem, focusedWindow) {
-                const body = `<!--
+const helpMenu = (commands: Record<string, string>, showAbout: () => void): MenuItemConstructorOptions => {
+  const submenu: MenuItemConstructorOptions[] = [
+    {
+      label: `${app.name} Website`,
+      click() {
+        void shell.openExternal('https://hyper.is');
+      }
+    },
+    {
+      label: 'Report Issue',
+      click(menuItem, focusedWindow) {
+        const body = `<!--
   Hi there! Thank you for discovering and submitting an issue.
   Before you submit this; let's make sure of a few things.
   Please make sure the following boxes are ✅ if they are correct.
@@ -64,54 +61,54 @@ ${JSON.stringify(getPlugins(), null, 2)}
 \`\`\`
 </details>`;
 
-                const issueURL = `https://github.com/vercel/hyper/issues/new?body=${encodeURIComponent(body)}`;
-                const copyAndSend = () => {
-                    void clipboard.writeText(body);
-                    void shell.openExternal(
-                        `https://github.com/vercel/hyper/issues/new?body=${encodeURIComponent(
-                            "<!-- We have written the needed data into your clipboard because it was too large to send. " +
-                                "Please paste. -->\n",
-                        )}`,
-                    );
-                };
-                if (!focusedWindow) {
-                    copyAndSend();
-                } else if (issueURL.length > 6144) {
-                    void dialog
-                        .showMessageBox(focusedWindow, {
-                            message:
-                                "There is too much data to send to GitHub directly. The data will be copied to the clipboard, " +
-                                "please paste it into the GitHub issue page that will open.",
-                            type: "warning",
-                            buttons: ["OK", "Cancel"],
-                        })
-                        .then((result) => {
-                            if (result.response === 0) {
-                                copyAndSend();
-                            }
-                        });
-                } else {
-                    void shell.openExternal(issueURL);
-                }
-            },
-        },
-    ];
-
-    if (process.platform !== "darwin") {
-        submenu.push(
-            { type: "separator" },
-            {
-                label: "About Hyper",
-                click() {
-                    showAbout();
-                },
-            },
-        );
+        const issueURL = `https://github.com/vercel/hyper/issues/new?body=${encodeURIComponent(body)}`;
+        const copyAndSend = () => {
+          void clipboard.writeText(body);
+          void shell.openExternal(
+            `https://github.com/vercel/hyper/issues/new?body=${encodeURIComponent(
+              '<!-- We have written the needed data into your clipboard because it was too large to send. ' +
+                'Please paste. -->\n'
+            )}`
+          );
+        };
+        if (!focusedWindow) {
+          copyAndSend();
+        } else if (issueURL.length > 6144) {
+          void dialog
+            .showMessageBox(focusedWindow, {
+              message:
+                'There is too much data to send to GitHub directly. The data will be copied to the clipboard, ' +
+                'please paste it into the GitHub issue page that will open.',
+              type: 'warning',
+              buttons: ['OK', 'Cancel']
+            })
+            .then((result) => {
+              if (result.response === 0) {
+                copyAndSend();
+              }
+            });
+        } else {
+          void shell.openExternal(issueURL);
+        }
+      }
     }
-    return {
-        role: "help",
-        submenu,
-    };
+  ];
+
+  if (process.platform !== 'darwin') {
+    submenu.push(
+      {type: 'separator'},
+      {
+        label: 'About Hyper',
+        click() {
+          showAbout();
+        }
+      }
+    );
+  }
+  return {
+    role: 'help',
+    submenu
+  };
 };
 
 export default helpMenu;

@@ -1,29 +1,29 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { exec, execFile } from "child_process";
-import { writeFileSync } from "fs";
-import { resolve, basename } from "path";
-import { fileURLToPath } from "url";
-import { promisify } from "util";
+import {exec, execFile} from 'child_process';
+import {writeFileSync} from 'fs';
+import {resolve, basename} from 'path';
+import {fileURLToPath} from 'url';
+import {promisify} from 'util';
 
-import { app, clipboard, dialog, ipcMain as _ipcMain } from "electron";
-import type { BrowserWindow, App, MenuItemConstructorOptions } from "electron";
-import React from "react";
+import {app, clipboard, dialog, ipcMain as _ipcMain} from 'electron';
+import type {BrowserWindow, App, MenuItemConstructorOptions} from 'electron';
+import React from 'react';
 
-import Config from "electron-store";
-import ms from "ms";
-import ReactDom from "react-dom";
+import Config from 'electron-store';
+import ms from 'ms';
+import ReactDom from 'react-dom';
 
-import type { IpcMainWithCommands } from "../typings/common";
-import type { configOptions } from "../typings/config";
+import type {IpcMainWithCommands} from '../typings/common';
+import type {configOptions} from '../typings/config';
 
-import * as config from "./config";
-import { plugs } from "./config/paths";
-import notify from "./notify";
-import { availableExtensions } from "./plugins/extensions";
-import { install } from "./plugins/install";
-import mapKeys from "./utils/map-keys";
+import * as config from './config';
+import {plugs} from './config/paths';
+import notify from './notify';
+import {availableExtensions} from './plugins/extensions';
+import {install} from './plugins/install';
+import mapKeys from './utils/map-keys';
 
 // local storage
 const cache = new Config();
@@ -45,7 +45,7 @@ let id = getId(plugins);
 let modules = requirePlugins();
 
 function getId(plugins_: any) {
-    return JSON.stringify(plugins_);
+  return JSON.stringify(plugins_);
 }
 
 const watchers: Function[] = [];
@@ -53,15 +53,15 @@ const watchers: Function[] = [];
 // we listen on configuration updates to trigger
 // plugin installation
 config.subscribe(() => {
-    const plugins_ = config.getPlugins();
-    if (plugins !== plugins_) {
-        const id_ = getId(plugins_);
-        if (id !== id_) {
-            id = id_;
-            plugins = plugins_;
-            updatePlugins();
-        }
+  const plugins_ = config.getPlugins();
+  if (plugins !== plugins_) {
+    const id_ = getId(plugins_);
+    if (id !== id_) {
+      id = id_;
+      plugins = plugins_;
+      updatePlugins();
     }
+  }
 });
 
 // patching Module._load
@@ -98,465 +98,408 @@ config.subscribe(() => {
 // }
 
 function checkDeprecatedExtendKeymaps() {
-    modules.forEach((plugin) => {
-        if (plugin.extendKeymaps) {
-            notify(
-                "Plugin warning!",
-                `"${plugin._name}" use deprecated "extendKeymaps" handler`,
-            );
-            return;
-        }
-    });
+  modules.forEach((plugin) => {
+    if (plugin.extendKeymaps) {
+      notify('Plugin warning!', `"${plugin._name}" use deprecated "extendKeymaps" handler`);
+      return;
+    }
+  });
 }
 
 let updating = false;
 
-function updatePlugins({ force = false } = {}) {
-    if (updating) {
-        return notify("Plugin update in progress");
-    }
-    updating = true;
-    syncPackageJSON();
-    const id_ = id;
-    install((err) => {
-        updating = false;
+function updatePlugins({force = false} = {}) {
+  if (updating) {
+    return notify('Plugin update in progress');
+  }
+  updating = true;
+  syncPackageJSON();
+  const id_ = id;
+  install((err) => {
+    updating = false;
 
-        if (err) {
-            notify("Error updating plugins.", err, { error: err });
+    if (err) {
+      notify('Error updating plugins.', err, {error: err});
+    } else {
+      // flag successful plugin update
+      cache.set('hyper.plugins', id_);
+
+      // cache paths
+      paths = getPaths();
+
+      // clear require cache
+      clearCache();
+
+      // cache modules
+      modules = requirePlugins();
+
+      const loaded = modules.length;
+      const total = paths.plugins.length + paths.localPlugins.length;
+      const pluginVersions = JSON.stringify(getPluginVersions());
+      const changed = cache.get('hyper.plugin-versions') !== pluginVersions && loaded === total;
+      cache.set('hyper.plugin-versions', pluginVersions);
+
+      // notify watchers
+      watchers.forEach((fn) => {
+        fn(err, {force});
+      });
+
+      if (force || changed) {
+        if (changed) {
+          notify('Plugins Updated', 'Restart the app or hot-reload with "View" > "Reload" to enjoy the updates!');
         } else {
-            // flag successful plugin update
-            cache.set("hyper.plugins", id_);
-
-            // cache paths
-            paths = getPaths();
-
-            // clear require cache
-            clearCache();
-
-            // cache modules
-            modules = requirePlugins();
-
-            const loaded = modules.length;
-            const total = paths.plugins.length + paths.localPlugins.length;
-            const pluginVersions = JSON.stringify(getPluginVersions());
-            const changed =
-                cache.get("hyper.plugin-versions") !== pluginVersions &&
-                loaded === total;
-            cache.set("hyper.plugin-versions", pluginVersions);
-
-            // notify watchers
-            watchers.forEach((fn) => {
-                fn(err, { force });
-            });
-
-            if (force || changed) {
-                if (changed) {
-                    notify(
-                        "Plugins Updated",
-                        'Restart the app or hot-reload with "View" > "Reload" to enjoy the updates!',
-                    );
-                } else {
-                    notify("Plugins Updated", "No changes!");
-                }
-                checkDeprecatedExtendKeymaps();
-            }
+          notify('Plugins Updated', 'No changes!');
         }
-    });
+        checkDeprecatedExtendKeymaps();
+      }
+    }
+  });
 }
 
 function getPluginVersions() {
-    const paths_ = paths.plugins.concat(paths.localPlugins);
-    return paths_.map((path_) => {
-        let version: string | null = null;
-        try {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            version = require(resolve(path_, "package.json")).version;
-            //eslint-disable-next-line no-empty
-        } catch (err) {}
-        return [basename(path_), version];
-    });
+  const paths_ = paths.plugins.concat(paths.localPlugins);
+  return paths_.map((path_) => {
+    let version: string | null = null;
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      version = require(resolve(path_, 'package.json')).version;
+      //eslint-disable-next-line no-empty
+    } catch (err) {}
+    return [basename(path_), version];
+  });
 }
 
 function clearCache() {
-    // trigger unload hooks
-    modules.forEach((mod) => {
-        if (mod.onUnload) {
-            mod.onUnload(app);
-        }
-    });
-
-    // clear require cache
-    for (const entry in require.cache) {
-        if (entry.indexOf(path) === 0 || entry.indexOf(localPath) === 0) {
-            delete require.cache[entry];
-        }
+  // trigger unload hooks
+  modules.forEach((mod) => {
+    if (mod.onUnload) {
+      mod.onUnload(app);
     }
+  });
+
+  // clear require cache
+  for (const entry in require.cache) {
+    if (entry.indexOf(path) === 0 || entry.indexOf(localPath) === 0) {
+      delete require.cache[entry];
+    }
+  }
 }
 
-export { updatePlugins };
+export {updatePlugins};
 
 export const getLoadedPluginVersions = () => {
-    return modules.map((mod) => ({ name: mod._name, version: mod._version }));
+  return modules.map((mod) => ({name: mod._name, version: mod._version}));
 };
 
 // we schedule the initial plugins update
 // a bit after the user launches the terminal
 // to prevent slowness
-if (cache.get("hyper.plugins") !== id || process.env.HYPER_FORCE_UPDATE) {
-    // install immediately if the user changed plugins
-    console.log(
-        "plugins have changed / not init, scheduling plugins installation",
-    );
-    setTimeout(() => {
-        updatePlugins();
-    }, 1000);
+if (cache.get('hyper.plugins') !== id || process.env.HYPER_FORCE_UPDATE) {
+  // install immediately if the user changed plugins
+  console.log('plugins have changed / not init, scheduling plugins installation');
+  setTimeout(() => {
+    updatePlugins();
+  }, 1000);
 }
 
 (() => {
-    const baseConfig = config.getConfig();
-    if (baseConfig["autoUpdatePlugins"]) {
-        // otherwise update plugins every 5 hours
-        setInterval(
-            updatePlugins,
-            ms(
-                baseConfig["autoUpdatePlugins"] === true
-                    ? "5h"
-                    : baseConfig["autoUpdatePlugins"],
-            ),
-        );
-    }
+  const baseConfig = config.getConfig();
+  if (baseConfig['autoUpdatePlugins']) {
+    // otherwise update plugins every 5 hours
+    setInterval(updatePlugins, ms(baseConfig['autoUpdatePlugins'] === true ? '5h' : baseConfig['autoUpdatePlugins']));
+  }
 })();
 
 function syncPackageJSON() {
-    const dependencies = toDependencies(plugins);
-    const pkg = {
-        name: "hyper-plugins",
-        description: "Auto-generated from `hyper.json`!",
-        private: true,
-        version: "0.0.1",
-        repository: "vercel/hyper",
-        license: "MIT",
-        homepage: "https://hyper.is",
-        dependencies,
-    };
+  const dependencies = toDependencies(plugins);
+  const pkg = {
+    name: 'hyper-plugins',
+    description: 'Auto-generated from `hyper.json`!',
+    private: true,
+    version: '0.0.1',
+    repository: 'vercel/hyper',
+    license: 'MIT',
+    homepage: 'https://hyper.is',
+    dependencies
+  };
 
-    const file = resolve(path, "package.json");
-    try {
-        writeFileSync(file, JSON.stringify(pkg, null, 2));
-    } catch (err) {
-        alert(`An error occurred writing to ${file}`);
-    }
+  const file = resolve(path, 'package.json');
+  try {
+    writeFileSync(file, JSON.stringify(pkg, null, 2));
+  } catch (err) {
+    alert(`An error occurred writing to ${file}`);
+  }
 }
 
 function alert(message: string) {
-    void dialog.showMessageBox({
-        message,
-        buttons: ["Ok"],
-    });
+  void dialog.showMessageBox({
+    message,
+    buttons: ['Ok']
+  });
 }
 
-function toDependencies(plugins_: { plugins: string[] }) {
-    const obj: Record<string, string> = {};
-    plugins_.plugins.forEach((plugin) => {
-        const regex = /.(@|#)/;
-        const match = regex.exec(plugin);
+function toDependencies(plugins_: {plugins: string[]}) {
+  const obj: Record<string, string> = {};
+  plugins_.plugins.forEach((plugin) => {
+    const regex = /.(@|#)/;
+    const match = regex.exec(plugin);
 
-        if (match) {
-            const index = match.index + 1;
-            const pieces: string[] = [];
+    if (match) {
+      const index = match.index + 1;
+      const pieces: string[] = [];
 
-            pieces[0] = plugin.substring(0, index);
-            pieces[1] = plugin.substring(index + 1, plugin.length);
-            obj[pieces[0]] = pieces[1];
-        } else {
-            obj[plugin] = "latest";
-        }
-    });
-    return obj;
+      pieces[0] = plugin.substring(0, index);
+      pieces[1] = plugin.substring(index + 1, plugin.length);
+      obj[pieces[0]] = pieces[1];
+    } else {
+      obj[plugin] = 'latest';
+    }
+  });
+  return obj;
 }
 
 export const subscribe = (fn: Function) => {
-    watchers.push(fn);
-    return () => {
-        watchers.splice(watchers.indexOf(fn), 1);
-    };
+  watchers.push(fn);
+  return () => {
+    watchers.splice(watchers.indexOf(fn), 1);
+  };
 };
 
 function getPaths() {
-    return {
-        plugins: plugins.plugins.map((name) => {
-            return resolve(path, "node_modules", name.split("#")[0]);
-        }),
-        localPlugins: plugins.localPlugins.map((name) => {
-            return resolve(localPath, name);
-        }),
-    };
+  return {
+    plugins: plugins.plugins.map((name) => {
+      return resolve(path, 'node_modules', name.split('#')[0]);
+    }),
+    localPlugins: plugins.localPlugins.map((name) => {
+      return resolve(localPath, name);
+    })
+  };
 }
 
 // expose to renderer
-export { getPaths };
+export {getPaths};
 
 // get paths from renderer
 export const getBasePaths = () => {
-    return { path, localPath };
+  return {path, localPath};
 };
 
 function requirePlugins(): any[] {
-    const { plugins: plugins_, localPlugins } = paths;
+  const {plugins: plugins_, localPlugins} = paths;
 
-    const load = (path_: string) => {
-        let mod: Record<string, any>;
-        try {
-            mod = require(path_);
-            const exposed =
-                mod &&
-                Object.keys(mod).some((key) => availableExtensions.has(key));
-            if (!exposed) {
-                notify(
-                    "Plugin error!",
-                    `${`Plugin "${basename(path_)}" does not expose any `}Hyper extension API methods`,
-                );
-                return;
-            }
+  const load = (path_: string) => {
+    let mod: Record<string, any>;
+    try {
+      mod = require(path_);
+      const exposed = mod && Object.keys(mod).some((key) => availableExtensions.has(key));
+      if (!exposed) {
+        notify('Plugin error!', `${`Plugin "${basename(path_)}" does not expose any `}Hyper extension API methods`);
+        return;
+      }
 
-            // populate the name for internal errors here
-            mod._name = basename(path_);
-            try {
-                // eslint-disable-next-line @typescript-eslint/no-var-requires
-                mod._version = require(resolve(path_, "package.json")).version;
-            } catch (err) {
-                console.warn(`No package.json found in ${path_}`);
-            }
-            console.log(`Plugin ${mod._name} (${mod._version}) loaded.`);
+      // populate the name for internal errors here
+      mod._name = basename(path_);
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        mod._version = require(resolve(path_, 'package.json')).version;
+      } catch (err) {
+        console.warn(`No package.json found in ${path_}`);
+      }
+      console.log(`Plugin ${mod._name} (${mod._version}) loaded.`);
 
-            return mod;
-        } catch (_err) {
-            const err = _err as { code: string; message: string };
-            if (err.code === "MODULE_NOT_FOUND") {
-                console.warn(
-                    `Plugin error while loading "${basename(path_)}" (${path_}): ${err.message}`,
-                );
-            } else {
-                notify(
-                    "Plugin error!",
-                    `Plugin "${basename(path_)}" failed to load (${err.message})`,
-                    { error: err },
-                );
-            }
-        }
-    };
+      return mod;
+    } catch (_err) {
+      const err = _err as {code: string; message: string};
+      if (err.code === 'MODULE_NOT_FOUND') {
+        console.warn(`Plugin error while loading "${basename(path_)}" (${path_}): ${err.message}`);
+      } else {
+        notify('Plugin error!', `Plugin "${basename(path_)}" failed to load (${err.message})`, {error: err});
+      }
+    }
+  };
 
-    return [
-        ...localPlugins.filter((p) => basename(p) === "migrated-hyper3-config"),
-        ...plugins_,
-        ...localPlugins.filter((p) => basename(p) !== "migrated-hyper3-config"),
-    ]
-        .map(load)
-        .filter((v): v is Record<string, any> => Boolean(v));
+  return [
+    ...localPlugins.filter((p) => basename(p) === 'migrated-hyper3-config'),
+    ...plugins_,
+    ...localPlugins.filter((p) => basename(p) !== 'migrated-hyper3-config')
+  ]
+    .map(load)
+    .filter((v): v is Record<string, any> => Boolean(v));
 }
 
 export const onApp = (app_: App) => {
-    modules.forEach((plugin) => {
-        if (plugin.onApp) {
-            try {
-                plugin.onApp(app_);
-            } catch (e) {
-                notify(
-                    "Plugin error!",
-                    `"${plugin._name}" has encountered an error. Check Developer Tools for details.`,
-                    {
-                        error: e,
-                    },
-                );
-            }
-        }
-    });
+  modules.forEach((plugin) => {
+    if (plugin.onApp) {
+      try {
+        plugin.onApp(app_);
+      } catch (e) {
+        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`, {
+          error: e
+        });
+      }
+    }
+  });
 };
 
 export const onWindowClass = (win: BrowserWindow) => {
-    modules.forEach((plugin) => {
-        if (plugin.onWindowClass) {
-            try {
-                plugin.onWindowClass(win);
-            } catch (e) {
-                notify(
-                    "Plugin error!",
-                    `"${plugin._name}" has encountered an error. Check Developer Tools for details.`,
-                    {
-                        error: e,
-                    },
-                );
-            }
-        }
-    });
+  modules.forEach((plugin) => {
+    if (plugin.onWindowClass) {
+      try {
+        plugin.onWindowClass(win);
+      } catch (e) {
+        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`, {
+          error: e
+        });
+      }
+    }
+  });
 };
 
 export const onWindow = (win: BrowserWindow) => {
-    modules.forEach((plugin) => {
-        if (plugin.onWindow) {
-            try {
-                plugin.onWindow(win);
-            } catch (e) {
-                notify(
-                    "Plugin error!",
-                    `"${plugin._name}" has encountered an error. Check Developer Tools for details.`,
-                    {
-                        error: e,
-                    },
-                );
-            }
-        }
-    });
+  modules.forEach((plugin) => {
+    if (plugin.onWindow) {
+      try {
+        plugin.onWindow(win);
+      } catch (e) {
+        notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`, {
+          error: e
+        });
+      }
+    }
+  });
 };
 
 // decorates the base entity by calling plugin[key]
 // for all the available plugins
-function decorateEntity(base: any, key: string, type: "object" | "function") {
-    let decorated = base;
-    modules.forEach((plugin) => {
-        if (plugin[key]) {
-            let res;
-            try {
-                res = plugin[key](decorated);
-            } catch (e) {
-                notify(
-                    "Plugin error!",
-                    `"${plugin._name}" when decorating ${key}`,
-                    { error: e },
-                );
-                return;
-            }
-            if (res && (!type || typeof res === type)) {
-                decorated = res;
-            } else {
-                notify(
-                    "Plugin error!",
-                    `"${plugin._name}": invalid return type for \`${key}\``,
-                );
-            }
-        }
-    });
+function decorateEntity(base: any, key: string, type: 'object' | 'function') {
+  let decorated = base;
+  modules.forEach((plugin) => {
+    if (plugin[key]) {
+      let res;
+      try {
+        res = plugin[key](decorated);
+      } catch (e) {
+        notify('Plugin error!', `"${plugin._name}" when decorating ${key}`, {error: e});
+        return;
+      }
+      if (res && (!type || typeof res === type)) {
+        decorated = res;
+      } else {
+        notify('Plugin error!', `"${plugin._name}": invalid return type for \`${key}\``);
+      }
+    }
+  });
 
-    return decorated;
+  return decorated;
 }
 
 function decorateObject<T>(base: T, key: string): T {
-    return decorateEntity(base, key, "object");
+  return decorateEntity(base, key, 'object');
 }
 
 function decorateClass(base: any, key: string) {
-    return decorateEntity(base, key, "function");
+  return decorateEntity(base, key, 'function');
 }
 
 export const getDeprecatedConfig = () => {
-    const deprecated: Record<string, { css: string[] }> = {};
-    const baseConfig = config.getConfig();
-    modules.forEach((plugin) => {
-        if (!plugin.decorateConfig) {
-            return;
-        }
-        // We need to clone config in case of plugin modifies config directly.
-        let configTmp: configOptions;
-        try {
-            configTmp = plugin.decorateConfig(
-                JSON.parse(JSON.stringify(baseConfig)),
-            );
-        } catch (e) {
-            notify(
-                "Plugin error!",
-                `"${plugin._name}" has encountered an error. Check Developer Tools for details.`,
-                {
-                    error: e,
-                },
-            );
-            return;
-        }
-        const pluginCSSDeprecated = config.getDeprecatedCSS(configTmp);
-        if (pluginCSSDeprecated.length === 0) {
-            return;
-        }
-        deprecated[plugin._name] = { css: pluginCSSDeprecated };
-    });
-    return deprecated;
+  const deprecated: Record<string, {css: string[]}> = {};
+  const baseConfig = config.getConfig();
+  modules.forEach((plugin) => {
+    if (!plugin.decorateConfig) {
+      return;
+    }
+    // We need to clone config in case of plugin modifies config directly.
+    let configTmp: configOptions;
+    try {
+      configTmp = plugin.decorateConfig(JSON.parse(JSON.stringify(baseConfig)));
+    } catch (e) {
+      notify('Plugin error!', `"${plugin._name}" has encountered an error. Check Developer Tools for details.`, {
+        error: e
+      });
+      return;
+    }
+    const pluginCSSDeprecated = config.getDeprecatedCSS(configTmp);
+    if (pluginCSSDeprecated.length === 0) {
+      return;
+    }
+    deprecated[plugin._name] = {css: pluginCSSDeprecated};
+  });
+  return deprecated;
 };
 
 export const decorateMenu = (tpl: MenuItemConstructorOptions[]) => {
-    return decorateObject(tpl, "decorateMenu");
+  return decorateObject(tpl, 'decorateMenu');
 };
 
 export const getDecoratedEnv = (baseEnv: Record<string, string>) => {
-    return decorateObject(baseEnv, "decorateEnv");
+  return decorateObject(baseEnv, 'decorateEnv');
 };
 
 export const getDecoratedConfig = (profile: string) => {
-    const baseConfig = config.getProfileConfig(profile);
-    const decoratedConfig = decorateObject(baseConfig, "decorateConfig");
-    const fixedConfig = config.fixConfigDefaults(decoratedConfig);
-    const translatedConfig = config.htermConfigTranslate(fixedConfig);
-    return translatedConfig;
+  const baseConfig = config.getProfileConfig(profile);
+  const decoratedConfig = decorateObject(baseConfig, 'decorateConfig');
+  const fixedConfig = config.fixConfigDefaults(decoratedConfig);
+  const translatedConfig = config.htermConfigTranslate(fixedConfig);
+  return translatedConfig;
 };
 
 export const getDecoratedKeymaps = () => {
-    const baseKeymaps = config.getKeymaps();
-    // Ensure that all keys are in an array and don't use deprecated key combination`
-    const decoratedKeymaps = mapKeys(
-        decorateObject(baseKeymaps, "decorateKeymaps"),
-    );
-    return decoratedKeymaps;
+  const baseKeymaps = config.getKeymaps();
+  // Ensure that all keys are in an array and don't use deprecated key combination`
+  const decoratedKeymaps = mapKeys(decorateObject(baseKeymaps, 'decorateKeymaps'));
+  return decoratedKeymaps;
 };
 
 export const getDecoratedBrowserOptions = <T>(defaults: T): T => {
-    return decorateObject(defaults, "decorateBrowserOptions");
+  return decorateObject(defaults, 'decorateBrowserOptions');
 };
 
 export const decorateWindowClass = <T>(defaults: T): T => {
-    return decorateObject(defaults, "decorateWindowClass");
+  return decorateObject(defaults, 'decorateWindowClass');
 };
 
 export const decorateSessionOptions = <T>(defaults: T): T => {
-    return decorateObject(defaults, "decorateSessionOptions");
+  return decorateObject(defaults, 'decorateSessionOptions');
 };
 
 export const decorateSessionClass = <T>(Session: T): T => {
-    return decorateClass(Session, "decorateSessionClass");
+  return decorateClass(Session, 'decorateSessionClass');
 };
 
-export { toDependencies as _toDependencies };
+export {toDependencies as _toDependencies};
 
 export const getPathFromClipboard = async (): Promise<string | null> => {
-    const items = await clipboard.read();
-    for (const item of items) {
-        if (!item.types.includes("text/uri-list")) continue;
-        const blob = await item.getType("text/uri-list");
-        if (!(blob instanceof Blob)) continue;
-        const uriList = await blob.text();
-        const uriPaths = uriList
-            .split(/\r?\n/)
-            .filter(Boolean)
-            .map((uri) => fileURLToPath(uri));
-        if (uriPaths.length > 0) {
-            return "'" + uriPaths.join("' '") + "'";
-        }
+  const items = await clipboard.read();
+  for (const item of items) {
+    if (!item.types.includes('text/uri-list')) continue;
+    const blob = await item.getType('text/uri-list');
+    if (!(blob instanceof Blob)) continue;
+    const uriList = await blob.text();
+    const uriPaths = uriList
+      .split(/\r?\n/)
+      .filter(Boolean)
+      .map((uri) => fileURLToPath(uri));
+    if (uriPaths.length > 0) {
+      return "'" + uriPaths.join("' '") + "'";
     }
-    return null;
+  }
+  return null;
 };
 
 const ipcMain = _ipcMain as IpcMainWithCommands;
 
-ipcMain.handle("child_process.exec", (event, command, options) => {
-    return promisify(exec)(command, options);
+ipcMain.handle('child_process.exec', (event, command, options) => {
+  return promisify(exec)(command, options);
 });
 
-ipcMain.handle("child_process.execFile", (event, file, args, options) => {
-    return promisify(execFile)(file, args, options);
+ipcMain.handle('child_process.execFile', (event, file, args, options) => {
+  return promisify(execFile)(file, args, options);
 });
 
-ipcMain.handle("getLoadedPluginVersions", () => getLoadedPluginVersions());
-ipcMain.handle("getPaths", () => getPaths());
-ipcMain.handle("getBasePaths", () => getBasePaths());
-ipcMain.handle("getDeprecatedConfig", () => getDeprecatedConfig());
-ipcMain.handle("getDecoratedConfig", (e, profile) =>
-    getDecoratedConfig(profile),
-);
-ipcMain.handle("getDecoratedKeymaps", () => getDecoratedKeymaps());
-ipcMain.handle("getPathFromClipboard", () => getPathFromClipboard());
+ipcMain.handle('getLoadedPluginVersions', () => getLoadedPluginVersions());
+ipcMain.handle('getPaths', () => getPaths());
+ipcMain.handle('getBasePaths', () => getBasePaths());
+ipcMain.handle('getDeprecatedConfig', () => getDeprecatedConfig());
+ipcMain.handle('getDecoratedConfig', (e, profile) => getDecoratedConfig(profile));
+ipcMain.handle('getDecoratedKeymaps', () => getDecoratedKeymaps());
+ipcMain.handle('getPathFromClipboard', () => getPathFromClipboard());
