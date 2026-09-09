@@ -9,11 +9,9 @@ import {promisify} from 'util';
 
 import {app, clipboard, dialog, ipcMain as _ipcMain} from 'electron';
 import type {BrowserWindow, App, MenuItemConstructorOptions} from 'electron';
-import React from 'react';
 
 import Config from 'electron-store';
 import ms from 'ms';
-import ReactDom from 'react-dom';
 
 import type {IpcMainWithCommands} from '../typings/common';
 import type {configOptions} from '../typings/config';
