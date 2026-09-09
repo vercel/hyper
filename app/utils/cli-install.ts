@@ -68,7 +68,7 @@ sudo ln -sf "${cliScriptPath}" "${cliLinkPath}"`,
           error = (_error as any[])[0];
         }
       } else if (result.response === 1) {
-        void clipboard.writeText(`sudo ln -sf "${cliScriptPath}" "${cliLinkPath}"`);
+        await clipboard.writeText(`sudo ln -sf "${cliScriptPath}" "${cliLinkPath}"`);
       }
     }
     throw error;

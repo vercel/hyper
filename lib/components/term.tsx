@@ -353,9 +353,12 @@ export default class Term extends React.PureComponent<
 
     const fallbackText = e.clipboardData?.getData('text/plain') ?? '';
 
-    void ipcRenderer.invoke('getPathFromClipboard').then((path) => {
-      this.term.paste(path ?? fallbackText);
-    });
+    ipcRenderer
+      .invoke('getPathFromClipboard')
+      .then((path) => {
+        this.term.paste(path ?? fallbackText);
+      })
+      .catch(console.error);
   };
 
   onMouseUp = (e: React.MouseEvent) => {
