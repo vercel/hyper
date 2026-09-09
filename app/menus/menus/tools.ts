@@ -1,49 +1,49 @@
-import type {BaseWindow, BrowserWindow, MenuItemConstructorOptions} from 'electron';
+import type { BaseWindow, MenuItemConstructorOptions } from "electron";
 
 const toolsMenu = (
-  commands: Record<string, string>,
-  execCommand: (command: string, focusedWindow?: BaseWindow) => void
+    commands: Record<string, string>,
+    execCommand: (command: string, focusedWindow?: BaseWindow) => void,
 ): MenuItemConstructorOptions => {
-  return {
-    label: 'Tools',
-    submenu: [
-      {
-        label: 'Update plugins',
-        accelerator: commands['plugins:update'],
-        click() {
-          execCommand('plugins:update');
-        }
-      },
-      {
-        label: 'Install Hyper CLI command in PATH',
-        click() {
-          execCommand('cli:install');
-        }
-      },
-      {
-        type: 'separator'
-      },
-      ...(process.platform === 'win32'
-        ? <MenuItemConstructorOptions[]>[
+    return {
+        label: "Tools",
+        submenu: [
             {
-              label: 'Add Hyper to system context menu',
-              click() {
-                execCommand('systemContextMenu:add');
-              }
+                label: "Update plugins",
+                accelerator: commands["plugins:update"],
+                click() {
+                    execCommand("plugins:update");
+                },
             },
             {
-              label: 'Remove Hyper from system context menu',
-              click() {
-                execCommand('systemContextMenu:remove');
-              }
+                label: "Install Hyper CLI command in PATH",
+                click() {
+                    execCommand("cli:install");
+                },
             },
             {
-              type: 'separator'
-            }
-          ]
-        : [])
-    ]
-  };
+                type: "separator",
+            },
+            ...(process.platform === "win32"
+                ? <MenuItemConstructorOptions[]>[
+                      {
+                          label: "Add Hyper to system context menu",
+                          click() {
+                              execCommand("systemContextMenu:add");
+                          },
+                      },
+                      {
+                          label: "Remove Hyper from system context menu",
+                          click() {
+                              execCommand("systemContextMenu:remove");
+                          },
+                      },
+                      {
+                          type: "separator",
+                      },
+                  ]
+                : []),
+        ],
+    };
 };
 
 export default toolsMenu;
