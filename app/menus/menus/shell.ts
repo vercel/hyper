@@ -1,8 +1,8 @@
-import type {BrowserWindow, MenuItemConstructorOptions} from 'electron';
+import type {BaseWindow, MenuItemConstructorOptions} from 'electron';
 
 const shellMenu = (
   commandKeys: Record<string, string>,
-  execCommand: (command: string, focusedWindow?: BrowserWindow) => void,
+  execCommand: (command: string, focusedWindow?: BaseWindow) => void,
   profiles: string[]
 ): MenuItemConstructorOptions => {
   const isMac = process.platform === 'darwin';

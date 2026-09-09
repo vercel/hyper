@@ -1,4 +1,3 @@
-import {clipboard} from 'electron';
 import React from 'react';
 
 import {webContents} from '@electron/remote';
@@ -19,7 +18,7 @@ import {WebglAddon} from 'xterm-addon-webgl';
 
 import type {TermProps} from '../../typings/hyper';
 import terms from '../terms';
-import processClipboard from '../utils/paste';
+import {ipcRenderer} from '../utils/ipc';
 import {decorate} from '../utils/plugins';
 
 import _SearchBox from './searchBox';
@@ -344,27 +343,34 @@ export default class Term extends React.PureComponent<
 
   // intercepting paste event for any necessary processing of
   // clipboard data, if result is falsy, paste event continues
-  onWindowPaste = (e: Event) => {
+  onWindowPaste = (e: ClipboardEvent) => {
     if (!this.props.isTermActive) return;
 
-    const processed = processClipboard();
-    if (processed) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.term.paste(processed);
-    }
+    // must call these synchronously; the IPC round-trip below is async,
+    // and preventDefault() has no effect once this handler returns
+    e.preventDefault();
+    e.stopPropagation();
+
+    const fallbackText = e.clipboardData?.getData('text/plain') ?? '';
+
+    ipcRenderer
+      .invoke('getPathFromClipboard')
+      .then((path) => {
+        this.term.paste(path ?? fallbackText);
+      })
+      .catch(console.error);
   };
 
   onMouseUp = (e: React.MouseEvent) => {
     if (this.props.quickEdit && e.button === 2) {
       if (this.term.hasSelection()) {
-        clipboard.writeText(this.term.getSelection());
+        void navigator.clipboard.writeText(this.term.getSelection());
         this.term.clearSelection();
       } else {
         document.execCommand('paste');
       }
     } else if (this.props.copyOnSelect && this.term.hasSelection()) {
-      clipboard.writeText(this.term.getSelection());
+      void navigator.clipboard.writeText(this.term.getSelection());
     }
   };
 

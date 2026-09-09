@@ -63,7 +63,7 @@ ${JSON.stringify(getPlugins(), null, 2)}
 
         const issueURL = `https://github.com/vercel/hyper/issues/new?body=${encodeURIComponent(body)}`;
         const copyAndSend = () => {
-          clipboard.writeText(body);
+          void clipboard.writeText(body);
           void shell.openExternal(
             `https://github.com/vercel/hyper/issues/new?body=${encodeURIComponent(
               '<!-- We have written the needed data into your clipboard because it was too large to send. ' +

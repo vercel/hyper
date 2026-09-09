@@ -1,9 +1,12 @@
-import {require as remoteRequire, getCurrentWindow} from '@electron/remote';
+import {resolve} from 'path';
+
+import {app as remoteApp, require as remoteRequire, getCurrentWindow} from '@electron/remote';
 // TODO: Should be updates to new async API https://medium.com/@nornagon/electrons-remote-module-considered-harmful-70d69500f31
 
 import {ipcRenderer} from './ipc';
 
-const plugins = remoteRequire('./plugins') as typeof import('../../app/plugins');
+// lib/utils/plugins.ts と同じ理由(2026-09, Electron 44 upgrade)で絶対パス指定にする。
+const plugins = remoteRequire(resolve(remoteApp.getAppPath(), 'plugins')) as typeof import('../../app/plugins');
 
 Object.defineProperty(window, 'profileName', {
   get() {

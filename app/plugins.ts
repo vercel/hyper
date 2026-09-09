@@ -4,15 +4,14 @@
 import {exec, execFile} from 'child_process';
 import {writeFileSync} from 'fs';
 import {resolve, basename} from 'path';
+import {fileURLToPath} from 'url';
 import {promisify} from 'util';
 
-import {app, dialog, ipcMain as _ipcMain} from 'electron';
+import {app, clipboard, dialog, ipcMain as _ipcMain} from 'electron';
 import type {BrowserWindow, App, MenuItemConstructorOptions} from 'electron';
-import React from 'react';
 
 import Config from 'electron-store';
 import ms from 'ms';
-import ReactDom from 'react-dom';
 
 import type {IpcMainWithCommands} from '../typings/common';
 import type {configOptions} from '../typings/config';
@@ -30,7 +29,12 @@ const cache = new Config();
 const path = plugs.base;
 const localPath = plugs.local;
 
-patchModuleLoad();
+// patchModuleLoad() は Module._load をプロセス全体で差し替える実装で、
+// Electron 44 の内部ブートストラップ処理(require('./plugins')等)まで巻き込み、
+// 'Cannot find module' エラーを引き起こすことを確認した(2026-09)。
+// 'react'/'react-dom'/'hyper/component' 等の旧式プラグインAPI互換のためだけの
+// 機能であり、このフォークでは対象の旧式プラグインを使わないため無効化する。
+// patchModuleLoad();
 
 // caches
 let plugins = config.getPlugins();
@@ -61,35 +65,35 @@ config.subscribe(() => {
 // patching Module._load
 // so plugins can `require` them without needing their own version
 // https://github.com/vercel/hyper/issues/619
-function patchModuleLoad() {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const Module = require('module');
-  const originalLoad = Module._load;
-  Module._load = function _load(modulePath: string) {
-    // PLEASE NOTE: Code changes here, also need to be changed in
-    // lib/utils/plugins.js
-    switch (modulePath) {
-      case 'react':
-        // DEPRECATED
-        return React;
-      case 'react-dom':
-        // DEPRECATED
-        return ReactDom;
-      case 'hyper/component':
-        // DEPRECATED
-        return React.PureComponent;
-      // These return Object, since they work differently on the backend, than on the frontend.
-      // Still needs to be here, to prevent errors, while loading plugins.
-      case 'hyper/Notification':
-      case 'hyper/notify':
-      case 'hyper/decorate':
-        return Object;
-      default:
-        // eslint-disable-next-line prefer-rest-params
-        return originalLoad.apply(this, arguments);
-    }
-  };
-}
+// function patchModuleLoad() {
+//   // eslint-disable-next-line @typescript-eslint/no-var-requires
+//   const Module = require('module');
+//   const originalLoad = Module._load;
+//   Module._load = function _load(modulePath: string) {
+//     // PLEASE NOTE: Code changes here, also need to be changed in
+//     // lib/utils/plugins.js
+//     switch (modulePath) {
+//       case 'react':
+//         // DEPRECATED
+//         return React;
+//       case 'react-dom':
+//         // DEPRECATED
+//         return ReactDom;
+//       case 'hyper/component':
+//         // DEPRECATED
+//         return React.PureComponent;
+//       // These return Object, since they work differently on the backend, than on the frontend.
+//       // Still needs to be here, to prevent errors, while loading plugins.
+//       case 'hyper/Notification':
+//       case 'hyper/notify':
+//       case 'hyper/decorate':
+//         return Object;
+//       default:
+//         // eslint-disable-next-line prefer-rest-params
+//         return originalLoad.apply(this, arguments);
+//     }
+//   };
+// }
 
 function checkDeprecatedExtendKeymaps() {
   modules.forEach((plugin) => {
@@ -462,6 +466,24 @@ export const decorateSessionClass = <T>(Session: T): T => {
 
 export {toDependencies as _toDependencies};
 
+export const getPathFromClipboard = async (): Promise<string | null> => {
+  const items = await clipboard.read();
+  for (const item of items) {
+    if (!item.types.includes('text/uri-list')) continue;
+    const blob = await item.getType('text/uri-list');
+    if (!(blob instanceof Blob)) continue;
+    const uriList = await blob.text();
+    const uriPaths = uriList
+      .split(/\r?\n/)
+      .filter(Boolean)
+      .map((uri) => fileURLToPath(uri));
+    if (uriPaths.length > 0) {
+      return "'" + uriPaths.join("' '") + "'";
+    }
+  }
+  return null;
+};
+
 const ipcMain = _ipcMain as IpcMainWithCommands;
 
 ipcMain.handle('child_process.exec', (event, command, options) => {
@@ -478,3 +500,4 @@ ipcMain.handle('getBasePaths', () => getBasePaths());
 ipcMain.handle('getDeprecatedConfig', () => getDeprecatedConfig());
 ipcMain.handle('getDecoratedConfig', (e, profile) => getDecoratedConfig(profile));
 ipcMain.handle('getDecoratedKeymaps', () => getDecoratedKeymaps());
+ipcMain.handle('getPathFromClipboard', () => getPathFromClipboard());
