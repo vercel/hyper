@@ -32,14 +32,14 @@
     ]
   },
   "win": {
-    "target": {
-      "target": "nsis",
-      "arch": [
-        "x64",
-        "arm64"
-      ]
-    },
-    "rfc3161TimeStampServer": "http://timestamp.comodoca.com"
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      }
+    ]
   },
   "nsis": {
     "include": "build/win/installer.nsh",
@@ -48,13 +48,15 @@
     "allowToChangeInstallationDirectory": true
   },
   "mac": {
-    "target": {
-      "target": "default",
-      "arch": [
-        "x64",
-        "arm64"
-      ]
-    },
+    "target": [
+      {
+        "target": "default",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      }
+    ],
     "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "category": "public.app-category.developer-tools",
     "entitlements": "./build/mac/entitlements.plist",
