@@ -19,7 +19,7 @@ The goal is to restore the webview preview feature that was removed from upstrea
 
 Split a pane (`Ctrl + Shift + D`), then click a URL printed in the terminal to display it in a webview in the adjacent pane.
 
-> ⚠️ Security note: The webview preview feature renders web pages using the Chromium engine bundled with Electron 22.3.25. This is an old, unpatched version of Chromium. Only open links you trust.
+> ⚠️ Security note: The webview preview feature renders web pages using the Chromium engine bundled with Electron 44.2.0 (Chromium 152). This is reasonably current, but as with any embedded browser, only open links you trust.
 
 ### Custom settings via `hyper.json`
 
