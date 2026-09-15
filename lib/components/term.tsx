@@ -26,6 +26,18 @@ import _SearchBox from './searchBox';
 import 'xterm/css/xterm.css';
 
 const SearchBox = decorate(_SearchBox, 'SearchBox');
+const rendererAddons = new WeakMap<Terminal, IDisposable>();
+
+type InternalTerminal = Terminal & {
+  _core?: {
+    _renderService?: {
+      _isPaused: boolean;
+      _pausedResizeTask: {
+        flush(): void;
+      };
+    };
+  };
+};
 
 const isWindows = ['Windows', 'Win16', 'Win32', 'WinCE'].includes(navigator.platform) || process.platform === 'win32';
 
@@ -223,14 +235,19 @@ export default class Term extends React.PureComponent<
 
       if (useWebGL) {
         const webglAddon = new WebglAddon();
+        rendererAddons.set(this.term, webglAddon);
         this.term.loadAddon(webglAddon);
         webglAddon.onContextLoss(() => {
           console.warn('WebGL context lost. Falling back to canvas-based rendering.');
           webglAddon.dispose();
-          this.term.loadAddon(new CanvasAddon());
+          const canvasAddon = new CanvasAddon();
+          rendererAddons.set(this.term, canvasAddon);
+          this.term.loadAddon(canvasAddon);
         });
       } else {
-        this.term.loadAddon(new CanvasAddon());
+        const canvasAddon = new CanvasAddon();
+        rendererAddons.set(this.term, canvasAddon);
+        this.term.loadAddon(canvasAddon);
       }
 
       if (props.disableLigatures !== true && !useWebGL) {
@@ -364,6 +381,20 @@ export default class Term extends React.PureComponent<
     this.term.write(data);
   }
 
+  dispose() {
+    // xterm 5.3 disposes renderer addons after its render service, but the
+    // addons need that service to restore the default renderer. Dispose the
+    // active addon first, after draining hidden-terminal resize work.
+    const renderService = (this.term as InternalTerminal)._core?._renderService;
+    if (renderService) {
+      renderService._isPaused = false;
+    }
+    rendererAddons.get(this.term)?.dispose();
+    rendererAddons.delete(this.term);
+    renderService?._pausedResizeTask.flush();
+    this.term.dispose();
+  }
+
   focus = () => {
     this.term.focus();
   };
@@ -485,7 +516,7 @@ export default class Term extends React.PureComponent<
         clearTimeout(this.resizeTimeout);
         this.resizeTimeout = setTimeout(() => {
           this.fitResize();
-        }, 500);
+        }, 0);
       });
       this.resizeObserver.observe(component);
     } else {
@@ -494,6 +525,7 @@ export default class Term extends React.PureComponent<
   };
 
   componentWillUnmount() {
+    clearTimeout(this.resizeTimeout);
     terms[this.props.uid] = null;
     this.termWrapperRef?.removeChild(this.termRef!);
     this.props.ref_(this.props.uid, null);
