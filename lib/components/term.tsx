@@ -19,7 +19,7 @@ import {WebglAddon} from 'xterm-addon-webgl';
 import type {TermProps} from '../../typings/hyper';
 import terms from '../terms';
 import processClipboard from '../utils/paste';
-import {decorate} from '../utils/plugins';
+import {decorate, getXtermAddons} from '../utils/plugins';
 
 import _SearchBox from './searchBox';
 
@@ -242,6 +242,16 @@ export default class Term extends React.PureComponent<
 
       if (props.imageSupport) {
         this.term.loadAddon(new ImageAddon());
+      }
+
+      // Load xterm addons from plugins
+      const pluginAddons = getXtermAddons();
+      for (const addon of pluginAddons) {
+        try {
+          this.term.loadAddon(addon);
+        } catch (err) {
+          console.warn(`Failed to load xterm addon from plugin:`, err);
+        }
       }
     } else {
       // get the cached plugins

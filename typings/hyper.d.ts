@@ -145,6 +145,7 @@ export type hyperPlugin = {
   getTabsProps: any;
   getTermGroupProps: any;
   getTermProps: any;
+  getXtermAddons: any;
   mapHeaderDispatch: any;
   mapHyperDispatch: any;
   mapHyperTermDispatch: any;

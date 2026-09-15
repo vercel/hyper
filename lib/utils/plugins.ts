@@ -69,6 +69,9 @@ let reducersDecorators: {
   reduceTermGroups: ITermGroupReducer[];
 };
 
+// xterm addons from plugins
+let xtermAddons: any[] = [];
+
 // expose decorated component instance to the higher-order components
 function exposeDecorated<P extends Record<string, any>>(
   Component_: React.ComponentType<P>
@@ -252,6 +255,7 @@ const loadModules = () => {
   tabsPropsDecorators = [];
   termPropsDecorators = [];
   termGroupPropsDecorators = [];
+  xtermAddons = [];
 
   propsDecorators = {
     getTermProps: termPropsDecorators,
@@ -353,6 +357,15 @@ const loadModules = () => {
 
       if (mod.mapNotificationsDispatch) {
         connectors.Notifications.dispatch.push(mod.mapNotificationsDispatch);
+      }
+
+      if (mod.getXtermAddons) {
+        const addons = mod.getXtermAddons();
+        if (Array.isArray(addons)) {
+          xtermAddons.push(...addons);
+        } else if (addons) {
+          xtermAddons.push(addons);
+        }
       }
 
       if (mod.getTermGroupProps) {
@@ -581,3 +594,7 @@ export const middleware: Middleware<{}, HyperState, Dispatch<HyperActions>> = (s
     remaining.length ? remaining[0](store)(nextMiddleware(remaining.slice(1)))(action_) : next(action_);
   nextMiddleware(middlewares)(action);
 };
+
+export function getXtermAddons(): any[] {
+  return xtermAddons;
+}

@@ -40,6 +40,23 @@ When you put a `console.log()` in your plugin code, it will be displayed in the 
 Almost all available API methods can be found on https://hyper.is.
 If there's any missing, let us know or submit a PR to document it!
 
+### Xterm Addons
+
+Plugins can contribute xterm.js addons by exporting a `getXtermAddons` function that returns an array of addon instances.
+
+Example:
+
+```js
+// In your plugin's main file
+import { xyzAddon } from 'xterm-addon-xyz';
+
+exports.getXtermAddons = () => {
+  return [new xyzAddon()];
+};
+```
+
+These addons are loaded by Hyper and made available to the terminal.
+
 ### Components
 You can decorate almost all Hyper components with a Higher-Order Component (HOC). To understand their architecture, the easiest way is to use React dev-tools to dig in to their hierarchy.
 
