@@ -1,9 +1,9 @@
 import {stat} from 'fs';
 import type {Stats} from 'fs';
 
-import type parseUrl from 'parse-url';
 import {php_escapeshellcmd as escapeShellCmd} from 'php-escape-shell';
 
+import type {SSHDestination} from '../../typings/common';
 import {
   UI_FONT_SIZE_SET,
   UI_FONT_SIZE_INCR,
@@ -295,14 +295,18 @@ export function leaveFullScreen(): HyperActions {
   };
 }
 
-export function openSSH(parsedUrl: ReturnType<typeof parseUrl>) {
+export function openSSH(destination: SSHDestination) {
   return (dispatch: HyperDispatch) => {
     dispatch({
       type: UI_OPEN_SSH_URL,
       effect() {
-        let command = `${parsedUrl.protocol} ${parsedUrl.user ? `${parsedUrl.user}@` : ''}${parsedUrl.resource}`;
+        // This command is written straight into an interactive shell. The
+        // destination was validated in the main process (app/utils/ssh-url),
+        // so user, host and port cannot carry shell metacharacters — keep that
+        // guarantee in place when changing either side.
+        let command = `ssh ${destination.user ? `${destination.user}@` : ''}${destination.host}`;
 
-        if (parsedUrl.port) command += ` -p ${parsedUrl.port}`;
+        if (destination.port) command += ` -p ${destination.port}`;
 
         command += '\n';
 

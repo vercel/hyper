@@ -29,12 +29,12 @@ import {app, BrowserWindow, Menu, screen} from 'electron';
 
 import isDev from 'electron-is-dev';
 import {gitDescribe} from 'git-describe';
-import parseUrl from 'parse-url';
 
 import * as AppMenu from './menus/menu';
 import * as plugins from './plugins';
 import {newWindow} from './ui/window';
 import {installCLI} from './utils/cli-install';
+import {parseSSHUrl} from './utils/ssh-url';
 import * as windowUtils from './utils/window-utils';
 
 const windowSet = new Set<BrowserWindow>([]);
@@ -237,7 +237,15 @@ app.on('open-file', (_event, path) => {
 });
 
 app.on('open-url', (_event, sshUrl) => {
+  // The URL comes from whatever asked the OS to open it, so it is only
+  // forwarded once it has been validated as a plain ssh destination.
+  const destination = parseSSHUrl(sshUrl);
+  if (!destination) {
+    console.warn('Ignoring ssh:// URL: not a valid ssh destination');
+    return;
+  }
+
   GetWindow((win: BrowserWindow) => {
-    win.rpc.emit('open ssh', parseUrl(sshUrl));
+    win.rpc.emit('open ssh', destination);
   });
 });

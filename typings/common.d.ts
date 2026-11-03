@@ -2,8 +2,6 @@ import type {ExecFileOptions, ExecOptions} from 'child_process';
 
 import type {IpcMain, IpcRenderer} from 'electron';
 
-import type parseUrl from 'parse-url';
-
 import type {configOptions} from './config';
 
 export type Session = {
@@ -15,6 +13,16 @@ export type Session = {
   pid: number | null;
   activeUid?: string;
   profile: string;
+};
+
+/**
+ * A validated ssh destination, as produced by `app/utils/ssh-url`. Every field
+ * is guaranteed to be free of shell metacharacters.
+ */
+export type SSHDestination = {
+  user?: string;
+  host: string;
+  port?: number;
 };
 
 export type sessionExtraOptions = {
@@ -51,7 +59,7 @@ export type RendererEvents = {
   ready: never;
   'add notification': {text: string; url: string; dismissable: boolean};
   'update available': {releaseNotes: string; releaseName: string; releaseUrl: string; canInstall: boolean};
-  'open ssh': ReturnType<typeof parseUrl>;
+  'open ssh': SSHDestination;
   'open file': {path: string};
   'move jump req': number | 'last';
   'reset fontSize req': never;
