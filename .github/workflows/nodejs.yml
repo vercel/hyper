@@ -77,8 +77,10 @@ jobs:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
       - name: Archive Build Artifacts
-        uses: LabhanshAgrawal/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
+          name: dist-${{ matrix.os }}
+          if-no-files-found: ignore
           path: |
             dist/*.dmg
             dist/*.snap
@@ -98,21 +100,11 @@ jobs:
         env:
           SHELL: /bin/bash
       - name: Archive E2E test screenshot
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: e2e
+          name: e2e-${{ matrix.os }}
+          if-no-files-found: ignore
           path: dist/tmp/*.png
-      - name: Save the pr number in an artifact
-        if: github.event_name == 'pull_request'
-        env:
-          PR_NUM: ${{ github.event.number }}
-        run: echo $PR_NUM > pr_num.txt
-      - name: Upload the pr num
-        uses: actions/upload-artifact@v3
-        if: github.event_name == 'pull_request'
-        with:
-          name: pr_num
-          path: ./pr_num.txt
       - uses: actions/cache/save@v4
         if: github.event_name == 'push'
         with:
@@ -191,8 +183,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Archive Build Artifacts
-        uses: LabhanshAgrawal/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
+          name: dist-linux-${{ matrix.name }}
+          if-no-files-found: ignore
           path: |
             dist/*.snap
             dist/*.AppImage
