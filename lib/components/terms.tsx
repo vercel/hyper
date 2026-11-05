@@ -62,7 +62,7 @@ export default class Terms extends React.Component<React.PropsWithChildren<Terms
   componentDidUpdate(prevProps: TermsProps) {
     for (const uid in prevProps.sessions) {
       if (!this.props.sessions[uid]) {
-        this.terms[uid].term.dispose();
+        this.terms[uid].dispose();
         delete this.terms[uid];
       }
     }

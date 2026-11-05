@@ -68,6 +68,14 @@ export function newWindow(
 
   const rpc = createRPC(window);
   const sessions = new Map<string, Session>();
+  const pendingSplitSessions = new Map<
+    string,
+    {
+      options: ReturnType<typeof prepareSession>;
+      timer: ReturnType<typeof setTimeout> | null;
+    }
+  >();
+  const pendingSplitResizes = new Map<string, {cols: number; rows: number}>();
 
   const updateBackgroundColor = () => {
     const cfg_ = app.plugins.getDecoratedConfig(profileName);
@@ -119,7 +127,7 @@ export function newWindow(
     }
   });
 
-  function createSession(extraOptions: sessionExtraOptions = {}) {
+  function prepareSession(extraOptions: sessionExtraOptions = {}) {
     const uid = uuidv4();
     const extraOptionsFiltered: sessionExtraOptions = {};
     Object.keys(extraOptions).forEach((key) => {
@@ -172,27 +180,13 @@ export function newWindow(
         uid
       }
     );
-    const options = decorateSessionOptions(defaultOptions);
-    const DecoratedSession = decorateSessionClass(Session);
-    const session = new DecoratedSession(options);
-    sessions.set(uid, session);
-    return {session, options};
+    return decorateSessionOptions(defaultOptions);
   }
 
-  rpc.on('new', (extraOptions) => {
-    const {session, options} = createSession(extraOptions);
-
+  function startSession(options: ReturnType<typeof prepareSession>) {
+    const DecoratedSession = decorateSessionClass(Session);
+    const session = new DecoratedSession(options);
     sessions.set(options.uid, session);
-    rpc.emit('session add', {
-      rows: options.rows,
-      cols: options.cols,
-      uid: options.uid,
-      splitDirection: options.splitDirection,
-      shell: session.shell,
-      pid: session.pty ? session.pty.pid : null,
-      activeUid: options.activeUid ?? undefined,
-      profile: options.profile
-    });
 
     session.on('data', (data: string) => {
       rpc.emit('session data', data);
@@ -203,9 +197,51 @@ export function newWindow(
       unsetRendererType(options.uid);
       sessions.delete(options.uid);
     });
+
+    return session;
+  }
+
+  function flushPendingSplitResizes() {
+    if (pendingSplitSessions.size !== 0) {
+      return;
+    }
+    pendingSplitResizes.forEach((size, uid) => {
+      sessions.get(uid)?.resize(size);
+    });
+    pendingSplitResizes.clear();
+  }
+
+  rpc.on('new', (extraOptions) => {
+    const options = prepareSession(extraOptions);
+    const splitPendingLayout = options.splitDirection !== undefined;
+    const session = splitPendingLayout ? null : startSession(options);
+
+    if (splitPendingLayout) {
+      pendingSplitSessions.set(options.uid, {options, timer: null});
+    }
+
+    rpc.emit('session add', {
+      rows: options.rows,
+      cols: options.cols,
+      uid: options.uid,
+      splitDirection: options.splitDirection,
+      shell: session?.shell ?? options.shell ?? null,
+      pid: session?.pty ? session.pty.pid : null,
+      activeUid: options.activeUid ?? undefined,
+      profile: options.profile
+    });
   });
 
   rpc.on('exit', ({uid}) => {
+    const pending = pendingSplitSessions.get(uid);
+    if (pending) {
+      if (pending.timer) {
+        clearTimeout(pending.timer);
+      }
+      pendingSplitSessions.delete(uid);
+      flushPendingSplitResizes();
+      return;
+    }
     const session = sessions.get(uid);
     if (session) {
       session.exit();
@@ -221,8 +257,26 @@ export function newWindow(
     window.minimize();
   });
   rpc.on('resize', ({uid, cols, rows}) => {
+    const pending = pendingSplitSessions.get(uid);
+    if (pending) {
+      pending.options.cols = cols;
+      pending.options.rows = rows;
+      if (pending.timer) {
+        clearTimeout(pending.timer);
+      }
+      pending.timer = setTimeout(() => {
+        pendingSplitSessions.delete(uid);
+        startSession(pending.options);
+        flushPendingSplitResizes();
+      }, 50);
+      return;
+    }
     const session = sessions.get(uid);
     if (session) {
+      if (pendingSplitSessions.size !== 0) {
+        pendingSplitResizes.set(uid, {cols, rows});
+        return;
+      }
       session.resize({cols, rows});
     }
   });
@@ -282,6 +336,13 @@ export function newWindow(
     rpc.emit('leave full screen');
   });
   const deleteSessions = () => {
+    pendingSplitSessions.forEach(({timer}) => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    });
+    pendingSplitSessions.clear();
+    pendingSplitResizes.clear();
     sessions.forEach((session, key) => {
       session.removeAllListeners();
       session.destroy();
