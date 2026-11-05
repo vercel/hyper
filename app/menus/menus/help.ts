@@ -62,8 +62,8 @@ ${JSON.stringify(getPlugins(), null, 2)}
 </details>`;
 
         const issueURL = `https://github.com/vercel/hyper/issues/new?body=${encodeURIComponent(body)}`;
-        const copyAndSend = () => {
-          clipboard.writeText(body);
+        const copyAndSend = async () => {
+          await clipboard.writeText(body);
           void shell.openExternal(
             `https://github.com/vercel/hyper/issues/new?body=${encodeURIComponent(
               '<!-- We have written the needed data into your clipboard because it was too large to send. ' +
@@ -72,7 +72,7 @@ ${JSON.stringify(getPlugins(), null, 2)}
           );
         };
         if (!focusedWindow) {
-          copyAndSend();
+          void copyAndSend().catch(console.error);
         } else if (issueURL.length > 6144) {
           void dialog
             .showMessageBox(focusedWindow, {
@@ -84,7 +84,7 @@ ${JSON.stringify(getPlugins(), null, 2)}
             })
             .then((result) => {
               if (result.response === 0) {
-                copyAndSend();
+                void copyAndSend().catch(console.error);
               }
             });
         } else {

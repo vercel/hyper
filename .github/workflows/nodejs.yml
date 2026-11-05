@@ -9,7 +9,7 @@ defaults:
   run:
     shell: bash
 env:
-  NODE_VERSION: 18.x
+  NODE_VERSION: 24.x
   PNPM_VERSION: 10.33.0
 jobs:
   build:
@@ -17,6 +17,7 @@ jobs:
     strategy:
       matrix:
         os:
+          - macos-15-intel
           - macos-latest
           - ubuntu-latest
           - windows-latest
@@ -32,8 +33,6 @@ jobs:
         run: |
           corepack enable pnpm
           corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
-      - name: Fix node-gyp and Python
-        run: python3 -m pip install packaging setuptools
       - name: Get pnpm store directory path
         id: pnpm-store-dir-path
         run: echo "dir=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
@@ -45,15 +44,13 @@ jobs:
             ${{ runner.os }}-pnpm-
       - name: Install
         run: pnpm install --frozen-lockfile
-        env:
-          npm_config_node_gyp: ${{ github.workspace }}${{ runner.os == 'Windows' && '\node_modules\node-gyp\bin\node-gyp.js' || '/node_modules/node-gyp/bin/node-gyp.js' }}
       - name: Install libarchive-tools
         if: runner.os == 'Linux'
         run: |
           sudo apt update
           sudo apt install libarchive-tools
-      - name: Lint and Run Unit Tests
-        run: pnpm run test
+      - name: Verify
+        run: pnpm run verify
       - name: Getting Build Icon
         if: github.ref == 'refs/heads/canary' || github.base_ref == 'canary'
         run: |
@@ -77,8 +74,9 @@ jobs:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
       - name: Archive Build Artifacts
-        uses: LabhanshAgrawal/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
+          name: build-${{ matrix.os }}
           path: |
             dist/*.dmg
             dist/*.snap
@@ -98,9 +96,9 @@ jobs:
         env:
           SHELL: /bin/bash
       - name: Archive E2E test screenshot
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: e2e
+          name: e2e-${{ matrix.os }}
           path: dist/tmp/*.png
       - name: Save the pr number in an artifact
         if: github.event_name == 'pull_request'
@@ -108,10 +106,10 @@ jobs:
           PR_NUM: ${{ github.event.number }}
         run: echo $PR_NUM > pr_num.txt
       - name: Upload the pr num
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: github.event_name == 'pull_request'
         with:
-          name: pr_num
+          name: pr_num-${{ matrix.os }}
           path: ./pr_num.txt
       - uses: actions/cache/save@v4
         if: github.event_name == 'push'
@@ -124,9 +122,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - name: armv7l
-            cpu: cortex-a8
-            image: raspios_lite:latest
           - name: arm64
             cpu: cortex-a53
             image: raspios_lite_arm64:latest
@@ -142,8 +137,6 @@ jobs:
         run: |
           corepack enable pnpm
           corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
-      - name: Fix node-gyp and Python
-        run: python3 -m pip install packaging setuptools
       - name: Get pnpm store directory path
         id: pnpm-store-dir-path
         run: echo "dir=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
@@ -158,8 +151,8 @@ jobs:
           pnpm install --frozen-lockfile
           sudo apt update
           sudo apt install libarchive-tools
-      - name: Compile
-        run: pnpm run build
+      - name: Verify
+        run: pnpm run verify
       - name: rebuild node-pty
         uses: pguyot/arm-runner-action@v2.5.2
         with:
@@ -170,29 +163,23 @@ jobs:
           copy_artifact_path: target/node_modules/node-pty
           copy_artifact_dest: target/node_modules
           commands: |
-            wget https://nodejs.org/dist/v18.16.0/node-v18.16.0-linux-${{ matrix.name }}.tar.xz
-            tar -xJf node-v18.16.0-linux-${{ matrix.name }}.tar.xz
-            sudo cp node-v18.16.0-linux-${{ matrix.name }}/* /usr/local/ -R
+            wget https://nodejs.org/dist/v24.22.0/node-v24.22.0-linux-${{ matrix.name }}.tar.xz
+            tar -xJf node-v24.22.0-linux-${{ matrix.name }}.tar.xz
+            sudo cp node-v24.22.0-linux-${{ matrix.name }}/* /usr/local/ -R
             corepack enable pnpm
             corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
             pnpm run rebuild-node-pty
       - name: chown node-pty
         run: |
           sudo chown -R $USER:$USER target/node_modules/node-pty
-      - name: Prepare v8 snapshot
-        if: matrix.name == 'armv7l'
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo apt update
-          sudo apt install -y libglib2.0-0:i386 libexpat1:i386 libgcc-s1:i386
-          npm_config_arch=armv7l pnpm run v8-snapshot:arch
       - name: Build
         run: pnpm exec electron-builder -l deb rpm AppImage pacman --${{ matrix.name }} -c electron-builder-linux-ci.json
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Archive Build Artifacts
-        uses: LabhanshAgrawal/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
+          name: build-linux-${{ matrix.name }}
           path: |
             dist/*.snap
             dist/*.AppImage

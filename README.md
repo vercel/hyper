@@ -38,6 +38,8 @@ nix-env -i hyper
 
 ### macOS
 
+Requires macOS 13 (Ventura) or later. Native window controls and menus follow the focused terminal window’s background: dark for dark themes and light for light themes, including live configuration changes.
+
 Use [Homebrew Cask](https://brew.sh) to download the app by running these commands:
 
 ```bash
@@ -46,6 +48,8 @@ brew install --cask hyper
 ```
 
 ### Windows
+
+Requires Windows 10 or later (x64 or ARM64).
 
 Use [chocolatey](https://chocolatey.org/) to install the app by running the following command (package information can be found [here](https://chocolatey.org/packages/hyper/)):
 
@@ -57,13 +61,15 @@ choco install hyper
 
 ## Contribute
 
-Regardless of the platform you are working on, you will need to have pnpm available. The recommended way is to enable it with Corepack: `corepack enable pnpm`.
+Hyper uses Electron 45. Builds support 64-bit platforms only: macOS and Windows x64/ARM64, and Linux x64/ARM64. Windows ia32 and Linux armv7l are no longer supported.
+
+Use Node.js 24 and the pinned pnpm 10.33.0 (`packageManager` in `package.json`). The recommended way is to enable it with Corepack: `corepack enable pnpm`.
 
 1. Install necessary packages:
   * Windows
-    - Be sure to run `pnpm add --global windows-build-tools` from an elevated prompt (as an administrator) to install `windows-build-tools`.
+    - Install Python and Visual Studio Build Tools with the Desktop development with C++ workload.
   * macOS
-    - Once you have enabled pnpm, you can skip this section!
+    - Install Xcode Command Line Tools (`xcode-select --install`).
   * Linux (You can see [here](https://en.wikipedia.org/wiki/List_of_Linux_distributions) what your Linux is based on.)
     - RPM-based
         + `GraphicsMagick`
@@ -88,6 +94,10 @@ pnpm run dist
 ```
 
 After that, you will see the binary in the `./dist` folder!
+
+Run `pnpm run verify` before committing. It runs `pnpm run test` (formatting, lint and unit tests) and `pnpm run build` (production bundle and TypeScript compilation). Installation enables the version-controlled Husky pre-commit hook; the existing pre-push tests remain enabled. Run `pnpm run test:e2e` after packaging.
+
+When upgrading from earlier Hyper builds, use a supported 64-bit OS and rebuild native plugins for Electron 45. Plugins must use main-process clipboard helpers or `navigator.clipboard`; Electron no longer exposes `clipboard` in renderers, and its main-process methods are asynchronous. Native file references use `text/uri-list`. The node-pty 1.0.0 ConPTY cleanup patch is no longer needed: node-pty 1.1.0 already avoids disconnecting or closing pipe handles in `PtyKill`. No configuration migration is required. On macOS, build each architecture on a native runner: the Electron 45 snapshot tools are architecture-specific. `pnpm run dist` builds the host Mac architecture.
 
 #### Known issues that can happen during development
 

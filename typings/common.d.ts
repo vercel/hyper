@@ -118,14 +118,14 @@ export interface TypedEmitter<Events> {
 type OptionalPromise<T> = T | Promise<T>;
 
 export type IpcCommands = {
-  'child_process.exec': (command: string, options: ExecOptions) => {stdout: string; stderr: string};
+  'child_process.exec': (command: string, options: ExecOptions) => {stdout: string | Buffer; stderr: string | Buffer};
   'child_process.execFile': (
     file: string,
     args: string[],
     options: ExecFileOptions
   ) => {
-    stdout: string;
-    stderr: string;
+    stdout: string | Buffer;
+    stderr: string | Buffer;
   };
   getLoadedPluginVersions: () => {name: string; version: string}[];
   getPaths: () => {plugins: string[]; localPlugins: string[]};

@@ -57,8 +57,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       node-pty:
-        specifier: 1.0.0
-        version: 1.0.0
+        specifier: 1.1.0
+        version: 1.1.0
       os-locale:
         specifier: 5.0.0
         version: 5.0.0
@@ -421,9 +421,6 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  nan@2.27.0:
-    resolution: {integrity: sha512-hC+0LidcL3XE4rp1C4H54KujgXKzbfyTngZTwBByQxsOxCEKZT0MPQ4hOKUH2jU1OYstqdDH4onyHPDzcV0XdQ==}
-
   native-process-working-directory@1.0.2:
     resolution: {integrity: sha512-3a67QQV8r3YMUTSOgvtMOCjPDgCpb/8xjv93L8Cqb8bv3hOKsWis4/+8HCu3bgj8ADQV75SCYFSsAGM5G0cXmQ==}
 
@@ -436,12 +433,15 @@ packages:
   node-addon-api@3.2.1:
     resolution: {integrity: sha512-mmcei9JghVNDYydghQmeDX8KoAm0FAiYyIcUt/N4nhyAipB17pllZQDOJD2fotxABnt4Mdz+dKTO7eftLg4d0A==}
 
+  node-addon-api@7.1.1:
+    resolution: {integrity: sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==}
+
   node-gyp-build@4.8.4:
     resolution: {integrity: sha512-LA4ZjwlnUblHVgq0oBF3Jl/6h/Nvs5fzBLwdEF4nuxnFdsfajde4WfxtJr3CaiH+F6ewcIB/q4jQ4UzPyid+CQ==}
     hasBin: true
 
-  node-pty@1.0.0:
-    resolution: {integrity: sha512-wtBMWWS7dFZm/VgqElrTvtfMq4GzJ6+edFI0Y0zyzygUSZMgZdraDUMUhCIvkjhJjme15qWmbyJbtAx4ot4uZA==}
+  node-pty@1.1.0:
+    resolution: {integrity: sha512-20JqtutY6JPXTUnL0ij1uad7Qe1baT46lyolh2sSENDd4sTzKZ4nmAFkeAARDKwmlLjPx6XKRlwRUxwjOy+lUg==}
 
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
@@ -1030,8 +1030,6 @@ snapshots:
 
   ms@2.1.3: {}
 
-  nan@2.27.0: {}
-
   native-process-working-directory@1.0.2:
     dependencies:
       node-addon-api: 3.2.1
@@ -1045,12 +1043,14 @@ snapshots:
 
   node-addon-api@3.2.1: {}
 
+  node-addon-api@7.1.1: {}
+
   node-gyp-build@4.8.4:
     optional: true
 
-  node-pty@1.0.0:
+  node-pty@1.1.0:
     dependencies:
-      nan: 2.27.0
+      node-addon-api: 7.1.1
 
   normalize-path@3.0.0: {}
 

@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const electronLink = require('electron-link');
 const {mkdirp} = require('fs-extra');
+const {electron} = require('../package.json').devDependencies;
 
 const excludedModules = {};
 
@@ -27,7 +28,7 @@ async function main() {
   // Verify if we will be able to use this in `mksnapshot`
   vm.runInNewContext(result.snapshotScript, undefined, {filename: snapshotScriptPath, displayErrors: true});
 
-  const outputBlobPath = `${baseDirPath}/cache/${process.env.npm_config_arch}`;
+  const outputBlobPath = `${baseDirPath}/cache/${electron}/${process.env.npm_config_arch}`;
   await mkdirp(outputBlobPath);
 
   if (process.platform !== 'darwin') {

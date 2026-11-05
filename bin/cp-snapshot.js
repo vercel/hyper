@@ -1,12 +1,13 @@
 const path = require('path');
 const fs = require('fs');
 const {Arch} = require('electron-builder');
+const {electron} = require('../package.json').devDependencies;
 
 function copySnapshot(pathToElectron, archToCopy) {
   const snapshotFileName = 'snapshot_blob.bin';
   const v8ContextFileName = getV8ContextFileName(archToCopy);
-  const pathToBlob = path.resolve(__dirname, '..', 'cache', archToCopy, snapshotFileName);
-  const pathToBlobV8 = path.resolve(__dirname, '..', 'cache', archToCopy, v8ContextFileName);
+  const pathToBlob = path.resolve(__dirname, '..', 'cache', electron, archToCopy, snapshotFileName);
+  const pathToBlobV8 = path.resolve(__dirname, '..', 'cache', electron, archToCopy, v8ContextFileName);
 
   console.log('Copying v8 snapshots from', pathToBlob, 'to', pathToElectron);
   fs.copyFileSync(pathToBlob, path.join(pathToElectron, snapshotFileName));

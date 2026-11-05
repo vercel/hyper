@@ -13,15 +13,16 @@
     "test:unit": "ava",
     "test:unit:watch": "pnpm run test:unit -- --watch",
     "test:e2e": "ava --config ava-e2e.config.js",
-    "postinstall": "pnpm run v8-snapshot && webpack --config-name hyper-app && electron-builder install-app-deps && pnpm run rebuild-node-pty && cpy --cwd=target node_modules \"../../app/\" && husky install && pnpm run generate-schema",
+    "postinstall": "install-electron && pnpm run v8-snapshot && webpack --config-name hyper-app && electron-builder install-app-deps && pnpm run rebuild-node-pty && cpy --cwd=target node_modules \"../../app/\" && husky && pnpm run generate-schema",
     "rebuild-node-pty": "electron-rebuild -f -o node-pty -m target",
     "dist": "pnpm run build && electron-builder",
     "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer",
-    "v8-snapshot": "cross-env npm_config_arch=x64 pnpm run v8-snapshot:arch && cross-env npm_config_arch=arm64 pnpm run v8-snapshot:arch",
+    "v8-snapshot": "node bin/snapshot-architectures.js",
     "v8-snapshot:arch": "pnpm run mk-snapshot && pnpm run cp-snapshot",
     "mk-snapshot": "node bin/download-mksnapshot.js && node bin/mk-snapshot.js",
     "cp-snapshot": "node bin/cp-snapshot.js",
-    "generate-schema": "typescript-json-schema ./typings/config.d.ts rawConfig -o ./app/config/schema.json --required"
+    "generate-schema": "typescript-json-schema ./typings/config.d.ts rawConfig -o ./app/config/schema.json --required",
+    "verify": "pnpm run test && pnpm run build"
   },
   "license": "MIT",
   "author": {
@@ -59,7 +60,7 @@
     "shebang-loader": "0.0.1",
     "styled-jsx": "5.1.2",
     "stylis": "3.5.4",
-    "typescript-json-schema": "0.63.0",
+    "typescript-json-schema": "0.68.0",
     "uuid": "9.0.1",
     "webpack-cli": "5.1.4",
     "xterm": "5.3.0",
@@ -83,7 +84,7 @@
     "@babel/plugin-proposal-optional-chaining": "7.21.0",
     "@babel/preset-react": "7.24.1",
     "@babel/preset-typescript": "7.24.1",
-    "@electron/rebuild": "^3.6.0",
+    "@electron/rebuild": "4.2.1",
     "@types/args": "5.0.3",
     "@types/async-retry": "1.4.3",
     "@types/color": "3.0.6",
@@ -92,7 +93,7 @@
     "@types/lodash": "^4.17.0",
     "@types/mousetrap": "1.6.15",
     "@types/ms": "0.7.34",
-    "@types/node": "18.19.31",
+    "@types/node": "24.9.0",
     "@types/plist": "3.0.5",
     "@types/react": "18.2.79",
     "@types/react-dom": "18.2.25",
@@ -107,10 +108,10 @@
     "copy-webpack-plugin": "12.0.2",
     "cpy-cli": "^5.0.0",
     "cross-env": "7.0.3",
-    "electron": "22.3.25",
-    "electron-builder": "^24.13.3",
+    "electron": "45.0.0",
+    "electron-builder": "26.18.0",
     "electron-link": "^0.6.0",
-    "electron-mksnapshot": "29.3.0",
+    "electron-mksnapshot": "45.0.0",
     "electronmon": "^2.0.2",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
@@ -127,7 +128,7 @@
     "node-addon-api": "8.0.0",
     "null-loader": "4.0.1",
     "parse-url": "8.1.0",
-    "playwright": "1.43.1",
+    "playwright": "1.64.1",
     "plist": "3.1.0",
     "prettier": "3.2.5",
     "proxyquire": "2.1.3",
@@ -144,5 +145,8 @@
       "!lib/**",
       "!dist/**"
     ]
+  },
+  "engines": {
+    "node": "24.x"
   }
 }

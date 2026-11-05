@@ -23,6 +23,7 @@ import Session from '../session';
 import updater from '../updater';
 import {setRendererType, unsetRendererType} from '../utils/renderer-utils';
 import toElectronBackgroundColor from '../utils/to-electron-background-color';
+import updateNativeTheme from '../utils/update-native-theme';
 
 import contextMenuTemplate from './contextmenu';
 
@@ -34,6 +35,10 @@ export function newWindow(
 ): BrowserWindow {
   const classOpts = Object.assign({uid: uuidv4()});
   app.plugins.decorateWindowClass(classOpts);
+
+  if (!BrowserWindow.getFocusedWindow()) {
+    updateNativeTheme(cfg.backgroundColor || '#000');
+  }
 
   const winOpts: BrowserWindowConstructorOptions = {
     minWidth: 370,
@@ -72,6 +77,9 @@ export function newWindow(
   const updateBackgroundColor = () => {
     const cfg_ = app.plugins.getDecoratedConfig(profileName);
     window.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
+    if (window.isFocused() || !BrowserWindow.getFocusedWindow()) {
+      updateNativeTheme(cfg_.backgroundColor || '#000');
+    }
   };
 
   // config changes
@@ -353,6 +361,7 @@ export function newWindow(
 
   window.on('focus', () => {
     updateFocusTime();
+    updateNativeTheme(app.plugins.getDecoratedConfig(profileName).backgroundColor || '#000');
   });
 
   // the window can be closed by the browser process itself

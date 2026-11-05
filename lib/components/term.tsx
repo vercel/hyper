@@ -1,6 +1,7 @@
-import {clipboard, shell} from 'electron';
+import {shell} from 'electron';
 import React from 'react';
 
+import {clipboard} from '@electron/remote';
 import Color from 'color';
 import isEqual from 'lodash/isEqual';
 import pickBy from 'lodash/pickBy';
@@ -334,29 +335,32 @@ export default class Term extends React.PureComponent<
     return document;
   }
 
-  // intercepting paste event for any necessary processing of
-  // clipboard data, if result is falsy, paste event continues
-  onWindowPaste = (e: Event) => {
+  onWindowPaste = (e: ClipboardEvent) => {
     if (!this.props.isTermActive) return;
 
-    const processed = processClipboard();
-    if (processed) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.term.paste(processed);
-    }
+    // Cancel synchronously before reading native file references asynchronously.
+    const text = e.clipboardData?.getData('text/plain') || '';
+    e.preventDefault();
+    e.stopPropagation();
+    void processClipboard().then(
+      (processed) => this.term.paste(processed || text),
+      (error: unknown) => {
+        console.error('Unable to read clipboard file paths', error);
+        this.term.paste(text);
+      }
+    );
   };
 
   onMouseUp = (e: React.MouseEvent) => {
     if (this.props.quickEdit && e.button === 2) {
       if (this.term.hasSelection()) {
-        clipboard.writeText(this.term.getSelection());
+        void clipboard.writeText(this.term.getSelection()).catch(console.error);
         this.term.clearSelection();
       } else {
         document.execCommand('paste');
       }
     } else if (this.props.copyOnSelect && this.term.hasSelection()) {
-      clipboard.writeText(this.term.getSelection());
+      void clipboard.writeText(this.term.getSelection()).catch(console.error);
     }
   };
 

@@ -690,7 +690,7 @@
                             "items": {
                                 "properties": {
                                     "config": {
-                                        "$ref": "#/definitions/Partial<profileConfigOptions>",
+                                        "$ref": "#/definitions/Partial%3CprofileConfigOptions%3E",
                                         "description": "Specify all the options you want to override for each profile.\nOptions set here override the defaults set in the root."
                                     },
                                     "name": {

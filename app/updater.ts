@@ -1,6 +1,6 @@
 // Packages
 import electron, {app} from 'electron';
-import type {BrowserWindow, AutoUpdater} from 'electron';
+import type {BrowserWindow, AutoUpdater, Event} from 'electron';
 
 import retry from 'async-retry';
 import ms from 'ms';
@@ -85,7 +85,7 @@ const updater = (win: BrowserWindow) => {
   };
 
   if (isLinux) {
-    autoUpdater.on('update-available', onupdate);
+    autoUpdaterLinux.on('update-available', onupdate);
   } else {
     autoUpdater.on('update-downloaded', onupdate);
   }
@@ -110,7 +110,7 @@ const updater = (win: BrowserWindow) => {
 
   win.on('close', () => {
     if (isLinux) {
-      autoUpdater.removeListener('update-available', onupdate);
+      autoUpdaterLinux.removeListener('update-available', onupdate);
     } else {
       autoUpdater.removeListener('update-downloaded', onupdate);
     }

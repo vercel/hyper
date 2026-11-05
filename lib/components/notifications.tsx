@@ -1,3 +1,4 @@
+import {shell} from 'electron';
 import React, {forwardRef} from 'react';
 
 import type {NotificationsProps} from '../../typings/hyper';
@@ -48,7 +49,7 @@ const Notifications = forwardRef<HTMLDivElement, NotificationsProps>((props, ref
               <a
                 style={{color: '#fff'}}
                 onClick={(ev) => {
-                  void window.require('electron').shell.openExternal(ev.currentTarget.href);
+                  void shell.openExternal(ev.currentTarget.href);
                   ev.preventDefault();
                 }}
                 href={props.messageURL}
@@ -75,7 +76,7 @@ const Notifications = forwardRef<HTMLDivElement, NotificationsProps>((props, ref
           <a
             style={{color: '#000'}}
             onClick={(ev) => {
-              void window.require('electron').shell.openExternal(ev.currentTarget.href);
+              void shell.openExternal(ev.currentTarget.href);
               ev.preventDefault();
             }}
             href={`https://github.com/vercel/hyper/releases/tag/${props.updateVersion}`}
@@ -103,7 +104,7 @@ const Notifications = forwardRef<HTMLDivElement, NotificationsProps>((props, ref
                 fontWeight: 'bold'
               }}
               onClick={(ev) => {
-                void window.require('electron').shell.openExternal(ev.currentTarget.href);
+                void shell.openExternal(ev.currentTarget.href);
                 ev.preventDefault();
               }}
               href={props.updateReleaseUrl!}

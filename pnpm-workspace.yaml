@@ -6,3 +6,6 @@ onlyBuiltDependencies:
   - leveldown
 ignoredBuiltDependencies:
   - core-js
+# electron-link's cache needs the Node-API build on Node 24.
+overrides:
+  electron-link>leveldown: 6.1.1
