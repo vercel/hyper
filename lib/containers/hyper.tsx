@@ -26,6 +26,10 @@ const Hyper = forwardRef<HTMLDivElement, HyperProps>((props, ref) => {
   useEffect(() => {
     handleFocusActive(props.activeSession);
   }, [props.activeSession]);
+  useEffect(() => {
+    // Electron drops the alpha of BrowserWindow backgroundColor, so paint it here — on mount too (#6531)
+    document.body.style.backgroundColor = props.backgroundColor;
+  }, [props.backgroundColor]);
 
   const handleFocusActive = (uid?: string | null) => {
     const term = uid && terms.current?.getTermByUid(uid);
