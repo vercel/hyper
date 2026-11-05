@@ -27,6 +27,11 @@ try {
 }
 
 const useConpty = config.getConfig().useConpty;
+// Defaults to true: the ConPTY bundled with node-pty (1.23+) passes DCS sequences
+// such as Sixel through verbatim and advertises Sixel in its DA1 response, which
+// the inbox ConPTY on many Windows builds does not. Set `useConptyDll: false` in
+// the config to fall back to the Windows one.
+const useConptyDll = config.getConfig().useConptyDll ?? true;
 
 // Max duration to batch session data before sending it to the renderer process.
 const BATCH_DURATION_MS = 16;
@@ -155,6 +160,8 @@ export default class Session extends EventEmitter {
     if (typeof useConpty === 'boolean') {
       options.useConpty = useConpty;
     }
+
+    options.useConptyDll = useConptyDll;
 
     try {
       this.pty = spawn(shell, shellArgs, options);

@@ -32,6 +32,14 @@ type rootConfigOptions = {
   /** choose either `'stable'` for receiving highly polished, or `'canary'` for less polished but more frequent updates */
   updateChannel: 'stable' | 'canary';
   useConpty?: boolean;
+  /**
+   * Windows only. If `true` (default), use the ConPTY that ships with `node-pty`
+   * instead of the one built into Windows. The bundled ConPTY (1.23+) passes DCS
+   * sequences such as Sixel through to the terminal verbatim and reports Sixel
+   * support in its DA1 response; older inbox ConPTY versions filter them out,
+   * which breaks `imageSupport`.
+   */
+  useConptyDll?: boolean;
 };
 
 type profileConfigOptions = {
